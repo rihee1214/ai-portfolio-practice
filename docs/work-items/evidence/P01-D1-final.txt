@@ -1,0 +1,220 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\d1-build\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\d1-build\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\d1-build\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T21:13:25.781+09:00  INFO 79656 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Starting ErrorHttpTest using Java 21.0.12.1 with PID 79656 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T21:13:25.784+09:00  INFO 79656 --- [           main] c.example.marketplace.api.ErrorHttpTest  : The following 1 profile is active: "d1"
+2026-10-23T21:13:26.856+09:00  INFO 79656 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-23T21:13:26.866+09:00  INFO 79656 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-23T21:13:26.866+09:00  INFO 79656 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-23T21:13:26.904+09:00  INFO 79656 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1090 ms
+2026-10-23T21:13:27.457+09:00  INFO 79656 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T21:13:27.547+09:00  INFO 79656 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 6820 (http) with context path '/'
+2026-10-23T21:13:27.552+09:00  INFO 79656 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Started ErrorHttpTest in 1.998 seconds (process running for 2.788)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-23T21:13:28.263+09:00  INFO 79656 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-23T21:13:28.263+09:00  INFO 79656 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-23T21:13:28.264+09:00  INFO 79656 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-23T21:13:28.443+09:00  WARN 79656 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.265 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Running com.example.marketplace.api.HealthMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T21:13:28.545+09:00  INFO 79656 --- [           main] c.example.marketplace.api.HealthMvcTest  : Starting HealthMvcTest using Java 21.0.12.1 with PID 79656 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T21:13:28.545+09:00  INFO 79656 --- [           main] c.example.marketplace.api.HealthMvcTest  : The following 1 profile is active: "d1"
+2026-10-23T21:13:28.811+09:00  INFO 79656 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-23T21:13:28.812+09:00  INFO 79656 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-23T21:13:28.814+09:00  INFO 79656 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T21:13:28.816+09:00  INFO 79656 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-23T21:13:28.833+09:00  INFO 79656 --- [           main] c.example.marketplace.api.HealthMvcTest  : Started HealthMvcTest in 0.305 seconds (process running for 4.069)
+2026-10-23T21:13:28.879+09:00  WARN 79656 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.510 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Running com.example.marketplace.api.UnhealthyMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T21:13:29.055+09:00  INFO 79656 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Starting UnhealthyMvcTest using Java 21.0.12.1 with PID 79656 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T21:13:29.056+09:00  INFO 79656 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : The following 1 profile is active: "d1"
+2026-10-23T21:13:29.263+09:00  INFO 79656 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-23T21:13:29.263+09:00  INFO 79656 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-23T21:13:29.266+09:00  INFO 79656 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T21:13:29.267+09:00  INFO 79656 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-23T21:13:29.274+09:00  INFO 79656 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Started UnhealthyMvcTest in 0.234 seconds (process running for 4.511)
+2026-10-23T21:13:29.280+09:00  WARN 79656 --- [           main] o.s.b.h.a.DiskSpaceHealthIndicator       : Free disk space at path 'D:\Workspace\ai-portfolio-practice\backend\.' below threshold. Available: 697427300352 bytes (threshold: 9223372036854775807B)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.272 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Running com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO]
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\d1-build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\d1-build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO]
+[INFO] --- dependency:3.10.0:tree (default-cli) @ marketplace-api ---
+[INFO] com.example:marketplace-api:jar:0.0.1-SNAPSHOT
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:4.1.1:test
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:4.1.1:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:4.1.1:compile
+[INFO] |  |  |  +- ch.qos.logback:logback-classic:jar:1.5.38:compile
+[INFO] |  |  |  |  \- ch.qos.logback:logback-core:jar:1.5.38:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.25.5:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.25.5:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:2.0.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-autoconfigure:jar:4.1.1:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:3.0.0:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:2.6:compile
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:4.1.1:test
+[INFO] |  |  \- org.springframework.boot:spring-boot:jar:4.1.1:compile
+[INFO] |  |     \- org.springframework:spring-context:jar:7.0.9:compile
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:4.1.1:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.10.0:test
+[INFO] |  |  \- org.slf4j:slf4j-api:jar:2.0.18:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.5:test
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:2.1.4:test
+[INFO] |  +- net.minidev:json-smart:jar:2.6.0:test
+[INFO] |  |  \- net.minidev:accessors-smart:jar:2.6.0:test
+[INFO] |  |     \- org.ow2.asm:asm:jar:9.7.1:test
+[INFO] |  +- org.assertj:assertj-core:jar:3.27.7:test
+[INFO] |  |  \- net.bytebuddy:byte-buddy:jar:1.18.11:test
+[INFO] |  +- org.awaitility:awaitility:jar:4.3.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:6.0.3:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:6.0.3:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:6.0.3:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:6.0.3:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:6.0.3:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:6.0.3:test
+[INFO] |  +- org.mockito:mockito-core:jar:5.23.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.18.11:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:3.3:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:5.23.0:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.3:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-core:jar:7.0.9:compile
+[INFO] |  |  +- commons-logging:commons-logging:jar:1.3.6:compile
+[INFO] |  |  \- org.jspecify:jspecify:jar:1.0.1:compile
+[INFO] |  +- org.springframework:spring-test:jar:7.0.9:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.11.0:test
+[INFO] +- org.springframework.boot:spring-boot-starter-webmvc-test:jar:4.1.1:test
+[INFO] |  +- org.springframework.boot:spring-boot-starter-jackson-test:jar:4.1.1:test
+[INFO] |  +- org.springframework.boot:spring-boot-webmvc-test:jar:4.1.1:test
+[INFO] |  |  \- org.springframework.boot:spring-boot-web-server:jar:4.1.1:compile
+[INFO] |  \- org.springframework.boot:spring-boot-resttestclient:jar:4.1.1:test
+[INFO] |     \- org.springframework:spring-web:jar:7.0.9:compile
+[INFO] |        \- org.springframework:spring-beans:jar:7.0.9:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-jdbc:jar:4.1.1:compile
+[INFO] |  +- org.springframework.boot:spring-boot-jdbc:jar:4.1.1:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-sql:jar:4.1.1:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-transaction:jar:4.1.1:compile
+[INFO] |  |  |  +- org.springframework.boot:spring-boot-persistence:jar:4.1.1:compile
+[INFO] |  |  |  \- org.springframework:spring-tx:jar:7.0.9:compile
+[INFO] |  |  \- org.springframework:spring-jdbc:jar:7.0.9:compile
+[INFO] |  \- com.zaxxer:HikariCP:jar:7.0.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-flyway:jar:4.1.1:compile
+[INFO] |  \- org.springframework.boot:spring-boot-flyway:jar:4.1.1:compile
+[INFO] +- org.flywaydb:flyway-database-postgresql:jar:12.4.0:compile
+[INFO] |  \- org.flywaydb:flyway-core:jar:12.4.0:compile
+[INFO] |     \- tools.jackson.core:jackson-databind:jar:3.1.5:compile
+[INFO] |        +- com.fasterxml.jackson.core:jackson-annotations:jar:2.21:compile
+[INFO] |        \- tools.jackson.core:jackson-core:jar:3.1.5:compile
+[INFO] +- org.postgresql:postgresql:jar:42.7.13:runtime
+[INFO] |  \- org.checkerframework:checker-qual:jar:3.55.1:runtime
+[INFO] +- org.springframework.boot:spring-boot-starter-webmvc:jar:4.1.1:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-jackson:jar:4.1.1:compile
+[INFO] |  |  \- org.springframework.boot:spring-boot-jackson:jar:4.1.1:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:4.1.1:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-tomcat-runtime:jar:4.1.1:compile
+[INFO] |  |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:11.0.24:compile
+[INFO] |  |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:11.0.24:compile
+[INFO] |  |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:11.0.24:compile
+[INFO] |  |  \- org.springframework.boot:spring-boot-tomcat:jar:4.1.1:compile
+[INFO] |  +- org.springframework.boot:spring-boot-http-converter:jar:4.1.1:compile
+[INFO] |  \- org.springframework.boot:spring-boot-webmvc:jar:4.1.1:compile
+[INFO] |     +- org.springframework.boot:spring-boot-servlet:jar:4.1.1:compile
+[INFO] |     \- org.springframework:spring-webmvc:jar:7.0.9:compile
+[INFO] |        +- org.springframework:spring-aop:jar:7.0.9:compile
+[INFO] |        \- org.springframework:spring-expression:jar:7.0.9:compile
+[INFO] \- org.springframework.boot:spring-boot-starter-actuator:jar:4.1.1:compile
+[INFO]    +- org.springframework.boot:spring-boot-starter-micrometer-metrics:jar:4.1.1:compile
+[INFO]    |  \- org.springframework.boot:spring-boot-micrometer-metrics:jar:4.1.1:compile
+[INFO]    |     \- org.springframework.boot:spring-boot-micrometer-observation:jar:4.1.1:compile
+[INFO]    +- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:4.1.1:compile
+[INFO]    |  \- org.springframework.boot:spring-boot-actuator:jar:4.1.1:compile
+[INFO]    +- org.springframework.boot:spring-boot-health:jar:4.1.1:compile
+[INFO]    +- io.micrometer:micrometer-observation:jar:1.17.1:compile
+[INFO]    |  \- io.micrometer:micrometer-commons:jar:1.17.1:compile
+[INFO]    \- io.micrometer:micrometer-jakarta9:jar:1.17.1:compile
+[INFO]       \- io.micrometer:micrometer-core:jar:1.17.1:compile
+[INFO]          \- org.hdrhistogram:HdrHistogram:jar:2.2.2:runtime
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.746 s
+[INFO] Finished at: 2026-10-23T21:13:30+09:00
+[INFO] ------------------------------------------------------------------------

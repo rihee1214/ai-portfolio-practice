@@ -1,0 +1,30 @@
+[
+  {
+    "name": "com.example.marketplace.api.ErrorHttpTest",
+    "skipped": 0,
+    "failures": 0,
+    "tests": 7,
+    "errors": 0
+  },
+  {
+    "name": "com.example.marketplace.api.HealthMvcTest",
+    "skipped": 0,
+    "failures": 0,
+    "tests": 11,
+    "errors": 0
+  },
+  {
+    "name": "com.example.marketplace.api.UnhealthyMvcTest",
+    "skipped": 0,
+    "failures": 0,
+    "tests": 1,
+    "errors": 0
+  },
+  {
+    "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "skipped": 0,
+    "failures": 0,
+    "tests": 13,
+    "errors": 0
+  }
+]

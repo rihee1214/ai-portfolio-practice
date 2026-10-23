@@ -130,6 +130,7 @@ public final class JdbcContract {
         check("production V1 plus test-only V2 migrate", flyway.migrate().migrationsExecuted == 2);
         check("migration repeat has no pending changes", flyway.migrate().migrationsExecuted == 0);
         try (var context = new AnnotationConfigApplicationContext()) {
+            context.getEnvironment().setActiveProfiles("c3-fixture");
             context.registerBean(DriverManagerDataSource.class, () -> source);
             context.register(FixtureConfiguration.class);
             context.refresh();

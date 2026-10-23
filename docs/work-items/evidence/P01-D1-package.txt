@@ -1,0 +1,1 @@
+PASS no D1/C3 test classes, test SQL or test libraries in deployed JAR
