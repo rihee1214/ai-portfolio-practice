@@ -1,0 +1,52 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/HealthPanel.test.tsx (11 tests | 2 failed) 1377ms
+   × 이전 응답이 로딩 중 도착해도 최신 상태를 덮어쓰지 않는다 110ms
+   × 이전 응답이 최신 성공 후 도착해도 최신 상태를 덮어쓰지 않는다 109ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/HealthPanel.test.tsx > 이전 응답이 로딩 중 도착해도 최신 상태를 덮어쓰지 않는다
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  서버 연결을 확인하고 있습니다.
+Received:
+  연결 확인을 취소했습니다.
+ ❯ tests/unit/HealthPanel.test.tsx:86:38
+     84|   if (timing === '최신 성공 후') await respond(pending[1], json({ status: '…
+     85|   await respond(pending[0], json({ status: 'DOWN' }, 503))
+     86|   expect(screen.getByRole('status')).toHaveTextContent(timing === '로딩 …
+       |                                      ^
+     87|   if (timing === '로딩 중') {
+     88|     await respond(pending[1], json({ status: 'UP' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/HealthPanel.test.tsx > 이전 응답이 최신 성공 후 도착해도 최신 상태를 덮어쓰지 않는다
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  서버와 정상적으로 연결되었습니다.
+Received:
+  연결 확인을 취소했습니다.
+ ❯ tests/unit/HealthPanel.test.tsx:86:38
+     84|   if (timing === '최신 성공 후') await respond(pending[1], json({ status: '…
+     85|   await respond(pending[0], json({ status: 'DOWN' }, 503))
+     86|   expect(screen.getByRole('status')).toHaveTextContent(timing === '로딩 …
+       |                                      ^
+     87|   if (timing === '로딩 중') {
+     88|     await respond(pending[1], json({ status: 'UP' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 12 passed (14)
+   Start at  22:44:36
+   Duration  2.35s (tests 60%, environment 29%, setup 6%, import 3%, transform 1%)

@@ -1,0 +1,12 @@
+{
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 2 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 2 hours (healthy)"
+  ],
+  "hashes": {
+    "test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "note": "D3 performs no database writes; compare with D2 final hashes.",
+  "timestamp": "2026-10-23T22:44:43.0068948+09:00"
+}
