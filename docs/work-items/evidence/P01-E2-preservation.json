@@ -1,0 +1,23 @@
+{
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ],
+  "timestamp": "2026-10-23T23:36:55.8759933+09:00",
+  "hashes": {
+    "test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 3 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 3 hours (healthy)"
+  ]
+}

@@ -1,0 +1,3 @@
+BOOT-INF/classes/com/example/marketplace/platform/web/ApiErrorConfiguration.class
+BOOT-INF/classes/com/example/marketplace/platform/web/ApiErrorFilter.class
+BOOT-INF/classes/com/example/marketplace/platform/web/ApiErrorResponse.class

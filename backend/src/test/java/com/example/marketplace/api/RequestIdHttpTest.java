@@ -90,14 +90,14 @@ class RequestIdHttpTest {
     }
 
     @Test
-    void servlet404And405HaveAnIdWithoutChangingErrorBodyContract() throws Exception {
+    void servlet404And405PreserveStatusAndRequestIdentity() throws Exception {
         var missing = request("GET", "/api/e1-missing");
         var wrongMethod = request("POST", "/actuator/health");
         assertEquals(404, missing.statusCode());
         assertEquals(405, wrongMethod.statusCode());
         id(missing);
         id(wrongMethod);
-        assertFalse(missing.body().contains("requestId"));
+        assertTrue(missing.body().contains("\"requestId\":\"" + id(missing) + "\""));
         assertTrue(wrongMethod.headers().firstValue("Allow").orElse("").contains("GET"));
     }
 

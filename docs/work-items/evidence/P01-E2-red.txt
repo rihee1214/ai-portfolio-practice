@@ -1,0 +1,383 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\e2-red\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\e2-red\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to ..\.local-tools\e2-red\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\e2-red\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 19 source files with javac [debug parameters release 21] to ..\.local-tools\e2-red\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ApiErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T23:34:45.331+09:00  INFO [requestId=] 74652 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Starting ApiErrorHttpTest using Java 21.0.12.1 with PID 74652 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T23:34:45.334+09:00  INFO [requestId=] 74652 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : The following 1 profile is active: "e2-probe"
+2026-10-23T23:34:46.347+09:00  INFO [requestId=] 74652 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-23T23:34:46.356+09:00  INFO [requestId=] 74652 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-23T23:34:46.356+09:00  INFO [requestId=] 74652 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-23T23:34:46.409+09:00  INFO [requestId=] 74652 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1058 ms
+2026-10-23T23:34:47.050+09:00  INFO [requestId=] 74652 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T23:34:47.136+09:00  INFO [requestId=] 74652 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4737 (http) with context path '/'
+2026-10-23T23:34:47.143+09:00  INFO [requestId=] 74652 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Started ApiErrorHttpTest in 2.057 seconds (process running for 3.026)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\rihee\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-23T23:34:47.917+09:00  INFO [requestId=] 74652 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-23T23:34:47.917+09:00  INFO [requestId=] 74652 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-23T23:34:47.918+09:00  INFO [requestId=] 74652 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-23T23:34:47.941+09:00  WARN [requestId=a377ab24-75f6-4271-a09d-0ff4c85569f0] 74652 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'text/plain' is not supported]
+2026-10-23T23:34:48.225+09:00 ERROR [requestId=] 74652 --- [1-auto-1-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 SQL secret] with root cause
+
+java.lang.IllegalStateException: private-e2 SQL secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.fail(ApiErrorHttpTest.java:162) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-23T23:34:48.254+09:00 ERROR [requestId=] 74652 --- [1-auto-1-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] threw exception
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:167) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-23T23:34:48.254+09:00 ERROR [requestId=] 74652 --- [1-auto-1-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 async secret] with root cause
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:167) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-23T23:34:48.268+09:00  WARN [requestId=49e84155-0e96-40ac-8972-e79cab4f5db3] 74652 --- [1-auto-1-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'value': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "private-e2"]
+2026-10-23T23:34:48.339+09:00  WARN [requestId=620a04e9-ce93-4060-861a-b377dd4af60e] 74652 --- [1-auto-1-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[ERROR] Tests run: 22, Failures: 18, Errors: 0, Skipped: 0, Time elapsed: 3.639 s <<< FAILURE! -- in com.example.marketplace.api.ApiErrorHttpTest
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.unsupportedMediaTypeIs415 -- Time elapsed: 0.793 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.unsupportedMediaTypeIs415(ApiErrorHttpTest.java:105)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.apiRootIsIncluded(String)[1] -- Time elapsed: 0.024 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.apiRootIsIncluded(ApiErrorHttpTest.java:85)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.apiRootIsIncluded(String)[2] -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.apiRootIsIncluded(ApiErrorHttpTest.java:85)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[1] -- Time elapsed: 0.025 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[2] -- Time elapsed: 0.008 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[3] -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[4] -- Time elapsed: 0.011 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[5] -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[6] -- Time elapsed: 0.007 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(int, String)[7] -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.sentStatusHasFixedPublicCode(ApiErrorHttpTest.java:119)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500(String)[1] -- Time elapsed: 0.020 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500(ApiErrorHttpTest.java:112)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500(String)[2] -- Time elapsed: 0.021 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500(ApiErrorHttpTest.java:112)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.invalidInputAndMalformedJsonAreSafe400 -- Time elapsed: 0.013 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.invalidInputAndMalformedJsonAreSafe400(ApiErrorHttpTest.java:97)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(String)[1] -- Time elapsed: 0.011 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(ApiErrorHttpTest.java:79)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(String)[2] -- Time elapsed: 0.019 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:69)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:41)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:195)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:63)
+	at com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(ApiErrorHttpTest.java:79)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(String)[3] -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(ApiErrorHttpTest.java:79)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(String)[4] -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:69)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:41)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:195)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:63)
+	at com.example.marketplace.api.ApiErrorHttpTest.missingApiAlwaysUsesJson(ApiErrorHttpTest.java:79)
+
+[ERROR] com.example.marketplace.api.ApiErrorHttpTest.methodNotAllowedPreservesAllow -- Time elapsed: 0.008 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <4>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.ApiErrorHttpTest.assertError(ApiErrorHttpTest.java:65)
+	at com.example.marketplace.api.ApiErrorHttpTest.methodNotAllowedPreservesAllow(ApiErrorHttpTest.java:91)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   ApiErrorHttpTest.apiRootIsIncluded:85->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.apiRootIsIncluded:85->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.invalidInputAndMalformedJsonAreSafe400:97->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.methodNotAllowedPreservesAllow:91->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.missingApiAlwaysUsesJson:79->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.missingApiAlwaysUsesJson:79->assertError:63 expected: <true> but was: <false>
+[ERROR]   ApiErrorHttpTest.missingApiAlwaysUsesJson:79->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.missingApiAlwaysUsesJson:79->assertError:63 expected: <true> but was: <false>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.sentStatusHasFixedPublicCode:119->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500:112->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.unexpectedSyncAndAsyncFailuresAreSafe500:112->assertError:65 expected: <3> but was: <4>
+[ERROR]   ApiErrorHttpTest.unsupportedMediaTypeIs415:105->assertError:65 expected: <3> but was: <4>
+[INFO]
+[ERROR] Tests run: 22, Failures: 18, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10.700 s
+[INFO] Finished at: 2026-10-23T23:34:48+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project marketplace-api: There are test failures.
+[ERROR]
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\e2-red\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -41,6 +41,13 @@ class ErrorHttpTest {
         assertEquals(status, response.statusCode());
         assertTrue(response.headers().firstValue("Content-Type").orElse("").startsWith("application/json"));
         var json = JsonMapper.builder().build().readTree(response.body());
+        if (path.startsWith("/api/")) {
+            assertEquals("NOT_FOUND", json.get("code").asText());
+            assertEquals("요청한 대상을 찾을 수 없습니다.", json.get("message").asText());
+            assertEquals(response.headers().firstValue("X-Request-ID").orElseThrow(), json.get("requestId").asText());
+            assertEquals(3, json.size());
+            return;
+        }
         assertEquals(status, json.get("status").asInt());
         assertEquals(error, json.get("error").asText());
         assertEquals(path, json.get("path").asText());
