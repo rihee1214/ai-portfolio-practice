@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-24T00:57:27.4885632+09:00",
+  "files": [
+    "README.md",
+    "docs/implementation-plan.md",
+    "docs/shop-design.md",
+    "docs/development-workflow.md",
+    "docs/local-development.md",
+    "docs/requirements.md",
+    "docs/work-items/P01-completion-audit.md",
+    "docs/work-items/P01-completion-audit-review.md"
+  ],
+  "brokenLinks": []
+}

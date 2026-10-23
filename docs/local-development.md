@@ -1,4 +1,4 @@
-# 로컬 실행과 검사 — P01-B5
+# 로컬 실행과 검사 — P01 종합 기준
 
 현재 검증 호스트는 Windows x64·PowerShell 7이며 루트는 `D:\Workspace\ai-portfolio-practice`다. 아래 명령은 저장소 루트에서 시작한다. 시스템 PATH·JAVA_HOME을 영구 변경하지 않는다.
 
@@ -25,7 +25,7 @@ try {
 } finally { Pop-Location }
 ```
 
-Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. JUnit 테스트는 아직 0개다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
+Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. 기본 Java 검사는 117개이며 실제 DB 통합 검사는 포함하지 않는다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
 
 설정이 필요한 경우 예제를 `backend/application-local.properties`로 복사하고 값을 편집한다. 기존 로컬 파일은 덮어쓰지 않는다. `local` 프로필은 기본 활성화되지 않는다. 아래 실행은 **backend 폴더를 작업 디렉터리로 사용**해야 외부 파일을 찾는다.
 
@@ -54,10 +54,24 @@ try {
 
 명령은 순서대로 성공한 뒤 다음을 실행한다. npm.ps1은 실패하면 예외를 던진다. ci는 잠금 파일에 따라 node_modules를 재설치한다. 실행 중 서버가 사용한다면 먼저 자신이 시작한 서버를 종료한 뒤 수행한다. 빌드 미리보기는 `./frontend/npm.ps1 run preview '--' --port 4174 --strictPort`다. 개발과 preview는 8080으로 프록시하며 공개 운영 서버가 아니다. 테스트는 임시 포트와 모의 upstream을 생성·종료한다. 샌드박스 EACCES는 앱 오류와 구별하고 허용된 실행 환경에서 재검증한다.
 
-현재 사용자 정의 환경 변수는 필요 없다. [frontend/.env.example](../frontend/.env.example)은 보안 안내다. VITE_*는 브라우저에 공개될 수 있으므로 암호·토큰·DB 주소를 넣지 않는다. 백엔드는 Spring 프로필, 프런트는 빌드 도구 환경이라는 차이가 있다. 실제 DB·비밀값 설정은 P01-C1에서 설계·검증한다.
+현재 사용자 정의 환경 변수는 필요 없다. [frontend/.env.example](../frontend/.env.example)은 보안 안내다. VITE_*는 브라우저에 공개될 수 있으므로 암호·토큰·DB 주소를 넣지 않는다. 백엔드는 Spring 프로필, 프런트는 빌드 도구 환경이라는 차이가 있다. 실제 DB·비밀값 설정은 [C1](work-items/P01-C1.md), JDBC·Flyway는 [C2](work-items/P01-C2.md), 격리 DB 통합 실행은 [D2](work-items/P01-D2.md)를 따른다. D2 실행은 새 전용 DB와 데이터를 생성하므로 기본 검사와 구분한다.
 
 ## Git과 직접 확인
 
 로컬 `main`에서 `git status --short`, `git diff`, `git log --oneline`으로 변경을 확인한다. 원격 저장소·push는 이번 범위가 아니다. `.gitignore`는 도구·캐시·빌드·IDE·로컬 설정·키 파일을 제외한다. 이것만으로 모든 비밀값을 탐지하지는 못하므로 커밋 전 `git diff --cached`와 파일 목록을 점검한다. 공유 가능한 설정 예제와 package-lock·Maven Wrapper는 추적한다.
 
 학습 실습: Java에 쓰지 않는 import를 잠시 추가하면 validate가 실패하는지 확인하고 원복한다. React에는 사용하지 않는 변수를 추가해 lint 오류를 비교한다. 자동 검사 결과와 사용자의 직접 실습 완료는 별개다.
+
+## 단위·브라우저 검증
+
+저장소 루트에서 아래 순서로 실행한다. JAVA_HOME과 MAVEN_USER_HOME은 위 Java 준비와 같다. MAVEN_USER_HOME은 Wrapper 캐시이며 의존성 저장소는 -Dmaven.repo.local로 별도 지정한다.
+
+```powershell
+./frontend/npm.ps1 run test:unit
+./frontend/npm.ps1 test
+./backend/mvnw.cmd -f backend/pom.xml "-Dmarketplace.build.directory=$PWD/.local-tools/d4-build" verify
+./frontend/npm.ps1 run build
+./frontend/npm.ps1 run test:e2e
+```
+
+각 명령의 성공을 확인한 뒤 다음을 실행한다. 현재 Vitest 47개·Node 68개·Playwright 16개다. Playwright는 최신 JAR와 dist를 자동 재빌드하지 않으므로 위 빌드를 생략하지 않는다. Chromium 준비 방법은 [D4](work-items/P01-D4.md)를 따른다. 18080·24174·24175는 전용 검사 포트이며 점유 시 기존 서버를 종료하지 말고 원인을 확인한다. 실제 DB는 사용하지 않는다. Windows 이외 환경·새 PC 전체 재현은 미검증이다.

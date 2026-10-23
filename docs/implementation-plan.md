@@ -1,32 +1,8 @@
 # 단계별 구현·검증 계획
 
-P01-E6는 ArchUnit으로 모듈 공개 계약·내부 참조·순환 의존을 검사한다. [E6 결과](work-items/P01-E6.md)는 구현·독립 검토 지적 반영·최종 검증 완료다. 현재 업무 모듈은 없으며 위반 탐지는 가상 클래스로 검증했다. E6 다음 단계는 진행하지 않는다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 단계별 과거 결과와 이번 재검증을 구분하며 P02는 미착수다.
 
-P01-E5는 Actuator의 health 전용 기본 접근과 JMX 비노출 정책을 구현했다. [E5 결과](work-items/P01-E5.md)는 구현·자동 검증·독립 검토 완료다. 이전 중단 문구는 단계별 이력이며 E5 다음 단계는 진행하지 않는다.
-
-P01-E4는 db 프로필의 필수 DB 설정을 연결 전에 검증한다. [E4 결과](work-items/P01-E4.md)는 구현·자동 검증·독립 검토 완료다. 아래 이전 단계의 중단 문구는 이력이며 E4 다음 단계는 진행하지 않는다.
-
-P01-E3에서 React 공통 API 오류·요청 ID 표시와 개발 전용 확인 화면을 구현했다. [E3 결과](work-items/P01-E3.md)는 구현·자동 검증·독립 검토 완료다. health 계약은 유지하며 아래 E3 미착수 표현은 이전 이력이다. 다음 E 작업은 진행하지 않는다.
-
-P01-E2는 /api의 Servlet ERROR 응답을 공통 JSON으로 통일했다. [E2 결과](work-items/P01-E2.md)는 69개 검사 통과·독립 검토 완료다. health 계약은 유지하며 아래 E2 미착수 표현은 이전 이력이다. 다음 E 작업은 진행하지 않는다.
-
-P01-E 첫 작업 E1은 서버 요청 ID 생성·응답 헤더·요청 속성/MDC 연계로 한정했다. [E1 결과](work-items/P01-E1.md)는 구현·자동 검증·독립 검토 완료다. 아래 E 미착수 표현은 이전 이력이며 다음 E 작업은 진행하지 않는다.
-
-P01-D4에서 실제 Chromium 브라우저 12개 검사와 React→Java health 연결을 검증했다. [현재 결과](work-items/P01-D4.md)는 지정 세션 독립 검토를 통과했다. 아래 D4 미착수 문구는 이전 이력이며 D4 이후는 진행하지 않는다.
-
-P01-D3에서 Vitest·React Testing Library 화면 검사 14개를 추가했다. [현재 결과](work-items/P01-D3.md)는 지정 세션 독립 검토를 통과했으며, 아래 D3 미착수 문구는 이전 이력이다. 기존 DB를 유지하고 D4 이후는 진행하지 않는다.
-
-P01-D2의 실제 PostgreSQL 통합8개와 기본 검사33개를 검증했다. [최신 결과](work-items/P01-D2.md)는 독립 재검증과 검토를 통과했다. 기존8080/5174는 착수 시부터 리스너가 없어 현재 health는 미확인이다. DB 컨테이너·기존 데이터는 보존했다. 아래 D2 미착수 문구는 이전 이력이며 D3 이후는 진행하지 않는다.
-
-P01-D1에서 DB 없는 JUnit32개(순수13·MockMvc12·실제 HTTP7)를 검증했다. [최신 결과](work-items/P01-D1.md)는 지정 세션 검토를 통과했다. 아래 D1 미착수/JUnit0건 표현은 이전 이력이며 D2 이후는 진행하지 않는다. 사용자 직접 실습은 미확인이다.
-
-P01-C3의 테스트 전용 JDBC 조회·매핑·트랜잭션·DB 보호 구현과 검증을 완료했다. [최신 결과](work-items/P01-C3.md)는 지정 세션 검토를 통과했다. 사용자 직접 실습은 미확인이다. 아래 C3 미착수 문구는 이전 이력이며 P01-D 이후는 진행하지 않는다.
-
-P01-C2 JDBC·Flyway 구성과 격리 DB 검증을 완료했다. [최신 결과](work-items/P01-C2.md)는 후속 검토를 통과했다. 사용자 직접 실습 완료는 미확인이다. 아래 C2 미착수 표현은 이전 이력이다. P01-C3는 진행하지 않는다.
-
-P01-C1에서 Docker 접근·개발/테스트 DB 구성·18건 기반 검사와 호스트 인증 4건을 완료했다. 지정 검토 의견도 반영했으며 최종 기록은 [P01-C1](work-items/P01-C1.md)을 따른다. 아래 미착수 표현은 이전 단계 이력이며 P01-C2는 진행하지 않는다.
-
-설계 v4 Java·Spring Boot + React / 2026-10-23 / P01-B1 Actuator 교체·B2·B3 검증 완료, B4 R4 수정·회귀 검증 완료, B5 완료
+설계 v4 Java·Spring Boot + React / 상태 점검 2026-10-24
 
 [요구사항](requirements.md)과 [전체 기술 설계](shop-design.md)의 현재 기준은 v4다. F01~F18과 AC01~AC20은 유지하고 React 학습 목표 G10을 추가했다. P01~P14의 기능 순서는 유지하며 Java·Spring Boot API와 React 화면에 맞춰 결과물·검증 도구를 변경했다. P01-A 문서 개정 완료를 현재 구성의 환경 검증 완료로 해석하지 않는다.
 
@@ -46,7 +22,7 @@ P01-C1에서 Docker 접근·개발/테스트 DB 구성·18건 기반 검사와 �
 
 | 단계 | 결과 | 기능·목표 연결 | 선행 | 상태 |
 | --- | --- | --- | --- | --- |
-| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1 완료, C2 구현·검토 완료, C3 구현·검증·검토 완료, D1 구현·검증·검토 완료, D2 구현·검증·검토 완료, D3 구현·검증·독립 검토 완료, D4 구현·검증·독립 검토 완료, E1 구현·검증·독립 검토 완료, E2 구현·검증·독립 검토 완료, E3 구현·검증·독립 검토 완료, E4 구현·검증·독립 검토 완료, E5 구현·검증·독립 검토 완료, E6 구현·독립 검토 반영·최종 검증 완료 |
+| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A~E6 세부 구현·검증 기록 있음. 현재 회귀 통과, 최신 실제 DB 통합 재실행 미검증. [종합 판정](work-items/P01-completion-audit.md) |
 | P02 | 회원과 권한·배송지 | F01·F07 | P01 | 미착수 |
 | P03 | 판매자 신청·승인·매대 | F03·F16 | P02 | 미착수 |
 | P04 | 카테고리·상품·옵션·이미지·재고 | F04·F05·F16 | P03 | 미착수 |
@@ -65,13 +41,13 @@ P08은 회원·비회원의 첫 구매 과정이 끝나는 중간 성과다. 상
 
 ## 3. P01 실행 환경과 프로젝트
 
-현재: [P01-B1](work-items/P01-B1.md)의 프로젝트 전용 JDK·Maven 준비, 최소 API 구현·패키징·HTTP 검증을 완료했다. 기술 선택은 ADR-001, 조사 이력은 P01-A2를 따른다. P01-B2의 React 첫 화면과 P01-B3의 경로·역할별 화면 틀을 검증했다. P01-B4 health 연동의 R4 결함을 수정하고 자동 검사 68개와 개발·preview HTTP·UI 회귀를 확인했다. DB·인증·업무 API 연동은 미구현이다.
+현재: [P01-B1](work-items/P01-B1.md)의 프로젝트 전용 JDK·Maven 준비, 최소 API 구현·패키징·HTTP 검증을 완료했다. 기술 선택은 ADR-001, 조사 이력은 P01-A2를 따른다. P01-B2의 React 첫 화면과 P01-B3의 경로·역할별 화면 틀을 검증했다. P01-B4 health 연동의 R4 결함을 수정하고 자동 검사 68개와 개발·preview HTTP·UI 회귀를 확인했다. DB 기반 연동은 C2·C3·D2에서 구현·검증했다. 인증·업무 API는 미구현이며 최신 db 프로필 통합 재검증은 남아 있다.
 
-2026-10-21 사용자가 개발·테스트용 PostgreSQL을 Docker Compose로 구성하기로 확정했다. PC에 DB 서버를 직접 설치하지 않으며, 환경 재현·애플리케이션과 DB의 독립 실행·3계층의 통신 경계 학습을 목적으로 한다. [ADR-002](decisions/ADR-002-docker-postgresql.md)의 구성 원칙과 한계를 따른다. Docker 접근 문제는 P01-C1에서 먼저 확인하고 직접 설치로 자동 대체하지 않는다. 이번 변경은 문서상 결정이며 P01-C1은 미착수다.
+2026-10-21 사용자가 개발·테스트용 PostgreSQL을 Docker Compose로 구성하기로 확정했다. PC에 DB 서버를 직접 설치하지 않으며, 환경 재현·애플리케이션과 DB의 독립 실행·3계층의 통신 경계 학습을 목적으로 한다. [ADR-002](decisions/ADR-002-docker-postgresql.md)의 구성 원칙과 한계를 따른다. Docker 접근 문제는 P01-C1에서 먼저 확인하고 직접 설치로 자동 대체하지 않는다. C1에서 실제 Compose·접속·보존을 검증했으며 상세 결과는 해당 작업 기록을 따른다.
 
 Java 21·Spring Boot 4.1·Maven 3.9·PostgreSQL 18, React 19·TypeScript·Vite·React Router·Node 24 LTS를 설계 목표로 삼는다. 목표 패치·주요 지원 조건·조사 당시 다운로드 실패는 P01-A2에 기록했다. B1·B2·B3에서 도입한 의존성과 실행 결과는 각 작업 기록을 따르며, DB·인증 등을 포함한 전체 조합은 미검증이다. Node.js·npm은 React 개발·검증·빌드에 필요하며 업무 API는 Java에서 실행한다. 과거 Next.js·Prisma 설치 목표를 현재 구성에 적용하지 않는다.
 
-2026-10-21 Actuator 교체 전 P01-B1 재검증은 기존 API·Wrapper를 유지한 채 공식 체크섬, clean verify, 재시작을 포함한 HTTP 8건을 확인했다. 이후 Actuator 교체 검증은 HTTP 27건이다. 제한된 실행 환경의 DNS·로컬 통신 실패와 허용된 실행 환경의 성공을 [B1 기록](work-items/P01-B1.md)에 구분했다. B4 구현은 진행하지 않았다.
+2026-10-21 Actuator 교체 전 P01-B1 재검증은 기존 API·Wrapper를 유지한 채 공식 체크섬, clean verify, 재시작을 포함한 HTTP 8건을 확인했다. 이후 Actuator 교체 검증은 HTTP 27건이다. 제한된 실행 환경의 DNS·로컬 통신 실패와 허용된 실행 환경의 성공을 [B1 기록](work-items/P01-B1.md)에 구분했다. 당시 B1 재검증에서는 B4 구현을 진행하지 않았다.
 
 각 작업에는 기존 Java·Spring·SQL 경험과 연결한 새 개념, 핵심 파일의 흐름, 직접 해 볼 작은 수정과 예상 결과를 제공한다. [학습을 포함한 진행 방식](development-workflow.md)을 적용하며 Boot·웹·인증까지 이미 능숙하다고 가정하지 않는다.
 
@@ -271,18 +247,18 @@ P08-E의 키나 제공자 접근이 준비되지 않으면 모의 검증과 PG �
 
 ## 17. 단계별 공통 검사와 상태
 
-아래는 Windows에서 사용할 실행 계약이다. 현재 Wrapper와 npm의 개발·타입·린트·빌드·미리보기 명령은 존재하며 B1~B4에서 실행했다. B4의 `npm test`는 Node 기반 응답·취소·프록시 검사를 실행한다. D1에서 JUnit·Boot Test·MockMvc를 도입했다. D2에서 db-it/Failsafe 통합 검사를 도입했다. React DOM 단위/E2E 체계는 아직 없다. 도입 시 실제 동작을 확인하고 README에 기록한다. 기본 Java 검사나 React 모의 API 검사를 실제 DB·브라우저 연동 검사로 계산하지 않는다.
+아래는 Windows에서 사용할 실행 계약이다. 현재 Wrapper와 npm의 개발·타입·린트·빌드·미리보기 명령은 존재하며 B1~B4에서 실행했다. B4의 `npm test`는 Node 기반 응답·취소·프록시 검사를 실행한다. D1에서 JUnit·Boot Test·MockMvc를 도입했다. D2에서 db-it/Failsafe 통합 검사를 도입했다. React DOM 단위 검사는 D3, 실제 브라우저 검사는 D4에서 도입했다. 기본 Java 검사나 React 모의 API 검사를 실제 DB·브라우저 연동 검사로 계산하지 않는다.
 
 | 실행 위치 | 검사 | 사용 시점 |
 | --- | --- | --- |
 | `backend/` | `.\mvnw.cmd verify` | Java 컴파일·단위/웹 검사·도입된 코드 규칙/ArchUnit·패키징 |
-| `backend/` | `.\mvnw.cmd test` | 현재 DB 없는 순수·MockMvc·임시 HTTP33개. 순수 검사만 실행하려면 -Dtest로 선택 |
+| `backend/` | `.\mvnw.cmd test` | 현재 DB 없는 순수·MockMvc·임시 HTTP·설정·ArchUnit 포함117개. 순수 검사만 실행하려면 -Dtest로 선택 |
 | `backend/` | `.\mvnw.cmd -Pdb-it verify` | Failsafe의 DB 통합 검사. PostgreSQL·Flyway·트랜잭션·작업 처리 변경 |
 | `backend/` | `.\verify-api.ps1` | 빌드된 JAR의 health 200·UP / 503·DOWN / 복구·status 단일 필드·기존 경로 제거·관리 경로 비노출, HTTP 27건 |
 | `frontend/` | `npm ci` | lockfile 기준 설치 재현. 설치만으로 검증 완료가 되지 않음 |
 | `frontend/` | `npm run lint`, `npm run typecheck`, `npm run build` | React·TypeScript 코드 규칙·타입·정적 빌드 |
 | `frontend/` | `npm run test:unit` | Vitest·React Testing Library를 대기 없이 1회 실행. 입력·상태·오류 처리 |
-| `frontend/` | `npm run test:e2e` | Playwright Test·TypeScript. 실제 React·Java·필요한 테스트 DB·브라우저 준비 |
+| `frontend/` | `npm run test:e2e` | Playwright Test·TypeScript. 현재 실제 React·Java·Chromium, DB 미사용. 최신 JAR·dist를 먼저 빌드 |
 | 해당 검사 위치 | 계약 검사 | Java 모듈·제공자/서비스, React와 API의 입출력·실패 계약 |
 | 실험 문서의 위치 | 부하·장애 시나리오 | P13~P14, 성능·복구 관련 변경 |
 
