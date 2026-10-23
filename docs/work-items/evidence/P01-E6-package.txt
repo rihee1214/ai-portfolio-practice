@@ -1,0 +1,1 @@
+Packaged application contains no ArchUnit or architecture fixtures

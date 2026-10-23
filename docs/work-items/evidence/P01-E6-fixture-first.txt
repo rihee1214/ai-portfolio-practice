@@ -1,0 +1,270 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\e6-build\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\e6-build\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 7 source files with javac [debug parameters release 21] to ..\.local-tools\e6-build\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\e6-build\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 24 source files with javac [debug parameters release 21] to ..\.local-tools\e6-build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.architecture.ModuleArchitectureTest
+00:35:16.031 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 21.0.12.1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.731 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Running com.example.marketplace.architecture.ModuleRulesTest
+C:\Users\rihee\AppData\Local\Temp\junit-11933177645819600121\catalog.web.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.web; public class Internal {  }
+                                      ^
+C:\Users\rihee\AppData\Local\Temp\junit-11933177645819600121\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.web.Internal value; }
+                                            ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-14549827057859071707\catalog.application.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.application; public class Internal {  }
+                                              ^
+C:\Users\rihee\AppData\Local\Temp\junit-14549827057859071707\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.application.Internal value; }
+                                            ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-4379347231811771861\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.domain.Internal value; }
+                                            ^
+C:\Users\rihee\AppData\Local\Temp\junit-4379347231811771861\catalog.domain.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.domain; public class Internal {  }
+                                         ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-15301944410704485118\catalog.infrastructure.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.infrastructure; public class Internal {  }
+                                                 ^
+C:\Users\rihee\AppData\Local\Temp\junit-15301944410704485118\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.infrastructure.Internal value; }
+                                            ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-16192499914028707525\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.internal.Internal value; }
+                                            ^
+C:\Users\rihee\AppData\Local\Temp\junit-16192499914028707525\catalog.internal.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.internal; public class Internal {  }
+                                           ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-1652209049772375394\catalog.domain.Internal.java:1: error: class Internal is public, should be declared in a file named Internal.java
+package e6fixture.catalog.domain; public class Internal {  }
+                                         ^
+C:\Users\rihee\AppData\Local\Temp\junit-1652209049772375394\catalog.api.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.api; public class Product { e6fixture.catalog.domain.Internal value; }
+                                      ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-12414273064750283288\catalog.api.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.api; public class Product {  }
+                                      ^
+C:\Users\rihee\AppData\Local\Temp\junit-12414273064750283288\platform.web.Filter.java:1: error: class Filter is public, should be declared in a file named Filter.java
+package e6fixture.platform.web; public class Filter { e6fixture.catalog.api.Product value; }
+                                       ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-239246241205438566\order.application.Service.java:1: error: class Service is public, should be declared in a file named Service.java
+package e6fixture.order.application; public class Service { e6fixture.catalog.api.Product product; e6fixture.order.domain.Order order; }
+                                            ^
+C:\Users\rihee\AppData\Local\Temp\junit-239246241205438566\order.domain.Order.java:1: error: class Order is public, should be declared in a file named Order.java
+package e6fixture.order.domain; public class Order { String id; }
+                                       ^
+C:\Users\rihee\AppData\Local\Temp\junit-239246241205438566\catalog.api.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.api; public class Product { String name; }
+                                      ^
+3 errors
+C:\Users\rihee\AppData\Local\Temp\junit-5965375151482381329\catalog.api.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.api; public class Product { e6fixture.order.api.Order value; }
+                                      ^
+C:\Users\rihee\AppData\Local\Temp\junit-5965375151482381329\order.api.Order.java:1: error: class Order is public, should be declared in a file named Order.java
+package e6fixture.order.api; public class Order { e6fixture.catalog.api.Product value; }
+                                    ^
+2 errors
+C:\Users\rihee\AppData\Local\Temp\junit-46247349795822952\catalog.api.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.api; public class Product { java.sql.Connection connection; }
+                                      ^
+1 error
+C:\Users\rihee\AppData\Local\Temp\junit-7439798277955528619\catalog.domain.Product.java:1: error: class Product is public, should be declared in a file named Product.java
+package e6fixture.catalog.domain; public class Product { java.sql.Connection connection; }
+                                         ^
+1 error
+[ERROR] Tests run: 11, Failures: 11, Errors: 0, Skipped: 0, Time elapsed: 6.735 s <<< FAILURE! -- in com.example.marketplace.architecture.ModuleRulesTest
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(String)[1] -- Time elapsed: 0.844 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(ModuleRulesTest.java:54)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(String)[2] -- Time elapsed: 0.557 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(ModuleRulesTest.java:54)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(String)[3] -- Time elapsed: 0.650 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(ModuleRulesTest.java:54)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(String)[4] -- Time elapsed: 0.622 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(ModuleRulesTest.java:54)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(String)[5] -- Time elapsed: 0.641 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.otherModuleInternalsAreRejected(ModuleRulesTest.java:54)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.publicApiCannotExposeOwnInternalType -- Time elapsed: 0.632 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.publicApiCannotExposeOwnInternalType(ModuleRulesTest.java:66)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.platformCannotDependOnBusinessEvenThroughApi -- Time elapsed: 0.553 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.platformCannotDependOnBusinessEvenThroughApi(ModuleRulesTest.java:60)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.ownInternalsAndOtherModuleApiAreAllowed -- Time elapsed: 0.573 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.ownInternalsAndOtherModuleApiAreAllowed(ModuleRulesTest.java:46)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.cyclesThroughPublicApisAreRejected -- Time elapsed: 0.527 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.cyclesThroughPublicApisAreRejected(ModuleRulesTest.java:78)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain(String)[1] -- Time elapsed: 0.534 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain(ModuleRulesTest.java:73)
+
+[ERROR] com.example.marketplace.architecture.ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain(String)[2] -- Time elapsed: 0.540 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <1>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.architecture.ModuleRulesTest.compile(ModuleRulesTest.java:36)
+    at com.example.marketplace.architecture.ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain(ModuleRulesTest.java:73)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   ModuleRulesTest.cyclesThroughPublicApisAreRejected:78->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain:73->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.jdbcTypesAreRejectedInContractsAndDomain:73->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.otherModuleInternalsAreRejected:54->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.otherModuleInternalsAreRejected:54->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.otherModuleInternalsAreRejected:54->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.otherModuleInternalsAreRejected:54->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.otherModuleInternalsAreRejected:54->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.ownInternalsAndOtherModuleApiAreAllowed:46->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.platformCannotDependOnBusinessEvenThroughApi:60->compile:36 expected: <0> but was: <1>
+[ERROR]   ModuleRulesTest.publicApiCannotExposeOwnInternalType:66->compile:36 expected: <0> but was: <1>
+[INFO]
+[ERROR] Tests run: 12, Failures: 11, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.242 s
+[INFO] Finished at: 2026-10-24T00:35:23+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project marketplace-api: There are test failures.
+[ERROR]
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\e6-build\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
