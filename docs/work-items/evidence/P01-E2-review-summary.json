@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-10-23T23:40:29.2771723+09:00",
+  "commit": "35e0fd47065a4abfd362b7c38b873b25b22614c3",
+  "command": "mvnw.cmd -o -B -ntp -Dmaven.repo.local=../.local-tools/m2/repository -Dmarketplace.build.directory=<root>/.local-tools/e2-review-build verify",
+  "buildSuccess": true,
+  "suites": [
+    {
+      "name": "com.example.marketplace.api.ApiErrorHttpTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.api.ErrorHttpTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.api.HealthMvcTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.api.RequestIdFilterTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.api.RequestIdHttpTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.api.UnhealthyMvcTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "hashes": {
+    "dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ],
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 3 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 3 hours (healthy)"
+  ],
+  "dbIntegrationProfileRun": false,
+  "userExerciseVerified": false
+}
