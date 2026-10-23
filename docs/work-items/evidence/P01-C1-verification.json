@@ -1,0 +1,96 @@
+{
+  "table": "c1_probe_38c68ac683d64731acc4aca2238280ed",
+  "records": [
+    {
+      "name": "db-dev identity and privileges",
+      "passed": true,
+      "detail": "marketplace_dev|marketplace_dev|180006|f|f|f"
+    },
+    {
+      "name": "db-dev rejects wrong password",
+      "passed": true,
+      "detail": "TCP authentication rejected"
+    },
+    {
+      "name": "db-dev rejects other environment role",
+      "passed": true,
+      "detail": "Other environment role rejected"
+    },
+    {
+      "name": "db-test identity and privileges",
+      "passed": true,
+      "detail": "marketplace_test|marketplace_test|180006|f|f|f"
+    },
+    {
+      "name": "db-test rejects wrong password",
+      "passed": true,
+      "detail": "TCP authentication rejected"
+    },
+    {
+      "name": "db-test rejects other environment role",
+      "passed": true,
+      "detail": "Other environment role rejected"
+    },
+    {
+      "name": "db-test survives db-dev stop",
+      "passed": true,
+      "detail": "db-test"
+    },
+    {
+      "name": "db-dev stop/start persistence",
+      "passed": true,
+      "detail": "db-dev"
+    },
+    {
+      "name": "db-dev survives db-test stop",
+      "passed": true,
+      "detail": "db-dev"
+    },
+    {
+      "name": "db-test stop/start persistence",
+      "passed": true,
+      "detail": "db-test"
+    },
+    {
+      "name": "db-dev restart persistence",
+      "passed": true,
+      "detail": "db-dev"
+    },
+    {
+      "name": "db-test restart persistence",
+      "passed": true,
+      "detail": "db-test"
+    },
+    {
+      "name": "db-dev recreated container",
+      "passed": true,
+      "detail": "Container ID changed"
+    },
+    {
+      "name": "db-dev retained volume data",
+      "passed": true,
+      "detail": "db-dev"
+    },
+    {
+      "name": "db-test recreated container",
+      "passed": true,
+      "detail": "Container ID changed"
+    },
+    {
+      "name": "db-test retained volume data",
+      "passed": true,
+      "detail": "db-test"
+    },
+    {
+      "name": "host port 15432 PostgreSQL protocol",
+      "passed": true,
+      "detail": "N"
+    },
+    {
+      "name": "host port 15433 PostgreSQL protocol",
+      "passed": true,
+      "detail": "N"
+    }
+  ],
+  "note": "Host TCP PostgreSQL handshake only; authenticated SQL uses container TCP. JDBC integration is P01-C2."
+}

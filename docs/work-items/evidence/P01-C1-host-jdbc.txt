@@ -1,0 +1,4 @@
+DEV host JDBC authenticated identity: marketplace_dev PASS
+DEV host JDBC wrong password rejected: SQLSTATE 28P01 PASS
+TEST host JDBC authenticated identity: marketplace_test PASS
+TEST host JDBC wrong password rejected: SQLSTATE 28P01 PASS

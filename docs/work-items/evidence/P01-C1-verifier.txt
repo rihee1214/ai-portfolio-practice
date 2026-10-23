@@ -1,0 +1,72 @@
+$ErrorActionPreference='Stop'
+$records=[Collections.Generic.List[object]]::new()
+function Dc([string[]]$Arguments) {
+    $output = & docker compose @Arguments 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "Compose failed: $($Arguments -join ' ') : $output" }
+    return ($output -join "`n")
+}
+function Sql($service,$sql) {
+    $output = $sql | docker compose exec -T $service sh -c 'PGPASSWORD="$APP_PASSWORD" psql -h 127.0.0.1 -U "$APP_USER" -d "$APP_DB" -X -qAt -v ON_ERROR_STOP=1' 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "SQL failed on $service : $output" }
+    return ($output -join "`n").Trim()
+}
+function Assert($name,$condition,$detail) {
+    $records.Add([pscustomobject]@{name=$name;passed=[bool]$condition;detail=$detail})
+    if (!$condition) { throw "Failed: $name : $detail" }
+}
+$table='c1_probe_'+[Guid]::NewGuid().ToString('N')
+$services=@('db-dev','db-test')
+$before=@{}
+try {
+    foreach($service in $services) {
+        $expected=if($service -eq 'db-dev'){'marketplace_dev'}else{'marketplace_test'}
+        $identity=Sql $service 'SELECT current_database(), current_user, current_setting(''server_version_num''), rolsuper, rolcreatedb, rolcreaterole FROM pg_roles WHERE rolname=current_user;'
+        Assert "$service identity and privileges" ($identity -eq "$expected|$expected|180006|f|f|f") $identity
+        $bad = 'SELECT 1;' | docker compose exec -T $service sh -c 'PGPASSWORD=invalid-c1-test psql -h 127.0.0.1 -U "$APP_USER" -d "$APP_DB" -X -qAt' 2>&1
+        Assert "$service rejects wrong password" ($LASTEXITCODE -ne 0 -and ($bad -join '') -match 'password authentication failed') 'TCP authentication rejected'
+        $other=if($service -eq 'db-dev'){'marketplace_test'}else{'marketplace_dev'}
+        $cross = 'SELECT 1;' | docker compose exec -T $service sh -c ('PGPASSWORD="$APP_PASSWORD" psql -h 127.0.0.1 -U '+$other+' -d "$APP_DB" -X -qAt') 2>&1
+        Assert "$service rejects other environment role" ($LASTEXITCODE -ne 0 -and ($cross -join '') -match 'password authentication failed') 'Other environment role rejected by authentication'
+        Sql $service "CREATE TABLE $table (id integer primary key, marker text NOT NULL); INSERT INTO $table VALUES (1, '$service');" | Out-Null
+        $before[$service]=Dc @('ps','-q',$service)
+    }
+    foreach($service in $services) {
+        $other=if($service -eq 'db-dev'){'db-test'}else{'db-dev'}
+        Dc @('stop',$service) | Out-Null
+        $marker=Sql $other "SELECT marker FROM $table WHERE id=1;"
+        Assert "$other survives $service stop" ($marker -eq $other) $marker
+        Dc @('up','-d','--wait',$service) | Out-Null
+        $marker=Sql $service "SELECT marker FROM $table WHERE id=1;"
+        Assert "$service stop/start persistence" ($marker -eq $service) $marker
+    }
+    Dc @('restart','db-dev','db-test') | Out-Null
+    Dc @('up','-d','--wait') | Out-Null
+    foreach($service in $services) {
+        $marker=Sql $service "SELECT marker FROM $table WHERE id=1;"
+        Assert "$service restart persistence" ($marker -eq $service) $marker
+    }
+    Dc @('up','-d','--force-recreate','--wait','db-dev','db-test') | Out-Null
+    foreach($service in $services) {
+        $after=Dc @('ps','-q',$service)
+        $marker=Sql $service "SELECT marker FROM $table WHERE id=1;"
+        Assert "$service recreated container" ($before[$service] -ne $after) 'Container ID changed'
+        Assert "$service retained volume data" ($marker -eq $service) $marker
+    }
+    foreach($port in @(15432,15433)) {
+        $tcp=[Net.Sockets.TcpClient]::new()
+        try {
+            $tcp.Connect('127.0.0.1',$port)
+            $stream=$tcp.GetStream(); $stream.ReadTimeout=3000
+            # PostgreSQL SSLRequest. N is expected for this local non-TLS image.
+            $stream.Write([byte[]]@(0,0,0,8,4,210,22,47),0,8)
+            $reply=$stream.ReadByte()
+            Assert "host port $port PostgreSQL protocol" ($reply -eq 78 -or $reply -eq 83) ([char]$reply).ToString()
+        } finally { $tcp.Dispose() }
+    }
+} finally {
+    foreach($service in $services) { try { Sql $service "DROP TABLE IF EXISTS $table;" | Out-Null } catch { Write-Warning 'Probe cleanup incomplete; see table name in evidence' } }
+    [pscustomobject]@{table=$table;records=$records;note='Host TCP PostgreSQL handshake only; authenticated SQL uses container TCP. JDBC integration is P01-C2.'} | ConvertTo-Json -Depth 5 | Set-Content docs/work-items/evidence/P01-C1-verification.json
+}
+$records | Format-Table -AutoSize
+
+

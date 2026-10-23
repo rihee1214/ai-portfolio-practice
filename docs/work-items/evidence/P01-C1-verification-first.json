@@ -1,0 +1,11 @@
+{
+  "table": "c1_probe_15d4cf625321482abaf56d17fbac3768",
+  "records": [
+    {
+      "name": "db-dev identity and privileges",
+      "passed": false,
+      "detail": "marketplace_dev|marketplace_dev|18.6 (Debian 18.6-1.pgdg13+2)|f|f|f"
+    }
+  ],
+  "note": "Host TCP PostgreSQL handshake only; authenticated SQL uses container TCP. JDBC integration is P01-C2."
+}

@@ -1,5 +1,7 @@
 # 단계별 구현·검증 계획
 
+P01-C1에서 Docker 접근·개발/테스트 DB 구성·18건 기반 검사와 호스트 인증 4건을 완료했다. 지정 검토 의견도 반영했으며 최종 기록은 [P01-C1](work-items/P01-C1.md)을 따른다. 아래 미착수 표현은 이전 단계 이력이며 P01-C2는 진행하지 않는다.
+
 설계 v4 Java·Spring Boot + React / 2026-10-23 / P01-B1 Actuator 교체·B2·B3 검증 완료, B4 R4 수정·회귀 검증 완료, B5 완료
 
 [요구사항](requirements.md)과 [전체 기술 설계](shop-design.md)의 현재 기준은 v4다. F01~F18과 AC01~AC20은 유지하고 React 학습 목표 G10을 추가했다. P01~P14의 기능 순서는 유지하며 Java·Spring Boot API와 React 화면에 맞춰 결과물·검증 도구를 변경했다. P01-A 문서 개정 완료를 현재 구성의 환경 검증 완료로 해석하지 않는다.
@@ -20,7 +22,7 @@
 
 | 단계 | 결과 | 기능·목표 연결 | 선행 | 상태 |
 | --- | --- | --- | --- | --- |
-| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1~E 미착수 |
+| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1 완료, C2~E 미착수 |
 | P02 | 회원과 권한·배송지 | F01·F07 | P01 | 미착수 |
 | P03 | 판매자 신청·승인·매대 | F03·F16 | P02 | 미착수 |
 | P04 | 카테고리·상품·옵션·이미지·재고 | F04·F05·F16 | P03 | 미착수 |
@@ -58,7 +60,7 @@ Java 21·Spring Boot 4.1·Maven 3.9·PostgreSQL 18, React 19·TypeScript·Vite·
 | P01-B3 (구현·최신 UI 재검증 완료) | React Router·공통 레이아웃·구매자/판매자/운영 화면 틀·일반 CSS | 2026-10-23 내장 브라우저 연결 복구. 16개 직접 URL·새로고침, 없는 경로 4개, 3가지 화면 폭·키보드·입력 회귀 통과. [결과·증거](work-items/P01-B3.md). 실제 기능·권한 미구현 |
 | P01-B4 (구현·R4 재검증 완료) | 정확한 health·업무 API 프록시, 공통 fetch, 홈 연결 확인·취소·재시도. [기록](work-items/P01-B4.md) | 최신 Node 68개 통과. 부분 응답 중단·무응답·강제 종료·재시도·취소를 개발·preview HTTP·UI로 확인. 이전 실패 증거 보존. 전체 timeout 보장 없음. [검토 기록](work-items/P01-B4-review.md). B5 완료 |
 | P01-B5 (완료) | Java/React 설정 예제·Checkstyle·ESLint·실행 안내·Git 초기화와 로컬 이력 | Java clean verify·정적 검사 실패 탐지, npm ci·타입·린트·빌드·68개 테스트, local 프로필200 UP 확인. Git 초기화·설정 제외 확인, 지정 검토 반영·로컬 이력 완료. [기록](work-items/P01-B5.md). 실제 Compose·DB 설정은 C1에서 추가 |
-| P01-C1 | Docker Compose PostgreSQL·버전 명시·데이터 볼륨·개발/테스트 DB와 별도 계정·연결 설정·비밀값 없는 설정 예제 | 엔진 접근·실제 이미지 확인, 두 DB 식별·접속·독립 실행/중지·재시작·볼륨 유지 재생성 후 데이터 보존. PC 직접 설치 없음 |
+| P01-C1 (완료) | Docker Compose PostgreSQL·버전 명시·데이터 볼륨·개발/테스트 DB와 별도 계정·연결 설정·비밀값 없는 설정 예제 | 엔진 접근·실제 이미지 확인, 두 DB 식별·접속·독립 실행/중지·재시작·볼륨 유지 재생성 후 데이터 보존. PC 직접 설치 없음 |
 | P01-C2 | Spring JDBC·Flyway·PostgreSQL 모듈, 초기 SQL 변경 경로 | 새 DB 이행·재실행·이력 검사. 자동 schema.sql 등 중복 초기화 없음 |
 | P01-C3 | 파라미터 조회·결과 매핑·트랜잭션·테스트 DB 보호 | 테스트 전용 fixture로 제약·중간 실패 롤백 확인. 운영/개발 DB 파괴적 초기화 거부 |
 | P01-D1 | JUnit Jupiter·Spring Boot Test·MockMvc 실행 구분 | API/오류 응답 계약과 검증 결과·실행 건수 확인. DB 미연결 검사는 분리 |

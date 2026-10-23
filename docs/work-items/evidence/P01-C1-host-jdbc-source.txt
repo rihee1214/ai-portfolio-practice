@@ -1,0 +1,29 @@
+import java.nio.file.*;
+import java.sql.*;
+import java.util.*;
+
+class CheckConnection {
+    public static void main(String[] args) throws Exception {
+        Properties local = new Properties();
+        try (var reader = Files.newBufferedReader(Path.of(".env"))) { local.load(reader); }
+        for (String environment : List.of("DEV", "TEST")) {
+            String database = "marketplace_" + environment.toLowerCase(Locale.ROOT);
+            String url = "jdbc:postgresql://127.0.0.1:" + local.getProperty(environment + "_DB_PORT")
+                    + "/" + database + "?connectTimeout=5&socketTimeout=5";
+            try (Connection connection = DriverManager.getConnection(url, database, local.getProperty(environment + "_DB_PASSWORD"));
+                 Statement statement = connection.createStatement();
+                 ResultSet result = statement.executeQuery("SELECT current_database(), current_user")) {
+                if (!result.next() || !database.equals(result.getString(1)) || !database.equals(result.getString(2))) {
+                    throw new IllegalStateException("Unexpected DB identity");
+                }
+                System.out.println(environment + " host JDBC authenticated identity: " + database + " PASS");
+            }
+            try (Connection unexpected = DriverManager.getConnection(url, database, "invalid-c1-password")) {
+                throw new IllegalStateException("Wrong password accepted");
+            } catch (SQLException expected) {
+                if (!"28P01".equals(expected.getSQLState())) { throw expected; }
+                System.out.println(environment + " host JDBC wrong password rejected: SQLSTATE 28P01 PASS");
+            }
+        }
+    }
+}

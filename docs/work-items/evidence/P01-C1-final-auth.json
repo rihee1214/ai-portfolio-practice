@@ -1,0 +1,14 @@
+[
+  {
+    "service": "db-dev",
+    "identity": "marketplace_dev|marketplace_dev",
+    "passed": true,
+    "transport": "container TCP after healthcheck change"
+  },
+  {
+    "service": "db-test",
+    "identity": "marketplace_test|marketplace_test",
+    "passed": true,
+    "transport": "container TCP after healthcheck change"
+  }
+]

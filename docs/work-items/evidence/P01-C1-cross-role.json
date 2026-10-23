@@ -1,0 +1,16 @@
+[
+  {
+    "service": "db-dev",
+    "otherRole": "marketplace_test",
+    "authenticationRejected": true,
+    "otherRoleCount": "0",
+    "errorType": "password authentication failed"
+  },
+  {
+    "service": "db-test",
+    "otherRole": "marketplace_dev",
+    "authenticationRejected": true,
+    "otherRoleCount": "0",
+    "errorType": "password authentication failed"
+  }
+]

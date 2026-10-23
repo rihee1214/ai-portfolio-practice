@@ -1,0 +1,2 @@
+moa-market-local_dev-data local moa-market-local
+moa-market-local_test-data local moa-market-local
