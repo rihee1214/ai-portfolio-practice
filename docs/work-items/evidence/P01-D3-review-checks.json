@@ -1,0 +1,15 @@
+{
+  "reviewedCommit": "da54ed8641d994e163e1991eebf344945bc50a40",
+  "date": "2026-10-23",
+  "timezone": "Asia/Seoul",
+  "checks": [
+    { "command": "./frontend/npm.ps1 run test:unit", "exitCode": 0, "filesPassed": 2, "testsPassed": 14 },
+    { "command": "./frontend/npm.ps1 run typecheck", "exitCode": 0 },
+    { "command": "./frontend/npm.ps1 run lint", "exitCode": 0 },
+    { "command": "./frontend/npm.ps1 ls vitest jsdom @testing-library/react @testing-library/dom @testing-library/user-event @testing-library/jest-dom vite react react-dom --depth=0", "exitCode": 0 }
+  ],
+  "productionSourceDiff": "git diff 9630fae da54ed8 -- frontend/src returned no changes",
+  "notRerun": ["Node 68-test suite", "build", "mutation experiment", "browser", "DB hash inspection"],
+  "serverOrDatabaseActions": "none",
+  "note": "Summary of independently executed commands; not a raw Vitest reporter artifact."
+}
