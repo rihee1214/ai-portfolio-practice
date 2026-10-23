@@ -79,6 +79,8 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .empty-panel h2 { font-size: 21px; }
 .empty-panel p { font-size: 14px; color: #59694f; }
 .empty-panel .empty-caption { font-size: 12px; }
+.api-error-notice { border: 1px solid #ba8f76; border-radius: 8px; padding: 16px; background: #fff5ed; color: #623a29; margin: 16px 0; }
+.request-id { overflow-wrap: anywhere; font-size: 13px; }
 .not-found { padding: 70px 0; max-width: 750px; }
 .not-found h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -2px; }
 .unknown-path { overflow-wrap: anywhere; font-size: 13px; color: #5d695f; }

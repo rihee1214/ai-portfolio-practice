@@ -1,0 +1,280 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run ApiErrorPreview
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/ApiErrorPreview.test.tsx (11 tests | 1 failed) 1030ms
+   × 재요청·취소·화면 해제 후 늦은 응답을 반영하지 않는다 108ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > 재요청·취소·화면 해제 후 늦은 응답을 반영하지 않는다
+TestingLibraryElementError: Unable to find an accessible element with the role "alert"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  heading:
+
+  Name "오류 안내 확인":
+  <h1 />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="page-description"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  <p
+    aria-live="polite"
+    role="status"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "다시 시도":
+  <button
+    type="button"
+  />
+
+  Name "요청 취소":
+  <button
+    disabled=""
+    type="button"
+  />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="workspace-page"
+      >
+        <h1>
+          오류 안내 확인
+        </h1>
+        <p
+          class="page-description"
+        >
+          개발용 확인 화면입니다. 없는 API를 요청하여 오류 안내와 요청 ID를 확인합니다. 구매·회원 기능을 실행하지 않습니다.
+        </p>
+        <p
+          aria-live="polite"
+          role="status"
+        >
+          요청을 취소했습니다.
+        </p>
+        <div
+          class="health-actions"
+        >
+          <button
+            type="button"
+          >
+            다시 시도
+          </button>
+          <button
+            disabled=""
+            type="button"
+          >
+            요청 취소
+          </button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:82:17
+     80|   await act(async () => { pending[1].resolve(reply(error(nextId))) })
+     81|   await act(async () => { pending[0].resolve(reply(error())) })
+     82|   expect(screen.getByRole('alert')).toHaveTextContent(nextId)
+       |                 ^
+     83|   expect(screen.getByRole('alert')).not.toHaveTextContent(requestId)
+     84|   await user.click(screen.getByRole('button', { name: '다시 시도' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  23:55:42
+   Duration  2.00s (tests 56%, environment 31%, setup 6%, import 5%, transform 2%)

@@ -1,0 +1,1580 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run ApiErrorPreview
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/ApiErrorPreview.test.tsx (11 tests | 11 failed) 254ms
+   × 개발 확인 화면에서 수동 요청 후 공통 오류와 요청 ID를 표시한다 109ms
+   × unknown code은 원문이나 ID 없이 일반 안내로 표시한다 17ms
+   × missing message은 원문이나 ID 없이 일반 안내로 표시한다 17ms
+   × wrong status은 원문이나 ID 없이 일반 안내로 표시한다 15ms
+   × array은 원문이나 ID 없이 일반 안내로 표시한다 15ms
+   × 서버 임의 메시지와 잘못된 ID는 화면에 노출하지 않는다 13ms
+   × HTML 실패 후 재시도는 새 ID만 표시한다 12ms
+   × broken JSON 실패 후 재시도는 새 ID만 표시한다 17ms
+   × network 실패 후 재시도는 새 ID만 표시한다 14ms
+   × 재요청·취소·화면 해제 후 늦은 응답을 반영하지 않는다 14ms
+   × 성공 응답은 오류나 이전 ID를 표시하지 않는다 11ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > 개발 확인 화면에서 수동 요청 후 공통 오류와 요청 ID를 표시한다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:24:40
+     22|   render(<App />)
+     23|   expect(fetcher).not.toHaveBeenCalled()
+     24|   await userEvent.setup().click(screen.getByRole('button', { name: '오류…
+       |                                        ^
+     25|   expect(await screen.findByRole('alert')).toHaveTextContent('요청한 대상을 …
+     26|   expect(screen.getByRole('alert')).toHaveTextContent(requestId)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > unknown code은 원문이나 ID 없이 일반 안내로 표시한다
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > missing message은 원문이나 ID 없이 일반 안내로 표시한다
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > wrong status은 원문이나 ID 없이 일반 안내로 표시한다
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > array은 원문이나 ID 없이 일반 안내로 표시한다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:38:40
+     36|   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply(body)))
+     37|   render(<App />)
+     38|   await userEvent.setup().click(screen.getByRole('button', { name: '오류…
+       |                                        ^
+     39|   expect(await screen.findByRole('alert')).toHaveTextContent('요청을 처리하지…
+     40|   expect(screen.getByRole('alert')).not.toHaveTextContent(requestId)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > 서버 임의 메시지와 잘못된 ID는 화면에 노출하지 않는다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:46:40
+     44|   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ ...error('p…
+     45|   render(<App />)
+     46|   await userEvent.setup().click(screen.getByRole('button', { name: '오류…
+       |                                        ^
+     47|   const alert = await screen.findByRole('alert')
+     48|   expect(alert).toHaveTextContent('요청한 대상을 찾을 수 없습니다.')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > HTML 실패 후 재시도는 새 ID만 표시한다
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > broken JSON 실패 후 재시도는 새 ID만 표시한다
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > network 실패 후 재시도는 새 ID만 표시한다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:63:27
+     61|   render(<App />)
+     62|   const user = userEvent.setup()
+     63|   await user.click(screen.getByRole('button', { name: '오류 응답 확인' }))
+       |                           ^
+     64|   expect(await screen.findByRole('alert')).not.toHaveTextContent('priv…
+     65|   await user.click(screen.getByRole('button', { name: '다시 시도' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > 재요청·취소·화면 해제 후 늦은 응답을 반영하지 않는다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:76:27
+     74|   const view = render(<App />)
+     75|   const user = userEvent.setup()
+     76|   await user.click(screen.getByRole('button', { name: '오류 응답 확인' }))
+       |                           ^
+     77|   expect(screen.getByRole('status')).toHaveTextContent('응답을 기다리고 있습니다.…
+     78|   await user.click(screen.getByRole('button', { name: '다시 확인' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/unit/ApiErrorPreview.test.tsx > 성공 응답은 오류나 이전 ID를 표시하지 않는다
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "오류 응답 확인"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "본문으로 건너뛰기":
+  <a
+    class="skip-link"
+    href="#main-content"
+  />
+
+  Name "모아마켓 홈":
+  <a
+    aria-label="모아마켓 홈"
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "둘러보기":
+  <a
+    class=""
+    data-discover="true"
+    href="/"
+  />
+
+  Name "구매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/account"
+  />
+
+  Name "판매자":
+  <a
+    class=""
+    data-discover="true"
+    href="/seller"
+  />
+
+  Name "운영자":
+  <a
+    class=""
+    data-discover="true"
+    href="/admin"
+  />
+
+  Name "홈으로 돌아가기":
+  <a
+    class="solid-link"
+    data-discover="true"
+    href="/"
+  />
+
+  Name "모아마켓.":
+  <a
+    class="brand"
+    data-discover="true"
+    href="/"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="site-header"
+  />
+
+  --------------------------------------------------
+  navigation:
+
+  Name "주요 화면":
+  <nav
+    aria-label="주요 화면"
+    class="primary-nav"
+  />
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  <main
+    id="main-content"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="eyebrow"
+  />
+
+  Name "":
+  <p />
+
+  Name "":
+  <p
+    class="unknown-path"
+  />
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  heading:
+
+  Name "아직 없는 길이에요.":
+  <h1 />
+
+  --------------------------------------------------
+  code:
+
+  Name "":
+  <code />
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  <footer />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <span
+        class="badge header-badge"
+      >
+        화면 미리보기
+      </span>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="not-found"
+      >
+        <p
+          class="eyebrow"
+        >
+          404 · 화면을 찾을 수 없어요
+        </p>
+        <h1>
+          아직 없는 길이에요.
+        </h1>
+        <p>
+          주소를 확인하거나 홈에서 다시 시작해 주세요.
+        </p>
+        <p
+          class="unknown-path"
+        >
+          요청한 경로:
+          <code>
+            /dev/api-errors
+          </code>
+        </p>
+        <a
+          class="solid-link"
+          data-discover="true"
+          href="/"
+        >
+          홈으로 돌아가기
+        </a>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/ApiErrorPreview.test.tsx:101:27
+     99|   render(<App />)
+    100|   const user = userEvent.setup()
+    101|   await user.click(screen.getByRole('button', { name: '오류 응답 확인' }))
+       |                           ^
+    102|   expect(await screen.findByRole('alert')).toHaveTextContent(requestId)
+    103|   await user.click(screen.getByRole('button', { name: '다시 시도' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  11 failed (11)
+   Start at  23:51:31
+   Duration  1.32s (environment 53%, tests 22%, setup 10%, import 9%, transform 6%)
