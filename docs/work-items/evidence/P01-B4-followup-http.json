@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "pid": 59592,
+    "node": "v24.22.0",
+    "forceFetchPath": null,
+    "target": "http://127.0.0.1:14109",
+    "dev": "http://127.0.0.1:14110",
+    "preview": "http://127.0.0.1:14112"
+  },
+  "records": [
+    {
+      "base": "http://127.0.0.1:14110",
+      "mode": "no-headers",
+      "status": 502,
+      "body": "{\"error\":\"UPSTREAM_UNAVAILABLE\"}",
+      "headersMs": 10020,
+      "outcome": "end",
+      "contentType": "application/json",
+      "elapsedMs": 10020
+    },
+    {
+      "base": "http://127.0.0.1:14110",
+      "mode": "stall",
+      "status": 200,
+      "body": "{\"status\":",
+      "headersMs": 19,
+      "outcome": "watchdog-15000ms",
+      "contentType": "application/json",
+      "elapsedMs": 15008
+    },
+    {
+      "base": "http://127.0.0.1:14110",
+      "mode": "trickle",
+      "status": 200,
+      "body": "{\"status\":                                              \"UP\"}",
+      "headersMs": 19,
+      "outcome": "end",
+      "contentType": "application/json",
+      "elapsedMs": 12023
+    },
+    {
+      "base": "http://127.0.0.1:14110",
+      "mode": "reset",
+      "status": 200,
+      "body": "{\"status\":",
+      "headersMs": 19,
+      "outcome": "watchdog-15000ms",
+      "contentType": "application/json",
+      "elapsedMs": 15008
+    },
+    {
+      "base": "http://127.0.0.1:14112",
+      "mode": "no-headers",
+      "status": 502,
+      "body": "{\"error\":\"UPSTREAM_UNAVAILABLE\"}",
+      "headersMs": 10017,
+      "outcome": "end",
+      "contentType": "application/json",
+      "elapsedMs": 10017
+    },
+    {
+      "base": "http://127.0.0.1:14112",
+      "mode": "stall",
+      "status": 200,
+      "body": "{\"status\":",
+      "headersMs": 19,
+      "outcome": "watchdog-15000ms",
+      "contentType": "application/json",
+      "elapsedMs": 15008
+    },
+    {
+      "base": "http://127.0.0.1:14112",
+      "mode": "trickle",
+      "status": 200,
+      "body": "{\"status\":                                              \"UP\"}",
+      "headersMs": 19,
+      "outcome": "end",
+      "contentType": "application/json",
+      "elapsedMs": 12023
+    },
+    {
+      "base": "http://127.0.0.1:14112",
+      "mode": "reset",
+      "status": 200,
+      "body": "{\"status\":",
+      "headersMs": 19,
+      "outcome": "watchdog-15000ms",
+      "contentType": "application/json",
+      "elapsedMs": 15008
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "mode": "no-headers",
+      "path": "/actuator/health?mode=no-headers",
+      "startedAt": "2026-10-23T02:39:46.536Z",
+      "chunks": 0,
+      "closedMs": 10000,
+      "finished": false
+    },
+    {
+      "id": 2,
+      "mode": "trickle",
+      "path": "/actuator/health?mode=trickle",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 47,
+      "closedMs": 12006,
+      "finished": true
+    },
+    {
+      "id": 3,
+      "mode": "stall",
+      "path": "/actuator/health?mode=stall",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 1,
+      "closedMs": 10001,
+      "finished": false
+    },
+    {
+      "id": 4,
+      "mode": "no-headers",
+      "path": "/actuator/health?mode=no-headers",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 0,
+      "closedMs": 10000,
+      "finished": false
+    },
+    {
+      "id": 5,
+      "mode": "reset",
+      "path": "/actuator/health?mode=reset",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 1,
+      "closedMs": 311,
+      "finished": false
+    },
+    {
+      "id": 6,
+      "mode": "stall",
+      "path": "/actuator/health?mode=stall",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 1,
+      "closedMs": 10001,
+      "finished": false
+    },
+    {
+      "id": 7,
+      "mode": "trickle",
+      "path": "/actuator/health?mode=trickle",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 47,
+      "closedMs": 12005,
+      "finished": true
+    },
+    {
+      "id": 8,
+      "mode": "reset",
+      "path": "/actuator/health?mode=reset",
+      "startedAt": "2026-10-23T02:39:46.537Z",
+      "chunks": 1,
+      "closedMs": 311,
+      "finished": false
+    }
+  ]
+}

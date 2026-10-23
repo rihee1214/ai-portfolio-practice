@@ -1,0 +1,97 @@
+import { createServer, request } from 'node:http'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+import { createServer as createViteServer, preview } from '../../frontend/node_modules/vite/dist/node/index.js'
+import react from '../../frontend/node_modules/@vitejs/plugin-react/dist/index.js'
+import { apiProxy } from '../../frontend/vite/apiProxy.ts'
+
+const root = fileURLToPath(new URL('../../frontend', import.meta.url))
+const here = new URL('./', import.meta.url)
+await mkdir(here, { recursive: true })
+const events = []
+let nextId = 0
+const upstream = createServer(async (req, res) => {
+  const settings = JSON.parse(await readFile(new URL('mode.json', here), 'utf8'))
+  const mode = new URL(req.url, 'http://fixture').searchParams.get('mode') ?? settings.mode
+  const event = { id: ++nextId, mode, path: req.url, startedAt: new Date().toISOString(), chunks: 0 }
+  events.push(event)
+  const start = performance.now()
+  let timer, interval
+  res.on('close', () => {
+    clearTimeout(timer); clearInterval(interval)
+    event.closedMs = Math.round(performance.now() - start)
+    event.finished = res.writableFinished
+  })
+  if (mode === 'no-headers') return
+  if (mode === 'stall' || mode === 'trickle' || mode === 'reset') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+    res.write('{"status":'); event.chunks++
+    if (mode === 'trickle') {
+      interval = setInterval(() => { res.write(' '); event.chunks++ }, 250)
+      timer = setTimeout(() => res.end('"UP"}'), 12_000)
+    }
+    if (mode === 'reset') timer = setTimeout(() => res.destroy(), 300)
+    return
+  }
+  timer = setTimeout(() => {
+    if (res.destroyed) return
+    const status = mode === 'down' || mode === 'delayed-down' ? 503 : 200
+    const type = mode === 'html' ? 'text/html' : 'application/json'
+    res.writeHead(status, { 'Content-Type': type, 'Cache-Control': 'no-store' })
+    res.end(mode === 'html' ? '<h1>Not health</h1>' : mode === 'malformed' ? '{bad-json' : JSON.stringify({ status: status === 503 ? 'DOWN' : 'UP' }))
+  }, mode === 'delayed-down' ? 5000 : 0)
+})
+await writeFile(new URL('mode.json', here), JSON.stringify({ mode: 'up' }))
+await new Promise(resolve => upstream.listen(0, '127.0.0.1', resolve))
+const target = `http://127.0.0.1:${upstream.address().port}`
+const config = { root, configFile: false, plugins: [react(), apiProxy(target)], logLevel: 'silent' }
+const dev = await createViteServer({ ...config, server: { host: '127.0.0.1', port: 0 } })
+await dev.listen()
+const built = await preview({ ...config, preview: { host: '127.0.0.1', port: 0 } })
+const metadata = { pid: process.pid, node: process.version, forceFetchPath: process.env.FORCE_FETCH_PATH ?? null,
+  target, dev: `http://127.0.0.1:${dev.httpServer.address().port}`, preview: `http://127.0.0.1:${built.httpServer.address().port}` }
+await writeFile(new URL('servers.json', here), JSON.stringify(metadata, null, 2))
+console.log(JSON.stringify(metadata))
+
+// An independent 15 s watchdog records a failure rather than waiting indefinitely.
+function probe(base, mode) {
+  return new Promise(resolve => {
+    const start = performance.now()
+    const record = { base, mode, status: null, body: '', headersMs: null, outcome: null }
+    let settled = false
+    const done = outcome => {
+      if (settled) return
+      settled = true; clearTimeout(watchdog)
+      record.outcome = outcome; record.elapsedMs = Math.round(performance.now() - start)
+      resolve(record)
+    }
+    const req = request(`${base}/actuator/health?mode=${mode}`, { headers: { Accept: 'application/json' } }, res => {
+      record.status = res.statusCode; record.contentType = res.headers['content-type']; record.headersMs = Math.round(performance.now() - start)
+      res.setEncoding('utf8')
+      res.on('data', chunk => { record.body += chunk })
+      res.on('end', () => done('end'))
+      res.on('error', error => done(error.code ?? error.name))
+    })
+    const watchdog = setTimeout(() => { done('watchdog-15000ms'); req.destroy() }, 15_000)
+    req.on('error', error => done(error.code ?? error.name))
+    req.end()
+  })
+}
+if (process.argv.includes('--probe')) {
+  const records = await Promise.all([metadata.dev, metadata.preview].flatMap(base => ['no-headers', 'stall', 'trickle', 'reset'].map(mode => probe(base, mode))))
+  await writeFile(new URL('http-before.json', here), JSON.stringify({ metadata, records, events }, null, 2))
+  console.log(JSON.stringify(records))
+}
+console.log('READY: change mode.json for UI checks; create stop file to close only these servers.')
+const poll = setInterval(async () => {
+  await writeFile(new URL('events.json', here), JSON.stringify(events, null, 2))
+  try { await readFile(new URL('stop', here)) } catch { return }
+  clearInterval(poll)
+  await dev.close()
+  built.httpServer.closeAllConnections()
+  await new Promise(resolve => built.httpServer.close(resolve))
+  upstream.closeAllConnections()
+  await new Promise(resolve => upstream.close(resolve))
+  await writeFile(new URL('events.json', here), JSON.stringify(events, null, 2))
+  console.log('STOPPED: temporary servers closed.')
+}, 500)

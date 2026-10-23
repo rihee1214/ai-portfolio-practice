@@ -1,0 +1,225 @@
+[
+  {
+    "name": "initial",
+    "at": "2026-10-23T02:40:55.493Z",
+    "expected": "idle with cancellation disabled",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/"
+  },
+  {
+    "name": "UP",
+    "at": "2026-10-23T02:40:55.793Z",
+    "expected": "healthy",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버와 정상적으로 연결되었습니다."
+  },
+  {
+    "name": "down",
+    "at": "2026-10-23T02:41:09.212Z",
+    "expected": "서버가 비정상 상태를 보고했습니다. 잠시 후 다시 시도해 주세요.",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버가 비정상 상태를 보고했습니다. 잠시 후 다시 시도해 주세요.",
+    "cancelDisabled": true
+  },
+  {
+    "name": "malformed",
+    "at": "2026-10-23T02:41:09.527Z",
+    "expected": "서버 응답 형식을 확인할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버 응답 형식을 확인할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "cancelDisabled": true
+  },
+  {
+    "name": "html",
+    "at": "2026-10-23T02:41:09.847Z",
+    "expected": "서버 응답 형식을 확인할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버 응답 형식을 확인할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "cancelDisabled": true
+  },
+  {
+    "name": "no-headers-loading",
+    "at": "2026-10-23T02:41:10.167Z",
+    "expected": "loading with cancel enabled",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/"
+  },
+  {
+    "name": "no-headers-timeout",
+    "at": "2026-10-23T02:41:37.899Z",
+    "expected": "connection-error after proxy timeout",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.",
+    "note": "UI result observed after separate tool call; exact 10 s timing is in HTTP evidence."
+  },
+  {
+    "name": "timeout-retry-UP",
+    "at": "2026-10-23T02:41:38.239Z",
+    "expected": "healthy",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버와 정상적으로 연결되었습니다."
+  },
+  {
+    "name": "partial-body-stall",
+    "at": "2026-10-23T02:41:53.581Z",
+    "expected": "connection-error once 10 s idle timeout expires",
+    "pass": false,
+    "url": "http://127.0.0.1:14110/",
+    "elapsedMs": 15301,
+    "message": "서버 연결을 확인하고 있습니다.",
+    "cancelEnabled": true
+  },
+  {
+    "name": "stalled-request-cancel",
+    "at": "2026-10-23T02:42:07.608Z",
+    "expected": "cancelled with cancellation disabled",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "연결 확인을 취소했습니다."
+  },
+  {
+    "name": "partial-body-connection-reset",
+    "at": "2026-10-23T02:42:22.937Z",
+    "expected": "connection-error after upstream disconnect",
+    "pass": false,
+    "url": "http://127.0.0.1:14110/",
+    "elapsedMs": 15293,
+    "message": "서버 연결을 확인하고 있습니다."
+  },
+  {
+    "name": "restart-after-hanging-reset",
+    "at": "2026-10-23T02:42:23.248Z",
+    "expected": "healthy",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버와 정상적으로 연결되었습니다."
+  },
+  {
+    "name": "continuous-small-chunks",
+    "at": "2026-10-23T02:42:58.195Z",
+    "expected": "measure total time; current setting is idle timeout",
+    "pass": null,
+    "url": "http://127.0.0.1:14110/",
+    "completed": true,
+    "elapsedMs": 12091,
+    "message": "서버와 정상적으로 연결되었습니다.",
+    "interpretation": "12 s response succeeds; no 10 s total deadline"
+  },
+  {
+    "name": "delayed-DOWN-loading",
+    "at": "2026-10-23T02:42:58.496Z",
+    "expected": "loading",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/"
+  },
+  {
+    "name": "replace-delayed-DOWN",
+    "at": "2026-10-23T02:42:58.804Z",
+    "expected": "new UP wins",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "서버와 정상적으로 연결되었습니다."
+  },
+  {
+    "name": "after-old-response-deadline",
+    "at": "2026-10-23T02:43:19.463Z",
+    "expected": "new healthy state remains",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "elapsedMs": 20932,
+    "message": "서버와 정상적으로 연결되었습니다.",
+    "note": "Browser cancellation is honored here; cancellation-ignoring responses remain covered by Node controller tests."
+  },
+  {
+    "name": "cancel-before-headers",
+    "at": "2026-10-23T02:43:20.004Z",
+    "expected": "cancelled",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "연결 확인을 취소했습니다."
+  },
+  {
+    "name": "leave-during-request",
+    "at": "2026-10-23T02:43:29.558Z",
+    "expected": "buyer route with no health panel",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/account"
+  },
+  {
+    "name": "buyer-orders-reload",
+    "at": "2026-10-23T02:43:29.844Z",
+    "expected": "buyer orders shell",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/account/orders"
+  },
+  {
+    "name": "return-after-unmount",
+    "at": "2026-10-23T02:43:30.074Z",
+    "expected": "idle without stale request result",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/",
+    "message": "아직 서버 연결을 확인하지 않았습니다."
+  },
+  {
+    "name": "home-input-regression",
+    "at": "2026-10-23T02:43:30.096Z",
+    "expected": "preview updates",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/"
+  },
+  {
+    "name": "seller-products-reload",
+    "at": "2026-10-23T02:43:41.034Z",
+    "expected": "seller products shell",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/seller/products"
+  },
+  {
+    "name": "admin-users-reload",
+    "at": "2026-10-23T02:43:49.237Z",
+    "expected": "admin users shell",
+    "pass": true,
+    "url": "http://127.0.0.1:14110/admin/users"
+  },
+  {
+    "name": "preview-no-headers-timeout",
+    "at": "2026-10-23T02:44:02.136Z",
+    "expected": "connection-error around 10 s",
+    "pass": true,
+    "url": "http://127.0.0.1:14112/",
+    "elapsedMs": 10074,
+    "message": "서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요."
+  },
+  {
+    "name": "preview-partial-body-stall",
+    "at": "2026-10-23T02:44:28.903Z",
+    "expected": "connection-error after idle timeout",
+    "pass": false,
+    "url": "http://127.0.0.1:14112/",
+    "elapsedMs": 15321,
+    "message": "서버 연결을 확인하고 있습니다."
+  },
+  {
+    "name": "preview-cancel-and-retry",
+    "at": "2026-10-23T02:44:29.483Z",
+    "expected": "healthy",
+    "pass": true,
+    "url": "http://127.0.0.1:14112/",
+    "message": "서버와 정상적으로 연결되었습니다."
+  },
+  {
+    "name": "existing-5174-to-8080-UP",
+    "at": "2026-10-23T02:45:53.893Z",
+    "expected": "existing development servers still healthy",
+    "pass": true,
+    "url": "http://127.0.0.1:5174/",
+    "message": "서버와 정상적으로 연결되었습니다.",
+    "note": "No configuration change, restart or stop of these existing servers."
+  }
+]

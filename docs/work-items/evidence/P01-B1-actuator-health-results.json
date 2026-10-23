@@ -1,0 +1,245 @@
+[
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "*/*",
+    "status": 200,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 200,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/api/status",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/api/not-found",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator/info",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator/env",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "GET",
+    "path": "/actuator/metrics",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "method": "POST",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 405,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "*/*",
+    "status": 503,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 503,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/api/status",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/api/not-found",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator/info",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator/env",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "GET",
+    "path": "/actuator/metrics",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 2,
+    "scenario": "unhealthy",
+    "method": "POST",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 405,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "*/*",
+    "status": 200,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 200,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/api/status",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/api/not-found",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator/info",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator/env",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "GET",
+    "path": "/actuator/metrics",
+    "accept": "application/json",
+    "status": 404,
+    "result": "PASS"
+  },
+  {
+    "run": 3,
+    "scenario": "recovered",
+    "method": "POST",
+    "path": "/actuator/health",
+    "accept": "application/json",
+    "status": 405,
+    "result": "PASS"
+  }
+]

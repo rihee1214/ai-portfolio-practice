@@ -1,0 +1,28 @@
+$ErrorActionPreference = 'Stop'
+$root = Split-Path $PSScriptRoot
+$config = Join-Path $root 'backend/application-local.properties'
+if (Test-Path -LiteralPath $config) { throw 'Existing local configuration must be preserved' }
+$listener = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, 0)
+$listener.Start()
+$port = $listener.LocalEndpoint.Port
+$listener.Stop()
+$process = $null
+try {
+    $sample = Get-Content (Join-Path $root 'backend/application-local.properties.example') -Raw
+    $sample.Replace('server.port=8080', "server.port=$port") | Set-Content -LiteralPath $config
+    $process = Start-Process -FilePath (Join-Path $root '.local-tools/jdk-21.0.12.1+1/bin/java.exe') -ArgumentList @('-jar','target/marketplace-api-0.0.1-SNAPSHOT.jar','--spring.profiles.active=local') -WorkingDirectory (Join-Path $root 'backend') -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $PSScriptRoot 'p01-b5-profile.stdout.log') -RedirectStandardError (Join-Path $PSScriptRoot 'p01-b5-profile.stderr.log')
+    $response = $null
+    for ($i=0; $i -lt 30; $i++) {
+        if ($process.HasExited) { throw 'Test server exited before health was available' }
+        try { $response = Invoke-WebRequest "http://127.0.0.1:$port/actuator/health" -TimeoutSec 2; break } catch { Start-Sleep -Milliseconds 300 }
+    }
+    $body = if ($response.Content -is [byte[]]) { [Text.Encoding]::UTF8.GetString($response.Content) } else { [string]$response.Content }
+    if (!$response -or $response.StatusCode -ne 200 -or ($body | ConvertFrom-Json).status -ne 'UP') { throw 'Health contract failed' }
+    [pscustomobject]@{port=$port;statusCode=$response.StatusCode;body=$body;profile='local';configuration='copied example with temporary port';pid=$process.Id} | ConvertTo-Json | Set-Content (Join-Path $root 'docs/work-items/evidence/P01-B5-local-profile.json')
+} finally {
+    if ($process -and !$process.HasExited) { $process.Kill(); $process.WaitForExit() }
+    if (Test-Path -LiteralPath $config) { Remove-Item -LiteralPath $config }
+}
+Get-Content (Join-Path $root 'docs/work-items/evidence/P01-B5-local-profile.json')
+
+

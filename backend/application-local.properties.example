@@ -1,0 +1,5 @@
+# Copy to backend/application-local.properties; activate with --spring.profiles.active=local.
+# Run the JAR from backend/ so Spring Boot finds this external profile file.
+server.address=127.0.0.1
+server.port=8080
+# No DB or credentials yet. Never expose management details in local configuration.

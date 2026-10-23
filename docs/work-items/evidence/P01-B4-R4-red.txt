@@ -1,0 +1,112 @@
+▶ dev: real partial responses terminate on upstream failure
+  ✔ silent (10053.3091ms)
+  ✖ stall (15015.6299ms)
+  ✖ disconnect (15010.9791ms)
+  ✔ stream (12013.9276ms)
+  ✔ caller cancels while reading body and can retry (315.0273ms)
+✖ dev: real partial responses terminate on upstream failure (52470.0226ms)
+ℹ silent: 10045ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 15014ms {"kind":"cancelled"}
+ℹ disconnect: 15011ms {"kind":"cancelled"}
+ℹ stream: 12010ms {"kind":"success","status":200,"data":{"status":"UP"}}
+▶ preview: real partial responses terminate on upstream failure
+  ✔ silent (10011.511ms)
+  ✖ stall (15004.6932ms)
+  ✖ disconnect (15014.5379ms)
+  ✔ stream (12018.0113ms)
+  ✔ caller cancels while reading body and can retry (316.9954ms)
+✖ preview: real partial responses terminate on upstream failure (52376.1367ms)
+ℹ silent: 10009ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 15004ms {"kind":"cancelled"}
+ℹ disconnect: 15014ms {"kind":"cancelled"}
+ℹ stream: 12015ms {"kind":"success","status":200,"data":{"status":"UP"}}
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105088.7584
+
+✖ failing tests:
+
+test at frontend\tests\proxy-stream.test.mjs:38:87
+✖ stall (15015.6299ms)
+  AssertionError [ERR_ASSERTION]: incomplete upstream must fail transport, not wait for caller cancellation
+  + actual - expected
+  
+  + 'cancelled'
+  - 'network'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:49:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'cancelled',
+    expected: 'network',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend\tests\proxy-stream.test.mjs:38:87
+✖ disconnect (15010.9791ms)
+  AssertionError [ERR_ASSERTION]: incomplete upstream must fail transport, not wait for caller cancellation
+  + actual - expected
+  
+  + 'cancelled'
+  - 'network'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:49:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'cancelled',
+    expected: 'network',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend\tests\proxy-stream.test.mjs:38:87
+✖ stall (15004.6932ms)
+  AssertionError [ERR_ASSERTION]: incomplete upstream must fail transport, not wait for caller cancellation
+  + actual - expected
+  
+  + 'cancelled'
+  - 'network'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:49:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'cancelled',
+    expected: 'network',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend\tests\proxy-stream.test.mjs:38:87
+✖ disconnect (15014.5379ms)
+  AssertionError [ERR_ASSERTION]: incomplete upstream must fail transport, not wait for caller cancellation
+  + actual - expected
+  
+  + 'cancelled'
+  - 'network'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:49:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'cancelled',
+    expected: 'network',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

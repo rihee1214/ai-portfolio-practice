@@ -1,0 +1,271 @@
+{
+  "note": "초기 stall/stall-recheck/no-headers false는 timeout 만료 전 중간 관찰 또는 diff snapshot이다. 최종 판정은 stall-final/no-headers-final 전체 상태를 따른다. locator waitFor는 요청한 16초 대신 약 3초에 종료되어 명시적 11초 대기 후 재검사했다.",
+  "records": [
+    {
+      "name": "dev",
+      "mode": "stall",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "preview",
+      "mode": "stall",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 17 button 다시 확인"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 309,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 313,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "reset",
+      "elapsedMs": 433,
+      "expected": "서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "reset",
+      "elapsedMs": 430,
+      "expected": "서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 322,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 314,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "stall-recheck",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버 연결을 확인하고 있습니다.\n\t\t\t\t17 button 다시 확인\n\t\t\t\t18 button 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 확인"
+    },
+    {
+      "name": "preview",
+      "mode": "stall-recheck",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버 연결을 확인하고 있습니다.\n\t\t\t\t17 button 다시 확인\n\t\t\t\t18 button 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 확인"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 304,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 318,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "no-headers",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버 연결을 확인하고 있습니다.\n\t\t\t\t17 button 다시 확인\n\t\t\t\t18 button 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 확인"
+    },
+    {
+      "name": "preview",
+      "mode": "no-headers",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": false,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버 연결을 확인하고 있습니다.\n\t\t\t\t17 button 다시 확인\n\t\t\t\t18 button 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 확인"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 322,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 312,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "stall-final",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "preview",
+      "mode": "stall-final",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 303,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 304,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "no-headers-final",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "preview",
+      "mode": "no-headers-final",
+      "expected": "서버에 연결할 수 없습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버에 연결할 수 없습니다. 서버 실행 상태를 확인한 뒤 다시 시도해 주세요.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 308,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 303,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "trickle",
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버와 정상적으로 연결되었습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "preview",
+      "mode": "trickle",
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버와 정상적으로 연결되었습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "dev",
+      "mode": "cancel",
+      "expected": "연결 확인을 취소했습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 연결 확인을 취소했습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/"
+    },
+    {
+      "name": "preview",
+      "mode": "cancel",
+      "expected": "연결 확인을 취소했습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 연결 확인을 취소했습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 317,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 317,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 309,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 317,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "dev",
+      "mode": "latest-after-delayed",
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버와 정상적으로 연결되었습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "preview",
+      "mode": "latest-after-delayed",
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t12 container 서버 연결 확인\n\t\t\t\t13 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t14 text 서버 연결 확인\n\t\t\t\t15 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t16 text 서버와 정상적으로 연결되었습니다.\n\t\t\t\t17 button 다시 시도\n\t\t\t\t18 button (disabled) 확인 취소\n\t\t\t19 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t20 text 작은 매대, 다양한 취향\n\t\t\t\t21 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t22 text 일상에 필요한 것들이\n\t\t\t\t\t23 text 모이는 곳.\n\t\t\t\t24 container\n\t\t\t\t\t25 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t26 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t27 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t28 container\n\t\t\t\t\t29 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t30 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t31 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t32 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t33 text 매대에서 만나는 일상\n\t\t\t\t34 text 샘플 상품 3개\n\t\t\t\t35 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t36 container\n\t\t\t\t\t37 text 흙과 온기  ·  주방\n\t\t\t\t\t38 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t39 text 아침을 여는 머그\n\t\t\t\t\t40 text 18,000 원\n\t\t\t\t41 container\n\t\t\t\t\t42 text 초록의 자리  ·  생활\n\t\t\t\t\t43 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t44 text 책상 위 작은 초록\n\t\t\t\t\t45 text 12,000 원\n\t\t\t\t46 container\n\t\t\t\t\t47 text 느린 생활  ·  수납\n\t\t\t\t\t48 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t49 text 차곡차곡 수납 바구니\n\t\t\t\t\t50 text 24,000 원\n\t\t\t51 container 첫 매대를 상상해 보세요\n\t\t\t\t52 text 나만의 이름으로\n\t\t\t\t53 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t54 text 첫 매대를 상상해 보세요\n\t\t\t\t55 container\n\t\t\t\t\t56 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t57 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t58 text 매대 이름\n\t\t\t\t59 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t60 button 초기화\n\t\t\t\t61 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t62 text 매대 이름 미리보기\n\t\t\t\t63 text 나의 작은 매대\n\t\t\t\t64 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 17 button 다시 시도"
+    },
+    {
+      "name": "dev",
+      "mode": "route-return",
+      "expected": "아직 서버 연결을 확인하지 않았습니다.",
+      "pass": true,
+      "state": "Browser tab: 6, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2468/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2468/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2468/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2468/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2468/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2468/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2468/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2468/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t68 container 서버 연결 확인\n\t\t\t\t69 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t70 text 서버 연결 확인\n\t\t\t\t71 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t72 text 아직 서버 연결을 확인하지 않았습니다.\n\t\t\t\t73 button 연결 확인\n\t\t\t\t74 button (disabled) 확인 취소\n\t\t\t75 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t76 text 작은 매대, 다양한 취향\n\t\t\t\t77 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t78 text 일상에 필요한 것들이\n\t\t\t\t\t79 text 모이는 곳.\n\t\t\t\t80 container\n\t\t\t\t\t81 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t82 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t83 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2468/#sample-products\n\t\t\t\t84 container\n\t\t\t\t\t85 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t86 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t87 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t88 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t89 text 매대에서 만나는 일상\n\t\t\t\t90 text 샘플 상품 3개\n\t\t\t\t91 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t92 container\n\t\t\t\t\t93 text 흙과 온기  ·  주방\n\t\t\t\t\t94 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t95 text 아침을 여는 머그\n\t\t\t\t\t96 text 18,000 원\n\t\t\t\t97 container\n\t\t\t\t\t98 text 초록의 자리  ·  생활\n\t\t\t\t\t99 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t100 text 책상 위 작은 초록\n\t\t\t\t\t101 text 12,000 원\n\t\t\t\t102 container\n\t\t\t\t\t103 text 느린 생활  ·  수납\n\t\t\t\t\t104 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t105 text 차곡차곡 수납 바구니\n\t\t\t\t\t106 text 24,000 원\n\t\t\t107 container 첫 매대를 상상해 보세요\n\t\t\t\t108 text 나만의 이름으로\n\t\t\t\t109 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t110 text 첫 매대를 상상해 보세요\n\t\t\t\t111 container\n\t\t\t\t\t112 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t113 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t114 text 매대 이름\n\t\t\t\t115 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t116 button 초기화\n\t\t\t\t117 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t118 text 매대 이름 미리보기\n\t\t\t\t119 text 나의 작은 매대\n\t\t\t\t120 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2468/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 11 container main-content"
+    },
+    {
+      "name": "preview",
+      "mode": "route-return",
+      "expected": "아직 서버 연결을 확인하지 않았습니다.",
+      "pass": true,
+      "state": "Browser tab: 7, Title: \"일상에 필요한 것들이 모이는 곳. · 모아마켓\", URL: \"http://127.0.0.1:2469/\".\n0 AXWebArea 일상에 필요한 것들이 모이는 곳. · 모아마켓, URL: 127.0.0.1:2469/\n\t1 container root\n\t\t2 link Description: 본문으로 건너뛰기, Value: 127.0.0.1:2469/#main-content\n\t\t3 container\n\t\t\t4 link Description: 모아마켓 홈, Value: 127.0.0.1:2469/\n\t\t\t5 container 주요 화면\n\t\t\t\t6 link Description: 둘러보기, Value: 127.0.0.1:2469/\n\t\t\t\t7 link Description: 구매자, Value: 127.0.0.1:2469/account\n\t\t\t\t8 link Description: 판매자, Value: 127.0.0.1:2469/seller\n\t\t\t\t9 link Description: 운영자, Value: 127.0.0.1:2469/admin\n\t\t\t10 text 화면 미리보기\n\t\t11 container main-content\n\t\t\t68 container 서버 연결 확인\n\t\t\t\t69 heading 서버 연결 확인, Value: 2, ID: health-title\n\t\t\t\t\t70 text 서버 연결 확인\n\t\t\t\t71 text 현재 서버 연결만 확인합니다. 상품 구매·결제나 데이터베이스의 정상 동작을 보장하지 않습니다.\n\t\t\t\t72 text 아직 서버 연결을 확인하지 않았습니다.\n\t\t\t\t73 button 연결 확인\n\t\t\t\t74 button (disabled) 확인 취소\n\t\t\t75 container 일상에 필요한 것들이 모이는 곳.\n\t\t\t\t76 text 작은 매대, 다양한 취향\n\t\t\t\t77 heading 일상에 필요한 것들이 모이는 곳., Value: 1, ID: hero-title\n\t\t\t\t\t78 text 일상에 필요한 것들이\n\t\t\t\t\t79 text 모이는 곳.\n\t\t\t\t80 container\n\t\t\t\t\t81 text 각자의 취향을 담은 매대를 만나보세요.\n\t\t\t\t\t82 text 함께 만들어 갈 마켓플레이스의 첫 번째 화면입니다.\n\t\t\t\t83 link Description: 샘플 상품 둘러보기 , Value: 127.0.0.1:2469/#sample-products\n\t\t\t\t84 container\n\t\t\t\t\t85 text LOCAL FINDS 작은 발견이\n\t\t\t\t\t86 text 좋은 일상으로. MOA MARKET / 01\n\t\t\t87 container 매대에서 만나는 일상, ID: sample-products\n\t\t\t\t88 heading 매대에서 만나는 일상, Value: 2, ID: products-title\n\t\t\t\t\t89 text 매대에서 만나는 일상\n\t\t\t\t90 text 샘플 상품 3개\n\t\t\t\t91 text 화면 연습용 데이터입니다. 현재 구매·장바구니 기능은 제공하지 않습니다.\n\t\t\t\t92 container\n\t\t\t\t\t93 text 흙과 온기  ·  주방\n\t\t\t\t\t94 heading 아침을 여는 머그, Value: 3\n\t\t\t\t\t\t95 text 아침을 여는 머그\n\t\t\t\t\t96 text 18,000 원\n\t\t\t\t97 container\n\t\t\t\t\t98 text 초록의 자리  ·  생활\n\t\t\t\t\t99 heading 책상 위 작은 초록, Value: 3\n\t\t\t\t\t\t100 text 책상 위 작은 초록\n\t\t\t\t\t101 text 12,000 원\n\t\t\t\t102 container\n\t\t\t\t\t103 text 느린 생활  ·  수납\n\t\t\t\t\t104 heading 차곡차곡 수납 바구니, Value: 3\n\t\t\t\t\t\t105 text 차곡차곡 수납 바구니\n\t\t\t\t\t106 text 24,000 원\n\t\t\t107 container 첫 매대를 상상해 보세요\n\t\t\t\t108 text 나만의 이름으로\n\t\t\t\t109 heading 첫 매대를 상상해 보세요, Value: 2, ID: preview-title\n\t\t\t\t\t110 text 첫 매대를 상상해 보세요\n\t\t\t\t111 container\n\t\t\t\t\t112 text 이름을 입력하면 옆의 미리보기가 바뀝니다.\n\t\t\t\t\t113 text 입력은 저장되지 않으며 화면을 떠나거나 새로고침하면 초기화됩니다.\n\t\t\t\t114 text 매대 이름\n\t\t\t\t115 text field (settable) 매대 이름, Value: 나의 작은 매대, ID: shop-name\n\t\t\t\t116 button 초기화\n\t\t\t\t117 text 최대 30자 · 공백만 입력하면 기본 안내가 표시됩니다.\n\t\t\t\t118 text 매대 이름 미리보기\n\t\t\t\t119 text 나의 작은 매대\n\t\t\t\t120 text 좋아하는 것들로 채울 작은 공간\n\t\t65 container\n\t\t\t66 link Description: 모아마켓., Value: 127.0.0.1:2469/\n\t\t\t67 text 포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중\n\nThe focused UI element is 11 container main-content"
+    },
+    {
+      "name": "dev",
+      "mode": "up",
+      "elapsedMs": 320,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    },
+    {
+      "name": "preview",
+      "mode": "up",
+      "elapsedMs": 314,
+      "expected": "서버와 정상적으로 연결되었습니다.",
+      "pass": true
+    }
+  ]
+}

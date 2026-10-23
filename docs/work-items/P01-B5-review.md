@@ -1,0 +1,44 @@
+# P01-B5 개발 검토
+
+검토일: 2026-10-23 (Asia/Seoul)
+
+판정: **현재 검토 범위 통과. P3 1건 수정 확인, 개발세션의 로컬 프로필 실행 증거 확인. 최종 로컬 커밋·완료 기록은 대기이며 B5 전체 완료 판정과 구분한다.**
+
+## 범위와 방법
+
+개발세션에서 전달한 B5 변경인 `.gitignore`, `.gitattributes`, `backend/pom.xml`, `backend/config/checkstyle.xml`, `backend/application-local.properties.example`, `frontend/.env.example`, `docs/local-development.md`, `P01-B5.md`를 읽었다. 연결된 npm 실행 래퍼·ESLint·Maven Wrapper·기본 Boot 설정과 B5 증거도 대조했다.
+
+현재 최초 main의 파일들이 staged 상태이므로 전체 staged 파일을 B5 신규 구현으로 계산하지 않았다. 기존 B1~B4 제품 코드와 R4 수정은 이번 기능 검토 범위 밖이다. 읽기 전용 Git 명령과 파일 검색을 사용했고, 변경은 이 검토 문서 하나뿐이다. 빌드·설치·서버 실행·Git 변경은 수행하지 않았다.
+
+## B5-R1 · P3 · Unix 실행 안내와 Wrapper 파일 모드 불일치 — 수정 확인
+
+대상: `docs/local-development.md`의 준비된 도구 절 및 Git index의 `backend/mvnw`.
+
+문서는 다른 OS에서 Java 21 JAVA_HOME을 지정한 뒤 `./mvnw`를 실행하도록 안내하지만 `git ls-files --stage backend/mvnw` 결과는 **100644**다. 실행 권한을 보존하는 일반적인 Linux 체크아웃에서는 직접 실행이 권한 오류로 끝날 수 있다. `.gitattributes`의 LF 설정은 실행 비트를 설정하지 않는다.
+
+필요 수정: 개발세션에서 Wrapper 실행 비트를 100755로 기록하거나, 실행 권한 없이도 가능한 `sh ./mvnw`로 안내를 바꾼다. 이번 호스트에서 Linux/macOS를 실행 검증하지 않았다는 문구는 유지한다. 현재 Windows의 `mvnw.cmd` 실행 실패를 발견한 것은 아니다.
+
+후속 확인: 개발세션 수정 후 `git ls-files --stage backend/mvnw`를 다시 실행해 **100755**를 확인했다. blob은 `bd8896bf2217b46faa0291585e01ac1a3441a958`로 내용 변경 없이 실행 모드가 보완됐다. 위 100644와 필요 수정 문장은 최초 발견 이력이다. 지적 사항은 해소됐으며 Linux/macOS 실제 실행 검증은 여전히 미실행이다.
+
+## 확인한 내용
+
+| 항목 | 근거와 판단 |
+| --- | --- |
+| 로컬 값 제외 | `git check-ignore -v --no-index`로 `.env`, `.env.production`, `frontend/.env.local`, `backend/application-local.properties/yml`, pem/key와 도구·빌드 경로의 제외 규칙을 확인했다. 예제 파일은 추적 대상이다. |
+| 설정 예제 | 백엔드 예제는 loopback·8080만 포함하며 DB/자격 증명이 없다. 프런트 예제는 공개 값 경고만 있고 불필요한 변수를 도입하지 않았다. |
+| 프로필 안내 | backend 작업 디렉터리에서 외부 `application-local.properties`를 복사하고 local 프로필을 명시하는 흐름은 설정과 일치한다. 기존 파일 덮어쓰기를 막는다. 후속 [프로필 실행 증거](evidence/P01-B5-local-profile.json)에서 local·임시 포트 5577·HTTP 200·UP을 확인했다. 개발세션의 실행 기록이며 검토 세션에서 서버를 재실행하지 않았다. |
+| Checkstyle | 3.6.0 플러그인의 check가 validate에 연결되고 위반 실패·테스트 소스 포함이 설정돼 있다. 최소 6개 규칙과 UTF-8을 확인했다. 증거의 실제 엔진은 Checkstyle 9.3이며 플러그인 버전과 다르다. |
+| 정적 검사의 실효성 | 개발세션의 wildcard import 부정 검사에서 AvoidStarImport로 BUILD FAILURE, 제거 후 Java 반복 빌드에서 BUILD SUCCESS를 확인했다. ESLint의 미사용 변수 부정 검사도 실제 오류를 기록했다. 임시 probe 소스는 검색되지 않았다. 모든 규칙을 각각 부정 검사한 것은 아니다. |
+| npm 재현 명령 | npm.ps1은 프로젝트 로컬 Node/npm과 잠금 파일을 사용하는 명령을 전달하고 실패 시 예외를 던진다. PATH·캐시 환경값을 finally에서 복원한다. 문서의 quoted `--` 전달은 현재 래퍼 사용 방식과 일치한다. |
+| 테스트 증거 | B5 frontend 원본 로그에는 EACCES 실패가 남고, 별도 green 로그에는 68개 통과·실패/건너뜀 0이 있다. Java 로그의 No tests to run을 문서가 JUnit 0개로 정확히 구분한다. 이 검토에서 테스트를 재실행한 결과는 아니다. |
+| 비밀값 확인 한계 | 이번 예제와 읽은 설정에서 실제 비밀값을 발견하지 않았다. 패턴 검색도 후보를 반환하지 않았으나 완전한 비밀값 감사는 아니다. ignore는 이미 추적한 파일이나 모든 임의 이름의 설정을 보호하지 않으므로 staged 내용 점검 안내는 유지해야 한다. |
+
+`git diff --cached --check`는 종료 코드 1이었다. 기존 Markdown 줄바꿈용 공백·로그 원문 공백·파일 끝 빈 줄 등이 포함된다. 초기 index 전체의 결과이며 이를 B5 제품 결함이나 검사 통과로 표시하지 않았다. 특히 실패/성공 로그를 공백 정리 때문에 원본과 다르게 고칠 필요는 없다.
+
+## 최종 판정 전에 남은 확인
+
+- 로컬 프로필 증거와 B5-R1 index 보완은 확인 완료다. 프로필 JSON은 요약 증거이며 실행 명령 전체·종료 후 포트 상태는 포함하지 않는다. 임시 프로세스·설정 정리는 개발세션의 작업 문서 기록에 근거하며 이 검토에서 독립적으로 관찰하지 않았다.
+- 개발세션에서 작성 중인 P01-B5 최종 결과·변경 목록·서버 보존·로컬 커밋 확인. 검토 시점에는 구현·검증 중이므로 완료로 앞당기지 않는다.
+- 현재 호스트의 기존 캐시를 사용한 성공과 새 PC에서 도구 준비부터 재현한 성공은 다르다. 새 PC·Linux/macOS·사용자 직접 실습은 미확인이다.
+
+후속 확인에서 `git remote -v`는 출력이 없어 등록된 원격이 없음을 확인했다. 로컬 커밋은 개발세션에서 검토 이후 수행할 예정이며 이 검토가 실행하지 않았다. 이 문서는 현재 파일·증거에 대한 판정으로 이후 변경을 자동으로 승인하지 않는다. P01-C1 이후 구현은 수행하지 않았다.

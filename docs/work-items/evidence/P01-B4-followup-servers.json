@@ -1,0 +1,36 @@
+{
+  "before": [
+    {
+      "Address": "127.0.0.1",
+      "Port": 8080,
+      "PID": 44820,
+      "Process": "java",
+      "Started": "2026-10-23T07:18:09.6731737+09:00"
+    },
+    {
+      "Address": "127.0.0.1",
+      "Port": 5174,
+      "PID": 61828,
+      "Process": "node",
+      "Started": "2026-10-23T07:14:58.1178857+09:00"
+    }
+  ],
+  "after": [
+    {
+      "Address": "127.0.0.1",
+      "Port": 8080,
+      "PID": 44820,
+      "Process": "java",
+      "Started": "2026-10-23T07:18:09.6731737+09:00"
+    },
+    {
+      "Address": "127.0.0.1",
+      "Port": 5174,
+      "PID": 61828,
+      "Process": "node",
+      "Started": "2026-10-23T07:14:58.1178857+09:00"
+    }
+  ],
+  "temporaryPortsReturned": true,
+  "existingServersSame": true
+}

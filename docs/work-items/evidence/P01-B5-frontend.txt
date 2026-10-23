@@ -1,0 +1,669 @@
+
+> marketplace-frontend@0.0.1 typecheck
+> tsc --noEmit
+
+
+> marketplace-frontend@0.0.1 lint
+> eslint . --max-warnings 0
+
+
+> marketplace-frontend@0.0.1 build
+> tsc --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 102 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.52 kB │ gzip:  0.38 kB
+dist/assets/index-BKTJ1-a9.css    7.42 kB │ gzip:  2.29 kB
+dist/assets/index-DunmJItA.js   272.11 kB │ gzip: 86.77 kB
+
+✓ built in 231ms
+
+> marketplace-frontend@0.0.1 test
+> node --test tests/*.test.mjs
+
+✔ health {"kind":"success","status":200,"data":{"status":"UP"}} => healthy (1.3156ms)
+✔ health {"kind":"success","status":201,"data":{"status":"UP"}} => invalid (0.2328ms)
+✔ health {"kind":"success","status":200,"data":{"status":"UNKNOWN"}} => unhealthy (0.1052ms)
+✔ health {"kind":"success","status":200,"data":{"status":"DOWN"}} => unhealthy (0.2185ms)
+✔ health {"kind":"http","status":503,"data":{"status":"DOWN"}} => unhealthy (0.1203ms)
+✔ health {"kind":"http","status":503,"data":{"status":"OUT_OF_SERVICE"}} => unhealthy (0.1068ms)
+✔ health {"kind":"http","status":503,"data":{"status":"UP"}} => connection-error (0.1879ms)
+✔ health {"kind":"http","status":502} => connection-error (1.6021ms)
+✔ health {"kind":"network"} => connection-error (0.4262ms)
+✔ health {"kind":"invalid-response","status":200} => invalid (0.127ms)
+✔ health {"kind":"success","status":200,"data":null} => invalid (0.063ms)
+✔ health {"kind":"success","status":200,"data":{"status":7}} => invalid (0.0511ms)
+✔ health {"kind":"cancelled"} => cancelled (0.0759ms)
+✔ new request wins even when the cancelled transport resolves late; dispose prevents updates (0.366ms)
+✔ JSON request preserves path and sends Accept; returns unknown data with HTTP status (32.5225ms)
+✔ HTTP DOWN keeps parsed error body (0.7151ms)
+✔ HTML success is a contract error (0.3154ms)
+✔ malformed JSON is a contract error (0.3836ms)
+✔ 204 has no JSON document (0.2406ms)
+✔ malformed error JSON still preserves HTTP failure (0.3661ms)
+✔ empty proxy error keeps HTTP status (1.367ms)
+✔ non-JSON HTTP error keeps status (0.2264ms)
+✔ network failure and caller cancellation are distinct (0.337ms)
+✔ cancellation during body read is not malformed JSON (3.1357ms)
+✔ a JSON body interrupted by the connection is a network failure, not malformed JSON (0.4431ms)
+▶ dev: API path aliases cannot escape into management routes or SPA fallback
+  ✖ /api/../actuator/env (15.691ms)
+  ✖ /api/%2e%2e/actuator/health (4.486ms)
+  ✖ /api/%2e%2e%2factuator/env (4.1391ms)
+  ✖ /api/..;/actuator/env (2.2318ms)
+  ✖ /api/%252e%252e/actuator/env (1.8705ms)
+  ✖ /api/..%5cactuator/env (1.3464ms)
+  ✖ //actuator/env (1.3761ms)
+  ✖ /%61ctuator/env (4.8865ms)
+  ✖ /ACTUATOR/env (1.8543ms)
+  ✖ /%61pi/missing (2.3447ms)
+  ✖ /API/missing (2.2703ms)
+  ✖ /api%2fmissing (1.2634ms)
+  ✖ /actu%61tor/%zz (3.6586ms)
+  ✖ ordinary API identifiers and exact health remain usable (2.7466ms)
+✖ dev: API path aliases cannot escape into management routes or SPA fallback (246.1805ms)
+▶ preview: API path aliases cannot escape into management routes or SPA fallback
+  ✖ /api/../actuator/env (1.244ms)
+  ✖ /api/%2e%2e/actuator/health (1.3083ms)
+  ✖ /api/%2e%2e%2factuator/env (1.295ms)
+  ✖ /api/..;/actuator/env (1.2988ms)
+  ✖ /api/%252e%252e/actuator/env (0.9724ms)
+  ✖ /api/..%5cactuator/env (1.1506ms)
+  ✖ //actuator/env (1.257ms)
+  ✖ /%61ctuator/env (1.0744ms)
+  ✖ /ACTUATOR/env (1.2503ms)
+  ✖ /%61pi/missing (1.3288ms)
+  ✖ /API/missing (0.8586ms)
+  ✖ /api%2fmissing (1.4578ms)
+  ✖ /actu%61tor/%zz (0.9834ms)
+  ✖ ordinary API identifiers and exact health remain usable (0.9964ms)
+✖ preview: API path aliases cannot escape into management routes or SPA fallback (49.4867ms)
+▶ dev: real partial responses terminate on upstream failure
+  ✖ silent (20.5638ms)
+  ✖ stall (28.1969ms)
+  ✖ disconnect (38.6872ms)
+  ✖ stream (30.3072ms)
+  ✖ caller cancels while reading body and can retry (32.0528ms)
+✖ dev: real partial responses terminate on upstream failure (225.5089ms)
+ℹ silent: 19ms {"kind":"network"}
+ℹ stall: 20ms {"kind":"network"}
+ℹ disconnect: 29ms {"kind":"network"}
+ℹ stream: 30ms {"kind":"network"}
+▶ preview: real partial responses terminate on upstream failure
+  ✖ silent (5.6697ms)
+  ✖ stall (6.1095ms)
+  ✖ disconnect (8.3535ms)
+  ✖ stream (6.9358ms)
+  ✖ caller cancels while reading body and can retry (1.4804ms)
+✖ preview: real partial responses terminate on upstream failure (29.4334ms)
+ℹ silent: 5ms {"kind":"network"}
+ℹ stall: 6ms {"kind":"network"}
+ℹ disconnect: 6ms {"kind":"network"}
+ℹ stream: 7ms {"kind":"network"}
+✖ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (187.0276ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 25
+ℹ fail 43
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 870.7289
+
+✖ failing tests:
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/../actuator/env (15.691ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%2e%2e/actuator/health (4.486ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%2e%2e%2factuator/env (4.1391ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/..;/actuator/env (2.2318ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%252e%252e/actuator/env (1.8705ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/..%5cactuator/env (1.3464ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ //actuator/env (1.3761ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /%61ctuator/env (4.8865ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /ACTUATOR/env (1.8543ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /%61pi/missing (2.3447ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /API/missing (2.2703ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api%2fmissing (1.2634ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /actu%61tor/%zz (3.6586ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:55:15
+✖ ordinary API identifiers and exact health remain usable (2.7466ms)
+  Error: connect EACCES 127.0.0.1:2505
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2505
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/../actuator/env (1.244ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%2e%2e/actuator/health (1.3083ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%2e%2e%2factuator/env (1.295ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/..;/actuator/env (1.2988ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/%252e%252e/actuator/env (0.9724ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api/..%5cactuator/env (1.1506ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ //actuator/env (1.257ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /%61ctuator/env (1.0744ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /ACTUATOR/env (1.2503ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /%61pi/missing (1.3288ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /API/missing (0.8586ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /api%2fmissing (1.4578ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:47:17
+✖ /actu%61tor/%zz (0.9834ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-boundary.test.mjs:55:15
+✖ ordinary API identifiers and exact health remain usable (0.9964ms)
+  Error: connect EACCES 127.0.0.1:2530
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 2530
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ silent (20.5638ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'network' !== 'http'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:45:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 0)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'http',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stall (28.1969ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(elapsed >= 9000 && elapsed < 14_000)
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:51:67)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 1)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ disconnect (38.6872ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   kind: 'network'
+  -   data: {
+  -     status: 'UP'
+  -   },
+  -   kind: 'success',
+  -   status: 200
+    }
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:54:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 2)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'network' },
+    expected: { kind: 'success', status: 200, data: { status: 'UP' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stream (30.3072ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'success'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:48:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 3)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'success',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:56:15
+✖ caller cancels while reading body and can retry (32.0528ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:58:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:56:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ silent (5.6697ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'network' !== 'http'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:45:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 0)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'http',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stall (6.1095ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(elapsed >= 9000 && elapsed < 14_000)
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:51:67)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 1)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ disconnect (8.3535ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   kind: 'network'
+  -   data: {
+  -     status: 'UP'
+  -   },
+  -   kind: 'success',
+  -   status: 200
+    }
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:54:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 2)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'network' },
+    expected: { kind: 'success', status: 200, data: { status: 'UP' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stream (6.9358ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'success'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:48:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 3)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'success',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:56:15
+✖ caller cancels while reading body and can retry (1.4804ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:58:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:56:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy.test.mjs:8:1
+✖ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (187.0276ms)
+  [TypeError [Error]: fetch failed] {
+    [cause]: Error: connect EACCES 127.0.0.1:2508
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 2508
+    }
+  }

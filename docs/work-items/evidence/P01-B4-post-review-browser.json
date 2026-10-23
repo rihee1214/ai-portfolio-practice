@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-23",
+  "url": "http://127.0.0.1:5174/",
+  "scenario": "final reviewed source with real Boot",
+  "message": "서버와 정상적으로 연결되었습니다.",
+  "pass": true
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "path": "/actuator/health",
+    "method": "GET",
+    "status": 503,
+    "body": "{\"status\":\"DOWN\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/health?probe=1",
+    "method": "GET",
+    "status": 503,
+    "body": "{\"status\":\"DOWN\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/health",
+    "method": "POST",
+    "status": 405,
+    "body": "{\"timestamp\":\"2026-10-22T22:16:32.135Z\",\"status\":405,\"error\":\"Method Not Allowed\",\"path\":\"/actuator/health\"}",
+    "pass": true
+  },
+  {
+    "path": "/api",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"timestamp\":\"2026-10-22T22:16:32.147Z\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api\"}",
+    "pass": true
+  },
+  {
+    "path": "/api/status",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"timestamp\":\"2026-10-22T22:16:32.153Z\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/status\"}",
+    "pass": true
+  },
+  {
+    "path": "/api/not-found",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"timestamp\":\"2026-10-22T22:16:32.158Z\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/not-found\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"error\":\"NOT_FOUND\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/env",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"error\":\"NOT_FOUND\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/metrics",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"error\":\"NOT_FOUND\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/health/",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"error\":\"NOT_FOUND\"}",
+    "pass": true
+  },
+  {
+    "path": "/actuator/health/liveness",
+    "method": "GET",
+    "status": 404,
+    "body": "{\"error\":\"NOT_FOUND\"}",
+    "pass": true
+  }
+]

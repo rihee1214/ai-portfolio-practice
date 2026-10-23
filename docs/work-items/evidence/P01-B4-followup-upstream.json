@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "mode": "no-headers",
+    "path": "/actuator/health?mode=no-headers",
+    "startedAt": "2026-10-23T02:39:46.536Z",
+    "chunks": 0,
+    "closedMs": 10000,
+    "finished": false
+  },
+  {
+    "id": 2,
+    "mode": "trickle",
+    "path": "/actuator/health?mode=trickle",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 47,
+    "closedMs": 12006,
+    "finished": true
+  },
+  {
+    "id": 3,
+    "mode": "stall",
+    "path": "/actuator/health?mode=stall",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 1,
+    "closedMs": 10001,
+    "finished": false
+  },
+  {
+    "id": 4,
+    "mode": "no-headers",
+    "path": "/actuator/health?mode=no-headers",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 0,
+    "closedMs": 10000,
+    "finished": false
+  },
+  {
+    "id": 5,
+    "mode": "reset",
+    "path": "/actuator/health?mode=reset",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 1,
+    "closedMs": 311,
+    "finished": false
+  },
+  {
+    "id": 6,
+    "mode": "stall",
+    "path": "/actuator/health?mode=stall",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 1,
+    "closedMs": 10001,
+    "finished": false
+  },
+  {
+    "id": 7,
+    "mode": "trickle",
+    "path": "/actuator/health?mode=trickle",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 47,
+    "closedMs": 12005,
+    "finished": true
+  },
+  {
+    "id": 8,
+    "mode": "reset",
+    "path": "/actuator/health?mode=reset",
+    "startedAt": "2026-10-23T02:39:46.537Z",
+    "chunks": 1,
+    "closedMs": 311,
+    "finished": false
+  },
+  {
+    "id": 9,
+    "mode": "up",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:40:55.546Z",
+    "chunks": 0,
+    "closedMs": 8,
+    "finished": true
+  },
+  {
+    "id": 10,
+    "mode": "down",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:08.958Z",
+    "chunks": 0,
+    "closedMs": 6,
+    "finished": true
+  },
+  {
+    "id": 11,
+    "mode": "malformed",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:09.274Z",
+    "chunks": 0,
+    "closedMs": 6,
+    "finished": true
+  },
+  {
+    "id": 12,
+    "mode": "html",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:09.591Z",
+    "chunks": 0,
+    "closedMs": 6,
+    "finished": true
+  },
+  {
+    "id": 13,
+    "mode": "no-headers",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:09.924Z",
+    "chunks": 0,
+    "closedMs": 10005,
+    "finished": false
+  },
+  {
+    "id": 14,
+    "mode": "up",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:37.992Z",
+    "chunks": 0,
+    "closedMs": 8,
+    "finished": true
+  },
+  {
+    "id": 15,
+    "mode": "stall",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:41:38.308Z",
+    "chunks": 1,
+    "closedMs": 10006,
+    "finished": false
+  },
+  {
+    "id": 16,
+    "mode": "reset",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:42:07.676Z",
+    "chunks": 1,
+    "closedMs": 310,
+    "finished": false
+  },
+  {
+    "id": 17,
+    "mode": "up",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:42:23.009Z",
+    "chunks": 0,
+    "closedMs": 2,
+    "finished": true
+  },
+  {
+    "id": 18,
+    "mode": "trickle",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:42:46.160Z",
+    "chunks": 47,
+    "closedMs": 12013,
+    "finished": true
+  },
+  {
+    "id": 19,
+    "mode": "delayed-down",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:42:58.260Z",
+    "chunks": 0,
+    "closedMs": 309,
+    "finished": false
+  },
+  {
+    "id": 20,
+    "mode": "up",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:42:58.560Z",
+    "chunks": 0,
+    "closedMs": 6,
+    "finished": true
+  },
+  {
+    "id": 21,
+    "mode": "no-headers",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:43:19.495Z",
+    "chunks": 0,
+    "closedMs": 277,
+    "finished": false
+  },
+  {
+    "id": 22,
+    "mode": "no-headers",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:43:20.079Z",
+    "chunks": 0,
+    "closedMs": 306,
+    "finished": false
+  },
+  {
+    "id": 23,
+    "mode": "no-headers",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:43:52.114Z",
+    "chunks": 0,
+    "closedMs": 10001,
+    "finished": false
+  },
+  {
+    "id": 24,
+    "mode": "stall",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:44:13.630Z",
+    "chunks": 1,
+    "closedMs": 10002,
+    "finished": false
+  },
+  {
+    "id": 25,
+    "mode": "up",
+    "path": "/actuator/health",
+    "startedAt": "2026-10-23T02:44:29.247Z",
+    "chunks": 0,
+    "closedMs": 15,
+    "finished": true
+  }
+]

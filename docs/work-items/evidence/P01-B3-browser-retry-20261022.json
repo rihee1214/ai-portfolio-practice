@@ -1,0 +1,243 @@
+{
+  "phase": "P01-B3",
+  "recordedAt": "2026-10-22T21:44:54.685753+09:00",
+  "status": "http-verified-browser-control-blocked",
+  "runtimeExecution": "Approved require_escalated command for local preview server and HTTP checks; no firewall or global permission configuration changes",
+  "checks": [
+    {
+      "command": ".\\frontend\\npm.ps1 run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": ".\\frontend\\npm.ps1 run lint",
+      "exitCode": 0
+    },
+    {
+      "command": ".\\frontend\\npm.ps1 run build",
+      "exitCode": 0,
+      "transformedModules": 99
+    }
+  ],
+  "http": {
+    "checkedAt": "2026-10-22T21:38:38.8316353+09:00",
+    "origin": "http://127.0.0.1:4174",
+    "method": "HTTP GET and Cache-Control: no-cache repeated GET; not browser navigation or reload",
+    "routes": [
+      {
+        "path": "/",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account/orders",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account/addresses",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account/wishlist",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account/coupons",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller/store",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller/products",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller/orders",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller/settlements",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin/users",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin/sellers",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin/moderation",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin/orders",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/missing-b3",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/account/missing-b3",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/seller/missing-b3",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/admin/missing-b3",
+        "directStatus": 200,
+        "repeatedStatus": 200,
+        "sameBuiltHtml": true,
+        "contentType": "text/html"
+      }
+    ],
+    "assets": [
+      {
+        "path": "/assets/index-Cdt-Irpl.js",
+        "status": 200,
+        "sameBuiltBytes": true
+      },
+      {
+        "path": "/assets/index-CLehRFjH.css",
+        "status": 200,
+        "sameBuiltBytes": true
+      }
+    ]
+  },
+  "sourceComparison": {
+    "baselineFileCount": 45,
+    "changesBeforeDocumentation": [],
+    "frontendInputCount": 16,
+    "frontendInputsUnchanged": true
+  },
+  "frontendInputsSha256": {
+    "frontend/eslint.config.js": "27b6562e0437e59f1bbf9cdd3726e0eaf14a0e7df241f6e8662a5d9ca9565cbb",
+    "frontend/index.html": "e231b7a60707a9809ffca981ebfd975dd0f8af4f3a023740558d1ab72f54cb55",
+    "frontend/npm.ps1": "4cc7a70a9497aeec9eec6aff341c68b62582680eded10e77f0171465b1f016cf",
+    "frontend/package-lock.json": "39391091f118109829d4039cf3354a21bdf281f5e403946e2493e8c1c9f7d9f2",
+    "frontend/package.json": "a25dad17bba50ecdbde8a218c461805e7fbbe14ba6569ec88d0972ea4236fb13",
+    "frontend/tsconfig.json": "1a709a5c171ec73b2ed5a0edbe4aa8719d7006914664d1d3e5fdd5bafeee7b6b",
+    "frontend/vite.config.ts": "2e22169dcf47cfa4b5ed63f65ff54d622a6f8d6927e2950e216ada60ae1d1566",
+    "frontend/src/App.tsx": "06d61902d18e8ab4ebe82bd0ffaea39199369d0882eb4414c6705b196144136e",
+    "frontend/src/main.tsx": "7c3f783be469d8c1bd6109edbf7326c54119fafbda34f48bbbb49adfdf2b4503",
+    "frontend/src/navigation.ts": "5b980dea62a6f9a82315028198ec6ae203194435f8561f859790aa5f44c3ac3c",
+    "frontend/src/styles.css": "12654ae6177c6d32ba27cd05ae3d1fbd6f8a05d2a73d2c08387eac7b25d7d276",
+    "frontend/src/layouts/SiteLayout.tsx": "799cb100b65b15d72c0e3337219c6a5b27bb1315735a9aa786e988b96692fa7f",
+    "frontend/src/layouts/WorkspaceLayout.tsx": "3abe60935c862d1688b974b14455571ac124acb254c03d0e729848391a1ec720",
+    "frontend/src/pages/HomePage.tsx": "ef0b46095bbe4326b7af64ce239def77ab5d0ed347d8d2f1f1af3ce2ac7dd614",
+    "frontend/src/pages/NotFoundPage.tsx": "8224dc640ae6eaf51dcdfbfc1847fbc98756dbdb61c259ee3d2f92deb91e67a1",
+    "frontend/src/pages/WorkspacePages.tsx": "02a1dd2202d86df4201ef2c17da12b0e8ec1f38021aa909759a7d75b86f6810a"
+  },
+  "buildOutputsSha256": {
+    "frontend/dist/index.html": "1a077e21133879f045b3cdbad124ad5ee2e756e67e5d38ff3f9a5cedab4e8f1d",
+    "frontend/dist/assets/index-Cdt-Irpl.js": "c7a775b167b8bed889e9f1293247ce002e1405524485edc509ef3bbe915ec9cb",
+    "frontend/dist/assets/index-CLehRFjH.css": "bcc8dc2d7bb7cf0b78d3412dff1448ccb3d316bc8cf4bab88b63924617cf9dc5"
+  },
+  "browser": {
+    "status": "blocked",
+    "executedUiCases": 0,
+    "newScreenshots": 0,
+    "inventory": [
+      {
+        "name": "Codex MCP Apps",
+        "type": "mcpapps",
+        "tabs": []
+      }
+    ],
+    "previewOpenToolStatus": "queued",
+    "userConfirmedPreviewTabVisible": true,
+    "userExplicitlyMentionedBrowserPlugin": true,
+    "sessionResetAttempted": true,
+    "directUrlConnectionError": "Browser is not available: iab",
+    "inventoryAfterUserBrowserMention": "unchanged; no iab",
+    "internalCause": "not established"
+  },
+  "pendingUi": [
+    "16 direct URL page renders and browser reloads",
+    "active menus, titles, back/forward and role navigation",
+    "4 missing paths and return-home interaction",
+    "375/768/1440px layout and overflow",
+    "Tab/Shift+Tab/Enter, skip link and focus",
+    "home input regression and console errors"
+  ],
+  "preview": {
+    "url": "http://127.0.0.1:4174/",
+    "leftRunningForUserAndReconnection": true
+  },
+  "applicationFilesChanged": false,
+  "nextPhaseStarted": false,
+  "historicalUiEvidenceReusedAsCurrentPass": false
+}

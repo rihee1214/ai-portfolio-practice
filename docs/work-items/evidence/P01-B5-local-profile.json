@@ -1,0 +1,8 @@
+{
+  "port": 5577,
+  "statusCode": 200,
+  "body": "{\"status\":\"UP\"}",
+  "profile": "local",
+  "configuration": "copied example with temporary port",
+  "pid": 72804
+}

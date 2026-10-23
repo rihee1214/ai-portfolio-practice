@@ -1,0 +1,70 @@
+
+> marketplace-frontend@0.0.1 test
+> node --test tests/*.test.mjs
+
+✔ health {"kind":"success","status":200,"data":{"status":"UP"}} => healthy (0.6617ms)
+✔ health {"kind":"success","status":201,"data":{"status":"UP"}} => invalid (0.0711ms)
+✔ health {"kind":"success","status":200,"data":{"status":"UNKNOWN"}} => unhealthy (0.051ms)
+✔ health {"kind":"success","status":200,"data":{"status":"DOWN"}} => unhealthy (0.0451ms)
+✔ health {"kind":"http","status":503,"data":{"status":"DOWN"}} => unhealthy (0.0642ms)
+✔ health {"kind":"http","status":503,"data":{"status":"OUT_OF_SERVICE"}} => unhealthy (0.0486ms)
+✔ health {"kind":"http","status":503,"data":{"status":"UP"}} => connection-error (0.0548ms)
+✔ health {"kind":"http","status":502} => connection-error (0.0766ms)
+✔ health {"kind":"network"} => connection-error (0.0725ms)
+✔ health {"kind":"invalid-response","status":200} => invalid (0.0924ms)
+✔ health {"kind":"success","status":200,"data":null} => invalid (0.047ms)
+✔ health {"kind":"success","status":200,"data":{"status":7}} => invalid (0.0402ms)
+✔ health {"kind":"cancelled"} => cancelled (0.0622ms)
+✔ new request wins even when the cancelled transport resolves late; dispose prevents updates (0.2904ms)
+✔ JSON request preserves path and sends Accept; returns unknown data with HTTP status (17.2781ms)
+✔ HTTP DOWN keeps parsed error body (0.2549ms)
+✔ HTML success is a contract error (0.2233ms)
+✔ malformed JSON is a contract error (0.2356ms)
+✔ 204 has no JSON document (0.1541ms)
+✔ malformed error JSON still preserves HTTP failure (0.1959ms)
+✔ empty proxy error keeps HTTP status (0.5843ms)
+✔ non-JSON HTTP error keeps status (0.149ms)
+✔ network failure and caller cancellation are distinct (0.2122ms)
+✔ cancellation during body read is not malformed JSON (0.6284ms)
+✔ a JSON body interrupted by the connection is a network failure, not malformed JSON (0.2431ms)
+▶ dev: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (17.0664ms)
+  ✔ /api/%2e%2e/actuator/health (2.1456ms)
+  ✔ /api/%2e%2e%2factuator/env (1.6737ms)
+  ✔ /api/..;/actuator/env (1.9327ms)
+  ✔ /api/%252e%252e/actuator/env (1.7496ms)
+  ✔ /api/..%5cactuator/env (6.5659ms)
+  ✔ //actuator/env (2.332ms)
+  ✔ /%61ctuator/env (0.8927ms)
+  ✔ /ACTUATOR/env (0.8443ms)
+  ✔ /%61pi/missing (0.8051ms)
+  ✔ /API/missing (0.7917ms)
+  ✔ /api%2fmissing (0.6383ms)
+  ✔ /actu%61tor/%zz (0.7226ms)
+  ✔ ordinary API identifiers and exact health remain usable (29.6166ms)
+✔ dev: API path aliases cannot escape into management routes or SPA fallback (142.9734ms)
+▶ preview: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (1.4742ms)
+  ✔ /api/%2e%2e/actuator/health (0.7702ms)
+  ✔ /api/%2e%2e%2factuator/env (0.7471ms)
+  ✔ /api/..;/actuator/env (0.7189ms)
+  ✔ /api/%252e%252e/actuator/env (0.7192ms)
+  ✔ /api/..%5cactuator/env (0.7158ms)
+  ✔ //actuator/env (0.7037ms)
+  ✔ /%61ctuator/env (0.7934ms)
+  ✔ /ACTUATOR/env (0.7943ms)
+  ✔ /%61pi/missing (0.7261ms)
+  ✔ /API/missing (0.7116ms)
+  ✔ /api%2fmissing (0.8335ms)
+  ✔ /actu%61tor/%zz (0.7591ms)
+  ✔ ordinary API identifiers and exact health remain usable (12.862ms)
+✔ preview: API path aliases cannot escape into management routes or SPA fallback (38.3911ms)
+✔ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (161.2158ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 576.294

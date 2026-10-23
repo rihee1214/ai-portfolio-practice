@@ -1,0 +1,490 @@
+{
+  "date": "2026-10-23",
+  "bootPort": 7683,
+  "vitePort": 7684,
+  "results": [
+    {
+      "phase": "UP",
+      "path": "/actuator/health",
+      "method": "GET",
+      "status": 200,
+      "data": {
+        "status": "UP"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/health?probe=1",
+      "method": "GET",
+      "status": 200,
+      "data": {
+        "status": "UP"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/health",
+      "method": "POST",
+      "status": 405,
+      "data": {
+        "timestamp": "2026-10-22T22:29:48.459Z",
+        "status": 405,
+        "error": "Method Not Allowed",
+        "path": "/actuator/health"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/api",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:48.469Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/api/status",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:48.474Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/status"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/api/not-found",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:48.478Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/not-found"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/env",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/metrics",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/health/",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/actuator/health/liveness",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "check": "production requestJson -> interpretHealth",
+      "state": "healthy",
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/api/../actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/api/%2e%2e/actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "path": "/%61pi/missing",
+      "status": 404,
+      "body": "{\"error\":\"NOT_FOUND\"}",
+      "pass": true
+    },
+    {
+      "phase": "UP",
+      "check": "owned Boot stopped",
+      "result": {
+        "kind": "http",
+        "status": 502,
+        "data": {
+          "error": "UPSTREAM_UNAVAILABLE"
+        }
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/health",
+      "method": "GET",
+      "status": 503,
+      "data": {
+        "status": "DOWN"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/health?probe=1",
+      "method": "GET",
+      "status": 503,
+      "data": {
+        "status": "DOWN"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/health",
+      "method": "POST",
+      "status": 405,
+      "data": {
+        "timestamp": "2026-10-22T22:29:50.831Z",
+        "status": 405,
+        "error": "Method Not Allowed",
+        "path": "/actuator/health"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/api",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:50.840Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/api/status",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:50.844Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/status"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/api/not-found",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:50.848Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/not-found"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/env",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/metrics",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/health/",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/actuator/health/liveness",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "check": "production requestJson -> interpretHealth",
+      "state": "unhealthy",
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/api/../actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/api/%2e%2e/actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "path": "/%61pi/missing",
+      "status": 404,
+      "body": "{\"error\":\"NOT_FOUND\"}",
+      "pass": true
+    },
+    {
+      "phase": "DOWN",
+      "check": "owned Boot stopped",
+      "result": {
+        "kind": "http",
+        "status": 502,
+        "data": {
+          "error": "UPSTREAM_UNAVAILABLE"
+        }
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/health",
+      "method": "GET",
+      "status": 200,
+      "data": {
+        "status": "UP"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/health?probe=1",
+      "method": "GET",
+      "status": 200,
+      "data": {
+        "status": "UP"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/health",
+      "method": "POST",
+      "status": 405,
+      "data": {
+        "timestamp": "2026-10-22T22:29:53.174Z",
+        "status": 405,
+        "error": "Method Not Allowed",
+        "path": "/actuator/health"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/api",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:53.183Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/api/status",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:53.187Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/status"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/api/not-found",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "timestamp": "2026-10-22T22:29:53.191Z",
+        "status": 404,
+        "error": "Not Found",
+        "path": "/api/not-found"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/env",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/metrics",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/health/",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/actuator/health/liveness",
+      "method": "GET",
+      "status": 404,
+      "data": {
+        "error": "NOT_FOUND"
+      },
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "check": "production requestJson -> interpretHealth",
+      "state": "healthy",
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/api/../actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/api/%2e%2e/actuator/health",
+      "status": 400,
+      "body": "{\"error\":\"INVALID_PATH\"}",
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "path": "/%61pi/missing",
+      "status": 404,
+      "body": "{\"error\":\"NOT_FOUND\"}",
+      "pass": true
+    },
+    {
+      "phase": "recovered",
+      "check": "owned Boot stopped",
+      "result": {
+        "kind": "http",
+        "status": 502,
+        "data": {
+          "error": "UPSTREAM_UNAVAILABLE"
+        }
+      },
+      "pass": true
+    }
+  ]
+}

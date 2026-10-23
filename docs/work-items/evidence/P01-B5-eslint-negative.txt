@@ -1,0 +1,10 @@
+
+> marketplace-frontend@0.0.1 lint
+> eslint . --max-warnings 0
+
+
+D:\Workspace\ai-portfolio-practice\frontend\src\b5-lint-probe.ts
+  1:7  error  'unusedB5Probe' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+

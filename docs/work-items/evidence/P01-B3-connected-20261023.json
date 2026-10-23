@@ -1,0 +1,785 @@
+{
+  "date": "2026-10-23",
+  "browser": "Codex IAB",
+  "results": [
+    {
+      "test": "unknown",
+      "path": "/not-found",
+      "direct": {
+        "h1": "아직 없는 길이에요.",
+        "path": "/not-found"
+      },
+      "reload": "아직 없는 길이에요.",
+      "home": "/",
+      "pass": true
+    },
+    {
+      "test": "unknown",
+      "path": "/account/missing",
+      "direct": {
+        "h1": "아직 없는 길이에요.",
+        "path": "/account/missing"
+      },
+      "reload": "아직 없는 길이에요.",
+      "home": "/",
+      "pass": true
+    },
+    {
+      "test": "unknown",
+      "path": "/seller/missing",
+      "direct": {
+        "h1": "아직 없는 길이에요.",
+        "path": "/seller/missing"
+      },
+      "reload": "아직 없는 길이에요.",
+      "home": "/",
+      "pass": true
+    },
+    {
+      "test": "unknown",
+      "path": "/admin/missing",
+      "direct": {
+        "h1": "아직 없는 길이에요.",
+        "path": "/admin/missing"
+      },
+      "reload": "아직 없는 길이에요.",
+      "home": "/",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/",
+      "width": 375,
+      "links": [
+        {
+          "left": 18,
+          "right": 96,
+          "text": "둘러보기"
+        },
+        {
+          "left": 100,
+          "right": 178,
+          "text": "구매자"
+        },
+        {
+          "left": 182,
+          "right": 260,
+          "text": "판매자"
+        },
+        {
+          "left": 264,
+          "right": 342,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 360,
+      "title": "일상에 필요한 것들이 모이는 곳.",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/account",
+      "width": 375,
+      "links": [
+        {
+          "left": 18,
+          "right": 96,
+          "text": "둘러보기"
+        },
+        {
+          "left": 100,
+          "right": 178,
+          "text": "구매자"
+        },
+        {
+          "left": 182,
+          "right": 260,
+          "text": "판매자"
+        },
+        {
+          "left": 264,
+          "right": 342,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 360,
+      "title": "나의 쇼핑",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/seller",
+      "width": 375,
+      "links": [
+        {
+          "left": 18,
+          "right": 96,
+          "text": "둘러보기"
+        },
+        {
+          "left": 100,
+          "right": 178,
+          "text": "구매자"
+        },
+        {
+          "left": 182,
+          "right": 260,
+          "text": "판매자"
+        },
+        {
+          "left": 264,
+          "right": 342,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 360,
+      "title": "매대 운영",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/admin",
+      "width": 375,
+      "links": [
+        {
+          "left": 18,
+          "right": 96,
+          "text": "둘러보기"
+        },
+        {
+          "left": 100,
+          "right": 178,
+          "text": "구매자"
+        },
+        {
+          "left": 182,
+          "right": 260,
+          "text": "판매자"
+        },
+        {
+          "left": 264,
+          "right": 342,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 360,
+      "title": "사이트 운영",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/",
+      "width": 768,
+      "links": [
+        {
+          "left": 403,
+          "right": 487,
+          "text": "둘러보기"
+        },
+        {
+          "left": 495,
+          "right": 565,
+          "text": "구매자"
+        },
+        {
+          "left": 573,
+          "right": 643,
+          "text": "판매자"
+        },
+        {
+          "left": 651,
+          "right": 721,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 753,
+      "title": "일상에 필요한 것들이 모이는 곳.",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/account",
+      "width": 768,
+      "links": [
+        {
+          "left": 403,
+          "right": 487,
+          "text": "둘러보기"
+        },
+        {
+          "left": 495,
+          "right": 565,
+          "text": "구매자"
+        },
+        {
+          "left": 573,
+          "right": 643,
+          "text": "판매자"
+        },
+        {
+          "left": 651,
+          "right": 721,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 753,
+      "title": "나의 쇼핑",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/seller",
+      "width": 768,
+      "links": [
+        {
+          "left": 403,
+          "right": 487,
+          "text": "둘러보기"
+        },
+        {
+          "left": 495,
+          "right": 565,
+          "text": "구매자"
+        },
+        {
+          "left": 573,
+          "right": 643,
+          "text": "판매자"
+        },
+        {
+          "left": 651,
+          "right": 721,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 753,
+      "title": "매대 운영",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/admin",
+      "width": 768,
+      "links": [
+        {
+          "left": 403,
+          "right": 487,
+          "text": "둘러보기"
+        },
+        {
+          "left": 495,
+          "right": 565,
+          "text": "구매자"
+        },
+        {
+          "left": 573,
+          "right": 643,
+          "text": "판매자"
+        },
+        {
+          "left": 651,
+          "right": 721,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 753,
+      "title": "사이트 운영",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/",
+      "width": 1440,
+      "links": [
+        {
+          "left": 548.90625,
+          "right": 632.90625,
+          "text": "둘러보기"
+        },
+        {
+          "left": 640.90625,
+          "right": 710.90625,
+          "text": "구매자"
+        },
+        {
+          "left": 718.90625,
+          "right": 788.90625,
+          "text": "판매자"
+        },
+        {
+          "left": 796.90625,
+          "right": 866.90625,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 1425,
+      "title": "일상에 필요한 것들이 모이는 곳.",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/account",
+      "width": 1440,
+      "links": [
+        {
+          "left": 556.40625,
+          "right": 640.40625,
+          "text": "둘러보기"
+        },
+        {
+          "left": 648.40625,
+          "right": 718.40625,
+          "text": "구매자"
+        },
+        {
+          "left": 726.40625,
+          "right": 796.40625,
+          "text": "판매자"
+        },
+        {
+          "left": 804.40625,
+          "right": 874.40625,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 1440,
+      "title": "나의 쇼핑",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/seller",
+      "width": 1440,
+      "links": [
+        {
+          "left": 548.90625,
+          "right": 632.90625,
+          "text": "둘러보기"
+        },
+        {
+          "left": 640.90625,
+          "right": 710.90625,
+          "text": "구매자"
+        },
+        {
+          "left": 718.90625,
+          "right": 788.90625,
+          "text": "판매자"
+        },
+        {
+          "left": 796.90625,
+          "right": 866.90625,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 1425,
+      "title": "매대 운영",
+      "pass": true
+    },
+    {
+      "test": "responsive",
+      "path": "/admin",
+      "width": 1440,
+      "links": [
+        {
+          "left": 556.40625,
+          "right": 640.40625,
+          "text": "둘러보기"
+        },
+        {
+          "left": 648.40625,
+          "right": 718.40625,
+          "text": "구매자"
+        },
+        {
+          "left": 726.40625,
+          "right": 796.40625,
+          "text": "판매자"
+        },
+        {
+          "left": 804.40625,
+          "right": 874.40625,
+          "text": "운영자"
+        }
+      ],
+      "scroll": 1440,
+      "title": "사이트 운영",
+      "pass": true
+    },
+    {
+      "test": "keyboard",
+      "skip": {
+        "id": "",
+        "outline": "3px",
+        "path": "/seller",
+        "tag": "A",
+        "text": "본문으로 건너뛰기"
+      },
+      "main": {
+        "id": "main-content",
+        "outline": "3px",
+        "path": "/seller",
+        "tag": "MAIN",
+        "text": "판매자 공간매대 운영한눈에 보기내 매대상품 관리판매 주문매출·모의 정산화면 구조 미리보기로"
+      },
+      "menu": {
+        "id": "",
+        "outline": "3px",
+        "path": "/seller",
+        "tag": "A",
+        "text": "한눈에 보기"
+      },
+      "next": {
+        "id": "",
+        "outline": "3px",
+        "path": "/seller",
+        "tag": "A",
+        "text": "내 매대"
+      },
+      "previous": {
+        "id": "",
+        "outline": "3px",
+        "path": "/seller",
+        "tag": "A",
+        "text": "한눈에 보기"
+      },
+      "entered": {
+        "id": "main-content",
+        "outline": "3px",
+        "path": "/seller/store",
+        "tag": "MAIN",
+        "text": "판매자 공간매대 운영한눈에 보기내 매대상품 관리판매 주문매출·모의 정산화면 구조 미리보기로"
+      },
+      "pass": true
+    },
+    {
+      "test": "mobile-navigation-history",
+      "userPath": "/admin/users",
+      "back": "/admin",
+      "forward": "/admin/users",
+      "pass": true
+    },
+    {
+      "test": "seller-buyer",
+      "pass": true
+    },
+    {
+      "test": "home-input",
+      "literal": {
+        "children": 0,
+        "text": "<b>테스트 매대</b>"
+      },
+      "blank": "이름을 기다리는 매대",
+      "reset": "나의 작은 매대",
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/",
+      "direct": {
+        "active": [
+          "/"
+        ],
+        "h1": "일상에 필요한 것들이 모이는 곳.",
+        "path": "/",
+        "title": "일상에 필요한 것들이 모이는 곳. · 모아마켓"
+      },
+      "reload": {
+        "h1": "일상에 필요한 것들이 모이는 곳.",
+        "path": "/",
+        "title": "일상에 필요한 것들이 모이는 곳. · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/account",
+      "direct": {
+        "active": [
+          "/account",
+          "/account"
+        ],
+        "h1": "나의 쇼핑",
+        "path": "/account",
+        "title": "나의 쇼핑 · 모아마켓"
+      },
+      "reload": {
+        "h1": "나의 쇼핑",
+        "path": "/account",
+        "title": "나의 쇼핑 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/account/orders",
+      "direct": {
+        "active": [
+          "/account",
+          "/account/orders"
+        ],
+        "h1": "주문·배송",
+        "path": "/account/orders",
+        "title": "주문·배송 · 모아마켓"
+      },
+      "reload": {
+        "h1": "주문·배송",
+        "path": "/account/orders",
+        "title": "주문·배송 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/account/addresses",
+      "direct": {
+        "active": [
+          "/account",
+          "/account/addresses"
+        ],
+        "h1": "배송지",
+        "path": "/account/addresses",
+        "title": "배송지 · 모아마켓"
+      },
+      "reload": {
+        "h1": "배송지",
+        "path": "/account/addresses",
+        "title": "배송지 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/account/wishlist",
+      "direct": {
+        "active": [
+          "/account",
+          "/account/wishlist"
+        ],
+        "h1": "찜한 상품",
+        "path": "/account/wishlist",
+        "title": "찜한 상품 · 모아마켓"
+      },
+      "reload": {
+        "h1": "찜한 상품",
+        "path": "/account/wishlist",
+        "title": "찜한 상품 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/account/coupons",
+      "direct": {
+        "active": [
+          "/account",
+          "/account/coupons"
+        ],
+        "h1": "내 쿠폰",
+        "path": "/account/coupons",
+        "title": "내 쿠폰 · 모아마켓"
+      },
+      "reload": {
+        "h1": "내 쿠폰",
+        "path": "/account/coupons",
+        "title": "내 쿠폰 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/seller",
+      "direct": {
+        "active": [
+          "/seller",
+          "/seller"
+        ],
+        "h1": "매대 운영",
+        "path": "/seller",
+        "title": "매대 운영 · 모아마켓"
+      },
+      "reload": {
+        "h1": "매대 운영",
+        "path": "/seller",
+        "title": "매대 운영 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/seller/store",
+      "direct": {
+        "active": [
+          "/seller",
+          "/seller/store"
+        ],
+        "h1": "내 매대",
+        "path": "/seller/store",
+        "title": "내 매대 · 모아마켓"
+      },
+      "reload": {
+        "h1": "내 매대",
+        "path": "/seller/store",
+        "title": "내 매대 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/seller/products",
+      "direct": {
+        "active": [
+          "/seller",
+          "/seller/products"
+        ],
+        "h1": "상품 관리",
+        "path": "/seller/products",
+        "title": "상품 관리 · 모아마켓"
+      },
+      "reload": {
+        "h1": "상품 관리",
+        "path": "/seller/products",
+        "title": "상품 관리 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/seller/orders",
+      "direct": {
+        "active": [
+          "/seller",
+          "/seller/orders"
+        ],
+        "h1": "판매 주문",
+        "path": "/seller/orders",
+        "title": "판매 주문 · 모아마켓"
+      },
+      "reload": {
+        "h1": "판매 주문",
+        "path": "/seller/orders",
+        "title": "판매 주문 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/seller/settlements",
+      "direct": {
+        "active": [
+          "/seller",
+          "/seller/settlements"
+        ],
+        "h1": "매출·모의 정산",
+        "path": "/seller/settlements",
+        "title": "매출·모의 정산 · 모아마켓"
+      },
+      "reload": {
+        "h1": "매출·모의 정산",
+        "path": "/seller/settlements",
+        "title": "매출·모의 정산 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/admin",
+      "direct": {
+        "active": [
+          "/admin",
+          "/admin"
+        ],
+        "h1": "사이트 운영",
+        "path": "/admin",
+        "title": "사이트 운영 · 모아마켓"
+      },
+      "reload": {
+        "h1": "사이트 운영",
+        "path": "/admin",
+        "title": "사이트 운영 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/admin/users",
+      "direct": {
+        "active": [
+          "/admin",
+          "/admin/users"
+        ],
+        "h1": "회원 관리",
+        "path": "/admin/users",
+        "title": "회원 관리 · 모아마켓"
+      },
+      "reload": {
+        "h1": "회원 관리",
+        "path": "/admin/users",
+        "title": "회원 관리 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/admin/sellers",
+      "direct": {
+        "active": [
+          "/admin",
+          "/admin/sellers"
+        ],
+        "h1": "판매자 심사",
+        "path": "/admin/sellers",
+        "title": "판매자 심사 · 모아마켓"
+      },
+      "reload": {
+        "h1": "판매자 심사",
+        "path": "/admin/sellers",
+        "title": "판매자 심사 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/admin/moderation",
+      "direct": {
+        "active": [
+          "/admin",
+          "/admin/moderation"
+        ],
+        "h1": "콘텐츠 조치",
+        "path": "/admin/moderation",
+        "title": "콘텐츠 조치 · 모아마켓"
+      },
+      "reload": {
+        "h1": "콘텐츠 조치",
+        "path": "/admin/moderation",
+        "title": "콘텐츠 조치 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "route",
+      "path": "/admin/orders",
+      "direct": {
+        "active": [
+          "/admin",
+          "/admin/orders"
+        ],
+        "h1": "거래 관리",
+        "path": "/admin/orders",
+        "title": "거래 관리 · 모아마켓"
+      },
+      "reload": {
+        "h1": "거래 관리",
+        "path": "/admin/orders",
+        "title": "거래 관리 · 모아마켓"
+      },
+      "pass": true
+    },
+    {
+      "test": "home-unmount-reset",
+      "pass": true
+    }
+  ],
+  "console": []
+}
