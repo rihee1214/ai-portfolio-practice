@@ -1,5 +1,7 @@
 # JDBC·Flyway 실행 안내 — P01-C2
 
+C3의 테스트 전용 조회·트랜잭션 패턴과 실행 안내는 [JDBC 트랜잭션 실습](jdbc-transactions.md)을 따른다. 아래 C3 이후 표현은 C2 당시 기록이다.
+
 JDBC는 Java와 PostgreSQL 사이의 SQL 연결, HikariCP는 연결 풀, Flyway는 SQL 변경 이력을 담당한다. Spring JDBC의 JdbcTemplate/JdbcClient 자동 구성을 사용할 준비를 했으며 업무 조회와 트랜잭션 구현은 P01-C3 이후다. JPA·Spring Data JDBC를 추가하지 않았다.
 
 ## 파일과 시작 흐름

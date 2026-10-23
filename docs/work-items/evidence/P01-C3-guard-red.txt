@@ -1,0 +1,15 @@
+FAIL target rejection 0
+FAIL target rejection 1
+FAIL target rejection 2
+FAIL target rejection 3
+FAIL target rejection 4
+FAIL target rejection 5
+FAIL target rejection 6
+FAIL target rejection 7
+FAIL target rejection 8
+FAIL target rejection 9
+FAIL target rejection 10
+FAIL target rejection 11
+PASS dedicated target accepted
+Exception in thread "main" java.lang.AssertionError: Target guard failures: 12
+	at com.example.marketplace.jdbcfixture.TargetContract.main(TargetContract.java:38)

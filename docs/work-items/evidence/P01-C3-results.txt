@@ -1,0 +1,26 @@
+PASS actual database mismatch rejected
+PASS actual dedicated database and unprivileged user accepted
+PASS actual administrator connection rejected
+PASS production V1 plus test-only V2 migrate
+PASS migration repeat has no pending changes
+PASS named parameter quote unicode decimal null mapping
+PASS non-null text mapping
+PASS missing row maps to empty
+PASS SQL injection remains a value
+PASS commit visible from independent connection
+PASS transfer entry committed
+PASS duplicate reference fails after both balance updates
+PASS constraint failure rolls back both updates
+PASS original committed entry survives failed retry
+PASS missing recipient raises checked failure after debit
+PASS checked exception rolls back debit
+PASS checked failure leaves no entry
+PASS negative balance database constraint
+PASS failed debit leaves both balances unchanged
+PASS zero amount rejected
+PASS same account rejected
+PASS caught REQUIRED failure prevents outer commit
+PASS REQUIRED rollback includes earlier successful transfer
+PASS REQUIRED rollback removes earlier transfer entry
+PASS foreign key enforced
+PASS foreign key failure leaves no entry
