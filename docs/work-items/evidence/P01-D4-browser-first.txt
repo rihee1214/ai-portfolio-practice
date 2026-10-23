@@ -1,0 +1,22 @@
+
+> marketplace-frontend@0.0.1 test:e2e
+> playwright test
+
+[WebServer] (node:44728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "../vite/apiProxy" without a file extension (e2e/vite.config.ts:3:26). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[WebServer] error when starting dev server:
+[WebServer] Error: listen EACCES: permission denied 127.0.0.1:14174
+[WebServer]     at Server.setupListenHandle [as _listen2] (node:net:2368:21)
+[WebServer]     at listenInCluster (node:net:2499:12)
+[WebServer]     at node:net:2728:7
+[WebServer]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[WebServer]   code: 'EACCES',
+[WebServer]   errno: -4092,
+[WebServer]   syscall: 'listen',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 14174
+[WebServer] }
+Error: Process from config.webServer was not able to start. Exit code: 1

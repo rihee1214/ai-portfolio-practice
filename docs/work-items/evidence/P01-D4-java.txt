@@ -1,0 +1,1764 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Artifact org.codehaus.plexus:plexus-xml:jar:3.0.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.codehaus.plexus:plexus-xml:jar:3.0.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.jar
+Progress (1): 0.6/9.8 kB
+Progress (1): 1.9/9.8 kB
+Progress (1): 3.2/9.8 kB
+Progress (1): 4.5/9.8 kB
+Progress (1): 5.9/9.8 kB
+Progress (1): 7.3/9.8 kB
+Progress (1): 8.7/9.8 kB
+Progress (1): 9.8 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.jar (9.8 kB at 27 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-impl/4.0.0/maven-reporting-impl-4.0.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-site-model/2.0.0/doxia-site-model-2.0.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-site-renderer/2.0.0/doxia-site-renderer-2.0.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-skin-model/2.0.0/doxia-skin-model-2.0.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-xhtml5/2.0.0/doxia-module-xhtml5-2.0.0.jar
+Progress (1): 0.9/17 kB
+Progress (1): 2.3/17 kB
+Progress (1): 3.6/17 kB
+Progress (1): 5.0/17 kB
+Progress (1): 6.4/17 kB
+Progress (1): 7.7/17 kB
+Progress (1): 9.1/17 kB
+Progress (1): 10/17 kB
+Progress (1): 12/17 kB
+Progress (1): 13/17 kB
+Progress (1): 15/17 kB
+Progress (1): 16/17 kB
+Progress (1): 17 kB
+Progress (2): 17 kB | 0.9/16 kB
+Progress (2): 17 kB | 2.3/16 kB
+Progress (2): 17 kB | 3.6/16 kB
+Progress (2): 17 kB | 5.0/16 kB
+Progress (3): 17 kB | 5.0/16 kB | 0.9/21 kB
+Progress (3): 17 kB | 6.4/16 kB | 0.9/21 kB
+Progress (3): 17 kB | 6.4/16 kB | 2.3/21 kB
+Progress (3): 17 kB | 7.7/16 kB | 2.3/21 kB
+Progress (3): 17 kB | 7.7/16 kB | 3.6/21 kB
+Progress (3): 17 kB | 9.1/16 kB | 3.6/21 kB
+Progress (3): 17 kB | 9.1/16 kB | 4.1/21 kB
+Progress (3): 17 kB | 10/16 kB | 4.1/21 kB
+Progress (3): 17 kB | 10/16 kB | 5.5/21 kB
+Progress (3): 17 kB | 12/16 kB | 5.5/21 kB
+Progress (3): 17 kB | 12/16 kB | 6.8/21 kB
+Progress (3): 17 kB | 13/16 kB | 6.8/21 kB
+Progress (3): 17 kB | 13/16 kB | 8.2/21 kB
+Progress (3): 17 kB | 15/16 kB | 8.2/21 kB
+Progress (3): 17 kB | 15/16 kB | 9.6/21 kB
+Progress (3): 17 kB | 16/16 kB | 9.6/21 kB
+Progress (3): 17 kB | 16/16 kB | 11/21 kB
+Progress (3): 17 kB | 16 kB | 11/21 kB
+Progress (3): 17 kB | 16 kB | 12/21 kB
+Progress (3): 17 kB | 16 kB | 14/21 kB
+Progress (3): 17 kB | 16 kB | 15/21 kB
+Progress (3): 17 kB | 16 kB | 16/21 kB
+Progress (3): 17 kB | 16 kB | 18/21 kB
+Progress (3): 17 kB | 16 kB | 19/21 kB
+Progress (3): 17 kB | 16 kB | 21/21 kB
+Progress (3): 17 kB | 16 kB | 21 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 0.9/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 2.3/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 3.6/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 5.0/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 6.4/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 7.7/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 9.1/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 10/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 11/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 13/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 14/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 15/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 17/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 18/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 20/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 21/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 22/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 24/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 25/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 26/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 28/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 29/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 31/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 32/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 33/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 35/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 36/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 37/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 39/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 40/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 41/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 43/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 44/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 46/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 47/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 48/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 50/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 51/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 52/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 54/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 55/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 59/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 64/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 68/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 72/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 76/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 81/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 85/86 kB
+Progress (4): 17 kB | 16 kB | 21 kB | 86 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 0.9/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 2.3/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 3.6/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 5.0/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 6.4/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 7.7/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 9.1/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 10/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 12/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 13/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 15/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 16/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 17/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 19/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 20/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 21/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 23/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 24/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 25/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 27/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 28/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 30/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 31/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 32/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 34/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 35/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 36/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 38/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 39/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 41/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 42/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 43/44 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 86 kB | 44 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-site-model/2.0.0/doxia-site-model-2.0.0.jar (86 kB at 1.1 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-velocity/2.2.0/plexus-velocity-2.2.0.jar
+Progress (5): 17 kB | 16 kB | 21 kB | 44 kB | 0.9/5.7 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 44 kB | 2.3/5.7 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 44 kB | 3.6/5.7 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 44 kB | 5.0/5.7 kB
+Progress (5): 17 kB | 16 kB | 21 kB | 44 kB | 5.7 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-velocity/2.2.0/plexus-velocity-2.2.0.jar (5.7 kB at 41 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/velocity/velocity-engine-core/2.4/velocity-engine-core-2.4.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-skin-model/2.0.0/doxia-skin-model-2.0.0.jar (16 kB at 113 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/velocity/tools/velocity-tools-generic/3.1/velocity-tools-generic-3.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-impl/4.0.0/maven-reporting-impl-4.0.0.jar (21 kB at 134 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-apt/2.0.0/doxia-module-apt-2.0.0.jar
+Progress (3): 17 kB | 44 kB | 0.9/510 kB
+Progress (3): 17 kB | 44 kB | 2.3/510 kB
+Progress (3): 17 kB | 44 kB | 3.6/510 kB
+Progress (3): 17 kB | 44 kB | 7.9/510 kB
+Progress (3): 17 kB | 44 kB | 11/510 kB
+Progress (3): 17 kB | 44 kB | 16/510 kB
+Progress (3): 17 kB | 44 kB | 20/510 kB
+Progress (3): 17 kB | 44 kB | 24/510 kB
+Progress (3): 17 kB | 44 kB | 28/510 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-xhtml5/2.0.0/doxia-module-xhtml5-2.0.0.jar (17 kB at 108 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-xdoc/2.0.0/doxia-module-xdoc-2.0.0.jar
+Progress (2): 44 kB | 33/510 kB
+Progress (2): 44 kB | 37/510 kB
+Progress (2): 44 kB | 41/510 kB
+Progress (2): 44 kB | 45/510 kB
+Progress (2): 44 kB | 49/510 kB
+Progress (2): 44 kB | 54/510 kB
+Progress (2): 44 kB | 58/510 kB
+Progress (2): 44 kB | 61/510 kB
+Progress (2): 44 kB | 65/510 kB
+Progress (2): 44 kB | 69/510 kB
+Progress (2): 44 kB | 73/510 kB
+Progress (2): 44 kB | 77/510 kB
+Progress (2): 44 kB | 82/510 kB
+Progress (2): 44 kB | 86/510 kB
+Progress (2): 44 kB | 90/510 kB
+Progress (2): 44 kB | 94/510 kB
+Progress (2): 44 kB | 99/510 kB
+Progress (2): 44 kB | 103/510 kB
+Progress (2): 44 kB | 107/510 kB
+Progress (2): 44 kB | 111/510 kB
+Progress (2): 44 kB | 115/510 kB
+Progress (2): 44 kB | 120/510 kB
+Progress (2): 44 kB | 124/510 kB
+Progress (2): 44 kB | 126/510 kB
+Progress (2): 44 kB | 130/510 kB
+Progress (2): 44 kB | 135/510 kB
+Progress (2): 44 kB | 139/510 kB
+Progress (2): 44 kB | 143/510 kB
+Progress (2): 44 kB | 147/510 kB
+Progress (2): 44 kB | 151/510 kB
+Progress (2): 44 kB | 156/510 kB
+Progress (2): 44 kB | 160/510 kB
+Progress (2): 44 kB | 164/510 kB
+Progress (2): 44 kB | 168/510 kB
+Progress (2): 44 kB | 185/510 kB
+Progress (2): 44 kB | 200/510 kB
+Progress (2): 44 kB | 217/510 kB
+Progress (2): 44 kB | 233/510 kB
+Progress (2): 44 kB | 250/510 kB
+Progress (2): 44 kB | 266/510 kB
+Progress (2): 44 kB | 282/510 kB
+Progress (2): 44 kB | 299/510 kB
+Progress (2): 44 kB | 315/510 kB
+Progress (2): 44 kB | 331/510 kB
+Progress (2): 44 kB | 348/510 kB
+Progress (2): 44 kB | 364/510 kB
+Progress (2): 44 kB | 381/510 kB
+Progress (2): 44 kB | 397/510 kB
+Progress (2): 44 kB | 413/510 kB
+Progress (3): 44 kB | 413/510 kB | 3.2/217 kB
+Progress (3): 44 kB | 413/510 kB | 7.4/217 kB
+Progress (3): 44 kB | 413/510 kB | 12/217 kB
+Progress (3): 44 kB | 413/510 kB | 16/217 kB
+Progress (3): 44 kB | 413/510 kB | 20/217 kB
+Progress (3): 44 kB | 413/510 kB | 24/217 kB
+Progress (3): 44 kB | 413/510 kB | 28/217 kB
+Progress (3): 44 kB | 413/510 kB | 32/217 kB
+Progress (3): 44 kB | 413/510 kB | 36/217 kB
+Progress (3): 44 kB | 413/510 kB | 40/217 kB
+Progress (3): 44 kB | 413/510 kB | 45/217 kB
+Progress (3): 44 kB | 413/510 kB | 49/217 kB
+Progress (3): 44 kB | 413/510 kB | 53/217 kB
+Progress (3): 44 kB | 413/510 kB | 57/217 kB
+Progress (3): 44 kB | 413/510 kB | 61/217 kB
+Progress (3): 44 kB | 430/510 kB | 61/217 kB
+Progress (3): 44 kB | 446/510 kB | 61/217 kB
+Progress (3): 44 kB | 463/510 kB | 61/217 kB
+Progress (3): 44 kB | 479/510 kB | 61/217 kB
+Progress (3): 44 kB | 495/510 kB | 61/217 kB
+Progress (3): 44 kB | 510 kB | 61/217 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 0.9/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 2.3/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 3.6/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 5.0/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 6.4/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 7.7/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 9.1/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 10/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 12/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 13/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 15/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 16/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 17/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 19/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 20/54 kB
+Progress (4): 44 kB | 510 kB | 61/217 kB | 21/54 kB
+Progress (4): 44 kB | 510 kB | 65/217 kB | 21/54 kB
+Progress (4): 44 kB | 510 kB | 65/217 kB | 23/54 kB
+Progress (4): 44 kB | 510 kB | 65/217 kB | 24/54 kB
+Progress (4): 44 kB | 510 kB | 65/217 kB | 25/54 kB
+Progress (4): 44 kB | 510 kB | 65/217 kB | 27/54 kB
+Progress (4): 44 kB | 510 kB | 69/217 kB | 27/54 kB
+Progress (4): 44 kB | 510 kB | 69/217 kB | 28/54 kB
+Progress (4): 44 kB | 510 kB | 69/217 kB | 30/54 kB
+Progress (4): 44 kB | 510 kB | 69/217 kB | 31/54 kB
+Progress (4): 44 kB | 510 kB | 73/217 kB | 31/54 kB
+Progress (4): 44 kB | 510 kB | 73/217 kB | 32/54 kB
+Progress (4): 44 kB | 510 kB | 77/217 kB | 32/54 kB
+Progress (4): 44 kB | 510 kB | 77/217 kB | 37/54 kB
+Progress (4): 44 kB | 510 kB | 77/217 kB | 41/54 kB
+Progress (4): 44 kB | 510 kB | 82/217 kB | 41/54 kB
+Progress (4): 44 kB | 510 kB | 82/217 kB | 45/54 kB
+Progress (4): 44 kB | 510 kB | 86/217 kB | 45/54 kB
+Progress (4): 44 kB | 510 kB | 86/217 kB | 49/54 kB
+Progress (4): 44 kB | 510 kB | 90/217 kB | 49/54 kB
+Progress (4): 44 kB | 510 kB | 90/217 kB | 53/54 kB
+Progress (4): 44 kB | 510 kB | 94/217 kB | 53/54 kB
+Progress (4): 44 kB | 510 kB | 94/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 99/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 103/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 107/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 111/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 115/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 120/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 124/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 126/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 130/217 kB | 54 kB
+Progress (4): 44 kB | 510 kB | 147/217 kB | 54 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 0.9/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 2.3/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 3.6/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 5.0/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 6.4/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 7.7/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 9.1/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 10/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 12/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 13/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 15/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 16/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 17/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 19/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 20/35 kB
+Progress (5): 44 kB | 510 kB | 147/217 kB | 54 kB | 21/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 21/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 23/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 24/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 26/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 27/35 kB
+Progress (5): 44 kB | 510 kB | 163/217 kB | 54 kB | 28/35 kB
+Progress (5): 44 kB | 510 kB | 179/217 kB | 54 kB | 28/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 28/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 29/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 30/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 32/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 33/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 35/35 kB
+Progress (5): 44 kB | 510 kB | 196/217 kB | 54 kB | 35 kB
+Progress (5): 44 kB | 510 kB | 212/217 kB | 54 kB | 35 kB
+Progress (5): 44 kB | 510 kB | 217 kB | 54 kB | 35 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/velocity/velocity-engine-core/2.4/velocity-engine-core-2.4.jar (510 kB at 2.5 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-apt/2.0.0/doxia-module-apt-2.0.0.jar (54 kB at 260 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/velocity/tools/velocity-tools-generic/3.1/velocity-tools-generic-3.1.jar (217 kB at 1.0 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/2.0.0/doxia-sink-api-2.0.0.jar
+Progress (3): 44 kB | 35 kB | 7.7/216 kB
+Progress (3): 44 kB | 35 kB | 11/216 kB
+Progress (3): 44 kB | 35 kB | 28/216 kB
+Progress (3): 44 kB | 35 kB | 44/216 kB
+Progress (3): 44 kB | 35 kB | 61/216 kB
+Progress (3): 44 kB | 35 kB | 77/216 kB
+Progress (3): 44 kB | 35 kB | 93/216 kB
+Progress (3): 44 kB | 35 kB | 110/216 kB
+Progress (3): 44 kB | 35 kB | 126/216 kB
+Progress (3): 44 kB | 35 kB | 126/216 kB
+Progress (4): 44 kB | 35 kB | 126/216 kB | 0.9/434 kB
+Progress (4): 44 kB | 35 kB | 126/216 kB | 5.1/434 kB
+Progress (4): 44 kB | 35 kB | 126/216 kB | 9.3/434 kB
+Progress (4): 44 kB | 35 kB | 142/216 kB | 9.3/434 kB
+Progress (4): 44 kB | 35 kB | 159/216 kB | 9.3/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 9.3/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 14/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 18/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 22/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 26/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 29/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 33/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 37/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 41/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 46/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 50/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 50/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 54/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 59/434 kB
+Progress (4): 44 kB | 35 kB | 175/216 kB | 63/434 kB
+Progress (4): 44 kB | 35 kB | 192/216 kB | 63/434 kB
+Progress (4): 44 kB | 35 kB | 208/216 kB | 63/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 63/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 66/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 70/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 74/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 78/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 82/434 kB
+Progress (4): 44 kB | 35 kB | 216 kB | 87/434 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 87/434 kB | 3.8/11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 91/434 kB | 3.8/11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 95/434 kB | 3.8/11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 95/434 kB | 8.0/11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 95/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 99/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 104/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 108/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 112/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 115/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 119/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 123/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 127/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 132/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 136/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 140/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 144/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 149/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 153/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 157/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 161/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 178/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 180/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 180/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 197/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 213/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 229/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 246/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 262/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 279/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 295/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 311/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 328/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 344/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 360/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 377/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 393/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 410/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 426/434 kB | 11 kB
+Progress (5): 44 kB | 35 kB | 216 kB | 434 kB | 11 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.jar (216 kB at 819 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-core/2.0.0/doxia-core-2.0.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.jar (434 kB at 1.6 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-integration-tools/2.0.0/doxia-integration-tools-2.0.0.jar
+Progress (4): 44 kB | 35 kB | 11 kB | 7.7/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 7.7/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 24/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 40/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 57/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 73/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 90/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 106/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 115/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 131/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 147/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 164/168 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 168 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 3.2/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 7.4/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 11/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 16/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 20/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 24/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 28/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 32/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 36/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 40/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 45/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 49/50 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 168 kB | 50 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-core/2.0.0/doxia-core-2.0.0.jar (168 kB at 537 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-component-annotations/2.2.0/plexus-component-annotations-2.2.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-integration-tools/2.0.0/doxia-integration-tools-2.0.0.jar (50 kB at 157 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-resources/1.3.0/plexus-resources-1.3.0.jar
+Progress (4): 44 kB | 35 kB | 11 kB | 3.8/4.2 kB
+Progress (4): 44 kB | 35 kB | 11 kB | 4.2 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 4.2 kB | 7.7/23 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 4.2 kB | 7.7/23 kB
+Progress (5): 44 kB | 35 kB | 11 kB | 4.2 kB | 23 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-site-renderer/2.0.0/doxia-site-renderer-2.0.0.jar (44 kB at 127 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-xml/3.0.1/plexus-xml-3.0.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/2.0.0/doxia-sink-api-2.0.0.jar (11 kB at 33 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/puppycrawl/tools/checkstyle/9.3/checkstyle-9.3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-xml/3.0.1/plexus-xml-3.0.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/info/picocli/picocli/4.6.2/picocli-4.6.2.jar
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0.1/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0.1/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0.1/2.0 MB
+Progress (4): 35 kB | 4.2 kB | 23 kB | 0.1/2.0 MB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-component-annotations/2.2.0/plexus-component-annotations-2.2.0.jar (4.2 kB at 11 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar
+Progress (3): 35 kB | 23 kB | 0.1/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.1/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.1/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.1/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.1/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.2/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.3/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.4/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.4/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.4/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.4/2.0 MB
+Progress (3): 35 kB | 23 kB | 0.4/2.0 MB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-module-xdoc/2.0.0/doxia-module-xdoc-2.0.0.jar (35 kB at 92 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar
+Progress (2): 23 kB | 0.4/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.5/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.6/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.7/2.0 MB
+Progress (2): 23 kB | 0.8/2.0 MB
+Progress (3): 23 kB | 0.8/2.0 MB | 3.2/247 kB
+Progress (3): 23 kB | 0.8/2.0 MB | 11/247 kB
+Progress (3): 23 kB | 0.8/2.0 MB | 28/247 kB
+Progress (4): 23 kB | 0.8/2.0 MB | 28/247 kB | 7.7/403 kB
+Progress (4): 23 kB | 0.8/2.0 MB | 44/247 kB | 7.7/403 kB
+Progress (4): 23 kB | 0.8/2.0 MB | 44/247 kB | 16/403 kB
+Progress (4): 23 kB | 0.8/2.0 MB | 44/247 kB | 32/403 kB
+Progress (4): 23 kB | 0.8/2.0 MB | 44/247 kB | 49/403 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 44/247 kB | 49/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 49/247 kB | 49/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 66/247 kB | 49/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 82/247 kB | 49/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 98/247 kB | 49/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 98/247 kB | 65/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 115/247 kB | 65/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 65/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 65/403 kB | 4.1/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 65/403 kB | 12/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 65/403 kB | 29/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 65/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 81/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 98/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 114/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 131/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 131/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 147/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 163/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 180/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 196/403 kB | 45/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 196/403 kB | 61/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 196/403 kB | 78/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 212/403 kB | 78/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 78/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 94/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 111/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 127/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 143/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 143/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 160/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 160/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 176/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 193/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 193/337 kB
+Progress (5): 23 kB | 0.8/2.0 MB | 131/247 kB | 229/403 kB | 209/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 209/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 225/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 225/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 0.9/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 229/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 245/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 245/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 262/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 262/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 278/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 294/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 311/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 311/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 311/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 328/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 328/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 344/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.0/2.0 MB | 131/247 kB | 344/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 344/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.1/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 242/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.2/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.3/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 131/247 kB | 360/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 131/247 kB | 377/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 131/247 kB | 393/403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 131/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 147/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 164/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 180/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 180/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 197/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 197/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 213/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 213/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 213/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 229/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 229/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 246/247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.4/2.0 MB | 247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 258/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 262/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 262/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 262/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 262/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 279/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 279/337 kB
+Progress (5): 23 kB | 1.5/2.0 MB | 247 kB | 403 kB | 295/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 295/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.6/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 311/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.7/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 328/337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.8/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 1.9/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 2.0/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 2.0/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 2.0/2.0 MB | 247 kB | 403 kB | 337 kB
+Progress (5): 23 kB | 2.0 MB | 247 kB | 403 kB | 337 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/info/picocli/picocli/4.6.2/picocli-4.6.2.jar (403 kB at 803 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/google/guava/guava/31.0.1-jre/guava-31.0.1-jre.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar (247 kB at 486 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.7.1/error_prone_annotations-2.7.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-resources/1.3.0/plexus-resources-1.3.0.jar (23 kB at 45 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/reflections/reflections/0.10.2/reflections-0.10.2.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar (337 kB at 659 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/javassist/javassist/3.28.0-GA/javassist-3.28.0-GA.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/com/puppycrawl/tools/checkstyle/9.3/checkstyle-9.3.jar (2.0 MB at 3.9 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/net/sf/saxon/Saxon-HE/10.6/Saxon-HE-10.6.jar
+Progress (1): 0/3.0 MB
+Progress (1): 0/3.0 MB
+Progress (1): 0/3.0 MB
+Progress (1): 0/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.1/3.0 MB
+Progress (1): 0.2/3.0 MB
+Progress (1): 0.2/3.0 MB
+Progress (1): 0.2/3.0 MB
+Progress (1): 0.2/3.0 MB
+Progress (1): 0.2/3.0 MB
+Progress (2): 0.2/3.0 MB | 4.1/130 kB
+Progress (2): 0.2/3.0 MB | 12/130 kB
+Progress (2): 0.2/3.0 MB | 29/130 kB
+Progress (2): 0.2/3.0 MB | 45/130 kB
+Progress (2): 0.2/3.0 MB | 61/130 kB
+Progress (2): 0.2/3.0 MB | 61/130 kB
+Progress (2): 0.3/3.0 MB | 61/130 kB
+Progress (2): 0.3/3.0 MB | 78/130 kB
+Progress (3): 0.3/3.0 MB | 78/130 kB | 7.7/15 kB
+Progress (3): 0.3/3.0 MB | 78/130 kB | 15 kB
+Progress (3): 0.3/3.0 MB | 94/130 kB | 15 kB
+Progress (3): 0.3/3.0 MB | 111/130 kB | 15 kB
+Progress (3): 0.3/3.0 MB | 127/130 kB | 15 kB
+Progress (3): 0.3/3.0 MB | 130 kB | 15 kB
+Progress (3): 0.3/3.0 MB | 130 kB | 15 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 4.1/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 12/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 12/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 29/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 45/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 45/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 45/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 61/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 66/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 82/852 kB
+Progress (4): 0.3/3.0 MB | 130 kB | 15 kB | 82/852 kB
+Progress (4): 0.4/3.0 MB | 130 kB | 15 kB | 82/852 kB
+Progress (4): 0.4/3.0 MB | 130 kB | 15 kB | 98/852 kB
+Progress (4): 0.4/3.0 MB | 130 kB | 15 kB | 98/852 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/reflections/reflections/0.10.2/reflections-0.10.2.jar (130 kB at 234 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.17.0/commons-lang3-3.17.0.jar
+Progress (3): 0.4/3.0 MB | 15 kB | 115/852 kB
+Progress (3): 0.4/3.0 MB | 15 kB | 131/852 kB
+Progress (3): 0.4/3.0 MB | 15 kB | 147/852 kB
+Progress (3): 0.4/3.0 MB | 15 kB | 164/852 kB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.4/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 164/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 180/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 197/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 213/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 229/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 246/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 262/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 279/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 295/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB
+Progress (4): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 7.7/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 16/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 24/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 40/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 57/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 73/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 90/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 106/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 122/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 139/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 311/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 328/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 344/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 360/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 377/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 377/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 393/852 kB | 0.1/5.8 MB | 155/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 393/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 393/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.5/3.0 MB | 15 kB | 410/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 410/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 426/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 426/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 442/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 442/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 459/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 459/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 475/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 475/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 492/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 508/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 508/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.6/3.0 MB | 15 kB | 524/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 524/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 541/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 557/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 557/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 573/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 573/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 590/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 590/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.7/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 606/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.8/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 0.9/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.0/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 623/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 639/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 639/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 655/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 655/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 655/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.1/3.0 MB | 15 kB | 672/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 672/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 688/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 688/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 688/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 705/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 172/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 188/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 204/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 221/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 221/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 221/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 221/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 233/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 721/852 kB | 0.1/5.8 MB | 250/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 737/852 kB | 0.1/5.8 MB | 250/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 737/852 kB | 0.1/5.8 MB | 266/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 737/852 kB | 0.1/5.8 MB | 282/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 282/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 299/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 315/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 331/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 348/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 364/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 364/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 381/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 397/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 754/852 kB | 0.1/5.8 MB | 413/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 770/852 kB | 0.1/5.8 MB | 413/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 770/852 kB | 0.1/5.8 MB | 430/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 770/852 kB | 0.1/5.8 MB | 446/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 786/852 kB | 0.1/5.8 MB | 446/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 786/852 kB | 0.1/5.8 MB | 463/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 803/852 kB | 0.1/5.8 MB | 463/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 803/852 kB | 0.1/5.8 MB | 479/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 819/852 kB | 0.1/5.8 MB | 479/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 819/852 kB | 0.1/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 836/852 kB | 0.1/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.1/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.1/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.1/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 491/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 507/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 523/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 523/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 523/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 540/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 556/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 556/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 572/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 572/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 589/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 605/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 605/674 kB
+Progress (5): 1.2/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 622/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 622/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 638/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 638/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 654/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 671/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 671/674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.3/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.4/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.5/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.6/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.7/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.8/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 1.9/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+Progress (5): 2.0/3.0 MB | 15 kB | 852 kB | 0.2/5.8 MB | 674 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/javassist/javassist/3.28.0-GA/javassist-3.28.0-GA.jar (852 kB at 1.2 MB/s)
+Progress (4): 2.0/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.0/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.0/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.0/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.0/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.1/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+Progress (4): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB | 674 kB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.17.0/commons-lang3-3.17.0.jar (674 kB at 962 kB/s)
+Progress (3): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB
+Progress (3): 2.2/3.0 MB | 15 kB | 0.2/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.2/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.2/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.2/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.3/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.4/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+Progress (3): 2.5/3.0 MB | 15 kB | 0.3/5.8 MB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.7.1/error_prone_annotations-2.7.1.jar (15 kB at 21 kB/s)
+Progress (2): 2.5/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.5/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.3/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.6/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.7/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.8/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 2.9/3.0 MB | 0.4/5.8 MB
+Progress (2): 3.0/3.0 MB | 0.4/5.8 MB
+Progress (2): 3.0 MB | 0.4/5.8 MB
+Progress (2): 3.0 MB | 0.4/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.5/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.6/5.8 MB
+Progress (2): 3.0 MB | 0.7/5.8 MB
+Progress (2): 3.0 MB | 0.7/5.8 MB
+Progress (2): 3.0 MB | 0.7/5.8 MB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/com/google/guava/guava/31.0.1-jre/guava-31.0.1-jre.jar (3.0 MB at 3.9 MB/s)
+Progress (1): 0.7/5.8 MB
+Progress (1): 0.7/5.8 MB
+Progress (1): 0.7/5.8 MB
+Progress (1): 0.7/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.8/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 0.9/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.0/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.1/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.2/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.3/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.4/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.5/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.6/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.7/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.8/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 1.9/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.0/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.1/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.2/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.3/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.4/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.5/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.6/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.7/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.8/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 2.9/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.0/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.1/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.2/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.3/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.4/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.5/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.6/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.7/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.8/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 3.9/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.0/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.1/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.2/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.3/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.4/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.5/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.6/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.7/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.8/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 4.9/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.0/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.1/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.2/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.3/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.4/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.5/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.6/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.7/5.8 MB
+Progress (1): 5.8/5.8 MB
+Progress (1): 5.8 MB
+
+Downloaded from central: https://repo.maven.apache.org/maven2/net/sf/saxon/Saxon-HE/10.6/Saxon-HE-10.6.jar (5.8 MB at 5.4 MB/s)
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Artifact org.apache.maven.shared:maven-filtering:jar:3.5.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-build-api:jar:1.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.eclipse.sisu:org.eclipse.sisu.plexus:jar:0.9.0.M4 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-interpolation:jar:1.29 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.shared:maven-filtering:jar:3.5.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-build-api:jar:1.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.eclipse.sisu:org.eclipse.sisu.plexus:jar:0.9.0.M4 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-interpolation:jar:1.29 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-filtering/3.5.0/maven-filtering-3.5.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-filtering/3.5.0/maven-filtering-3.5.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-build-api/1.2.0/plexus-build-api-1.2.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M4/org.eclipse.sisu.plexus-0.9.0.M4.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.29/plexus-interpolation-1.29.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.6.0/plexus-utils-3.6.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-build-api/1.2.0/plexus-build-api-1.2.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.6.0/plexus-utils-3.6.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M4/org.eclipse.sisu.plexus-0.9.0.M4.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.29/plexus-interpolation-1.29.jar (0 B at 0 B/s)
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\d4-build\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\d4-build\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Artifact org.ow2.asm:asm:jar:9.9.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-java:jar:1.5.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact com.thoughtworks.qdox:qdox:jar:2.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-api:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-manager:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-javac:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:4.0.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.ow2.asm:asm:jar:9.9.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-java:jar:1.5.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact com.thoughtworks.qdox:qdox:jar:2.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-api:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-manager:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-compiler-javac:jar:2.16.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:4.0.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.9.1/asm-9.9.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.9.1/asm-9.9.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-java/1.5.2/plexus-java-1.5.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/com/thoughtworks/qdox/qdox/2.2.0/qdox-2.2.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-api/2.16.2/plexus-compiler-api-2.16.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-manager/2.16.2/plexus-compiler-manager-2.16.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-javac/2.16.2/plexus-compiler-javac-2.16.2.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-java/1.5.2/plexus-java-1.5.2.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.2/plexus-utils-4.0.2.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-manager/2.16.2/plexus-compiler-manager-2.16.2.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/qdox/qdox/2.2.0/qdox-2.2.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-api/2.16.2/plexus-compiler-api-2.16.2.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-javac/2.16.2/plexus-compiler-javac-2.16.2.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.2/plexus-utils-4.0.2.jar (0 B at 0 B/s)
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to ..\.local-tools\d4-build\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\d4-build\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 16 source files with javac [debug parameters release 21] to ..\.local-tools\d4-build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ErrorHttpTest.java: D:\Workspace\ai-portfolio-practice\backend\src\test\java\com\example\marketplace\api\ErrorHttpTest.java uses or overrides a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Artifact org.apache.maven.surefire:surefire-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-logger-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-shared-utils:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-extensions-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:maven-surefire-common:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-booter:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-extensions-spi:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.shared:maven-common-artifact-filters:jar:3.4.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-logger-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-shared-utils:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-extensions-api:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:maven-surefire-common:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-booter:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-extensions-spi:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.shared:maven-common-artifact-filters:jar:3.4.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-api/3.5.6/surefire-api-3.5.6.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-api/3.5.6/surefire-api-3.5.6.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-logger-api/3.5.6/surefire-logger-api-3.5.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-extensions-api/3.5.6/surefire-extensions-api-3.5.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-shared-utils/3.5.6/surefire-shared-utils-3.5.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/3.5.6/maven-surefire-common-3.5.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/3.5.6/surefire-booter-3.5.6.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-logger-api/3.5.6/surefire-logger-api-3.5.6.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-extensions-spi/3.5.6/surefire-extensions-spi-3.5.6.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/3.5.6/maven-surefire-common-3.5.6.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-common-artifact-filters/3.4.0/maven-common-artifact-filters-3.4.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/3.5.6/surefire-booter-3.5.6.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-extensions-spi/3.5.6/surefire-extensions-spi-3.5.6.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-shared-utils/3.5.6/surefire-shared-utils-3.5.6.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-extensions-api/3.5.6/surefire-extensions-api-3.5.6.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-common-artifact-filters/3.4.0/maven-common-artifact-filters-3.4.0.jar (0 B at 0 B/s)
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] Artifact org.apache.maven.surefire:surefire-junit-platform:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-junit-platform:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit-platform/3.5.6/surefire-junit-platform-3.5.6.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit-platform/3.5.6/surefire-junit-platform-3.5.6.pom (0 B at 0 B/s)
+[INFO] Artifact org.apache.maven.surefire:surefire-providers:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-providers:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-providers/3.5.6/surefire-providers-3.5.6.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-providers/3.5.6/surefire-providers-3.5.6.pom (0 B at 0 B/s)
+[INFO] Artifact org.apache.maven.surefire:common-java5:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:common-java5:pom:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/common-java5/3.5.6/common-java5-3.5.6.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/common-java5/3.5.6/common-java5-3.5.6.pom (0 B at 0 B/s)
+[INFO] Artifact org.junit.platform:junit-platform-engine:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-engine:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.pom (0 B at 0 B/s)
+[INFO] Artifact org.junit.platform:junit-platform-commons:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-commons:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.pom (0 B at 0 B/s)
+[INFO] Artifact org.junit.platform:junit-platform-launcher:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-launcher:pom:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.pom (0 B at 0 B/s)
+[INFO] Artifact org.apache.maven.surefire:surefire-junit-platform:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:common-java5:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-engine:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-commons:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-launcher:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:surefire-junit-platform:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.surefire:common-java5:jar:3.5.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-engine:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-commons:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-launcher:jar:1.12.2 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit-platform/3.5.6/surefire-junit-platform-3.5.6.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit-platform/3.5.6/surefire-junit-platform-3.5.6.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/common-java5/3.5.6/common-java5-3.5.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/common-java5/3.5.6/common-java5-3.5.6.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar (0 B at 0 B/s)
+[INFO] Artifact org.junit.platform:junit-platform-launcher:pom:6.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-launcher:pom:6.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/6.0.3/junit-platform-launcher-6.0.3.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/6.0.3/junit-platform-launcher-6.0.3.pom (0 B at 0 B/s)
+[INFO] Artifact org.junit.platform:junit-platform-launcher:jar:6.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.jspecify:jspecify:jar:1.0.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.junit.platform:junit-platform-launcher:jar:6.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.jspecify:jspecify:jar:1.0.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/6.0.3/junit-platform-launcher-6.0.3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/6.0.3/junit-platform-launcher-6.0.3.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar (0 B at 0 B/s)
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T22:58:40.753+09:00  INFO 3052 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Starting ErrorHttpTest using Java 21.0.12.1 with PID 3052 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T22:58:40.761+09:00  INFO 3052 --- [           main] c.example.marketplace.api.ErrorHttpTest  : The following 1 profile is active: "d1"
+2026-10-23T22:58:41.550+09:00  INFO 3052 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-23T22:58:41.560+09:00  INFO 3052 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-23T22:58:41.561+09:00  INFO 3052 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-23T22:58:41.604+09:00  INFO 3052 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 827 ms
+2026-10-23T22:58:42.071+09:00  INFO 3052 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T22:58:42.137+09:00  INFO 3052 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 5057 (http) with context path '/'
+2026-10-23T22:58:42.143+09:00  INFO 3052 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Started ErrorHttpTest in 1.582 seconds (process running for 2.494)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\rihee\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-23T22:58:42.806+09:00  INFO 3052 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-23T22:58:42.806+09:00  INFO 3052 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-23T22:58:42.806+09:00  INFO 3052 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-23T22:58:42.939+09:00  WARN 3052 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.723 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Running com.example.marketplace.api.HealthMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T22:58:43.022+09:00  INFO 3052 --- [           main] c.example.marketplace.api.HealthMvcTest  : Starting HealthMvcTest using Java 21.0.12.1 with PID 3052 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T22:58:43.022+09:00  INFO 3052 --- [           main] c.example.marketplace.api.HealthMvcTest  : The following 1 profile is active: "d1"
+2026-10-23T22:58:43.227+09:00  INFO 3052 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-23T22:58:43.228+09:00  INFO 3052 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-23T22:58:43.230+09:00  INFO 3052 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T22:58:43.232+09:00  INFO 3052 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-23T22:58:43.248+09:00  INFO 3052 --- [           main] c.example.marketplace.api.HealthMvcTest  : Started HealthMvcTest in 0.24 seconds (process running for 3.6)
+2026-10-23T22:58:43.282+09:00  WARN 3052 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.424 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Running com.example.marketplace.api.UnhealthyMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T22:58:43.438+09:00  INFO 3052 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Starting UnhealthyMvcTest using Java 21.0.12.1 with PID 3052 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T22:58:43.438+09:00  INFO 3052 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : The following 1 profile is active: "d1"
+2026-10-23T22:58:43.634+09:00  INFO 3052 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-23T22:58:43.635+09:00  INFO 3052 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-23T22:58:43.637+09:00  INFO 3052 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T22:58:43.639+09:00  INFO 3052 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-23T22:58:43.646+09:00  INFO 3052 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Started UnhealthyMvcTest in 0.219 seconds (process running for 3.998)
+2026-10-23T22:58:43.652+09:00  WARN 3052 --- [           main] o.s.b.h.a.DiskSpaceHealthIndicator       : Free disk space at path 'D:\Workspace\ai-portfolio-practice\backend\.' below threshold. Available: 695518654464 bytes (threshold: 9223372036854775807B)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.250 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Running com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 33, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO] Artifact org.apache.maven.shared:file-management:jar:3.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:4.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven:maven-archiver:jar:3.6.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-archiver:jar:4.12.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-io:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-compress:jar:1.28.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-codec:commons-codec:jar:1.19.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.18.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.tukaani:xz:jar:1.12 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact com.github.luben:zstd-jni:jar:1.5.7-9 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-io:commons-io:jar:2.22.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.shared:file-management:jar:3.2.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-utils:jar:4.0.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven:maven-archiver:jar:3.6.6 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-archiver:jar:4.12.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.codehaus.plexus:plexus-io:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-compress:jar:1.28.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-codec:commons-codec:jar:1.19.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.18.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.tukaani:xz:jar:1.12 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact com.github.luben:zstd-jni:jar:1.5.7-9 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-io:commons-io:jar:2.22.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.2.0/file-management-3.2.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.2.0/file-management-3.2.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-archiver/3.6.6/maven-archiver-3.6.6.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.12.0/plexus-archiver-4.12.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.19.0/commons-codec-1.19.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.18.0/commons-lang3-3.18.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.12.0/plexus-archiver-4.12.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.12/xz-1.12.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-9/zstd-jni-1.5.7-9.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-archiver/3.6.6/maven-archiver-3.6.6.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.12/xz-1.12.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.18.0/commons-lang3-3.18.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-9/zstd-jni-1.5.7-9.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.19.0/commons-codec-1.19.0.jar (0 B at 0 B/s)
+[INFO] Building jar: D:\Workspace\ai-portfolio-practice\.local-tools\d4-build\marketplace-api-0.0.1-SNAPSHOT.jar
+[INFO]
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Artifact org.springframework.boot:spring-boot-buildpack-platform:jar:4.1.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact net.java.dev.jna:jna-platform:jar:5.17.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact net.java.dev.jna:jna:jar:5.17.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-compress:jar:1.27.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-codec:commons-codec:jar:1.17.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.16.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.httpcomponents.client5:httpclient5:jar:5.6.4 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.httpcomponents.core5:httpcore5:jar:5.4.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.httpcomponents.core5:httpcore5-h2:jar:5.4.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.springframework.boot:spring-boot-loader-tools:jar:4.1.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-logging:commons-logging:jar:1.3.5 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact io.micrometer:micrometer-observation:jar:1.16.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact io.micrometer:micrometer-commons:jar:1.16.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.plugins:maven-shade-plugin:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.ow2.asm:asm-commons:jar:9.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.ow2.asm:asm-tree:jar:9.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots), ow2-snapshot (https://repository.ow2.org/nexus/content/repositories/snapshots, default, snapshots)]
+[INFO] Artifact org.vafer:jdependency:jar:2.10 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.springframework.boot:spring-boot-buildpack-platform:jar:4.1.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact net.java.dev.jna:jna-platform:jar:5.17.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact net.java.dev.jna:jna:jar:5.17.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.commons:commons-compress:jar:1.27.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-codec:commons-codec:jar:1.17.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.16.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.httpcomponents.client5:httpclient5:jar:5.6.4 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.httpcomponents.core5:httpcore5:jar:5.4.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.httpcomponents.core5:httpcore5-h2:jar:5.4.3 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.springframework.boot:spring-boot-loader-tools:jar:4.1.1 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact commons-logging:commons-logging:jar:1.3.5 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact io.micrometer:micrometer-observation:jar:1.16.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact io.micrometer:micrometer-commons:jar:1.16.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.apache.maven.plugins:maven-shade-plugin:jar:3.6.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact org.ow2.asm:asm-commons:jar:9.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.ow2.asm:asm-tree:jar:9.7 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots), ow2-snapshot (https://repository.ow2.org/nexus/content/repositories/snapshots, default, snapshots)]
+[INFO] Artifact org.vafer:jdependency:jar:2.10 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-buildpack-platform/4.1.1/spring-boot-buildpack-platform-4.1.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-buildpack-platform/4.1.1/spring-boot-buildpack-platform-4.1.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.27.1/commons-compress-1.27.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.17.1/commons-codec-1.17.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.16.0/commons-lang3-3.16.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.27.1/commons-compress-1.27.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/client5/httpclient5/5.6.4/httpclient5-5.6.4.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.16.0/commons-lang3-3.16.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/core5/httpcore5/5.4.3/httpcore5-5.4.3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.17.1/commons-codec-1.17.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/core5/httpcore5-h2/5.4.3/httpcore5-h2-5.4.3.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-loader-tools/4.1.1/spring-boot-loader-tools-4.1.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.3.5/commons-logging-1.3.5.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/core5/httpcore5/5.4.3/httpcore5-5.4.3.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/io/micrometer/micrometer-observation/1.16.7/micrometer-observation-1.16.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/core5/httpcore5-h2/5.4.3/httpcore5-h2-5.4.3.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/io/micrometer/micrometer-commons/1.16.7/micrometer-commons-1.16.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/httpcomponents/client5/httpclient5/5.6.4/httpclient5-5.6.4.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-shade-plugin/3.6.0/maven-shade-plugin-3.6.0.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-loader-tools/4.1.1/spring-boot-loader-tools-4.1.1.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.3.5/commons-logging-1.3.5.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/io/micrometer/micrometer-observation/1.16.7/micrometer-observation-1.16.7.jar (0 B at 0 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/vafer/jdependency/2.10/jdependency-2.10.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/io/micrometer/micrometer-commons/1.16.7/micrometer-commons-1.16.7.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-shade-plugin/3.6.0/maven-shade-plugin-3.6.0.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar (0 B at 0 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/vafer/jdependency/2.10/jdependency-2.10.jar (0 B at 0 B/s)
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\d4-build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\d4-build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.317 s
+[INFO] Finished at: 2026-10-23T22:58:45+09:00
+[INFO] ------------------------------------------------------------------------

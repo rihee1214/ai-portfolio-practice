@@ -1,0 +1,14 @@
+
+> marketplace-frontend@0.0.1 build
+> tsc --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 102 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.52 kB │ gzip:  0.38 kB
+dist/assets/index-BKTJ1-a9.css    7.42 kB │ gzip:  2.29 kB
+dist/assets/index-DunmJItA.js   272.11 kB │ gzip: 86.77 kB
+
+✓ built in 97ms
