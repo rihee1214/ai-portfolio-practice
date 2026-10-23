@@ -1,6 +1,6 @@
 # 단계별 구현·검증 계획
 
-설계 v4 Java·Spring Boot + React / 2026-10-23 / P01-B1 Actuator 교체·B2·B3 검증 완료, B4 R4 수정·회귀 검증 완료, B5 검토 중
+설계 v4 Java·Spring Boot + React / 2026-10-23 / P01-B1 Actuator 교체·B2·B3 검증 완료, B4 R4 수정·회귀 검증 완료, B5 완료
 
 [요구사항](requirements.md)과 [전체 기술 설계](shop-design.md)의 현재 기준은 v4다. F01~F18과 AC01~AC20은 유지하고 React 학습 목표 G10을 추가했다. P01~P14의 기능 순서는 유지하며 Java·Spring Boot API와 React 화면에 맞춰 결과물·검증 도구를 변경했다. P01-A 문서 개정 완료를 현재 구성의 환경 검증 완료로 해석하지 않는다.
 
@@ -12,7 +12,7 @@
 
 각 작업의 완료에는 변경 파일, 필요한 DB 변경, 실행 방법, 검증 명령·결과, 남은 제한, 다음 작업 기록이 포함된다. API와 DB만 만든 경우 화면까지 완료했다고 표시하지 않는다. 더 작게 나눌 필요가 있으면 작업 ID 아래 하위 작업을 기록한다.
 
-현재 [P01-B1](work-items/P01-B1.md)의 최소 API·Wrapper·빌드·HTTP 검증을 완료했다. [P01-B2](work-items/P01-B2.md)의 첫 화면과 [P01-B3](work-items/P01-B3.md)의 라우팅·공통 레이아웃·역할별 화면 틀도 검증했다. P01-B4는 health 연동과 기존 검토 수정을 반영했지만, [추가 UI·timeout 검증](work-items/P01-B4-review.md)에서 발견한 부분 응답 종료 결함 R4를 수정하고 개발·preview에서 재검증했다. P01-B5는 설정·빌드·Git을 검증하고 지정 세션 검토를 진행 중이다. B1~B5가 있는 P01-B처럼 상위 작업은 하위 작업이 모두 검증되어야 완료다. P02-A도 A1~A3로 나누며 작업 중 새 개념·변경 파일이 많아지면 더 작게 나눈다. 자동 검사와 사용자 직접 확인 결과는 별도로 남긴다.
+현재 [P01-B1](work-items/P01-B1.md)의 최소 API·Wrapper·빌드·HTTP 검증을 완료했다. [P01-B2](work-items/P01-B2.md)의 첫 화면과 [P01-B3](work-items/P01-B3.md)의 라우팅·공통 레이아웃·역할별 화면 틀도 검증했다. P01-B4는 health 연동과 기존 검토 수정을 반영했지만, [추가 UI·timeout 검증](work-items/P01-B4-review.md)에서 발견한 부분 응답 종료 결함 R4를 수정하고 개발·preview에서 재검증했다. P01-B5는 설정·빌드·Git을 검증하고 지정 세션 검토 반영·로컬 이력 기록을 완료했다. B1~B5가 있는 P01-B처럼 상위 작업은 하위 작업이 모두 검증되어야 완료다. P02-A도 A1~A3로 나누며 작업 중 새 개념·변경 파일이 많아지면 더 작게 나눈다. 자동 검사와 사용자 직접 확인 결과는 별도로 남긴다.
 
 화면이 포함된 기능은 React 화면 → HTTP 계약 → Java 애플리케이션 서비스 → SQL → 화면 결과까지 연결한다. API만 검증한 상태와 실제 브라우저에서 연결한 상태를 구분한다. 로딩·빈 결과·오류·권한 거부·중복 클릭 중 해당 기능에 필요한 상태도 함께 설계한다.
 
@@ -20,7 +20,7 @@
 
 | 단계 | 결과 | 기능·목표 연결 | 선행 | 상태 |
 | --- | --- | --- | --- | --- |
-| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 검토 중, C1~E 미착수 |
+| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1~E 미착수 |
 | P02 | 회원과 권한·배송지 | F01·F07 | P01 | 미착수 |
 | P03 | 판매자 신청·승인·매대 | F03·F16 | P02 | 미착수 |
 | P04 | 카테고리·상품·옵션·이미지·재고 | F04·F05·F16 | P03 | 미착수 |
@@ -56,8 +56,8 @@ Java 21·Spring Boot 4.1·Maven 3.9·PostgreSQL 18, React 19·TypeScript·Vite·
 | P01-B1 (완료) | 필요한 JDK 준비, `backend/` 최소 Boot 앱·Wrapper·Actuator health | Java 컴파일·패키징, health 정상·장애·복구 HTTP 27건. DB·인증 미도입. 기존 상태 컨트롤러 제거 |
 | P01-B2 (완료) | 필요한 Node 환경 준비, `frontend/` React·TypeScript·Vite 첫 화면 | React 실행·한국어 표시·타입 검사·lint·정적 빌드. package-lock에 실제 버전 기록 |
 | P01-B3 (구현·최신 UI 재검증 완료) | React Router·공통 레이아웃·구매자/판매자/운영 화면 틀·일반 CSS | 2026-10-23 내장 브라우저 연결 복구. 16개 직접 URL·새로고침, 없는 경로 4개, 3가지 화면 폭·키보드·입력 회귀 통과. [결과·증거](work-items/P01-B3.md). 실제 기능·권한 미구현 |
-| P01-B4 (구현·R4 재검증 완료) | 정확한 health·업무 API 프록시, 공통 fetch, 홈 연결 확인·취소·재시도. [기록](work-items/P01-B4.md) | 최신 Node 68개 통과. 부분 응답 중단·무응답·강제 종료·재시도·취소를 개발·preview HTTP·UI로 확인. 이전 실패 증거 보존. 전체 timeout 보장 없음. [검토 기록](work-items/P01-B4-review.md). B5 검토 중 |
-| P01-B5 (구현·검증, 검토 중) | Java/React 설정 예제·Checkstyle·ESLint·실행 안내·Git 초기화와 로컬 이력 | Java clean verify·정적 검사 실패 탐지, npm ci·타입·린트·빌드·68개 테스트, local 프로필200 UP 확인. Git 초기화·설정 제외 확인, 지정 검토·로컬 이력 마무리 중. [기록](work-items/P01-B5.md). 실제 Compose·DB 설정은 C1에서 추가 |
+| P01-B4 (구현·R4 재검증 완료) | 정확한 health·업무 API 프록시, 공통 fetch, 홈 연결 확인·취소·재시도. [기록](work-items/P01-B4.md) | 최신 Node 68개 통과. 부분 응답 중단·무응답·강제 종료·재시도·취소를 개발·preview HTTP·UI로 확인. 이전 실패 증거 보존. 전체 timeout 보장 없음. [검토 기록](work-items/P01-B4-review.md). B5 완료 |
+| P01-B5 (완료) | Java/React 설정 예제·Checkstyle·ESLint·실행 안내·Git 초기화와 로컬 이력 | Java clean verify·정적 검사 실패 탐지, npm ci·타입·린트·빌드·68개 테스트, local 프로필200 UP 확인. Git 초기화·설정 제외 확인, 지정 검토 반영·로컬 이력 완료. [기록](work-items/P01-B5.md). 실제 Compose·DB 설정은 C1에서 추가 |
 | P01-C1 | Docker Compose PostgreSQL·버전 명시·데이터 볼륨·개발/테스트 DB와 별도 계정·연결 설정·비밀값 없는 설정 예제 | 엔진 접근·실제 이미지 확인, 두 DB 식별·접속·독립 실행/중지·재시작·볼륨 유지 재생성 후 데이터 보존. PC 직접 설치 없음 |
 | P01-C2 | Spring JDBC·Flyway·PostgreSQL 모듈, 초기 SQL 변경 경로 | 새 DB 이행·재실행·이력 검사. 자동 schema.sql 등 중복 초기화 없음 |
 | P01-C3 | 파라미터 조회·결과 매핑·트랜잭션·테스트 DB 보호 | 테스트 전용 fixture로 제약·중간 실패 롤백 확인. 운영/개발 DB 파괴적 초기화 거부 |

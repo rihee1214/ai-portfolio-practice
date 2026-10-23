@@ -1,6 +1,6 @@
 # AI와 함께 진행하는 개발 작업 흐름
 
-P01-B5의 설정 예제·Checkstyle·기존 ESLint·빌드 재현·Git 초기화를 검증했다. 지정 세션 검토와 로컬 이력 마무리는 [P01-B5 기록](work-items/P01-B5.md)을 따른다. [실행 안내](local-development.md)를 추가했으며 아래 B1~B4의 B5 미착수 표현은 이전 이력이다. P01-C1은 진행하지 않는다.
+P01-B5의 설정 예제·Checkstyle·기존 ESLint·빌드 재현·Git 초기화를 검증했다. 지정 세션 검토 반영과 로컬 이력 기록을 완료했으며 결과는 [P01-B5 기록](work-items/P01-B5.md)을 따른다. [실행 안내](local-development.md)를 추가했으며 아래 B1~B4의 B5 미착수 표현은 이전 이력이다. P01-C1은 진행하지 않는다.
 
 설계 v4 Java·Spring Boot + React / 2026-10-21
 
