@@ -1,0 +1,92 @@
+
+> marketplace-frontend@0.0.1 test
+> node --test tests/*.test.mjs
+
+✔ health {"kind":"success","status":200,"data":{"status":"UP"}} => healthy (0.6793ms)
+✔ health {"kind":"success","status":201,"data":{"status":"UP"}} => invalid (0.0758ms)
+✔ health {"kind":"success","status":200,"data":{"status":"UNKNOWN"}} => unhealthy (0.0527ms)
+✔ health {"kind":"success","status":200,"data":{"status":"DOWN"}} => unhealthy (0.0585ms)
+✔ health {"kind":"http","status":503,"data":{"status":"DOWN"}} => unhealthy (0.0636ms)
+✔ health {"kind":"http","status":503,"data":{"status":"OUT_OF_SERVICE"}} => unhealthy (0.0485ms)
+✔ health {"kind":"http","status":503,"data":{"status":"UP"}} => connection-error (0.5342ms)
+✔ health {"kind":"http","status":502} => connection-error (0.0626ms)
+✔ health {"kind":"network"} => connection-error (0.0633ms)
+✔ health {"kind":"invalid-response","status":200} => invalid (0.0964ms)
+✔ health {"kind":"success","status":200,"data":null} => invalid (0.0511ms)
+✔ health {"kind":"success","status":200,"data":{"status":7}} => invalid (0.04ms)
+✔ health {"kind":"cancelled"} => cancelled (0.042ms)
+✔ new request wins even when the cancelled transport resolves late; dispose prevents updates (0.3353ms)
+✔ JSON request preserves path and sends Accept; returns unknown data with HTTP status (18.1181ms)
+✔ HTTP DOWN keeps parsed error body (0.2634ms)
+✔ HTML success is a contract error (0.1991ms)
+✔ malformed JSON is a contract error (0.2473ms)
+✔ 204 has no JSON document (0.1398ms)
+✔ malformed error JSON still preserves HTTP failure (0.1952ms)
+✔ empty proxy error keeps HTTP status (0.5632ms)
+✔ non-JSON HTTP error keeps status (0.1634ms)
+✔ network failure and caller cancellation are distinct (0.2158ms)
+✔ cancellation during body read is not malformed JSON (0.6448ms)
+✔ a JSON body interrupted by the connection is a network failure, not malformed JSON (0.2447ms)
+▶ dev: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (19.1799ms)
+  ✔ /api/%2e%2e/actuator/health (2.6186ms)
+  ✔ /api/%2e%2e%2factuator/env (2.3064ms)
+  ✔ /api/..;/actuator/env (1.7345ms)
+  ✔ /api/%252e%252e/actuator/env (1.261ms)
+  ✔ /api/..%5cactuator/env (5.8099ms)
+  ✔ //actuator/env (4.5406ms)
+  ✔ /%61ctuator/env (1.2325ms)
+  ✔ /ACTUATOR/env (1.2144ms)
+  ✔ /%61pi/missing (1.0622ms)
+  ✔ /API/missing (0.8545ms)
+  ✔ /api%2fmissing (0.6756ms)
+  ✔ /actu%61tor/%zz (0.7861ms)
+  ✔ ordinary API identifiers and exact health remain usable (32.846ms)
+✔ dev: API path aliases cannot escape into management routes or SPA fallback (165.6753ms)
+▶ preview: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (1.551ms)
+  ✔ /api/%2e%2e/actuator/health (2.5996ms)
+  ✔ /api/%2e%2e%2factuator/env (0.6056ms)
+  ✔ /api/..;/actuator/env (0.5195ms)
+  ✔ /api/%252e%252e/actuator/env (0.5262ms)
+  ✔ /api/..%5cactuator/env (0.6234ms)
+  ✔ //actuator/env (0.5604ms)
+  ✔ /%61ctuator/env (0.6428ms)
+  ✔ /ACTUATOR/env (0.663ms)
+  ✔ /%61pi/missing (0.556ms)
+  ✔ /API/missing (0.5092ms)
+  ✔ /api%2fmissing (0.5765ms)
+  ✔ /actu%61tor/%zz (0.5582ms)
+  ✔ ordinary API identifiers and exact health remain usable (12.7847ms)
+✔ preview: API path aliases cannot escape into management routes or SPA fallback (43.5462ms)
+▶ dev: real partial responses terminate on upstream failure
+  ✔ silent (10037.5816ms)
+  ✔ stall (10034.0155ms)
+  ✔ disconnect (342.835ms)
+  ✔ stream (12036.2374ms)
+  ✔ caller cancels while reading body and can retry (305.438ms)
+✔ dev: real partial responses terminate on upstream failure (12443.3176ms)
+ℹ disconnect: 338ms {"kind":"network"}
+ℹ silent: 10033ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10029ms {"kind":"network"}
+ℹ stream: 12032ms {"kind":"success","status":200,"data":{"status":"UP"}}
+▶ preview: real partial responses terminate on upstream failure
+  ✔ silent (10023.4529ms)
+  ✔ stall (10023.6011ms)
+  ✔ disconnect (321.9365ms)
+  ✔ stream (12008.8137ms)
+  ✔ caller cancels while reading body and can retry (320.2048ms)
+✔ preview: real partial responses terminate on upstream failure (12338.9166ms)
+ℹ disconnect: 319ms {"kind":"network"}
+ℹ silent: 10020ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10020ms {"kind":"network"}
+ℹ stream: 12006ms {"kind":"success","status":200,"data":{"status":"UP"}}
+✔ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (199.842ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 68
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25093.6055

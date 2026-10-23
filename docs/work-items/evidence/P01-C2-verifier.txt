@@ -1,0 +1,127 @@
+import java.io.*;
+import java.net.*;
+import java.net.http.*;
+import java.nio.file.*;
+import java.sql.*;
+import java.time.*;
+import java.util.*;
+import java.util.concurrent.*;
+
+class VerifyC2 {
+    static final Path root = Path.of("").toAbsolutePath();
+    static final Path evidence = root.resolve("docs/work-items/evidence");
+    static final Path scratch = root.resolve(".local-tools/c2-verification");
+    static final Properties local = new Properties();
+    static final List<String> results = new ArrayList<>();
+    static String database;
+    static String url;
+    static void check(String name, boolean condition) {
+        results.add((condition ? "PASS " : "FAIL ") + name);
+        if (!condition) throw new IllegalStateException(name);
+    }
+    static String query(String sql) throws Exception {
+        try (var c = DriverManager.getConnection(url, "marketplace_test", local.getProperty("TEST_DB_PASSWORD"));
+             var s = c.createStatement(); var r = s.executeQuery(sql)) {
+            StringJoiner rows = new StringJoiner("\n");
+            while (r.next()) {
+                StringJoiner row = new StringJoiner("|");
+                for (int i=1;i<=r.getMetaData().getColumnCount();i++) row.add(String.valueOf(r.getObject(i)));
+                rows.add(row.toString());
+            }
+            return rows.toString();
+        }
+    }
+    static String run(String name, String profile, String password, Path migrations, boolean success) throws Exception {
+        int port;
+        try (var socket = new ServerSocket(0, 0, InetAddress.getLoopbackAddress())) { port = socket.getLocalPort(); }
+        List<String> args = new ArrayList<>(List.of(root.resolve(".local-tools/jdk-21.0.12.1+1/bin/java.exe").toString(),
+            "-jar", root.resolve(".local-tools/c2-build/marketplace-api-0.0.1-SNAPSHOT.jar").toString(),
+            "--server.address=127.0.0.1", "--server.port="+port));
+        if (!profile.isEmpty()) args.add("--spring.profiles.active="+profile);
+        if (migrations != null) args.add("--spring.flyway.locations=filesystem:"+migrations.toString().replace('\\','/'));
+        ProcessBuilder builder = new ProcessBuilder(args).directory(scratch.toFile());
+        var env = builder.environment();
+        env.keySet().removeIf(key -> key.startsWith("SPRING_") || key.startsWith("DB_"));
+        env.put("SPRING_CONFIG_LOCATION", "classpath:/");
+        if (password != null) {
+            env.put("DB_URL",url); env.put("DB_USERNAME","marketplace_test");
+            env.put("DB_PASSWORD",password); env.put("DB_SCHEMA","marketplace");
+        }
+        Path log = scratch.resolve(name+".log");
+        builder.redirectErrorStream(true).redirectOutput(log.toFile());
+        Process process = builder.start();
+        boolean healthy=false;
+        HttpClient http=HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(1)).build();
+        try {
+            long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(45);
+            while (System.nanoTime()<deadline && process.isAlive()) {
+                try {
+                    var response=http.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/actuator/health"))
+                        .timeout(Duration.ofSeconds(2)).GET().build(),HttpResponse.BodyHandlers.ofString());
+                    
+                    if (response.statusCode()==200 && response.body().equals("{\"status\":\"UP\"}")) {healthy=true;break;}
+                } catch (IOException ignored) { }
+                Thread.sleep(200);
+            }
+            if (success) check(name+" starts with status-only health",healthy);
+            else check(name+" rejects startup",!healthy && !process.isAlive() && process.exitValue()!=0);
+        } finally {
+            http.close();
+            if (process.isAlive()) {process.destroy(); if(!process.waitFor(8,TimeUnit.SECONDS))process.destroyForcibly().waitFor();}
+            String text=Files.readString(log);
+            for(String key:local.stringPropertyNames()) if(key.contains("PASSWORD")) text=text.replace(local.getProperty(key),"[REDACTED]");
+            Files.writeString(evidence.resolve("P01-C2-"+name+".txt"),text);
+            results.add("INFO "+name+" own process "+process.pid()+" on port "+port+" terminated");
+        }
+        return Files.readString(evidence.resolve("P01-C2-"+name+".txt"));
+    }
+    public static void main(String[] args) throws Exception {
+        try(var reader=Files.newBufferedReader(root.resolve(".env"))){local.load(reader);}
+        database = args.length == 0 ? "c2_verify_"+System.currentTimeMillis() : args[0];
+        if (!database.matches("c2_verify_[0-9]+")) throw new IllegalArgumentException("Unsafe verification DB name");
+        String base="jdbc:postgresql://127.0.0.1:"+local.getProperty("TEST_DB_PORT")+"/";
+        try(var c=DriverManager.getConnection(base+"postgres","postgres",local.getProperty("TEST_ADMIN_PASSWORD"));var s=c.createStatement()){
+            if (args.length == 0) s.execute("CREATE DATABASE "+database+" OWNER marketplace_test");
+        }
+        url=base+database+"?connectTimeout=3&socketTimeout=10";
+        Files.writeString(evidence.resolve("P01-C2-target.txt"),"New isolated DB: "+database+"\nSchema: marketplace\nOwner: marketplace_test\nDB retained; no drop/clean/reset.\n");
+        try {
+            run("default-no-db","",null,null,true);
+            run("local-no-db","local",null,null,true);
+            String missing=run("missing-config","db",null,null,false);
+            check("missing DB settings fail explicitly",missing.contains("must start with") && missing.contains("jdbc"));
+            run("first-migration","db",local.getProperty("TEST_DB_PASSWORD"),null,true);
+            String history=query("SELECT version,description,success FROM marketplace.flyway_schema_history WHERE version IS NOT NULL ORDER BY installed_rank");
+            check("V1 history recorded",history.equals("1|initialize schema|true"));
+            check("schema comment applied",query("SELECT obj_description(oid,'pg_namespace') FROM pg_namespace WHERE nspname='marketplace'").equals("Marketplace application schema managed by Flyway"));
+            String checksum=query("SELECT checksum FROM marketplace.flyway_schema_history WHERE version='1'");
+            run("repeat-migration","db",local.getProperty("TEST_DB_PASSWORD"),null,true);
+            check("repeat preserves history",history.equals(query("SELECT version,description,success FROM marketplace.flyway_schema_history WHERE version IS NOT NULL ORDER BY installed_rank")));
+            check("repeat preserves checksum",checksum.equals(query("SELECT checksum FROM marketplace.flyway_schema_history WHERE version='1'")));
+            String badPassword=run("bad-password","db","invalid-c2-password",null,false);
+            check("wrong password is authentication failure",badPassword.contains("password authentication failed"));
+            Path original=root.resolve("backend/src/main/resources/db/migration/V1__initialize_schema.sql");
+            Path mismatch=Files.createDirectories(scratch.resolve("mismatch"));
+            Files.writeString(mismatch.resolve(original.getFileName()),Files.readString(original).replace("Marketplace application schema","Changed application schema"));
+            String mismatchLog=run("checksum-mismatch","db",local.getProperty("TEST_DB_PASSWORD"),mismatch,false);
+            check("edited V1 rejected by checksum",mismatchLog.toLowerCase(Locale.ROOT).contains("checksum mismatch"));
+            Path broken=Files.createDirectories(scratch.resolve("broken"));
+            Files.copy(original,broken.resolve(original.getFileName()),StandardCopyOption.REPLACE_EXISTING);
+            Files.writeString(broken.resolve("V2__deliberate_failure.sql"),"CREATE TABLE c2_failure_probe (id integer); SELECT 1 / 0;\n");
+            String failed=run("migration-failure","db",local.getProperty("TEST_DB_PASSWORD"),broken,false);
+            check("invalid migration fails with SQL error",failed.contains("division by zero"));
+            check("failed V2 leaves no partial table",query("SELECT count(*) FROM pg_tables WHERE schemaname='marketplace' AND tablename='c2_failure_probe'").equals("0"));
+            check("failed V2 leaves no version row",query("SELECT count(*) FROM marketplace.flyway_schema_history WHERE version='2'").equals("0"));
+            run("recovery","db",local.getProperty("TEST_DB_PASSWORD"),null,true);
+            check("original V1 and history recover without repair",checksum.equals(query("SELECT checksum FROM marketplace.flyway_schema_history WHERE version='1'")));
+            check("clean disabled and single initializer configured",Files.readString(root.resolve("backend/src/main/resources/application-db.properties")).contains("spring.flyway.clean-disabled=true")
+                && Files.readString(root.resolve("backend/src/main/resources/application.properties")).contains("spring.sql.init.mode=never"));
+        } finally {
+            Files.write(evidence.resolve("P01-C2-results.txt"),results);
+        }
+        results.forEach(System.out::println);
+    }
+}
+
+
+

@@ -1,0 +1,9 @@
+{
+  "requiredDependenciesMissing": [
+    "spring-boot-starter-jdbc",
+    "spring-boot-starter-flyway",
+    "flyway-database-postgresql"
+  ],
+  "dbProfileExists": false,
+  "migrationExists": false
+}

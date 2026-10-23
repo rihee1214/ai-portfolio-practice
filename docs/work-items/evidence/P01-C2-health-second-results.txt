@@ -1,0 +1,9 @@
+PASS default-no-db starts with status-only health
+INFO default-no-db own process 2544 on port 9580 terminated
+PASS local-no-db starts with status-only health
+INFO local-no-db own process 74348 on port 9607 terminated
+PASS missing-config rejects startup
+INFO missing-config own process 80016 on port 2420 terminated
+PASS missing DB settings fail explicitly
+FAIL first-migration starts with status-only health
+INFO first-migration own process 63932 on port 13257 terminated

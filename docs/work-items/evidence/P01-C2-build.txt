@@ -1,0 +1,28 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.956 s
+[INFO] Finished at: 2026-10-23T20:34:12+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project marketplace-api: Could not collect dependencies for project com.example:marketplace-api:jar:0.0.1-SNAPSHOT
+[ERROR] Failed to read artifact descriptor for org.springframework.boot:spring-boot-starter-jdbc:jar:4.1.1
+[ERROR] 	Caused by: The following artifacts could not be resolved: org.springframework.boot:spring-boot-starter-jdbc:pom:4.1.1 (absent): Could not transfer artifact org.springframework.boot:spring-boot-starter-jdbc:pom:4.1.1 from/to central (https://repo.maven.apache.org/maven2): �˷��� ȣ��Ʈ�� �����ϴ� (repo.maven.apache.org)
+[ERROR] Failed to read artifact descriptor for org.springframework.boot:spring-boot-starter-flyway:jar:4.1.1
+[ERROR] 	Caused by: The following artifacts could not be resolved: org.springframework.boot:spring-boot-starter-flyway:pom:4.1.1 (absent): Could not transfer artifact org.springframework.boot:spring-boot-starter-flyway:pom:4.1.1 from/to central (https://repo.maven.apache.org/maven2): repo.maven.apache.org
+[ERROR] Failed to read artifact descriptor for org.flywaydb:flyway-database-postgresql:jar:12.4.0
+[ERROR] 	Caused by: The following artifacts could not be resolved: org.flywaydb:flyway-database-postgresql:pom:12.4.0 (absent): Could not transfer artifact org.flywaydb:flyway-database-postgresql:pom:12.4.0 from/to central (https://repo.maven.apache.org/maven2): repo.maven.apache.org
+[ERROR] Failed to read artifact descriptor for org.postgresql:postgresql:jar:42.7.13
+[ERROR] 	Caused by: The following artifacts could not be resolved: org.postgresql:postgresql:pom:42.7.13 (absent): Could not transfer artifact org.postgresql:postgresql:pom:42.7.13 from/to central (https://repo.maven.apache.org/maven2): repo.maven.apache.org
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException

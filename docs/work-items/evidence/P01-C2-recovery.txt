@@ -1,0 +1,29 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T20:42:05.772+09:00  INFO 81024 --- [           main] c.e.marketplace.MarketplaceApplication   : Starting MarketplaceApplication v0.0.1-SNAPSHOT using Java 21.0.12.1 with PID 81024 (D:\Workspace\ai-portfolio-practice\.local-tools\c2-build\marketplace-api-0.0.1-SNAPSHOT.jar started by rihee in D:\Workspace\ai-portfolio-practice\.local-tools\c2-verification)
+2026-10-23T20:42:05.776+09:00  INFO 81024 --- [           main] c.e.marketplace.MarketplaceApplication   : The following 1 profile is active: "db"
+2026-10-23T20:42:07.000+09:00  INFO 81024 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 14705 (http)
+2026-10-23T20:42:07.015+09:00  INFO 81024 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-23T20:42:07.015+09:00  INFO 81024 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-23T20:42:07.039+09:00  INFO 81024 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1212 ms
+2026-10-23T20:42:07.804+09:00  INFO 81024 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-23T20:42:07.950+09:00  INFO 81024 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@60807fd9
+2026-10-23T20:42:07.952+09:00  INFO 81024 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-23T20:42:07.978+09:00  INFO 81024 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/c2_verify_1792755700154?connectTimeout=3&socketTimeout=10 (PostgreSQL 18.6)
+2026-10-23T20:42:08.050+09:00  INFO 81024 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.031s)
+2026-10-23T20:42:08.084+09:00  INFO 81024 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": 1
+2026-10-23T20:42:08.096+09:00  INFO 81024 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "marketplace" is up to date. No migration necessary.
+2026-10-23T20:42:08.215+09:00  INFO 81024 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T20:42:08.330+09:00  INFO 81024 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 14705 (http) with context path '/'
+2026-10-23T20:42:08.339+09:00  INFO 81024 --- [           main] c.e.marketplace.MarketplaceApplication   : Started MarketplaceApplication in 2.907 seconds (process running for 3.254)
+2026-10-23T20:42:08.498+09:00  INFO 81024 --- [.1-14705-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-23T20:42:08.498+09:00  INFO 81024 --- [.1-14705-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-23T20:42:08.499+09:00  INFO 81024 --- [.1-14705-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

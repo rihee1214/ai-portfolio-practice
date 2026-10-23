@@ -1,0 +1,30 @@
+PASS default-no-db starts with status-only health
+INFO default-no-db own process 67296 on port 2971 terminated
+PASS local-no-db starts with status-only health
+INFO local-no-db own process 73440 on port 12924 terminated
+PASS missing-config rejects startup
+INFO missing-config own process 75876 on port 12952 terminated
+PASS missing DB settings fail explicitly
+PASS first-migration starts with status-only health
+INFO first-migration own process 78780 on port 12980 terminated
+PASS V1 history recorded
+PASS schema comment applied
+PASS repeat-migration starts with status-only health
+INFO repeat-migration own process 78124 on port 13325 terminated
+PASS repeat preserves history
+PASS repeat preserves checksum
+PASS bad-password rejects startup
+INFO bad-password own process 9044 on port 2226 terminated
+PASS wrong password is authentication failure
+PASS checksum-mismatch rejects startup
+INFO checksum-mismatch own process 34056 on port 2270 terminated
+PASS edited V1 rejected by checksum
+PASS migration-failure rejects startup
+INFO migration-failure own process 27264 on port 14448 terminated
+PASS invalid migration fails with SQL error
+PASS failed V2 leaves no partial table
+PASS failed V2 leaves no version row
+PASS recovery starts with status-only health
+INFO recovery own process 81024 on port 14705 terminated
+PASS original V1 and history recover without repair
+PASS clean disabled and single initializer configured

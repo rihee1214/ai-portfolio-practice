@@ -1,5 +1,7 @@
 # 단계별 구현·검증 계획
 
+P01-C2 JDBC·Flyway 구성과 격리 DB 검증을 완료했다. [최신 결과](work-items/P01-C2.md)는 후속 검토 대기이며 검토 승인·사용자 실습 완료를 뜻하지 않는다. 아래 C2 미착수 표현은 이전 이력이다. P01-C3는 진행하지 않는다.
+
 P01-C1에서 Docker 접근·개발/테스트 DB 구성·18건 기반 검사와 호스트 인증 4건을 완료했다. 지정 검토 의견도 반영했으며 최종 기록은 [P01-C1](work-items/P01-C1.md)을 따른다. 아래 미착수 표현은 이전 단계 이력이며 P01-C2는 진행하지 않는다.
 
 설계 v4 Java·Spring Boot + React / 2026-10-23 / P01-B1 Actuator 교체·B2·B3 검증 완료, B4 R4 수정·회귀 검증 완료, B5 완료
@@ -22,7 +24,7 @@ P01-C1에서 Docker 접근·개발/테스트 DB 구성·18건 기반 검사와 �
 
 | 단계 | 결과 | 기능·목표 연결 | 선행 | 상태 |
 | --- | --- | --- | --- | --- |
-| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1 완료, C2~E 미착수 |
+| P01 | Java·React 환경·프로젝트·검증 기반 | G01·G07·G10 | 설계 v4·ADR-001 | A2·B1·B2·B3 완료, B4 R4 수정·회귀 검증 완료, B5 완료, C1 완료, C2 검토 대기, C3~E 미착수 |
 | P02 | 회원과 권한·배송지 | F01·F07 | P01 | 미착수 |
 | P03 | 판매자 신청·승인·매대 | F03·F16 | P02 | 미착수 |
 | P04 | 카테고리·상품·옵션·이미지·재고 | F04·F05·F16 | P03 | 미착수 |
@@ -61,7 +63,7 @@ Java 21·Spring Boot 4.1·Maven 3.9·PostgreSQL 18, React 19·TypeScript·Vite·
 | P01-B4 (구현·R4 재검증 완료) | 정확한 health·업무 API 프록시, 공통 fetch, 홈 연결 확인·취소·재시도. [기록](work-items/P01-B4.md) | 최신 Node 68개 통과. 부분 응답 중단·무응답·강제 종료·재시도·취소를 개발·preview HTTP·UI로 확인. 이전 실패 증거 보존. 전체 timeout 보장 없음. [검토 기록](work-items/P01-B4-review.md). B5 완료 |
 | P01-B5 (완료) | Java/React 설정 예제·Checkstyle·ESLint·실행 안내·Git 초기화와 로컬 이력 | Java clean verify·정적 검사 실패 탐지, npm ci·타입·린트·빌드·68개 테스트, local 프로필200 UP 확인. Git 초기화·설정 제외 확인, 지정 검토 반영·로컬 이력 완료. [기록](work-items/P01-B5.md). 실제 Compose·DB 설정은 C1에서 추가 |
 | P01-C1 (완료) | Docker Compose PostgreSQL·버전 명시·데이터 볼륨·개발/테스트 DB와 별도 계정·연결 설정·비밀값 없는 설정 예제 | 엔진 접근·실제 이미지 확인, 두 DB 식별·접속·독립 실행/중지·재시작·볼륨 유지 재생성 후 데이터 보존. PC 직접 설치 없음 |
-| P01-C2 | Spring JDBC·Flyway·PostgreSQL 모듈, 초기 SQL 변경 경로 | 새 DB 이행·재실행·이력 검사. 자동 schema.sql 등 중복 초기화 없음 |
+| P01-C2 (구현·검증, 검토 대기) | Spring JDBC·Flyway·PostgreSQL 모듈, 초기 SQL 변경 경로 | 새 DB 이행·재실행·이력 검사. 자동 schema.sql 등 중복 초기화 없음 |
 | P01-C3 | 파라미터 조회·결과 매핑·트랜잭션·테스트 DB 보호 | 테스트 전용 fixture로 제약·중간 실패 롤백 확인. 운영/개발 DB 파괴적 초기화 거부 |
 | P01-D1 | JUnit Jupiter·Spring Boot Test·MockMvc 실행 구분 | API/오류 응답 계약과 검증 결과·실행 건수 확인. DB 미연결 검사는 분리 |
 | P01-D2 | 실제 PostgreSQL 통합 검사 프로필·가상 데이터 | Testcontainers 또는 Compose의 명시적 테스트 DB에서 같은 Flyway·롤백·제약 검사. 미준비를 통과로 처리하지 않음 |

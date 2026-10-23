@@ -1,0 +1,4 @@
+New isolated DB: c2_verify_1792755390505
+Schema: marketplace
+Owner: marketplace_test
+DB retained; no drop/clean/reset.

@@ -1,0 +1,7 @@
+PASS default-no-db starts with status-only health
+INFO default-no-db own process 77008 on port 10049 terminated
+PASS local-no-db starts with status-only health
+INFO local-no-db own process 14144 on port 10074 terminated
+PASS missing-config rejects startup
+INFO missing-config own process 80836 on port 10102 terminated
+FAIL missing DB settings fail explicitly
