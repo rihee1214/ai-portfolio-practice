@@ -26,8 +26,10 @@ $env:JAVA_HOME = Join-Path $PWD '.local-tools/jdk-21.0.12.1+1'
 $env:MAVEN_USER_HOME = Join-Path $PWD '.local-tools/m2'
 $build = Join-Path $PWD '.local-tools/d1-build'
 Push-Location backend
-./mvnw.cmd -B -ntp '-Dmaven.repo.local=../.local-tools/m2/repository' "-Dmarketplace.build.directory=$build" verify
-Pop-Location
+try {
+    ./mvnw.cmd -B -ntp '-Dmaven.repo.local=../.local-tools/m2/repository' "-Dmarketplace.build.directory=$build" verify
+    if ($LASTEXITCODE -ne 0) { throw 'Maven verification failed' }
+} finally { Pop-Location }
 ```
 
 의존성을 처음 준비할 때 Maven Central 접근이 필요하다. 캐시가 준비됐다면 `-o`로 오프라인 실행할 수 있다. `verify`는 Checkstyle·컴파일·아래 Surefire 검사·패키징을 실행한다. 기본 `test`에도 실제 HTTP 임시 포트 검사7개가 포함되므로 “전부 순수 단위 검사”라고 부르지 않는다.
