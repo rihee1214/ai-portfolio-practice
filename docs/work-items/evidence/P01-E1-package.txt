@@ -1,0 +1,3 @@
+BOOT-INF/classes/com/example/marketplace/platform/web/
+BOOT-INF/classes/com/example/marketplace/platform/web/RequestIdConfiguration.class
+BOOT-INF/classes/com/example/marketplace/platform/web/RequestIdFilter.class

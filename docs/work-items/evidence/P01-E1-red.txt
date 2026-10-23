@@ -1,0 +1,202 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\e1-red\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\e1-red\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to ..\.local-tools\e1-red\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\e1-red\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug parameters release 21] to ..\.local-tools\e1-red\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ErrorHttpTest.java: D:\Workspace\ai-portfolio-practice\backend\src\test\java\com\example\marketplace\api\ErrorHttpTest.java uses or overrides a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.RequestIdHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-23T23:19:47.447+09:00  INFO 62428 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Starting RequestIdHttpTest using Java 21.0.12.1 with PID 62428 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-23T23:19:47.449+09:00  INFO 62428 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : The following 1 profile is active: "e1-probe"
+2026-10-23T23:19:48.263+09:00  INFO 62428 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-23T23:19:48.271+09:00  INFO 62428 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-23T23:19:48.271+09:00  INFO 62428 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-23T23:19:48.315+09:00  INFO 62428 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 854 ms
+2026-10-23T23:19:48.745+09:00  INFO 62428 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-23T23:19:48.824+09:00  INFO 62428 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 12751 (http) with context path '/'
+2026-10-23T23:19:48.830+09:00  INFO 62428 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Started RequestIdHttpTest in 1.583 seconds (process running for 2.288)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\rihee\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-23T23:19:49.469+09:00  INFO 62428 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-23T23:19:49.469+09:00  INFO 62428 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-23T23:19:49.470+09:00  INFO 62428 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-23T23:19:49.576+09:00 ERROR 62428 --- [1-auto-1-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: intentional-e1] with root cause
+
+java.lang.IllegalStateException: intentional-e1
+	at com.example.marketplace.api.RequestIdHttpTest$ProbeController.fail(RequestIdHttpTest.java:134) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-23T23:19:49.599+09:00  INFO 62428 --- [1-auto-1-exec-4] .e.m.a.RequestIdHttpTest$ProbeController : E1 test-only log probe
+2026-10-23T23:19:49.622+09:00  WARN 62428 --- [1-auto-1-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[ERROR] Tests run: 5, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 2.659 s <<< FAILURE! -- in com.example.marketplace.api.RequestIdHttpTest
+[ERROR] com.example.marketplace.api.RequestIdHttpTest.externalValidMalformedAndDuplicateIdsAreNotTrusted -- Time elapsed: 0.667 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.RequestIdHttpTest.id(RequestIdHttpTest.java:61)
+	at com.example.marketplace.api.RequestIdHttpTest.externalValidMalformedAndDuplicateIdsAreNotTrusted(RequestIdHttpTest.java:80)
+
+[ERROR] com.example.marketplace.api.RequestIdHttpTest.realExceptionErrorDispatchKeepsOriginalRequestId -- Time elapsed: 0.021 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.RequestIdHttpTest.id(RequestIdHttpTest.java:61)
+	at com.example.marketplace.api.RequestIdHttpTest.realExceptionErrorDispatchKeepsOriginalRequestId(RequestIdHttpTest.java:110)
+
+[ERROR] com.example.marketplace.api.RequestIdHttpTest.requestAttributeMdcHeaderAndLogHaveSameId(CapturedOutput) -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.RequestIdHttpTest.id(RequestIdHttpTest.java:61)
+	at com.example.marketplace.api.RequestIdHttpTest.requestAttributeMdcHeaderAndLogHaveSameId(RequestIdHttpTest.java:100)
+
+[ERROR] com.example.marketplace.api.RequestIdHttpTest.servlet404And405HaveAnIdWithoutChangingErrorBodyContract -- Time elapsed: 0.018 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.RequestIdHttpTest.id(RequestIdHttpTest.java:61)
+	at com.example.marketplace.api.RequestIdHttpTest.servlet404And405HaveAnIdWithoutChangingErrorBodyContract(RequestIdHttpTest.java:91)
+
+[ERROR] com.example.marketplace.api.RequestIdHttpTest.healthBodyIsUnchangedAndEveryRequestGetsANewServerId -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.api.RequestIdHttpTest.id(RequestIdHttpTest.java:61)
+	at com.example.marketplace.api.RequestIdHttpTest.healthBodyIsUnchangedAndEveryRequestGetsANewServerId(RequestIdHttpTest.java:74)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   RequestIdHttpTest.externalValidMalformedAndDuplicateIdsAreNotTrusted:80->id:61 expected: <1> but was: <0>
+[ERROR]   RequestIdHttpTest.healthBodyIsUnchangedAndEveryRequestGetsANewServerId:74->id:61 expected: <1> but was: <0>
+[ERROR]   RequestIdHttpTest.realExceptionErrorDispatchKeepsOriginalRequestId:110->id:61 expected: <1> but was: <0>
+[ERROR]   RequestIdHttpTest.requestAttributeMdcHeaderAndLogHaveSameId:100->id:61 expected: <1> but was: <0>
+[ERROR]   RequestIdHttpTest.servlet404And405HaveAnIdWithoutChangingErrorBodyContract:91->id:61 expected: <1> but was: <0>
+[INFO]
+[ERROR] Tests run: 5, Failures: 5, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.037 s
+[INFO] Finished at: 2026-10-23T23:19:49+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project marketplace-api: There are test failures.
+[ERROR]
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\e1-red\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

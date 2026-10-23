@@ -1,0 +1,44 @@
+[
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.api.ErrorHttpTest",
+    "tests": 7
+  },
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.api.HealthMvcTest",
+    "tests": 11
+  },
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.api.RequestIdFilterTest",
+    "tests": 5
+  },
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.api.RequestIdHttpTest",
+    "tests": 6
+  },
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.api.UnhealthyMvcTest",
+    "tests": 1
+  },
+  {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "tests": 14
+  }
+]
