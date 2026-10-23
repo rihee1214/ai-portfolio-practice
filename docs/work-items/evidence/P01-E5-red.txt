@@ -1,0 +1,191 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 2 resources from src\main\resources to ..\.local-tools\e5-build\classes
+[INFO] Copying 1 resource from src\main\resources to ..\.local-tools\e5-build\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 7 source files with javac [debug parameters release 21] to ..\.local-tools\e5-build\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\e5-build\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 21 source files with javac [debug parameters release 21] to ..\.local-tools\e5-build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ActuatorPolicyHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T00:25:21.608+09:00  INFO [requestId=] 77088 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Starting ActuatorPolicyHttpTest using Java 21.0.12.1 with PID 77088 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T00:25:21.610+09:00  INFO [requestId=] 77088 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : The following 1 profile is active: "e5-test"
+2026-10-24T00:25:22.484+09:00  INFO [requestId=] 77088 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T00:25:22.492+09:00  INFO [requestId=] 77088 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T00:25:22.493+09:00  INFO [requestId=] 77088 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T00:25:22.533+09:00  INFO [requestId=] 77088 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 909 ms
+2026-10-24T00:25:23.152+09:00  INFO [requestId=] 77088 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 12 endpoints beneath base path '/actuator'
+2026-10-24T00:25:23.240+09:00  INFO [requestId=] 77088 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 10605 (http) with context path '/'
+2026-10-24T00:25:23.245+09:00  INFO [requestId=] 77088 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Started ActuatorPolicyHttpTest in 1.827 seconds (process running for 2.525)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\rihee\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-24T00:25:23.800+09:00  INFO [requestId=] 77088 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T00:25:23.800+09:00  INFO [requestId=] 77088 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T00:25:23.801+09:00  INFO [requestId=] 77088 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-24T00:25:23.822+09:00  WARN [requestId=bb55887a-3cad-4612-a205-097109917d50] 77088 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-24T00:25:24.176+09:00  INFO [requestId=] 77088 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-24T00:25:24.178+09:00  INFO [requestId=] 77088 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+[ERROR] Tests run: 16, Failures: 9, Errors: 0, Skipped: 0, Time elapsed: 3.039 s <<< FAILURE! -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[2] -- Time elapsed: 0.014 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[3] -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[4] -- Time elapsed: 0.072 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[5] -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[6] -- Time elapsed: 0.007 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[7] -- Time elapsed: 0.016 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[8] -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[9] -- Time elapsed: 0.023 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <200>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+    at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+    at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(ActuatorPolicyHttpTest.java:54)
+
+[ERROR] com.example.marketplace.api.ActuatorPolicyHttpTest.noActuatorMBeansAreRegisteredEvenWhenSpringJmxIsEnabled -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+    at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+    at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+    at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:69)
+    at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:41)
+    at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+    at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:195)
+    at com.example.marketplace.api.ActuatorPolicyHttpTest.noActuatorMBeansAreRegisteredEvenWhenSpringJmxIsEnabled(ActuatorPolicyHttpTest.java:77)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.managementDetailsStayUnavailableEvenWhenWebExposureIsWidened:54 expected: <404> but was: <200>
+[ERROR]   ActuatorPolicyHttpTest.noActuatorMBeansAreRegisteredEvenWhenSpringJmxIsEnabled:77 expected: <true> but was: <false>
+[INFO]
+[ERROR] Tests run: 16, Failures: 9, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.020 s
+[INFO] Finished at: 2026-10-24T00:25:24+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project marketplace-api: There are test failures.
+[ERROR]
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\e5-build\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

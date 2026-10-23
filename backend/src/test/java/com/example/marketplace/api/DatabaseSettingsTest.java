@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
+import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
@@ -23,6 +24,8 @@ class DatabaseSettingsTest {
     private ApplicationContextRunner runner(String profile) {
         return new ApplicationContextRunner()
                 .withInitializer(context -> {
+                    // Match SpringApplication's relaxed enum/property conversion.
+                    context.getEnvironment().setConversionService(new ApplicationConversionService());
                     context.getEnvironment().getPropertySources().remove("systemEnvironment");
                     context.getEnvironment().getPropertySources().remove("systemProperties");
                     context.getEnvironment().setActiveProfiles(profile);
