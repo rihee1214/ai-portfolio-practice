@@ -1,6 +1,6 @@
 # AI 개발 연습용 마켓플레이스
 
-P01-D4에서 실제 Chromium 브라우저 12개 검사와 React→Java health 연결을 검증했다. [현재 결과](docs/work-items/P01-D4.md)는 지정 세션 검토 대기다. 아래 D4 미착수 문구는 이전 이력이며 D4 이후는 진행하지 않는다.
+P01-D4에서 실제 Chromium 브라우저 12개 검사와 React→Java health 연결을 검증했다. [현재 결과](docs/work-items/P01-D4.md)는 지정 세션 독립 검토를 통과했다. 아래 D4 미착수 문구는 이전 이력이며 D4 이후는 진행하지 않는다.
 
 P01-D3에서 Vitest·React Testing Library 화면 검사 14개를 추가했다. [현재 결과](docs/work-items/P01-D3.md)는 지정 세션 독립 검토를 통과했으며, 아래 D3 미착수 문구는 이전 이력이다. 기존 DB를 유지하고 D4 이후는 진행하지 않는다.
 

@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-10-23T23:06:25.5948000+09:00",
+  "commit": "3d74bc23fc8c807158611c0facbfd51a595c29e7",
+  "browserStats": {
+    "startTime": "2026-10-23T14:05:38.729Z",
+    "duration": 22846.083,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "typecheckExit": 0,
+  "lintExit": 0,
+  "hashes": {
+    "test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "originalDbUnchanged": true,
+  "testPortsClosed": true,
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ],
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 3 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 3 hours (healthy)"
+  ]
+}
