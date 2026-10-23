@@ -95,4 +95,22 @@ class ModuleRulesTest {
     void securityPrincipalCannotLeakIntoApi() throws Exception {
         assertTrue(violates(compile(Map.of("catalog.api.Product", "java.security.Principal value;"))));
     }
+
+    @Test
+    void publicApiCannotDependOnPlatformEvenIfItsPackageIsNamedApi() throws Exception {
+        assertTrue(violates(compile(Map.of("catalog.api.Product", "e6fixture.platform.api.Technical value;",
+                "platform.api.Technical", ""))));
+    }
+
+    @Test
+    void publicApiCannotDependOnPlatformWeb() throws Exception {
+        assertTrue(violates(compile(Map.of("catalog.api.Product", "e6fixture.platform.web.Technical value;",
+                "platform.web.Technical", ""))));
+    }
+
+    @Test
+    void applicationCanStillUsePlatform() throws Exception {
+        assertFalse(violates(compile(Map.of("catalog.application.Service", "e6fixture.platform.web.Technical value;",
+                "platform.web.Technical", ""))));
+    }
 }

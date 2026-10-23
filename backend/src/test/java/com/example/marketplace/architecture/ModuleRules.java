@@ -28,7 +28,7 @@ final class ModuleRules {
                         boolean targetPlatform = destination[0].equals("platform");
                         violation = origin[0].equals("platform") && !targetPlatform;
                         violation |= !sameModule && !targetPlatform && !targetApi;
-                        violation |= layer(origin, "api") && !targetApi;
+                        violation |= layer(origin, "api") && (!targetApi || targetPlatform);
                         violation |= layer(origin, "domain")
                                 && (layer(destination, "web") || layer(destination, "infrastructure"));
                     }
