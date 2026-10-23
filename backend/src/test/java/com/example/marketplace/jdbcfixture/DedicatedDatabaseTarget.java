@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-/** Safety gate for the C3 fixture runner, never part of the application JAR. */
+/** Safety gate for dedicated fixture databases, never part of the application JAR. */
 public final class DedicatedDatabaseTarget {
     private DedicatedDatabaseTarget() {
     }
 
     public static void validate(String url, String username, String confirmation) {
-        if (confirmation == null || !Pattern.matches("c3_verify_[0-9a-f]{32}", confirmation)
+        if (confirmation == null || !Pattern.matches("(?:c3_verify|d2_it)_[0-9a-f]{32}", confirmation)
                 || !("jdbc:postgresql://127.0.0.1:15433/" + confirmation).equals(url)
                 || !"marketplace_test".equals(username)) {
-            throw new IllegalArgumentException("Only an explicitly confirmed dedicated C3 test target is allowed");
+            throw new IllegalArgumentException("Only an explicitly confirmed dedicated test target is allowed");
         }
     }
 

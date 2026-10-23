@@ -1,0 +1,57 @@
+{
+  "dbHashes": {
+    "dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 2 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 2 hours (healthy)"
+  ],
+  "checkedAt": "2026-10-23T22:33:35.0404131+09:00",
+  "closedD1TestPorts": [
+    13862
+  ],
+  "http": [
+    {
+      "status": "unavailable",
+      "port": 8080,
+      "reason": "connection refused; listener absent at baseline and end"
+    },
+    {
+      "status": "unavailable",
+      "port": 5174,
+      "reason": "connection refused; listener absent at baseline and end"
+    }
+  ],
+  "fixtures": [
+    {
+      "run": "d2-green",
+      "accounts_entries_successfulVersions": "11|2|2",
+      "database": "d2_it_ae59ed177e6c4b14bdc84dadc87307ef"
+    },
+    {
+      "run": "d2-final",
+      "accounts_entries_successfulVersions": "11|2|2",
+      "database": "d2_it_8e4f6269c64a416e9a23690ee5fd7366"
+    },
+    {
+      "accounts_entries_successfulVersions": "11|2|2",
+      "database": "d2_it_eef26ee364774f77b8cccb7f8e86e850",
+      "run": "d2-verified"
+    }
+  ],
+  "databaseUnchanged": true,
+  "serverBaseline": "8080/5174 absent already; old PIDs absent; no restart performed",
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # C3 JDBC 조회·매핑·트랜잭션 실습
 
-D1 도입 이후 verify-jdbc.ps1의 Maven verify는 JUnit32개도 실행한다. C3 main 검사13+26개와 따로 집계한다. FixtureConfiguration은 c3-fixture 프로필에서만 활성화하며 JdbcContract가 명시적으로 켠다. 아래 JUnit0건/D1 미구현 표현은 C3 당시 기록이다. [현재 Java 검사 안내](java-testing.md)를 참고한다.
+현재 verify-jdbc.ps1의 Maven verify는 DB 없는 JUnit33개도 실행한다(D1 당시32개). C3 main 검사13+26개와 따로 집계한다. FixtureConfiguration은 c3-fixture 프로필에서만 활성화하며 JdbcContract가 명시적으로 켠다. 아래 JUnit0건/D1 미구현 표현은 C3 당시 기록이다. [현재 Java 검사 안내](java-testing.md)를 참고한다.
 
 C3는 테스트 전용 fixture로 SQL과 트랜잭션 사용 방식을 검증한다. 쇼핑몰 계정·잔액·결제 기능이 구현된 것은 아니다. `backend/src/test/java/com/example/marketplace/jdbcfixture`와 `src/test/resources/db/c3fixture`는 배포 JAR에 포함되지 않는다. 앱의 기존 health와 DB 프로필은 변경하지 않았다.
 

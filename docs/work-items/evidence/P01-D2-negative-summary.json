@@ -1,0 +1,28 @@
+{
+  "beforeHash": "824BEF0BC715172FDDE19C408922493C6A39A1DA8E76148BD1A347EB0BEF2934",
+  "cases": [
+    {
+      "created": false,
+      "scenario": "unsafe-target",
+      "exitCode": 1,
+      "requestedDatabase": "d2_it_3247a80ce5644a13af7515e5c00b07ca",
+      "reason": "Only an explicitly confirmed dedicated test target is allowed"
+    },
+    {
+      "created": false,
+      "scenario": "wrong-password",
+      "exitCode": 1,
+      "requestedDatabase": "d2_it_706e5c2a7c1e40afbb72891e384a8206",
+      "reason": "SQLSTATE=28P01"
+    },
+    {
+      "created": false,
+      "scenario": "existing-database",
+      "exitCode": 1,
+      "requestedDatabase": "d2_it_ae59ed177e6c4b14bdc84dadc87307ef",
+      "reason": "SQLSTATE=42P04"
+    }
+  ],
+  "collisionDatabase": "d2_it_ae59ed177e6c4b14bdc84dadc87307ef",
+  "afterHash": "824BEF0BC715172FDDE19C408922493C6A39A1DA8E76148BD1A347EB0BEF2934"
+}

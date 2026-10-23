@@ -1,4 +1,6 @@
-# Java 검사 실행 범위 — P01-D1
+# Java 검사 실행 범위
+
+D2에서 전용 DB 이름 허용 검사1개가 추가돼 기본 실행은33개다. D1 당시32개 결과는 해당 작업 기록에 보존한다.
 
 JUnit Jupiter는 테스트를 발견하고 실행하며 assertion/파라미터 검사를 제공한다. Spring Boot Test는 실제 앱 설정과 자동 구성을 로딩한다. MockMvc는 그 컨텍스트의 MVC 요청 처리를 네트워크 없이 실행한다. 셋은 대체 관계가 아니라 함께 쓰는 서로 다른 도구다. 현재 Boot4.1.1 BOM이 관리하는 Jupiter6.0.3, Spring Test7.0.9를 사용한다. [Boot 공식 테스트 안내](https://docs.spring.io/spring-boot/reference/testing/)
 
@@ -6,12 +8,12 @@ JUnit Jupiter는 테스트를 발견하고 실행하며 assertion/파라미터 �
 
 | 클래스 | 실행 수 | Spring/서버/DB | 확인하는 계약 |
 | --- | ---: | --- | --- |
-| DedicatedDatabaseTargetTest | 13 | 모두 없음 | C3 대상 허용·거부. 연결 없이 URL·계정·확인값 검증 |
+| DedicatedDatabaseTargetTest | 14 | 모두 없음 | C3 대상 허용·거부. 연결 없이 URL·계정·확인값 검증 |
 | HealthMvcTest | 11 | Boot MOCK + MockMvc / 서버·DB 없음 | health 200·status-only·JSON 협상, 기존/없는 경로 404, health POST405, DB/Flyway 빈 없음 |
 | UnhealthyMvcTest | 1 | Boot MOCK + MockMvc / 서버·DB 없음 | diskspace 임계값으로 503 DOWN 생성, 상세 정보 비노출 |
 | ErrorHttpTest | 7 | Boot RANDOM_PORT / loopback 서버 / DB 없음 | 실제 Servlet 오류 전달의 404·405 JSON 및 정상 health |
 
-합계32개이며 실패·오류·skip는0이다. MockMvc의404/405 상태 확인과 실제 HTTP 오류 body 확인을 구분한다. 실제 서버는 OS가 고른 임시 포트에서 뜨고 테스트 JVM 종료 시 닫힌다. 기존8080·5174는 시작·종료 대상이 아니다. RANDOM_PORT 검사는 DB 통합 검사가 아니다.
+합계33개이며 실패·오류·skip는0이다. MockMvc의404/405 상태 확인과 실제 HTTP 오류 body 확인을 구분한다. 실제 서버는 OS가 고른 임시 포트에서 뜨고 테스트 JVM 종료 시 닫힌다. 기존8080·5174는 시작·종료 대상이 아니다. RANDOM_PORT 검사는 DB 통합 검사가 아니다.
 
 `DbFreeBootTest`와 `ErrorHttpTest`는 DataSource/Flyway 자동 구성을 제외하고 SQL init/Flyway를 끈다. 로컬 root.env를 읽지 않고 classpath 설정만 로딩한다. DB 자동 구성 회귀 자체를 검증하는 검사는 아니며 D1 범위를 DB와 분리하기 위한 명시적 제한이다. C3의 FixtureConfiguration은 `c3-fixture` 프로필에서만 켜지고 기존 JdbcContract가 명시적으로 활성화한다.
 
@@ -43,7 +45,7 @@ try {
 | Boot+MockMvc만 | `-Dtest=HealthMvcTest,UnhealthyMvcTest test` (PowerShell에서는 -D 인자 전체를 따옴표로 감싼다) |
 | 실제 HTTP 오류 계약만 | `-Dtest=ErrorHttpTest test` |
 
-Surefire3.5.6은 `*Test.java`를 실행하고 `*IT.java`는 제외한다. `failIfNoTests=true`를 명시했다. 없는 이름을 선택하면 비정상 종료하며 0건을 통과로 보고하지 않는다. DB 통합의 `*IT`/Failsafe/`-Pdb-it`는 D2에서 도입할 범위이고 지금 사용할 수 있는 명령이 아니다. C3의 Java main 검사와 Surefire의 실행 수는 따로 센다.
+Surefire3.5.6은 `*Test.java`를 실행하고 `*IT.java`는 제외한다. `failIfNoTests=true`를 명시했다. 없는 이름을 선택하면 비정상 종료하며 0건을 통과로 보고하지 않는다. D2에서 `*IT`/Failsafe/`-Pdb-it`를 도입했다. [PostgreSQL 통합 검사 안내](postgresql-integration-tests.md)의 보호된 실행 방법을 따른다. C3의 Java main 검사와 Surefire의 실행 수는 따로 센다.
 
 보고서는 `.local-tools/d1-build/surefire-reports`에 생긴다. 파라미터 검사도 각 입력마다1건으로 집계한다. 전체 XML에는 JVM 시스템 속성·환경 경로 등이 들어갈 수 있으므로 그대로 공유하지 말고 필요한 집계/로그를 선별한다.
 
@@ -55,7 +57,7 @@ health는 정상200 `{"status":"UP"}`, 장애503 `{"status":"DOWN"}`만 노출�
 
 ## 직접 확인할 작은 실습
 
-1. 순수 검사와 MockMvc 검사 명령을 각각 실행하고 실행 수13/12와 서버 시작 로그 유무를 비교한다.
+1. 순수 검사와 MockMvc 검사 명령을 각각 실행하고 실행 수14/12와 서버 시작 로그 유무를 비교한다.
 2. ErrorHttpTest를 실행해 임시 포트와404 JSON 확인 지점을 읽는다.
 3. 별도 임시 Maven 인자로 `-Dmanagement.endpoint.health.show-details=always`와 `-Dmanagement.endpoint.health.show-components=always`를 함께 전달해 HealthMvcTest의 status-only 검사가 실패하는지 확인한다. 파일/기존 서버 설정은 바뀌지 않는다. 인자를 제거하고 다시 전체 검사한다.
 

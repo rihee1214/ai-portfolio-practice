@@ -39,4 +39,11 @@ class DedicatedDatabaseTargetTest {
     void acceptsExplicitDedicatedTargetWithoutConnecting() {
         assertDoesNotThrow(() -> DedicatedDatabaseTarget.validate(URL, "marketplace_test", DATABASE));
     }
+
+    @Test
+    void acceptsDedicatedD2TargetWithoutConnecting() {
+        String database = "d2_it_0123456789abcdef0123456789abcdef";
+        assertDoesNotThrow(() -> DedicatedDatabaseTarget.validate(
+                "jdbc:postgresql://127.0.0.1:15433/" + database, "marketplace_test", database));
+    }
 }

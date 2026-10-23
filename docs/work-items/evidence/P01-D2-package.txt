@@ -1,0 +1,1 @@
+PASS final d2-verified JAR excludes test code, SQL and libraries
