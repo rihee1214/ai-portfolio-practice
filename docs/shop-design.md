@@ -162,7 +162,7 @@ worker는 주 앱과 같은 배포 버전·DB를 사용하는 Java 실행 역할
 | --- | --- | --- | --- |
 | 상품 | draft / active / stopped / archived | isHiddenByAdmin | active이고 운영 숨김이 아니며 매대·판매자 조건 충족 |
 | 리뷰·댓글 | deletedAt 없음 | isHiddenByAdmin | 작성자 삭제와 운영 숨김 모두 없음 |
-| 매대 | open / closed | suspended / hidden | 신규 판매는 open·승인·공개 상태에서만 |
+| 매대 | P03 확정: OPEN / SUSPENDED / CLOSED | visible 공개 여부, 별도 hidden 미구현 | ACTIVE SELLER이고 OPEN·visible일 때 공개·신규 판매 정책 허용. 복구 후 비공개, 폐점 후 재개설 불가 |
 | 회원 | active / withdrawn | suspended | 로그인·변경 권한은 active·비정지 |
 
 운영 비공개에는 사유·처리자·시각·이전/이후 상태를 기록한다. 복원도 새 조치다. 기존 주문·결제·정산은 삭제 요청 때문에 물리 삭제하지 않는다. 회원 탈퇴 시 식별 정보 처리와 거래 보존을 분리하고, 실제 보관 기간은 실사용 전 별도 결정한다.

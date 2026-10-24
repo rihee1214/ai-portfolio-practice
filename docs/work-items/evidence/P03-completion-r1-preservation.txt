@@ -1,0 +1,7 @@
+PASS existing DB hashes, database inventory, container identities
+New databases: d2_it_310224f7d3f643489a00dcde1cb70254, d2_it_6b6056ddfbd144d08a0ff7981a8d5ffc
+
+LocalAddress LocalPort OwningProcess
+------------ --------- -------------
+127.0.0.1        15433         57168
+127.0.0.1        15432         57168

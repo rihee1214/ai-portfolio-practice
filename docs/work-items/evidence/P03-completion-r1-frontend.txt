@@ -1,0 +1,7 @@
+
+> marketplace-frontend@0.0.1 typecheck
+> tsc --noEmit
+
+
+> marketplace-frontend@0.0.1 lint
+> eslint . --max-warnings 0
