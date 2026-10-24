@@ -1,0 +1,9 @@
+2026-10-24T15:59:49.135+09:00  INFO [requestId=] 54452 --- [           main] c.e.m.i.i.InitialAdminCommand            : Starting InitialAdminCommand v0.0.1-SNAPSHOT using Java 21.0.12.1 with PID 54452 (D:\Workspace\ai-portfolio-practice\.local-tools\p02-c-review-final\build\marketplace-api-0.0.1-SNAPSHOT.jar started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:59:49.139+09:00  INFO [requestId=] 54452 --- [           main] c.e.m.i.i.InitialAdminCommand            : The following 1 profile is active: "db"
+2026-10-24T15:59:50.494+09:00  INFO [requestId=] 54452 --- [           main] c.e.m.i.i.InitialAdminCommand            : Started InitialAdminCommand in 1.678 seconds (process running for 2.158)
+2026-10-24T15:59:50.509+09:00  INFO [requestId=] 54452 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-24T15:59:50.678+09:00  INFO [requestId=] 54452 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2954f6ab
+2026-10-24T15:59:50.680+09:00  INFO [requestId=] 54452 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-24T15:59:50.713+09:00  INFO [requestId=] 54452 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-24T15:59:50.715+09:00  INFO [requestId=] 54452 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+INITIAL_ADMIN_FAILED: check explicit inputs, target schema and one-time eligibility

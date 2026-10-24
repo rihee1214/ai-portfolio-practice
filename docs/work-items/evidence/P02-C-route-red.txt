@@ -1,0 +1,2046 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/WorkspaceAccess.test.tsx (9 tests | 5 failed) 5240ms
+   × 라우터가 허용한 변형 경로 /admin/users/도 개별 운영 권한으로 검사한다 1014ms
+   × 라우터가 허용한 변형 경로 /ADMIN/users도 개별 운영 권한으로 검사한다 1018ms
+   × 라우터가 허용한 변형 경로 /admin/sellers/도 개별 운영 권한으로 검사한다 1024ms
+   × 라우터가 허용한 변형 경로 /admin/orders/도 개별 운영 권한으로 검사한다 1023ms
+   × 라우터가 허용한 변형 경로 /ADMIN/moderation/도 개별 운영 권한으로 검사한다 1019ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/WorkspaceAccess.test.tsx > 라우터가 허용한 변형 경로 /admin/users/도 개별 운영 권한으로 검사한다
+ FAIL  tests/unit/WorkspaceAccess.test.tsx > 라우터가 허용한 변형 경로 /ADMIN/users도 개별 운영 권한으로 검사한다
+TestingLibraryElementError: Unable to find role="alert"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                회원 관리
+              </h1>
+              <p
+                class="page-description"
+              >
+                회원 상태와 조치 이력을 관리합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  운영 권한 확인 후 회원 정지·복원과 사유 기록을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                회원 관리
+              </h1>
+              <p
+                class="page-description"
+              >
+                회원 상태와 조치 이력을 관리합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  운영 권한 확인 후 회원 정지·복원과 사유 기록을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/unit/WorkspaceAccess.test.tsx:53:25
+     51|         ? json({ access: 'ADMIN' }) : json({ code: 'FORBIDDEN', messag…
+     52|     render(<App />)
+     53|     expect(await screen.findByRole('alert')).toHaveTextContent('권한')
+       |                         ^
+     54|     expect(screen.queryByText(/공간 접근 권한을 확인했습니다/)).not.toBeInTheDocume…
+     55|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/unit/WorkspaceAccess.test.tsx > 라우터가 허용한 변형 경로 /admin/sellers/도 개별 운영 권한으로 검사한다
+TestingLibraryElementError: Unable to find role="alert"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                판매자 심사
+              </h1>
+              <p
+                class="page-description"
+              >
+                판매 신청과 매대 운영 상태를 확인합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  판매 신청 승인·반려와 처리 이력을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                판매자 심사
+              </h1>
+              <p
+                class="page-description"
+              >
+                판매 신청과 매대 운영 상태를 확인합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  판매 신청 승인·반려와 처리 이력을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/unit/WorkspaceAccess.test.tsx:53:25
+     51|         ? json({ access: 'ADMIN' }) : json({ code: 'FORBIDDEN', messag…
+     52|     render(<App />)
+     53|     expect(await screen.findByRole('alert')).toHaveTextContent('권한')
+       |                         ^
+     54|     expect(screen.queryByText(/공간 접근 권한을 확인했습니다/)).not.toBeInTheDocume…
+     55|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/unit/WorkspaceAccess.test.tsx > 라우터가 허용한 변형 경로 /admin/orders/도 개별 운영 권한으로 검사한다
+TestingLibraryElementError: Unable to find role="alert"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                거래 관리
+              </h1>
+              <p
+                class="page-description"
+              >
+                주문과 거래 지원 내역을 확인합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  업무별 운영 권한과 거래 감사 이력을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                거래 관리
+              </h1>
+              <p
+                class="page-description"
+              >
+                주문과 거래 지원 내역을 확인합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  업무별 운영 권한과 거래 감사 이력을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/unit/WorkspaceAccess.test.tsx:53:25
+     51|         ? json({ access: 'ADMIN' }) : json({ code: 'FORBIDDEN', messag…
+     52|     render(<App />)
+     53|     expect(await screen.findByRole('alert')).toHaveTextContent('권한')
+       |                         ^
+     54|     expect(screen.queryByText(/공간 접근 권한을 확인했습니다/)).not.toBeInTheDocume…
+     55|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/unit/WorkspaceAccess.test.tsx > 라우터가 허용한 변형 경로 /ADMIN/moderation/도 개별 운영 권한으로 검사한다
+TestingLibraryElementError: Unable to find role="alert"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                콘텐츠 조치
+              </h1>
+              <p
+                class="page-description"
+              >
+                문제 상품·리뷰·댓글을 관리합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  사유와 이력을 남기는 비공개·복원을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <a
+      class="skip-link"
+      href="#main-content"
+    >
+      본문으로 건너뛰기
+    </a>
+    <header
+      class="site-header"
+    >
+      <a
+        aria-label="모아마켓 홈"
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아
+        <span>
+          마켓
+        </span>
+        <span
+          class="brand-dot"
+        >
+          .
+        </span>
+      </a>
+      <nav
+        aria-label="주요 화면"
+        class="primary-nav"
+      >
+        <a
+          class=""
+          data-discover="true"
+          href="/"
+        >
+          둘러보기
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/account"
+        >
+          구매자
+        </a>
+        <a
+          class=""
+          data-discover="true"
+          href="/seller"
+        >
+          판매자
+        </a>
+        <a
+          aria-current="page"
+          class="active"
+          data-discover="true"
+          href="/admin"
+        >
+          운영자
+        </a>
+      </nav>
+      <a
+        class="account-link"
+        data-discover="true"
+        href="/account"
+      >
+        내 계정 · 로그인
+      </a>
+    </header>
+    <main
+      id="main-content"
+      tabindex="-1"
+    >
+      <section
+        class="auth-shell"
+      >
+        <nav
+          aria-label="회원 메뉴"
+        >
+          <a
+            data-discover="true"
+            href="/login"
+          >
+            로그인
+          </a>
+          <a
+            data-discover="true"
+            href="/signup"
+          >
+            회원가입
+          </a>
+          <a
+            data-discover="true"
+            href="/verify-email"
+          >
+            이메일 확인
+          </a>
+          <a
+            data-discover="true"
+            href="/account"
+          >
+            내 계정
+          </a>
+          <a
+            data-discover="true"
+            href="/account/profile"
+          >
+            프로필
+          </a>
+          <a
+            data-discover="true"
+            href="/account/addresses"
+          >
+            배송지
+          </a>
+        </nav>
+        <div
+          class="workspace"
+        >
+          <aside
+            class="workspace-sidebar"
+          >
+            <p
+              class="eyebrow"
+            >
+              운영자
+               공간
+            </p>
+            <p
+              class="workspace-label"
+            >
+              사이트 운영
+            </p>
+            <nav
+              aria-label="운영자 메뉴"
+              class="workspace-nav"
+            >
+              <a
+                class=""
+                data-discover="true"
+                href="/admin"
+              >
+                한눈에 보기
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/users"
+              >
+                회원 관리
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/sellers"
+              >
+                판매자 심사
+              </a>
+              <a
+                aria-current="page"
+                class="active"
+                data-discover="true"
+                href="/admin/moderation"
+              >
+                콘텐츠 조치
+              </a>
+              <a
+                class=""
+                data-discover="true"
+                href="/admin/orders"
+              >
+                거래 관리
+              </a>
+            </nav>
+          </aside>
+          <div
+            class="workspace-content"
+          >
+            <div
+              class="preview-notice"
+            >
+              <strong>
+                화면 구조 미리보기
+              </strong>
+              <p>
+                공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.
+              </p>
+            </div>
+            <section
+              class="workspace-page"
+            >
+              <p
+                class="eyebrow"
+              >
+                구현 예정
+              </p>
+              <h1>
+                콘텐츠 조치
+              </h1>
+              <p
+                class="page-description"
+              >
+                문제 상품·리뷰·댓글을 관리합니다.
+              </p>
+              <div
+                class="empty-panel"
+              >
+                <span
+                  aria-hidden="true"
+                  class="empty-symbol"
+                >
+                  ＋
+                </span>
+                <h2>
+                  이 공간을 준비하고 있어요
+                </h2>
+                <p>
+                  사유와 이력을 남기는 비공개·복원을 연결할 예정입니다.
+                </p>
+                <p
+                  class="empty-caption"
+                >
+                  아직 데이터를 조회하지 않았습니다.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        class="brand"
+        data-discover="true"
+        href="/"
+      >
+        모아마켓.
+      </a>
+      <p>
+        포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중
+      </p>
+    </footer>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/unit/WorkspaceAccess.test.tsx:53:25
+     51|         ? json({ access: 'ADMIN' }) : json({ code: 'FORBIDDEN', messag…
+     52|     render(<App />)
+     53|     expect(await screen.findByRole('alert')).toHaveTextContent('권한')
+       |                         ^
+     54|     expect(screen.queryByText(/공간 접근 권한을 확인했습니다/)).not.toBeInTheDocume…
+     55|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  5 failed | 65 passed (70)
+   Start at  15:57:53
+   Duration  7.37s (tests 44%, environment 42%, setup 9%, import 4%, transform 1%)

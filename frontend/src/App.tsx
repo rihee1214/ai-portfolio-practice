@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { BrowserRouter, Route, Routes, useLocation, matchPath } from 'react-router'
 import { SiteLayout } from './layouts/SiteLayout'
 import { WorkspaceLayout } from './layouts/WorkspaceLayout'
 import { workspaces } from './navigation'
@@ -10,6 +10,18 @@ import AuthLayout from './auth/AuthLayout'
 import { AccountPage, AuthForm } from './pages/AuthPages'
 import { AccountDetailsPage } from './pages/AccountPages'
 import { PasswordPage } from './pages/PasswordPages'
+import { WorkspaceAccess, type AccessArea } from './auth/WorkspaceAccess'
+import type { Workspace } from './navigation'
+
+function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
+  const location = useLocation()
+  const feature = workspace.features.find(item => matchPath({ path: workspace.path + '/' + item.path, end: true }, location.pathname))
+  const areas: Record<string, AccessArea> = { users: 'ACCOUNTS', sellers: 'ACCOUNTS', moderation: 'CONTENT', orders: 'SUPPORT' }
+  const area: AccessArea = workspace.path === '/seller' ? 'SELLER' : feature ? areas[feature.path] : 'ADMIN'
+  return <WorkspaceAccess key={location.pathname} area={area} title={feature?.title ?? workspace.title}>
+    <WorkspaceLayout workspace={workspace} />
+  </WorkspaceAccess>
+}
 
 export default function App() {
   return (
@@ -31,16 +43,16 @@ export default function App() {
                 {workspaces[0].features.filter(feature => feature.path !== 'addresses').map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
               </Route>
             </Route>
-          </Route>
-          {import.meta.env.DEV && <Route path="/dev/api-errors" element={<ApiErrorPreview />} />}
           {workspaces.filter(workspace => workspace.path !== '/account').map((workspace) => (
-            <Route key={workspace.path} path={workspace.path} element={<WorkspaceLayout workspace={workspace} />}>
+            <Route key={workspace.path} path={workspace.path} element={<ProtectedWorkspace workspace={workspace} />}>
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.features.map((feature) => (
                 <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}
+          </Route>
+          {import.meta.env.DEV && <Route path="/dev/api-errors" element={<ApiErrorPreview />} />}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

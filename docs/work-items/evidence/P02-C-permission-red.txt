@@ -1,0 +1,464 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO]
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 3 resources from src\main\resources to ..\.local-tools\p02-c-permission-red\build\classes
+[INFO] Copying 4 resources from src\main\resources to ..\.local-tools\p02-c-permission-red\build\classes
+[INFO]
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 40 source files with javac [debug parameters release 21] to ..\.local-tools\p02-c-permission-red\build\classes
+[INFO]
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\.local-tools\p02-c-permission-red\build\test-classes
+[INFO]
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 29 source files with javac [debug parameters release 21] to ..\.local-tools\p02-c-permission-red\build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ActuatorPolicyHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:06.026+09:00  INFO [requestId=] 76020 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Starting ActuatorPolicyHttpTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:06.028+09:00  INFO [requestId=] 76020 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : The following 1 profile is active: "e5-test"
+2026-10-24T15:48:06.933+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T15:48:06.942+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T15:48:06.942+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T15:48:06.983+09:00  INFO [requestId=] 76020 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 938 ms
+2026-10-24T15:48:07.625+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:07.705+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7655 (http) with context path '/'
+2026-10-24T15:48:07.711+09:00  INFO [requestId=] 76020 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Started ActuatorPolicyHttpTest in 1.883 seconds (process running for 2.723)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-24T15:48:08.359+09:00  INFO [requestId=] 76020 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T15:48:08.359+09:00  INFO [requestId=] 76020 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T15:48:08.360+09:00  INFO [requestId=] 76020 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-24T15:48:08.383+09:00  WARN [requestId=2463833e-b23f-4548-8960-e6abe838b451] 76020 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-24T15:48:08.643+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-24T15:48:08.646+09:00  INFO [requestId=] 76020 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.107 s -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[INFO] Running com.example.marketplace.api.ApiErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:08.690+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Starting ApiErrorHttpTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:08.690+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : The following 1 profile is active: "e2-probe"
+2026-10-24T15:48:08.873+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T15:48:08.874+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T15:48:08.874+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T15:48:08.898+09:00  INFO [requestId=] 76020 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 207 ms
+2026-10-24T15:48:08.982+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:08.992+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7675 (http) with context path '/'
+2026-10-24T15:48:08.995+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Started ApiErrorHttpTest in 0.322 seconds (process running for 4.007)
+2026-10-24T15:48:09.006+09:00  INFO [requestId=] 76020 --- [1-auto-2-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T15:48:09.006+09:00  INFO [requestId=] 76020 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T15:48:09.007+09:00  INFO [requestId=] 76020 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-24T15:48:09.008+09:00  WARN [requestId=9ecdf00a-c48d-4be4-9f4b-32d162891abe] 76020 --- [1-auto-2-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'text/plain' is not supported]
+2026-10-24T15:48:09.070+09:00  WARN [requestId=b7b09ea2-8b67-416c-aaca-198e7dba21cc] 76020 --- [1-auto-2-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: No acceptable representation]
+2026-10-24T15:48:09.233+09:00 ERROR [requestId=] 76020 --- [1-auto-2-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 SQL secret] with root cause
+
+java.lang.IllegalStateException: private-e2 SQL secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.fail(ApiErrorHttpTest.java:179) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-24T15:48:09.274+09:00 ERROR [requestId=] 76020 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] threw exception
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-24T15:48:09.275+09:00 ERROR [requestId=] 76020 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 async secret] with root cause
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-24T15:48:09.287+09:00  WARN [requestId=0a759a3c-229c-497a-afe3-7693ba2ac812] 76020 --- [1-auto-2-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'value': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "private-e2"]
+2026-10-24T15:48:09.310+09:00  WARN [requestId=7493ef8e-1ad0-46d7-aaaf-45c14a9fe39d] 76020 --- [1-auto-2-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('p' (code 112)): was expecting double-quote to start property name]
+2026-10-24T15:48:09.352+09:00  WARN [requestId=6dfd3d27-7899-43b1-9ef4-820bad0c7039] 76020 --- [1-auto-2-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.693 s -- in com.example.marketplace.api.ApiErrorHttpTest
+[INFO] Running com.example.marketplace.api.DatabaseSettingsTest
+2026-10-24T15:48:09.527+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-24T15:48:09.752+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-24T15:48:09.862+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-24T15:48:09.967+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-24T15:48:10.066+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-24T15:48:10.177+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-24T15:48:10.280+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-24T15:48:10.382+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-24T15:48:10.471+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-24T15:48:10.558+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-24T15:48:10.936+09:00  WARN [requestId=] 76020 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL), spring.datasource.username (DB_USERNAME), spring.datasource.password (DB_PASSWORD)
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.841 s -- in com.example.marketplace.api.DatabaseSettingsTest
+[INFO] Running com.example.marketplace.api.ErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:11.222+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Starting ErrorHttpTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:11.222+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.ErrorHttpTest  : The following 1 profile is active: "d1"
+2026-10-24T15:48:11.352+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T15:48:11.354+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T15:48:11.354+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T15:48:11.378+09:00  INFO [requestId=] 76020 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 155 ms
+2026-10-24T15:48:11.463+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:11.472+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 5264 (http) with context path '/'
+2026-10-24T15:48:11.475+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Started ErrorHttpTest in 0.268 seconds (process running for 6.487)
+2026-10-24T15:48:11.482+09:00  INFO [requestId=] 76020 --- [1-auto-3-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T15:48:11.482+09:00  INFO [requestId=] 76020 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T15:48:11.482+09:00  INFO [requestId=] 76020 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-24T15:48:11.531+09:00  WARN [requestId=8946b940-2729-4081-ad59-39ea6c625b6e] 76020 --- [1-auto-3-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.345 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Running com.example.marketplace.api.HealthMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:11.565+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.HealthMvcTest  : Starting HealthMvcTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:11.565+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.HealthMvcTest  : The following 1 profile is active: "d1"
+2026-10-24T15:48:11.757+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-24T15:48:11.758+09:00  INFO [requestId=] 76020 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-24T15:48:11.759+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:11.760+09:00  INFO [requestId=] 76020 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-24T15:48:11.771+09:00  INFO [requestId=] 76020 --- [           main] c.example.marketplace.api.HealthMvcTest  : Started HealthMvcTest in 0.215 seconds (process running for 6.783)
+2026-10-24T15:48:11.788+09:00  WARN [requestId=c2beeda7-94a7-4d7d-8be7-967ce1905ba4] 76020 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.319 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Running com.example.marketplace.api.RequestIdFilterTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.example.marketplace.api.RequestIdFilterTest
+[INFO] Running com.example.marketplace.api.RequestIdHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:11.888+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Starting RequestIdHttpTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:11.888+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : The following 1 profile is active: "e1-probe"
+2026-10-24T15:48:12.004+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T15:48:12.005+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T15:48:12.006+09:00  INFO [requestId=] 76020 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T15:48:12.028+09:00  INFO [requestId=] 76020 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 139 ms
+2026-10-24T15:48:12.097+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:12.104+09:00  INFO [requestId=] 76020 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 5275 (http) with context path '/'
+2026-10-24T15:48:12.106+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Started RequestIdHttpTest in 0.227 seconds (process running for 7.118)
+2026-10-24T15:48:12.112+09:00  INFO [requestId=] 76020 --- [1-auto-4-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T15:48:12.112+09:00  INFO [requestId=] 76020 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T15:48:12.113+09:00  INFO [requestId=] 76020 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-24T15:48:12.153+09:00 ERROR [requestId=] 76020 --- [-auto-4-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: intentional-e1] with root cause
+
+java.lang.IllegalStateException: intentional-e1
+	at com.example.marketplace.api.RequestIdHttpTest$ProbeController.fail(RequestIdHttpTest.java:170) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-24T15:48:12.166+09:00  INFO [requestId=1944dada-cc10-49ed-8ce5-49e23c9ceb6d] 76020 --- [1-auto-4-exec-1] .e.m.a.RequestIdHttpTest$ProbeController : E1 test-only log probe
+2026-10-24T15:48:12.201+09:00  WARN [requestId=c09461fc-9e4e-4fb1-84a8-7a92717b91ce] 76020 --- [1-auto-4-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.328 s -- in com.example.marketplace.api.RequestIdHttpTest
+[INFO] Running com.example.marketplace.api.UnhealthyMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-24T15:48:12.224+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Starting UnhealthyMvcTest using Java 21.0.12.1 with PID 76020 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:12.224+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : The following 1 profile is active: "d1"
+2026-10-24T15:48:12.387+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-24T15:48:12.387+09:00  INFO [requestId=] 76020 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-24T15:48:12.387+09:00  INFO [requestId=] 76020 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:12.388+09:00  INFO [requestId=] 76020 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-24T15:48:12.393+09:00  INFO [requestId=] 76020 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Started UnhealthyMvcTest in 0.177 seconds (process running for 7.406)
+2026-10-24T15:48:12.398+09:00  WARN [requestId=84b1a719-0645-4461-b576-74c57a820f95] 76020 --- [           main] o.s.b.h.a.DiskSpaceHealthIndicator       : Free disk space at path 'D:\Workspace\ai-portfolio-practice\backend\.' below threshold. Available: 694846853120 bytes (threshold: 9223372036854775807B)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.204 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Running com.example.marketplace.architecture.ModuleArchitectureTest
+2026-10-24T15:48:12.423+09:00  INFO [requestId=] 76020 --- [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.12.1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.938 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Running com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.599 s -- in com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Running com.example.marketplace.identity.AccountRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.identity.AccountRulesTest
+[INFO] Running com.example.marketplace.identity.AttemptWindowTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.839 s -- in com.example.marketplace.identity.AttemptWindowTest
+[INFO] Running com.example.marketplace.identity.SignupRulesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.example.marketplace.identity.SignupRulesTest
+[INFO] Running com.example.marketplace.identity.SignupSecurityTest
+A1_ARGON_ENCODE_MS=261
+A1_ARGON_VERIFY_MS=27
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.412 s -- in com.example.marketplace.identity.SignupSecurityTest
+[INFO] Running com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Running com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 129, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO] Building jar: D:\Workspace\ai-portfolio-practice\.local-tools\p02-c-permission-red\build\marketplace-api-0.0.1-SNAPSHOT.jar
+[INFO]
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\p02-c-permission-red\build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\p02-c-permission-red\build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO]
+[INFO] --- failsafe:3.5.6:integration-test (default) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.dbtest.PostgresJdbcIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+D2_CREATED_DATABASE=d2_it_aedd4866d9a741a3bb5936efb2b7819b
+2026-10-24T15:48:26.702+09:00  INFO [requestId=] 25980 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Starting PostgresJdbcIT using Java 21.0.12.1 with PID 25980 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-24T15:48:26.704+09:00  INFO [requestId=] 25980 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : The following 4 profiles are active: "db", "c3-fixture", "local-mailbox", "local-http"
+2026-10-24T15:48:27.583+09:00  INFO [requestId=] 25980 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-24T15:48:27.594+09:00  INFO [requestId=] 25980 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-24T15:48:27.594+09:00  INFO [requestId=] 25980 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-24T15:48:27.635+09:00  INFO [requestId=] 25980 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 923 ms
+2026-10-24T15:48:27.839+09:00  INFO [requestId=] 25980 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-24T15:48:27.864+09:00  INFO [requestId=] 25980 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@e5c5e6
+2026-10-24T15:48:27.866+09:00  INFO [requestId=] 25980 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-24T15:48:28.290+09:00  INFO [requestId=] 25980 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_aedd4866d9a741a3bb5936efb2b7819b (PostgreSQL 18.6)
+2026-10-24T15:48:28.334+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "marketplace" ...
+2026-10-24T15:48:28.339+09:00  INFO [requestId=] 25980 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "marketplace"."flyway_schema_history" ...
+2026-10-24T15:48:28.412+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": null
+2026-10-24T15:48:28.422+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "1 - initialize schema"
+2026-10-24T15:48:28.438+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "2 - jdbc fixture"
+2026-10-24T15:48:28.459+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "3 - identity signup"
+2026-10-24T15:48:28.482+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "4 - jdbc sessions"
+2026-10-24T15:48:28.501+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "5 - account recovery profile addresses"
+2026-10-24T15:48:28.522+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "marketplace", now at version v5 (execution time 00:00.040s)
+2026-10-24T15:48:28.633+09:00  INFO [requestId=] 25980 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginMembers
+2026-10-24T15:48:29.178+09:00  INFO [requestId=] 25980 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-24T15:48:29.255+09:00  INFO [requestId=] 25980 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 5338 (http) with context path '/'
+2026-10-24T15:48:29.262+09:00  INFO [requestId=] 25980 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Started PostgresJdbcIT in 3.054 seconds (process running for 3.907)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-24T15:48:30.154+09:00  INFO [requestId=] 25980 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-24T15:48:30.154+09:00  INFO [requestId=] 25980 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-24T15:48:30.155+09:00  INFO [requestId=] 25980 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-24T15:48:31.013+09:00  INFO [requestId=] 25980 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_aedd4866d9a741a3bb5936efb2b7819b (PostgreSQL 18.6)
+2026-10-24T15:48:31.028+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.007s)
+2026-10-24T15:48:31.036+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": 5
+2026-10-24T15:48:31.037+09:00  INFO [requestId=] 25980 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "marketplace" is up to date. No migration necessary.
+2026-10-24T15:48:31.918+09:00  WARN [requestId=] 25980 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-24T15:48:32.145+09:00  WARN [requestId=] 25980 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-24T15:48:32.320+09:00  WARN [requestId=] 25980 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-24T15:48:33.127+09:00  WARN [requestId=e535698c-d71e-4f75-a7b1-38fb7c2154f9] 25980 --- [1-auto-1-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-24T15:48:34.822+09:00  WARN [requestId=4c182cee-771f-4785-b6e8-31c3da26c71e] 25980 --- [1-auto-1-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot map `null` into type `boolean` (set `DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES` to 'false' to allow)]
+2026-10-24T15:48:35.099+09:00  INFO [requestId=] 25980 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-24T15:48:35.100+09:00  INFO [requestId=] 25980 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-24T15:48:35.103+09:00  INFO [requestId=] 25980 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-24T15:48:35.106+09:00  INFO [requestId=] 25980 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[ERROR] Tests run: 43, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 9.268 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.adminPermissionsAreSeparateAndRevocationAppliesToExistingSession -- Time elapsed: 0.112 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <200> but was: <404>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.adminPermissionsAreSeparateAndRevocationAppliesToExistingSession(PostgresJdbcIT.java:92)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   PostgresJdbcIT.adminPermissionsAreSeparateAndRevocationAppliesToExistingSession:92 expected: <200> but was: <404>
+[INFO]
+[ERROR] Tests run: 43, Failures: 1, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- failsafe:3.5.6:verify (default) @ marketplace-api ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  37.058 s
+[INFO] Finished at: 2026-10-24T15:48:35+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.5.6:verify (default) on project marketplace-api: There are test failures.
+[ERROR]
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\p02-c-permission-red\build\failsafe-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

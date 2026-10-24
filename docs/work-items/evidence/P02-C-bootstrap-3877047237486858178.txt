@@ -1,0 +1,1 @@
+INITIAL_ADMIN_FAILED: check explicit inputs, target schema and one-time eligibility

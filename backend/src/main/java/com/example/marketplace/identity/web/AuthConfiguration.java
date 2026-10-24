@@ -56,7 +56,8 @@ public class AuthConfiguration {
     }
 
     @Bean
-    SecurityFilterChain authenticationChain(HttpSecurity http, LoginMembers members) throws Exception {
+    SecurityFilterChain authenticationChain(HttpSecurity http, LoginMembers members,
+            com.example.marketplace.identity.api.AccessPolicy access) throws Exception {
         var hasher = new ArgonPasswordHasher();
         var provider = new DaoAuthenticationProvider(members);
         provider.setPasswordEncoder(new PasswordEncoder() {
@@ -76,6 +77,14 @@ public class AuthConfiguration {
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
                                 "/api/auth/signup", "/api/auth/verify-email",
                                 "/api/auth/password/request", "/api/auth/password/reset").permitAll()
+                        .requestMatchers("/api/seller/**").hasRole("SELLER")
+                        .requestMatchers("/api/admin/**").access((authentication, context) -> {
+                            var principal = authentication.get().getPrincipal();
+                            boolean allowed = principal instanceof com.example.marketplace.identity.infrastructure.SessionMember member
+                                    && access.allowed(java.util.UUID.fromString(member.getUsername()),
+                                        com.example.marketplace.identity.api.AccessArea.forAdminPath(context.getRequest().getRequestURI()));
+                            return new org.springframework.security.authorization.AuthorizationDecision(allowed);
+                        })
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) -> AuthJson.error(request, response, 401))

@@ -83,6 +83,132 @@ import static org.assertj.core.api.Assertions.assertThat;
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
 
+    @Test
+    void initialAdminIsExplicitAtomicAndOnlyOneConcurrentWinner() throws Exception {
+        var bootstrap = new com.example.marketplace.identity.infrastructure.InitialAdmin(jdbc, transactionManager);
+        String database = jdbc.queryForObject("SELECT current_database()", Map.of(), String.class);
+        UUID first = activeMember("bootstrap-first-c@example.com");
+        UUID second = activeMember("bootstrap-second-c@example.com");
+        UUID pending = signup.register("bootstrap-pending-c@example.com", SIGNUP_PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> bootstrap.initialize(first, database, "wrong"));
+        assertThrows(IllegalStateException.class, () -> bootstrap.initialize(first, "wrong_database", "INITIAL_ADMIN"));
+        assertThrows(IllegalStateException.class, () -> bootstrap.initialize(pending, database, "INITIAL_ADMIN"));
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("bootstrap-first-c@example.com", SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", second));
+        assertThrows(IllegalStateException.class, () -> bootstrap.initialize(first, database, "INITIAL_ADMIN"));
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", second));
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.authorization_audit ADD CONSTRAINT c_reject_audit CHECK (action <> 'INITIAL_ADMIN_GRANTED') NOT VALID");
+        try {
+            assertThrows(DataIntegrityViolationException.class, () -> bootstrap.initialize(first, database, "INITIAL_ADMIN"));
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.authorization_audit DROP CONSTRAINT c_reject_audit"); }
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.admin_permission", Map.of(), Integer.class));
+        assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        new TransactionTemplate(transactionManager).executeWithoutResult(status -> {
+            bootstrap.initialize(first, database, "INITIAL_ADMIN");
+            status.setRollbackOnly();
+        });
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.admin_permission", Map.of(), Integer.class));
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.authorization_audit", Map.of(), Integer.class));
+        assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", Map.of("id", first), Long.class));
+        assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        var next = new java.util.concurrent.atomic.AtomicInteger();
+        var results = race(() -> {
+            UUID candidate = next.getAndIncrement() == 0 ? first : second;
+            return runBootstrapCommand(candidate, database, "INITIAL_ADMIN", false) == 0 ? "ok" : "blocked";
+        });
+        assertEquals(1, results.stream().filter("ok"::equals).count());
+        assertEquals(1, results.stream().filter("blocked"::equals).count());
+        UUID winner = jdbc.queryForObject("SELECT user_id FROM marketplace.admin_bootstrap WHERE id=1", Map.of(), UUID.class);
+        assertEquals(5, jdbc.queryForObject("SELECT count(*) FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", winner), Integer.class));
+        assertEquals(List.of("ADMIN", "BUYER"), jdbc.queryForList("SELECT role FROM marketplace.role_assignment WHERE user_id=:id ORDER BY role", Map.of("id", winner), String.class));
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.authorization_audit WHERE source='LOCAL_BOOTSTRAP' AND target_id=:id", Map.of("id", winner), Integer.class));
+        assertThrows(IllegalStateException.class, () -> bootstrap.initialize(winner, database, "INITIAL_ADMIN"));
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE principal_name=:id", Map.of("id", winner.toString()), Integer.class));
+        // Leave completed marker intact: removing ADMIN is not an authorization to bootstrap again.
+        jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", winner));
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", winner));
+        assertThrows(IllegalStateException.class, () -> bootstrap.initialize(second, database, "INITIAL_ADMIN"));
+        assertEquals(1, runBootstrapCommand(second, database, "INITIAL_ADMIN", false));
+        assertEquals(1, runBootstrapCommand(second, "wrong_database", "INITIAL_ADMIN", false));
+        assertEquals(1, runBootstrapCommand(second, database, "wrong", false));
+        assertEquals(1, runBootstrapCommand(second, database, "INITIAL_ADMIN", true));
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.authorization_audit", Map.of(), Integer.class));
+    }
+
+    private int runBootstrapCommand(UUID user, String database, String confirmation, boolean forbiddenArgument) throws Exception {
+        var classes = java.nio.file.Path.of(MarketplaceApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        var build = classes.getParent();
+        var jar = build.resolve("marketplace-api-0.0.1-SNAPSHOT.jar");
+        var command = new java.util.ArrayList<>(List.of(java.nio.file.Path.of(System.getProperty("java.home"), "bin", "java").toString(),
+                "-Dloader.main=com.example.marketplace.identity.infrastructure.InitialAdminCommand", "-cp", jar.toString(),
+                "org.springframework.boot.loader.launch.PropertiesLauncher"));
+        if (forbiddenArgument) { command.add("--spring.flyway.enabled=true"); }
+        var output = java.nio.file.Files.createTempFile(build, "bootstrap-", ".txt");
+        var builder = new ProcessBuilder(command).redirectErrorStream(true).redirectOutput(output.toFile());
+        builder.environment().put("DB_URL", System.getenv("D2_DB_URL"));
+        builder.environment().put("DB_USERNAME", System.getenv("D2_DB_USERNAME"));
+        builder.environment().put("DB_PASSWORD", System.getenv("D2_DB_PASSWORD"));
+        builder.environment().put("BOOTSTRAP_USER_ID", user.toString());
+        builder.environment().put("BOOTSTRAP_EXPECTED_DATABASE", database);
+        builder.environment().put("BOOTSTRAP_CONFIRM", confirmation);
+        var process = builder.start();
+        if (!process.waitFor(45, TimeUnit.SECONDS)) { process.destroyForcibly(); throw new AssertionError("Bootstrap command timed out"); }
+        String log = java.nio.file.Files.readString(output);
+        assertFalse(log.contains("Tomcat started"));
+        assertFalse(log.contains(System.getenv("D2_DB_PASSWORD")));
+        if (process.exitValue() == 0) { assertTrue(log.contains("INITIAL_ADMIN_COMPLETED")); }
+        return process.exitValue();
+    }
+
+    @Test
+    void adminPermissionsAreSeparateAndRevocationAppliesToExistingSession() throws Exception {
+        UUID id = activeMember("permission-c@example.com");
+        var servicePolicy = new com.example.marketplace.identity.infrastructure.JdbcAccessPolicy(jdbc);
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", id));
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("permission-c@example.com", SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        assertEquals(200, authRequest(browser, "/api/admin/access", null, null).statusCode());
+        for (String area : List.of("accounts", "content", "support", "settlements", "system")) {
+            assertEquals(403, authRequest(browser, "/api/admin/" + area + "/access", null, null).statusCode());
+            assertThrows(com.example.marketplace.identity.api.AccessRejected.class, () -> servicePolicy.require(id,
+                    com.example.marketplace.identity.api.AccessArea.valueOf(area.toUpperCase(java.util.Locale.ROOT))));
+            jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,:permission)", Map.of("id", id, "permission", area.toUpperCase(java.util.Locale.ROOT)));
+            assertEquals(200, authRequest(browser, "/api/admin/" + area + "/access", null, null).statusCode());
+            servicePolicy.require(id, com.example.marketplace.identity.api.AccessArea.valueOf(area.toUpperCase(java.util.Locale.ROOT)));
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", id));
+            assertEquals(403, authRequest(browser, "/api/admin/" + area + "/access", null, null).statusCode());
+        }
+        assertEquals(403, authRequest(browser, "/api/admin/unknown", null, null).statusCode());
+        assertEquals(403, authRequest(browser, "/api/seller/access", null, null).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", id));
+        assertEquals(200, authRequest(browser, "/api/seller/access", null, null).statusCode());
+        assertEquals(200, authRequest(browser, "/api/account/profile", null, null).statusCode());
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'", Map.of("id", id));
+        assertEquals(403, authRequest(browser, "/api/seller/access", null, null).statusCode());
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", id));
+    }
+
+    @Test
+    void roleSpacesDenyAnonymousAndBuyerEvenWithForgedSignupFields() throws Exception {
+        var browser = authBrowser();
+        assertEquals(401, authRequest(browser, "/api/seller/access", null, null).statusCode());
+        assertEquals(401, authRequest(browser, "/api/admin/access", null, null).statusCode());
+        var signupResponse = authJsonPost(browser, "/api/auth/signup", Map.of("email", "forged-c@example.com",
+                "password", SIGNUP_PASSWORD, "role", "ADMIN", "permissions", "SYSTEM", "isAdmin", "true"), csrfToken(browser));
+        assertEquals(201, signupResponse.statusCode());
+        signup.verifyEmail(mail("forged-c@example.com").token());
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("forged-c@example.com", SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        for (String path : List.of("/api/seller/access", "/api/admin/access", "/api/admin/accounts/access",
+                "/api/admin/content/access", "/api/admin/support/access", "/api/admin/settlements/access", "/api/admin/system/access")) {
+            var response = authRequest(browser, path, null, null);
+            assertEquals(403, response.statusCode(), path);
+            assertEquals("FORBIDDEN", authMapper.readTree(response.body()).get("code").asText());
+        }
+        assertEquals(List.of("BUYER"), authMapper.readTree(authRequest(browser, "/api/auth/me", null, null).body())
+                .get("roles").valueStream().map(node -> node.asText()).toList());
+    }
+
     private String resetMail(String email) {
         return resetMailbox.messages().stream().filter(item -> item.recipient().equals(email))
                 .reduce((first, second) -> second).orElseThrow().token();
@@ -451,6 +577,16 @@ class PostgresJdbcIT {
 
     private void runAuthBrowsersIfRequested() throws Exception {
         if (!"true".equals(System.getenv("A3_RUN_BROWSER"))) { return; }
+        var cMembers = new java.util.ArrayList<UUID>();
+        for (String project : List.of("desktop", "mobile")) {
+            UUID seller = activeMember("c-seller-" + project + "@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", seller));
+            UUID admin = activeMember("c-admin-" + project + "@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", admin));
+            jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')", Map.of("id", admin));
+            cMembers.add(seller); cMembers.add(admin);
+        }
+        try {
         var root = java.nio.file.Path.of("..").toAbsolutePath().normalize();
         var node = root.resolve(".local-tools/node-v24.22.0-win-x64/node.exe");
         var builder = new ProcessBuilder(node.toString(), "node_modules/@playwright/test/cli.js", "test",
@@ -465,6 +601,12 @@ class PostgresJdbcIT {
             throw new AssertionError("Auth browser verification timed out");
         }
         assertEquals(0, process.exitValue(), "See isolated evidence browser.txt");
+        } finally {
+            for (UUID id : cMembers) {
+                jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", id));
+                jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role IN ('ADMIN','SELLER')", Map.of("id", id));
+            }
+        }
     }
 
     @Test
