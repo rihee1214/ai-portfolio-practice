@@ -7,13 +7,27 @@ import com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget;
 import com.example.marketplace.jdbcfixture.TransferRejectedException;
 import com.example.marketplace.jdbcfixture.TransferService;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.DriverManager;
+import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.boot.convert.ApplicationConversionService;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,17 +36,27 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.UnexpectedRollbackException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles({"db", "c3-fixture"})
 @ContextConfiguration(initializers = DedicatedPostgresInitializer.class)
-@SpringBootTest(classes = MarketplaceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE,
+@SpringBootTest(classes = MarketplaceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"spring.config.location=classpath:/", "spring.sql.init.mode=never", "spring.flyway.clean-disabled=true",
+            "server.address=127.0.0.1", "spring.jmx.enabled=true", "spring.jmx.unique-names=true",
+            "management.endpoints.jmx.domain=com.example.marketplace.dbfollowup",
             "spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class PostgresJdbcIT {
+    @LocalServerPort
+    private int port;
+    @Autowired
+    private ApplicationContext context;
+    @Autowired
+    private MBeanServer mBeanServer;
     @Autowired
     private DataSource source;
     @Autowired
@@ -45,6 +69,86 @@ class PostgresJdbcIT {
     private BatchService batches;
     @Autowired
     private Flyway flyway;
+
+    private HttpResponse<String> request(String method, String path) throws Exception {
+        try (var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build()) {
+            return client.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
+                    .timeout(Duration.ofSeconds(5)).header("Accept", "application/json")
+                    .method(method, HttpRequest.BodyPublishers.noBody()).build(), HttpResponse.BodyHandlers.ofString());
+        }
+    }
+
+    @Test
+    void databaseSettingsValidatorAndActualDataSourceCoexist() {
+        assertTrue(context.containsBean("requiredDatabaseSettings"));
+        assertEquals(System.getenv("D2_DB_URL"), context.getEnvironment().getProperty("spring.datasource.url"));
+        assertEquals(System.getenv("D2_DB_USERNAME"), context.getEnvironment().getProperty("spring.datasource.username"));
+        assertEquals("none", context.getEnvironment().getProperty("management.endpoints.access.default"));
+        assertEquals("read-only", context.getEnvironment().getProperty("management.endpoint.health.access"));
+        assertTrue(context.containsBean("dbHealthContributor"));
+    }
+
+    @Test
+    void invalidSettingsFailBeforeSingletonsWithRealDatabaseAutoConfigurationEnabled() {
+        for (String key : new String[] {"url", "username", "password"}) {
+            var singletonCreated = new AtomicBoolean();
+            var databaseCreationAttempted = new AtomicBoolean();
+            new ApplicationContextRunner().withInitializer(candidate -> {
+                candidate.getBeanFactory().addBeanPostProcessor(new InstantiationAwareBeanPostProcessor() {
+                    @Override
+                    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
+                        if (beanName.equals("dataSource") || beanName.equals("flyway")) {
+                            databaseCreationAttempted.set(true);
+                        }
+                        return null;
+                    }
+                });
+                candidate.getEnvironment().setConversionService(new ApplicationConversionService());
+                candidate.getEnvironment().getPropertySources().remove("systemEnvironment");
+                candidate.getEnvironment().getPropertySources().remove("systemProperties");
+                candidate.getEnvironment().setActiveProfiles("db");
+            }).withInitializer(new ConfigDataApplicationContextInitializer())
+                    .withUserConfiguration(MarketplaceApplication.class)
+                    .withPropertyValues("spring.config.location=classpath:/",
+                            "DB_URL=" + System.getenv("D2_DB_URL"), "DB_USERNAME=marketplace_test",
+                            "DB_PASSWORD=unused-synthetic-password", "spring.datasource." + key + "= ")
+                    .withBean("singletonProbe", Object.class, () -> {
+                        singletonCreated.set(true);
+                        return new Object();
+                    }).run(candidate -> {
+                        assertThat(candidate).hasFailed();
+                        assertThat(candidate.getStartupFailure())
+                                .hasStackTraceContaining("Required database settings are missing, blank or unresolved:")
+                                .hasStackTraceContaining("spring.datasource." + key);
+                        assertFalse(singletonCreated.get());
+                        assertFalse(databaseCreationAttempted.get());
+                    });
+        }
+    }
+
+    @Test
+    void realDatabaseHealthPreservesStatusOnlyAndRequestId() throws Exception {
+        var response = request("GET", "/actuator/health");
+        assertEquals(200, response.statusCode());
+        assertEquals("{\"status\":\"UP\"}", response.body());
+        assertTrue(response.headers().firstValue("X-Request-ID").orElse("")
+                .matches("[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}"));
+        var head = request("HEAD", "/actuator/health");
+        assertEquals(200, head.statusCode());
+        assertEquals("", head.body());
+        assertEquals(405, request("POST", "/actuator/health").statusCode());
+    }
+
+    @Test
+    void databaseProfileDoesNotExposeManagementDetailsOrJmx() throws Exception {
+        for (String path : new String[] {"/actuator", "/actuator/env", "/actuator/configprops",
+                "/actuator/metrics", "/actuator/beans", "/actuator/health/db",
+                "/actuator/health/liveness", "/actuator/health/readiness"}) {
+            assertEquals(404, request("GET", path).statusCode(), path);
+        }
+        assertTrue(mBeanServer.queryNames(new ObjectName("com.example.marketplace.dbfollowup:*"), null).isEmpty());
+        assertFalse(context.containsBean("heapDumpWebEndpoint"));
+    }
 
     private void seed(long id, String label, String note) {
         jdbc.update("INSERT INTO c3_fixture.account VALUES (:id, :label, :balance, :note)",

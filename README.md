@@ -37,7 +37,7 @@
 
 ## 진행 상태
 
-P01 기반 구현과 단계별 검증 기록을 종합 점검했다. 현재 재검증은 Java 117개, Vitest 47개, Node 68개, Playwright 16개와 타입·린트·빌드다. 실제 DB 통합 8개는 D2 당시 증거이며 이번에는 재실행하지 않았다.
+P01 기반 구현과 단계별 검증 기록을 종합 점검했다. 현재 재검증은 Java 117개, Vitest 47개, Node 68개, Playwright 16개와 타입·린트·빌드다. 실제 DB 통합은 후속 보완에서 최신 코드12개를 재검증했다. E4·E5 조합과 [현재 결과](docs/work-items/P01-db-followup.md)를 확인한다.
 
 화면은 역할별 공개 틀이며 로그인·상품·주문·권한 기능은 아직 없다. health는 정상 200·UP / 장애 503·DOWN의 status 단일 필드 계약을 유지한다. 현재 실행 방법은 [로컬 실행 안내](docs/local-development.md), 미검증과 제한은 [종합 점검](docs/work-items/P01-completion-audit.md)을 따른다.
 

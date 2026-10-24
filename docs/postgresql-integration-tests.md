@@ -1,4 +1,4 @@
-# 실제 PostgreSQL 통합 검사 — P01-D2
+# 실제 PostgreSQL 통합 검사 — P01 최신 코드 보완
 
 D1은 DB 없는 검사이고 D2는 실제 PostgreSQL·Flyway·Spring JDBC·트랜잭션을 함께 검사한다. H2나 가짜 DataSource로 대체하지 않는다. 기존 Compose db-test를 사용하며 컨테이너를 시작·중지·재생성하지 않는다.
 
@@ -6,10 +6,10 @@ D1은 DB 없는 검사이고 D2는 실제 PostgreSQL·Flyway·Spring JDBC·트�
 
 | 명령/실행기 | 대상 | 현재 결과 |
 | --- | --- | --- |
-| 기본 Maven verify / Surefire | *Test, DB 없음 | 33개: 순수14·MockMvc12·실제 HTTP7 |
-| Maven -Pdb-it verify / Failsafe | 위33개 + *IT | PostgreSQL 통합8개 별도 집계 |
+| 기본 Maven verify / Surefire | *Test, DB 없음 | 117개: API·설정·관리 정책·모듈 경계·대상 보호 |
+| Maven -Pdb-it verify / Failsafe | 위117개 + *IT | PostgreSQL·db 프로필 HTTP 통합12개 별도 집계 |
 
-`db-it`는 Maven 프로필이다. 통합 검사의 Spring 프로필은 `db,c3-fixture`다. Boot가 기존 application-db.properties를 읽고 실제 Hikari DataSource·Flyway를 구성하며 테스트용 Repository/Service를 연결한다. `@SpringBootTest(webEnvironment=NONE)`이므로 D2 자체는 웹 서버를 띄우지 않는다. 함께 실행되는 D1의 HTTP7개만 별도 loopback 임시 서버를 사용한다. [Boot 테스트 모드](https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html)
+`db-it`는 Maven 프로필이다. 통합 검사의 Spring 프로필은 `db,c3-fixture`다. Boot가 기존 application-db.properties를 읽고 실제 Hikari DataSource·Flyway를 구성하며 테스트용 Repository/Service를 연결한다. `@SpringBootTest(webEnvironment=RANDOM_PORT)`로 loopback 임시 HTTP 서버도 실행해 E4·E5 조합을 확인한다. 최초 D2의 NONE·8개 실행은 당시 이력이며 최신 결과는 [보완 검증](work-items/P01-db-followup.md)을 따른다. [Boot 테스트 모드](https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html)
 
 Failsafe는 integration-test에서 실행하고 verify에서 결과를 판정한다. 따라서 통합 검사 완료 명령은 `verify`까지 사용한다. 현재 부모 POM이 관리하는3.5.6을 사용하며 공식 페이지의 최신 버전으로 임의 업그레이드하지 않았다. [Failsafe 실행 단계](https://maven.apache.org/surefire/maven-failsafe-plugin/usage.html)
 
@@ -45,7 +45,7 @@ DB 준비가 안 됐을 때 테스트를 skip하는 옵션은 없다. Docker/DB 
 
 Flyway만 스키마 초기화를 담당하며 SQL init은 never, clean은 disabled다. V1 원문과 C3 V2는 수정하지 않았다. test SQL/코드는 배포 JAR에 포함되지 않는다. 권한 있는 사용자가 코드·DB 포트·관리자 설정을 임의로 바꾸는 것까지 막는 보안 경계는 아니다.
 
-## 검사8개가 확인하는 것
+## 기존 JDBC 검사8개와 조합 검사4개
 
 - 실제 PostgreSQL18·검증된 DB/사용자·Boot DataSource.
 - V1/V2 성공 이력과 재실행의 추가 migration0건.
@@ -55,6 +55,8 @@ Flyway만 스키마 초기화를 담당하며 SQL init은 never, clean은 disabl
 - 출금 이후 checked 예외가 발생했을 때 롤백.
 - 잔액 CHECK와 FK 제약 위반 시 데이터 보존.
 - REQUIRED 내부 실패를 catch해도 바깥 커밋이 실패하고 앞선 성공 변경까지 롤백.
+
+추가4개는 E4 활성/실제 설정, DB 자동 구성 활성 시 필수 설정 오류의 생성 전 거부(키3개), 실제 DB health 계약·요청 ID, 관리 경로/JMX 비노출을 확인한다. 제품 코드는 변경하지 않았다.
 
 테스트 전체에 @Transactional을 붙이지 않았다. 서비스 호출은 실제 프록시를 거치고 결과는 연결 풀 밖의 새 JDBC 연결에서 읽는다. 각 검사가 별도 가상 ID/이체 참조를 쓰므로 실행 순서에 의존하지 않으며 데이터를 지우는 정리 SQL도 없다. 컨텍스트 종료 시 연결 풀은 닫지만 DB는 남긴다.
 

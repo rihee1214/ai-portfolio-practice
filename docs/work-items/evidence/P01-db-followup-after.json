@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-10-24T13:25:25.9820810+09:00",
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ],
+  "databases": [
+    "c2_verify_1792755390505",
+    "c2_verify_1792755614835",
+    "c2_verify_1792755700154",
+    "c3_verify_51b5e587565343ca8abbfbbc5afce7cf",
+    "c3_verify_5aaff9ff870e41e883136dc31ab25c25",
+    "c3_verify_5e177587cd4f48e8a97fdf545d5fc50e",
+    "d2_it_072249861f96406fa8969eff1f24ec5a",
+    "d2_it_204ff6a7b1304b6f9dac8d2352a0623d",
+    "d2_it_62470ff6f020486aadb61008e361e430",
+    "d2_it_8af65276aade41f9a464f28e76fbe1ba",
+    "d2_it_8e4f6269c64a416e9a23690ee5fd7366",
+    "d2_it_ae59ed177e6c4b14bdc84dadc87307ef",
+    "d2_it_eef26ee364774f77b8cccb7f8e86e850",
+    "d2_it_f4d47cbfa4604a0f8f9f7a6a0c68fe86",
+    "marketplace_test",
+    "postgres",
+    "template0",
+    "template1"
+  ],
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1 Up 17 hours (healthy)",
+    "68d17431a4b1 moa-market-local-db-test-1 Up 17 hours (healthy)"
+  ]
+}
