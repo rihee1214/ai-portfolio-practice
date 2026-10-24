@@ -84,3 +84,18 @@ test('카테고리 저장 중 로그아웃하면 늦은 성공 응답을 폐기�
   expect(store.getSnapshot().notice).toBe('')
   stop()
 })
+
+test('상품을 선택하면 기본 SKU 가격과 판매 여부를 관리할 수 있다', async () => {
+  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  vi.stubGlobal('fetch', vi.fn(async (path: string) => {
+    if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
+    if (path.includes('/skus')) return json({ items: [{ id, code: 'sku-' + id, options: [], price: 0, active: false, version: 0 }], page: 0, hasMore: false })
+    return json({ items: path.startsWith('/api/categories') ? [{ id, name: '카테고리', active: true, version: 0 }] : [product], page: 0, hasMore: false })
+  }))
+  const auth = new AuthStore(); await auth.refresh()
+  render(<AuthContext value={auth}><ProductPage /></AuthContext>)
+  await userEvent.setup().click(await screen.findByRole('button', { name: '상품 · 초안' }))
+  await userEvent.setup().click(await screen.findByRole('button', { name: '기본 SKU · 0원 · 판매 중지' }))
+  expect(await screen.findByLabelText('SKU 가격 (원)')).toHaveValue(0)
+  expect(screen.getByLabelText('SKU 판매 활성')).not.toBeChecked()
+})

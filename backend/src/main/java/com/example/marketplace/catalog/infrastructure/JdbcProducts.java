@@ -18,7 +18,7 @@ import org.springframework.dao.DuplicateKeyException;
 @Service @Profile("db")
 public final class JdbcProducts implements Products {
     // Read projection only: one snapshot applies all public eligibility conditions.
-    private static final String PUBLIC = """
+    static final String PUBLIC = """
             SELECT p.*,s.slug AS store_slug FROM marketplace.catalog_product p
             JOIN marketplace.catalog_category c ON c.id=p.category_id
             JOIN marketplace.seller_store s ON s.id=p.store_id
@@ -64,6 +64,7 @@ public final class JdbcProducts implements Products {
                     if(input.version()!=0||!"DRAFT".equals(input.state())) { throw new CatalogException(400); }
                     p.addValue("store",stores.own(owner).id());
                     jdbc.update("INSERT INTO marketplace.catalog_product(id,store_id,category_id,slug,title,description,state) VALUES(:id,:store,:category,:slug,:title,:description,:state)",p);
+                    jdbc.update("INSERT INTO marketplace.catalog_sku(id,product_id,code) VALUES(:id,:id,'sku-'||CAST(:id AS text))",p);
                 } else {
                     current=jdbc.queryForObject("SELECT * FROM marketplace.catalog_product WHERE id=:id FOR UPDATE",p,this::map);
                     if(current.version()!=input.version()||!current.slug().equals(input.slug())||"ARCHIVED".equals(current.state())

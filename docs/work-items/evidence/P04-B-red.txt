@@ -1,0 +1,20 @@
+p04-b-default-red
+
+[ERROR] Tests run: 69, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 19.01 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+org.opentest4j.AssertionFailedError: {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"bce76842-ce48-469c-9cf7-863302ec7d27"} ==> expected: <200> but was: <404>
+[ERROR]   PostgresJdbcIT.productCreatesOneInactiveDefaultSkuWithPublicEligibility:91 {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"bce76842-ce48-469c-9cf7-863302ec7d27"} ==> expected: <200> but was: <404>
+[ERROR] Tests run: 69, Failures: 1, Errors: 0, Skipped: 0
+
+
+p04-b-rules-red
+
+[ERROR] Tests run: 70, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 20.66 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+org.opentest4j.AssertionFailedError: {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"55274c09-5fd8-4b87-9131-0d86af441d3f"} ==> expected: <200> but was: <404>
+[ERROR]   PostgresJdbcIT.skuOptionsPricesOwnershipAndVersionsAreEnforcedOverHttp:92 {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"55274c09-5fd8-4b87-9131-0d86af441d3f"} ==> expected: <200> but was: <404>
+[ERROR] Tests run: 70, Failures: 1, Errors: 0, Skipped: 0
+
+
+
+TestingLibraryElementError: Unable to find role="button" and name "기본 SKU · 0원 · 판매 중지"
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)

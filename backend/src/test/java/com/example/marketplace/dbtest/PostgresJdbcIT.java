@@ -83,6 +83,181 @@ import static org.assertj.core.api.Assertions.assertThat;
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
     @Test
+    void skuDefaultTransitionIsAtomicAndSerializedWithActivation() throws Exception {
+        var f=skuFixture("mode"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+        var skus=context.getBean(com.example.marketplace.catalog.api.Skus.class); var basic=skus.list(owner,product.id(),0).items().getFirst();
+        skus.save(owner,product.id(),basic.id(),new com.example.marketplace.catalog.api.Skus.Input(List.of(),0L,true,0L));
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.catalog_sku ADD CONSTRAINT p4b_fail_variant CHECK(options='[]') NOT VALID");
+        try {
+            assertThrows(DataIntegrityViolationException.class,()->skus.save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("종류","실패")),1L,true,0L)));
+            var retained=skus.list(owner,product.id(),0).items(); assertEquals(1,retained.size()); assertTrue(retained.getFirst().active()); assertEquals(1,retained.getFirst().version());
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.catalog_sku DROP CONSTRAINT p4b_fail_variant"); }
+        var sequence=new java.util.concurrent.atomic.AtomicInteger();
+        race(()->{ try { if(sequence.incrementAndGet()==1) { skus.save(owner,product.id(),basic.id(),new com.example.marketplace.catalog.api.Skus.Input(List.of(),0L,true,1L)); }
+                else { skus.save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("종류","성공")),1L,true,0L)); } return "ok";
+            } catch(com.example.marketplace.catalog.api.CatalogException e) { assertEquals(409,e.status()); return "conflict"; } });
+        var rows=skus.list(owner,product.id(),0).items(); assertEquals(2,rows.size()); assertFalse(rows.stream().filter(row->row.options().isEmpty()).findFirst().orElseThrow().active()); assertEquals(1,rows.stream().filter(row->row.active()).count());
+    }
+    @Test
+    void skuWritesRecheckSuspensionAndArchiveAfterActualLockWait() throws Exception {
+        for(boolean member:List.of(true,false)) {
+            String suffix=member?"wait-member":"wait-product";
+            var f=skuFixture(suffix); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+            var basic=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+            var client=authBrowser(); assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-"+suffix+"@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+            String csrf=csrfToken(client); String table=member?"identity_user":"catalog_product"; UUID lock=member?owner:product.id();
+            try(var executor=Executors.newSingleThreadExecutor()) {
+                var future=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<HttpResponse<String>>>();
+                new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                    jdbc.queryForObject("SELECT id FROM marketplace."+table+" WHERE id=:id FOR UPDATE",Map.of("id",lock),UUID.class);
+                    future.set(executor.submit(()->accountRequest(client,"PUT","/api/seller/products/"+product.id()+"/skus/"+basic.id(),Map.of("options",List.of(),"price",100,"active",true,"version",0),csrf)));
+                    long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
+                    while(System.nanoTime()<deadline) {
+                        jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+"%FOR UPDATE%"),Boolean.class));
+                        if(waiting) { break; }
+                        try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
+                    }
+                    assertTrue(waiting,"SKU request must wait on "+table);
+                    jdbc.update("UPDATE marketplace."+table+" SET state=:state WHERE id=:id",Map.of("id",lock,"state",member?"SUSPENDED":"ARCHIVED"));
+                });
+                var response=future.get().get(5,TimeUnit.SECONDS); assertEquals(409,response.statusCode(),response.body());
+                assertEquals("CONFLICT",authMapper.readTree(response.body()).get("code").asText());
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_sku WHERE id=:id AND price=0 AND NOT active AND version=0",Map.of("id",basic.id()),Integer.class));
+            }
+        }
+    }
+    @Test
+    void skuMigrationBackfillsExistingProductsAndCreationRollsBackAtomically() {
+        var f=skuFixture("upgrade"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+        var ds=context.getBean(DataSource.class); String schema="p4b_upgrade";
+        Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").target("14").cleanDisabled(true).load().migrate();
+        jdbc.update("INSERT INTO p4b_upgrade.identity_user SELECT * FROM marketplace.identity_user WHERE id=:id",Map.of("id",owner));
+        jdbc.update("INSERT INTO p4b_upgrade.seller_store SELECT * FROM marketplace.seller_store WHERE owner_id=:id",Map.of("id",owner));
+        jdbc.update("INSERT INTO p4b_upgrade.catalog_category SELECT * FROM marketplace.catalog_category WHERE id=:id",Map.of("id",product.categoryId()));
+        jdbc.update("INSERT INTO p4b_upgrade.catalog_product SELECT * FROM marketplace.catalog_product WHERE id=:id",Map.of("id",product.id()));
+        var upgrade=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();
+        upgrade.migrate(); upgrade.migrate();
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM p4b_upgrade.catalog_sku WHERE product_id=:id AND options='[]' AND price=0 AND NOT active AND version=0 AND code='sku-'||id::text",Map.of("id",product.id()),Integer.class));
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.catalog_sku ADD CONSTRAINT p4b_fail_creation CHECK(false) NOT VALID");
+        try {
+            assertThrows(DataIntegrityViolationException.class,()->context.getBean(com.example.marketplace.catalog.api.Products.class).save(owner,null,new com.example.marketplace.catalog.api.Products.Input(product.categoryId(),"p4b-rollback","rollback","","DRAFT",0L)));
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_product WHERE slug='p4b-rollback'",Map.of(),Integer.class));
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.catalog_sku DROP CONSTRAINT p4b_fail_creation"); }
+    }
+    @Test
+    void skuConcurrentChangesDuplicatesAndCapacityHaveOneWinner() throws Exception {
+        var f=skuFixture("race"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+        var skus=context.getBean(com.example.marketplace.catalog.api.Skus.class); var basic=skus.list(owner,product.id(),0).items().getFirst();
+        var updated=race(()->{ try { skus.save(owner,product.id(),basic.id(),new com.example.marketplace.catalog.api.Skus.Input(List.of(),1L,true,0L)); return "ok"; } catch(com.example.marketplace.catalog.api.CatalogException e) { assertEquals(409,e.status()); return "conflict"; } });
+        assertEquals(1,updated.stream().filter("ok"::equals).count());
+        var options=List.of(new com.example.marketplace.catalog.api.Skus.Option("색상","빨강"));
+        var created=race(()->{ try { skus.save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(options,0L,true,0L)); return "ok"; } catch(com.example.marketplace.catalog.api.CatalogException e) { assertEquals(409,e.status()); return "conflict"; } });
+        assertEquals(1,created.stream().filter("ok"::equals).count());
+        assertEquals(2,jdbc.queryForObject("SELECT version FROM marketplace.catalog_sku WHERE id=:id",Map.of("id",basic.id()),Integer.class));
+        for(int i=0;i<97;i++) { UUID id=UUID.randomUUID(); jdbc.update("INSERT INTO marketplace.catalog_sku(id,product_id,code,options) VALUES(:id,:product,:code,CAST(:options AS jsonb))",Map.of("id",id,"product",product.id(),"code","sku-"+id,"options","[{\"name\":\"n\",\"value\":\""+i+"\"}]")); }
+        var sequence=new java.util.concurrent.atomic.AtomicInteger();
+        var capacity=race(()->{ try { skus.save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("limit",String.valueOf(sequence.incrementAndGet()))),1L,false,0L)); return "ok"; } catch(com.example.marketplace.catalog.api.CatalogException e) { assertEquals(409,e.status()); return "conflict"; } });
+        assertEquals(1,capacity.stream().filter("ok"::equals).count());
+        assertEquals(100,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_sku WHERE product_id=:id",Map.of("id",product.id()),Integer.class));
+        var all=new java.util.HashSet<UUID>(); for(int page=0;page<5;page++) { var rows=skus.list(owner,product.id(),page); assertEquals(page<4,rows.hasMore()); rows.items().forEach(row->assertTrue(all.add(row.id()))); } assertEquals(100,all.size());
+    }
+    @Test
+    void skuHttpTypesAndPublicFiltersRemainStrict() throws Exception {
+        var f=skuFixture("public"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+        var skus=context.getBean(com.example.marketplace.catalog.api.Skus.class); var basic=skus.list(owner,product.id(),0).items().getFirst();
+        var client=authBrowser(); assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-public@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+        String csrf=csrfToken(client), path="/api/seller/products/"+product.id()+"/skus/"+basic.id();
+        for(Object price:List.of("10",true,new BigDecimal("1.0"))) { assertEquals(400,accountRequest(client,"PUT",path,Map.of("options",List.of(),"price",price,"active",true,"version",0),csrf).statusCode()); }
+        var invalid=new java.util.HashMap<String,Object>(Map.of("options",List.of(),"active",true,"version",0)); invalid.put("price",null);
+        assertEquals(400,accountRequest(client,"PUT",path,invalid,csrf).statusCode());
+        assertEquals(400,accountRequest(client,"PUT",path,Map.of("options",List.of(),"price",10,"active","true","version",0),csrf).statusCode());
+        assertEquals(400,accountRequest(client,"PUT",path,Map.of("options",List.of(),"price",10,"active",true,"version",new BigDecimal("0.1")),csrf).statusCode());
+        skus.save(owner,product.id(),basic.id(),new com.example.marketplace.catalog.api.Skus.Input(List.of(),0L,true,0L));
+        context.getBean(com.example.marketplace.catalog.api.Products.class).save(owner,product.id(),new com.example.marketplace.catalog.api.Products.Input(product.categoryId(),product.slug(),product.title(),"","ACTIVE",0L));
+        var guest=authBrowser(); String url="/api/products/"+product.slug()+"/skus";
+        assertEquals(1,authMapper.readTree(accountRequest(guest,"GET",url,null,null).body()).get("items").size());
+        jdbc.update("UPDATE marketplace.catalog_category SET active=false WHERE id=:id",Map.of("id",product.categoryId())); assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+        jdbc.update("UPDATE marketplace.catalog_category SET active=true WHERE id=:id",Map.of("id",product.categoryId()));
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",product.id())); assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=false WHERE id=:id",Map.of("id",product.id()));
+        jdbc.update("UPDATE marketplace.seller_store SET visible=false WHERE owner_id=:id",Map.of("id",owner)); assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+        jdbc.update("UPDATE marketplace.seller_store SET visible=true WHERE owner_id=:id",Map.of("id",owner));
+        jdbc.update("UPDATE marketplace.seller_store SET visible=false,state='SUSPENDED' WHERE owner_id=:id",Map.of("id",owner));
+        assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+        assertEquals(409,accountRequest(client,"PUT",path,Map.of("options",List.of(),"price",10,"active",true,"version",1),csrf).statusCode());
+        jdbc.update("UPDATE marketplace.seller_store SET visible=true,state='OPEN' WHERE owner_id=:id",Map.of("id",owner));
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",owner)); assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner)); assertEquals(404,accountRequest(guest,"GET",url,null,null).statusCode());
+    }
+    @Test
+    void skuOptionsPricesOwnershipAndVersionsAreEnforcedOverHttp() throws Exception {
+        var f=skuFixture("rules"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var client=authBrowser(); assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-rules@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+        String csrf=csrfToken(client), path="/api/seller/products/"+product.id()+"/skus";
+        var basic=authMapper.readTree(accountRequest(client,"GET",path,null,null).body()).get("items").get(0);
+        var enabled=accountRequest(client,"PUT",path+"/"+basic.get("id").asText(),Map.of("options",List.of(),"price",100,"active",true,"version",0),csrf);
+        assertEquals(200,enabled.statusCode(),enabled.body());
+        var opts=List.of(Map.of("name"," 크기 ","value"," M "),Map.of("name","색상","value","빨강"));
+        var input=Map.of("options",opts,"price",2500,"active",true,"version",0);
+        assertEquals(403,accountRequest(client,"POST",path,input,null).statusCode());
+        var created=accountRequest(client,"POST",path,input,csrf); assertEquals(201,created.statusCode(),created.body());
+        var sku=authMapper.readTree(created.body()); String id=sku.get("id").asText();
+        var rows=authMapper.readTree(accountRequest(client,"GET",path,null,null).body()).get("items");
+        assertEquals(2,rows.size()); assertEquals(1,java.util.stream.StreamSupport.stream(rows.spliterator(),false).filter(row->row.get("active").asBoolean()).count());
+        var normalized=List.of(Map.of("name","색상","value","빨강"),Map.of("name","크기","value","M"));
+        assertEquals(409,accountRequest(client,"POST",path,Map.of("options",normalized,"price",1,"active",false,"version",0),csrf).statusCode());
+        assertEquals(409,accountRequest(client,"POST",path,Map.of("options",List.of(),"price",0,"active",false,"version",0),csrf).statusCode());
+        assertEquals(201,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","café","value","é")),"price",0,"active",false,"version",0),csrf).statusCode());
+        assertEquals(409,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","cafe\u0301","value","e\u0301")),"price",0,"active",false,"version",0),csrf).statusCode());
+        assertEquals(400,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","x".repeat(41),"value","v")),"price",0,"active",false,"version",0),csrf).statusCode());
+        assertEquals(201,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","문자경계","value","😀".repeat(40))),"price",0,"active",false,"version",0),csrf).statusCode());
+        for(String invalid:List.of("😀".repeat(41),"a\nb")) {
+            assertEquals(400,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","문자경계","value",invalid)),"price",0,"active",false,"version",0),csrf).statusCode());
+        }
+        assertEquals(400,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","a","value","1"),Map.of("name","b","value","2"),Map.of("name","c","value","3"),Map.of("name","d","value","4")),"price",0,"active",false,"version",0),csrf).statusCode());
+        for(Object price:List.of(-1,new BigDecimal("1.5"),1000000000L)) {
+            assertEquals(400,accountRequest(client,"PUT",path+"/"+id,Map.of("options",normalized,"price",price,"active",true,"version",0),csrf).statusCode());
+        }
+        assertEquals(400,accountRequest(client,"POST",path,Map.of("options",List.of(Map.of("name","색상","value","a"),Map.of("name"," 색상 ","value","b")),"price",1,"active",true,"version",0),csrf).statusCode());
+        assertEquals(409,accountRequest(client,"PUT",path+"/"+basic.get("id").asText(),Map.of("options",List.of(),"price",0,"active",true,"version",2),csrf).statusCode());
+        assertEquals(409,accountRequest(client,"PUT",path+"/"+id,Map.of("options",List.of(Map.of("name","색상","value","변경")),"price",0,"active",true,"version",0),csrf).statusCode());
+        assertEquals(200,accountRequest(client,"PUT",path+"/"+id,Map.of("options",normalized,"price",999999999,"active",false,"version",0),csrf).statusCode());
+        assertEquals(409,accountRequest(client,"PUT",path+"/"+id,Map.of("options",normalized,"price",0,"active",false,"version",0),csrf).statusCode());
+        var other=skuFixture("foreign"); var outsider=authBrowser(); assertEquals(200,authRequest(outsider,"/api/auth/login",loginForm("p4b-foreign@example.com",SIGNUP_PASSWORD),csrfToken(outsider)).statusCode());
+        assertEquals(404,accountRequest(outsider,"GET",path,null,null).statusCode());
+        assertEquals(404,accountRequest(outsider,"POST",path,input,csrfToken(outsider)).statusCode());
+        String otherPath="/api/seller/products/"+((com.example.marketplace.catalog.api.Products.Product)other.get("product")).id()+"/skus/"+id;
+        assertEquals(404,accountRequest(outsider,"PUT",otherPath,Map.of("options",normalized,"price",1,"active",true,"version",1),csrfToken(outsider)).statusCode());
+        jdbc.update("UPDATE marketplace.catalog_product SET state='ARCHIVED' WHERE id=:id",Map.of("id",product.id()));
+        assertEquals(409,accountRequest(client,"PUT",path+"/"+id,Map.of("options",normalized,"price",0,"active",false,"version",1),csrf).statusCode());
+    }
+    @Test
+    void productCreatesOneInactiveDefaultSkuWithPublicEligibility() throws Exception {
+        var fixture=skuFixture("default"); var owner=(UUID)fixture.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)fixture.get("product");
+        var client=authBrowser();
+        assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-default@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+        var response=accountRequest(client,"GET","/api/seller/products/"+product.id()+"/skus",null,null);
+        assertEquals(200,response.statusCode(),response.body());
+        var items=authMapper.readTree(response.body()).get("items");
+        assertEquals(1,items.size()); assertEquals(0,items.get(0).get("price").asLong());
+        assertFalse(items.get(0).get("active").asBoolean()); assertEquals(0,items.get(0).get("options").size());
+        var code=items.get(0).get("code").asText(); assertTrue(code.startsWith("sku-"));
+        assertEquals(404,accountRequest(authBrowser(),"GET","/api/products/"+product.slug()+"/skus",null,null).statusCode());
+        context.getBean(com.example.marketplace.catalog.api.Products.class).save(owner,product.id(),new com.example.marketplace.catalog.api.Products.Input(product.categoryId(),product.slug(),product.title(),"","ACTIVE",0L));
+        var visible=accountRequest(authBrowser(),"GET","/api/products/"+product.slug()+"/skus",null,null);
+        assertEquals(200,visible.statusCode()); assertEquals(0,authMapper.readTree(visible.body()).get("items").size());
+    }
+    private Map<String,Object> skuFixture(String suffix) {
+        UUID owner=activeMember("p4b-"+suffix+"@example.com"), category=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        context.getBean(com.example.marketplace.seller.api.Stores.class).save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p4b-"+suffix,"P04B","intro","address","","","",true,0L));
+        jdbc.update("INSERT INTO marketplace.catalog_category(id,name) VALUES(:id,:name)",Map.of("id",category,"name","P04B "+suffix));
+        var product=context.getBean(com.example.marketplace.catalog.api.Products.class).save(owner,null,new com.example.marketplace.catalog.api.Products.Input(category,"p4b-"+suffix,"SKU 상품","","DRAFT",0L));
+        return Map.of("owner",owner,"product",product);
+    }
+    @Test
     void storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies() {
         UUID owner=activeMember("p4-history-owner@example.com"), admin=activeMember("p4-history-admin@example.com");
         jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));

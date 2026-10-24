@@ -20,7 +20,7 @@ export function WorkspaceLayout({ workspace }: { workspace: Workspace }) {
       <div className="workspace-content">
         <div className="preview-notice">
           <strong>{catalog ? '카테고리·상품 기본 관리' : operations ? '매대 운영 조치' : storeEditor ? '매대 기본 관리' : sellerReview ? '모의 판매자 심사' : '화면 구조 미리보기'}</strong>
-          <p>{catalog ? '공간 접근 권한을 확인했습니다. 기본 정보와 공개 상태를 관리합니다. 가격·재고·구매 기능은 준비 중입니다.' : operations ? '판매 정지·복구와 사유·이력을 관리합니다.' : storeEditor ? '본인 매대의 소개·공지·공개 정보를 관리합니다.' : sellerReview ? '판매 신청의 승인·반려와 처리 이력을 확인할 수 있습니다.' : workspace.path === '/account' ? '이 업무의 실제 데이터 연결은 준비 중입니다.'
+          <p>{catalog ? '공간 접근 권한을 확인했습니다. 기본 정보·옵션·가격·공개 상태를 관리합니다. 재고·구매 기능은 준비 중입니다.' : operations ? '판매 정지·복구와 사유·이력을 관리합니다.' : storeEditor ? '본인 매대의 소개·공지·공개 정보를 관리합니다.' : sellerReview ? '판매 신청의 승인·반려와 처리 이력을 확인할 수 있습니다.' : workspace.path === '/account' ? '이 업무의 실제 데이터 연결은 준비 중입니다.'
             : '공간 접근 권한을 확인했습니다. 실제 업무 기능과 데이터 연결은 준비 중입니다.'}</p>
         </div>
         <Outlet />

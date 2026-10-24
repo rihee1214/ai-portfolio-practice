@@ -1,0 +1,10 @@
+PASS existing DB hashes, database inventory, container identities
+New databases: d2_it_108aa706918f4de796277ad03d02c5b1, d2_it_4e16855f05474be68e7d162095ccd34d, d2_it_6a0a93c0b314441eb6eee754a33cf87d, d2_it_75203c454bd34f16bf01268a882f98b4, d2_it_8f89147efef94f7385105a54d2d1846e, d2_it_8fbb162154ba4ad5b815a426f4602fce, d2_it_b3ecf9960d384e5c9f9791aa3c5b98f1
+
+LocalAddress LocalPort OwningProcess
+------------ --------- -------------
+127.0.0.1        15433         57168
+127.0.0.1        15432         57168
+
+
+PASS baseline listeners unchanged

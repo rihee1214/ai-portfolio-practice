@@ -1,0 +1,51 @@
+
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.702 s -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.526 s -- in com.example.marketplace.api.ApiErrorHttpTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.554 s -- in com.example.marketplace.api.DatabaseSettingsTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.233 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.238 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.marketplace.api.RequestIdFilterTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.242 s -- in com.example.marketplace.api.RequestIdHttpTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.143 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.828 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.028 s -- in com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.identity.AccountRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.638 s -- in com.example.marketplace.identity.AttemptWindowTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.example.marketplace.identity.SignupRulesTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.311 s -- in com.example.marketplace.identity.SignupSecurityTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 130, Failures: 0, Errors: 0, Skipped: 0
+2026-10-24T22:42:33.286+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "1 - initialize schema"
+2026-10-24T22:42:33.301+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "2 - jdbc fixture"
+2026-10-24T22:42:33.326+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "3 - identity signup"
+2026-10-24T22:42:33.347+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "4 - jdbc sessions"
+2026-10-24T22:42:33.364+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "5 - account recovery profile addresses"
+2026-10-24T22:42:33.384+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "6 - operating permissions"
+2026-10-24T22:42:33.401+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "7 - account state audit"
+2026-10-24T22:42:33.416+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "8 - seller applications"
+2026-10-24T22:42:33.433+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "9 - stores"
+2026-10-24T22:42:33.448+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "10 - store operations"
+2026-10-24T22:42:33.463+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "11 - catalog categories"
+2026-10-24T22:42:33.476+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "12 - catalog products"
+2026-10-24T22:42:33.491+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "13 - category audit"
+2026-10-24T22:42:33.505+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "14 - store operation order"
+2026-10-24T22:42:33.518+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "15 - catalog skus"
+2026-10-24T22:43:38.890+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "1 - initialize schema"
+2026-10-24T22:43:38.902+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "3 - identity signup"
+2026-10-24T22:43:38.920+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "4 - jdbc sessions"
+2026-10-24T22:43:38.938+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "5 - account recovery profile addresses"
+2026-10-24T22:43:38.955+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "6 - operating permissions"
+2026-10-24T22:43:38.971+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "7 - account state audit"
+2026-10-24T22:43:38.984+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "8 - seller applications"
+2026-10-24T22:43:38.999+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "9 - stores"
+2026-10-24T22:43:39.013+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "10 - store operations"
+2026-10-24T22:43:39.027+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "11 - catalog categories"
+2026-10-24T22:43:39.039+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "12 - catalog products"
+2026-10-24T22:43:39.054+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "13 - category audit"
+2026-10-24T22:43:39.066+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "14 - store operation order"
+2026-10-24T22:43:39.112+09:00  INFO [requestId=] 39432 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "15 - catalog skus"
+[INFO] Tests run: 75, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 68.55 s -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[INFO] Tests run: 75, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  01:32 min
