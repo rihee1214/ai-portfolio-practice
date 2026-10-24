@@ -1,0 +1,7 @@
+2026-10-24 P03-A latest frontend validation
+./frontend/npm.ps1 run typecheck: PASS
+./frontend/npm.ps1 run lint: PASS
+./frontend/npm.ps1 run test:unit: 9 files / 76 passed / 0 failed
+./frontend/npm.ps1 run build: PASS / 115 modules
+Browser regression uses latest dist and .local-tools/p03-a-browser-fixed/build/marketplace-api-0.0.1-SNAPSHOT.jar
+Development tool output was verified in this session; this file is a result summary, not raw stdout.

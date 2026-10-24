@@ -1,6 +1,6 @@
 # 마켓플레이스 전체 기술 설계
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 회원 기반·JDBC 인증에 이어 [P02-C](work-items/P02-C.md)의 역할·운영 권한·초기 설정과 독립 검증을 완료했다. 전체 설계의 후속 기능까지 완료했다는 의미는 아니며 다음 단계는 진행하지 않았다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 회원 기반·JDBC 인증에 이어 [P02-C](work-items/P02-C.md)의 역할·운영 권한·초기 설정과 독립 검증을 완료했다. P02 전체 점검에 이어 [P03-A](work-items/P03-A.md)의 모의 판매 신청·심사·이력을 구현했다. seller는 identity.api로 회원 잠금·SELLER 부여를 요청하며 승인 거래에 상태·역할·이력을 함께 저장한다. P03-B 매대 CRUD 이후는 미착수다.
 
 개정일: 2026-10-21 / 설계 v4 Java·Spring Boot + React / 구현 기준 설계; 현재 상태는 P01 종합 점검 참조
 

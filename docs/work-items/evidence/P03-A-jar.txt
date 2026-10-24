@@ -1,0 +1,2 @@
+PASS no dbtest/jdbcfixture/test mail HTTP controller classes in production jar.
+Existing LocalTestMailbox remains an intentional local-mailbox profile implementation; it is not a test HTTP endpoint.

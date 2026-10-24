@@ -1,0 +1,22 @@
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.838 s -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.679 s -- in com.example.marketplace.api.ApiErrorHttpTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.859 s -- in com.example.marketplace.api.DatabaseSettingsTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.281 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.336 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.example.marketplace.api.RequestIdFilterTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.367 s -- in com.example.marketplace.api.RequestIdHttpTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.222 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.969 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.456 s -- in com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.example.marketplace.identity.AccountRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.827 s -- in com.example.marketplace.identity.AttemptWindowTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.example.marketplace.identity.SignupRulesTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.424 s -- in com.example.marketplace.identity.SignupSecurityTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 130, Failures: 0, Errors: 0, Skipped: 0
+D2_CREATED_DATABASE=d2_it_bbcdcb02e7724190938a661da2403455
+2026-10-24T17:49:36.598+09:00  INFO [requestId=] 47400 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 8 migrations to schema "marketplace", now at version v8 (execution time 00:00.082s)
+[INFO] Tests run: 52, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 45.68 s -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[INFO] Tests run: 52, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS

@@ -86,5 +86,6 @@ export function AccountPage() {
     {state.notice && <p role="status">{state.notice}</p>}
     <button type="button" disabled={state.busy} onClick={() => { void store.refresh() }}>상태 다시 확인</button>
     <p><Link to="/account/profile">프로필 변경</Link> · <Link to="/account/addresses">배송지 관리</Link></p>
+    <p><Link to="/account/seller-application">판매 신청·이력</Link></p>
   </div>
 }

@@ -12,6 +12,7 @@ import { AccountDetailsPage } from './pages/AccountPages'
 import { PasswordPage } from './pages/PasswordPages'
 import { WorkspaceAccess, type AccessArea } from './auth/WorkspaceAccess'
 import type { Workspace } from './navigation'
+import { SellerApplicationsPage } from './pages/SellerApplicationsPage'
 
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/verify-email" element={<AuthForm key="verify" mode="verify-email" />} />
             <Route path="/login" element={<AuthForm key="login" mode="login" />} />
             <Route path="/account">
+              <Route path="seller-application" element={<SellerApplicationsPage />} />
               <Route index element={<AccountPage />} />
               <Route path="profile" element={<AccountDetailsPage key="profile" resource="profile" />} />
               <Route path="addresses" element={<AccountDetailsPage key="addresses" resource="addresses" />} />
@@ -47,7 +49,7 @@ export default function App() {
             <Route key={workspace.path} path={workspace.path} element={<ProtectedWorkspace workspace={workspace} />}>
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.features.map((feature) => (
-                <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />
+                <Route key={feature.path} path={feature.path} element={workspace.path === '/admin' && feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}

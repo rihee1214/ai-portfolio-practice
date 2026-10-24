@@ -84,6 +84,150 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PostgresJdbcIT {
 
     @Test
+    void sellerDecisionsRejectInvalidTransitionsAndRollbackRoleAndHistory() {
+        var service = context.getBean(com.example.marketplace.seller.api.SellerApplications.class);
+        UUID operator = activeMember("p3-reviewer@example.com");
+        UUID applicant = activeMember("p3-rejected@example.com");
+        var input = new com.example.marketplace.seller.api.SellerApplications.Input("가상 매대", "가상 계획");
+        var first = service.submit(applicant, input);
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class, () -> service.decide(operator, first.id(), "APPROVED", "사유"));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", operator));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", operator));
+        try {
+            assertThrows(com.example.marketplace.seller.api.SellerApplicationException.class, () -> service.decide(operator, first.id(), "PENDING", "사유"));
+            assertThrows(com.example.marketplace.seller.api.SellerApplicationException.class, () -> service.decide(operator, first.id(), "APPROVED", " "));
+            var rejected = service.decide(operator, first.id(), "REJECTED", "계획 보완 필요");
+            assertEquals("REJECTED", rejected.status());
+            assertEquals("계획 보완 필요", rejected.events().getLast().reason());
+            assertThrows(com.example.marketplace.seller.api.SellerApplicationException.class, () -> service.decide(operator, first.id(), "APPROVED", "사유"));
+            var second = service.submit(applicant, input);
+            assertEquals(2, service.own(applicant, 0).items().size());
+            var self = service.submit(operator, input);
+            assertThrows(com.example.marketplace.seller.api.SellerApplicationException.class, () -> service.decide(operator, self.id(), "APPROVED", "자기 심사"));
+            jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.seller_application_event ADD CONSTRAINT p3_reject_event CHECK (state <> 'APPROVED') NOT VALID");
+            try {
+                assertThrows(DataIntegrityViolationException.class, () -> service.decide(operator, second.id(), "APPROVED", "승인"));
+            } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.seller_application_event DROP CONSTRAINT p3_reject_event"); }
+            assertEquals("PENDING", jdbc.queryForObject("SELECT state FROM marketplace.seller_application WHERE id=:id", Map.of("id", second.id()), String.class));
+            assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.seller_application_event WHERE application_id=:id", Map.of("id", second.id()), Integer.class));
+            assertEquals(List.of("BUYER"), jdbc.queryForList("SELECT role FROM marketplace.role_assignment WHERE user_id=:id", Map.of("id", applicant), String.class));
+            jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id", Map.of("id", applicant));
+            assertThrows(AccountException.class, () -> service.decide(operator, second.id(), "APPROVED", "승인"));
+            jdbc.update("UPDATE marketplace.identity_user SET state='WITHDRAWN' WHERE id=:id", Map.of("id", applicant));
+            assertThrows(AccountException.class, () -> service.decide(operator, second.id(), "REJECTED", "반려"));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", operator));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", operator));
+        }
+    }
+
+    @Test
+    void sellerConcurrentApplicationsAndDecisionsHaveOneWinner() throws Exception {
+        var service = context.getBean(com.example.marketplace.seller.api.SellerApplications.class);
+        UUID applicant = activeMember("p3-race-buyer@example.com");
+        UUID operator = activeMember("p3-race-admin@example.com");
+        var input = new com.example.marketplace.seller.api.SellerApplications.Input("경쟁 매대", "모의 판매");
+        var submitted = race(() -> {
+            try { service.submit(applicant, input); return "ok"; }
+            catch (com.example.marketplace.seller.api.SellerApplicationException conflict) { return "blocked"; }
+        });
+        assertEquals(1, submitted.stream().filter("ok"::equals).count());
+        assertEquals(1, submitted.stream().filter("blocked"::equals).count());
+        UUID id = service.own(applicant, 0).items().getFirst().id();
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", operator));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", operator));
+        try {
+            var turn = new java.util.concurrent.atomic.AtomicInteger();
+            var decisions = race(() -> {
+                try { service.decide(operator, id, turn.getAndIncrement() == 0 ? "APPROVED" : "REJECTED", "경쟁 심사"); return "ok"; }
+                catch (com.example.marketplace.seller.api.SellerApplicationException conflict) { return "blocked"; }
+            });
+            assertEquals(1, decisions.stream().filter("ok"::equals).count());
+            assertEquals(1, decisions.stream().filter("blocked"::equals).count());
+            var result = service.own(applicant, 0).items().getFirst();
+            assertEquals(2, result.events().size());
+            assertEquals(result.status(), result.events().getLast().status());
+            assertEquals(result.status().equals("APPROVED") ? 1 : 0, jdbc.queryForObject("SELECT count(*) FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'", Map.of("id", applicant), Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", operator));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", operator));
+        }
+    }
+
+    @Test
+    void sellerApplicationOwnershipPaginationAndNarrowSecurityException() throws Exception {
+        var service = context.getBean(com.example.marketplace.seller.api.SellerApplications.class);
+        UUID buyer = activeMember("p3-boundary@example.com");
+        UUID other = activeMember("p3-other@example.com");
+        var foreign = service.submit(other, new com.example.marketplace.seller.api.SellerApplications.Input("다른 매대", "가상 계획"));
+        var browser = authBrowser();
+        assertEquals(401, accountRequest(browser, "GET", "/api/seller/applications", null, null).statusCode());
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("p3-boundary@example.com", SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        assertTrue(service.own(buyer, 0).items().isEmpty());
+        for (String path : List.of("/api/seller/applications/" + foreign.id(), "/api/seller/products", "/api/admin/accounts/seller-applications")) {
+            assertEquals(403, accountRequest(browser, "GET", path, null, null).statusCode());
+        }
+        assertEquals(403, accountRequest(browser, "PUT", "/api/seller/applications", Map.of(), csrfToken(browser)).statusCode());
+        assertEquals(400, accountRequest(browser, "POST", "/api/seller/applications", Map.of("displayName", " ", "description", "bad"), csrfToken(browser)).statusCode());
+        assertEquals(400, accountRequest(browser, "GET", "/api/seller/applications?page=-1", null, null).statusCode());
+        for (int i = 0; i < 21; i++) {
+            UUID applicationId = UUID.randomUUID();
+            jdbc.update("INSERT INTO marketplace.seller_application(id,applicant_id,display_name,description,state) VALUES(:id,:member,'목록 매대','모의 자료','REJECTED')",
+                    Map.of("id", applicationId, "member", buyer));
+            for (String state : List.of("PENDING", "REJECTED")) {
+                jdbc.update("INSERT INTO marketplace.seller_application_event(id,application_id,actor_id,state,reason) VALUES(:id,:application,:member,:state,'모의 목록 이력')",
+                        Map.of("id", UUID.randomUUID(), "application", applicationId, "member", buyer, "state", state));
+            }
+        }
+        assertEquals(20, service.own(buyer, 0).items().size());
+        assertTrue(service.own(buyer, 0).hasMore());
+        assertEquals(1, service.own(buyer, 1).items().size());
+        assertFalse(service.own(buyer, 1).hasMore());
+        assertEquals(1, service.own(other, 0).items().size());
+        assertThrows(IllegalStateException.class, () -> context.getBean(com.example.marketplace.identity.api.SellerMembership.class).lockActiveBuyer(buyer));
+    }
+
+    @Test
+    void sellerApplicationHttpSubmissionReviewAndBuyerRolePreserved() throws Exception {
+        UUID buyerId = activeMember("p3-buyer@example.com");
+        UUID adminId = activeMember("p3-admin@example.com");
+        var buyer = authBrowser();
+        var admin = authBrowser();
+        assertEquals(200, authRequest(buyer, "/api/auth/login", loginForm("p3-buyer@example.com", SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
+        assertEquals(200, authRequest(admin, "/api/auth/login", loginForm("p3-admin@example.com", SIGNUP_PASSWORD), csrfToken(admin)).statusCode());
+        String own = "/api/seller/applications";
+        var input = Map.of("displayName", "모의 매대", "description", "가상 상품 판매 계획", "applicantId", adminId.toString(), "status", "APPROVED");
+        assertEquals(403, accountRequest(buyer, "POST", own, input, null).statusCode());
+        var submitted = accountRequest(buyer, "POST", own, input, csrfToken(buyer));
+        assertEquals(201, submitted.statusCode());
+        var body = authMapper.readTree(submitted.body());
+        String id = body.get("id").asText();
+        assertEquals(buyerId.toString(), body.get("applicantId").asText());
+        assertEquals("PENDING", body.get("status").asText());
+        assertEquals(409, accountRequest(buyer, "POST", own, input, csrfToken(buyer)).statusCode());
+        String review = "/api/admin/accounts/seller-applications/" + id + "/decision";
+        var approved = Map.of("decision", "APPROVED", "reason", "모의 심사 완료");
+        assertEquals(403, accountRequest(admin, "POST", review, approved, csrfToken(admin)).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", adminId));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", adminId));
+        try {
+            assertEquals(403, accountRequest(admin, "POST", review, approved, null).statusCode());
+            assertEquals(200, accountRequest(admin, "POST", review, approved, csrfToken(admin)).statusCode());
+            assertEquals(409, accountRequest(admin, "POST", review, approved, csrfToken(admin)).statusCode());
+            assertEquals(List.of("BUYER", "SELLER"), authMapper.readTree(authRequest(buyer, "/api/auth/me", null, null).body()).get("roles")
+                    .valueStream().map(node -> node.asText()).sorted().toList());
+            assertEquals(200, authRequest(buyer, "/api/seller/access", null, null).statusCode());
+            var listing = authMapper.readTree(accountRequest(buyer, "GET", own, null, null).body());
+            assertEquals(1, listing.get("items").size());
+            assertEquals(2, listing.get("items").get(0).get("events").size());
+            assertEquals(409, accountRequest(buyer, "POST", own, input, csrfToken(buyer)).statusCode());
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", adminId));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", adminId));
+        }
+    }
+
+    @Test
     void accountStateLifecycleRevokesSessionsAndPreservesIdentityReference() throws Exception {
         UUID admin = activeMember("d-admin@example.com");
         UUID target = activeMember("d-target@example.com");
@@ -703,6 +847,10 @@ class PostgresJdbcIT {
             jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", admin));
             jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')", Map.of("id", admin));
             cMembers.add(seller); cMembers.add(admin);
+            UUID reviewer = activeMember("p3-admin-" + project + "@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", reviewer));
+            jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", reviewer));
+            cMembers.add(reviewer);
         }
         try {
         var root = java.nio.file.Path.of("..").toAbsolutePath().normalize();

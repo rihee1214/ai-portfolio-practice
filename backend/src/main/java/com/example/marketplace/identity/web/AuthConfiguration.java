@@ -77,6 +77,8 @@ public class AuthConfiguration {
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
                                 "/api/auth/signup", "/api/auth/verify-email",
                                 "/api/auth/password/request", "/api/auth/password/reset").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/seller/applications").authenticated()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/seller/applications").authenticated()
                         .requestMatchers("/api/seller/**").hasRole("SELLER")
                         .requestMatchers("/api/admin/**").access((authentication, context) -> {
                             var principal = authentication.get().getPrincipal();

@@ -7,7 +7,7 @@ D1은 DB 없는 검사이고 D2는 실제 PostgreSQL·Flyway·Spring JDBC·트�
 | 명령/실행기 | 대상 | 현재 결과 |
 | --- | --- | --- |
 | 기본 Maven verify / Surefire | *Test, DB 없음 | 130개: API·설정·관리 정책·모듈 경계·대상 보호 |
-| Maven -Pdb-it verify / Failsafe | 위130개 + *IT | PostgreSQL·db 프로필 HTTP 통합48개 별도 집계(P02-A1 회원9개, A2 인증7개, A3 HTTP3개, B 복구·계정10개, C 역할/권한/초기 설정3개, D 상태/롤백2개, R1 잠금 대기 만료2개 포함) |
+| Maven -Pdb-it verify / Failsafe | 위130개 + *IT | PostgreSQL·db 프로필 HTTP 통합52개 별도 집계(P02-A1 회원9개, A2 인증7개, A3 HTTP3개, B 복구·계정10개, C 역할/권한/초기 설정3개, D 상태/롤백2개, R1 잠금 대기 만료2개, P03-A 신청·심사·원자성·경계4개 포함) |
 
 `db-it`는 Maven 프로필이다. 통합 검사의 Spring 프로필은 `db,c3-fixture,local-mailbox`다. Boot가 기존 application-db.properties를 읽고 실제 Hikari DataSource·Flyway를 구성하며 테스트용 Repository/Service를 연결한다. `@SpringBootTest(webEnvironment=RANDOM_PORT)`로 loopback 임시 HTTP 서버도 실행해 E4·E5 조합을 확인한다. 최초 D2의 NONE·8개 실행은 당시 이력이며 최신 결과는 [보완 검증](work-items/P01-db-followup.md)을 따른다. [Boot 테스트 모드](https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html)
 

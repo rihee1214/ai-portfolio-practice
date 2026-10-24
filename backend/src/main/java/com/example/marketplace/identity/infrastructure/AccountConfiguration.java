@@ -10,6 +10,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration(proxyBeanMethods = false)
 @Profile("db")
 public class AccountConfiguration {
+    @Bean com.example.marketplace.identity.api.SellerMembership sellerMembership(NamedParameterJdbcTemplate jdbc,
+            com.example.marketplace.identity.api.AccessPolicy access) {
+        return new JdbcSellerMembership(jdbc, access);
+    }
     @Bean com.example.marketplace.identity.api.AccountStateOperations accountStateOperations(NamedParameterJdbcTemplate jdbc,
             PlatformTransactionManager manager, com.example.marketplace.identity.api.AccessPolicy access) {
         return new JdbcAccountStateOperations(jdbc, manager, access);
