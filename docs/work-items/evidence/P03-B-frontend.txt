@@ -1,0 +1,6 @@
+2026-10-24 P03-B frontend final validation (summary, not raw stdout)
+typecheck PASS
+lint PASS
+Vitest: 10 files, 79 passed, 0 failed
+build PASS: 117 modules; latest CSS includes store-card overflow-wrap
+Actual DB browser: separate evidence; no counts added to Vitest

@@ -13,6 +13,7 @@ import { PasswordPage } from './pages/PasswordPages'
 import { WorkspaceAccess, type AccessArea } from './auth/WorkspaceAccess'
 import type { Workspace } from './navigation'
 import { SellerApplicationsPage } from './pages/SellerApplicationsPage'
+import { StoreEditorPage, PublicStorePage } from './pages/StorePages'
 
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
@@ -30,6 +31,7 @@ export default function App() {
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />
             <Route path="/password/reset" element={<PasswordPage key="reset" mode="reset" />} />
@@ -49,7 +51,7 @@ export default function App() {
             <Route key={workspace.path} path={workspace.path} element={<ProtectedWorkspace workspace={workspace} />}>
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.features.map((feature) => (
-                <Route key={feature.path} path={feature.path} element={workspace.path === '/admin' && feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
+                <Route key={feature.path} path={feature.path} element={workspace.path === '/seller' && feature.path === 'store' ? <StoreEditorPage /> : workspace.path === '/admin' && feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}

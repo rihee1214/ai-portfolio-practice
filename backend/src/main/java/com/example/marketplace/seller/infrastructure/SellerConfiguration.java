@@ -12,6 +12,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration(proxyBeanMethods = false)
 @Profile("db")
 public class SellerConfiguration {
+    @Bean com.example.marketplace.seller.api.Stores stores(NamedParameterJdbcTemplate jdbc, SellerMembership members, AccessPolicy access, PlatformTransactionManager manager) {
+        return new JdbcStores(jdbc, members, access, manager);
+    }
     @Bean SellerApplications sellerApplications(NamedParameterJdbcTemplate jdbc, SellerMembership members, AccessPolicy access, PlatformTransactionManager manager) {
         return new JdbcSellerApplications(jdbc, members, access, manager);
     }

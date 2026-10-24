@@ -74,6 +74,7 @@ public class AuthConfiguration {
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
                                 "/api/auth/signup", "/api/auth/verify-email",
                                 "/api/auth/password/request", "/api/auth/password/reset").permitAll()

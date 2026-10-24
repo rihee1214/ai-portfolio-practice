@@ -82,6 +82,86 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
+    @Test
+    void storeInputLimitsAndInvalidUpdatesLeaveSavedValuesUnchanged() {
+        var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        UUID owner=activeMember("p3b-limits@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        var max=new com.example.marketplace.seller.api.Stores.Input("s".repeat(63),"😀".repeat(80),"소".repeat(1000),"주".repeat(200),"공".repeat(1000),"i".repeat(100),"그".repeat(120),true,0L);
+        var saved=service.save(owner,null,max);
+        assertEquals(max.name(),saved.name());
+        assertEquals(max.imageAlt(),service.published(max.slug()).imageAlt());
+        var invalid=List.of(
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name()+"x",max.introduction(),max.address(),max.notice(),max.imageKey(),max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name(),max.introduction()+"x",max.address(),max.notice(),max.imageKey(),max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name(),max.introduction(),max.address()+"x",max.notice(),max.imageKey(),max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name(),max.introduction(),max.address(),max.notice()+"x",max.imageKey(),max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name(),max.introduction(),max.address(),max.notice(),max.imageKey()+"x",max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),max.name(),max.introduction(),max.address(),max.notice(),max.imageKey(),max.imageAlt()+"x",true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug()+"x",max.name(),max.introduction(),max.address(),max.notice(),max.imageKey(),max.imageAlt(),true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug()," ",max.introduction(),max.address(),"","","",true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),"이름"," ",max.address(),"","","",true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),"이름","소개"," ","","","",true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),"이름","소개","주소","","key","",true,0L),
+            new com.example.marketplace.seller.api.Stores.Input(max.slug(),"이름","소개","주소","","","alt",true,0L));
+        for(var input:invalid) {
+            assertEquals(400,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,saved.id(),input)).status());
+            assertEquals(saved,service.own(owner));
+        }
+    }
+    @Test
+    void storeConcurrentCreateAndUpdateAndValidation() throws Exception {
+        var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        UUID owner=activeMember("p3b-race@example.com");
+        var input=new com.example.marketplace.seller.api.Stores.Input("race-store","모의","소개","가상 주소","","asset-1","가상 그림",false,0L);
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->service.save(owner,null,input));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        var created=race(()->{ try { service.save(owner,null,input); return "ok"; } catch(com.example.marketplace.seller.api.StoreException ex) { assertEquals(409,ex.status()); return "conflict"; } });
+        assertEquals(1,created.stream().filter("ok"::equals).count());
+        var current=service.own(owner);
+        var updated=race(()->{ try { service.save(owner,current.id(),input); return "ok"; } catch(com.example.marketplace.seller.api.StoreException ex) { assertEquals(409,ex.status()); return "conflict"; } });
+        assertEquals(1,updated.stream().filter("ok"::equals).count());
+        assertEquals(1,service.own(owner).version());
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,current.id(),new com.example.marketplace.seller.api.Stores.Input("changed-slug","모의","소개","주소","","","",false,1L)));
+        for(String slug:List.of("aa","UPPER","../bad","-bad","bad-")) {
+            assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,null,new com.example.marketplace.seller.api.Stores.Input(slug,"모의","소개","주소","","","",false,0L)));
+        }
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,current.id(),new com.example.marketplace.seller.api.Stores.Input("race-store","모의","소개","주소","","https://external","그림",false,1L)));
+        assertEquals(1,service.own(owner).version());
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.published("race-store"));
+        jdbc.update("UPDATE marketplace.identity_user SET state='WITHDRAWN' WHERE id=:id",Map.of("id",owner));
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->service.save(owner,current.id(),input));
+    }
+    @Test
+    void storeHttpOwnershipVisibilityAndVersion() throws Exception {
+        UUID owner = activeMember("p3b-owner@example.com");
+        UUID other = activeMember("p3b-other@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", owner));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", other));
+        var browser = authBrowser();
+        var stranger = authBrowser();
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm("p3b-owner@example.com",SIGNUP_PASSWORD),csrfToken(browser)).statusCode());
+        assertEquals(200,authRequest(stranger,"/api/auth/login",loginForm("p3b-other@example.com",SIGNUP_PASSWORD),csrfToken(stranger)).statusCode());
+        var fields = new java.util.HashMap<String,Object>(Map.of("slug","sample-store","name","모의 매대","introduction","가상 소개","address","모의 주소","notice","","imageKey","","imageAlt","","visible",false,"version",0));
+        assertEquals(403, accountRequest(browser,"POST","/api/seller/stores", fields,null).statusCode());
+        var created = accountRequest(browser,"POST","/api/seller/stores",fields,csrfToken(browser));
+        assertEquals(201,created.statusCode());
+        var store = new tools.jackson.databind.ObjectMapper().readTree(created.body());
+        String path = "/api/seller/stores/" + store.get("id").asText();
+        assertEquals(409,accountRequest(browser,"POST","/api/seller/stores",fields,csrfToken(browser)).statusCode());
+        assertEquals(409,accountRequest(stranger,"POST","/api/seller/stores",fields,csrfToken(stranger)).statusCode());
+        assertEquals(404,accountRequest(stranger,"PUT",path,fields,csrfToken(stranger)).statusCode());
+        assertEquals(404,accountRequest(HttpClient.newHttpClient(),"GET","/api/stores/sample-store",null,null).statusCode());
+        fields.put("visible",true);
+        assertEquals(200,accountRequest(browser,"PUT",path,fields,csrfToken(browser)).statusCode());
+        assertEquals(409,accountRequest(browser,"PUT",path,fields,csrfToken(browser)).statusCode());
+        var published = accountRequest(HttpClient.newHttpClient(),"GET","/api/stores/sample-store",null,null);
+        assertEquals(200,published.statusCode());
+        assertFalse(published.body().contains(owner.toString()));
+        assertFalse(published.body().contains("version"));
+        jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner));
+        assertEquals(404,accountRequest(HttpClient.newHttpClient(),"GET","/api/stores/sample-store",null,null).statusCode());
+    }
 
     @Test
     void sellerDecisionsRejectInvalidTransitionsAndRollbackRoleAndHistory() {
