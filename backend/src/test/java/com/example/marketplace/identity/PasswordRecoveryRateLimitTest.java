@@ -6,6 +6,16 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PasswordRecoveryRateLimitTest {
+    @Test void withdrawalPasswordAttemptsAreBounded() throws Exception {
+        var filter = new AttemptLimitFilter();
+        for (int attempt = 0; attempt < 6; attempt++) {
+            var request = new MockHttpServletRequest("POST", "/api/account/withdraw");
+            request.setRemoteAddr("192.0.2.2");
+            var response = new MockHttpServletResponse();
+            filter.doFilter(request, response, (req, res) -> ((jakarta.servlet.http.HttpServletResponse) res).setStatus(200));
+            assertEquals(attempt < 5 ? 200 : 429, response.getStatus());
+        }
+    }
     @Test void bothRecoveryMutationsUseTheBoundedAttemptWindow() throws Exception {
         for (String path : new String[] {"/api/auth/password/request", "/api/auth/password/reset"}) {
             var filter = new AttemptLimitFilter();

@@ -3,6 +3,23 @@ import { randomUUID } from 'node:crypto'
 
 const originalPassword = 'b-browser-original-password'
 const newPassword = 'b-browser-recovered-password'
+test('탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다', async ({ page }) => {
+  const email = await prepare(page)
+  await page.getByLabel('탈퇴 확인 비밀번호').fill(originalPassword)
+  await page.getByLabel('탈퇴 후 계정을 복구할 수 없음을 확인했습니다.').check()
+  await page.getByRole('button', { name: '회원 탈퇴', exact: true }).focus()
+  await page.keyboard.press('Enter')
+  await expect(page.getByText('회원 탈퇴를 완료했습니다.', { exact: true })).toBeVisible()
+  await expect(page.getByLabel('탈퇴 확인 비밀번호')).toHaveCount(0)
+  expect((await page.request.get('/api/account/profile')).status()).toBe(401)
+  await page.reload()
+  await expect(page.getByText('로그인이 필요합니다.', { exact: true })).toBeVisible()
+  const response = await page.request.post('/api/auth/login', {
+    headers: { 'X-CSRF-TOKEN': await csrf(page) }, form: { email, password: originalPassword },
+  })
+  expect(response.status()).toBe(401)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
+})
 async function csrf(page: Page) {
   return (await (await page.request.get('/api/auth/csrf')).json()).token as string
 }

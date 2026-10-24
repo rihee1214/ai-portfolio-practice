@@ -1,0 +1,1 @@
+PASS production JAR excludes test fixtures

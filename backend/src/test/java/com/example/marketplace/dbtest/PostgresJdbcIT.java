@@ -84,6 +84,124 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PostgresJdbcIT {
 
     @Test
+    void accountStateLifecycleRevokesSessionsAndPreservesIdentityReference() throws Exception {
+        UUID admin = activeMember("d-admin@example.com");
+        UUID target = activeMember("d-target@example.com");
+        var operator = authBrowser();
+        var buyer = authBrowser();
+        var second = authBrowser();
+        assertEquals(200, authRequest(operator, "/api/auth/login", loginForm("d-admin@example.com", SIGNUP_PASSWORD), csrfToken(operator)).statusCode());
+        assertEquals(200, authRequest(buyer, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
+        assertEquals(200, authRequest(second, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(second)).statusCode());
+        String path = "/api/admin/accounts/" + target;
+        var reason = Map.of("reason", "테스트 운영 조치");
+        assertEquals(403, accountRequest(operator, "POST", path + "/suspend", reason, csrfToken(operator)).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", admin));
+        try {
+            assertEquals(403, accountRequest(operator, "POST", path + "/suspend", reason, null).statusCode());
+            assertEquals(200, accountRequest(operator, "POST", path + "/suspend", reason, csrfToken(operator)).statusCode());
+            assertEquals(401, authRequest(buyer, "/api/auth/me", null, null).statusCode());
+            assertEquals(401, authRequest(second, "/api/auth/me", null, null).statusCode());
+            assertEquals(401, authRequest(buyer, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
+            assertEquals(409, accountRequest(operator, "POST", path + "/suspend", reason, csrfToken(operator)).statusCode());
+            assertEquals(200, accountRequest(operator, "POST", path + "/restore", reason, csrfToken(operator)).statusCode());
+            assertEquals(401, authRequest(second, "/api/auth/me", null, null).statusCode());
+            assertEquals(200, authRequest(buyer, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
+            accountOperations.saveAddress(target, null, addressInput(true));
+            accountOperations.updateProfile(target, "탈퇴자", "01012345678");
+            recovery.request("d-target@example.com");
+            String resetToken = resetMail("d-target@example.com");
+            var withdrawal = Map.of("password", SIGNUP_PASSWORD, "confirmation", "WITHDRAW");
+            jdbc.getJdbcTemplate().execute("CREATE TABLE marketplace.d_trade_reference (member_id uuid REFERENCES marketplace.identity_user(id), amount integer NOT NULL)");
+            jdbc.update("INSERT INTO marketplace.d_trade_reference VALUES(:id,12300)", Map.of("id", target));
+            assertEquals(403, accountRequest(buyer, "POST", "/api/account/withdraw", withdrawal, null).statusCode());
+            assertEquals(400, accountRequest(buyer, "POST", "/api/account/withdraw", Map.of("password", "wrong", "confirmation", "WITHDRAW"), csrfToken(buyer)).statusCode());
+            assertEquals(200, accountRequest(buyer, "POST", "/api/account/withdraw", withdrawal, csrfToken(buyer)).statusCode());
+            assertEquals("WITHDRAWN", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class));
+            assertEquals(3L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), Long.class));
+            assertEquals("", jdbc.queryForObject("SELECT display_name FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class));
+            for (String table : List.of("user_credential", "member_address", "email_verification_token", "password_reset_token", "role_assignment")) {
+                assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace." + table + " WHERE user_id=:id", Map.of("id", target), Integer.class));
+            }
+            assertEquals(3, jdbc.queryForObject("SELECT count(*) FROM marketplace.account_state_audit WHERE target_id=:id", Map.of("id", target), Integer.class));
+            assertEquals(12300, jdbc.queryForObject("SELECT amount FROM marketplace.d_trade_reference WHERE member_id=:id", Map.of("id", target), Integer.class));
+            assertNull(jdbc.queryForObject("SELECT phone FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class));
+            assertFalse("d-target@example.com".equals(jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class)));
+            assertEquals(401, authRequest(buyer, "/api/auth/me", null, null).statusCode());
+            assertThrows(SignupException.class, () -> recovery.reset(resetToken, SIGNUP_PASSWORD));
+            assertEquals(409, accountRequest(operator, "POST", path + "/restore", reason, csrfToken(operator)).statusCode());
+            assertEquals(409, accountRequest(operator, "POST", "/api/admin/accounts/" + admin + "/suspend", reason, csrfToken(operator)).statusCode());
+            assertEquals(409, accountRequest(operator, "POST", "/api/account/withdraw", withdrawal, csrfToken(operator)).statusCode());
+            UUID replacement = activeMember("d-target@example.com");
+            assertFalse(target.equals(replacement));
+            assertEquals(target, jdbc.queryForObject("SELECT member_id FROM marketplace.d_trade_reference", Map.of(), UUID.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", admin));
+        }
+    }
+
+    @Test
+    void stateChangesRollbackAndSerializeAndCannotBypassServicePermission() throws Exception {
+        var service = context.getBean(com.example.marketplace.identity.api.AccountStateOperations.class);
+        UUID actor = activeMember("d-service-actor@example.com");
+        UUID target = activeMember("d-service-target@example.com");
+        UUID pending = signup.register("d-pending@example.com", SIGNUP_PASSWORD);
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class, () -> service.suspend(actor, target, "reason"));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", actor));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", actor));
+        try {
+            assertThrows(AccountException.class, () -> service.suspend(actor, target, " "));
+            assertThrows(AccountException.class, () -> service.suspend(actor, pending, "reason"));
+            assertThrows(AccountException.class, () -> service.restore(actor, target, "reason"));
+            assertThrows(AccountException.class, () -> service.suspend(actor, UUID.randomUUID(), "reason"));
+            assertThrows(AccountException.class, () -> service.withdraw(target, SIGNUP_PASSWORD, "wrong"));
+            var browser = authBrowser();
+            assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("d-service-target@example.com", SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+            recovery.request("d-service-target@example.com");
+            accountOperations.saveAddress(target, null, addressInput(true));
+            jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.account_state_audit ADD CONSTRAINT d_reject_audit CHECK (reason='impossible') NOT VALID");
+            try {
+                assertThrows(DataIntegrityViolationException.class, () -> service.suspend(actor, target, "reason"));
+                assertThrows(DataIntegrityViolationException.class, () -> service.withdraw(target, SIGNUP_PASSWORD, "WITHDRAW"));
+            } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.account_state_audit DROP CONSTRAINT d_reject_audit"); }
+            assertEquals("ACTIVE", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class));
+            assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), Long.class));
+            assertEquals(1, accountOperations.addresses(target).size());
+            assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.password_reset_token WHERE user_id=:id", Map.of("id", target), Integer.class));
+            assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+            accountOperations.updateProfile(target, "보존 이름", "01012345678");
+            // Fail after state/session/token/audit/anonymization/address writes, during credential deletion.
+            jdbc.getJdbcTemplate().execute("CREATE TABLE marketplace.d_credential_reference (user_id uuid REFERENCES marketplace.user_credential(user_id))");
+            jdbc.update("INSERT INTO marketplace.d_credential_reference VALUES(:id)", Map.of("id", target));
+            assertThrows(DataIntegrityViolationException.class, () -> service.withdraw(target, SIGNUP_PASSWORD, "WITHDRAW"));
+            assertEquals("d-service-target@example.com", accountOperations.profile(target).email());
+            assertEquals("보존 이름", accountOperations.profile(target).displayName());
+            assertEquals("01012345678", accountOperations.profile(target).phone());
+            assertEquals(1, accountOperations.addresses(target).size());
+            for (String table : List.of("user_credential", "role_assignment", "password_reset_token", "email_verification_token")) {
+                assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace." + table + " WHERE user_id=:id", Map.of("id", target), Integer.class));
+            }
+            assertEquals("ACTIVE", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), String.class));
+            assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", Map.of("id", target), Long.class));
+            assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.account_state_audit WHERE target_id=:id", Map.of("id", target), Integer.class));
+            assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+            jdbc.update("DELETE FROM marketplace.d_credential_reference WHERE user_id=:id", Map.of("id", target));
+            var results = race(() -> {
+                try { service.suspend(actor, target, "race"); return "ok"; }
+                catch (AccountException exception) { return "blocked"; }
+            });
+            assertEquals(1, results.stream().filter("ok"::equals).count());
+            assertEquals(1, results.stream().filter("blocked"::equals).count());
+            assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.account_state_audit WHERE target_id=:id", Map.of("id", target), Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", actor));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", actor));
+        }
+    }
+
+    @Test
     void initialAdminIsExplicitAtomicAndOnlyOneConcurrentWinner() throws Exception {
         var bootstrap = new com.example.marketplace.identity.infrastructure.InitialAdmin(jdbc, transactionManager);
         String database = jdbc.queryForObject("SELECT current_database()", Map.of(), String.class);
@@ -644,7 +762,8 @@ class PostgresJdbcIT {
     private final tools.jackson.databind.json.JsonMapper authMapper = tools.jackson.databind.json.JsonMapper.builder().build();
 
     private HttpClient authBrowser() {
-        return HttpClient.newBuilder().cookieHandler(new java.net.CookieManager(
+        // Isolate Java contract traffic from Playwright's 127.0.0.1 rate window without relaxing production limits.
+        return HttpClient.newBuilder().localAddress(new java.net.InetSocketAddress("127.0.0.2", 0).getAddress()).cookieHandler(new java.net.CookieManager(
                 null, java.net.CookiePolicy.ACCEPT_ALL)).connectTimeout(Duration.ofSeconds(5)).build();
     }
 
@@ -866,7 +985,7 @@ class PostgresJdbcIT {
     private Flyway flyway;
 
     private LocalTestMailbox.Message mail(String email) {
-        return mailbox.messages().stream().filter(item -> item.recipient().equals(email)).findFirst().orElseThrow();
+        return mailbox.messages().stream().filter(item -> item.recipient().equals(email)).reduce((first, last) -> last).orElseThrow();
     }
 
     private SignupService serviceAt(Instant now, VerificationMailbox targetMailbox) {

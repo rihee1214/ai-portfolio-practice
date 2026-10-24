@@ -1,0 +1,23 @@
+[WebServer] (node:75752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:38856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.6s)
+  ok  2 [desktop] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (684ms)
+  ok  3 [desktop] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.3s)
+  ok  4 [desktop] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.5s)
+  ok  5 [desktop] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.8s)
+  ok  6 [desktop] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.2s)
+(node:61732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [mobile] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.6s)
+  ok  8 [mobile] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (718ms)
+  ok  9 [mobile] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.4s)
+  ok 10 [mobile] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.6s)
+  ok 11 [mobile] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (2.0s)
+  ok 12 [mobile] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+
+  12 passed (18.7s)

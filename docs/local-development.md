@@ -1,6 +1,6 @@
 # 로컬 실행과 검사 — P01 종합 기준
 
-P02-A2 인증 API는 `db` 웹 프로필에서 활성화된다. 로컬 HTTP에서만 `local-http`를 추가한다. SESSION 쿠키의 기본 Secure=true 때문에 HTTP에서 이 프로필을 빼면 로그인 유지가 되지 않을 수 있다. 가입 테스트 도구까지 필요하면 `local-mailbox`를 추가한다. 기존 DB를 자동 갱신하지 말고 새 격리 DB를 쓰며, 이번 단계의 재현 명령은 `./backend/verify-db.ps1 -EvidenceDirectory .local-tools/a2-새로운이름`이다. 이 명령이 임시 서버와 새 DB를 구성한다. [A2 계약·검증·한계](work-items/P02-A2.md)를 먼저 확인한다. React 가입·확인·로그인 화면은 P02-A3에서 구현했다. 실제 외부 메일은 발송하지 않는다. 인증 브라우저 검증은 ./backend/verify-db.ps1 -EvidenceDirectory .local-tools/a3-새로운이름 -RunBrowser로 별도 실행한다. 최신 P02-C 기준 PC·모바일10개를 실행하며 기본129개·DB통합44개도 함께 검증한다. 운영 권한과 별도 로컬 초기 설정 명령은 [C 기록](work-items/P02-C.md)을 따른다. 복구·프로필·배송지 계약과 새 DB 실행은 [B 기록](work-items/P02-B.md)을 따른다. 자세한 메일 확인·재현 방법은 [A3 기록](work-items/P02-A3.md)을 따른다.
+P02-A2 인증 API는 `db` 웹 프로필에서 활성화된다. 로컬 HTTP에서만 `local-http`를 추가한다. SESSION 쿠키의 기본 Secure=true 때문에 HTTP에서 이 프로필을 빼면 로그인 유지가 되지 않을 수 있다. 가입 테스트 도구까지 필요하면 `local-mailbox`를 추가한다. 기존 DB를 자동 갱신하지 말고 새 격리 DB를 쓰며, 이번 단계의 재현 명령은 `./backend/verify-db.ps1 -EvidenceDirectory .local-tools/a2-새로운이름`이다. 이 명령이 임시 서버와 새 DB를 구성한다. [A2 계약·검증·한계](work-items/P02-A2.md)를 먼저 확인한다. React 가입·확인·로그인 화면은 P02-A3에서 구현했다. 실제 외부 메일은 발송하지 않는다. 인증 브라우저 검증은 ./backend/verify-db.ps1 -EvidenceDirectory .local-tools/a3-새로운이름 -RunBrowser로 별도 실행한다. 최신 P02-D 기준 PC·모바일12개를 실행하며 기본130개·DB통합46개도 함께 검증한다. [D 범위·검증](work-items/P02-D.md)을 확인한다. 운영 권한과 별도 로컬 초기 설정 명령은 [C 기록](work-items/P02-C.md)을 따른다. 복구·프로필·배송지 계약과 새 DB 실행은 [B 기록](work-items/P02-B.md)을 따른다. 자세한 메일 확인·재현 방법은 [A3 기록](work-items/P02-A3.md)을 따른다.
 
 현재 검증 호스트는 Windows x64·PowerShell 7이며 루트는 `D:\Workspace\ai-portfolio-practice`다. 아래 명령은 저장소 루트에서 시작한다. 시스템 PATH·JAVA_HOME을 영구 변경하지 않는다.
 
@@ -27,7 +27,7 @@ try {
 } finally { Pop-Location }
 ```
 
-Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. 기본 Java 검사는 129개이며 실제 DB 통합 검사는 포함하지 않는다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
+Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. 기본 Java 검사는 130개이며 실제 DB 통합 검사는 포함하지 않는다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
 
 설정이 필요한 경우 예제를 `backend/application-local.properties`로 복사하고 값을 편집한다. 기존 로컬 파일은 덮어쓰지 않는다. `local` 프로필은 기본 활성화되지 않는다. 아래 실행은 **backend 폴더를 작업 디렉터리로 사용**해야 외부 파일을 찾는다.
 
@@ -76,4 +76,4 @@ try {
 ./frontend/npm.ps1 run test:e2e
 ```
 
-각 명령의 성공을 확인한 뒤 다음을 실행한다. 현재 Vitest 70개·Playwright 16개다. Node 68개는 B에서 통과한 기록이며 C에서는 전송 코드 변경이 없어 재실행하지 않았다. Playwright는 최신 JAR와 dist를 자동 재빌드하지 않으므로 위 빌드를 생략하지 않는다. Chromium 준비 방법은 [D4](work-items/P01-D4.md)를 따른다. 18080·24174·24175는 전용 검사 포트이며 점유 시 기존 서버를 종료하지 말고 원인을 확인한다. 실제 DB는 사용하지 않는다. Windows 이외 환경·새 PC 전체 재현은 미검증이다.
+각 명령의 성공을 확인한 뒤 다음을 실행한다. 현재 Vitest 73개·Playwright 16개다. Node 68개는 B에서 통과한 기록이며 C·D에서는 전송 코드 변경이 없어 재실행하지 않았다. Playwright는 최신 JAR와 dist를 자동 재빌드하지 않으므로 위 빌드를 생략하지 않는다. Chromium 준비 방법은 [D4](work-items/P01-D4.md)를 따른다. 18080·24174·24175는 전용 검사 포트이며 점유 시 기존 서버를 종료하지 말고 원인을 확인한다. 실제 DB는 사용하지 않는다. Windows 이외 환경·새 PC 전체 재현은 미검증이다.

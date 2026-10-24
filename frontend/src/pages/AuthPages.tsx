@@ -64,7 +64,23 @@ export function AccountPage() {
     {state.busy || !state.checked ? <p role="status">로그인 상태를 확인하고 있습니다.</p>
       : state.member ? <><p>로그인되었습니다.</p><dl><dt>회원 ID</dt><dd>{state.member.id}</dd>
         <dt>이용 자격</dt><dd>{state.member.roles.map(role => ({ BUYER: '구매자', SELLER: '판매자', ADMIN: '운영자' })[role]).join(', ')}</dd></dl>
-        <button onClick={() => { void store.mutate('logout') }}>로그아웃</button></>
+        <button onClick={() => { void store.mutate('logout') }}>로그아웃</button>
+        {state.member.roles.includes('ADMIN') ? <p>운영자 계정의 탈퇴는 권한 인계 절차가 마련된 후 지원합니다.</p> :
+          <form onSubmit={event => {
+            event.preventDefault()
+            const form = event.currentTarget
+            const data = new FormData(form)
+            const password = String(data.get('password') ?? '')
+            form.reset()
+            void store.mutate('withdraw', { password, confirmation: 'WITHDRAW' })
+          }}>
+            <h2>회원 탈퇴</h2>
+            <p>계정을 복구할 수 없으며 로그인 정보·프로필·배송지를 삭제합니다. 거래 이력은 별도 보존 대상입니다.</p>
+            <label htmlFor="withdraw-password">탈퇴 확인 비밀번호</label>
+            <input id="withdraw-password" name="password" type="password" required maxLength={256} autoComplete="current-password" />
+            <label><input type="checkbox" required />탈퇴 후 계정을 복구할 수 없음을 확인했습니다.</label>
+            <button type="submit">회원 탈퇴</button>
+          </form>}</>
         : <><p>로그인이 필요합니다.</p><Link to="/login">로그인하러 가기</Link></>}
     {state.error && <ApiErrorNotice error={state.error} />}
     {state.notice && <p role="status">{state.notice}</p>}

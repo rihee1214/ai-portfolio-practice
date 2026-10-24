@@ -6,10 +6,27 @@ import { AuthContext } from '../../src/auth/AuthContext'
 import { AuthStore } from '../../src/auth/AuthStore'
 import { AccountDetailsPage } from '../../src/pages/AccountPages'
 import { PasswordPage } from '../../src/pages/PasswordPages'
+import { AccountPage } from '../../src/pages/AuthPages'
 
 const id = '00000000-0000-4000-8000-000000000001'
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
 const profile = { email: 'buyer@example.com', displayName: '구매자', phone: null }
+test('탈퇴는 비밀번호와 확인 체크 후 한 번 제출하고 입력을 화면에서 제거한다', async () => {
+  const fetcher = vi.fn(async (path: string) => {
+    if (path === '/api/auth/me') return json({ id, roles: ['BUYER'] })
+    if (path === '/api/auth/csrf') return json({ headerName: 'X-CSRF-TOKEN', token: 'csrf' })
+    return json({ status: 'WITHDRAWN' })
+  })
+  vi.stubGlobal('fetch', fetcher)
+  mount(<AccountPage />)
+  const user = userEvent.setup()
+  await user.type(await screen.findByLabelText('탈퇴 확인 비밀번호'), 'private-password')
+  await user.click(screen.getByLabelText('탈퇴 후 계정을 복구할 수 없음을 확인했습니다.'))
+  await user.click(screen.getByRole('button', { name: '회원 탈퇴' }))
+  await screen.findByText('회원 탈퇴를 완료했습니다.')
+  expect(screen.queryByLabelText('탈퇴 확인 비밀번호')).not.toBeInTheDocument()
+  expect(fetcher.mock.calls.filter(call => call[0] === '/api/account/withdraw')).toHaveLength(1)
+})
 function mount(page: React.ReactNode) {
   const auth = new AuthStore()
   const view = render(<MemoryRouter><AuthContext value={auth}>{page}</AuthContext></MemoryRouter>)

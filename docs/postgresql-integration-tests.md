@@ -6,8 +6,8 @@ D1은 DB 없는 검사이고 D2는 실제 PostgreSQL·Flyway·Spring JDBC·트�
 
 | 명령/실행기 | 대상 | 현재 결과 |
 | --- | --- | --- |
-| 기본 Maven verify / Surefire | *Test, DB 없음 | 129개: API·설정·관리 정책·모듈 경계·대상 보호 |
-| Maven -Pdb-it verify / Failsafe | 위129개 + *IT | PostgreSQL·db 프로필 HTTP 통합44개 별도 집계(P02-A1 회원9개, A2 인증7개, A3 HTTP3개, B 복구·계정10개, C 역할/권한/초기 설정3개 포함) |
+| 기본 Maven verify / Surefire | *Test, DB 없음 | 130개: API·설정·관리 정책·모듈 경계·대상 보호 |
+| Maven -Pdb-it verify / Failsafe | 위130개 + *IT | PostgreSQL·db 프로필 HTTP 통합46개 별도 집계(P02-A1 회원9개, A2 인증7개, A3 HTTP3개, B 복구·계정10개, C 역할/권한/초기 설정3개, D 상태/롤백2개 포함) |
 
 `db-it`는 Maven 프로필이다. 통합 검사의 Spring 프로필은 `db,c3-fixture,local-mailbox`다. Boot가 기존 application-db.properties를 읽고 실제 Hikari DataSource·Flyway를 구성하며 테스트용 Repository/Service를 연결한다. `@SpringBootTest(webEnvironment=RANDOM_PORT)`로 loopback 임시 HTTP 서버도 실행해 E4·E5 조합을 확인한다. 최초 D2의 NONE·8개 실행은 당시 이력이며 최신 결과는 [보완 검증](work-items/P01-db-followup.md)을 따른다. [Boot 테스트 모드](https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html)
 
@@ -78,4 +78,4 @@ Flyway만 스키마 초기화를 담당하며 SQL init은 never, clean은 disabl
 
 P02-A1은 V3 회원 테이블과 가입·확인 서비스 검사9개를 추가했다. P02-A2는 V4 JDBC 세션 테이블과 인증 검사7개를 추가했다. 현재 실행은 새 격리 DB에 V1/V2/V3/V4를 적용하고 db,c3-fixture,local-mailbox,local-http 프로필을 사용한다. 기존 DB에는 적용하지 않는다. 상세 계약·잔여 DB·검토 상태는 [A1 기록](work-items/P02-A1.md), [A2 기록](work-items/P02-A2.md)을 따른다.
 
-P02-A3에서 추가한 -RunBrowser 옵션은 최신 P02-C 기준 같은 임시 Java 서버/새 DB에서 인증·계정 Playwright10개를 추가 실행한다. 브라우저를 실행하지 않은 기본 verify 결과를 브라우저 통과로 표현하지 않는다. 최신 재현과 근거는 [C 기록](work-items/P02-C.md)을 따른다.
+P02-A3에서 추가한 -RunBrowser 옵션은 최신 P02-D 기준 같은 임시 Java 서버/새 DB에서 인증·계정 Playwright12개를 추가 실행한다. 브라우저를 실행하지 않은 기본 verify 결과를 브라우저 통과로 표현하지 않는다. 최신 재현과 근거는 [D 기록](work-items/P02-D.md)을 따른다.
