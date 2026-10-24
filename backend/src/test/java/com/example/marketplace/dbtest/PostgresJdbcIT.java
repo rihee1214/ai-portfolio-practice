@@ -83,6 +83,126 @@ import static org.assertj.core.api.Assertions.assertThat;
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
     @Test
+    void storeOperatorPermissionsAndConcurrentEditSuspendKeepRestriction() throws Exception {
+        var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        UUID owner=activeMember("p3c-permissions-owner@example.com"), admin=activeMember("p3c-permissions-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        var input=new com.example.marketplace.seller.api.Stores.Input("permission-store","모의","소개","가상 주소","","","",true,0L);
+        var store=service.save(owner,null,input);
+        var change=new com.example.marketplace.seller.api.Stores.Change(0L,"모의 정지");
+        try {
+            assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->service.transition(admin,store.id(),"suspend",change));
+            assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->service.queue(admin,0));
+            jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')",Map.of("id",owner));
+            assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->service.transition(owner,store.id(),"suspend",change));
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",owner));
+            assertEquals(403,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.transition(owner,store.id(),"suspend",change)).status());
+            assertEquals(store,service.own(owner));
+            assertTrue(service.history(owner,store.id(),false).isEmpty());
+            jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')",Map.of("id",admin));
+            var sequence=new java.util.concurrent.atomic.AtomicInteger();
+            var results=race(()->{
+                try {
+                    if(sequence.getAndIncrement()==0) { service.save(owner,store.id(),input); return "edit"; }
+                    service.transition(admin,store.id(),"suspend",change); return "suspend";
+                } catch(com.example.marketplace.seller.api.StoreException failure) { assertEquals(409,failure.status()); return "conflict"; }
+            });
+            assertEquals(1,results.stream().filter("conflict"::equals).count());
+            assertEquals(1,service.own(owner).version());
+            if(results.contains("edit")) {
+                service.transition(admin,store.id(),"suspend",new com.example.marketplace.seller.api.Stores.Change(1L,"최신 버전 정지"));
+            }
+            var suspended=service.own(owner);
+            assertEquals("SUSPENDED",suspended.state());
+            assertFalse(suspended.visible());
+            var updated=new com.example.marketplace.seller.api.Stores.Input(input.slug(),"덮어쓰기",input.introduction(),input.address(),"","","",true,suspended.version());
+            assertEquals(409,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,store.id(),updated)).status());
+            assertEquals(suspended,service.own(owner));
+            assertFalse(service.capabilities(owner).manageCatalog());
+            assertFalse(service.capabilities(owner).newSales());
+            assertTrue(service.capabilities(owner).existingTrades());
+            service.transition(owner,store.id(),"close",new com.example.marketplace.seller.api.Stores.Change(suspended.version(),"정지 중 폐점"));
+            assertEquals("CLOSED",service.own(owner).state());
+            assertEquals(2,service.history(owner,store.id(),false).size());
+        } finally {
+            for(UUID id:List.of(owner,admin)) {
+                jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",id));
+                jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",id));
+            }
+        }
+    }
+    @Test
+    void storeCloseIsAtomicConcurrentAndKeepsCapabilityBoundary() throws Exception {
+        var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        UUID owner=activeMember("p3c-atomic@example.com"), other=activeMember("p3c-other@example.com");
+        for(UUID id:List.of(owner,other)) { jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",id)); }
+        var input=new com.example.marketplace.seller.api.Stores.Input("atomic-store","모의","소개","가상 주소","","","",true,0L);
+        var store=service.save(owner,null,input);
+        var change=new com.example.marketplace.seller.api.Stores.Change(0L,"😀".repeat(300));
+        assertEquals(404,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.transition(other,store.id(),"close",change)).status());
+        assertEquals(404,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.history(other,store.id(),false)).status());
+        for(String reason:List.of(" ","가".repeat(301))) {
+            assertEquals(400,assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.transition(owner,store.id(),"close",new com.example.marketplace.seller.api.Stores.Change(0L,reason))).status());
+        }
+        assertThrows(IllegalStateException.class,()->service.requireCapability(owner,com.example.marketplace.seller.api.Stores.Capability.NEW_SALES));
+        new TransactionTemplate(transactionManager).executeWithoutResult(status->service.requireCapability(owner,com.example.marketplace.seller.api.Stores.Capability.NEW_SALES));
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.store_operation_event ADD CONSTRAINT p3c_reject_event CHECK (store_id <> '"+store.id()+"'::uuid) NOT VALID");
+        try {
+            assertThrows(DataIntegrityViolationException.class,()->service.transition(owner,store.id(),"close",change));
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.store_operation_event DROP CONSTRAINT p3c_reject_event"); }
+        assertEquals(store,service.own(owner));
+        assertTrue(service.history(owner,store.id(),false).isEmpty());
+        var results=race(()->{ try { service.transition(owner,store.id(),"close",change); return "ok"; }
+            catch(com.example.marketplace.seller.api.StoreException failure) { assertEquals(409,failure.status()); return "conflict"; } });
+        assertEquals(1,results.stream().filter("ok"::equals).count());
+        assertEquals("CLOSED",service.own(owner).state());
+        assertFalse(service.own(owner).visible());
+        assertEquals(1,service.history(owner,store.id(),false).size());
+        assertEquals(change.reason(),service.history(owner,store.id(),false).getFirst().reason());
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,store.id(),input));
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->service.save(owner,null,input));
+        assertFalse(service.capabilities(owner).manageCatalog());
+        assertFalse(service.capabilities(owner).newSales());
+        new TransactionTemplate(transactionManager).executeWithoutResult(status->service.requireCapability(owner,com.example.marketplace.seller.api.Stores.Capability.EXISTING_TRADES));
+        assertThrows(com.example.marketplace.seller.api.StoreException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(status->service.requireCapability(owner,com.example.marketplace.seller.api.Stores.Capability.NEW_SALES)));
+    }
+    @Test
+    void storeLifecycleHttpKeepsBuyingAndRestrictsNewSales() throws Exception {
+        UUID owner=activeMember("p3c-owner@example.com"), admin=activeMember("p3c-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')",Map.of("id",admin));
+        var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        var input=new com.example.marketplace.seller.api.Stores.Input("lifecycle-store","모의 매대","소개","가상 주소","","","",true,0L);
+        var store=service.save(owner,null,input);
+        var buyer=authBrowser(); var operator=authBrowser();
+        assertEquals(200,authRequest(buyer,"/api/auth/login",loginForm("p3c-owner@example.com",SIGNUP_PASSWORD),csrfToken(buyer)).statusCode());
+        assertEquals(200,authRequest(operator,"/api/auth/login",loginForm("p3c-admin@example.com",SIGNUP_PASSWORD),csrfToken(operator)).statusCode());
+        String path="/api/admin/accounts/stores/"+store.id();
+        try {
+            assertEquals(403,accountRequest(buyer,"POST",path+"/suspend",Map.of("version",0,"reason","모의 정지"),csrfToken(buyer)).statusCode());
+            assertEquals(403,accountRequest(operator,"POST",path+"/suspend",Map.of("version",0,"reason","모의 정지"),null).statusCode());
+            assertEquals(200,accountRequest(operator,"POST",path+"/suspend",Map.of("version",0,"reason","모의 정지"),csrfToken(operator)).statusCode());
+            assertEquals(404,accountRequest(HttpClient.newHttpClient(),"GET","/api/stores/lifecycle-store",null,null).statusCode());
+            assertEquals(200,accountRequest(buyer,"GET","/api/account/profile",null,null).statusCode());
+            assertEquals(200,accountRequest(buyer,"GET","/api/seller/stores",null,null).statusCode());
+            var capabilities=authMapper.readTree(accountRequest(buyer,"GET","/api/seller/capabilities",null,null).body());
+            assertFalse(capabilities.get("manageCatalog").asBoolean());
+            assertFalse(capabilities.get("newSales").asBoolean());
+            assertTrue(capabilities.get("existingTrades").asBoolean());
+            assertEquals(200,accountRequest(operator,"POST",path+"/restore",Map.of("version",1,"reason","모의 복구"),csrfToken(operator)).statusCode());
+            assertEquals(404,accountRequest(HttpClient.newHttpClient(),"GET","/api/stores/lifecycle-store",null,null).statusCode());
+            assertEquals(200,accountRequest(buyer,"POST","/api/seller/stores/"+store.id()+"/close",Map.of("version",2,"reason","모의 폐점"),csrfToken(buyer)).statusCode());
+            assertEquals(409,accountRequest(operator,"POST",path+"/restore",Map.of("version",3,"reason","재개 불가"),csrfToken(operator)).statusCode());
+            assertEquals(200,accountRequest(buyer,"GET","/api/account/profile",null,null).statusCode());
+            assertEquals(3,jdbc.queryForObject("SELECT count(*) FROM marketplace.store_operation_event WHERE store_id=:id",Map.of("id",store.id()),Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
     void storeInputLimitsAndInvalidUpdatesLeaveSavedValuesUnchanged() {
         var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
         UUID owner=activeMember("p3b-limits@example.com");
@@ -927,6 +1047,9 @@ class PostgresJdbcIT {
             jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", admin));
             jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')", Map.of("id", admin));
             cMembers.add(seller); cMembers.add(admin);
+            UUID lifecycleSeller=activeMember("p3c-seller-"+project+"@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",lifecycleSeller));
+            cMembers.add(lifecycleSeller);
             UUID reviewer = activeMember("p3-admin-" + project + "@example.com");
             jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", reviewer));
             jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", reviewer));

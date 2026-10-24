@@ -3,16 +3,18 @@ import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import type { AuthStore } from '../auth/AuthStore'
 
 export type StoreFields = { slug: string; name: string; introduction: string; address: string; notice: string; imageKey: string; imageAlt: string }
-export type ManagedStore = StoreFields & { id: string; visible: boolean; version: number }
+export type ManagedStore = StoreFields & { id: string; visible: boolean; version: number; state: 'OPEN' | 'SUSPENDED' | 'CLOSED' }
+export const storeStates = { OPEN: '운영 중', SUSPENDED: '판매 정지', CLOSED: '폐점' }
 const object = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
 export function publicStore(v: unknown): v is StoreFields {
   return object(v) && typeof v.slug === 'string' && /^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$/.test(v.slug)
     && Object.entries({ name: 80, introduction: 1000, address: 200, notice: 1000, imageKey: 100, imageAlt: 120 }).every(([key, max]) => typeof v[key] === 'string' && [...v[key]].length <= max)
     && Boolean(v.name && v.introduction && v.address)
 }
-function managed(v: unknown): v is ManagedStore {
+export function managed(v: unknown): v is ManagedStore {
   return object(v) && typeof v.id === 'string' && /^[0-9a-f-]{36}$/i.test(v.id)
     && typeof v.visible === 'boolean' && Number.isSafeInteger(v.version) && Number(v.version) >= 0
+    && ['OPEN', 'SUSPENDED', 'CLOSED'].includes(String(v.state))
     && publicStore(v)
 }
 type State = { store: ManagedStore | null | undefined; busy: boolean; error: ApiErrorView | null; notice: string }
@@ -63,5 +65,19 @@ export class StoreEditorStore {
     if (generation !== this.generation) return
     if (result.kind !== 'success' || result.status !== (existing ? 200 : 201) || !managed(result.data)) { this.fail(result); return }
     this.set({ ...empty, store: result.data, notice: '매대 정보를 저장했습니다.' })
+  }
+  close = async (reason: string) => {
+    const current = this.state.store
+    if (!this.auth.getSnapshot().member || this.state.busy || !current) return
+    const generation = this.begin()
+    const csrf = await this.request('/api/auth/csrf')
+    if (generation !== this.generation) return
+    if (csrf.kind !== 'success' || !object(csrf.data) || csrf.data.headerName !== 'X-CSRF-TOKEN' || typeof csrf.data.token !== 'string' || !csrf.data.token) { this.fail(csrf); return }
+    const result = await this.request('/api/seller/stores/' + current.id + '/close', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf.data.token }, body: JSON.stringify({ version: current.version, reason }),
+    })
+    if (generation !== this.generation) return
+    if (result.kind !== 'success' || result.status !== 200 || !managed(result.data)) { this.fail(result); return }
+    this.set({ ...empty, store: result.data, notice: '매대를 폐점했습니다.' })
   }
 }

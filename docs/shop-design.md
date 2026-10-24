@@ -1,6 +1,6 @@
 # 마켓플레이스 전체 기술 설계
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 회원 기반·JDBC 인증에 이어 [P02-C](work-items/P02-C.md)의 역할·운영 권한·초기 설정과 독립 검증을 완료했다. P02 전체 점검에 이어 [P03-A](work-items/P03-A.md)의 모의 판매 신청·심사·이력을 구현했다. seller는 identity.api로 회원 잠금·SELLER 부여를 요청하며 승인 거래에 상태·역할·이력을 함께 저장한다. [P03-B](work-items/P03-B.md)에서 본인 매대 생성·수정·공개 여부와 공개 조회를 구현했다. slug는 고유·불변이고 version으로 수정 충돌을 거부한다. P03-C 폐점·판매 정지 이후는 미착수다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 회원 기반·JDBC 인증에 이어 [P02-C](work-items/P02-C.md)의 역할·운영 권한·초기 설정과 독립 검증을 완료했다. P02 전체 점검에 이어 [P03-A](work-items/P03-A.md)의 모의 판매 신청·심사·이력을 구현했다. seller는 identity.api로 회원 잠금·SELLER 부여를 요청하며 승인 거래에 상태·역할·이력을 함께 저장한다. [P03-B](work-items/P03-B.md)에서 본인 매대 생성·수정·공개 여부와 공개 조회를 구현했다. slug는 고유·불변이고 version으로 수정 충돌을 거부한다. [P03-C](work-items/P03-C.md)에서 매대 OPEN/SUSPENDED/CLOSED와 상태·비공개·버전·감사 이력의 원자적 변경을 구현했다. 복구 후에도 비공개이고 폐점은 복구/재개설하지 않는다. 역할·세션과 구매자 기능은 유지하며 실제 상품/거래는 후속 단계다. [독립 검토](work-items/P03-C-review.md)를 완료했으며 다음 단계는 미착수다.
 
 개정일: 2026-10-21 / 설계 v4 Java·Spring Boot + React / 구현 기준 설계; 현재 상태는 P01 종합 점검 참조
 

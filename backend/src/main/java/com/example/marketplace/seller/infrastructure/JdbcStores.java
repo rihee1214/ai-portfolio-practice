@@ -26,6 +26,57 @@ public final class JdbcStores implements Stores {
         var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE owner_id=:owner",Map.of("owner",owner),this::map);
         return rows.isEmpty()?null:rows.getFirst();
     }
+    @Override public Page queue(UUID operator,int page) {
+        access.require(operator,AccessArea.ACCOUNTS);
+        if(page<0 || page>10000) { throw new StoreException(400); }
+        var rows=jdbc.query("SELECT * FROM marketplace.seller_store ORDER BY id LIMIT 21 OFFSET :offset",Map.of("offset",page*20),this::map);
+        return new Page(rows.stream().limit(20).toList(),page,rows.size()>20);
+    }
+    @Override public Store transition(UUID actor,UUID id,String action,Change change) {
+        boolean closing="close".equals(action);
+        access.require(actor,closing?AccessArea.SELLER:AccessArea.ACCOUNTS);
+        if(!closing && !"suspend".equals(action) && !"restore".equals(action)) { throw new StoreException(400); }
+        if(change==null || change.version()==null || change.version()<0 || change.version()>9007199254740990L) { throw new StoreException(400); }
+        String reason=text(change.reason(),300,true);
+        return tx.execute(status -> {
+            var owners=jdbc.queryForList("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),UUID.class);
+            if(owners.isEmpty()) { throw new StoreException(404); }
+            UUID owner=owners.getFirst();
+            if(closing && !owner.equals(actor)) { throw new StoreException(404); }
+            if(!closing && owner.equals(actor)) { throw new StoreException(403); }
+            if(!members.lockActiveBuyer(owner)) { throw new StoreException(409); }
+            var current=jdbc.queryForObject("SELECT * FROM marketplace.seller_store WHERE id=:id FOR UPDATE",Map.of("id",id),this::map);
+            access.require(actor,closing?AccessArea.SELLER:AccessArea.ACCOUNTS);
+            if(current.version()!=change.version() || "CLOSED".equals(current.state())) { throw new StoreException(409); }
+            String next=closing?"CLOSED":"suspend".equals(action)?"SUSPENDED":"OPEN";
+            if(!closing && !("suspend".equals(action)?"OPEN":"SUSPENDED").equals(current.state())) { throw new StoreException(409); }
+            jdbc.update("UPDATE marketplace.seller_store SET state=:state,visible=false,version=version+1 WHERE id=:id",Map.of("state",next,"id",id));
+            jdbc.update("INSERT INTO marketplace.store_operation_event(id,store_id,actor_id,action,before_state,after_state,reason) VALUES(:event,:store,:actor,:action,:before,:after,:reason)",
+                    Map.of("event",UUID.randomUUID(),"store",id,"actor",actor,"action",action,"before",current.state(),"after",next,"reason",reason));
+            return jdbc.queryForObject("SELECT * FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),this::map);
+        });
+    }
+    @Override public java.util.List<Event> history(UUID actor,UUID id,boolean administrator) {
+        access.require(actor,administrator?AccessArea.ACCOUNTS:AccessArea.SELLER);
+        var owners=jdbc.queryForList("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),UUID.class);
+        if(owners.isEmpty() || !administrator&&!owners.getFirst().equals(actor)) { throw new StoreException(404); }
+        return jdbc.query("SELECT * FROM marketplace.store_operation_event WHERE store_id=:id ORDER BY occurred_at DESC,id DESC LIMIT 20",Map.of("id",id),
+                (row,index)->new Event(row.getObject("actor_id",UUID.class),row.getString("action"),row.getString("before_state"),row.getString("after_state"),row.getString("reason"),row.getTimestamp("occurred_at").toInstant()));
+    }
+    private Capabilities allowed(Store store) {
+        boolean open=store!=null&&"OPEN".equals(store.state());
+        return new Capabilities(open,open&&store.visible(),store!=null);
+    }
+    @Override public Capabilities capabilities(UUID owner) { return allowed(own(owner)); }
+    @Override public void requireCapability(UUID owner,Capability capability) {
+        if(!org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
+        if(!members.lockActiveBuyer(owner)) { throw new StoreException(403); }
+        var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE owner_id=:owner FOR UPDATE",Map.of("owner",owner),this::map);
+        var flags=allowed(rows.isEmpty()?null:rows.getFirst());
+        if(capability==null) { throw new StoreException(400); }
+        boolean permitted=switch(capability) { case MANAGE_CATALOG -> flags.manageCatalog(); case NEW_SALES -> flags.newSales(); case EXISTING_TRADES -> flags.existingTrades(); };
+        if(!permitted) { throw new StoreException(409); }
+    }
     @Override public Store save(UUID owner, UUID id, Input input) {
         access.require(owner, AccessArea.SELLER);
         if(input==null || input.visible()==null || input.version()==null || input.version()<0 || input.version()>9007199254740990L) { throw new StoreException(400); }
@@ -48,6 +99,7 @@ public final class JdbcStores implements Stores {
                     p.addValue("id",id);
                     var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE id=:id AND owner_id=:owner FOR UPDATE",p,this::map);
                     if(rows.isEmpty()) { throw new StoreException(404); }
+                    if(!"OPEN".equals(rows.getFirst().state())) { throw new StoreException(409); }
                     if(!rows.getFirst().slug().equals(slug) || rows.getFirst().version()!=input.version()) { throw new StoreException(409); }
                     jdbc.update("UPDATE marketplace.seller_store SET name=:name,introduction=:intro,address=:address,notice=:notice,image_key=:image,image_alt=:alt,visible=:visible,version=version+1 WHERE id=:id AND owner_id=:owner",p);
                 }
@@ -57,14 +109,14 @@ public final class JdbcStores implements Stores {
     }
     @Override public PublicStore published(String slug) {
         if(slug==null || !slug.matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { throw new StoreException(404); }
-        return jdbc.query("SELECT * FROM marketplace.seller_store WHERE slug=:slug AND visible=true",Map.of("slug",slug),row -> {
+        return jdbc.query("SELECT * FROM marketplace.seller_store WHERE slug=:slug AND visible=true AND state='OPEN'",Map.of("slug",slug),row -> {
             if(!row.next() || !access.allowed(row.getObject("owner_id",UUID.class),AccessArea.SELLER)) { throw new StoreException(404); }
             Store s=map(row,0);
             return new PublicStore(s.slug(),s.name(),s.introduction(),s.address(),s.notice(),s.imageKey(),s.imageAlt());
         });
     }
     private Store map(java.sql.ResultSet row,int index) throws java.sql.SQLException {
-        return new Store(row.getObject("id",UUID.class),row.getString("slug"),row.getString("name"),row.getString("introduction"),row.getString("address"),row.getString("notice"),row.getString("image_key"),row.getString("image_alt"),row.getBoolean("visible"),row.getLong("version"));
+        return new Store(row.getObject("id",UUID.class),row.getString("slug"),row.getString("name"),row.getString("introduction"),row.getString("address"),row.getString("notice"),row.getString("image_key"),row.getString("image_alt"),row.getBoolean("visible"),row.getLong("version"),row.getString("state"));
     }
     private String text(String value,int limit,boolean required) {
         if(value==null) { throw new StoreException(400); }

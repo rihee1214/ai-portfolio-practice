@@ -1,6 +1,6 @@
 # AI 개발 연습용 마켓플레이스
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](docs/work-items/P01-completion-audit.md)을 기준으로 한다. [P02 전체 완료 점검](docs/work-items/P02-completion-audit.md)의 R1을 실제 재현·수정·독립 검증해 **P02 계획 범위의 구현·검증을 완료**했다. [P03-A](docs/work-items/P03-A.md)의 모의 판매 신청·심사·이력과 승인 시 판매자 자격 추가를 구현했다. 독립 검토 결과는 [검토 기록](docs/work-items/P03-A-review.md)을 따른다. [P03-B](docs/work-items/P03-B.md)의 매대 기본 관리·공개 조회를 구현·검증하고 독립 검토를 완료했다. P03-C는 미착수다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](docs/work-items/P01-completion-audit.md)을 기준으로 한다. [P02 전체 완료 점검](docs/work-items/P02-completion-audit.md)의 R1을 실제 재현·수정·독립 검증해 **P02 계획 범위의 구현·검증을 완료**했다. [P03-A](docs/work-items/P03-A.md)의 모의 판매 신청·심사·이력과 승인 시 판매자 자격 추가를 구현했다. 독립 검토 결과는 [검토 기록](docs/work-items/P03-A-review.md)을 따른다. [P03-B](docs/work-items/P03-B.md)의 매대 기본 관리·공개 조회를 구현·검증하고 독립 검토를 완료했다. [P03-C](docs/work-items/P03-C.md)의 판매 정지·복구·폐점과 기능별 제한을 구현·검증했다. 지정 [검토 세션의 독립 검증](docs/work-items/P03-C-review.md)까지 완료했다. 다음 단계는 진행하지 않는다.
 
 익숙한 Java·Spring 경험을 활용하고 React를 배우면서 AI와 함께 유지보수 가능한 CRUD 마켓플레이스를 만드는 포트폴리오 프로젝트다. 개발자가 생성된 코드의 흐름을 이해하고 직접 수정·검증하며, 구매·판매·사이트 운영 기능을 완성한 뒤 재현한 문제를 근거로 MSA로 발전시킨다.
 

@@ -25,7 +25,7 @@ test('매대 생성은 CSRF와 버전0, 수정은 읽은 버전을 보내고 충
   const fetcher = vi.fn(async (path: string, init: RequestInit) => {
     if (path === '/api/auth/me') return json({ id, roles: ['BUYER', 'SELLER'] })
     if (path === '/api/auth/csrf') return json({ token: 'csrf', headerName: 'X-CSRF-TOKEN' })
-    if (init.method === 'POST') return json({ ...fields, id, version: 0 }, 201)
+    if (init.method === 'POST') return json({ ...fields, id, version: 0, state: 'OPEN' }, 201)
     if (init.method === 'PUT') return json({ code: 'CONFLICT', message: 'conflict', requestId: id }, 409)
     return json({ store: null })
   })
@@ -51,7 +51,7 @@ test('세션 변경 후 늦게 도착한 유효한 매대 정보는 복원되지
   const store = new StoreEditorStore(auth); const disconnect = store.connect()
   await waitFor(() => expect(release).toBeDefined())
   auth.stop()
-  release(json({ store: { ...fields, id, version: 0 } }))
+  release(json({ store: { ...fields, id, version: 0, state: 'OPEN' } }))
   await new Promise(resolve => setTimeout(resolve, 0))
   expect(store.getSnapshot().store).toBeUndefined()
   disconnect()

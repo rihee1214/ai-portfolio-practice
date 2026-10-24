@@ -127,7 +127,7 @@ public final class JdbcContract {
         var flyway = Flyway.configure().dataSource(source).defaultSchema("marketplace").schemas("marketplace")
                 .locations("classpath:db/migration", "classpath:db/c3fixture")
                 .cleanDisabled(true).baselineOnMigrate(false).load();
-        check("production V1/V3/V4/V5/V6/V7/V8/V9 plus test-only V2 migrate", flyway.migrate().migrationsExecuted == 9);
+        check("production V1/V3/V4/V5/V6/V7/V8/V9/V10 plus test-only V2 migrate", flyway.migrate().migrationsExecuted == 10);
         check("migration repeat has no pending changes", flyway.migrate().migrationsExecuted == 0);
         try (var context = new AnnotationConfigApplicationContext()) {
             context.getEnvironment().setActiveProfiles("c3-fixture");

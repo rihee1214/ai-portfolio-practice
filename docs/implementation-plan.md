@@ -1,6 +1,6 @@
 # 단계별 구현·검증 계획
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 단계별 과거 결과와 이번 재검증을 구분한다. [P02-A3 작업 기록](work-items/P02-A3.md)의 화면·API·세션 연결과 검증을 완료했다. [P02-B 작업 기록](work-items/P02-B.md)의 복구·프로필·배송지 구현·개발 검증·독립 검토를 완료했다. [P02-C](work-items/P02-C.md)의 역할·운영 권한·최초 운영자 설정을 구현·검증·독립 검토했다. [P02-D](work-items/P02-D.md)의 정지·복구·탈퇴·세션 폐기와 독립 검증을 완료했다. 이후 [P02 전체 점검](work-items/P02-completion-audit.md)의 R1을 실제 재현·수정·독립 검증해 P02 계획 범위 완료로 갱신했다. 운영 준비 제한은 별도이며 [P03-A](work-items/P03-A.md)의 판매 신청·심사·이력을 구현했다. [독립 검토](work-items/P03-A-review.md)와 실행 증거는 해당 기록을 따른다. [P03-B](work-items/P03-B.md)의 매대 기본 관리·공개 조회를 구현·검증하고 독립 검토를 완료했다. P03-C는 미착수다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. 단계별 과거 결과와 이번 재검증을 구분한다. [P02-A3 작업 기록](work-items/P02-A3.md)의 화면·API·세션 연결과 검증을 완료했다. [P02-B 작업 기록](work-items/P02-B.md)의 복구·프로필·배송지 구현·개발 검증·독립 검토를 완료했다. [P02-C](work-items/P02-C.md)의 역할·운영 권한·최초 운영자 설정을 구현·검증·독립 검토했다. [P02-D](work-items/P02-D.md)의 정지·복구·탈퇴·세션 폐기와 독립 검증을 완료했다. 이후 [P02 전체 점검](work-items/P02-completion-audit.md)의 R1을 실제 재현·수정·독립 검증해 P02 계획 범위 완료로 갱신했다. 운영 준비 제한은 별도이며 [P03-A](work-items/P03-A.md)의 판매 신청·심사·이력을 구현했다. [독립 검토](work-items/P03-A-review.md)와 실행 증거는 해당 기록을 따른다. [P03-B](work-items/P03-B.md)의 매대 기본 관리·공개 조회를 구현·검증하고 독립 검토를 완료했다. [P03-C](work-items/P03-C.md)의 판매 정지·복구·폐점과 기능별 제한을 구현·검증했다. [독립 검토](work-items/P03-C-review.md)의 필수 수정 잔여 없이 P03-C 계획 범위를 완료했다. 다음 단계는 진행하지 않는다.
 
 설계 v4 Java·Spring Boot + React / 상태 점검 2026-10-24
 
