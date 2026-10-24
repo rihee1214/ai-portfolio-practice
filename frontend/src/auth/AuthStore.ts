@@ -3,7 +3,7 @@ import { apiErrorView, type ApiErrorView } from '../api/apiError'
 
 export type Member = { id: string; roles: string[] }
 export type AuthState = { member: Member | null; busy: boolean; checked: boolean; error: ApiErrorView | null; notice: string }
-type Action = 'signup' | 'verify-email' | 'login' | 'logout'
+type Action = 'signup' | 'verify-email' | 'login' | 'logout' | 'password/request' | 'password/reset'
 const initial: AuthState = { member: null, busy: false, checked: false, error: null, notice: '' }
 const failure = { message: '응답을 확인하지 못했습니다. 상태를 다시 확인해 주세요.' }
 function object(value: unknown): value is Record<string, unknown> {
@@ -32,6 +32,10 @@ export class AuthStore {
     return ++this.generation
   }
   stop = () => { this.generation++; this.controller.abort(); this.set(initial) }
+  rejectSession = (error: ApiErrorView) => {
+    this.stop()
+    this.set({ ...initial, checked: true, error })
+  }
   private request(path: string, init: RequestInit = {}) {
     return requestJson('/api/auth/' + path, { ...init, cache: 'no-store', credentials: 'same-origin',
       signal: AbortSignal.any([this.controller.signal, AbortSignal.timeout(10000)]) })
@@ -72,8 +76,9 @@ export class AuthStore {
       body: form ? new URLSearchParams(fields).toString() : JSON.stringify(fields) })
     if (generation !== this.generation) return false
     const expected = { signup: 'EMAIL_VERIFICATION_REQUIRED', 'verify-email': 'EMAIL_VERIFIED',
-      login: 'AUTHENTICATED', logout: 'LOGGED_OUT' }[action]
-    if (result.kind !== 'success' || !object(result.data) || result.data.status !== expected) {
+      login: 'AUTHENTICATED', logout: 'LOGGED_OUT', 'password/request': 'PASSWORD_RESET_REQUESTED', 'password/reset': 'PASSWORD_RESET' }[action]
+    if (result.kind !== 'success' || !object(result.data) || result.data.status !== expected
+      || (action === 'password/request' && result.status !== 202) || (action === 'password/reset' && result.status !== 200)) {
       const error = this.error(result)
       if (action === 'login' && result.kind === 'http' && result.status === 401) error.message = '이메일·비밀번호와 이메일 확인 여부를 확인해 주세요.'
       this.set({ ...initial, checked: true, error })
@@ -101,7 +106,15 @@ export class AuthStore {
         error: valid ? null : this.error(me), notice: valid && action === 'logout' ? '로그아웃했습니다.' : '' })
       return valid
     }
-    this.set({ ...initial, checked: true, notice: action === 'signup'
+    if (action === 'password/reset' && typeof BroadcastChannel !== 'undefined') {
+      const channel = new BroadcastChannel('marketplace-auth')
+      channel.postMessage({ source: this.source })
+      channel.close()
+    }
+    this.set({ ...initial, checked: true, notice: action === 'password/request'
+      ? '복구 요청을 접수했습니다. 재설정 가능한 계정이면 로컬 테스트 메일함에서 복구 코드를 확인할 수 있습니다.'
+      : action === 'password/reset' ? '비밀번호를 변경했습니다. 새 비밀번호로 로그인해 주세요.'
+      : action === 'signup'
       ? '가입 신청이 완료되었습니다. 로컬 테스트 메일함의 확인 코드를 입력해 주세요.'
       : '이메일 확인을 완료했습니다. 로그인할 수 있습니다.' })
     return true

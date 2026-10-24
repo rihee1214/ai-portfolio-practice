@@ -13,7 +13,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 final class AttemptLimitFilter extends OncePerRequestFilter {
     private final AttemptWindow attempts = new AttemptWindow(Clock.systemUTC());
-    private static final Set<String> PATHS = Set.of("/api/auth/login", "/api/auth/signup", "/api/auth/verify-email");
+    private static final Set<String> PATHS = Set.of("/api/auth/login", "/api/auth/signup", "/api/auth/verify-email",
+            "/api/auth/password/request", "/api/auth/password/reset");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

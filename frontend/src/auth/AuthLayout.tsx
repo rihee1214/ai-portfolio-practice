@@ -30,7 +30,8 @@ export default function AuthLayout() {
   }, [store])
   return <AuthContext value={store}><section className="auth-shell">
     <nav aria-label="회원 메뉴"><Link to="/login">로그인</Link><Link to="/signup">회원가입</Link>
-      <Link to="/verify-email">이메일 확인</Link><Link to="/account">내 계정</Link></nav>
+      <Link to="/verify-email">이메일 확인</Link><Link to="/account">내 계정</Link>
+      <Link to="/account/profile">프로필</Link><Link to="/account/addresses">배송지</Link></nav>
     <Outlet />
   </section></AuthContext>
 }

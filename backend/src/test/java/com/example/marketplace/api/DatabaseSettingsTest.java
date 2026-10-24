@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.core.env.MapPropertySource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(OutputCaptureExtension.class)
@@ -35,6 +37,26 @@ class DatabaseSettingsTest {
                         "spring.autoconfigure.exclude=org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration,"
                             + "org.springframework.boot.flyway.autoconfigure.FlywayAutoConfiguration",
                         "spring.flyway.enabled=false", "spring.sql.init.mode=never")
+                // Settings-only context: satisfy account wiring without creating a DataSource or connecting.
+                .withBean(NamedParameterJdbcTemplate.class, () -> new NamedParameterJdbcTemplate(
+                        new org.springframework.jdbc.datasource.AbstractDataSource() {
+                            @Override public java.sql.Connection getConnection() { throw new AssertionError("Settings test must not connect"); }
+                            @Override public java.sql.Connection getConnection(String username, String password) {
+                                throw new AssertionError("Settings test must not connect");
+                            }
+                        }))
+                .withBean(PlatformTransactionManager.class, () -> new PlatformTransactionManager() {
+                    @Override public org.springframework.transaction.TransactionStatus getTransaction(
+                            org.springframework.transaction.TransactionDefinition definition) {
+                        throw new AssertionError("Settings test must not start a transaction");
+                    }
+                    @Override public void commit(org.springframework.transaction.TransactionStatus status) {
+                        throw new AssertionError("Settings test must not commit");
+                    }
+                    @Override public void rollback(org.springframework.transaction.TransactionStatus status) {
+                        throw new AssertionError("Settings test must not roll back");
+                    }
+                })
                 .withUserConfiguration(MarketplaceApplication.class);
     }
 
@@ -74,14 +96,20 @@ class DatabaseSettingsTest {
 
     @Test
     void validEnvironmentSettingsPassWithoutConnectingToDatabase() {
-        valid("db").run(context -> assertThat(context).hasNotFailed());
+        valid("db").run(context -> {
+            assertThat(context).hasNotFailed();
+            assertThat(context).doesNotHaveBean(javax.sql.DataSource.class);
+        });
     }
 
     @Test
     void explicitDatasourcePropertiesOverrideMissingEnvironmentVariables() {
         runner("db").withPropertyValues("spring.datasource.url=jdbc:postgresql://invalid.test/direct",
                 "spring.datasource.username=direct-user", "spring.datasource.password=direct-secret")
-                .run(context -> assertThat(context).hasNotFailed());
+                .run(context -> {
+                    assertThat(context).hasNotFailed();
+                    assertThat(context).doesNotHaveBean(javax.sql.DataSource.class);
+                });
     }
 
     @Test

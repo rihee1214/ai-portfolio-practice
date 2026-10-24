@@ -74,7 +74,8 @@ public class AuthConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
-                                "/api/auth/signup", "/api/auth/verify-email").permitAll()
+                                "/api/auth/signup", "/api/auth/verify-email",
+                                "/api/auth/password/request", "/api/auth/password/reset").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) -> AuthJson.error(request, response, 401))

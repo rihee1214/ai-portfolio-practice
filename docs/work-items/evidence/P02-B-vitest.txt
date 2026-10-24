@@ -1,0 +1,12 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+
+ Test Files  7 passed (7)
+      Tests  61 passed (61)
+   Start at  15:34:36
+   Duration  4.98s (environment 58%, tests 28%, setup 10%, import 4%, transform 1%)

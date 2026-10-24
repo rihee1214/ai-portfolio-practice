@@ -2,6 +2,13 @@ package com.example.marketplace.dbtest;
 
 import com.example.marketplace.MarketplaceApplication;
 import com.example.marketplace.identity.api.SignupOperations;
+import com.example.marketplace.identity.api.AccountOperations;
+import com.example.marketplace.identity.api.AccountOperations.AddressInput;
+import com.example.marketplace.identity.api.AccountException;
+import com.example.marketplace.identity.api.PasswordRecoveryOperations;
+import com.example.marketplace.identity.application.PasswordRecoveryService;
+import com.example.marketplace.identity.infrastructure.JdbcPasswordRecoveryStore;
+import com.example.marketplace.identity.infrastructure.LocalPasswordResetMailbox;
 import com.example.marketplace.identity.api.SignupException;
 import com.example.marketplace.identity.application.SignupService;
 import com.example.marketplace.identity.application.TokenSecrets;
@@ -76,6 +83,313 @@ import static org.assertj.core.api.Assertions.assertThat;
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
 
+    private String resetMail(String email) {
+        return resetMailbox.messages().stream().filter(item -> item.recipient().equals(email))
+                .reduce((first, second) -> second).orElseThrow().token();
+    }
+
+    private HttpResponse<String> accountRequest(HttpClient browser, String method, String path, Object body, String csrf) throws Exception {
+        var request = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
+                .header("Content-Type", "application/json")
+                .method(method, body == null ? HttpRequest.BodyPublishers.noBody()
+                        : HttpRequest.BodyPublishers.ofString(authMapper.writeValueAsString(body)));
+        if (csrf != null) { request.header("X-CSRF-TOKEN", csrf); }
+        return browser.send(request.build(), HttpResponse.BodyHandlers.ofString());
+    }
+
+    @Test
+    void accountHttpOwnerCsrfValidationAndPrivacyBoundaries() throws Exception {
+        String email = "account-http-b@example.com";
+        UUID member = activeMember(email);
+        UUID other = activeMember("account-http-other-b@example.com");
+        var foreign = accountOperations.saveAddress(other, null, addressInput(false));
+        var browser = authBrowser();
+        for (String path : List.of("/api/account/profile", "/api/account/addresses")) {
+            assertEquals(401, accountRequest(browser, "GET", path, null, null).statusCode());
+        }
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        String csrf = csrfToken(browser);
+        var profileBody = Map.of("displayName", "사용자", "phone", "010-9876-5432", "email", "forged@example.com");
+        assertEquals(403, accountRequest(browser, "PUT", "/api/account/profile", profileBody, null).statusCode());
+        assertEquals("", accountOperations.profile(member).displayName());
+        var profile = accountRequest(browser, "PUT", "/api/account/profile", profileBody, csrf);
+        assertEquals(200, profile.statusCode());
+        assertEquals(email, authMapper.readTree(profile.body()).get("email").asText());
+        assertTrue(profile.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+        assertEquals(400, accountRequest(browser, "PUT", "/api/account/profile", Map.of("displayName", " "), csrf).statusCode());
+        assertEquals(403, accountRequest(browser, "POST", "/api/account/addresses", addressInput(false), null).statusCode());
+        assertTrue(accountOperations.addresses(member).isEmpty());
+        var created = accountRequest(browser, "POST", "/api/account/addresses", addressInput(false), csrf);
+        assertEquals(201, created.statusCode());
+        String id = authMapper.readTree(created.body()).get("id").asText();
+        assertTrue(authMapper.readTree(created.body()).get("isDefault").asBoolean());
+        assertEquals(403, accountRequest(browser, "PUT", "/api/account/addresses/" + id, addressInput(true), null).statusCode());
+        assertEquals(403, accountRequest(browser, "DELETE", "/api/account/addresses/" + id, null, null).statusCode());
+        assertEquals(1, accountOperations.addresses(member).size());
+        assertEquals(404, accountRequest(browser, "PUT", "/api/account/addresses/" + foreign.id(), addressInput(true), csrf).statusCode());
+        assertEquals(404, accountRequest(browser, "DELETE", "/api/account/addresses/" + foreign.id(), null, csrf).statusCode());
+        assertEquals(400, accountRequest(browser, "POST", "/api/account/addresses", Map.of("label", "bad"), csrf).statusCode());
+        assertEquals(200, accountRequest(browser, "PUT", "/api/account/addresses/" + id, addressInput(false), csrf).statusCode());
+        var listing = accountRequest(browser, "GET", "/api/account/addresses", null, null);
+        assertEquals(1, authMapper.readTree(listing.body()).get("addresses").size());
+        assertTrue(listing.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+        assertEquals(200, accountRequest(browser, "DELETE", "/api/account/addresses/" + id, null, csrf).statusCode());
+        assertTrue(accountOperations.addresses(member).isEmpty());
+        assertEquals(1, accountOperations.addresses(other).size());
+    }
+
+    private AddressInput addressInput(boolean isDefault) {
+        return new AddressInput("집", "구매자", "010-1234-5678", "01234", "서울 주소", "101호", isDefault);
+    }
+
+    @Test
+    void recoveryFailureAfterSessionDeleteRollsBackAllState() throws Exception {
+        String email = "recover-atomic-b@example.com";
+        UUID member = activeMember(email);
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        recovery.request(email);
+        String token = resetMail(email);
+        var delegate = new JdbcPasswordRecoveryStore(jdbc);
+        var failingStore = new com.example.marketplace.identity.domain.PasswordRecoveryStore() {
+            @Override public UUID lockEligibleMember(String value) { return delegate.lockEligibleMember(value); }
+            @Override public void replaceToken(UUID id, String hash, Instant created, Instant expires) {
+                delegate.replaceToken(id, hash, created, expires);
+            }
+            @Override public boolean consume(String hash, String passwordHash, java.util.function.Supplier<Instant> currentTime) {
+                assertTrue(delegate.consume(hash, passwordHash, currentTime));
+                throw new IllegalStateException("injected-after-session-delete");
+            }
+        };
+        var failing = new PasswordRecoveryService(failingStore, passwordHasher, resetMailbox, Clock.systemUTC(), transactionManager);
+        assertThrows(IllegalStateException.class, () -> failing.reset(token, "atomic-new-password"));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.password_reset_token WHERE user_id=:id",
+                Map.of("id", member), java.sql.Timestamp.class));
+        assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", Map.of("id", member), Long.class));
+        String hash = jdbc.queryForObject("SELECT password_hash FROM marketplace.user_credential WHERE user_id=:id", Map.of("id", member), String.class);
+        assertTrue(passwordHasher.matches(SIGNUP_PASSWORD, hash));
+        assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        recovery.reset(token, "atomic-new-password");
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+    }
+
+    @Test
+    void recoveryConcurrentIssueAndConsumeLeavesOnlyReplacementValid() throws Exception {
+        String email = "recover-reissue-b@example.com";
+        activeMember(email);
+        recovery.request(email);
+        String old = resetMail(email);
+        var issuer = new AtomicBoolean();
+        race(() -> {
+            if (issuer.compareAndSet(false, true)) { recovery.request(email); return "issued"; }
+            try { recovery.reset(old, "concurrent-new-password"); return "consumed"; }
+            catch (SignupException expected) { return expected.getMessage(); }
+        });
+        String replacement = resetMail(email);
+        assertThrows(SignupException.class, () -> recovery.reset(old, SIGNUP_PASSWORD));
+        recovery.reset(replacement, SIGNUP_PASSWORD);
+    }
+
+    @Test
+    void recoveryRechecksExpiryAfterWaitingForMemberLock() throws Exception {
+        String email = "recover-lock-expiry-b@example.com";
+        UUID member = activeMember(email);
+        Instant issuedAt = Instant.parse("2030-01-01T00:00:00Z");
+        recoveryAt(issuedAt, resetMailbox).request(email);
+        String token = resetMail(email);
+        var current = new java.util.concurrent.atomic.AtomicReference<>(issuedAt.plusSeconds(1799));
+        Clock moving = new Clock() {
+            @Override public java.time.ZoneId getZone() { return ZoneOffset.UTC; }
+            @Override public Clock withZone(java.time.ZoneId zone) { return this; }
+            @Override public Instant instant() { return current.get(); }
+        };
+        var service = new PasswordRecoveryService(new JdbcPasswordRecoveryStore(jdbc), passwordHasher,
+                resetMailbox, moving, transactionManager);
+        try (var pool = Executors.newSingleThreadExecutor()) {
+            java.util.concurrent.Future<String> reset;
+            try (var blocker = source.getConnection()) {
+                blocker.setAutoCommit(false);
+                try (var statement = blocker.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) {
+                    statement.setObject(1, member);
+                    try (var rows = statement.executeQuery()) { assertTrue(rows.next()); }
+                }
+                reset = pool.submit(() -> {
+                    try { service.reset(token, "expired-while-waiting"); return "ok"; }
+                    catch (SignupException expected) { return expected.getMessage(); }
+                });
+                long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
+                boolean waiting = false;
+                while (System.nanoTime() < deadline) {
+                    waiting = jdbc.queryForObject("""
+                            SELECT count(*) > 0 FROM pg_stat_activity WHERE datname=current_database()
+                            AND pid<>pg_backend_pid() AND wait_event_type='Lock'
+                            AND query LIKE '%marketplace.identity_user%' AND query LIKE '%FOR UPDATE%'
+                            """, Map.of(), Boolean.class);
+                    if (waiting) { break; }
+                    Thread.sleep(10);
+                }
+                current.set(issuedAt.plusSeconds(1800));
+                blocker.commit();
+                assertTrue(waiting, "Reset must demonstrably wait for the member lock before clock advances");
+            }
+            assertEquals("INVALID_RESET_TOKEN", reset.get(10, TimeUnit.SECONDS));
+        }
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.password_reset_token WHERE user_id=:id",
+                Map.of("id", member), java.sql.Timestamp.class));
+        assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", member), Long.class));
+        assertTrue(passwordHasher.matches(SIGNUP_PASSWORD, jdbc.queryForObject(
+                "SELECT password_hash FROM marketplace.user_credential WHERE user_id=:id", Map.of("id", member), String.class)));
+    }
+
+    @Test
+    void recoveryLatestOnlyOneUseRevokesSessionsAndChangesPassword(CapturedOutput output) throws Exception {
+        String email = "recover-b@example.com";
+        UUID member = activeMember(email);
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        recovery.request(email);
+        String old = resetMail(email);
+        recovery.request(email);
+        String current = resetMail(email);
+        assertThrows(SignupException.class, () -> recovery.reset(old, "replacement-password"));
+        assertThrows(SignupException.class, () -> recovery.reset(mail(email).token(), "replacement-password"));
+        assertThrows(SignupException.class, () -> signup.verifyEmail(current));
+        assertThrows(SignupException.class, () -> recovery.reset(current, "short"));
+        assertEquals(TokenSecrets.hash(current), jdbc.queryForObject(
+                "SELECT token_hash FROM marketplace.password_reset_token WHERE user_id=:id", Map.of("id", member), String.class));
+        recovery.reset(current, "replacement-password");
+        assertThrows(SignupException.class, () -> recovery.reset(current, "another-password"));
+        assertEquals(1L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", member), Long.class));
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE principal_name=:id",
+                Map.of("id", member.toString()), Integer.class));
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        assertEquals(401, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD), csrfToken(browser)).statusCode());
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm(email, "replacement-password"), csrfToken(browser)).statusCode());
+        assertFalse(output.getAll().contains(current));
+        assertFalse(output.getAll().contains("replacement-password"));
+    }
+
+    @Test
+    void recoveryConcurrentConsumptionAndLatestRequestSerialize() throws Exception {
+        UUID member = activeMember("recover-race-b@example.com");
+        race(() -> { recovery.request("recover-race-b@example.com"); return "ok"; });
+        String hash = jdbc.queryForObject("SELECT token_hash FROM marketplace.password_reset_token WHERE user_id=:id",
+                Map.of("id", member), String.class);
+        String token = resetMailbox.messages().stream().filter(item -> TokenSecrets.hash(item.token()).equals(hash))
+                .findFirst().orElseThrow().token();
+        var results = race(() -> {
+            try { recovery.reset(token, "new-racing-password"); return "ok"; }
+            catch (SignupException expected) { return expected.getMessage(); }
+        });
+        assertEquals(1, results.stream().filter("ok"::equals).count());
+        assertEquals(1, results.stream().filter("INVALID_RESET_TOKEN"::equals).count());
+    }
+
+    private PasswordRecoveryService recoveryAt(Instant time, VerificationMailbox targetMailbox) {
+        return new PasswordRecoveryService(new JdbcPasswordRecoveryStore(jdbc), passwordHasher, targetMailbox,
+                Clock.fixed(time, ZoneOffset.UTC), transactionManager);
+    }
+
+    @Test
+    void recoveryExpiryRollbackAndIneligibleMembersLeaveStateUntouched() {
+        UUID member = activeMember("recover-expire-b@example.com");
+        Instant now = Instant.parse("2030-01-01T00:00:00Z");
+        recoveryAt(now, resetMailbox).request("recover-expire-b@example.com");
+        String token = resetMail("recover-expire-b@example.com");
+        assertThrows(SignupException.class, () -> recoveryAt(now.plusSeconds(1800), resetMailbox).reset(token, SIGNUP_PASSWORD));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.password_reset_token WHERE user_id=:id",
+                Map.of("id", member), java.sql.Timestamp.class));
+        VerificationMailbox failing = (recipient, secret, expiry) -> { throw new SignupException("MAIL_FAILURE"); };
+        assertThrows(SignupException.class, () -> recoveryAt(now, failing).request("recover-expire-b@example.com"));
+        assertEquals(TokenSecrets.hash(token), jdbc.queryForObject("SELECT token_hash FROM marketplace.password_reset_token WHERE user_id=:id",
+                Map.of("id", member), String.class));
+        int before = resetMailbox.messages().size();
+        new TransactionTemplate(transactionManager).executeWithoutResult(status -> {
+            recoveryAt(now, resetMailbox).request("recover-expire-b@example.com");
+            status.setRollbackOnly();
+        });
+        assertEquals(before, resetMailbox.messages().size());
+        recoveryAt(now.plusSeconds(1799), resetMailbox).reset(token, "valid-before-expiry");
+        signup.register("recover-pending-b@example.com", SIGNUP_PASSWORD);
+        UUID suspended = activeMember("recover-suspended-b@example.com");
+        jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id", Map.of("id", suspended));
+        before = resetMailbox.messages().size();
+        for (String email : List.of("recover-pending-b@example.com", "recover-suspended-b@example.com", "absent-b@example.com")) {
+            recovery.request(email);
+        }
+        assertEquals(before, resetMailbox.messages().size());
+    }
+
+    @Test
+    void recoveryHttpRequiresCsrfAndDoesNotRevealEligibility() throws Exception {
+        var browser = authBrowser();
+        assertEquals(403, authJsonPost(browser, "/api/auth/password/request", Map.of("email", "unknown-b@example.com"), null).statusCode());
+        String csrf = csrfToken(browser);
+        activeMember("recover-http-b@example.com");
+        signup.register("recover-http-pending-b@example.com", SIGNUP_PASSWORD);
+        for (String email : List.of("unknown-b@example.com", "recover-http-b@example.com", "recover-http-pending-b@example.com")) {
+            var response = authJsonPost(browser, "/api/auth/password/request", Map.of("email", email), csrf);
+            assertEquals(202, response.statusCode());
+            assertEquals("{\"status\":\"PASSWORD_RESET_REQUESTED\"}", response.body());
+        }
+        String token = resetMail("recover-http-b@example.com");
+        assertEquals(403, authJsonPost(browser, "/api/auth/password/reset", Map.of("token", token, "password", SIGNUP_PASSWORD), null).statusCode());
+        assertEquals(400, authJsonPost(browser, "/api/auth/password/reset", Map.of("token", token, "password", "short"), csrf).statusCode());
+        assertEquals(200, authJsonPost(browser, "/api/auth/password/reset", Map.of("token", token, "password", SIGNUP_PASSWORD), csrf).statusCode());
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+    }
+
+    @Test
+    void profileAndAddressOwnershipDefaultAndRollback() {
+        UUID member = activeMember("address-owner-b@example.com");
+        UUID other = activeMember("address-other-b@example.com");
+        var profile = accountOperations.updateProfile(member, " 구매자😀 ", "010-1234-5678");
+        assertEquals("구매자😀", profile.displayName());
+        assertEquals("address-owner-b@example.com", profile.email());
+        assertThrows(AccountException.class, () -> accountOperations.updateProfile(member, " ", null));
+        assertEquals(profile, accountOperations.profile(member));
+        var first = accountOperations.saveAddress(member, null, addressInput(false));
+        assertTrue(first.isDefault());
+        var second = accountOperations.saveAddress(member, null, addressInput(true));
+        assertEquals(second.id(), accountOperations.addresses(member).stream().filter(AccountOperations.Address::isDefault).findFirst().orElseThrow().id());
+        assertTrue(accountOperations.saveAddress(member, second.id(), addressInput(false)).isDefault());
+        assertEquals("ADDRESS_NOT_FOUND", assertThrows(AccountException.class,
+                () -> accountOperations.saveAddress(other, first.id(), addressInput(true))).getMessage());
+        assertThrows(AccountException.class, () -> accountOperations.deleteAddress(other, first.id()));
+        assertTrue(accountOperations.addresses(other).isEmpty());
+        new TransactionTemplate(transactionManager).executeWithoutResult(status -> {
+            accountOperations.saveAddress(member, first.id(), addressInput(true));
+            accountOperations.deleteAddress(member, second.id());
+            status.setRollbackOnly();
+        });
+        assertEquals(2, accountOperations.addresses(member).size());
+        assertEquals(second.id(), accountOperations.addresses(member).stream().filter(AccountOperations.Address::isDefault).findFirst().orElseThrow().id());
+        accountOperations.deleteAddress(member, second.id());
+        assertEquals(first.id(), accountOperations.addresses(member).getFirst().id());
+        assertTrue(accountOperations.addresses(member).getFirst().isDefault());
+        accountOperations.deleteAddress(member, first.id());
+        assertTrue(accountOperations.addresses(member).isEmpty());
+    }
+
+    @Test
+    void addressConcurrentFirstDefaultAndCapacityPreserveInvariants() throws Exception {
+        UUID member = activeMember("address-race-b@example.com");
+        race(() -> { accountOperations.saveAddress(member, null, addressInput(true)); return "ok"; });
+        assertEquals(2, accountOperations.addresses(member).size());
+        assertEquals(1, accountOperations.addresses(member).stream().filter(AccountOperations.Address::isDefault).count());
+        for (int i = 2; i < 19; i++) { accountOperations.saveAddress(member, null, addressInput(false)); }
+        var result = race(() -> {
+            try { accountOperations.saveAddress(member, null, addressInput(true)); return "ok"; }
+            catch (AccountException expected) { return expected.getMessage(); }
+        });
+        assertEquals(1, result.stream().filter("ok"::equals).count());
+        assertEquals(1, result.stream().filter("ADDRESS_LIMIT"::equals).count());
+        assertEquals(20, accountOperations.addresses(member).size());
+        assertEquals(1, accountOperations.addresses(member).stream().filter(AccountOperations.Address::isDefault).count());
+    }
+
     private HttpResponse<String> authJsonPost(HttpClient browser, String path, Map<String, String> body, String csrf)
             throws Exception {
         var builder = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
@@ -115,7 +429,17 @@ class PostgresJdbcIT {
     @org.springframework.context.annotation.Profile("c3-fixture")
     static class TestMailboxEndpoint {
         private final LocalTestMailbox mailbox;
-        TestMailboxEndpoint(LocalTestMailbox mailbox) { this.mailbox = mailbox; }
+        private final LocalPasswordResetMailbox resetMailbox;
+        TestMailboxEndpoint(LocalTestMailbox mailbox, LocalPasswordResetMailbox resetMailbox) {
+            this.mailbox = mailbox; this.resetMailbox = resetMailbox;
+        }
+        @org.springframework.web.bind.annotation.GetMapping("/__test/reset-mail")
+        Map<String, String> resetToken(@org.springframework.web.bind.annotation.RequestParam String email,
+                jakarta.servlet.http.HttpServletResponse response) {
+            response.setHeader("Cache-Control", "no-store");
+            return Map.of("token", resetMailbox.messages().stream().filter(item -> item.recipient().equals(email))
+                    .reduce((first, second) -> second).orElseThrow().token());
+        }
         @org.springframework.web.bind.annotation.GetMapping("/__test/mail")
         Map<String, String> token(@org.springframework.web.bind.annotation.RequestParam String email,
                 jakarta.servlet.http.HttpServletResponse response) {
@@ -135,7 +459,7 @@ class PostgresJdbcIT {
         builder.environment().put("PATH", node.getParent() + java.io.File.pathSeparator + System.getenv("PATH"));
         builder.redirectErrorStream(true).redirectOutput(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "browser.txt").toFile());
         var process = builder.start();
-        if (!process.waitFor(150, TimeUnit.SECONDS)) {
+        if (!process.waitFor(240, TimeUnit.SECONDS)) {
             process.descendants().forEach(ProcessHandle::destroyForcibly);
             process.destroyForcibly();
             throw new AssertionError("Auth browser verification timed out");
@@ -367,6 +691,9 @@ class PostgresJdbcIT {
         assertTrue(csrf.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
     }
     private static final String SIGNUP_PASSWORD = " A1-private-passphrase-가나다 ";
+    @Autowired private PasswordRecoveryOperations recovery;
+    @Autowired private LocalPasswordResetMailbox resetMailbox;
+    @Autowired private AccountOperations accountOperations;
     @Autowired
     private SignupOperations signup;
     @Autowired

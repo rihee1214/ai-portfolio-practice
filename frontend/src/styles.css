@@ -92,6 +92,12 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .auth-card button { padding: 12px 18px; margin-top: 12px; border-radius: 6px; background: #304d3c; color: white; border: 0; font: inherit; cursor: pointer; }
 .auth-card button:disabled { opacity: .6; cursor: wait; }
 .auth-card dd { margin: 6px 0 20px; overflow-wrap: anywhere; }
+.address-list article { border: 1px solid #dcded6; border-radius: 8px; padding: 16px; margin: 16px 0; overflow-wrap: anywhere; }
+.address-list h2 { font-size: 20px; }
+.address-list h2 span { font-size: 13px; }
+.address-list button + button { margin-left: 12px; }
+.auth-card .checkbox-label { display: flex; align-items: center; gap: 10px; }
+.auth-card .checkbox-label input { width: auto; }
 .not-found { padding: 70px 0; max-width: 750px; }
 .not-found h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -2px; }
 .unknown-path { overflow-wrap: anywhere; font-size: 13px; color: #5d695f; }

@@ -52,6 +52,7 @@ export function AuthForm({ mode }: { mode: 'signup' | 'login' | 'verify-email' }
     {submitted && <Link className="solid-link" to={mode === 'signup' ? '/verify-email' : '/login'}>
       {mode === 'signup' ? '이메일 확인하기' : '로그인하기'}</Link>}
     {state.error && <button type="button" disabled={state.busy} onClick={() => { void store.refresh() }}>세션 상태 다시 확인</button>}
+    {mode === 'login' && <p><Link to="/password/request">비밀번호를 잊으셨나요?</Link></p>}
   </div>
 }
 
@@ -68,6 +69,6 @@ export function AccountPage() {
     {state.error && <ApiErrorNotice error={state.error} />}
     {state.notice && <p role="status">{state.notice}</p>}
     <button type="button" disabled={state.busy} onClick={() => { void store.refresh() }}>상태 다시 확인</button>
-    <p>프로필·배송지 변경은 이후 단계에서 제공됩니다.</p>
+    <p><Link to="/account/profile">프로필 변경</Link> · <Link to="/account/addresses">배송지 관리</Link></p>
   </div>
 }

@@ -15,6 +15,19 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Profile("db & local-mailbox")
 public class IdentityLocalConfiguration {
     @Bean
+    LocalPasswordResetMailbox localPasswordResetMailbox(Clock identityClock) {
+        return new LocalPasswordResetMailbox(identityClock);
+    }
+
+    @Bean
+    com.example.marketplace.identity.api.PasswordRecoveryOperations passwordRecoveryOperations(
+            NamedParameterJdbcTemplate jdbc, PasswordHasher hasher, LocalPasswordResetMailbox mailbox,
+            Clock identityClock, PlatformTransactionManager manager) {
+        return new com.example.marketplace.identity.application.PasswordRecoveryService(
+                new JdbcPasswordRecoveryStore(jdbc), hasher, mailbox, identityClock, manager);
+    }
+
+    @Bean
     Clock identityClock() { return Clock.systemUTC(); }
 
     @Bean
