@@ -25,7 +25,7 @@ try {
 } finally { Pop-Location }
 ```
 
-Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. 기본 Java 검사는 117개이며 실제 DB 통합 검사는 포함하지 않는다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
+Checkstyle은 validate에서 먼저 실행되며 위반 시 빌드를 멈춘다. 기본 Java 검사는 124개이며 실제 DB 통합 검사는 포함하지 않는다. 플러그인 3.6.0(현재 의존 엔진 Checkstyle 9.3)과 최소 규칙은 [pom](../backend/pom.xml), [규칙](../backend/config/checkstyle.xml)에 있다. 역할은 [Maven 공식 설명](https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html)을 참고한다. 자동 포맷터는 도입하지 않았다.
 
 설정이 필요한 경우 예제를 `backend/application-local.properties`로 복사하고 값을 편집한다. 기존 로컬 파일은 덮어쓰지 않는다. `local` 프로필은 기본 활성화되지 않는다. 아래 실행은 **backend 폴더를 작업 디렉터리로 사용**해야 외부 파일을 찾는다.
 

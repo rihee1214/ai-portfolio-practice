@@ -1,6 +1,14 @@
 package com.example.marketplace.dbtest;
 
 import com.example.marketplace.MarketplaceApplication;
+import com.example.marketplace.identity.api.SignupOperations;
+import com.example.marketplace.identity.api.SignupException;
+import com.example.marketplace.identity.application.SignupService;
+import com.example.marketplace.identity.application.TokenSecrets;
+import com.example.marketplace.identity.domain.IdentityStore;
+import com.example.marketplace.identity.domain.PasswordHasher;
+import com.example.marketplace.identity.domain.VerificationMailbox;
+import com.example.marketplace.identity.infrastructure.LocalTestMailbox;
 import com.example.marketplace.jdbcfixture.AccountRepository;
 import com.example.marketplace.jdbcfixture.BatchService;
 import com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget;
@@ -13,7 +21,16 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.DriverManager;
 import java.time.Duration;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.Map;
+import java.util.UUID;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -35,6 +52,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.UnexpectedRollbackException;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.boot.test.system.CapturedOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -42,7 +64,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles({"db", "c3-fixture"})
+@ActiveProfiles({"db", "c3-fixture", "local-mailbox"})
+@ExtendWith(OutputCaptureExtension.class)
 @ContextConfiguration(initializers = DedicatedPostgresInitializer.class)
 @SpringBootTest(classes = MarketplaceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"spring.config.location=classpath:/", "spring.sql.init.mode=never", "spring.flyway.clean-disabled=true",
@@ -51,6 +74,17 @@ import static org.assertj.core.api.Assertions.assertThat;
             "spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class PostgresJdbcIT {
+    private static final String SIGNUP_PASSWORD = " A1-private-passphrase-가나다 ";
+    @Autowired
+    private SignupOperations signup;
+    @Autowired
+    private IdentityStore identityStore;
+    @Autowired
+    private PasswordHasher passwordHasher;
+    @Autowired
+    private LocalTestMailbox mailbox;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
     @LocalServerPort
     private int port;
     @Autowired
@@ -69,6 +103,158 @@ class PostgresJdbcIT {
     private BatchService batches;
     @Autowired
     private Flyway flyway;
+
+    private LocalTestMailbox.Message mail(String email) {
+        return mailbox.messages().stream().filter(item -> item.recipient().equals(email)).findFirst().orElseThrow();
+    }
+
+    private SignupService serviceAt(Instant now, VerificationMailbox targetMailbox) {
+        return new SignupService(identityStore, passwordHasher, targetMailbox,
+                Clock.fixed(now, ZoneOffset.UTC), transactionManager);
+    }
+
+    @Test
+    void signupPersistsOnlyHashesAndBuyerThenVerificationActivates(CapturedOutput output) {
+        UUID id = signup.register("  New.Buyer@EXAMPLE.COM ", SIGNUP_PASSWORD);
+        String hash = jdbc.queryForObject("SELECT password_hash FROM marketplace.user_credential WHERE user_id=:id",
+                Map.of("id", id), String.class);
+        assertTrue(hash.startsWith("{argon2id}$argon2id$"));
+        assertTrue(passwordHasher.matches(SIGNUP_PASSWORD, hash));
+        assertFalse(passwordHasher.matches(SIGNUP_PASSWORD.strip(), hash));
+        assertEquals("BUYER", jdbc.queryForObject("SELECT role FROM marketplace.role_assignment WHERE user_id=:id",
+                Map.of("id", id), String.class));
+        assertEquals("PENDING_EMAIL", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", id), String.class));
+        var message = mail("new.buyer@example.com");
+        assertEquals(TokenSecrets.hash(message.token()), jdbc.queryForObject(
+                "SELECT token_hash FROM marketplace.email_verification_token WHERE user_id=:id", Map.of("id", id), String.class));
+        signup.verifyEmail(message.token());
+        assertEquals("ACTIVE", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", id), String.class));
+        assertEquals(0L, jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", id), Long.class));
+        assertEquals("INVALID_EMAIL_TOKEN", assertThrows(SignupException.class,
+                () -> signup.verifyEmail(message.token())).getMessage());
+        assertFalse(output.getAll().contains(SIGNUP_PASSWORD));
+        assertFalse(output.getAll().contains(message.token()));
+        assertFalse(output.getAll().contains(hash));
+        assertFalse(message.toString().contains(message.token()));
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.flyway_schema_history WHERE version='3' AND success",
+                Map.of(), Integer.class));
+    }
+
+    @Test
+    void normalizedDuplicateIsRejectedWithoutExtraCredentialOrMail() {
+        signup.register("duplicate@example.com", SIGNUP_PASSWORD);
+        int mailCount = mailbox.messages().size();
+        assertEquals("EMAIL_ALREADY_REGISTERED", assertThrows(SignupException.class,
+                () -> signup.register(" DUPLICATE@example.COM ", SIGNUP_PASSWORD)).getMessage());
+        assertEquals(mailCount, mailbox.messages().size());
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE email=:email",
+                Map.of("email", "duplicate@example.com"), Integer.class));
+    }
+
+    private List<String> race(Callable<String> action) throws Exception {
+        var start = new CountDownLatch(1);
+        try (var pool = Executors.newFixedThreadPool(2)) {
+            Callable<String> task = () -> {
+                start.await();
+                return action.call();
+            };
+            var first = pool.submit(task);
+            var second = pool.submit(task);
+            start.countDown();
+            return List.of(first.get(20, TimeUnit.SECONDS), second.get(20, TimeUnit.SECONDS));
+        }
+    }
+
+    @Test
+    void concurrentDuplicateHasExactlyOneCommitAndOneMail() throws Exception {
+        var results = race(() -> {
+            try {
+                signup.register("race@example.com", SIGNUP_PASSWORD);
+                return "ok";
+            } catch (SignupException expected) { return expected.getMessage(); }
+        });
+        assertEquals(1, results.stream().filter("ok"::equals).count());
+        assertEquals(1, results.stream().filter("EMAIL_ALREADY_REGISTERED"::equals).count());
+        assertEquals(1, mailbox.messages().stream().filter(item -> item.recipient().equals("race@example.com")).count());
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE email='race@example.com'",
+                Map.of(), Integer.class));
+    }
+
+    @Test
+    void concurrentTokenConsumptionHasExactlyOneSuccess() throws Exception {
+        signup.register("token-race@example.com", SIGNUP_PASSWORD);
+        String token = mail("token-race@example.com").token();
+        var results = race(() -> {
+            try {
+                signup.verifyEmail(token);
+                return "ok";
+            } catch (SignupException expected) { return expected.getMessage(); }
+        });
+        assertEquals(1, results.stream().filter("ok"::equals).count());
+        assertEquals(1, results.stream().filter("INVALID_EMAIL_TOKEN"::equals).count());
+    }
+
+    @Test
+    void expiryBoundaryIsExclusiveAndExpiredTokenRemainsUnconsumed() {
+        Instant now = Instant.parse("2030-01-01T00:00:00Z");
+        var service = serviceAt(now, mailbox);
+        UUID expired = service.register("expiry@example.com", SIGNUP_PASSWORD);
+        service.register("before-expiry@example.com", SIGNUP_PASSWORD);
+        String token = mail("expiry@example.com").token();
+        assertThrows(SignupException.class,
+                () -> serviceAt(now.plusSeconds(1800), mailbox).verifyEmail(token));
+        serviceAt(now.plusSeconds(1799), mailbox).verifyEmail(mail("before-expiry@example.com").token());
+        assertEquals("PENDING_EMAIL", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id",
+                Map.of("id", expired), String.class));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.email_verification_token WHERE user_id=:id",
+                Map.of("id", expired), java.sql.Timestamp.class));
+        assertThrows(SignupException.class, () -> signup.verifyEmail("unknown"));
+        assertThrows(SignupException.class, () -> signup.verifyEmail(TokenSecrets.generate()));
+    }
+
+    @Test
+    void mailboxPreparationFailureRollsBackAllSignupRows() {
+        VerificationMailbox unavailable = (recipient, token, expires) -> { throw new SignupException("MAILBOX_UNAVAILABLE"); };
+        var service = serviceAt(Instant.now(), unavailable);
+        int before = jdbc.queryForObject("SELECT count(*) FROM marketplace.email_verification_token", Map.of(), Integer.class);
+        assertThrows(SignupException.class, () -> service.register("failed-mail@example.com", SIGNUP_PASSWORD));
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE email='failed-mail@example.com'",
+                Map.of(), Integer.class));
+        assertEquals(before, jdbc.queryForObject("SELECT count(*) FROM marketplace.email_verification_token", Map.of(), Integer.class));
+        assertTrue(mailbox.messages().stream().noneMatch(item -> item.recipient().equals("failed-mail@example.com")));
+    }
+
+    @Test
+    void callerRollbackAlsoRollsBackSignupAndDiscardsUnpublishedMail() {
+        new TransactionTemplate(transactionManager).executeWithoutResult(status -> {
+            signup.register("outer-rollback@example.com", SIGNUP_PASSWORD);
+            status.setRollbackOnly();
+        });
+        assertEquals(0, jdbc.queryForObject(
+                "SELECT count(*) FROM marketplace.identity_user WHERE email='outer-rollback@example.com'",
+                Map.of(), Integer.class));
+        assertTrue(mailbox.messages().stream().noneMatch(item -> item.recipient().equals("outer-rollback@example.com")));
+    }
+
+    @Test
+    void invalidInputDoesNotWriteOrDeliver() {
+        int before = jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user", Map.of(), Integer.class);
+        assertThrows(SignupException.class, () -> signup.register("bad address", SIGNUP_PASSWORD));
+        assertThrows(SignupException.class, () -> signup.register("short@example.com", "short"));
+        assertEquals(before, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user", Map.of(), Integer.class));
+    }
+
+    @Test
+    void activationFailureRollsBackTokenConsumption() {
+        UUID id = signup.register("suspended@example.com", SIGNUP_PASSWORD);
+        jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id", Map.of("id", id));
+        assertThrows(SignupException.class, () -> signup.verifyEmail(mail("suspended@example.com").token()));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.email_verification_token WHERE user_id=:id",
+                Map.of("id", id), java.sql.Timestamp.class));
+    }
 
     private HttpResponse<String> request(String method, String path) throws Exception {
         try (var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build()) {

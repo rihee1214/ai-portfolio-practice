@@ -1,0 +1,2 @@
+BOOT-INF/lib/spring-security-crypto-7.1.1.jar
+BOOT-INF/lib/bcprov-jdk18on-1.86.jar
