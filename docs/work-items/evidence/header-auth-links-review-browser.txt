@@ -1,0 +1,15 @@
+[WebServer] (node:22272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:81336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:81596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-desktop] › e2e\browser.spec.ts:3:1 › 홈 공통 헤더에서 회원가입·로그인·내 계정으로 바로 이동한다 (833ms)
+(node:18200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [chromium-mobile] › e2e\browser.spec.ts:3:1 › 홈 공통 헤더에서 회원가입·로그인·내 계정으로 바로 이동한다 (871ms)
+
+  2 passed (7.4s)

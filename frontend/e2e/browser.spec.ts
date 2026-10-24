@@ -1,5 +1,20 @@
 import { expect, test } from '@playwright/test'
 
+test('홈 공통 헤더에서 회원가입·로그인·내 계정으로 바로 이동한다', async ({ page }) => {
+  for (const [name, path, heading] of [['회원가입', '/signup', '회원가입'], ['로그인', '/login', '로그인'], ['내 계정', '/account', '내 계정']]) {
+    await page.goto('/')
+    const menu = page.getByRole('navigation', { name: '회원 서비스', exact: true })
+    const link = menu.getByRole('link', { name, exact: true })
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', path)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
+    await link.focus()
+    await page.keyboard.press('Enter')
+    await expect(page).toHaveURL(new RegExp(path + '$'))
+    await expect(page.getByRole('heading', { level: 1, name: heading, exact: true })).toBeVisible()
+  }
+})
+
 test('실제 React → Vite → Java health 응답과 재시도', async ({ page, request }) => {
   const java = await request.get('http://127.0.0.1:18080/actuator/health', { headers: { Accept: 'application/json' } })
   expect(java.status()).toBe(200)

@@ -82,6 +82,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .api-error-notice { border: 1px solid #ba8f76; border-radius: 8px; padding: 16px; background: #fff5ed; color: #623a29; margin: 16px 0; }
 .request-id { overflow-wrap: anywhere; font-size: 13px; }
 .account-link { font-size: 14px; white-space: nowrap; }
+.account-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .auth-shell { max-width: 620px; margin: 40px auto 64px; }
 .auth-shell nav { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
 .auth-card { padding: clamp(20px, 4vw, 36px); border: 1px solid #dcded6; border-radius: 12px; background: #fffdf7; }
