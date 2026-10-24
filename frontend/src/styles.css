@@ -100,6 +100,12 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .address-list button + button { margin-left: 12px; }
 .auth-card .checkbox-label { display: flex; align-items: center; gap: 10px; }
 .auth-card .checkbox-label input { width: auto; }
+.catalog-card fieldset { display: grid; gap: 12px; min-width: 0; padding: 16px; border: 1px solid #dcded6; border-radius: 8px; }
+.catalog-card fieldset label:not(.checkbox-label) { display: grid; gap: 8px; }
+.catalog-card textarea, .catalog-card select { width: 100%; min-width: 0; padding: 12px; border: 1px solid #879986; border-radius: 6px; font: inherit; background: #fff; }
+.catalog-card textarea { min-height: 120px; resize: vertical; }
+.catalog-card li, .catalog-card button, .catalog-card small { overflow-wrap: anywhere; }
+.catalog-card small { color: #4b5e50; font-weight: normal; }
 .not-found { padding: 70px 0; max-width: 750px; }
 .not-found h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -2px; }
 .unknown-path { overflow-wrap: anywhere; font-size: 13px; color: #5d695f; }

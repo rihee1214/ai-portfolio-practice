@@ -21,11 +21,12 @@ public final class LoginMembers implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid credentials");
         }
         var users = jdbc.query("""
-                SELECT u.id, u.auth_version, u.state, c.password_hash
+                SELECT u.id, u.auth_version, u.state, c.password_hash,
+                    ARRAY(SELECT r.role FROM marketplace.role_assignment r WHERE r.user_id=u.id ORDER BY r.role) AS roles
                 FROM marketplace.identity_user u JOIN marketplace.user_credential c ON c.user_id = u.id
                 WHERE u.email = :email
                 """, Map.of("email", email), (rs, row) -> new SessionMember(rs.getString("id"),
-                rs.getLong("auth_version"), roles(rs.getString("id")), rs.getString("password_hash"),
+                rs.getLong("auth_version"), roles(rs), rs.getString("password_hash"),
                 "ACTIVE".equals(rs.getString("state"))));
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("Invalid credentials");
@@ -35,14 +36,17 @@ public final class LoginMembers implements UserDetailsService {
 
     public SessionMember current(String id) {
         var users = jdbc.query("""
-                SELECT id, auth_version, state FROM marketplace.identity_user WHERE id = :id
+                SELECT u.id, u.auth_version, u.state,
+                    ARRAY(SELECT r.role FROM marketplace.role_assignment r WHERE r.user_id=u.id ORDER BY r.role) AS roles
+                FROM marketplace.identity_user u WHERE u.id = :id
                 """, Map.of("id", UUID.fromString(id)), (rs, row) -> new SessionMember(id,
-                rs.getLong("auth_version"), roles(id), null, "ACTIVE".equals(rs.getString("state"))));
+                rs.getLong("auth_version"), roles(rs), null, "ACTIVE".equals(rs.getString("state"))));
         return users.isEmpty() ? null : users.getFirst();
     }
 
-    private java.util.List<String> roles(String id) {
-        return jdbc.queryForList("SELECT role FROM marketplace.role_assignment WHERE user_id = :id ORDER BY role",
-                Map.of("id", UUID.fromString(id)), String.class);
+    private java.util.List<String> roles(java.sql.ResultSet row) throws java.sql.SQLException {
+        var array=row.getArray("roles");
+        try { return java.util.List.of((String[])array.getArray()); }
+        finally { array.free(); }
     }
 }

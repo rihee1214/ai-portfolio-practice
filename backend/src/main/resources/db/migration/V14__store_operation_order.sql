@@ -1,0 +1,2 @@
+ALTER TABLE store_operation_event ADD COLUMN store_version bigint CHECK(store_version > 0);
+CREATE UNIQUE INDEX store_operation_version ON store_operation_event(store_id,store_version) WHERE store_version IS NOT NULL;

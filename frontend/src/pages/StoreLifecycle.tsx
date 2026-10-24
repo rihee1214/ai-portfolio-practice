@@ -7,6 +7,7 @@ import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
 import { FeaturePage } from './WorkspacePages'
 import type { Feature } from '../navigation'
+import { ProductPage } from './CatalogPages'
 
 type Event = { actorId: string; action: string; beforeState: string; afterState: string; reason: string; occurredAt: string }
 function eventValid(value: unknown): value is Event {
@@ -82,7 +83,7 @@ export function SellerFeaturePage({ feature }: { feature: Feature }) {
     })
     return () => { active = false; controller.abort() }
   }, [feature.path, attempt])
-  if (result?.attempt === attempt && result.allowed) return <><p>이 공간에 접근할 수 있습니다. 실제 거래 업무는 아직 준비 중입니다.</p><FeaturePage feature={feature} /></>
+  if (result?.attempt === attempt && result.allowed) return feature.path === 'products' ? <ProductPage /> : <><p>이 공간에 접근할 수 있습니다. 실제 거래 업무는 아직 준비 중입니다.</p><FeaturePage feature={feature} /></>
   return <section className="auth-card"><h1>{feature.title}</h1>{result?.attempt !== attempt ? <p role="status">판매 기능 상태를 확인하고 있습니다.</p>
     : result.error ? <ApiErrorNotice error={result.error} /> : <p role="alert">현재 매대 상태에서는 이 기능을 이용할 수 없습니다.</p>}
     <button onClick={() => retry(value => value + 1)}>판매 기능 다시 확인</button></section>

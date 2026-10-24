@@ -1,0 +1,31 @@
+[WebServer] (node:63524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:80752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:13360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-desktop] › e2e\api-errors.spec.ts:3:1 › 실제 Java 공통404 오류와 요청 ID를 표시하고 재시도한다 (573ms)
+  ok  2 [chromium-desktop] › e2e\api-errors.spec.ts:26:1 › production 빌드에서는 개발 오류 확인 화면을 제공하지 않는다 (262ms)
+  ok  3 [chromium-desktop] › e2e\browser.spec.ts:3:1 › 홈 공통 헤더에서 회원가입·로그인·내 계정으로 바로 이동한다 (862ms)
+  ok  4 [chromium-desktop] › e2e\browser.spec.ts:18:1 › 실제 React → Vite → Java health 응답과 재시도 (518ms)
+  ok  5 [chromium-desktop] › e2e\browser.spec.ts:34:1 › 구매자·판매자·운영자의 직접 URL과 새로고침 (5.0s)
+  ok  6 [chromium-desktop] › e2e\browser.spec.ts:52:1 › 없는 경로 안내와 홈 복귀 (638ms)
+  ok  7 [chromium-desktop] › e2e\browser.spec.ts:62:1 › 키보드 건너뛰기·입력·초기화·경로 이동 포커스 (561ms)
+  ok  8 [chromium-desktop] › e2e\browser.spec.ts:86:1 › 화면 폭에 맞는 주요 화면과 클릭 가능한 이동 (1.2s)
+  ok  9 [chromium-desktop] › e2e\browser.spec.ts:101:1 › 새 브라우저 문맥은 입력·저장소를 공유하지 않는다 (1.2s)
+(node:46720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [chromium-mobile] › e2e\api-errors.spec.ts:3:1 › 실제 Java 공통404 오류와 요청 ID를 표시하고 재시도한다 (626ms)
+  ok 11 [chromium-mobile] › e2e\api-errors.spec.ts:26:1 › production 빌드에서는 개발 오류 확인 화면을 제공하지 않는다 (256ms)
+  ok 12 [chromium-mobile] › e2e\browser.spec.ts:3:1 › 홈 공통 헤더에서 회원가입·로그인·내 계정으로 바로 이동한다 (838ms)
+  ok 13 [chromium-mobile] › e2e\browser.spec.ts:18:1 › 실제 React → Vite → Java health 응답과 재시도 (511ms)
+  ok 14 [chromium-mobile] › e2e\browser.spec.ts:34:1 › 구매자·판매자·운영자의 직접 URL과 새로고침 (4.9s)
+  ok 15 [chromium-mobile] › e2e\browser.spec.ts:52:1 › 없는 경로 안내와 홈 복귀 (659ms)
+  ok 16 [chromium-mobile] › e2e\browser.spec.ts:62:1 › 키보드 건너뛰기·입력·초기화·경로 이동 포커스 (509ms)
+  ok 17 [chromium-mobile] › e2e\browser.spec.ts:86:1 › 화면 폭에 맞는 주요 화면과 클릭 가능한 이동 (1.2s)
+  ok 18 [chromium-mobile] › e2e\browser.spec.ts:101:1 › 새 브라우저 문맥은 입력·저장소를 공유하지 않는다 (1.0s)
+
+  18 passed (27.4s)

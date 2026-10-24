@@ -42,6 +42,7 @@ export const workspaces: Workspace[] = [
       { path: 'sellers', title: '판매자 심사', description: '판매 신청과 매대 운영 상태를 확인합니다.', planned: '판매 신청 승인·반려와 처리 이력을 연결할 예정입니다.' },
       { path: 'stores', title: '매대 운영 관리', description: '판매 정지·복구와 조치 이력을 확인합니다.', planned: '매대 운영 조치를 관리합니다.' },
       { path: 'moderation', title: '콘텐츠 조치', description: '문제 상품·리뷰·댓글을 관리합니다.', planned: '사유와 이력을 남기는 비공개·복원을 연결할 예정입니다.' },
+      { path: 'catalog', title: '카테고리 운영', description: '카테고리 이름과 활성 상태를 관리합니다.', planned: '카테고리 변경 이력을 보존합니다.' },
       { path: 'orders', title: '거래 관리', description: '주문과 거래 지원 내역을 확인합니다.', planned: '업무별 운영 권한과 거래 감사 이력을 연결할 예정입니다.' },
     ],
   },

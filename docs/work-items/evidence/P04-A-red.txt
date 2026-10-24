@@ -1,0 +1,82 @@
+.local-tools/p04-a-category-red2/maven.txt
+[ERROR] Tests run: 59, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 18.60 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.catalogCategoryHttpContract -- Time elapsed: 1.000 s <<< FAILURE!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.catalogCategoryHttpContract(PostgresJdbcIT.java:96)
+[ERROR]   PostgresJdbcIT.catalogCategoryHttpContract:96 {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"cba5564a-8365-4861-b81d-7668ed1a708d"} ==> expected: <201> but was: <404>
+[ERROR] Tests run: 59, Failures: 1, Errors: 0, Skipped: 0
+.local-tools/p04-a-product-red/maven.txt
+[ERROR] Tests run: 60, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 18.70 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.catalogProductHttpOwnershipLifecycleAndPublicFilters -- Time elapsed: 0.254 s <<< FAILURE!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.catalogProductHttpOwnershipLifecycleAndPublicFilters(PostgresJdbcIT.java:105)
+[ERROR]   PostgresJdbcIT.catalogProductHttpOwnershipLifecycleAndPublicFilters:105 {"code":"NOT_FOUND","message":"��û�� ����� ã�� �� �����ϴ�.","requestId":"bb330d9f-e34c-4f2b-a9ac-e79000a7fd82"} ==> expected: <201> but was: <404>
+[ERROR] Tests run: 60, Failures: 1, Errors: 0, Skipped: 0
+.local-tools/p04-a-r1-red/maven.txt
+[ERROR] Tests run: 64, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 21.17 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit -- Time elapsed: 0.084 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <denied> but was: <changed>
+	at com.example.marketplace.dbtest.PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit(PostgresJdbcIT.java:111)
+[ERROR]   PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit:111 expected: <denied> but was: <changed>
+[ERROR] Tests run: 64, Failures: 1, Errors: 0, Skipped: 0
+.local-tools/p04-a-review-red/maven.txt
+[ERROR] Tests run: 64, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 23.35 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.productDescriptionAcceptsMultilineButTitleRemainsSingleLine -- Time elapsed: 0.040 s <<< ERROR!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.productDescriptionAcceptsMultilineButTitleRemainsSingleLine(PostgresJdbcIT.java:128)
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit -- Time elapsed: 5.046 s <<< FAILURE!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$categoryWaiterRechecksRevokedPermissionAndWritesNoAudit$1(PostgresJdbcIT.java:107)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit(PostgresJdbcIT.java:94)
+[ERROR]   PostgresJdbcIT.categoryWaiterRechecksRevokedPermissionAndWritesNoAudit:94->lambda$categoryWaiterRechecksRevokedPermissionAndWritesNoAudit$1:107 must observe category lock wait before revoking permission ==> expected: <true> but was: <false>
+[ERROR]   PostgresJdbcIT.productDescriptionAcceptsMultilineButTitleRemainsSingleLine:128 ? Catalog CATALOG_REJECTED
+[ERROR] Tests run: 64, Failures: 1, Errors: 1, Skipped: 0
+.local-tools/p04-a-pool-red/maven.txt
+[ERROR] Tests run: 66, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 20.13 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.publicStoreReadNeedsOnlyOneDatabaseConnection -- Time elapsed: 0.356 s <<< ERROR!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.publicStoreReadNeedsOnlyOneDatabaseConnection(PostgresJdbcIT.java:109)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-2 - Connection is not available, request timed out after 300ms (total=1, active=1, idle=0, waiting=0)
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.memberReadsNeedOnlyOneDatabaseConnection -- Time elapsed: 0.358 s <<< ERROR!
+	at com.example.marketplace.dbtest.PostgresJdbcIT.memberReadsNeedOnlyOneDatabaseConnection(PostgresJdbcIT.java:93)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-3 - Connection is not available, request timed out after 313ms (total=1, active=1, idle=0, waiting=0)
+[ERROR]   PostgresJdbcIT.memberReadsNeedOnlyOneDatabaseConnection:93 ? CannotGetJdbcConnection Failed to obtain JDBC Connection
+[ERROR]   PostgresJdbcIT.publicStoreReadNeedsOnlyOneDatabaseConnection:109 ? CannotGetJdbcConnection Failed to obtain JDBC Connection
+[ERROR] Tests run: 66, Failures: 0, Errors: 2, Skipped: 0
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/Catalog.test.tsx (4 tests | 1 failed) 2806ms
+   × 카테고리 입력은 서버와 같은 문자 기준으로 emoji 80자를 허용한다 2552ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/Catalog.test.tsx > 카테고리 입력은 서버와 같은 문자 기준으로 emoji 80자를 허용한다
+Error: expect(element).toHaveValue(😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀)
+
+Expected the element to have value:
+  😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀
+Received:
+  😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀
+ ❯ tests/unit/Catalog.test.tsx:19:17
+     17|   const input = await screen.findByLabelText('카테고리 이름')
+     18|   await userEvent.setup().type(input, '😀'.repeat(80))
+     19|   expect(input).toHaveValue('😀'.repeat(80))
+       |                 ^
+     20| })
+     21| test('운영 가능한 판매자의 상품 공간에 등록 폼을 표시한다', async () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  21:40:29
+   Duration  3.77s (tests 78%, environment 15%, setup 3%, import 2%, transform 1%)
+
+[ERROR] Tests run: 67, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 19.87 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite -- Time elapsed: 0.120 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"INTERNAL_ERROR","message":"��û�� ó������ ���߽��ϴ�. ��� �� �ٽ� �õ��� �ּ���.","requestId":"94284164-c4bf-48bc-81c0-7c5bd1fee5b3"} ==> expected: <409> but was: <500>
+	at com.example.marketplace.dbtest.PostgresJdbcIT.productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite(PostgresJdbcIT.java:110)
+[ERROR]   PostgresJdbcIT.productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite:110 {"code":"INTERNAL_ERROR","message":"��û�� ó������ ���߽��ϴ�. ��� �� �ٽ� �õ��� �ּ���.","requestId":"94284164-c4bf-48bc-81c0-7c5bd1fee5b3"} ==> expected: <409> but was: <500>
+[ERROR] Tests run: 67, Failures: 1, Errors: 0, Skipped: 0
+
+[ERROR] Tests run: 68, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 19.57 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+org.opentest4j.AssertionFailedError: expected: <[close, restore, suspend]> but was: <[restore, suspend, close]>
+[ERROR]   PostgresJdbcIT.storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies:98 expected: <[close, restore, suspend]> but was: <[restore, suspend, close]>
+[ERROR] Tests run: 68, Failures: 1, Errors: 0, Skipped: 0

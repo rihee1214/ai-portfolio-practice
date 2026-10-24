@@ -1,0 +1,75 @@
+[WebServer] (node:29772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:73396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.7s)
+  ok  2 [desktop] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (696ms)
+  ok  3 [desktop] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.3s)
+  ok  4 [desktop] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.5s)
+  ok  5 [desktop] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.8s)
+  ok  6 [desktop] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.2s)
+  ok  7 [desktop] › auth-e2e\catalog.spec.ts:12:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (2.5s)
+  ok  8 [desktop] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.0s)
+  ok  9 [desktop] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (2.7s)
+  ok 10 [desktop] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (1.9s)
+  ok 11 [desktop] › auth-e2e\store.spec.ts:4:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.3s)
+(node:78232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [mobile] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.7s)
+  ok 13 [mobile] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (712ms)
+  ok 14 [mobile] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.4s)
+  ok 15 [mobile] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.6s)
+  ok 16 [mobile] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.9s)
+  ok 17 [mobile] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.2s)
+  ok 18 [mobile] › auth-e2e\catalog.spec.ts:12:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (2.7s)
+  ok 19 [mobile] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.0s)
+  x  20 [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (3.1s)
+(node:71436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [mobile] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (2.0s)
+  ok 22 [mobile] › auth-e2e\store.spec.ts:4:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.3s)
+
+
+  1) [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ──────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "close",
+        "restore",
+        "suspend",
+    +   "close",
+      ]
+
+      118 |     const events = await history.json()
+      119 |     expect(events).toHaveLength(3)
+    > 120 |     expect(events.map((event: { action: string }) => event.action)).toEqual(['close', 'restore', 'suspend'])
+          |                                                                     ^
+      121 |     expect(events[0]).toMatchObject({ actorId: member.id, beforeState: 'OPEN', afterState: 'CLOSED', reason: '연속 흐름 폐점' })
+      122 |     expect(events[1]).toMatchObject({ actorId: operatorId, beforeState: 'SUSPENDED', afterState: 'OPEN', reason: '연속 흐름 복구' })
+      123 |     expect(events[2]).toMatchObject({ actorId: operatorId, beforeState: 'OPEN', afterState: 'SUSPENDED', reason: '연속 흐름 정지' })
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\seller-journey.spec.ts:120:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\p04-a-final-r4-review\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\p04-a-final-r4-review\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\p04-a-final-r4-review\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\p04-a-final-r4-review\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\error-context.md
+
+  1 failed
+    [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ───────
+  21 passed (40.8s)

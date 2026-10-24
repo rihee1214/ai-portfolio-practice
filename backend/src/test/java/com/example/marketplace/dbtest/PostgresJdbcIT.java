@@ -83,6 +83,293 @@ import static org.assertj.core.api.Assertions.assertThat;
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
     @Test
+    void storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies() {
+        UUID owner=activeMember("p4-history-owner@example.com"), admin=activeMember("p4-history-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')",Map.of("id",admin));
+        var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        try {
+            var store=stores.save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-history","P04","intro","address","","","",true,0L));
+            stores.transition(admin,store.id(),"suspend",new com.example.marketplace.seller.api.Stores.Change(0L,"suspend"));
+            stores.transition(admin,store.id(),"restore",new com.example.marketplace.seller.api.Stores.Change(1L,"restore"));
+            stores.transition(owner,store.id(),"close",new com.example.marketplace.seller.api.Stores.Change(2L,"close"));
+            jdbc.update("UPDATE marketplace.store_operation_event SET occurred_at='2000-01-01T00:00:00Z' WHERE store_id=:id AND action='close'",Map.of("id",store.id()));
+            assertEquals(List.of("close","restore","suspend"),stores.history(owner,store.id(),false).stream().map(com.example.marketplace.seller.api.Stores.Event::action).toList());
+            jdbc.update("UPDATE marketplace.store_operation_event SET occurred_at='2000-01-01T00:00:00Z' WHERE store_id=:id",Map.of("id",store.id()));
+            assertEquals(List.of("close","restore","suspend"),stores.history(admin,store.id(),true).stream().map(com.example.marketplace.seller.api.Stores.Event::action).toList());
+            jdbc.update("INSERT INTO marketplace.store_operation_event(id,store_id,actor_id,action,before_state,after_state,reason,occurred_at) VALUES(:event,:store,:actor,'suspend','OPEN','SUSPENDED','legacy','2100-01-01T00:00:00Z')",Map.of("event",UUID.randomUUID(),"store",store.id(),"actor",admin));
+            assertEquals(List.of("close","restore","suspend","legacy"),stores.history(owner,store.id(),false).stream().map(com.example.marketplace.seller.api.Stores.Event::reason).toList());
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.store_operation_event WHERE store_id=:id AND store_version IS NULL",Map.of("id",store.id()),Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
+    void productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite() throws Exception {
+        UUID owner=activeMember("p4-suspend-race@example.com"), category=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        context.getBean(com.example.marketplace.seller.api.Stores.class).save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-suspend-race","P04","intro","address","","","",true,0L));
+        jdbc.update("INSERT INTO marketplace.catalog_category(id,name) VALUES(:id,'P04 suspend race')",Map.of("id",category));
+        var client=authBrowser();
+        assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4-suspend-race@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+        String csrf=csrfToken(client);
+        try(var executor=Executors.newSingleThreadExecutor()) {
+            var future=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<HttpResponse<String>>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE id=:id FOR UPDATE",Map.of("id",owner),UUID.class);
+                future.set(executor.submit(()->accountRequest(client,"POST","/api/seller/products",Map.of("categoryId",category,"slug","p04-suspend-product","title","상품","description","","state","DRAFT","version",0),csrf)));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    if(waiting) { break; }
+                    try { Thread.sleep(20); } catch(InterruptedException interrupted) { throw new IllegalStateException(interrupted); }
+                }
+                assertTrue(waiting,"product write must wait on member lock");
+                jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner));
+            });
+            var response=future.get().get(5,TimeUnit.SECONDS);
+            assertEquals(409,response.statusCode(),response.body());
+            assertEquals("CONFLICT",authMapper.readTree(response.body()).get("code").asText());
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_product WHERE slug='p04-suspend-product'",Map.of(),Integer.class));
+        }
+    }
+    @Test
+    void memberReadsNeedOnlyOneDatabaseConnection() {
+        UUID member=activeMember("p4-single-connection@example.com");
+        var original=(com.zaxxer.hikari.HikariDataSource)context.getBean(DataSource.class);
+        try(var single=new com.zaxxer.hikari.HikariDataSource()) {
+            single.setJdbcUrl(original.getJdbcUrl()); single.setUsername(original.getUsername()); single.setPassword(original.getPassword());
+            single.setMaximumPoolSize(1); single.setMinimumIdle(0); single.setConnectionTimeout(300);
+            var members=new com.example.marketplace.identity.infrastructure.LoginMembers(new NamedParameterJdbcTemplate(single));
+            assertEquals(member.toString(),members.current(member.toString()).getUsername());
+            assertEquals(member.toString(),members.loadUserByUsername("p4-single-connection@example.com").getUsername());
+        }
+    }
+
+    @Test
+    void publicStoreReadNeedsOnlyOneDatabaseConnection() {
+        UUID owner=activeMember("p4-single-store@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        context.getBean(com.example.marketplace.seller.api.Stores.class).save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-single-store","P04","intro","address","","","",true,0L));
+        var original=(com.zaxxer.hikari.HikariDataSource)context.getBean(DataSource.class);
+        try(var single=new com.zaxxer.hikari.HikariDataSource()) {
+            single.setJdbcUrl(original.getJdbcUrl()); single.setUsername(original.getUsername()); single.setPassword(original.getPassword());
+            single.setMaximumPoolSize(1); single.setMinimumIdle(0); single.setConnectionTimeout(300);
+            var template=new NamedParameterJdbcTemplate(single);
+            var service=new com.example.marketplace.seller.infrastructure.JdbcStores(template,context.getBean(com.example.marketplace.identity.api.SellerMembership.class),new com.example.marketplace.identity.infrastructure.JdbcAccessPolicy(template),transactionManager);
+            assertEquals("p04-single-store",service.published("p04-single-store").slug());
+        }
+    }
+    @Test
+    void categoryWaiterRechecksRevokedPermissionAndWritesNoAudit() throws Exception {
+        UUID admin=activeMember("p4-revoked-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        var categories=context.getBean(com.example.marketplace.catalog.api.Categories.class);
+        var category=categories.save(admin,null,new com.example.marketplace.catalog.api.Categories.Input("P04 revoked",true,0L));
+        try(var executor=Executors.newSingleThreadExecutor()) {
+            var future=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<String>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.queryForObject("SELECT id FROM marketplace.catalog_category WHERE id=:id FOR UPDATE",Map.of("id",category.id()),UUID.class);
+                future.set(executor.submit(()->{
+                    try { categories.save(admin,category.id(),new com.example.marketplace.catalog.api.Categories.Input("unauthorized",false,0L)); return "changed"; }
+                    catch(com.example.marketplace.identity.api.AccessRejected rejected) { return "denied"; }
+                }));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);
+                boolean waiting=false;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%catalog_category%FOR UPDATE%')",Map.of(),Boolean.class));
+                    if(waiting) { break; }
+                    try { Thread.sleep(20); } catch(InterruptedException interrupted) { throw new IllegalStateException(interrupted); }
+                }
+                assertTrue(waiting,"must observe category lock wait before revoking permission");
+                jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            });
+            assertEquals("denied",future.get().get(5,TimeUnit.SECONDS));
+            assertEquals("P04 revoked",jdbc.queryForObject("SELECT name FROM marketplace.catalog_category WHERE id=:id",Map.of("id",category.id()),String.class));
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.category_event WHERE category_id=:id",Map.of("id",category.id()),Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+
+    @Test
+    void productDescriptionAcceptsMultilineButTitleRemainsSingleLine() {
+        UUID owner=activeMember("p4-multiline@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        context.getBean(com.example.marketplace.seller.api.Stores.class).save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-multiline","P04","intro","address","","","",true,0L));
+        UUID category=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.catalog_category(id,name) VALUES(:id,'P04 multiline')",Map.of("id",category));
+        var products=context.getBean(com.example.marketplace.catalog.api.Products.class);
+        var input=new com.example.marketplace.catalog.api.Products.Input(category,"p04-multiline-product","title","첫 줄\r\n둘째 줄\t설명","DRAFT",0L);
+        var saved=products.save(owner,null,input);
+        assertEquals("첫 줄\n둘째 줄\t설명",products.own(owner,saved.id()).description());
+        assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,new com.example.marketplace.catalog.api.Products.Input(category,"p04-invalid","첫 줄\n둘째 줄","","DRAFT",0L))).status());
+        assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,new com.example.marketplace.catalog.api.Products.Input(category,"p04-control","title","control\u0000","DRAFT",0L))).status());
+    }
+    @Test
+    void catalogValidationPublicEligibilityAndConcurrentUpdates() throws Exception {
+        UUID admin=activeMember("p4-bounds-admin@example.com"), owner=activeMember("p4-bounds-owner@example.com"), buyer=activeMember("p4-bounds-buyer@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
+        var categories=context.getBean(com.example.marketplace.catalog.api.Categories.class);
+        var products=context.getBean(com.example.marketplace.catalog.api.Products.class);
+        var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        var catInput=new com.example.marketplace.catalog.api.Categories.Input("P04 boundaries",true,0L);
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->categories.save(admin,null,catInput));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        try {
+            var cat=categories.save(admin,null,catInput);
+            var store=stores.save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-boundaries","P04","intro","address","","","",true,0L));
+            var draft=new com.example.marketplace.catalog.api.Products.Input(cat.id(),"p04-bounds","😀".repeat(120),"","DRAFT",0L);
+            assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->products.save(buyer,null,draft));
+            assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,new com.example.marketplace.catalog.api.Products.Input(cat.id(),"p04-long","a".repeat(121),"","DRAFT",0L))).status());
+            assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,new com.example.marketplace.catalog.api.Products.Input(cat.id(),"p04-long","ok","x".repeat(4001),"DRAFT",0L))).status());
+            assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,new com.example.marketplace.catalog.api.Products.Input(cat.id(),"p04-long","ok","","ACTIVE",0L))).status());
+            var product=products.save(owner,null,draft);
+            assertEquals(409,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,null,draft)).status());
+            var active=new com.example.marketplace.catalog.api.Products.Input(cat.id(),draft.slug(),draft.title(),"","ACTIVE",0L);
+            var results=race(()->{ try { products.save(owner,product.id(),active); return "ok"; } catch(com.example.marketplace.catalog.api.CatalogException failure) { assertEquals(409,failure.status()); return "conflict"; } });
+            assertEquals(1,results.stream().filter("ok"::equals).count());
+            assertEquals(1,products.own(owner,product.id()).version());
+            assertEquals(draft.slug(),products.published(draft.slug()).slug());
+            assertEquals(409,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.save(owner,product.id(),new com.example.marketplace.catalog.api.Products.Input(cat.id(),draft.slug(),"ok","","DRAFT",1L))).status());
+            for(String restriction:List.of("store-private","store-suspended","seller-suspended","seller-role","category")) {
+                switch(restriction) {
+                    case "store-private" -> jdbc.update("UPDATE marketplace.seller_store SET visible=false WHERE id=:id",Map.of("id",store.id()));
+                    case "store-suspended" -> jdbc.update("UPDATE marketplace.seller_store SET visible=false,state='SUSPENDED' WHERE id=:id",Map.of("id",store.id()));
+                    case "seller-suspended" -> jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner));
+                    case "seller-role" -> jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",owner));
+                    default -> jdbc.update("UPDATE marketplace.catalog_category SET active=false WHERE id=:id",Map.of("id",cat.id()));
+                }
+                assertEquals(404,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.published(draft.slug())).status());
+                assertFalse(products.published(0).items().stream().anyMatch(published->published.slug().equals(draft.slug())));
+                jdbc.update("UPDATE marketplace.seller_store SET state='OPEN',visible=true WHERE id=:id",Map.of("id",store.id()));
+                jdbc.update("UPDATE marketplace.identity_user SET state='ACTIVE' WHERE id=:id",Map.of("id",owner));
+                jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER') ON CONFLICT DO NOTHING",Map.of("id",owner));
+                jdbc.update("UPDATE marketplace.catalog_category SET active=true WHERE id=:id",Map.of("id",cat.id()));
+                assertEquals(draft.slug(),products.published(draft.slug()).slug());
+            }
+            var sequence=new java.util.concurrent.atomic.AtomicInteger();
+            race(()->{
+                if(sequence.getAndIncrement()==0) { categories.save(admin,cat.id(),new com.example.marketplace.catalog.api.Categories.Input(cat.name(),false,0L)); return "disabled"; }
+                try { products.save(owner,product.id(),new com.example.marketplace.catalog.api.Products.Input(cat.id(),draft.slug(),"edited","","ACTIVE",1L)); return "edited"; }
+                catch(com.example.marketplace.catalog.api.CatalogException failure) { assertEquals(409,failure.status()); return "conflict"; }
+            });
+            assertEquals(404,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.published(draft.slug())).status());
+            assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->products.published(-1)).status());
+            assertEquals(400,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->categories.list(null,10001)).status());
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
+    void categoryAuditIsAtomicAndOwnedByOperator() {
+        UUID admin=activeMember("p4-audit-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        var categories=context.getBean(com.example.marketplace.catalog.api.Categories.class);
+        try {
+            var input=new com.example.marketplace.catalog.api.Categories.Input("P04 audit",true,0L);
+            var created=categories.save(admin,null,input);
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.category_event WHERE category_id=:id AND actor_id=:actor",Map.of("id",created.id(),"actor",admin),Integer.class));
+            jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.category_event ADD CONSTRAINT p4_fail_audit CHECK(category_id <> '"+created.id()+"'::uuid) NOT VALID");
+            try { assertThrows(DataIntegrityViolationException.class,()->categories.save(admin,created.id(),new com.example.marketplace.catalog.api.Categories.Input("P04 lost",false,0L))); }
+            finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.category_event DROP CONSTRAINT p4_fail_audit"); }
+            assertEquals("P04 audit",jdbc.queryForObject("SELECT name FROM marketplace.catalog_category WHERE id=:id",Map.of("id",created.id()),String.class));
+            assertEquals(0,jdbc.queryForObject("SELECT version FROM marketplace.catalog_category WHERE id=:id",Map.of("id",created.id()),Integer.class));
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
+    void catalogProductHttpOwnershipLifecycleAndPublicFilters() throws Exception {
+        UUID admin=activeMember("p4-product-admin@example.com"), owner=activeMember("p4-product-owner@example.com"), other=activeMember("p4-product-other@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        for(UUID id:List.of(owner,other)) { jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",id)); }
+        var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);
+        var store=stores.save(owner,null,new com.example.marketplace.seller.api.Stores.Input("p04-store","P04","intro","address","","","",true,0L));
+        stores.save(other,null,new com.example.marketplace.seller.api.Stores.Input("p04-other","P04 other","intro","address","","","",true,0L));
+        var adminClient=authBrowser(); var seller=authBrowser(); var stranger=authBrowser();
+        assertEquals(200,authRequest(adminClient,"/api/auth/login",loginForm("p4-product-admin@example.com",SIGNUP_PASSWORD),csrfToken(adminClient)).statusCode());
+        assertEquals(200,authRequest(seller,"/api/auth/login",loginForm("p4-product-owner@example.com",SIGNUP_PASSWORD),csrfToken(seller)).statusCode());
+        assertEquals(200,authRequest(stranger,"/api/auth/login",loginForm("p4-product-other@example.com",SIGNUP_PASSWORD),csrfToken(stranger)).statusCode());
+        try {
+            var category=accountRequest(adminClient,"POST","/api/admin/content/categories",Map.of("name","P04 product category","active",true,"version",0),csrfToken(adminClient));
+            assertEquals(201,category.statusCode());
+            String categoryId=authMapper.readTree(category.body()).get("id").asText();
+            var body=new java.util.HashMap<String,Object>(Map.of("slug","p04-product","title","상품","description","소개","categoryId",categoryId,"state","DRAFT","version",0));
+            assertEquals(403,accountRequest(seller,"POST","/api/seller/products",body,null).statusCode());
+            var created=accountRequest(seller,"POST","/api/seller/products",body,csrfToken(seller));
+            assertEquals(201,created.statusCode(),created.body());
+            String id=authMapper.readTree(created.body()).get("id").asText();
+            String path="/api/seller/products/"+id;
+            assertEquals(404,accountRequest(authBrowser(),"GET","/api/products/p04-product",null,null).statusCode());
+            assertEquals(404,accountRequest(stranger,"PUT",path,body,csrfToken(stranger)).statusCode());
+            assertEquals(404,accountRequest(stranger,"GET",path,null,null).statusCode());
+            body.put("state","ACTIVE");
+            assertEquals(200,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            assertEquals(409,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            var published=accountRequest(authBrowser(),"GET","/api/products/p04-product",null,null);
+            assertEquals(200,published.statusCode()); assertFalse(published.body().contains("ownerId")); assertFalse(published.body().contains("hiddenByAdmin"));
+            jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",UUID.fromString(id)));
+            body.put("version",1); body.put("isHiddenByAdmin",false);
+            assertEquals(200,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            assertEquals(404,accountRequest(authBrowser(),"GET","/api/products/p04-product",null,null).statusCode());
+            assertFalse(accountRequest(authBrowser(),"GET","/api/products",null,null).body().contains("p04-product"));
+            jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=false WHERE id=:id",Map.of("id",UUID.fromString(id)));
+            assertEquals(200,accountRequest(adminClient,"PUT","/api/admin/content/categories/"+categoryId,Map.of("name","P04 product category","active",false,"version",0),csrfToken(adminClient)).statusCode());
+            body.put("version",2);
+            assertEquals(409,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            assertEquals(404,accountRequest(authBrowser(),"GET","/api/products/p04-product",null,null).statusCode());
+            body.put("state","STOPPED");
+            assertEquals(200,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            body.put("version",3); body.put("state","ARCHIVED");
+            assertEquals(200,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            body.put("version",4); body.put("state","ACTIVE");
+            assertEquals(409,accountRequest(seller,"PUT",path,body,csrfToken(seller)).statusCode());
+            assertEquals(404,accountRequest(authBrowser(),"GET","/api/products/p04-product",null,null).statusCode());
+            assertFalse(accountRequest(authBrowser(),"GET","/api/products",null,null).body().contains("p04-product"));
+            stores.transition(owner,store.id(),"close",new com.example.marketplace.seller.api.Stores.Change(0L,"closed"));
+            body.put("slug","p04-new"); body.put("state","DRAFT"); body.put("version",0);
+            assertEquals(409,accountRequest(seller,"POST","/api/seller/products",body,csrfToken(seller)).statusCode());
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
+    void catalogCategoryHttpContract() throws Exception {
+        UUID admin=activeMember("p4-category-admin@example.com");
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        var browser=authBrowser();
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm("p4-category-admin@example.com",SIGNUP_PASSWORD),csrfToken(browser)).statusCode());
+        try {
+            var body=Map.of("name","P04 category","active",true,"version",0);
+            assertEquals(403,accountRequest(browser,"POST","/api/admin/content/categories",body,null).statusCode());
+            var created=accountRequest(browser,"POST","/api/admin/content/categories",body,csrfToken(browser));
+            assertEquals(201,created.statusCode(),created.body());
+            String id=authMapper.readTree(created.body()).get("id").asText();
+            assertEquals(409,accountRequest(browser,"POST","/api/admin/content/categories",body,csrfToken(browser)).statusCode());
+            assertEquals(200,accountRequest(browser,"PUT","/api/admin/content/categories/"+id,Map.of("name","P04 edited","active",false,"version",0),csrfToken(browser)).statusCode());
+            assertEquals(409,accountRequest(browser,"PUT","/api/admin/content/categories/"+id,body,csrfToken(browser)).statusCode());
+            assertEquals(400,accountRequest(browser,"POST","/api/admin/content/categories",Map.of("name"," ","active",true,"version",0),csrfToken(browser)).statusCode());
+            assertEquals(200,accountRequest(authBrowser(),"GET","/api/categories",null,null).statusCode());
+        } finally {
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'",Map.of("id",admin));
+        }
+    }
+    @Test
     void storeOperatorPermissionsAndConcurrentEditSuspendKeepRestriction() throws Exception {
         var service=context.getBean(com.example.marketplace.seller.api.Stores.class);
         UUID owner=activeMember("p3c-permissions-owner@example.com"), admin=activeMember("p3c-permissions-admin@example.com");
@@ -1041,6 +1328,10 @@ class PostgresJdbcIT {
         if (!"true".equals(System.getenv("A3_RUN_BROWSER"))) { return; }
         var cMembers = new java.util.ArrayList<UUID>();
         for (String project : List.of("desktop", "mobile")) {
+            UUID catalogSeller=activeMember("p4-seller-"+project+"@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",catalogSeller));
+            context.getBean(com.example.marketplace.seller.api.Stores.class).save(catalogSeller,null,new com.example.marketplace.seller.api.Stores.Input("p4-browser-"+project,"P04 browser","intro","address","","","",true,0L));
+            cMembers.add(catalogSeller);
             UUID seller = activeMember("c-seller-" + project + "@example.com");
             jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", seller));
             UUID admin = activeMember("c-admin-" + project + "@example.com");

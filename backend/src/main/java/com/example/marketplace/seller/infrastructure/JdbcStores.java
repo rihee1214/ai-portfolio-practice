@@ -51,8 +51,8 @@ public final class JdbcStores implements Stores {
             String next=closing?"CLOSED":"suspend".equals(action)?"SUSPENDED":"OPEN";
             if(!closing && !("suspend".equals(action)?"OPEN":"SUSPENDED").equals(current.state())) { throw new StoreException(409); }
             jdbc.update("UPDATE marketplace.seller_store SET state=:state,visible=false,version=version+1 WHERE id=:id",Map.of("state",next,"id",id));
-            jdbc.update("INSERT INTO marketplace.store_operation_event(id,store_id,actor_id,action,before_state,after_state,reason) VALUES(:event,:store,:actor,:action,:before,:after,:reason)",
-                    Map.of("event",UUID.randomUUID(),"store",id,"actor",actor,"action",action,"before",current.state(),"after",next,"reason",reason));
+            jdbc.update("INSERT INTO marketplace.store_operation_event(id,store_id,actor_id,action,before_state,after_state,reason,store_version) VALUES(:event,:store,:actor,:action,:before,:after,:reason,:version)",
+                    Map.of("event",UUID.randomUUID(),"store",id,"actor",actor,"action",action,"before",current.state(),"after",next,"reason",reason,"version",current.version()+1));
             return jdbc.queryForObject("SELECT * FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),this::map);
         });
     }
@@ -60,7 +60,7 @@ public final class JdbcStores implements Stores {
         access.require(actor,administrator?AccessArea.ACCOUNTS:AccessArea.SELLER);
         var owners=jdbc.queryForList("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),UUID.class);
         if(owners.isEmpty() || !administrator&&!owners.getFirst().equals(actor)) { throw new StoreException(404); }
-        return jdbc.query("SELECT * FROM marketplace.store_operation_event WHERE store_id=:id ORDER BY occurred_at DESC,id DESC LIMIT 20",Map.of("id",id),
+        return jdbc.query("SELECT * FROM marketplace.store_operation_event WHERE store_id=:id ORDER BY store_version DESC NULLS LAST,occurred_at DESC,id DESC LIMIT 20",Map.of("id",id),
                 (row,index)->new Event(row.getObject("actor_id",UUID.class),row.getString("action"),row.getString("before_state"),row.getString("after_state"),row.getString("reason"),row.getTimestamp("occurred_at").toInstant()));
     }
     private Capabilities allowed(Store store) {
@@ -109,11 +109,13 @@ public final class JdbcStores implements Stores {
     }
     @Override public PublicStore published(String slug) {
         if(slug==null || !slug.matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { throw new StoreException(404); }
-        return jdbc.query("SELECT * FROM marketplace.seller_store WHERE slug=:slug AND visible=true AND state='OPEN'",Map.of("slug",slug),row -> {
-            if(!row.next() || !access.allowed(row.getObject("owner_id",UUID.class),AccessArea.SELLER)) { throw new StoreException(404); }
-            Store s=map(row,0);
-            return new PublicStore(s.slug(),s.name(),s.introduction(),s.address(),s.notice(),s.imageKey(),s.imageAlt());
-        });
+        record Candidate(Store store,UUID owner) { }
+        var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE slug=:slug AND visible=true AND state='OPEN'",Map.of("slug",slug),
+                (row,index)->new Candidate(map(row,index),row.getObject("owner_id",UUID.class)));
+        // Release the query connection before the identity API performs its own query.
+        if(rows.isEmpty() || !access.allowed(rows.getFirst().owner(),AccessArea.SELLER)) { throw new StoreException(404); }
+        Store s=rows.getFirst().store();
+        return new PublicStore(s.slug(),s.name(),s.introduction(),s.address(),s.notice(),s.imageKey(),s.imageAlt());
     }
     private Store map(java.sql.ResultSet row,int index) throws java.sql.SQLException {
         return new Store(row.getObject("id",UUID.class),row.getString("slug"),row.getString("name"),row.getString("introduction"),row.getString("address"),row.getString("notice"),row.getString("image_key"),row.getString("image_alt"),row.getBoolean("visible"),row.getLong("version"),row.getString("state"));

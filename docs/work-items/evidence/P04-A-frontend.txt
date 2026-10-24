@@ -1,0 +1,36 @@
+
+> marketplace-frontend@0.0.1 typecheck
+> tsc --noEmit
+
+
+> marketplace-frontend@0.0.1 lint
+> eslint . --max-warnings 0
+
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+Not implemented: Window's scrollTo() method
+
+ Test Files  12 passed (12)
+      Tests  86 passed (86)
+   Start at  21:51:37
+   Duration  4.49s (environment 46%, tests 40%, setup 8%, import 4%, transform 1%)
+
+
+> marketplace-frontend@0.0.1 build
+> tsc --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 121 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.52 kB │ gzip:   0.38 kB
+dist/assets/index-BPXCh0NU.css    9.31 kB │ gzip:   2.71 kB
+dist/assets/index-DHdgzwZg.js   335.15 kB │ gzip: 100.66 kB
+
+✓ built in 107ms
