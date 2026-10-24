@@ -64,7 +64,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles({"db", "c3-fixture", "local-mailbox"})
+@ActiveProfiles({"db", "c3-fixture", "local-mailbox", "local-http"})
 @ExtendWith(OutputCaptureExtension.class)
 @ContextConfiguration(initializers = DedicatedPostgresInitializer.class)
 @SpringBootTest(classes = MarketplaceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -74,6 +74,198 @@ import static org.assertj.core.api.Assertions.assertThat;
             "spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class PostgresJdbcIT {
+
+    private final tools.jackson.databind.json.JsonMapper authMapper = tools.jackson.databind.json.JsonMapper.builder().build();
+
+    private HttpClient authBrowser() {
+        return HttpClient.newBuilder().cookieHandler(new java.net.CookieManager(
+                null, java.net.CookiePolicy.ACCEPT_ALL)).connectTimeout(Duration.ofSeconds(5)).build();
+    }
+
+    private HttpResponse<String> authRequest(HttpClient browser, String path, String form, String csrf) throws Exception {
+        var request = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
+                .timeout(Duration.ofSeconds(10));
+        if (form == null) { request.GET(); } else {
+            request.header("Content-Type", "application/x-www-form-urlencoded")
+                    .POST(HttpRequest.BodyPublishers.ofString(form));
+        }
+        if (csrf != null) { request.header("X-CSRF-TOKEN", csrf); }
+        return browser.send(request.build(), HttpResponse.BodyHandlers.ofString());
+    }
+
+    private String csrfToken(HttpClient browser) throws Exception {
+        var response = authRequest(browser, "/api/auth/csrf", null, null);
+        assertEquals(200, response.statusCode());
+        return authMapper.readTree(response.body()).get("token").asText();
+    }
+
+    private String loginForm(String email, String password) {
+        return "email=" + java.net.URLEncoder.encode(email, java.nio.charset.StandardCharsets.UTF_8)
+                + "&password=" + java.net.URLEncoder.encode(password, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    private UUID activeMember(String email) {
+        UUID id = signup.register(email, SIGNUP_PASSWORD);
+        signup.verifyEmail(mail(email).token());
+        return id;
+    }
+
+    private String cookieValue(HttpClient browser) {
+        return ((java.net.CookieManager) browser.cookieHandler().orElseThrow()).getCookieStore().getCookies()
+                .stream().filter(cookie -> cookie.getName().equals("SESSION")).findFirst().orElseThrow().getValue();
+    }
+
+    @Test
+    void loginRotatesSessionPersistsInJdbcAndLogoutRevokesCookie(CapturedOutput output) throws Exception {
+        UUID id = activeMember("login-a2@example.com");
+        var browser = authBrowser();
+        String beforeToken = csrfToken(browser);
+        String beforeCookie = cookieValue(browser);
+        var login = authRequest(browser, "/api/auth/login", loginForm(" LOGIN-A2@example.com ", SIGNUP_PASSWORD), beforeToken);
+        assertEquals(200, login.statusCode());
+        assertFalse(login.headers().firstValue("Location").isPresent());
+        String afterCookie = cookieValue(browser);
+        assertFalse(beforeCookie.equals(afterCookie));
+        String cookieHeader = login.headers().firstValue("Set-Cookie").orElseThrow();
+        assertTrue(cookieHeader.contains("HttpOnly"));
+        assertTrue(cookieHeader.contains("SameSite=Lax"));
+        assertFalse(cookieHeader.contains("Secure"));
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE principal_name=:id",
+                Map.of("id", id.toString()), Integer.class));
+
+        // Another HTTP client restores authentication from the same JDBC-backed cookie.
+        var restored = HttpClient.newHttpClient().send(HttpRequest.newBuilder(
+                URI.create("http://127.0.0.1:" + port + "/api/auth/me"))
+                .header("Cookie", "SESSION=" + afterCookie).GET().build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, restored.statusCode());
+        assertEquals(id.toString(), authMapper.readTree(restored.body()).get("id").asText());
+        assertTrue(restored.body().contains("BUYER"));
+        assertFalse(restored.body().contains("email"));
+        assertFalse(restored.body().contains("password"));
+        assertTrue(restored.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+        var attributes = jdbc.queryForList("""
+                SELECT a.attribute_bytes FROM marketplace.spring_session_attributes a
+                JOIN marketplace.spring_session s ON s.primary_id=a.session_primary_id WHERE s.principal_name=:id
+                """, Map.of("id", id.toString()), byte[].class);
+        assertFalse(attributes.isEmpty());
+        for (byte[] attribute : attributes) {
+            String serialized = new String(attribute, java.nio.charset.StandardCharsets.ISO_8859_1);
+            assertFalse(serialized.contains("{argon2id}"));
+            assertFalse(serialized.contains("A1-private-passphrase"));
+        }
+
+        assertEquals(403, authRequest(browser, "/api/auth/logout", "", beforeToken).statusCode());
+        assertEquals(200, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        String afterToken = csrfToken(browser);
+        assertFalse(beforeToken.equals(afterToken));
+        assertEquals(200, authRequest(browser, "/api/auth/logout", "", afterToken).statusCode());
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        var replay = HttpClient.newHttpClient().send(HttpRequest.newBuilder(
+                URI.create("http://127.0.0.1:" + port + "/api/auth/me"))
+                .header("Cookie", "SESSION=" + afterCookie).GET().build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(401, replay.statusCode());
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE principal_name=:id",
+                Map.of("id", id.toString()), Integer.class));
+        assertEquals(403, authRequest(browser, "/api/auth/login", loginForm("login-a2@example.com", SIGNUP_PASSWORD),
+                afterToken).statusCode());
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("login-a2@example.com", SIGNUP_PASSWORD),
+                csrfToken(browser)).statusCode());
+        assertFalse(output.getAll().contains(SIGNUP_PASSWORD));
+        assertFalse(output.getAll().contains(beforeToken));
+    }
+
+    @Test
+    void invalidCredentialsAndUnverifiedAccountsHaveSameJsonFailure() throws Exception {
+        activeMember("wrong-a2@example.com");
+        signup.register("pending-a2@example.com", SIGNUP_PASSWORD);
+        var browser = authBrowser();
+        String token = csrfToken(browser);
+        for (String email : List.of("wrong-a2@example.com", "missing-a2@example.com", "pending-a2@example.com", "bad")) {
+            String password = email.startsWith("wrong") ? "incorrect-password" : SIGNUP_PASSWORD;
+            var response = authRequest(browser, "/api/auth/login", loginForm(email, password), token);
+            assertEquals(401, response.statusCode());
+            assertEquals("AUTHENTICATION_REQUIRED", authMapper.readTree(response.body()).get("code").asText());
+            assertEquals(response.headers().firstValue("X-Request-ID").orElseThrow(),
+                    authMapper.readTree(response.body()).get("requestId").asText());
+            assertFalse(response.headers().firstValue("Location").isPresent());
+            assertFalse(response.body().contains(email));
+        }
+    }
+
+    @Test
+    void csrfCannotBeOmittedOrCopiedBetweenSessions() throws Exception {
+        var first = authBrowser();
+        var second = authBrowser();
+        String token = csrfToken(first);
+        csrfToken(second);
+        for (String path : List.of("/api/auth/login", "/api/auth/logout", "/api/unknown-mutation")) {
+            assertEquals(403, authRequest(first, path, "", null).statusCode());
+            assertEquals(403, authRequest(second, path, "", token).statusCode());
+        }
+        assertFalse(authRequest(first, "/api/auth/logout", null, null).statusCode() == 200);
+    }
+
+    @Test
+    void currentRolesAndAccountVersionAreCheckedEveryRequest() throws Exception {
+        UUID id = activeMember("version-a2@example.com");
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("version-a2@example.com", SIGNUP_PASSWORD),
+                csrfToken(browser)).statusCode());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES (:id, 'SELLER')", Map.of("id", id));
+        assertTrue(authRequest(browser, "/api/auth/me", null, null).body().contains("SELLER"));
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'", Map.of("id", id));
+        assertFalse(authRequest(browser, "/api/auth/me", null, null).body().contains("SELLER"));
+        jdbc.update("UPDATE marketplace.identity_user SET auth_version=auth_version+1 WHERE id=:id", Map.of("id", id));
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE principal_name=:id",
+                Map.of("id", id.toString()), Integer.class));
+    }
+
+    @Test
+    void suspendedAndWithdrawnAccountsLoseExistingSessions() throws Exception {
+        for (String state : List.of("SUSPENDED", "WITHDRAWN")) {
+            String email = state.toLowerCase(java.util.Locale.ROOT) + "-a2@example.com";
+            UUID id = activeMember(email);
+            var browser = authBrowser();
+            assertEquals(200, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD),
+                    csrfToken(browser)).statusCode());
+            jdbc.update("UPDATE marketplace.identity_user SET state=:state WHERE id=:id", Map.of("id", id, "state", state));
+            assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+            assertEquals(401, authRequest(browser, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD),
+                    csrfToken(browser)).statusCode());
+        }
+    }
+
+    @Test
+    void expiredJdbcSessionCannotAuthenticateOrReuseCsrf() throws Exception {
+        UUID id = activeMember("expiry-a2@example.com");
+        var browser = authBrowser();
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("expiry-a2@example.com", SIGNUP_PASSWORD),
+                csrfToken(browser)).statusCode());
+        String oldToken = csrfToken(browser);
+        jdbc.update("""
+                UPDATE marketplace.spring_session SET last_access_time=0, expiry_time=0 WHERE principal_name=:id
+                """, Map.of("id", id.toString()));
+        assertEquals(401, authRequest(browser, "/api/auth/me", null, null).statusCode());
+        assertEquals(403, authRequest(browser, "/api/auth/login", loginForm("expiry-a2@example.com", SIGNUP_PASSWORD),
+                oldToken).statusCode());
+        assertEquals(200, authRequest(browser, "/api/auth/login", loginForm("expiry-a2@example.com", SIGNUP_PASSWORD),
+                csrfToken(browser)).statusCode());
+    }
+
+    @Test
+    void anonymousAuthenticationContract() throws Exception {
+        HttpClient browser = HttpClient.newHttpClient();
+        var me = browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/api/auth/me"))
+                .GET().build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(401, me.statusCode());
+        assertTrue(me.body().contains("AUTHENTICATION_REQUIRED"));
+        var csrf = browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/api/auth/csrf"))
+                .GET().build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, csrf.statusCode());
+        assertTrue(csrf.body().contains("X-CSRF-TOKEN"));
+        assertTrue(csrf.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+    }
     private static final String SIGNUP_PASSWORD = " A1-private-passphrase-가나다 ";
     @Autowired
     private SignupOperations signup;

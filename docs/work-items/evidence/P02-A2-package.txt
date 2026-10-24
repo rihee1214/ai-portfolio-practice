@@ -1,0 +1,6 @@
+BOOT-INF/lib/spring-security-config-7.1.1.jar
+BOOT-INF/lib/spring-security-core-7.1.1.jar
+BOOT-INF/lib/spring-security-web-7.1.1.jar
+BOOT-INF/lib/spring-session-jdbc-4.1.1.jar
+BOOT-INF/lib/spring-session-core-4.1.1.jar
+BOOT-INF/lib/spring-security-crypto-7.1.1.jar

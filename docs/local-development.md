@@ -1,5 +1,7 @@
 # 로컬 실행과 검사 — P01 종합 기준
 
+P02-A2 인증 API는 `db` 웹 프로필에서 활성화된다. 로컬 HTTP에서만 `local-http`를 추가한다. SESSION 쿠키의 기본 Secure=true 때문에 HTTP에서 이 프로필을 빼면 로그인 유지가 되지 않을 수 있다. 가입 테스트 도구까지 필요하면 `local-mailbox`를 추가한다. 기존 DB를 자동 갱신하지 말고 새 격리 DB를 쓰며, 이번 단계의 재현 명령은 `./backend/verify-db.ps1 -EvidenceDirectory .local-tools/a2-새로운이름`이다. 이 명령이 임시 서버와 새 DB를 구성한다. [A2 계약·검증·한계](work-items/P02-A2.md)를 먼저 확인한다. React 인증 화면은 P02-A3 범위로 아직 없다.
+
 현재 검증 호스트는 Windows x64·PowerShell 7이며 루트는 `D:\Workspace\ai-portfolio-practice`다. 아래 명령은 저장소 루트에서 시작한다. 시스템 PATH·JAVA_HOME을 영구 변경하지 않는다.
 
 ## 준비된 도구

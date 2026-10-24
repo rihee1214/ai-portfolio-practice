@@ -1,0 +1,62 @@
+{
+  "hashesUnchanged": true,
+  "hashes": {
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "time": "2026-10-24T14:04:05.0092135+09:00",
+  "oldDatabasesPresent": true,
+  "ports": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15433,
+      "OwningProcess": 57168
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 15432,
+      "OwningProcess": 57168
+    }
+  ],
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1",
+    "68d17431a4b1 moa-market-local-db-test-1"
+  ],
+  "databases": [
+    "c2_verify_1792755390505",
+    "c2_verify_1792755614835",
+    "c2_verify_1792755700154",
+    "c3_verify_51b5e587565343ca8abbfbbc5afce7cf",
+    "c3_verify_5aaff9ff870e41e883136dc31ab25c25",
+    "c3_verify_5e177587cd4f48e8a97fdf545d5fc50e",
+    "d2_it_0529e5bf6e164030b7d47d960c2acfbe",
+    "d2_it_072249861f96406fa8969eff1f24ec5a",
+    "d2_it_204ff6a7b1304b6f9dac8d2352a0623d",
+    "d2_it_4d7ecd1df99b411fab0f5b64fe63f27e",
+    "d2_it_5ae344617dc74532b29df2eceddfd341",
+    "d2_it_5e2c570950e7431aadce6badb885dc2b",
+    "d2_it_62470ff6f020486aadb61008e361e430",
+    "d2_it_8af65276aade41f9a464f28e76fbe1ba",
+    "d2_it_8e4f6269c64a416e9a23690ee5fd7366",
+    "d2_it_9a89bd9325424a93b221cc7473c3fb17",
+    "d2_it_a76ee49a9260477ab11d737ebada5bf1",
+    "d2_it_ae59ed177e6c4b14bdc84dadc87307ef",
+    "d2_it_c7c8d78a000d4cd7ab1c49a5f4f3d0eb",
+    "d2_it_ee5d49ed16384297ac2bdda8d31eb6b3",
+    "d2_it_eef26ee364774f77b8cccb7f8e86e850",
+    "d2_it_efaec51fb856433695e68394d455969b",
+    "d2_it_f0af45c177764b288429544eed8dfb48",
+    "d2_it_f4d47cbfa4604a0f8f9f7a6a0c68fe86",
+    "marketplace_test",
+    "postgres",
+    "template0",
+    "template1"
+  ],
+  "newDatabases": [
+    "d2_it_5e2c570950e7431aadce6badb885dc2b",
+    "d2_it_c7c8d78a000d4cd7ab1c49a5f4f3d0eb",
+    "d2_it_ee5d49ed16384297ac2bdda8d31eb6b3",
+    "d2_it_efaec51fb856433695e68394d455969b",
+    "d2_it_f0af45c177764b288429544eed8dfb48"
+  ]
+}
