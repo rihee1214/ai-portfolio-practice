@@ -15,7 +15,7 @@ export function WorkspaceLayout({ workspace }: { workspace: Workspace }) {
       <div className="workspace-content">
         <div className="preview-notice">
           <strong>화면 구조 미리보기</strong>
-          <p>로그인·권한 확인과 실제 데이터 연결은 아직 구현되지 않았습니다. 누구나 이 화면 틀을 둘러볼 수 있습니다.</p>
+          <p>이 업무 화면의 권한 확인과 실제 데이터 연결은 아직 구현되지 않았습니다. 누구나 미리보기 화면 틀을 둘러볼 수 있습니다.</p>
         </div>
         <Outlet />
       </div>

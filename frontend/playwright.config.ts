@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 const local = (path: string) => fileURLToPath(new URL(path, import.meta.url))
-const jar = local('../.local-tools/d4-build/marketplace-api-0.0.1-SNAPSHOT.jar')
+const jar = process.env.E2E_API_JAR ?? local('../.local-tools/d4-build/marketplace-api-0.0.1-SNAPSHOT.jar')
 if (!existsSync(jar)) throw new Error('Build the D4 JAR first: see docs/work-items/P01-D4.md')
 process.env.PLAYWRIGHT_BROWSERS_PATH = local('../.local-tools/playwright')
 

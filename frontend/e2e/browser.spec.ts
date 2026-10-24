@@ -18,7 +18,7 @@ test('실제 React → Vite → Java health 응답과 재시도', async ({ page,
 
 test('구매자·판매자·운영자의 직접 URL과 새로고침', async ({ page }) => {
   const routes = [
-    ['/account', '나의 쇼핑'], ['/account/orders', '주문·배송'],
+    ['/account', '내 계정'], ['/account/orders', '주문·배송'],
     ['/account/addresses', '배송지'], ['/account/wishlist', '찜한 상품'], ['/account/coupons', '내 쿠폰'],
     ['/seller', '매대 운영'], ['/seller/store', '내 매대'], ['/seller/products', '상품 관리'],
     ['/seller/orders', '판매 주문'], ['/seller/settlements', '매출·모의 정산'],

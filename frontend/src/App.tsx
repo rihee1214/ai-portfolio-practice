@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { FeaturePage, WorkspaceOverview } from './pages/WorkspacePages'
 import ApiErrorPreview from './pages/ApiErrorPreview'
+import AuthLayout from './auth/AuthLayout'
+import { AccountPage, AuthForm } from './pages/AuthPages'
 
 export default function App() {
   return (
@@ -13,8 +15,19 @@ export default function App() {
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
+          <Route element={<AuthLayout />}>
+            <Route path="/signup" element={<AuthForm key="signup" mode="signup" />} />
+            <Route path="/verify-email" element={<AuthForm key="verify" mode="verify-email" />} />
+            <Route path="/login" element={<AuthForm key="login" mode="login" />} />
+            <Route path="/account">
+              <Route index element={<AccountPage />} />
+              <Route element={<WorkspaceLayout workspace={workspaces[0]} />}>
+                {workspaces[0].features.map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
+              </Route>
+            </Route>
+          </Route>
           {import.meta.env.DEV && <Route path="/dev/api-errors" element={<ApiErrorPreview />} />}
-          {workspaces.map((workspace) => (
+          {workspaces.filter(workspace => workspace.path !== '/account').map((workspace) => (
             <Route key={workspace.path} path={workspace.path} element={<WorkspaceLayout workspace={workspace} />}>
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.features.map((feature) => (

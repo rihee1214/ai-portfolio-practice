@@ -1,6 +1,7 @@
 param(
     [string]$EvidenceDirectory = ".local-tools/d2-$([guid]::NewGuid().ToString('N'))",
-    [switch]$Offline
+    [switch]$Offline,
+    [switch]$RunBrowser
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
@@ -11,7 +12,7 @@ if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) {
 }
 if (Test-Path -LiteralPath $output) { throw 'Use a new evidence directory; existing results are preserved.' }
 New-Item -ItemType Directory -Path $output | Out-Null
-$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD')
+$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD','A3_RUN_BROWSER','A3_EVIDENCE')
 $previous = @{}
 foreach ($name in $names) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 $secrets = @{}
@@ -29,6 +30,8 @@ try {
     $env:D2_DB_USERNAME = 'marketplace_test'
     $env:D2_DB_PASSWORD = $secrets['TEST_DB_PASSWORD']
     $env:D2_ADMIN_PASSWORD = $secrets['TEST_ADMIN_PASSWORD']
+    $env:A3_RUN_BROWSER = if ($RunBrowser) { 'true' } else { 'false' }
+    $env:A3_EVIDENCE = $output
     "REQUESTED_DATABASE=$env:D2_DB_NAME" | Set-Content (Join-Path $output 'target.txt')
     $build = Join-Path $output 'build'
     $arguments = @('-B','-ntp','-Pdb-it','-Dmaven.repo.local=../.local-tools/m2/repository',"-Dmarketplace.build.directory=$build",'verify')

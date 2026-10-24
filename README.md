@@ -1,6 +1,6 @@
 # AI 개발 연습용 마켓플레이스
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](docs/work-items/P01-completion-audit.md)을 기준으로 한다. P01의 결과·제한은 해당 기록을 따른다. P02-A1에 이어 [P02-A2](docs/work-items/P02-A2.md)의 인증·JDBC 세션 구현과 검증을 진행했다. P02-A3는 미착수다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](docs/work-items/P01-completion-audit.md)을 기준으로 한다. 회원 기반·JDBC 인증에 이어 [P02-A3](docs/work-items/P02-A3.md)의 React 가입·이메일 확인·로그인 연결과 검증을 완료했다. 다음 단계는 진행하지 않았다.
 
 익숙한 Java·Spring 경험을 활용하고 React를 배우면서 AI와 함께 유지보수 가능한 CRUD 마켓플레이스를 만드는 포트폴리오 프로젝트다. 개발자가 생성된 코드의 흐름을 이해하고 직접 수정·검증하며, 구매·판매·사이트 운영 기능을 완성한 뒤 재현한 문제를 근거로 MSA로 발전시킨다.
 
@@ -37,8 +37,8 @@
 
 ## 진행 상태
 
-P01 기반 구현과 단계별 검증 기록을 종합 점검했다. 현재 재검증은 Java 117개, Vitest 47개, Node 68개, Playwright 16개와 타입·린트·빌드다. 실제 DB 통합은 후속 보완에서 최신 코드12개를 재검증했다. E4·E5 조합과 [현재 결과](docs/work-items/P01-db-followup.md)를 확인한다.
+P01 기반 구현과 단계별 검증 기록을 종합 점검했다. 당시 재검증은 Java 117개, Vitest 47개, Node 68개, Playwright 16개와 타입·린트·빌드였다. 실제 DB 통합은 후속 보완에서 당시 최신 코드12개를 재검증했다. E4·E5 조합과 [P01 결과](docs/work-items/P01-db-followup.md)를 확인한다.
 
 화면은 역할별 공개 틀이며 로그인·상품·주문·권한 기능은 아직 없다. health는 정상 200·UP / 장애 503·DOWN의 status 단일 필드 계약을 유지한다. 현재 실행 방법은 [로컬 실행 안내](docs/local-development.md), 미검증과 제한은 [종합 점검](docs/work-items/P01-completion-audit.md)을 따른다.
 
-P08 구매 완료, P12 전체 기능·유지보수, P14 MSA 전환은 후속 목표다. P02-A2 로그인·로그아웃·me·csrf와 JDBC 세션을 구현했다. 최신 기본124개·통합28개가 통과했다. HTTP 가입·이메일 확인 어댑터와 React 인증 화면은 아직 없으며 [완료 기록과 한계](docs/work-items/P02-A2.md)를 따른다. P02-A3는 아직 진행하지 않는다.
+P08 구매 완료, P12 전체 기능·유지보수, P14 MSA 전환은 후속 목표다. P02-A3까지 가입·확인 HTTP와 React 화면·세션·CSRF 연결을 구현했다. 기본126개·DB통합31개·인증 브라우저4개, Vitest51개·Node68개·기존 브라우저16개가 통과했다. [완료 기록·재현 방법·제한](docs/work-items/P02-A3.md)을 따른다. 메일은 로컬 테스트 방식이며 실제 외부 메일 발송·프로필·주소 기능은 아직 없다.

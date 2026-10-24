@@ -73,7 +73,8 @@ public class AuthConfiguration {
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
+                                "/api/auth/signup", "/api/auth/verify-email").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) -> AuthJson.error(request, response, 401))
@@ -85,6 +86,7 @@ public class AuthConfiguration {
                 .logout(logout -> logout.logoutUrl("/api/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) ->
                                 AuthJson.write(response, 200, Map.of("status", "LOGGED_OUT"))))
+                .addFilterAfter(new AttemptLimitFilter(), org.springframework.security.web.csrf.CsrfFilter.class)
                 .addFilterBefore(new CurrentMemberFilter(members), AuthorizationFilter.class);
         return http.build();
     }

@@ -25,7 +25,7 @@ export function SiteLayout() {
           <NavLink to="/" end>둘러보기</NavLink>
           {workspaces.map((workspace) => <NavLink key={workspace.path} to={workspace.path}>{workspace.label}</NavLink>)}
         </nav>
-        <span className="badge header-badge">화면 미리보기</span>
+        <Link className="account-link" to="/account">내 계정 · 로그인</Link>
       </header>
       <main id="main-content" ref={mainRef} tabIndex={-1}><Outlet /></main>
       <footer>

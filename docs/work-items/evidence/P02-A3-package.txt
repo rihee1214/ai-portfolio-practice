@@ -1,0 +1,1 @@
+PASS: PostgresJdbcIT/TestMailboxEndpoint absent from production JAR

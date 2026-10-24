@@ -73,7 +73,107 @@ import static org.assertj.core.api.Assertions.assertThat;
             "management.endpoints.jmx.domain=com.example.marketplace.dbfollowup",
             "spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
+
+    private HttpResponse<String> authJsonPost(HttpClient browser, String path, Map<String, String> body, String csrf)
+            throws Exception {
+        var builder = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(authMapper.writeValueAsString(body)));
+        if (csrf != null) { builder.header("X-CSRF-TOKEN", csrf); }
+        return browser.send(builder.build(), HttpResponse.BodyHandlers.ofString());
+    }
+
+    @Test
+    void signupAndVerificationHttpRejectCsrfAndBadInputWithoutChanges() throws Exception {
+        var browser = authBrowser();
+        var body = Map.of("email", "guard-a3@example.com", "password", "guard-a3-password");
+        assertEquals(403, authJsonPost(browser, "/api/auth/signup", body, null).statusCode());
+        assertEquals(0, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE email=:email",
+                Map.of("email", "guard-a3@example.com"), Integer.class));
+        String csrf = csrfToken(browser);
+        assertEquals(400, authJsonPost(browser, "/api/auth/signup",
+                Map.of("email", "invalid", "password", "short"), csrf).statusCode());
+        assertEquals(201, authJsonPost(browser, "/api/auth/signup", body, csrf).statusCode());
+        assertEquals(409, authJsonPost(browser, "/api/auth/signup", body, csrf).statusCode());
+        String token = mail("guard-a3@example.com").token();
+        var verification = Map.of("token", token);
+        assertEquals(403, authJsonPost(browser, "/api/auth/verify-email", verification, null).statusCode());
+        assertEquals("PENDING_EMAIL", jdbc.queryForObject(
+                "SELECT state FROM marketplace.identity_user WHERE email=:email",
+                Map.of("email", "guard-a3@example.com"), String.class));
+        assertEquals(1, jdbc.queryForObject(
+                "SELECT count(*) FROM marketplace.email_verification_token WHERE token_hash=:hash AND consumed_at IS NULL",
+                Map.of("hash", TokenSecrets.hash(token)), Integer.class));
+        assertEquals(200, authJsonPost(browser, "/api/auth/verify-email", verification, csrf).statusCode());
+        assertEquals(400, authJsonPost(browser, "/api/auth/verify-email", verification, csrf).statusCode());
+        assertEquals(1, jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE email=:email",
+                Map.of("email", "guard-a3@example.com"), Integer.class));
+    }
+    @org.springframework.web.bind.annotation.RestController
+    @org.springframework.context.annotation.Profile("c3-fixture")
+    static class TestMailboxEndpoint {
+        private final LocalTestMailbox mailbox;
+        TestMailboxEndpoint(LocalTestMailbox mailbox) { this.mailbox = mailbox; }
+        @org.springframework.web.bind.annotation.GetMapping("/__test/mail")
+        Map<String, String> token(@org.springframework.web.bind.annotation.RequestParam String email,
+                jakarta.servlet.http.HttpServletResponse response) {
+            response.setHeader("Cache-Control", "no-store");
+            return Map.of("token", mailbox.messages().stream().filter(item -> item.recipient().equals(email))
+                    .findFirst().orElseThrow().token());
+        }
+    }
+
+    private void runAuthBrowsersIfRequested() throws Exception {
+        if (!"true".equals(System.getenv("A3_RUN_BROWSER"))) { return; }
+        var root = java.nio.file.Path.of("..").toAbsolutePath().normalize();
+        var node = root.resolve(".local-tools/node-v24.22.0-win-x64/node.exe");
+        var builder = new ProcessBuilder(node.toString(), "node_modules/@playwright/test/cli.js", "test",
+                "--config=auth-e2e/playwright.config.ts").directory(root.resolve("frontend").toFile());
+        builder.environment().put("A3_API_PORT", Integer.toString(port));
+        builder.environment().put("PATH", node.getParent() + java.io.File.pathSeparator + System.getenv("PATH"));
+        builder.redirectErrorStream(true).redirectOutput(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "browser.txt").toFile());
+        var process = builder.start();
+        if (!process.waitFor(150, TimeUnit.SECONDS)) {
+            process.descendants().forEach(ProcessHandle::destroyForcibly);
+            process.destroyForcibly();
+            throw new AssertionError("Auth browser verification timed out");
+        }
+        assertEquals(0, process.exitValue(), "See isolated evidence browser.txt");
+    }
+
+    @Test
+    void authMutationLimitReturns429WithoutChangingAccount() throws Exception {
+        var browser = authBrowser();
+        String token = csrfToken(browser);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(401, authRequest(browser, "/api/auth/login",
+                    loginForm("limited-a3@example.com", "wrong-password"), token).statusCode());
+        }
+        var blocked = authRequest(browser, "/api/auth/login", loginForm(" LIMITED-A3@example.com ", "wrong"), token);
+        assertEquals(429, blocked.statusCode());
+        assertEquals("60", blocked.headers().firstValue("Retry-After").orElseThrow());
+        assertEquals("RATE_LIMITED", authMapper.readTree(blocked.body()).get("code").asText());
+    }
+    @Test
+    void signupHttpRequiresCsrfAndReturnsNoSecrets() throws Exception {
+        var browser = authBrowser();
+        String token = csrfToken(browser);
+        var response = browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/api/auth/signup"))
+                .header("Content-Type", "application/json").header("X-CSRF-TOKEN", token)
+                .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"http-a3@example.com\",\"password\":\"a3-test-password\"}"))
+                .build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(201, response.statusCode());
+        assertFalse(response.body().contains("password"));
+        assertFalse(response.body().contains("token"));
+        var verify = browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/api/auth/verify-email"))
+                .header("Content-Type", "application/json").header("X-CSRF-TOKEN", token)
+                .POST(HttpRequest.BodyPublishers.ofString(authMapper.writeValueAsString(Map.of("token", mail("http-a3@example.com").token()))))
+                .build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, verify.statusCode());
+        runAuthBrowsersIfRequested();
+    }
 
     private final tools.jackson.databind.json.JsonMapper authMapper = tools.jackson.databind.json.JsonMapper.builder().build();
 
