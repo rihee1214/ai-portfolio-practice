@@ -1,6 +1,6 @@
 # 마켓플레이스 전체 기술 설계
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. P01의 결과·제한은 해당 기록을 따른다. P02-A1은 [회원 기반 작업](work-items/P02-A1.md)에서 진행하며 P02-A2는 미착수다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. P01의 결과·제한은 해당 기록을 따른다. P02-A1은 [회원 기반 작업](work-items/P02-A1.md)에서 완료했으며 P02-A2는 미착수다.
 
 개정일: 2026-10-21 / 설계 v4 Java·Spring Boot + React / 구현 기준 설계; 현재 상태는 P01 종합 점검 참조
 
