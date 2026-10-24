@@ -1096,6 +1096,62 @@ class PostgresJdbcIT {
     }
 
     @Test
+    void verificationRechecksExpiryAfterTokenLockWait() throws Exception {
+        verifyExpiryAfterLockWait("email_verification_token");
+    }
+
+    @Test
+    void verificationRechecksExpiryAfterMemberLockWait() throws Exception {
+        verifyExpiryAfterLockWait("identity_user");
+    }
+
+    private void verifyExpiryAfterLockWait(String table) throws Exception {
+        Instant issuedAt = Instant.parse("2030-01-01T00:00:00Z");
+        String email = "r1-" + table + "@example.com";
+        UUID member = serviceAt(issuedAt, mailbox).register(email, SIGNUP_PASSWORD);
+        String token = mail(email).token();
+        var current = new java.util.concurrent.atomic.AtomicReference<>(issuedAt.plusSeconds(1799));
+        Clock moving = new Clock() {
+            @Override public java.time.ZoneId getZone() { return ZoneOffset.UTC; }
+            @Override public Clock withZone(java.time.ZoneId zone) { return this; }
+            @Override public Instant instant() { return current.get(); }
+        };
+        var service = new SignupService(identityStore, passwordHasher, mailbox, moving, transactionManager);
+        try (var pool = Executors.newSingleThreadExecutor()) {
+            java.util.concurrent.Future<String> result;
+            try (var blocker = source.getConnection()) {
+                blocker.setAutoCommit(false);
+                String column = table.equals("identity_user") ? "id" : "user_id";
+                try (var statement = blocker.prepareStatement("SELECT " + column + " FROM marketplace." + table + " WHERE " + column + "=? FOR UPDATE")) {
+                    statement.setObject(1, member);
+                    try (var rows = statement.executeQuery()) { assertTrue(rows.next()); }
+                }
+                result = pool.submit(() -> {
+                    try { service.verifyEmail(token); return "ok"; }
+                    catch (SignupException expected) { return expected.getMessage(); }
+                });
+                long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
+                boolean waiting = false;
+                while (System.nanoTime() < deadline) {
+                    waiting = jdbc.queryForObject("""
+                            SELECT count(*) > 0 FROM pg_stat_activity WHERE datname=current_database()
+                            AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query
+                            """, Map.of("query", "%marketplace." + table + "%"), Boolean.class);
+                    if (waiting) { break; }
+                    Thread.sleep(10);
+                }
+                current.set(issuedAt.plusSeconds(1800));
+                blocker.commit();
+                assertTrue(waiting, "Verification must actually wait for " + table + " before clock advances");
+            }
+            assertEquals("INVALID_EMAIL_TOKEN", result.get(10, TimeUnit.SECONDS));
+        }
+        assertEquals("PENDING_EMAIL", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", member), String.class));
+        assertNull(jdbc.queryForObject("SELECT email_verified_at FROM marketplace.identity_user WHERE id=:id", Map.of("id", member), java.sql.Timestamp.class));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.email_verification_token WHERE user_id=:id", Map.of("id", member), java.sql.Timestamp.class));
+    }
+
+    @Test
     void mailboxPreparationFailureRollsBackAllSignupRows() {
         VerificationMailbox unavailable = (recipient, token, expires) -> { throw new SignupException("MAILBOX_UNAVAILABLE"); };
         var service = serviceAt(Instant.now(), unavailable);
@@ -1134,6 +1190,20 @@ class PostgresJdbcIT {
         assertThrows(SignupException.class, () -> signup.verifyEmail(mail("suspended@example.com").token()));
         assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.email_verification_token WHERE user_id=:id",
                 Map.of("id", id), java.sql.Timestamp.class));
+        UUID failing = signup.register("activation-write-failure@example.com", SIGNUP_PASSWORD);
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.identity_user ADD CONSTRAINT r1_reject_activation CHECK (id <> '"
+                + failing + "'::uuid OR state <> 'ACTIVE') NOT VALID");
+        try {
+            var failure = assertThrows(SignupException.class,
+                    () -> signup.verifyEmail(mail("activation-write-failure@example.com").token()));
+            assertEquals("VERIFICATION_UNAVAILABLE", failure.getMessage());
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.identity_user DROP CONSTRAINT r1_reject_activation"); }
+        assertEquals("PENDING_EMAIL", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", failing), String.class));
+        assertNull(jdbc.queryForObject("SELECT email_verified_at FROM marketplace.identity_user WHERE id=:id", Map.of("id", failing), java.sql.Timestamp.class));
+        assertNull(jdbc.queryForObject("SELECT consumed_at FROM marketplace.email_verification_token WHERE user_id=:id", Map.of("id", failing), java.sql.Timestamp.class));
+        // A retry with the same token succeeds after the transient write constraint is removed.
+        signup.verifyEmail(mail("activation-write-failure@example.com").token());
+        assertEquals("ACTIVE", jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id", Map.of("id", failing), String.class));
     }
 
     private HttpResponse<String> request(String method, String path) throws Exception {

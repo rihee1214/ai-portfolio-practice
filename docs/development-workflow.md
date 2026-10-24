@@ -1,6 +1,6 @@
 # AI와 함께 진행하는 개발 작업 흐름
 
-현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. P01의 결과·제한은 해당 기록을 따른다. P02 기능별 구현·검증 후 [전체 점검](work-items/P02-completion-audit.md)의 R1 보완이 필요해 최종 완료 판정은 보류했다. P03는 진행하지 않았다.
+현재 P01 종합 점검 결과는 [완료 점검 기록](work-items/P01-completion-audit.md)을 기준으로 한다. P01의 결과·제한은 해당 기록을 따른다. [P02 전체 점검](work-items/P02-completion-audit.md)의 R1 재현·수정·독립 검증을 완료했다. 계획 범위 완료와 운영 준비 제한을 구분하며 P03는 진행하지 않았다.
 
 설계 v4 Java·Spring Boot + React / 2026-10-21
 

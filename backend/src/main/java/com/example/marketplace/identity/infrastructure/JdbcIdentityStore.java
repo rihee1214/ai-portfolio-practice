@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 public final class JdbcIdentityStore implements IdentityStore {
@@ -28,7 +29,18 @@ public final class JdbcIdentityStore implements IdentityStore {
     }
 
     @Override
-    public boolean consumeAndActivate(String tokenHash, Instant now) {
+    public boolean consumeAndActivate(String tokenHash, Supplier<Instant> currentTime) {
+        var members = jdbc.queryForList("SELECT user_id FROM marketplace.email_verification_token WHERE token_hash=:hash",
+                Map.of("hash", tokenHash), UUID.class);
+        if (members.isEmpty()) { return false; }
+        UUID member = members.getFirst();
+        // All identity mutations lock the member before credentials/tokens; avoid reversed lock order.
+        if (jdbc.queryForList("SELECT id FROM marketplace.identity_user WHERE id=:id AND state='PENDING_EMAIL' FOR UPDATE",
+                Map.of("id", member), UUID.class).isEmpty()) { return false; }
+        if (jdbc.queryForList("SELECT user_id FROM marketplace.email_verification_token WHERE token_hash=:hash AND user_id=:id FOR UPDATE",
+                Map.of("hash", tokenHash, "id", member), UUID.class).isEmpty()) { return false; }
+        // Either lock can wait across expiry. Sample only after both locks have been acquired.
+        Instant now = currentTime.get();
         var ids = jdbc.query("""
                 UPDATE marketplace.email_verification_token SET consumed_at=:now
                 WHERE token_hash=:hash AND consumed_at IS NULL AND expires_at>:now

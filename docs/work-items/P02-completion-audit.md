@@ -1,18 +1,18 @@
 # P02 전체 완료 점검
 
-2026-10-24 / 제품 기준 `01c878eb83063c38c87af24027f9c3c8a018f4c9`
+2026-10-24 / 최초 점검 제품 기준 `01c878e`, R1 보완 기준 `d586fcf` 이후 변경
 
 ## 판정
 
-**계획된 기능 구현은 갖춰져 있으나 P02 전체 최종 완료 판정은 보류한다.** 이메일 확인 토큰의 잠금 대기 중 만료 처리에서 정적 결함 후보와 필수 경계 검증 공백 R1을 발견했다. 기존 테스트 통과가 이 시나리오까지 검증한 것은 아니다. 보완 후 새 격리 DB에서 재검증해야 한다. P03는 미착수로 유지한다.
+**P02 계획 범위의 구현·검증·독립 검토 완료.** 최초 점검에서 보류했던 R1은 두 잠금 대기 시나리오에서 실제 재현한 뒤 수정했다. 최신 독립 Java130·DB48 및 동일 제품 코드의 인증 브라우저12 통과로 보류 사유를 해소했다. 아래 운영 준비 제한은 그대로 남으며 실서비스 전체 준비 완료를 의미하지 않는다. P03는 미착수로 유지한다.
 
-이번 작업은 코드·계획·테스트·저장된 실행 증거의 대조 점검이다. 제품/테스트 코드를 변경하거나 테스트 서버·DB를 생성·시작·중단하지 않았다. 기존 서버와 모든 DB를 변경하지 않았다. 이전 단계 완료 문서는 당시 결과로 보존하고 현재 판단은 이 문서를 우선한다.
+최초 점검은 읽기 전용 대조였다. 이후 사용자가 검토 세션에서 R1 재현·수정을 승인해 [P02-R1](P02-R1.md)에서 제품·검사를 보완하고 새 격리 DB4개를 생성해 검증했다. 기존 서버·DB 및 새 검증 DB는 모두 유지했다. 이전 단계 완료 문서는 당시 결과로 보존하고 현재 판단은 이 문서를 우선한다.
 
 ## 계획과 구현·검증 대조
 
 | 작업 | 현재 구현 | 대응 검증과 판단 |
 | --- | --- | --- |
-| A1 가입·이메일 확인 | SignupService/JdbcIdentityStore, V3, Argon2id, 해시 토큰, 로컬 메일함 | 정규화 중복·동시 가입·일회성·고정 만료 경계·롤백·로그 비밀값 제외 통과. **잠금 대기 중 만료 R1 미검증** |
+| A1 가입·이메일 확인 | SignupService/JdbcIdentityStore, V3, Argon2id, 해시 토큰, 로컬 메일함 | 정규화 중복·동시 가입·일회성·만료·롤백·로그 비밀값 제외 통과. **R1 토큰/회원 잠금 대기 만료 및 소비 후 활성화 쓰기 실패 롤백 보완 완료** |
 | A2 로그인·JDBC 세션 | AuthConfiguration/LoginMembers/CurrentMemberFilter, V4, me/csrf | 로그인·로그아웃 JSON, ID 교체, 만료, CSRF, 계정 상태·authVersion 반영 통과 |
 | A3 React 인증 | AuthStore/AuthLayout/AuthPages, 가입/확인 HTTP | 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥·로그아웃, 오류·늦은 응답·개인 상태 제거 통과 |
 | B 복구·프로필·주소 | PasswordRecoveryService/JdbcPasswordRecoveryStore/JdbcAccountOperations, V5, React 폼 | 최신·일회성 복구, 잠금 대기 후 만료 재검사, 세션 폐기, 타인 주소 거부, 기본주소·동시성·롤백 통과 |
@@ -21,7 +21,9 @@
 
 실제 검사 이름은 [PostgresJdbcIT](../../backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java), [React 단위 검사](../../frontend/tests/unit), [인증 브라우저 검사](../../frontend/auth-e2e)를 대조했다. 기능별 상세 계약은 [A1](P02-A1.md), [A2](P02-A2.md), [A3](P02-A3.md), [B](P02-B.md), [C](P02-C.md), [D](P02-D.md)를 따른다.
 
-## R1 — 이메일 확인 토큰의 잠금 대기 중 만료
+## R1 — 최초 발견 및 보완 이력
+
+아래 항목은 최초 점검 당시 판단이다. 이후 RED에서 실제 결함이 재현됐으며 현재 코드에는 회원→토큰 잠금 후 시각을 읽는 수정이 반영됐다. 최종 결과는 다음 절의 R1 증거를 따른다.
 
 - 근거: [SignupService.verifyEmail](../../backend/src/main/java/com/example/marketplace/identity/application/SignupService.java)은 `clock.instant()` 결과를 먼저 [JdbcIdentityStore.consumeAndActivate](../../backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcIdentityStore.java)에 넘긴다. 저장소는 토큰 UPDATE의 `expires_at > :now`와 consumed_at에 이 고정 시각을 사용한다.
 - 예상 문제: 아직 유효할 때 확인을 시작한 요청이 토큰 행 잠금에서 기다리다가 만료 뒤 실행돼도 비교 시각이 갱신되지 않는다. 만료 후 활성화될 가능성이 있다. 이번 점검에서 실제 DB 재현은 하지 않았으므로 정적 근거와 재현 완료를 구별한다.
@@ -45,7 +47,9 @@ F07은 P02에서 배송지 관리 기반만 구현했다. 장바구니·찜·구
 
 ## 실행 증거와 이번 점검의 한계
 
-아래 수치는 **직전 P02-D의 동일 제품 코드에 대한 실제 실행 기록**을 이번에 다시 읽고 집계한 것이다. 이번 점검에서 전체 테스트를 새로 실행했다고 주장하지 않는다. 제품 변경이 없고 추가 실행의 구체적 목적이 없으므로 반복 실행/새 DB 생성은 하지 않았다. R1은 기존 실행에 포함되지 않는다.
+최신 R1: [RED48 중2실패](evidence/P02-R1-red-summary.json) → [개발 GREEN130+48](evidence/P02-R1-green-summary.json) → [독립130+48](evidence/P02-R1-review-summary.json) 및 [브라우저12](evidence/P02-R1-review-browser-report.json). 독립 검토에서 활성화 쓰기 실패 롤백 검사를 보강한 뒤 [최종 독립130+48](evidence/P02-R1-review-rollback-summary.json)도 통과했다. 두 독립 실행의 제품 코드는 동일하며 마지막 실행은 검사만 보강하고 브라우저는 반복하지 않았다. React/Node 및 P01 브라우저 기록은 아래 과거 결과로 구분한다.
+
+아래는 **최초 점검 때 대조한 P02-D 실행 기록**이다. 당시에는 제품 변경 없이 기록만 확인했다. 이후 R1 변경·검증은 위 최신 결과로 구분하며, 아래 D 실행에는 R1 검사가 포함되지 않는다.
 
 | 증거 | 확인 결과 |
 | --- | --- |
@@ -59,4 +63,4 @@ Node 전송 검사68건은 P02-B 당시 기록이며 최신 P02 전체 재실행
 
 ## 독립 검토
 
-[검토 및 반영세션의 전체 검토](P02-completion-review.md)를 함께 따른다. R1은 해당 세션이 먼저 발견했고 개발세션에서도 코드·기존 테스트를 재확인했다. 현재 전체 완료 보류 사유는 R1이며 운영 준비 제한은 별도 분류다. 다음 요청은 P02-R1 보완으로 한정할 수 있으며, 이번에는 구현하거나 P03를 시작하지 않았다.
+[검토 및 반영세션의 전체 검토](P02-completion-review.md)를 함께 따른다. R1은 해당 세션이 먼저 발견했고 개발세션의 실제 재현·수정 후 독립 검증까지 완료했다. P02 계획 범위 내 필수 수정 잔여는 없으며 운영 준비 제한은 별도 분류다. P03는 시작하지 않았다.

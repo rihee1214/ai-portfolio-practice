@@ -81,7 +81,7 @@ public final class SignupService implements SignupOperations {
         }
         try {
             transaction.executeWithoutResult(status -> {
-                if (!store.consumeAndActivate(TokenSecrets.hash(token), clock.instant())) {
+                if (!store.consumeAndActivate(TokenSecrets.hash(token), clock::instant)) {
                     throw new SignupException("INVALID_EMAIL_TOKEN");
                 }
             });
