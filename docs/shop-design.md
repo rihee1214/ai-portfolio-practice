@@ -440,3 +440,6 @@ P04-B SKU 세부 계약은 [작업 기록](work-items/P04-B.md)을 따른다. �
 
 
 P04-C의 세부 계약은 [작업 기록](work-items/P04-C.md)을 따른다. TwelveMonkeys imageio-webp 3.15.0과 JDK JPEG/PNG 디코더를 사용하고 메타데이터 없는 PNG로 재인코딩한다. 상품5슬롯·매대1슬롯, 5MiB 입력/출력·4096px 변·1600만 픽셀 제한과 명시적 MEDIA_ROOT를 적용한다. media가 자산과 연결 슬롯을 소유하며 catalog/seller 공개 API로 쓰기 자격과 잠금을 확인한다. DB 연결→회원→매대→상품 잠금 뒤 짧은 파일 모니터를 취하고, 읽기/정리도 연결을 먼저 확보한다. 새 DB마다 별도 namespace와 루트를 사용한다. 재고·구매는 P04-C 범위가 아니다.
+
+
+P04-D의 수동 재고 조정은 [세부 계약](work-items/P04-D.md)을 따른다. inventory_balance와 stock_movement는 inventory가 소유하고 catalog의 공개 SKU 권한 계약으로 판매자/운영자 및 대상 상태를 확인한다. onHand 절대값을 입력 version으로 조정하며 reserved 하한을 지킨다. 잔액 변경과 actor·사유·원인·전후값·버전 이력은 같은 거래에 저장한다. 전역 requestId의 성공 재전송은 현재 접근/쓰기 자격 확인 뒤 최초 결과를 반환하고 다른 내용은409다. 기존 SKU0보충 및 새 SKU 최초 조정 생성으로 타 모듈의 inventory 테이블 쓰기를 피한다. 예약 생성·확정·해제·만료는 P04-E에서 별도 설계/검증하며 현재 기능에 포함하지 않는다.

@@ -13,10 +13,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 public final class JdbcSkus implements Skus {
     private final NamedParameterJdbcTemplate jdbc;
     private final Products products;
+    private final com.example.marketplace.identity.api.AccessPolicy access;
     private final com.example.marketplace.seller.api.Stores stores;
     private final org.springframework.transaction.support.TransactionTemplate tx;
     private final tools.jackson.databind.ObjectMapper mapper=new tools.jackson.databind.ObjectMapper();
-    public JdbcSkus(NamedParameterJdbcTemplate jdbc,Products products,com.example.marketplace.seller.api.Stores stores,org.springframework.transaction.PlatformTransactionManager manager) { this.jdbc=jdbc; this.products=products; this.stores=stores; tx=new org.springframework.transaction.support.TransactionTemplate(manager); }
+    public JdbcSkus(NamedParameterJdbcTemplate jdbc,Products products,com.example.marketplace.seller.api.Stores stores,org.springframework.transaction.PlatformTransactionManager manager,com.example.marketplace.identity.api.AccessPolicy access) { this.access=access; this.jdbc=jdbc; this.products=products; this.stores=stores; tx=new org.springframework.transaction.support.TransactionTemplate(manager); }
     @Override public Sku save(UUID owner,UUID product,UUID id,Input input) {
         products.own(owner,product);
         if(input==null||input.price()==null||input.price()<0||input.price()>999999999||input.active()==null) { throw new CatalogException(400); }
@@ -47,6 +48,17 @@ public final class JdbcSkus implements Skus {
                 return jdbc.queryForObject("SELECT * FROM marketplace.catalog_sku WHERE id=:id",p,this::map);
             });
         } catch(org.springframework.dao.DuplicateKeyException conflict) { throw new CatalogException(409); }
+    }
+    @Override public void inventoryAccess(UUID actor,UUID product,UUID sku,boolean administrator,boolean write) {
+        if(administrator) { access.require(actor,com.example.marketplace.identity.api.AccessArea.CONTENT); }
+        else { products.own(actor,product); }
+        var owners=jdbc.queryForList("SELECT s.owner_id FROM marketplace.catalog_product p JOIN marketplace.seller_store s ON s.id=p.store_id WHERE p.id=:product",Map.of("product",product),UUID.class);
+        if(owners.isEmpty()) { throw new CatalogException(404); }
+        if(sku!=null&&jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_sku WHERE product_id=:product AND id=:sku",Map.of("product",product,"sku",sku),Integer.class)==0) { throw new CatalogException(404); }
+        if(write) {
+            products.lockForMedia(owners.getFirst(),product);
+            if(administrator) { access.require(actor,com.example.marketplace.identity.api.AccessArea.CONTENT); }
+        }
     }
     private java.util.List<Option> normalize(java.util.List<Option> options) {
         if(options==null||options.size()>3) { throw new CatalogException(400); }

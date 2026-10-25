@@ -1,0 +1,62 @@
+[
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Skus.java",
+    "sha256": "42903900D269A87B5C6D26E0737DD0D8BF908244C9EA029957EFF94EC36A1D68"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcSkus.java",
+    "sha256": "19CD9B3654A2C7AEFA0A4C2327810381EF5E5F1A714F7264A43E35A127A42AF5"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/Inventory.java",
+    "sha256": "E91221B73B77BCAD395588CAAB11BAC7CA167D3AC03A3B9956A092E9C85DCFF6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/InventoryException.java",
+    "sha256": "EF8F4801E532F6A0EEBE4EF7A5111812BD4D7902BF827DCB97AAC3FA1692C4BF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/infrastructure/JdbcInventory.java",
+    "sha256": "C4F4CE3D04F4FA5DC80BCE812E9F8F8C90CB389269A7A8401F5B1AEC4935251A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/web/InventoryController.java",
+    "sha256": "9D850FC9226105D78217D8C205ECAA15912D9B27D4299A03BFACFB426909A73B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/web/InventoryErrors.java",
+    "sha256": "7D015B870E13D0ED1B12217CD6B424C3BA57413080C2C7E00108AF0D290AE1A7"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V17__inventory_balances.sql",
+    "sha256": "0954274DB57D24C4EA748182061EEC79AB06CFA79507B3601C8C324F6A39792F"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "sha256": "C51B233581155E270E73AADEBA70EABED11A9F88CEAEB932AE66F2B91C8CF46E"
+  },
+  {
+    "path": "frontend/auth-e2e/catalog.spec.ts",
+    "sha256": "4E354B67ABEACFC1087FDF0E342F431F702CF197576E8A9EF2CC2E0481E7C65D"
+  },
+  {
+    "path": "frontend/src/pages/CatalogPages.tsx",
+    "sha256": "6A37DD65032E4EC124519882CCA49A487D6B9EA2FDA239A34472EFB022607D6E"
+  },
+  {
+    "path": "frontend/src/pages/InventoryPanel.tsx",
+    "sha256": "9BEDADDEC3CEBD79F3D2534C676D5DC15C2EADFBA135A9214645BA81481ACEC2"
+  },
+  {
+    "path": "frontend/src/pages/SkuPanel.tsx",
+    "sha256": "1611837D890B495886E672E9863D38C71941E64100BC14BDD6537A7A508F9492"
+  },
+  {
+    "path": "frontend/tests/unit/Catalog.test.tsx",
+    "sha256": "29590A7E6A23D406B1AE5C76E3B67D33956EEF2560C424027034AB4D939D8EA8"
+  },
+  {
+    "path": "frontend/tests/unit/Inventory.test.tsx",
+    "sha256": "C86A9E43E7BCB4A00E67CF1CE417DBA7368A8C1A5AD8FF698305402EA0CE13F3"
+  }
+]

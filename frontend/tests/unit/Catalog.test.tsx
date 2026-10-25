@@ -113,3 +113,19 @@ test('선택한 상품에 이미지 업로드와 대체 텍스트 입력이 있�
   expect(await screen.findByLabelText('이미지 파일 1')).toBeEnabled()
   expect(screen.getByLabelText('이미지 설명 1')).toBeEnabled()
 })
+
+test('상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있다', async () => {
+  const product = { id, slug: 'stock-product', title: '재고 상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  vi.stubGlobal('fetch', vi.fn(async (path: string) => {
+    if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
+    if (path.includes('/inventory')) return json({ items: [{ id, code: 'sku-test', onHand: 0, reserved: 0, available: 0, version: 0 }], page: 0, hasMore: false })
+    if (path.includes('/skus')) return json({ items: [], page: 0, hasMore: false })
+    return json({ items: path.startsWith('/api/categories') ? [] : [product], page: 0, hasMore: false })
+  }))
+  const auth = new AuthStore(); await auth.refresh()
+  render(<AuthContext value={auth}><ProductPage /></AuthContext>)
+  await userEvent.setup().click(await screen.findByRole('button', { name: '재고 상품 · 초안' }))
+  await userEvent.setup().click(await screen.findByRole('button', { name: /sku-test · 보유/ }))
+  expect(screen.getByLabelText('보유 수량')).toHaveValue(0)
+  expect(screen.getByLabelText('재고 조정 사유')).toBeVisible()
+})

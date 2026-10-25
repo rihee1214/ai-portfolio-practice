@@ -1,0 +1,626 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\.database",
+    "sha256": "B15BD9CF91220A51EDFBDCCC83BC454DB573649450AD2F1B45B97C6C93C9C65E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\0f6e671e-5916-4f0a-bad2-dba506aa5b46.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\34bfdeb3-5767-4108-b10d-eb513a7836cc.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\353461ea-3256-4f64-8c81-1c8dd231bbe5.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\511d7a1c-4cf8-463e-bc14-6e0256f42a0c.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\c301c350-7cda-415a-ac0f-0e1fa9edff73.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\d8b23b58-a1e1-4b38-a39d-bc781fc92938.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\fd1d143d-a8d3-4fcf-a3b5-b60744e82155.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-boundaries\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\.database",
+    "sha256": "09B95D089C366431403DEF69F4CA0B38DA9CCE07CF73AF83887001F3D41D71AD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\55d2a8c4-72dc-4fe1-b791-be1b03d77faf.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\649c3528-a98a-42ed-8745-8e21ec5c7e55.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\6af505ba-c3d2-4c90-afb6-1dfd6a492cbe.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\7d3edbf0-0d51-4f03-9190-d6be8f5187ad.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\800c1d01-fc9a-49be-9740-4b79a4b410d6.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\a5380f0b-97ef-4eaf-8f99-002099bb90ba.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\aa2bf97f-8c24-411e-a6de-a61532fd495d.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\b7208ceb-007b-453f-9c28-c3c8144e58c0.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\bf45c897-c24b-4915-acc6-9f7a559c2c0e.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\c84c4a21-0522-4fc2-890e-9c0de4c18ceb.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\d913ff2c-731c-48d7-bbe7-0845e37f7e42.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\edfdf37f-ac3b-4552-af0d-b772ccd7ff84.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\f2c7dcef-34c1-4d0c-8f57-e6e97b94ba00.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\f67079bb-515c-44a2-8443-0f743815893a.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\fa11213f-006c-43d7-a0b6-e51c7a7a2d47.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\fc1dbede-356d-4234-b36e-f0d431624a17.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\.database",
+    "sha256": "B54C224B1ABCF4467A9D3A08CC0B971C1A6D8E1DA40CC691913FBD026A684E0E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\0ef1ca37-ddb0-4023-9950-1bd51649188f.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\1556523e-1702-414d-bce3-27ec23f22a91.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\171daca5-7aee-4381-b609-625e1ab56688.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\19622e3f-a90a-4d58-b7bd-1e8232806f78.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\1dbe90a7-2e65-4927-84a7-b25b3b49a99d.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\20d8f065-edf1-4283-8dcf-28aa7988810b.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\302ab97f-120c-475c-a79a-fc2e7e892b65.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\35b25473-0d46-41b9-9389-0708ee0fd329.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\3edf79ef-7cf2-46a9-bc17-4bce72110fd2.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\4d78cccd-3808-41bb-a872-4ae3b509a1f9.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\5e5aacbe-dd0a-4e30-8311-5e5c4a891775.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\85b3a992-8c9f-4407-bb5e-cd0104a27b40.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\8c797bb5-551d-4790-ba1d-73d6101910c4.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\95d4ecdc-92bf-4e0a-a658-f3ce8ae369ec.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\c65a5544-10ce-474d-b392-e9131a7ff389.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\ca87c767-3861-4b43-852b-df442f3be14b.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-final2\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\.database",
+    "sha256": "56D0F98D9DAFCB9F831F63E26D4B765C8E8F736E676712F4F3713F44A0F00529"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\17f28fd3-6511-464a-a04e-499f591473bf.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\3337280c-8e01-4595-9fa2-e2d916dbaa89.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\356c4152-c00b-44b8-8bc9-7a9ab1b89ea5.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\57aac696-845d-4b89-a9e9-d76a17055dc7.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\5d02541d-6824-4305-ac53-25c2456c650c.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\6026e372-3f65-4b4f-af03-e35008dba696.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\750228fa-9edf-468d-95be-778357ccc631.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\8002a8da-73c9-43cd-b8e3-b5825a20d674.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\a16017b1-c9e7-49e9-ae5f-858d67232b94.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\b89373ee-7353-47da-90a0-b8ac63d4e447.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\c61eb8ac-db35-41d8-96cb-daaf801aefcb.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\f0b34ce1-f2b7-4592-b975-66b7720239c6.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\fda94ef0-9fd9-445f-9960-467163e31ca0.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-full\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\.database",
+    "sha256": "05139B16C62037BEBAE6646DBEBE2173B620D20E3FDEF5139FB078FC17719B11"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\15bda390-0011-4628-9c5b-7d4d5d83c452.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\331c528d-91f8-465e-916e-270bb87647af.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\5034438c-4ba9-407a-b916-902a74df642d.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\535ca0bf-83b4-4fa0-8048-a6b8d2489d77.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\5478405f-18dc-4d95-9c09-c925c09f5c46.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\6dfd5155-1d40-46fd-b4d7-72c221ef85dc.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\702baaa4-76ca-4eab-a060-11df8c3ea707.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\91e30565-4354-4cdf-b79e-e0cc4bfe0703.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\a0512c0f-b016-4892-a092-71e397919cde.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\b0a87588-dfaa-4e86-9943-dbd99e3b7da6.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\c34edbbe-497d-4018-9c95-6706632d4e75.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\dd9f9748-6932-49e1-bcac-2e328913e1f4.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\e058dc0a-dc02-46b2-af22-689e10c35abd.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\e2e406cc-b0bc-4c3b-97b5-a8133fbcef51.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\e394d823-81bc-4508-b9f1-866c03b6fb3c.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\f7527c3c-3321-42eb-ad27-3b228296202e.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-independent-review\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green2\\media\\.database",
+    "sha256": "DD017642767FCD5DB50F7C7A306221966158E78672FCF4F82C3FED1F5FF59FB6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green2\\media\\24dc1f9c-7155-4528-8e19-c64a6a7ad4ad.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green2\\media\\48aa5299-c840-4da4-bbc9-35012c431a19.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green3\\media\\.database",
+    "sha256": "3D673D63765229CE4D4FF29214D04A82F1B09719EAC6CDE3F4BFF7D97D9C717A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green3\\media\\3df5eb81-6341-4925-9905-b5f2b902053b.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-media-green3\\media\\b14b7b33-b763-4415-8de8-61c81450ec55.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-orphan-red\\media\\.database",
+    "sha256": "D313F2F262CE5C4683838ECDA9FB561372F231F6B961713958BCEC6160EE03B0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-pool-red\\media\\.database",
+    "sha256": "03FA88A0019C3E6D5437D38C420D566E570760F2A5083EB8892E818D3C2C7930"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-c-pool-red\\media\\ad9b1287-2d18-411c-91c9-61f8895f83a6.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\.database",
+    "sha256": "33E61D112FA103240A05757443F51917340DC0F99A5279FADC633BA11D6CC74A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\8730ec50-260f-4a80-87be-2c1d1cfe2250.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\89aa0778-c79a-4caa-8517-9bc636fd9cbc.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\8a700f1f-6d46-410b-9f81-54a135e2a29e.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\8df38bb1-69a2-4c77-bb03-e8626b647120.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\ace10da0-c81f-4dd1-b9b8-49e42ec57b6d.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\ae0ac000-54ed-4137-b8f7-773023b03f40.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\b232865e-4671-4529-b73f-0fab54680303.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\b5ec8855-b28e-49d9-a0d1-2fdbb73efd80.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\d0e96bf2-ce71-4771-a42f-c12625f58678.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\dedc7bfa-8e47-47e6-af7b-61ce29166ef5.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-boundaries\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\.database",
+    "sha256": "3053832089C389956344574BBDED2ED9D8E1C63F399DD5EB817EE59393D2BAB2"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\2f97f57a-507b-4914-a52c-acc9f0896c2d.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\32e15064-c764-400e-be8b-c8d166de3e37.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\37bff733-a34a-43f3-9ceb-e2d572ad5144.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\38630247-95b6-4851-a012-3c2af5ea50ab.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\443afdec-3ef5-4513-86ea-e486991e2900.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\4dbf7f6e-8d7e-45ae-b983-b7ff43f087c3.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\54bad6d3-1473-4e1d-884b-ac8ddb4d8ef8.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\5c7d3d58-d229-4ec1-8a94-8b47f330205a.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\94f81fd4-8aca-4482-b500-d8423d9220fc.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\bf0bfce6-be43-444d-b760-92e817eb8d42.png",
+    "sha256": "6B5A565F3E3405870603E00EAD532275202A60F330AA20E5AB88A5B1D632A601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\c2f2d67c-4576-4cd0-ac72-55f88298b677.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\c7d159e0-f972-4c9b-bb13-994fa3076cab.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\ce6ae2e9-0def-48fe-bd86-5af0d0a20cdc.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\e3585b87-cc5f-42b2-8c0f-95a9d2c34a1b.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\ec2b0328-358f-42da-8b5a-b5ee8362a76d.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\f51439e3-08e1-45ab-9c24-0a98e63be83e.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-final\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\.database",
+    "sha256": "C006F9C285BCB027AC9050F6AD4EEBBB7C9D8494A8680557CB378A5D19E06EB2"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\0516f8d7-233d-45d1-8ef0-6f2621093261.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\17e8d5b6-fada-45f8-b981-ad906b033814.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\22370f4e-3ce7-4b64-8839-a042b2523f1d.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\40c71eca-9162-4ba5-97df-62f64b26e43f.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\447c071f-d72b-4cd4-99ae-6c122e52f228.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\7edfe893-035d-47a1-8020-4e5b9138cbdf.png",
+    "sha256": "230ABAE900EE54FEBD19C68D6DC9CA097BF39128B59E512491804016999CEF71"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\823894ff-6dd1-4f5c-8b3a-f1abb38e8706.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\893e3e68-2942-4608-9cc3-169f91336017.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\afa11718-edbb-4b82-87eb-9c03f9f9e036.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\d0e32128-e962-4983-a3be-b2c7ad325eb9.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\eebe7f05-8741-428c-9955-e8730b0864f8.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\f81a4428-6c1e-412a-aab7-0c56a234091f.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-full\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\.database",
+    "sha256": "8C2B2CF9BE5D5D8DDCD83DCDF7FFE9ABC564B4C344594BFD28841E4849033ACB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\286b9565-7453-46bb-a1af-b25e1f8b0c7a.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\2b15110c-c953-4ea9-b30d-fc063be4f5e2.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\35e7a888-aa90-4748-a640-7aeff4224300.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\79c8123b-2ce4-4c8d-8365-37c6cb6b8064.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\86073778-5737-49c8-8a8f-993f5c70a8cc.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\9804ef7b-0f59-435d-a8db-6e3b42c6074f.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\a767bc46-8d06-4205-b263-949f1840c1be.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\e05ad169-bbc8-4370-a317-eec3c2292ac1.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\e4b0d027-f492-41ab-b931-c54e9db77258.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\e9411a32-67d7-4b1a-93f8-168cb9c9a7d1.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-green\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\.database",
+    "sha256": "94727368E676C2B81D587E7A7BBC46B8BB43A70624BD3AA100D42488F15766DF"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\18ea0df1-2efd-4df7-b613-c7962db20736.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\22e35e5a-96de-4294-bdf3-7239ec2b1ae7.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\3972962d-8888-4535-a0b4-026f5e799f7d.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\3dabbf0b-6ca4-48a6-b12d-bcda50c58b3b.png",
+    "sha256": "3762FA03EDDA6528B638D8552642013E9861BD8F66F6BC5BE037D8C679CAB2E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\6dfddc96-2977-4f1c-b5e0-56f6e50934d8.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\9d995e61-357e-46f4-93c5-d6b09ac203f8.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\a920ed9d-7d1d-484a-805e-54afbf2215f9.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\d79aecef-4b4e-4521-9b13-ea732d9c08ab.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\eb8657a9-2848-47df-9d4d-0d5b52996384.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\f7527c32-989e-4f64-b6c8-77431d138c51.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\faf5b615-0729-4ec2-9b15-38e41fb9041b.png",
+    "sha256": "F4DFB80B30C439BE041453CA9BBFC2B64C187F1AE22EE2B05AE674C2405885CA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-d-stock-red\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  }
+]

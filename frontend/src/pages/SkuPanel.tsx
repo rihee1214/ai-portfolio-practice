@@ -12,7 +12,7 @@ export function SkuPanel({ product }: { product: Product }) {
   useEffect(() => store.connect(), [store])
   const item = state.items?.find(row => row.id === selected) ?? null
   return <section aria-label="SKU 관리"><h2>옵션·가격·판매 상태</h2>
-    <p>SKU는 실제 판매할 옵션 조합입니다. 옵션이 없으면 기본 SKU를 사용합니다. 기본 가격은 0원이며 처음에는 판매 중지 상태입니다. 재고·구매 기능은 아직 제공하지 않습니다.</p>
+    <p>SKU는 실제 판매할 옵션 조합입니다. 옵션이 없으면 기본 SKU를 사용합니다. 기본 가격은 0원이며 처음에는 판매 중지 상태입니다. 재고 수량은 재고 관리에서 조정합니다. 구매 기능은 아직 제공하지 않습니다.</p>
     <p>옵션 SKU를 등록하면 기본 SKU가 판매 중지되고 다시 활성화할 수 없습니다. 등록한 옵션 조합과 SKU 코드는 변경·삭제할 수 없습니다. 잘못된 조합은 판매 중지 후 새로 등록하세요.</p>
     {state.busy && <p role="status">SKU 처리 중입니다.</p>}{state.error && <ApiErrorNotice error={state.error} />}{state.notice && <p role="status">SKU {state.notice}</p>}
     <button disabled={state.busy} onClick={() => { select(null); void store.load() }}>SKU 다시 확인</button>

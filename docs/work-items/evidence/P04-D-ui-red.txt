@@ -1,0 +1,716 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run --run tests/unit/Catalog.test.tsx
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/Catalog.test.tsx (8 tests | 1 failed) 4011ms
+   × 상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있다 1071ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/Catalog.test.tsx > 상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있다
+TestingLibraryElementError: Unable to find role="button" and name `/sku-test · 보유/`
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <section
+      class="auth-card store-card catalog-card"
+    >
+      <h1>
+        상품 관리
+      </h1>
+      <p>
+        상품을 초안으로 등록하고 공개 등록·판매 중지·보관 상태를 관리합니다. 보관 후에는 수정하거나 복구할 수 없습니다. 상품을 선택하면 옵션·가격·이미지를 관리할 수 있습니다. 재고와 구매 기능은 아직 준비 중입니다.
+      </p>
+      <button>
+        상품 다시 확인
+      </button>
+      <ul>
+        <li>
+          <button>
+            재고 상품
+             · 
+            초안
+          </button>
+        </li>
+      </ul>
+      <nav
+        aria-label="상품 목록 페이지"
+      >
+        <button
+          disabled=""
+        >
+          이전
+        </button>
+         
+        <span>
+          1
+           페이지
+        </span>
+         
+        <button
+          disabled=""
+        >
+          다음
+        </button>
+      </nav>
+      <button>
+        새 상품
+      </button>
+      <p>
+        카테고리 목록은 페이지별로 표시합니다. 선택한 상품의 기존 카테고리는 비활성 상태여도 유지할 수 있습니다.
+      </p>
+      <nav
+        aria-label="상품 카테고리 페이지"
+      >
+        <button
+          disabled=""
+        >
+          이전
+        </button>
+         
+        <span>
+          1
+           페이지
+        </span>
+         
+        <button
+          disabled=""
+        >
+          다음
+        </button>
+      </nav>
+      <button>
+        카테고리 다시 확인
+      </button>
+      <form>
+        <fieldset>
+          <legend>
+            상품 수정
+          </legend>
+          <label>
+            상품 주소
+            <input
+              name="slug"
+              pattern="[a-z0-9][a-z0-9-]{1,61}[a-z0-9]"
+              readonly=""
+              required=""
+              value="stock-product"
+            />
+            <small>
+              영문 소문자·숫자·하이픈 3~63자, 등록 후 변경 불가
+            </small>
+          </label>
+          <label>
+            상품명
+            <input
+              aria-describedby="product-title-hint"
+              name="title"
+              required=""
+              value="재고 상품"
+            />
+          </label>
+          <small
+            id="product-title-hint"
+          >
+            1~120자
+          </small>
+          <label
+            for="product-description"
+          >
+            설명
+          </label>
+          <textarea
+            aria-describedby="product-description-hint"
+            id="product-description"
+            name="description"
+          />
+          <small
+            id="product-description-hint"
+          >
+            줄바꿈 가능, 4000자 이내
+          </small>
+          <label
+            for="product-category"
+          >
+            카테고리
+          </label>
+          <select
+            id="product-category"
+            required=""
+          >
+            <option
+              value=""
+            >
+              선택해 주세요
+            </option>
+            <option
+              value="00000000-0000-4000-8000-000000000003"
+            >
+              선택한 카테고리 (목록 밖 또는 비활성)
+            </option>
+          </select>
+          <label
+            for="product-state"
+          >
+            상품 상태
+          </label>
+          <select
+            id="product-state"
+          >
+            <option
+              value="DRAFT"
+            >
+              초안
+            </option>
+            <option
+              value="ACTIVE"
+            >
+              공개 등록
+            </option>
+            <option
+              value="STOPPED"
+            >
+              판매 중지
+            </option>
+            <option
+              value="ARCHIVED"
+            >
+              보관
+            </option>
+          </select>
+          <button
+            type="submit"
+          >
+            상품 저장
+          </button>
+        </fieldset>
+      </form>
+      <section
+        aria-label="SKU 관리"
+      >
+        <h2>
+          옵션·가격·판매 상태
+        </h2>
+        <p>
+          SKU는 실제 판매할 옵션 조합입니다. 옵션이 없으면 기본 SKU를 사용합니다. 기본 가격은 0원이며 처음에는 판매 중지 상태입니다. 재고·구매 기능은 아직 제공하지 않습니다.
+        </p>
+        <p>
+          옵션 SKU를 등록하면 기본 SKU가 판매 중지되고 다시 활성화할 수 없습니다. 등록한 옵션 조합과 SKU 코드는 변경·삭제할 수 없습니다. 잘못된 조합은 판매 중지 후 새로 등록하세요.
+        </p>
+        <button>
+          SKU 다시 확인
+        </button>
+        <ul />
+        <nav
+          aria-label="SKU 목록 페이지"
+        >
+          <button
+            disabled=""
+          >
+            이전 SKU
+          </button>
+           
+          <span>
+            1
+             페이지
+          </span>
+           
+          <button
+            disabled=""
+          >
+            다음 SKU
+          </button>
+        </nav>
+        <button>
+          새 옵션 SKU
+        </button>
+        <form>
+          <fieldset>
+            <legend>
+              옵션 SKU 등록
+            </legend>
+            <div>
+              <label>
+                옵션 이름 
+                1
+                <input
+                  name="name-0"
+                  placeholder="예: 색상"
+                />
+              </label>
+              <label>
+                옵션 값 
+                1
+                <input
+                  name="value-0"
+                  placeholder="예: 빨강"
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                옵션 이름 
+                2
+                <input
+                  name="name-1"
+                  placeholder=""
+                />
+              </label>
+              <label>
+                옵션 값 
+                2
+                <input
+                  name="value-1"
+                  placeholder=""
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                옵션 이름 
+                3
+                <input
+                  name="name-2"
+                  placeholder=""
+                />
+              </label>
+              <label>
+                옵션 값 
+                3
+                <input
+                  name="value-2"
+                  placeholder=""
+                />
+              </label>
+            </div>
+            <label>
+              SKU 가격 (원)
+              <input
+                max="999999999"
+                min="0"
+                name="price"
+                required=""
+                step="1"
+                type="number"
+                value="0"
+              />
+            </label>
+            <label
+              class="checkbox-label"
+            >
+              <input
+                name="active"
+                type="checkbox"
+              />
+              SKU 판매 활성
+            </label>
+            <label
+              class="checkbox-label"
+            >
+              <input
+                name="confirm"
+                type="checkbox"
+              />
+              기본 SKU 복귀 불가와 조합 변경 불가를 확인합니다
+            </label>
+            <button
+              type="submit"
+            >
+              옵션 SKU 등록
+            </button>
+          </fieldset>
+        </form>
+      </section>
+      <section
+        aria-label="이미지 관리"
+        class="media-panel"
+      >
+        <h2>
+          상품 이미지 (최대 5개)
+        </h2>
+        <p>
+          JPEG·PNG·WebP 파일, 5MB 이하, 가로·세로 4096px 이하 및 총 1600만 픽셀 이하를 지원합니다. 애니메이션은 지원하지 않습니다. PNG로 변환한 결과가 5MB를 넘으면 저장할 수 없습니다.
+        </p>
+        <p>
+          교체·삭제하면 이전 이미지 주소는 사용할 수 없습니다. 사진 방향은 올바르게 맞춘 뒤 올려 주세요.
+        </p>
+        <div
+          aria-atomic="true"
+          class="api-error-notice"
+          role="alert"
+        >
+          <p>
+            이미지 정보를 확인하지 못했습니다.
+          </p>
+        </div>
+        <button>
+          이미지 다시 확인
+        </button>
+      </section>
+    </section>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <section
+      class="auth-card store-card catalog-card"
+    >
+      <h1>
+        상품 관리
+      </h1>
+      <p>
+        상품을 초안으로 등록하고 공개 등록·판매 중지·보관 상태를 관리합니다. 보관 후에는 수정하거나 복구할 수 없습니다. 상품을 선택하면 옵션·가격·이미지를 관리할 수 있습니다. 재고와 구매 기능은 아직 준비 중입니다.
+      </p>
+      <button>
+        상품 다시 확인
+      </button>
+      <ul>
+        <li>
+          <button>
+            재고 상품
+             · 
+            초안
+          </button>
+        </li>
+      </ul>
+      <nav
+        aria-label="상품 목록 페이지"
+      >
+        <button
+          disabled=""
+        >
+          이전
+        </button>
+         
+        <span>
+          1
+           페이지
+        </span>
+         
+        <button
+          disabled=""
+        >
+          다음
+        </button>
+      </nav>
+      <button>
+        새 상품
+      </button>
+      <p>
+        카테고리 목록은 페이지별로 표시합니다. 선택한 상품의 기존 카테고리는 비활성 상태여도 유지할 수 있습니다.
+      </p>
+      <nav
+        aria-label="상품 카테고리 페이지"
+      >
+        <button
+          disabled=""
+        >
+          이전
+        </button>
+         
+        <span>
+          1
+           페이지
+        </span>
+         
+        <button
+          disabled=""
+        >
+          다음
+        </button>
+      </nav>
+      <button>
+        카테고리 다시 확인
+      </button>
+      <form>
+        <fieldset>
+          <legend>
+            상품 수정
+          </legend>
+          <label>
+            상품 주소
+            <input
+              name="slug"
+              pattern="[a-z0-9][a-z0-9-]{1,61}[a-z0-9]"
+              readonly=""
+              required=""
+              value="stock-product"
+            />
+            <small>
+              영문 소문자·숫자·하이픈 3~63자, 등록 후 변경 불가
+            </small>
+          </label>
+          <label>
+            상품명
+            <input
+              aria-describedby="product-title-hint"
+              name="title"
+              required=""
+              value="재고 상품"
+            />
+          </label>
+          <small
+            id="product-title-hint"
+          >
+            1~120자
+          </small>
+          <label
+            for="product-description"
+          >
+            설명
+          </label>
+          <textarea
+            aria-describedby="product-description-hint"
+            id="product-description"
+            name="description"
+          />
+          <small
+            id="product-description-hint"
+          >
+            줄바꿈 가능, 4000자 이내
+          </small>
+          <label
+            for="product-category"
+          >
+            카테고리
+          </label>
+          <select
+            id="product-category"
+            required=""
+          >
+            <option
+              value=""
+            >
+              선택해 주세요
+            </option>
+            <option
+              value="00000000-0000-4000-8000-000000000003"
+            >
+              선택한 카테고리 (목록 밖 또는 비활성)
+            </option>
+          </select>
+          <label
+            for="product-state"
+          >
+            상품 상태
+          </label>
+          <select
+            id="product-state"
+          >
+            <option
+              value="DRAFT"
+            >
+              초안
+            </option>
+            <option
+              value="ACTIVE"
+            >
+              공개 등록
+            </option>
+            <option
+              value="STOPPED"
+            >
+              판매 중지
+            </option>
+            <option
+              value="ARCHIVED"
+            >
+              보관
+            </option>
+          </select>
+          <button
+            type="submit"
+          >
+            상품 저장
+          </button>
+        </fieldset>
+      </form>
+      <section
+        aria-label="SKU 관리"
+      >
+        <h2>
+          옵션·가격·판매 상태
+        </h2>
+        <p>
+          SKU는 실제 판매할 옵션 조합입니다. 옵션이 없으면 기본 SKU를 사용합니다. 기본 가격은 0원이며 처음에는 판매 중지 상태입니다. 재고·구매 기능은 아직 제공하지 않습니다.
+        </p>
+        <p>
+          옵션 SKU를 등록하면 기본 SKU가 판매 중지되고 다시 활성화할 수 없습니다. 등록한 옵션 조합과 SKU 코드는 변경·삭제할 수 없습니다. 잘못된 조합은 판매 중지 후 새로 등록하세요.
+        </p>
+        <button>
+          SKU 다시 확인
+        </button>
+        <ul />
+        <nav
+          aria-label="SKU 목록 페이지"
+        >
+          <button
+            disabled=""
+          >
+            이전 SKU
+          </button>
+           
+          <span>
+            1
+             페이지
+          </span>
+           
+          <button
+            disabled=""
+          >
+            다음 SKU
+          </button>
+        </nav>
+        <button>
+          새 옵션 SKU
+        </button>
+        <form>
+          <fieldset>
+            <legend>
+              옵션 SKU 등록
+            </legend>
+            <div>
+              <label>
+                옵션 이름 
+                1
+                <input
+                  name="name-0"
+                  placeholder="예: 색상"
+                />
+              </label>
+              <label>
+                옵션 값 
+                1
+                <input
+                  name="value-0"
+                  placeholder="예: 빨강"
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                옵션 이름 
+                2
+                <input
+                  name="name-1"
+                  placeholder=""
+                />
+              </label>
+              <label>
+                옵션 값 
+                2
+                <input
+                  name="value-1"
+                  placeholder=""
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                옵션 이름 
+                3
+                <input
+                  name="name-2"
+                  placeholder=""
+                />
+              </label>
+              <label>
+                옵션 값 
+                3
+                <input
+                  name="value-2"
+                  placeholder=""
+                />
+              </label>
+            </div>
+            <label>
+              SKU 가격 (원)
+              <input
+                max="999999999"
+                min="0"
+                name="price"
+                required=""
+                step="1"
+                type="number"
+                value="0"
+              />
+            </label>
+            <label
+              class="checkbox-label"
+            >
+              <input
+                name="active"
+                type="checkbox"
+              />
+              SKU 판매 활성
+            </label>
+            <label
+              class="checkbox-label"
+            >
+              <input
+                name="confirm"
+                type="checkbox"
+              />
+              기본 SKU 복귀 불가와 조합 변경 불가를 확인합니다
+            </label>
+            <button
+              type="submit"
+            >
+              옵션 SKU 등록
+            </button>
+          </fieldset>
+        </form>
+      </section>
+      <section
+        aria-label="이미지 관리"
+        class="media-panel"
+      >
+        <h2>
+          상품 이미지 (최대 5개)
+        </h2>
+        <p>
+          JPEG·PNG·WebP 파일, 5MB 이하, 가로·세로 4096px 이하 및 총 1600만 픽셀 이하를 지원합니다. 애니메이션은 지원하지 않습니다. PNG로 변환한 결과가 5MB를 넘으면 저장할 수 없습니다.
+        </p>
+        <p>
+          교체·삭제하면 이전 이미지 주소는 사용할 수 없습니다. 사진 방향은 올바르게 맞춘 뒤 올려 주세요.
+        </p>
+        <div
+          aria-atomic="true"
+          class="api-error-notice"
+          role="alert"
+        >
+          <p>
+            이미지 정보를 확인하지 못했습니다.
+          </p>
+        </div>
+        <button>
+          이미지 다시 확인
+        </button>
+      </section>
+    </section>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/unit/Catalog.test.tsx:128:46
+    126|   render(<AuthContext value={auth}><ProductPage /></AuthContext>)
+    127|   await userEvent.setup().click(await screen.findByRole('button', { na…
+    128|   await userEvent.setup().click(await screen.findByRole('button', { na…
+       |                                              ^
+    129|   expect(screen.getByLabelText('보유 수량')).toHaveValue(0)
+    130|   expect(screen.getByLabelText('재고 조정 사유')).toBeVisible()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  11:14:07
+   Duration  6.30s (tests 66%, environment 23%, setup 5%, import 4%, transform 1%)
+

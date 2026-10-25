@@ -1,6 +1,6 @@
 # AI 개발 연습용 마켓플레이스
 
-최신 작업은 [P04-C 상품·매대 이미지](docs/work-items/P04-C.md)이며 새 격리 DB 검증과 [독립 검토](docs/work-items/P04-C-review.md)를 완료했다. 기본137·DB83·브라우저22·프런트 단위90개 통과, 필수 잔여/차단 없음. 기존 서버·DB와 과거/새 검증 DB·이미지를 보존했다. P04-D 이후는 미착수다. [P04-B 완료 기록](docs/work-items/P04-B.md)과 아래 P01~P03 수치는 당시 이력이다.
+최신 작업은 [P04-D SKU 재고](docs/work-items/P04-D.md)이며 새 격리 DB 검증과 [독립 검토](docs/work-items/P04-D-review.md)를 완료했다. 기본137·DB90·브라우저22·프런트96개 통과, 필수 잔여/차단 없음. 기존 서버·DB·검증 DB·미디어를 보존했다. P04-E 이후는 미착수다. [P04-C 완료 기록](docs/work-items/P04-C.md)과 아래 수치는 당시 이력이다.
 
 현재 P01 종합 점검 결과는 [완료 점검 기록](docs/work-items/P01-completion-audit.md)을 기준으로 한다. [P02 전체 완료 점검](docs/work-items/P02-completion-audit.md)의 R1을 실제 재현·수정·독립 검증해 **P02 계획 범위의 구현·검증을 완료**했다. [P03-A](docs/work-items/P03-A.md)의 모의 판매 신청·심사·이력과 승인 시 판매자 자격 추가를 구현했다. 독립 검토 결과는 [검토 기록](docs/work-items/P03-A-review.md)을 따른다. [P03-B](docs/work-items/P03-B.md)의 매대 기본 관리·공개 조회를 구현·검증하고 독립 검토를 완료했다. [P03-C](docs/work-items/P03-C.md)의 판매 정지·복구·폐점과 기능별 제한을 구현·검증했다. 지정 [검토 세션의 독립 검증](docs/work-items/P03-C-review.md)까지 완료했다. 다음 단계는 진행하지 않는다.
 

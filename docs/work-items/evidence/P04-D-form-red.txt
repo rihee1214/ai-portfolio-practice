@@ -1,0 +1,52 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run --run tests/unit/Inventory.test.tsx
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+stderr | tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+Encountered two children with the same key, `00000000-0000-4000-8000-000000000003:7`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+Encountered two children with the same key, `00000000-0000-4000-8000-000000000003:7`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+Encountered two children with the same key, `00000000-0000-4000-8000-000000000003:7`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+Encountered two children with the same key, `00000000-0000-4000-8000-000000000003:8`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+Encountered two children with the same key, `00000000-0000-4000-8000-000000000003:8`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ❯ tests/unit/Inventory.test.tsx (4 tests | 1 failed) 1605ms
+   × 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다 306ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/Inventory.test.tsx > 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다
+AssertionError: expected [ <input min="1" …(6)></input>, …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/unit/Inventory.test.tsx:61:45
+     59|   await user.click(screen.getByRole('button', { name: '재고 조정 저장' }))
+     60|   await screen.findByRole('button', { name: /sku-test · 보유 8/ })
+     61|   expect(screen.getAllByLabelText('보유 수량')).toHaveLength(1)
+       |                                             ^
+     62|   expect(screen.getByLabelText('보유 수량')).toHaveValue(8)
+     63| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  11:19:43
+   Duration  3.50s (tests 49%, environment 34%, setup 10%, import 5%, transform 2%)
+

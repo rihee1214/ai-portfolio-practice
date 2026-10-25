@@ -82,6 +82,141 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
+    @Test
+    void inventoryAdjustmentIsVersionedAuditedAndIdempotent() throws Exception {
+        var f=skuFixture("stock-basic"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+        var client=authBrowser(); assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-stock-basic@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+        String path="/api/seller/products/"+product.id()+"/inventory";
+        var list=accountRequest(client,"GET",path,null,null); assertEquals(200,list.statusCode(),list.body());
+        assertEquals(0,authMapper.readTree(list.body()).get("items").get(0).get("onHand").asLong());
+        var input=Map.of("onHand",10,"version",0,"reason","초기 입고","requestId",UUID.randomUUID().toString());
+        var saved=accountRequest(client,"PUT",path+"/"+sku.id(),input,csrfToken(client)); assertEquals(200,saved.statusCode(),saved.body());
+        assertEquals(1,authMapper.readTree(saved.body()).get("version").asLong());
+        assertEquals(saved.body(),accountRequest(client,"PUT",path+"/"+sku.id(),input,csrfToken(client)).body());
+        assertEquals(409,accountRequest(client,"PUT",path+"/"+sku.id(),Map.of("onHand",20,"version",0,"reason","낡은 조정","requestId",UUID.randomUUID().toString()),csrfToken(client)).statusCode());
+        var history=accountRequest(client,"GET",path+"/"+sku.id()+"/history",null,null); assertEquals(200,history.statusCode());
+        var events=authMapper.readTree(history.body()).get("items"); assertEquals(1,events.size()); assertEquals(0,events.get(0).get("beforeOnHand").asLong()); assertEquals(10,events.get(0).get("afterOnHand").asLong()); assertEquals("초기 입고",events.get(0).get("reason").asText());
+    }
+    @Test
+    void inventoryBoundariesOwnershipAndReservedFloorAreEnforced() throws Exception {
+        var f=skuFixture("stock-limits"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+        var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);
+        var client=authBrowser(); authRequest(client,"/api/auth/login",loginForm("p4b-stock-limits@example.com",SIGNUP_PASSWORD),csrfToken(client));
+        String path="/api/seller/products/"+product.id()+"/inventory/"+sku.id();
+        for(Object value:List.of(-1,1000000000L,"1",true,1.5)) {
+            assertEquals(400,accountRequest(client,"PUT",path,Map.of("onHand",value,"version",0,"reason","검사","requestId",UUID.randomUUID().toString()),csrfToken(client)).statusCode());
+        }
+        for(Object value:List.of(-1,"0",true,0.5,9007199254740991L)) {
+            assertEquals(400,accountRequest(client,"PUT",path,Map.of("onHand",1,"version",value,"reason","검사","requestId",UUID.randomUUID().toString()),csrfToken(client)).statusCode());
+        }
+        assertEquals(403,accountRequest(client,"PUT",path,Map.of("onHand",1,"version",0,"reason","검사","requestId",UUID.randomUUID().toString()),null).statusCode());
+        UUID stranger=(UUID)skuFixture("stock-stranger").get("owner");
+        assertEquals(404,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->inventory.list(stranger,product.id(),false,0)).status());
+        assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->inventory.list(owner,product.id(),true,0));
+        inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change(10L,0L,"입고",UUID.randomUUID()));
+        jdbc.update("UPDATE marketplace.inventory_balance SET reserved=4 WHERE sku_id=:id",Map.of("id",sku.id()));
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change(3L,1L,"예약 하한",UUID.randomUUID()))).status());
+        var result=inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change(4L,1L,"실사",UUID.randomUUID()));
+        assertEquals(0,result.available()); assertEquals(4,result.reserved());
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.inventory_balance SET on_hand=3 WHERE sku_id=:id",Map.of("id",sku.id())));
+        assertEquals(400,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->inventory.history(owner,product.id(),sku.id(),false,-1)).status());
+    }
+    @Test
+    void inventoryConcurrentKeysHaveOneEffectAndAuditFailureRollsBack() throws Exception {
+        var f=skuFixture("stock-race"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+        var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);
+        var input=new com.example.marketplace.inventory.api.Inventory.Change(10L,0L,"동시 재전송",UUID.randomUUID());
+        assertEquals(List.of("ok","ok"),race(()->{ inventory.adjust(owner,product.id(),sku.id(),false,input);return "ok"; }));
+        assertEquals(1,inventory.history(owner,product.id(),sku.id(),false,0).items().size());
+        var attempts=race(()->{ try { inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change(20L,1L,"동시 조정",UUID.randomUUID()));return "ok"; } catch(com.example.marketplace.inventory.api.InventoryException e) { assertEquals(409,e.status());return "conflict"; } });
+        assertEquals(1,attempts.stream().filter("ok"::equals).count());
+        var failure=new com.example.marketplace.inventory.api.Inventory.Change(30L,2L,"실패",UUID.randomUUID());
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.stock_movement ADD CONSTRAINT p4d_fail CHECK(reason<>'실패') NOT VALID");
+        try { assertThrows(DataIntegrityViolationException.class,()->inventory.adjust(owner,product.id(),sku.id(),false,failure)); }
+        finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.stock_movement DROP CONSTRAINT p4d_fail"); }
+        assertEquals(20,inventory.list(owner,product.id(),false,0).items().getFirst().onHand()); assertEquals(2,inventory.history(owner,product.id(),sku.id(),false,0).items().size());
+        assertEquals(3,inventory.adjust(owner,product.id(),sku.id(),false,failure).version());
+        assertEquals(1,inventory.adjust(owner,product.id(),sku.id(),false,input).version());
+        assertEquals(30,inventory.list(owner,product.id(),false,0).items().getFirst().onHand());
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change(11L,0L,input.reason(),input.requestId()))).status());
+        var other=context.getBean(com.example.marketplace.catalog.api.Skus.class).save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("색","청")),0L,false,0L));
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->inventory.adjust(owner,product.id(),other.id(),false,input)).status());
+    }
+    @Test
+    void inventoryHistoryPagesAndUpgradePreserveSkuData() {
+        var f=skuFixture("stock-upgrade"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+        var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);
+        for(int i=0;i<25;i++) { inventory.adjust(owner,product.id(),sku.id(),false,new com.example.marketplace.inventory.api.Inventory.Change((long)i+1,(long)i,"실사 "+i,UUID.randomUUID())); }
+        jdbc.update("UPDATE marketplace.stock_movement SET occurred_at=clock_timestamp()+interval '1 day' WHERE sku_id=:id AND version=1",Map.of("id",sku.id()));
+        var first=inventory.history(owner,product.id(),sku.id(),false,0);var next=inventory.history(owner,product.id(),sku.id(),false,1);
+        assertEquals(20,first.items().size());assertTrue(first.hasMore());assertEquals(25,first.items().getFirst().version());assertEquals(6,first.items().getLast().version());assertEquals(5,next.items().size());assertFalse(next.hasMore());assertEquals(1,next.items().getLast().version());
+        var ds=context.getBean(DataSource.class); String schema="p4d_upgrade";
+        Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").target("16").cleanDisabled(true).load().migrate();
+        jdbc.update("INSERT INTO p4d_upgrade.identity_user SELECT * FROM marketplace.identity_user WHERE id=:id",Map.of("id",owner));
+        jdbc.update("INSERT INTO p4d_upgrade.seller_store SELECT * FROM marketplace.seller_store WHERE owner_id=:id",Map.of("id",owner));
+        jdbc.update("INSERT INTO p4d_upgrade.catalog_category SELECT * FROM marketplace.catalog_category WHERE id=:id",Map.of("id",product.categoryId()));
+        jdbc.update("INSERT INTO p4d_upgrade.catalog_product SELECT * FROM marketplace.catalog_product WHERE id=:id",Map.of("id",product.id()));
+        jdbc.update("INSERT INTO p4d_upgrade.catalog_sku SELECT * FROM marketplace.catalog_sku WHERE id=:id",Map.of("id",sku.id()));
+        var upgrade=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();upgrade.migrate();assertEquals(0,upgrade.migrate().migrationsExecuted);
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM p4d_upgrade.inventory_balance WHERE sku_id=:id AND on_hand=0 AND reserved=0 AND version=0",Map.of("id",sku.id()),Integer.class));
+        assertEquals(sku.code(),jdbc.queryForObject("SELECT code FROM p4d_upgrade.catalog_sku WHERE id=:id",Map.of("id",sku.id()),String.class));
+    }
+    @Test
+    void inventoryAdministratorPermissionIsRecheckedAfterProductLockWait() throws Exception {
+        var f=skuFixture("stock-admin"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+        UUID admin=activeMember("stock-admin@example.com"); jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",admin));jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);
+        assertEquals(0,inventory.list(admin,product.id(),true,0).items().getFirst().onHand());
+        try(var executor=Executors.newSingleThreadExecutor()) {
+            var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<String>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.queryForObject("SELECT id FROM marketplace.catalog_product WHERE id=:id FOR UPDATE",Map.of("id",product.id()),UUID.class);
+                pending.set(executor.submit(()->{ try { inventory.adjust(admin,product.id(),sku.id(),true,new com.example.marketplace.inventory.api.Inventory.Change(5L,0L,"운영",UUID.randomUUID()));return "ok"; } catch(com.example.marketplace.identity.api.AccessRejected rejected) { return "denied"; } }));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%catalog_product%FOR UPDATE%')",Map.of(),Boolean.class));
+                    if(waiting) { break; } try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
+                }
+                assertTrue(waiting);jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id",Map.of("id",admin));
+            });
+            assertEquals("denied",pending.get().get(5,TimeUnit.SECONDS));assertEquals(0,inventory.list(owner,product.id(),false,0).items().getFirst().onHand());
+        }
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT')",Map.of("id",admin));
+        var saved=inventory.adjust(admin,product.id(),sku.id(),true,new com.example.marketplace.inventory.api.Inventory.Change(5L,0L,"운영 실사",UUID.randomUUID()));assertEquals(5,saved.onHand());assertEquals(admin,inventory.history(admin,product.id(),sku.id(),true,0).items().getFirst().actorId());
+    }
+    @Test
+    void inventoryGlobalRequestKeyCollisionRollsBackOtherOwnersBalance() throws Exception {
+        var a=skuFixture("stock-global-a");var b=skuFixture("stock-global-b");
+        UUID ownerA=(UUID)a.get("owner"),ownerB=(UUID)b.get("owner");
+        var productA=(com.example.marketplace.catalog.api.Products.Product)a.get("product");var productB=(com.example.marketplace.catalog.api.Products.Product)b.get("product");
+        var skus=context.getBean(com.example.marketplace.catalog.api.Skus.class);var skuA=skus.list(ownerA,productA.id(),0).items().getFirst();var skuB=skus.list(ownerB,productB.id(),0).items().getFirst();
+        var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);var input=new com.example.marketplace.inventory.api.Inventory.Change(10L,0L,"global race",UUID.randomUUID());
+        jdbc.getJdbcTemplate().execute("CREATE FUNCTION marketplace.p4d_gate() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.reason='global race' THEN PERFORM pg_advisory_xact_lock(20260404); END IF; RETURN NEW; END $$");
+        jdbc.getJdbcTemplate().execute("CREATE TRIGGER p4d_gate BEFORE INSERT ON marketplace.stock_movement FOR EACH ROW EXECUTE FUNCTION marketplace.p4d_gate()");
+        try(var executor=Executors.newFixedThreadPool(2)) {
+            var futures=new java.util.ArrayList<java.util.concurrent.Future<String>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.getJdbcTemplate().execute("SELECT pg_advisory_xact_lock(20260404)");
+                for(int n=0;n<2;n++) { final int index=n; futures.add(executor.submit(()->{ try { inventory.adjust(index==0?ownerA:ownerB,index==0?productA.id():productB.id(),index==0?skuA.id():skuB.id(),false,input);return "ok"; } catch(com.example.marketplace.inventory.api.InventoryException e) { assertEquals(409,e.status()); return "conflict"; } })); }
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);int waiting=0;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=jdbc.queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE 'INSERT INTO marketplace.stock_movement%'",Map.of(),Integer.class);
+                    if(waiting==2) { break; } try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
+                }
+                assertEquals(2,waiting,"Both independent transactions must reach insert before release");
+            });
+            var results=List.of(futures.get(0).get(5,TimeUnit.SECONDS),futures.get(1).get(5,TimeUnit.SECONDS));assertEquals(1,results.stream().filter("ok"::equals).count());
+            assertEquals(10,inventory.list(ownerA,productA.id(),false,0).items().getFirst().onHand()+inventory.list(ownerB,productB.id(),false,0).items().getFirst().onHand());
+            assertEquals(1,inventory.history(ownerA,productA.id(),skuA.id(),false,0).items().size()+inventory.history(ownerB,productB.id(),skuB.id(),false,0).items().size());
+        } finally { jdbc.getJdbcTemplate().execute("DROP TRIGGER p4d_gate ON marketplace.stock_movement");jdbc.getJdbcTemplate().execute("DROP FUNCTION marketplace.p4d_gate()"); }
+    }
     private byte[] mediaPng() throws Exception {
         var out=new java.io.ByteArrayOutputStream(); javax.imageio.ImageIO.write(new java.awt.image.BufferedImage(4,3,java.awt.image.BufferedImage.TYPE_INT_RGB),"png",out); return out.toByteArray();
     }
@@ -292,6 +427,35 @@ class PostgresJdbcIT {
                 else { skus.save(owner,product.id(),null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("종류","성공")),1L,true,0L)); } return "ok";
             } catch(com.example.marketplace.catalog.api.CatalogException e) { assertEquals(409,e.status()); return "conflict"; } });
         var rows=skus.list(owner,product.id(),0).items(); assertEquals(2,rows.size()); assertFalse(rows.stream().filter(row->row.options().isEmpty()).findFirst().orElseThrow().active()); assertEquals(1,rows.stream().filter(row->row.active()).count());
+    }
+    @Test
+    void inventoryWritesRecheckSuspensionAndArchiveAfterActualLockWait() throws Exception {
+        for(boolean member:List.of(true,false)) {
+            String suffix=member?"stock-wait-member":"stock-wait-product";
+            var f=skuFixture(suffix); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product"); UUID owner=(UUID)f.get("owner");
+            var sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst();
+            var client=authBrowser(); assertEquals(200,authRequest(client,"/api/auth/login",loginForm("p4b-"+suffix+"@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());
+            String token=csrfToken(client); String table=member?"identity_user":"catalog_product"; UUID lock=member?owner:product.id();
+            try(var executor=Executors.newSingleThreadExecutor()) {
+                var future=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<HttpResponse<String>>>();
+                new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                    jdbc.queryForObject("SELECT id FROM marketplace."+table+" WHERE id=:id FOR UPDATE",Map.of("id",lock),UUID.class);
+                    future.set(executor.submit(()->accountRequest(client,"PUT","/api/seller/products/"+product.id()+"/inventory/"+sku.id(),Map.of("onHand",5,"version",0,"reason","잠금 검사","requestId",UUID.randomUUID().toString()),token)));
+                    long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
+                    while(System.nanoTime()<deadline) {
+                        jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+"%FOR UPDATE%"),Boolean.class));
+                        if(waiting) { break; }
+                        try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
+                    }
+                    assertTrue(waiting,"Inventory request must wait on "+table);
+                    jdbc.update("UPDATE marketplace."+table+" SET state=:state WHERE id=:id",Map.of("id",lock,"state",member?"SUSPENDED":"ARCHIVED"));
+                });
+                var response=future.get().get(5,TimeUnit.SECONDS); assertEquals(409,response.statusCode(),response.body());
+                assertEquals("CONFLICT",authMapper.readTree(response.body()).get("code").asText());
+                assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.stock_movement WHERE sku_id=:id",Map.of("id",sku.id()),Integer.class));
+            }
+        }
     }
     @Test
     void mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait() throws Exception {
