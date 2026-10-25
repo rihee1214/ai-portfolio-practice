@@ -1,0 +1,18 @@
+{
+  "sourceFiles": 311,
+  "currentMismatch": 0,
+  "developmentDifference": 0,
+  "inputsHash": "96D4C186B4D32473E793A052E5C5B75AEB3CCE81EA75094AB14DCC51A0DFBAB1",
+  "failures": [
+    {
+      "manifest": "docs/work-items/evidence/P06-A-review-failure-manifest.json",
+      "files": 2162,
+      "mismatches": 0
+    },
+    {
+      "manifest": ".local-tools/p06-b-failure-manifest-20261025.json",
+      "files": 405,
+      "mismatches": 0
+    }
+  ]
+}

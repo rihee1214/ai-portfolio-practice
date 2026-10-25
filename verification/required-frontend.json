@@ -128,6 +128,12 @@
     "tests/unit/InputFlow.test.tsx#배송지 오류 포커스와 서버 실패 뒤 임시 입력 유지·재시도·계정 변경 폐기를 확인한다",
     "tests/unit/phone-provider.test.tsx#keeps provider credentials in memory and disposes the SDK after proof retrieval",
     "tests/unit/phone-provider.test.tsx#rejects nonlocal production and malformed settings before SDK initialization",
-    "tests/unit/phone-provider.test.tsx#returns a safe retry message and disposes credentials after SDK failure"
+    "tests/unit/phone-provider.test.tsx#returns a safe retry message and disposes credentials after SDK failure",
+    "tests/unit/GuestStore.test.tsx#binds fixed purchase purpose and waits for Java confirmation before showing success",
+    "tests/unit/GuestStore.test.tsx#rejects invalid input and suppresses duplicate submissions",
+    "tests/unit/GuestStore.test.tsx#discards late SDK proof after leaving and never sends the verify request",
+    "tests/unit/GuestStore.test.tsx#server rejection never grants success and expiration clears the visible verification",
+    "tests/unit/GuestStore.test.tsx#restores a pending attempt after refresh and requires a fresh attempt after interrupted exchange",
+    "tests/unit/GuestStore.test.tsx#SDK failure never confirms and explicit new authentication recovers"
   ]
 }

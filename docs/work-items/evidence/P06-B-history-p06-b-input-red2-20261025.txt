@@ -1,0 +1,30 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+[ERROR] D:\Workspace\ai-portfolio-practice\backend\src\test\java\com\example\marketplace\guest\GuestInputTest.java:5:47: Using the '.*' form of import should be avoided - org.junit.jupiter.api.Assertions.*. [AvoidStarImport]
+[ERROR] D:\Workspace\ai-portfolio-practice\backend\src\test\java\com\example\marketplace\guest\GuestInputTest.java:14:9: 'for' construct must use '{}'s. [NeedBraces]
+[ERROR] D:\Workspace\ai-portfolio-practice\backend\src\test\java\com\example\marketplace\guest\GuestInputTest.java:16:9: 'for' construct must use '{}'s. [NeedBraces]
+Audit done.
+[INFO] There are 3 errors reported by Checkstyle 9.3 with config/checkstyle.xml ruleset.
+[ERROR] src\test\java\com\example\marketplace\guest\GuestInputTest.java:[5,47] (imports) AvoidStarImport: Using the '.*' form of import should be avoided - org.junit.jupiter.api.Assertions.*.
+[ERROR] src\test\java\com\example\marketplace\guest\GuestInputTest.java:[14,9] (blocks) NeedBraces: 'for' construct must use '{}'s.
+[ERROR] src\test\java\com\example\marketplace\guest\GuestInputTest.java:[16,9] (blocks) NeedBraces: 'for' construct must use '{}'s.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.010 s
+[INFO] Finished at: 2026-10-25T17:36:37+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin:3.6.0:check (check-java-style) on project marketplace-api: You have 3 Checkstyle violations. -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

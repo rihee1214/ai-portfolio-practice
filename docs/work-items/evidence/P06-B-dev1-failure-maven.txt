@@ -1,0 +1,614 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 3 resources from src\main\resources to ..\.local-tools\p06-b-dev1-20261025\db\build\classes
+[INFO] Copying 21 resources from src\main\resources to ..\.local-tools\p06-b-dev1-20261025\db\build\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 111 source files with javac [debug parameters release 21] to ..\.local-tools\p06-b-dev1-20261025\db\build\classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 5 resources from src\test\resources to ..\.local-tools\p06-b-dev1-20261025\db\build\test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to ..\.local-tools\p06-b-dev1-20261025\db\build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ActuatorPolicyHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:32.691+09:00  INFO [requestId=] 24464 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Starting ActuatorPolicyHttpTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:32.693+09:00  INFO [requestId=] 24464 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : The following 1 profile is active: "e5-test"
+2026-10-25T17:44:33.586+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T17:44:33.595+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T17:44:33.596+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T17:44:33.644+09:00  INFO [requestId=] 24464 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 930 ms
+2026-10-25T17:44:34.375+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:34.450+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7876 (http) with context path '/'
+2026-10-25T17:44:34.457+09:00  INFO [requestId=] 24464 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Started ActuatorPolicyHttpTest in 1.976 seconds (process running for 2.892)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-25T17:44:35.062+09:00  INFO [requestId=] 24464 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-25T17:44:35.062+09:00  INFO [requestId=] 24464 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-25T17:44:35.063+09:00  INFO [requestId=] 24464 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-25T17:44:35.088+09:00  WARN [requestId=fea3832d-4266-4fd5-8195-98af548231d7] 24464 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-25T17:44:35.325+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-25T17:44:35.326+09:00  INFO [requestId=] 24464 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.152 s -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[INFO] Running com.example.marketplace.api.ApiErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:35.371+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Starting ApiErrorHttpTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:35.371+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : The following 1 profile is active: "e2-probe"
+2026-10-25T17:44:35.563+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T17:44:35.564+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T17:44:35.564+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T17:44:35.589+09:00  INFO [requestId=] 24464 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 217 ms
+2026-10-25T17:44:35.673+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:35.681+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7894 (http) with context path '/'
+2026-10-25T17:44:35.683+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Started ApiErrorHttpTest in 0.328 seconds (process running for 4.118)
+2026-10-25T17:44:35.693+09:00  INFO [requestId=] 24464 --- [1-auto-2-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-25T17:44:35.693+09:00  INFO [requestId=] 24464 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-25T17:44:35.693+09:00  INFO [requestId=] 24464 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-25T17:44:35.695+09:00  WARN [requestId=c3fd5e5a-ab2f-4e4a-8ed6-411ef1129421] 24464 --- [1-auto-2-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'text/plain' is not supported]
+2026-10-25T17:44:35.744+09:00  WARN [requestId=9a21d881-815f-452d-9049-b0da266a3cc4] 24464 --- [1-auto-2-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: No acceptable representation]
+2026-10-25T17:44:35.852+09:00 ERROR [requestId=] 24464 --- [1-auto-2-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 SQL secret] with root cause
+
+java.lang.IllegalStateException: private-e2 SQL secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.fail(ApiErrorHttpTest.java:179) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-25T17:44:35.865+09:00 ERROR [requestId=] 24464 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] threw exception
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-25T17:44:35.865+09:00 ERROR [requestId=] 24464 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 async secret] with root cause
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-25T17:44:35.871+09:00  WARN [requestId=96219e2b-a4e7-49c9-9607-a2f0bc3e61bf] 24464 --- [1-auto-2-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'value': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "private-e2"]
+2026-10-25T17:44:35.886+09:00  WARN [requestId=de7ba8d2-41f7-43b0-bc1a-4adb55764029] 24464 --- [1-auto-2-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('p' (code 112)): was expecting double-quote to start property name]
+2026-10-25T17:44:35.924+09:00  WARN [requestId=cd7078df-674a-4de7-a17d-54cb6ba9cd34] 24464 --- [1-auto-2-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.580 s -- in com.example.marketplace.api.ApiErrorHttpTest
+[INFO] Running com.example.marketplace.api.DatabaseSettingsTest
+2026-10-25T17:44:36.118+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-25T17:44:36.324+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-25T17:44:36.457+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-25T17:44:36.602+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-25T17:44:36.759+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-25T17:44:36.891+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-25T17:44:37.016+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-25T17:44:37.131+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-25T17:44:37.240+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-25T17:44:37.355+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-25T17:44:37.838+09:00  WARN [requestId=] 24464 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL), spring.datasource.username (DB_USERNAME), spring.datasource.password (DB_PASSWORD)
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.170 s -- in com.example.marketplace.api.DatabaseSettingsTest
+[INFO] Running com.example.marketplace.api.ErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:38.115+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Starting ErrorHttpTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:38.115+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.ErrorHttpTest  : The following 1 profile is active: "d1"
+2026-10-25T17:44:38.235+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T17:44:38.235+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T17:44:38.235+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T17:44:38.255+09:00  INFO [requestId=] 24464 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 139 ms
+2026-10-25T17:44:38.306+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:38.310+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7929 (http) with context path '/'
+2026-10-25T17:44:38.311+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Started ErrorHttpTest in 0.207 seconds (process running for 6.747)
+2026-10-25T17:44:38.317+09:00  INFO [requestId=] 24464 --- [1-auto-3-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-25T17:44:38.317+09:00  INFO [requestId=] 24464 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-25T17:44:38.317+09:00  INFO [requestId=] 24464 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-25T17:44:38.352+09:00  WARN [requestId=f0b8411b-15fe-44ae-bb03-5416218bf740] 24464 --- [1-auto-3-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.262 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Running com.example.marketplace.api.HealthMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:38.376+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.HealthMvcTest  : Starting HealthMvcTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:38.376+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.HealthMvcTest  : The following 1 profile is active: "d1"
+2026-10-25T17:44:38.589+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-25T17:44:38.589+09:00  INFO [requestId=] 24464 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-25T17:44:38.590+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:38.591+09:00  INFO [requestId=] 24464 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-25T17:44:38.602+09:00  INFO [requestId=] 24464 --- [           main] c.example.marketplace.api.HealthMvcTest  : Started HealthMvcTest in 0.233 seconds (process running for 7.038)
+2026-10-25T17:44:38.626+09:00  WARN [requestId=2b17f44e-28ae-44d2-b1e9-ebc2174673e7] 24464 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.347 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Running com.example.marketplace.api.RequestIdFilterTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.marketplace.api.RequestIdFilterTest
+[INFO] Running com.example.marketplace.api.RequestIdHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:38.729+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Starting RequestIdHttpTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:38.729+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : The following 1 profile is active: "e1-probe"
+2026-10-25T17:44:38.856+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T17:44:38.857+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T17:44:38.857+09:00  INFO [requestId=] 24464 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T17:44:38.879+09:00  INFO [requestId=] 24464 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 149 ms
+2026-10-25T17:44:38.926+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:38.931+09:00  INFO [requestId=] 24464 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7939 (http) with context path '/'
+2026-10-25T17:44:38.933+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Started RequestIdHttpTest in 0.212 seconds (process running for 7.368)
+2026-10-25T17:44:38.938+09:00  INFO [requestId=] 24464 --- [1-auto-4-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-25T17:44:38.938+09:00  INFO [requestId=] 24464 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-25T17:44:38.938+09:00  INFO [requestId=] 24464 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-25T17:44:38.962+09:00 ERROR [requestId=] 24464 --- [1-auto-4-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: intentional-e1] with root cause
+
+java.lang.IllegalStateException: intentional-e1
+	at com.example.marketplace.api.RequestIdHttpTest$ProbeController.fail(RequestIdHttpTest.java:170) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-25T17:44:38.967+09:00  INFO [requestId=bae7375f-7bc5-4e6e-b2a5-33716461c4fe] 24464 --- [-auto-4-exec-10] .e.m.a.RequestIdHttpTest$ProbeController : E1 test-only log probe
+2026-10-25T17:44:38.986+09:00  WARN [requestId=653f7b71-5d6c-40fc-b2aa-c11d3376486a] 24464 --- [1-auto-4-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.271 s -- in com.example.marketplace.api.RequestIdHttpTest
+[INFO] Running com.example.marketplace.api.UnhealthyMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-25T17:44:39.001+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Starting UnhealthyMvcTest using Java 21.0.12.1 with PID 24464 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:39.001+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : The following 1 profile is active: "d1"
+2026-10-25T17:44:39.167+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-25T17:44:39.167+09:00  INFO [requestId=] 24464 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-25T17:44:39.168+09:00  INFO [requestId=] 24464 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:44:39.169+09:00  INFO [requestId=] 24464 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-25T17:44:39.172+09:00  INFO [requestId=] 24464 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Started UnhealthyMvcTest in 0.178 seconds (process running for 7.607)
+2026-10-25T17:44:39.176+09:00  WARN [requestId=1d17c757-f353-4ee9-a7ec-c35f69d03b2b] 24464 --- [           main] o.s.b.h.a.DiskSpaceHealthIndicator       : Free disk space at path 'D:\Workspace\ai-portfolio-practice\backend\.' below threshold. Available: 688186081280 bytes (threshold: 9223372036854775807B)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.194 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Running com.example.marketplace.architecture.ModuleArchitectureTest
+2026-10-25T17:44:39.197+09:00  INFO [requestId=] 24464 --- [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.12.1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.100 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Running com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.62 s -- in com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Running com.example.marketplace.cart.CartRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.example.marketplace.cart.CartRulesTest
+[INFO] Running com.example.marketplace.guest.GuestInputTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.example.marketplace.guest.GuestInputTest
+[INFO] Running com.example.marketplace.guest.GuestLocalPolicyTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.GuestLocalPolicyTest
+[INFO] Running com.example.marketplace.identity.AccountRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.identity.AccountRulesTest
+[INFO] Running com.example.marketplace.identity.AttemptWindowTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.636 s -- in com.example.marketplace.identity.AttemptWindowTest
+[INFO] Running com.example.marketplace.identity.SignupRulesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.example.marketplace.identity.SignupRulesTest
+[INFO] Running com.example.marketplace.identity.SignupSecurityTest
+A1_ARGON_ENCODE_MS=178
+A1_ARGON_VERIFY_MS=25
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.307 s -- in com.example.marketplace.identity.SignupSecurityTest
+[INFO] Running com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Running com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Running com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.611 s -- in com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Running com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.039 s -- in com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] Running com.example.marketplace.phone.PhoneProviderTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.example.marketplace.phone.PhoneProviderTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 152, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO] Building jar: D:\Workspace\ai-portfolio-practice\.local-tools\p06-b-dev1-20261025\db\build\marketplace-api-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\p06-b-dev1-20261025\db\build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\p06-b-dev1-20261025\db\build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- failsafe:3.5.6:integration-test (default) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.dbtest.PostgresJdbcIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+D2_CREATED_DATABASE=d2_it_89fe5ea86f09471c80511f3a4da97f2d
+2026-10-25T17:44:59.131+09:00  INFO [requestId=] 46512 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Starting PostgresJdbcIT using Java 21.0.12.1 with PID 46512 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T17:44:59.133+09:00  INFO [requestId=] 46512 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : The following 4 profiles are active: "db", "c3-fixture", "local-mailbox", "local-http"
+2026-10-25T17:45:00.186+09:00  INFO [requestId=] 46512 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T17:45:00.195+09:00  INFO [requestId=] 46512 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T17:45:00.196+09:00  INFO [requestId=] 46512 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T17:45:00.244+09:00  INFO [requestId=] 46512 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1103 ms
+2026-10-25T17:45:00.428+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-25T17:45:00.453+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7d156f8f
+2026-10-25T17:45:00.456+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-25T17:45:00.924+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:45:00.970+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "marketplace" ...
+2026-10-25T17:45:00.976+09:00  INFO [requestId=] 46512 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "marketplace"."flyway_schema_history" ...
+2026-10-25T17:45:01.015+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": null
+2026-10-25T17:45:01.019+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "1 - initialize schema"
+2026-10-25T17:45:01.034+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "2 - jdbc fixture"
+2026-10-25T17:45:01.053+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "3 - identity signup"
+2026-10-25T17:45:01.073+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "4 - jdbc sessions"
+2026-10-25T17:45:01.089+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "5 - account recovery profile addresses"
+2026-10-25T17:45:01.108+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "6 - operating permissions"
+2026-10-25T17:45:01.124+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "7 - account state audit"
+2026-10-25T17:45:01.138+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "8 - seller applications"
+2026-10-25T17:45:01.153+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "9 - stores"
+2026-10-25T17:45:01.167+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "10 - store operations"
+2026-10-25T17:45:01.180+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "11 - catalog categories"
+2026-10-25T17:45:01.192+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "12 - catalog products"
+2026-10-25T17:45:01.206+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "13 - category audit"
+2026-10-25T17:45:01.219+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "14 - store operation order"
+2026-10-25T17:45:01.232+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "15 - catalog skus"
+2026-10-25T17:45:01.245+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "16 - media assets"
+2026-10-25T17:45:01.263+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "17 - inventory balances"
+2026-10-25T17:45:01.278+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "18 - inventory reservations"
+2026-10-25T17:45:01.295+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "19 - product creation time"
+2026-10-25T17:45:01.305+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "20 - member carts"
+2026-10-25T17:45:01.319+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "21 - member wishlists"
+2026-10-25T17:45:01.330+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "22 - guest purchase verification"
+2026-10-25T17:45:01.348+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 22 migrations to schema "marketplace", now at version v22 (execution time 00:00.119s)
+2026-10-25T17:45:01.747+09:00  INFO [requestId=] 46512 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginMembers
+2026-10-25T17:45:02.315+09:00  INFO [requestId=] 46512 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T17:45:02.359+09:00  INFO [requestId=] 46512 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 12015 (http) with context path '/'
+2026-10-25T17:45:02.366+09:00  INFO [requestId=] 46512 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Started PostgresJdbcIT in 3.67 seconds (process running for 4.698)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-25T17:45:02.980+09:00  INFO [requestId=] 46512 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-25T17:45:02.981+09:00  INFO [requestId=] 46512 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-25T17:45:02.982+09:00  INFO [requestId=] 46512 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-25T17:45:14.901+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:45:14.919+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 23 migrations (execution time 00:00.010s)
+2026-10-25T17:45:14.926+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": 22
+2026-10-25T17:45:14.927+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "marketplace" is up to date. No migration necessary.
+2026-10-25T17:45:15.903+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-25T17:45:15.911+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-25T17:45:15.920+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-10-25T17:45:15.956+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-10-25T17:45:16.574+09:00  WARN [requestId=] 46512 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-25T17:45:16.713+09:00  WARN [requestId=] 46512 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-25T17:45:16.835+09:00  WARN [requestId=] 46512 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-25T17:46:33.047+09:00  WARN [requestId=2c755bf7-8d8a-45e4-8545-13f0ea43e3a2] 46512 --- [1-auto-1-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-25T17:46:33.650+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:33.665+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4e_upgrade" ...
+2026-10-25T17:46:33.667+09:00  INFO [requestId=] 46512 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4e_upgrade"."flyway_schema_history" ...
+2026-10-25T17:46:33.686+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4e_upgrade": null
+2026-10-25T17:46:33.689+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "1 - initialize schema"
+2026-10-25T17:46:33.701+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "3 - identity signup"
+2026-10-25T17:46:33.718+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "4 - jdbc sessions"
+2026-10-25T17:46:33.734+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "5 - account recovery profile addresses"
+2026-10-25T17:46:33.750+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "6 - operating permissions"
+2026-10-25T17:46:33.764+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "7 - account state audit"
+2026-10-25T17:46:33.778+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "8 - seller applications"
+2026-10-25T17:46:33.793+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "9 - stores"
+2026-10-25T17:46:33.805+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "10 - store operations"
+2026-10-25T17:46:33.818+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "11 - catalog categories"
+2026-10-25T17:46:33.830+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "12 - catalog products"
+2026-10-25T17:46:33.842+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "13 - category audit"
+2026-10-25T17:46:33.855+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "14 - store operation order"
+2026-10-25T17:46:33.866+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "15 - catalog skus"
+2026-10-25T17:46:33.880+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "16 - media assets"
+2026-10-25T17:46:33.896+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "17 - inventory balances"
+2026-10-25T17:46:33.909+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 16 migrations to schema "p4e_upgrade", now at version v17 (execution time 00:00.083s)
+2026-10-25T17:46:33.927+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:33.940+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 22 migrations (execution time 00:00.008s)
+2026-10-25T17:46:33.946+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4e_upgrade": 17
+2026-10-25T17:46:33.949+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "18 - inventory reservations"
+2026-10-25T17:46:33.965+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "19 - product creation time"
+2026-10-25T17:46:33.975+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "20 - member carts"
+2026-10-25T17:46:33.988+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "21 - member wishlists"
+2026-10-25T17:46:33.999+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "22 - guest purchase verification"
+2026-10-25T17:46:34.013+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "p4e_upgrade", now at version v22 (execution time 00:00.026s)
+2026-10-25T17:46:35.412+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:35.424+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4d_upgrade" ...
+2026-10-25T17:46:35.426+09:00  INFO [requestId=] 46512 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4d_upgrade"."flyway_schema_history" ...
+2026-10-25T17:46:35.443+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": null
+2026-10-25T17:46:35.445+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "1 - initialize schema"
+2026-10-25T17:46:35.455+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "3 - identity signup"
+2026-10-25T17:46:35.472+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "4 - jdbc sessions"
+2026-10-25T17:46:35.486+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "5 - account recovery profile addresses"
+2026-10-25T17:46:35.503+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "6 - operating permissions"
+2026-10-25T17:46:35.516+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "7 - account state audit"
+2026-10-25T17:46:35.529+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "8 - seller applications"
+2026-10-25T17:46:35.543+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "9 - stores"
+2026-10-25T17:46:35.555+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "10 - store operations"
+2026-10-25T17:46:35.568+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "11 - catalog categories"
+2026-10-25T17:46:35.579+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "12 - catalog products"
+2026-10-25T17:46:35.592+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "13 - category audit"
+2026-10-25T17:46:35.604+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "14 - store operation order"
+2026-10-25T17:46:35.617+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "15 - catalog skus"
+2026-10-25T17:46:35.630+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "16 - media assets"
+2026-10-25T17:46:35.644+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 15 migrations to schema "p4d_upgrade", now at version v16 (execution time 00:00.076s)
+2026-10-25T17:46:35.658+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:35.672+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 22 migrations (execution time 00:00.008s)
+2026-10-25T17:46:35.678+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": 16
+2026-10-25T17:46:35.680+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "17 - inventory balances"
+2026-10-25T17:46:35.696+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "18 - inventory reservations"
+2026-10-25T17:46:35.711+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "19 - product creation time"
+2026-10-25T17:46:35.721+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "20 - member carts"
+2026-10-25T17:46:35.735+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "21 - member wishlists"
+2026-10-25T17:46:35.745+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "22 - guest purchase verification"
+2026-10-25T17:46:35.759+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 6 migrations to schema "p4d_upgrade", now at version v22 (execution time 00:00.031s)
+2026-10-25T17:46:35.763+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:35.776+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 22 migrations (execution time 00:00.008s)
+2026-10-25T17:46:35.782+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": 22
+2026-10-25T17:46:35.783+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p4d_upgrade" is up to date. No migration necessary.
+2026-10-25T17:46:36.032+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-10-25T17:46:36.040+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-10-25T17:46:36.049+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-10-25T17:46:36.088+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-10-25T17:46:37.369+09:00  INFO [requestId=] 46512 --- [ool-46-thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-10-25T17:46:37.377+09:00  INFO [requestId=] 46512 --- [ool-46-thread-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@5f4857d8
+2026-10-25T17:46:37.377+09:00  INFO [requestId=] 46512 --- [ool-46-thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-10-25T17:46:37.399+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-10-25T17:46:37.400+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-10-25T17:46:37.452+09:00  WARN [requestId=8a0d13a8-b9d1-441e-8de9-567eb14410d4] 46512 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'page': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "abc"]
+2026-10-25T17:46:37.458+09:00  WARN [requestId=2302c3c1-b50d-490c-9a57-227ea80a6302] 46512 --- [1-auto-1-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'category': Failed to convert value of type 'java.lang.String' to required type 'java.util.UUID'; Invalid UUID string: no]
+2026-10-25T17:46:39.308+09:00  WARN [requestId=1e7ff1c4-8c9d-495e-8680-a7ad0242fe64] 46512 --- [-auto-1-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot map `null` into type `boolean` (set `DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES` to 'false' to allow)]
+2026-10-25T17:46:40.528+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:40.539+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4b_upgrade" ...
+2026-10-25T17:46:40.542+09:00  INFO [requestId=] 46512 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4b_upgrade"."flyway_schema_history" ...
+2026-10-25T17:46:40.556+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": null
+2026-10-25T17:46:40.558+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "1 - initialize schema"
+2026-10-25T17:46:40.569+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "3 - identity signup"
+2026-10-25T17:46:40.585+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "4 - jdbc sessions"
+2026-10-25T17:46:40.600+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "5 - account recovery profile addresses"
+2026-10-25T17:46:40.614+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "6 - operating permissions"
+2026-10-25T17:46:40.629+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "7 - account state audit"
+2026-10-25T17:46:40.641+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "8 - seller applications"
+2026-10-25T17:46:40.655+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "9 - stores"
+2026-10-25T17:46:40.667+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "10 - store operations"
+2026-10-25T17:46:40.680+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "11 - catalog categories"
+2026-10-25T17:46:40.691+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "12 - catalog products"
+2026-10-25T17:46:40.704+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "13 - category audit"
+2026-10-25T17:46:40.716+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "14 - store operation order"
+2026-10-25T17:46:40.725+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema "p4b_upgrade", now at version v14 (execution time 00:00.064s)
+2026-10-25T17:46:40.737+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:40.750+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 22 migrations (execution time 00:00.007s)
+2026-10-25T17:46:40.756+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": 14
+2026-10-25T17:46:40.758+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "15 - catalog skus"
+2026-10-25T17:46:40.772+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "16 - media assets"
+2026-10-25T17:46:40.788+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "17 - inventory balances"
+2026-10-25T17:46:40.802+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "18 - inventory reservations"
+2026-10-25T17:46:40.817+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "19 - product creation time"
+2026-10-25T17:46:40.827+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "20 - member carts"
+2026-10-25T17:46:40.841+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "21 - member wishlists"
+2026-10-25T17:46:40.851+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "22 - guest purchase verification"
+2026-10-25T17:46:40.864+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 8 migrations to schema "p4b_upgrade", now at version v22 (execution time 00:00.044s)
+2026-10-25T17:46:40.868+09:00  INFO [requestId=] 46512 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_89fe5ea86f09471c80511f3a4da97f2d (PostgreSQL 18.6)
+2026-10-25T17:46:40.880+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 22 migrations (execution time 00:00.006s)
+2026-10-25T17:46:40.885+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": 22
+2026-10-25T17:46:40.886+09:00  INFO [requestId=] 46512 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p4b_upgrade" is up to date. No migration necessary.
+2026-10-25T17:46:41.691+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2026-10-25T17:46:41.700+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection org.postgresql.jdbc.PgConnection@5977f3d6
+2026-10-25T17:46:41.700+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2026-10-25T17:46:41.717+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2026-10-25T17:46:41.718+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2026-10-25T17:46:41.948+09:00  WARN [requestId=32e19741-a1df-4cfe-9159-30908aaa7927] 46512 --- [1-auto-1-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.MaxUploadSizeExceededException: Maximum upload size exceeded]
+2026-10-25T17:46:42.004+09:00  INFO [requestId=] 46512 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-25T17:46:42.006+09:00  INFO [requestId=] 46512 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-25T17:46:42.010+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-25T17:46:42.011+09:00  INFO [requestId=] 46512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[ERROR] Tests run: 114, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 103.7 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.reservationValidationAndDatabaseConstraints -- Time elapsed: 0.473 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <4> but was: <5>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationValidationAndDatabaseConstraints(PostgresJdbcIT.java:646)
+
+[INFO] Running com.example.marketplace.phone.PhoneProviderEmulatorIT
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.879 s -- in com.example.marketplace.phone.PhoneProviderEmulatorIT
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   PostgresJdbcIT.reservationValidationAndDatabaseConstraints:646 expected: <4> but was: <5>
+[INFO] 
+[ERROR] Tests run: 115, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- failsafe:3.5.6:verify (default) @ marketplace-api ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:20 min
+[INFO] Finished at: 2026-10-25T17:46:43+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.5.6:verify (default) on project marketplace-api: There are test failures.
+[ERROR] 
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\p06-b-dev1-20261025\db\build\failsafe-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

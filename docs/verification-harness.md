@@ -63,3 +63,7 @@ ArchUnit 규칙은 정상 소스 검사뿐 아니라 잘못된 의존을 가진 
 루트 verify.ps1은 verification/Run-PhoneEmulator.ps1을 통해 새 demo 프로젝트와 동적 loopback 포트의 Firebase Auth Emulator를 기동한 뒤 전체 하네스를 수행한다. CLI15.34.1 캐시는 .local-tools/p06-a-provider-probe-20261025/node_modules에 있어야 한다. 캐시가 없으면 명시적으로 실패하며 검사를 생략하지 않는다. 새 에뮬레이터 실행 정보는 .local-tools/phone-emulator-<UUID>에 보존한다.
 기존 JUnit/ArchUnit/새 PostgreSQL·미디어/브라우저/프런트/Node 검사는 유지한다. 추가된 PhoneProviderTest10개와 PhoneProviderEmulatorIT1개는 required-tests.json 필수 목록에 있으며, 실제 제공자 브라우저 probe는 IT가 실행해 db/phone-browser.txt에 남긴다. 일반 Playwright report의40개와 별도이며 중복 합산하지 않는다. 프런트 제공자 단위3개는 required-frontend.json, 자원 정리4개는 기존 Node test 파일 패턴에 포함된다.
 SDK13.1.0은 브라우저 메모리 persistence, Admin Java9.11.0은 공식 검증/custom token을 사용한다. Firebase의 XML 간접 의존성은 JSON 전용 API 회귀 방지를 위해 제외했다. 실제 문자·구매 세션·GuestBuyer·P06-B는 실행하지 않는다. 상세 제약/실패/결과는 work-items/P06-A.md와 P06-A-review.md를 따른다. 위의 이전 'P06 미진행' 문장은 이전 단계 시점의 기록이다.
+
+## P06-B 구매 업무 검증 추가 (2026-10-25)
+
+후속 사용자 요청으로 구매 세션·인증 시도·이름/전화 화면을 추가했다. 기존 P06-A 절의 '구매 세션/P06-B 미진행'은 당시 범위 기록이다. 새 제약과 결과는 [P06-B 작업 기록](work-items/P06-B.md), [독립 검토](work-items/P06-B-review.md)를 따른다. 현재 하네스는 명시적인 로컬 전화 제공자를 격리 테스트 서버에 연결하여 DB·실제 SDK·업무 API·브라우저를 검사한다. 모든 실행은 새 DB/미디어/증거 경로를 사용한다. 구매 인증은 실제 SMS·실명 확인·주문 소유권이 아니며 P06-C는 진행하지 않는다.

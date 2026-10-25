@@ -1,0 +1,33 @@
+{
+  "finished": "2026-10-25T17:46:50.1015526+09:00",
+  "started": "2026-10-25T17:44:16.7620986+09:00",
+  "commit": "5393fef6b62c96fe7232b321ea4ebc2056f2bb7f",
+  "status": "failed",
+  "error": "PostgreSQL integration verification failed; see D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p06-b-dev1-20261025\\db/maven.txt",
+  "dirty": [
+    " M backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+    " M backend/src/main/java/com/example/marketplace/phone/application/PhoneProvider.java",
+    " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    " M frontend/src/App.tsx",
+    " M frontend/src/pages/PurchasePages.tsx",
+    " M verification/required-browser.json",
+    " M verification/required-frontend.json",
+    " M verification/required-tests.json",
+    " M verify.ps1",
+    "?? backend/src/main/java/com/example/marketplace/guest/",
+    "?? backend/src/main/java/com/example/marketplace/phone/api/",
+    "?? backend/src/main/java/com/example/marketplace/phone/infrastructure/LocalPhonePolicy.java",
+    "?? backend/src/main/java/com/example/marketplace/phone/infrastructure/PhoneConfiguration.java",
+    "?? backend/src/main/resources/db/migration/V22__guest_purchase_verification.sql",
+    "?? backend/src/test/java/com/example/marketplace/guest/",
+    "?? docs/work-items/P06-B-review.md",
+    "?? docs/work-items/P06-B.md",
+    "?? frontend/auth-e2e/guest.spec.ts",
+    "?? frontend/src/guest/",
+    "?? frontend/src/pages/GuestPage.tsx",
+    "?? frontend/tests/unit/GuestStore.test.tsx"
+  ],
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p06-b-dev1-20261025",
+  "preservation": "passed",
+  "scope": "Existing implementation through P06-B"
+}

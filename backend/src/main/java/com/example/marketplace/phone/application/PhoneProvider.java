@@ -8,9 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /** Local provider boundary only. Never grants a purchase or account session. */
-public final class PhoneProvider {
-    public record Request(String id, String session, Instant expiresAt) { }
-    public record Proof(String phone, Instant authenticatedAt) { }
+public final class PhoneProvider implements com.example.marketplace.phone.api.PhoneVerifications {
     public interface Gateway {
         String issue(String phone);
         String exchange(String session, String code);
@@ -39,11 +37,7 @@ public final class PhoneProvider {
     }
 
     public static String normalize(String phone) {
-        if (phone == null) { throw new IllegalArgumentException("Invalid phone"); }
-        if (phone.matches("010-[0-9]{4}-[0-9]{4}")) { phone = phone.replace("-", ""); }
-        if (phone.matches("010[0-9]{8}")) { return "+82" + phone.substring(1); }
-        if (phone.matches("\\+8210[0-9]{8}")) { return phone; }
-        throw new IllegalArgumentException("Invalid phone");
+        return com.example.marketplace.phone.api.PhoneVerifications.normalize(phone);
     }
 
     public synchronized Request issue(String input) {

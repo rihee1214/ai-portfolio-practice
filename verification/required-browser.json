@@ -40,6 +40,10 @@
     "mobile#input-flow.spec.ts:입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
     "mobile#input-flow.spec.ts:입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
     "mobile#input-flow.spec.ts:입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
-    "mobile#input-flow.spec.ts:상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다"
+    "mobile#input-flow.spec.ts:상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다",
+    "desktop#guest.spec.ts:모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다",
+    "mobile#guest.spec.ts:모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다",
+    "desktop#guest.spec.ts:확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다",
+    "mobile#guest.spec.ts:확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다"
   ]
 }

@@ -1,4 +1,5 @@
 import { CheckoutPage } from './pages/PurchasePages'
+import { GuestPage } from './pages/GuestPage'
 import { WishlistPage } from './pages/WishlistPages'
 import AuthProvider from './auth/AuthProvider'
 import CartProvider from './cart/CartProvider'
@@ -40,6 +41,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
+          <Route path="/checkout/guest" element={<GuestPage />} />
           <Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>

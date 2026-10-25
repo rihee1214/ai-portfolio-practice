@@ -265,7 +265,15 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#browseDistinctFiltersSortAndOptionPrices",
       "com.example.marketplace.dbtest.PostgresJdbcIT#cartOwnershipCrudAndPublicAvailability",
       "com.example.marketplace.dbtest.PostgresJdbcIT#cartMergeReplayAndConcurrentUpdates",
-      "com.example.marketplace.dbtest.PostgresJdbcIT#cartCapacityRollbackAndSuspension"
+      "com.example.marketplace.dbtest.PostgresJdbcIT#cartCapacityRollbackAndSuspension",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestBindingReuseAndOneTimeConsumption",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestConcurrentVerificationHasOneWinnerAndNoExternalTransaction",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestBusinessExpiryBeforeAndAfterProviderAndSessionExpiry",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestExpiryIsRecheckedAfterDatabaseLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestResendFailureAndSourceLimitsPersistAcrossSessions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestHttpRequiresCsrfAndBrowserBindingWithoutGrantingAccountAccess",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestDatabaseFailureLateProviderAndLostResponseRecoverWithoutFalseSuccess",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestProviderStagesWindowsAndRestartFailClosed"
     ]
   },
   {
@@ -355,6 +363,19 @@
     "id": "P06-A-browser-SDK-Java-emulator",
     "tests": [
       "com.example.marketplace.phone.PhoneProviderEmulatorIT#browserSdkAndJavaVerifierEnforceProviderContract"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.guest.GuestInputTest",
+    "tests": [
+      "com.example.marketplace.guest.GuestInputTest#acceptsOnlyPurchaseAndNormalizesPhoneAndName",
+      "com.example.marketplace.guest.GuestInputTest#rejectsOtherPurposeInvalidPhoneAndUnsafeNames"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.guest.GuestLocalPolicyTest",
+    "tests": [
+      "com.example.marketplace.guest.GuestLocalPolicyTest#requiresExplicitLoopbackModeAndRejectsProductionProfiles"
     ]
   }
 ]

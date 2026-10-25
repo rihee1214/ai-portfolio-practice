@@ -1,0 +1,16 @@
+{
+  "sourceFiles": 311,
+  "sourceMismatches": 0,
+  "failures": [
+    {
+      "manifest": "docs/work-items/evidence/P06-A-review-failure-manifest.json",
+      "count": 2162,
+      "mismatches": 0
+    },
+    {
+      "manifest": "docs/work-items/evidence/P06-B-failure-manifest.json",
+      "count": 405,
+      "mismatches": 0
+    }
+  ]
+}

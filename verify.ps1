@@ -17,7 +17,7 @@ if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { 
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
 $oldPath = $env:PATH
-$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Existing implementation through P06-A'; evidence=$output }
+$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Existing implementation through P06-B'; evidence=$output }
 function Get-Inputs {
     $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend verification verify.ps1)
     if ($LASTEXITCODE -ne 0) { throw 'Source inventory failed' }
@@ -90,3 +90,4 @@ try {
     }
 }
 "PASS integrated harness: $output/result.json"
+

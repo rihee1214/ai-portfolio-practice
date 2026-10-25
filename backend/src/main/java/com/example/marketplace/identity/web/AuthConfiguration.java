@@ -74,6 +74,9 @@ public class AuthConfiguration {
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout", "/api/guest/verifications",
+                                "/api/guest/verifications/{id}/exchange", "/api/guest/verifications/{id}/verify").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/categories").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products", "/api/products/{slug}", "/api/products/{slug}/skus", "/api/browse/products", "/api/browse/products/{slug}").permitAll()
