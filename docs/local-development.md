@@ -77,3 +77,12 @@ try {
 ```
 
 각 명령의 성공을 확인한 뒤 다음을 실행한다. 현재 Vitest 73개·Playwright 16개다. Node 68개는 B에서 통과한 기록이며 C·D에서는 전송 코드 변경이 없어 재실행하지 않았다. Playwright는 최신 JAR와 dist를 자동 재빌드하지 않으므로 위 빌드를 생략하지 않는다. Chromium 준비 방법은 [D4](work-items/P01-D4.md)를 따른다. 18080·24174·24175는 전용 검사 포트이며 점유 시 기존 서버를 종료하지 말고 원인을 확인한다. 실제 DB는 사용하지 않는다. Windows 이외 환경·새 PC 전체 재현은 미검증이다.
+
+
+## P04-C 이미지 저장소
+
+DB 프로필 서버에는 `MEDIA_ROOT`를 별도로 설정한다. 예: 저장소 밖 정적 서비스와 연결되지 않은 `D:/Workspace/ai-portfolio-practice/.local-tools/media-dev`. 최초 사용 시 빈 디렉터리여야 하며, 다른 DB 또는 실행 중인 서버와 공유할 수 없다. DB namespace 마커 `.database`와 프로세스 `.lock`을 임의로 지우거나 기존 이미지 폴더를 새 DB에 재사용하지 않는다. DB와 이미지 폴더를 함께 보존한다. 기존 서버의 설정이나 데이터에 이번 변경을 적용하지 않았다.
+
+검증은 `./backend/verify-db.ps1 -EvidenceDirectory .local-tools/p04-c-새이름 -Offline -RunBrowser`로 실행한다. 매번 새 무작위 DB와 해당 evidence 하위 `media` 디렉터리를 만들고 실패 결과도 남긴다. 기존 경로를 재사용하지 않는다. 초기 운영자 CLI는 이미지 저장소를 사용하지 않는 명령이므로 media 구성을 비활성화한다.
+
+이미지는 `/api/media/{assetId}/content`의 권한 검사 경로로만 제공한다. 루트를 웹 서버 정적 디렉터리로 매핑하지 않는다. 교체/삭제는 즉시 이전 URL을 막고, 실제 파일 정리는24시간 유예 뒤 시간별 작업으로 재시도한다.

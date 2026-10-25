@@ -10,6 +10,8 @@ public interface Products {
     record Page<T>(List<T> items,int page,boolean hasMore) { }
     Product save(UUID owner,UUID id,Input input);
     Product own(UUID owner,UUID id);
+    /** Caller must hold an active transaction through the media mutation. */
+    void lockForMedia(UUID owner,UUID id);
     Page<Product> list(UUID owner,int page);
     PublicProduct published(String slug);
     Page<PublicProduct> published(int page);

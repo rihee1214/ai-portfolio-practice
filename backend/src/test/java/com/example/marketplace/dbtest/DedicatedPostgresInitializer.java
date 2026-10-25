@@ -53,6 +53,7 @@ public class DedicatedPostgresInitializer implements ApplicationContextInitializ
             throw new IllegalStateException("PostgreSQL test preparation failed; SQLSTATE=" + failure.getSQLState());
         }
         TestPropertyValues.of(
+                "marketplace.media.root="+java.nio.file.Path.of(required("A3_EVIDENCE")).resolve("media"),
                 "DB_URL=" + url, "DB_USERNAME=" + username, "DB_PASSWORD=" + password, "DB_SCHEMA=marketplace",
                 "spring.datasource.url=" + url, "spring.datasource.username=" + username,
                 "spring.datasource.password=" + password).applyTo(context);

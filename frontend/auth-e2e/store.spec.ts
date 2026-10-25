@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { randomUUID } from 'node:crypto'
+import { resolve } from 'node:path'
 
 test('판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침', async ({ page, browser }, info) => {
   await page.goto('/login')
@@ -32,7 +33,14 @@ test('판매자 매대 생성·수정·공개·비공개와 공개 페이지 새
     await page.getByLabel('매대 공개', { exact: true }).check()
     await page.getByRole('button', { name: '매대 저장', exact: true }).click()
     await expect(page.getByText('매대 정보를 저장했습니다.')).toBeVisible()
+    await page.getByLabel('이미지 파일 1', { exact: true }).setInputFiles(resolve('../backend/src/test/resources/media/alpha.webp'))
+    await page.getByLabel('이미지 설명 1', { exact: true }).fill('실제 매대 이미지')
+    await page.getByRole('button', { name: '이미지 1 업로드', exact: true }).click()
+    await expect(page.getByRole('img', { name: '실제 매대 이미지' })).toBeVisible()
+    const imageUrl = (await page.getByRole('img', { name: '실제 매대 이미지' }).getAttribute('src'))!
     await publicPage.reload()
+    await expect.poll(() => publicPage.getByRole('img', { name: '실제 매대 이미지' }).evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(4)
+    await publicPage.screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04c-public-store-' + info.project.name + '.png') })
     await expect(publicPage.getByRole('heading', { name: '가상 매대' })).toBeVisible()
     await expect(publicPage.getByText('모의 공지', { exact: true })).toBeVisible()
     expect(await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
@@ -44,6 +52,7 @@ test('판매자 매대 생성·수정·공개·비공개와 공개 페이지 새
     await expect(page.getByText('매대 정보를 저장했습니다.')).toBeVisible()
     await publicPage.reload()
     await expect(publicPage.getByRole('alert')).toContainText('찾을 수 없습니다')
+    expect((await publicPage.request.get(imageUrl)).status()).toBe(404)
     expect((await page.request.get('/api/account/profile')).status()).toBe(200)
   } finally { await visitor.close() }
 })

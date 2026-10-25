@@ -23,6 +23,7 @@ public final class InitialAdminCommand {
             application.setWebApplicationType(WebApplicationType.NONE);
             try (var context = application.run("--spring.main.web-application-type=none", "--spring.profiles.active=db",
                     "--spring.config.location=classpath:/", "--spring.flyway.enabled=false", "--spring.sql.init.mode=never",
+                    "--marketplace.media.enabled=false",
                     "--spring.main.banner-mode=off")) {
                 new InitialAdmin(context.getBean(NamedParameterJdbcTemplate.class),
                         context.getBean(PlatformTransactionManager.class)).initialize(member, database, confirmation);

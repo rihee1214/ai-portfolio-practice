@@ -36,7 +36,7 @@ class DatabaseSettingsTest {
                 .withPropertyValues("spring.config.location=classpath:/",
                         "spring.autoconfigure.exclude=org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration,"
                             + "org.springframework.boot.flyway.autoconfigure.FlywayAutoConfiguration",
-                        "spring.flyway.enabled=false", "spring.sql.init.mode=never")
+                        "spring.flyway.enabled=false", "spring.sql.init.mode=never", "marketplace.media.enabled=false")
                 // Settings-only context: satisfy account wiring without creating a DataSource or connecting.
                 .withBean(NamedParameterJdbcTemplate.class, () -> new NamedParameterJdbcTemplate(
                         new org.springframework.jdbc.datasource.AbstractDataSource() {

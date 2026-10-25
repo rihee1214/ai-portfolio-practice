@@ -99,3 +99,17 @@ test('상품을 선택하면 기본 SKU 가격과 판매 여부를 관리할 수
   expect(await screen.findByLabelText('SKU 가격 (원)')).toHaveValue(0)
   expect(screen.getByLabelText('SKU 판매 활성')).not.toBeChecked()
 })
+
+test('선택한 상품에 이미지 업로드와 대체 텍스트 입력이 있다', async () => {
+  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  vi.stubGlobal('fetch', vi.fn(async (path: string) => {
+    if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
+    if (path.startsWith('/api/media/')) return json(Array.from({ length: 5 }, (_, slot) => ({ slot, assetId: null, alt: '', version: 0, width: 0, height: 0 })))
+    return json({ items: path.includes('/skus') || path.startsWith('/api/categories') ? [] : [product], page: 0, hasMore: false })
+  }))
+  const auth = new AuthStore(); await auth.refresh()
+  render(<AuthContext value={auth}><ProductPage /></AuthContext>)
+  await userEvent.setup().click(await screen.findByRole('button', { name: '상품 · 초안' }))
+  expect(await screen.findByLabelText('이미지 파일 1')).toBeEnabled()
+  expect(screen.getByLabelText('이미지 설명 1')).toBeEnabled()
+})

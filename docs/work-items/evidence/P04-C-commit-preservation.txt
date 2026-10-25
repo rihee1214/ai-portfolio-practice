@@ -1,0 +1,10 @@
+PASS existing DB hashes, database inventory, container identities
+New databases: 
+
+LocalAddress LocalPort OwningProcess
+------------ --------- -------------
+127.0.0.1        15433         57168
+127.0.0.1        15432         57168
+
+
+PASS listeners unchanged, reviewed database inventory 107 preserved, existing media 69 hashes unchanged

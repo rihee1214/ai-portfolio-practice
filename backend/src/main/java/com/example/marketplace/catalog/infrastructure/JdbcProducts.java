@@ -38,6 +38,12 @@ public final class JdbcProducts implements Products {
         if(rows.isEmpty()) { throw new CatalogException(404); }
         return rows.getFirst();
     }
+    @Override public void lockForMedia(UUID owner,UUID id) {
+        stores.requireCapability(owner,Stores.Capability.MANAGE_CATALOG);
+        own(owner,id);
+        String state=jdbc.queryForObject("SELECT state FROM marketplace.catalog_product WHERE id=:id FOR UPDATE",Map.of("id",id),String.class);
+        if("ARCHIVED".equals(state)) { throw new CatalogException(409); }
+    }
     @Override public Page<Product> list(UUID owner,int page) {
         access.require(owner,AccessArea.SELLER); CatalogValues.page(page);
         var rows=jdbc.query("SELECT p.* FROM marketplace.catalog_product p JOIN marketplace.seller_store s ON s.id=p.store_id WHERE s.owner_id=:owner ORDER BY p.id LIMIT 21 OFFSET :offset",Map.of("owner",owner,"offset",page*20),this::map);

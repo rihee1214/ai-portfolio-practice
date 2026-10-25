@@ -3,6 +3,7 @@ import { useAuthStore } from '../auth/AuthContext'
 import { CatalogStore, categoryValid, productValid, productStates, type Category, type Product } from '../catalog/CatalogStore'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
 import { SkuPanel } from './SkuPanel'
+import { MediaPanel } from './MediaPanel'
 
 function Pager({ page, hasMore, busy, load, label }: { page: number; hasMore: boolean; busy: boolean; load: (page: number) => void; label: string }) {
   return <nav aria-label={label}><button disabled={busy || !page} onClick={() => load(page - 1)}>이전</button> <span>{page + 1} 페이지</span> <button disabled={busy || !hasMore || page >= 10000} onClick={() => load(page + 1)}>다음</button></nav>
@@ -50,7 +51,7 @@ export function ProductPage() {
   useEffect(() => store.connect(), [store]); useEffect(() => categories.connect(), [categories])
   const item = state.items?.find(row => row.id === selected) ?? null
   return <section className="auth-card store-card catalog-card"><h1>상품 관리</h1>
-    <p>상품을 초안으로 등록하고 공개 등록·판매 중지·보관 상태를 관리합니다. 보관 후에는 수정하거나 복구할 수 없습니다. 상품을 선택하면 옵션·가격·SKU 판매 상태를 관리할 수 있습니다. 이미지·재고와 구매 기능은 아직 준비 중입니다.</p>
+    <p>상품을 초안으로 등록하고 공개 등록·판매 중지·보관 상태를 관리합니다. 보관 후에는 수정하거나 복구할 수 없습니다. 상품을 선택하면 옵션·가격·이미지를 관리할 수 있습니다. 재고와 구매 기능은 아직 준비 중입니다.</p>
     {state.busy && <p role="status">처리 중입니다.</p>}{state.error && <ApiErrorNotice error={state.error} />}{cats.error && <ApiErrorNotice error={cats.error} />}{state.notice && <p role="status">{state.notice}</p>}
     <button disabled={state.busy} onClick={() => { select(null); void store.load() }}>상품 다시 확인</button>
     {state.items && <><ul>{state.items.map(row => <li key={row.id}><button disabled={state.busy} onClick={() => select(row.id)}>{row.title} · {productStates[row.state]}</button>{row.hiddenByAdmin && <span> 운영 비공개</span>}</li>)}</ul>
@@ -62,6 +63,7 @@ export function ProductPage() {
       <button disabled={cats.busy} onClick={() => void categories.load()}>카테고리 다시 확인</button>
       <ProductForm key={item ? item.id + ':' + item.version : 'new'} item={item} categories={cats.items ?? []} busy={state.busy || cats.busy || !cats.items} save={fields => store.save(item, fields)} />
       {item && <SkuPanel key={item.id} product={item} />}
+      {item && <MediaPanel key={'media-' + item.id} kind="products" target={item.id} disabled={item.state === 'ARCHIVED'} />}
     </>}
   </section>
 }

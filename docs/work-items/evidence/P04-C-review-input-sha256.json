@@ -1,0 +1,138 @@
+[
+  {
+    "path": "backend/.env.example",
+    "sha256": "C2F4E093D164F1D87BE92479DA39238174228318B7D43486297E3EB257628945"
+  },
+  {
+    "path": "backend/pom.xml",
+    "sha256": "894C16ABAAADCBDF26F4D8502349248149A700907FED933075A53C32358BDB99"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Products.java",
+    "sha256": "D88FE1D9E57B5EFB09CC1858F137F5ECFD4107E521A960680E7D04CC18C1EBF6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcProducts.java",
+    "sha256": "CBF267FDCDCCD14A8C8538929ACADC7DDFFA3FBE2911315C2325A87F36D69415"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/InitialAdminCommand.java",
+    "sha256": "EB1FC64563440C9A4CAB82A6E5E0B28F7C1DC74C9BB16D6D76150FBA315F52EE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+    "sha256": "CFCE209FE437A752BD4DCB60FA2D4676FA71D544353F2EA24AFBAD6E9A7FEF64"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/api/Media.java",
+    "sha256": "D333618109F04D3D05428650B504D46C2B042D6EA00711253EC43C80885984E4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/api/MediaException.java",
+    "sha256": "C4A6F733B9521AE27938008275C676DD54A9B9B777D7A2FDFC5E471374DF15A1"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/ImageNormalizer.java",
+    "sha256": "DAA09F09B704C069647B7308E2E51A54E78AA60FB7CD752FE935CE16CDF6BD9F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/JdbcMedia.java",
+    "sha256": "51D8EB84B160827F7E6C044B45E24EB472F6FD0D3F8927E15225E99B2983334A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/LocalImages.java",
+    "sha256": "58E3822CD8AFE765D4E4ED5A1D2E958961F0BF534C341899A162BFEA606CBDEB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/MediaConfiguration.java",
+    "sha256": "B2E66F775FD28CE044F4ECA4D695D156885C25D498FBFC74A2D2C14254CDF0D8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/web/MediaController.java",
+    "sha256": "C9A11DCC484E054107329A9D5272D60F007D9402F7F7D1B240B3F9574475CDB4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/web/MediaErrors.java",
+    "sha256": "DE550F646A7889DBC36AC8422198EB454549EDECE023D5227EED20F45A1E1E1C"
+  },
+  {
+    "path": "backend/src/main/resources/application-db.properties",
+    "sha256": "84261FDFA840BDE7CD378C0633EF6D7F649125747D9A3C35863A54CA789BEEE7"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V16__media_assets.sql",
+    "sha256": "EC23B1A5425A48290EF556D58BD892EBCA1D1EAE5A1D864D9774E3BEE9D22295"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/DatabaseSettingsTest.java",
+    "sha256": "0BE85427A43C780018B44D17487473DB066E844325FA0D43831D645CD47FF3AF"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/DedicatedPostgresInitializer.java",
+    "sha256": "78547F963C33801A6ABFAB6F2B13BB90CC795DB3A3BFEA687E6AC715ECA2F64B"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "sha256": "F959DE5027AA945CBD26342C2FEE30F609AE67EF82D614C7F782AE1D2C88BB84"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/media/infrastructure/ImageNormalizerTest.java",
+    "sha256": "C726EBB0290F562BBEBA868FF40A509E01011AB83562B104AE1C4A139B875E19"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/media/infrastructure/LocalImagesTest.java",
+    "sha256": "7A54B6EAC9E4BF58AB106C9C4B5875B91EFD35AC2F3EA0C3769A5F99064C4858"
+  },
+  {
+    "path": "backend/src/test/resources/media/alpha.webp",
+    "sha256": "5BC8FB7AA321287DAFA8EC7B8D181722A32E765F3FCE7BE17A58E1FEF4B6280C"
+  },
+  {
+    "path": "backend/src/test/resources/media/animated.webp",
+    "sha256": "5E839D206BDCBFCA041228EE259C0EC31609C7DB488D3CB78FE960393AD57FA6"
+  },
+  {
+    "path": "backend/src/test/resources/media/lossy.webp",
+    "sha256": "EFC838C0B30EADFC28D25BE20D2490443D35CBC38AE3C7B201FF3AD71257EB16"
+  },
+  {
+    "path": "backend/src/test/resources/media/README.md",
+    "sha256": "50129BC58C811AD2B68F08ADC2D34EADA71B10EAF453BE41562A381CAED3D48D"
+  },
+  {
+    "path": "frontend/auth-e2e/catalog.spec.ts",
+    "sha256": "F729229E46121F4ED62E6BFF38FF70BCFD79C92292831BBB347092F7DA046FD0"
+  },
+  {
+    "path": "frontend/auth-e2e/store.spec.ts",
+    "sha256": "A4EA59A46004541E55150BED8F62F43E5ECFDF00BB4606EF4DCC6D84E14E84BA"
+  },
+  {
+    "path": "frontend/src/catalog/MediaStore.ts",
+    "sha256": "E8A2604CA1FBB435BB77ED94433A1F8B174599A8D9D28C5DAF170E448D7F6CF9"
+  },
+  {
+    "path": "frontend/src/pages/CatalogPages.tsx",
+    "sha256": "015791A87BFF54E736C0D4560E85E9617BFA1DD4A1476AFF94B477A85A2CA954"
+  },
+  {
+    "path": "frontend/src/pages/MediaPanel.tsx",
+    "sha256": "100D50FE4F90DD1B217D49B48819386E4CB649D65080C5B3D6D207A206D0DB65"
+  },
+  {
+    "path": "frontend/src/pages/StorePages.tsx",
+    "sha256": "75FE303498A64492413924DE662115C2651D6CF52D950F173F68A56A6826C6F4"
+  },
+  {
+    "path": "frontend/src/styles.css",
+    "sha256": "F635696C4060C52B076044233C8BF83B3B3BD9AABA923B0FB19059BA06BB5B0A"
+  },
+  {
+    "path": "frontend/tests/unit/Catalog.test.tsx",
+    "sha256": "49BFDED2315140AA7F64C4B8231FD39D5CD3E53AFA5FEDA28DEEF28EC1227769"
+  },
+  {
+    "path": "frontend/tests/unit/MediaStore.test.tsx",
+    "sha256": "EA67E138B9C851E8AE342D0A5CE986CA98EAD607947FB6E3D26C20393C4DDE10"
+  }
+]

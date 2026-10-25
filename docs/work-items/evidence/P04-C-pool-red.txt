@@ -1,0 +1,159 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 3 resources from src\main\resources to ..\.local-tools\p04-c-pool-red\build\classes
+[INFO] Copying 15 resources from src\main\resources to ..\.local-tools\p04-c-pool-red\build\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 81 source files with javac [debug parameters release 21] to ..\.local-tools\p04-c-pool-red\build\classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 4 resources from src\test\resources to ..\.local-tools\p04-c-pool-red\build\test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 31 source files with javac [debug parameters release 21] to ..\.local-tools\p04-c-pool-red\build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.610 s -- in com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Running com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO] Building jar: D:\Workspace\ai-portfolio-practice\.local-tools\p04-c-pool-red\build\marketplace-api-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\p04-c-pool-red\build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\p04-c-pool-red\build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- failsafe:3.5.6:integration-test (default) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.dbtest.PostgresJdbcIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+D2_CREATED_DATABASE=d2_it_714246a045f94416acfb8bd6e120a6fa
+2026-10-25T00:35:56.010+09:00  INFO [requestId=] 76856 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Starting PostgresJdbcIT using Java 21.0.12.1 with PID 76856 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-25T00:35:56.012+09:00  INFO [requestId=] 76856 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : The following 4 profiles are active: "db", "c3-fixture", "local-mailbox", "local-http"
+2026-10-25T00:35:56.995+09:00  INFO [requestId=] 76856 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-25T00:35:57.004+09:00  INFO [requestId=] 76856 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-25T00:35:57.005+09:00  INFO [requestId=] 76856 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-25T00:35:57.044+09:00  INFO [requestId=] 76856 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1023 ms
+2026-10-25T00:35:57.193+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-25T00:35:57.226+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5a78b52b
+2026-10-25T00:35:57.227+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-25T00:35:57.828+09:00  INFO [requestId=] 76856 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_714246a045f94416acfb8bd6e120a6fa (PostgreSQL 18.6)
+2026-10-25T00:35:57.897+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "marketplace" ...
+2026-10-25T00:35:57.902+09:00  INFO [requestId=] 76856 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "marketplace"."flyway_schema_history" ...
+2026-10-25T00:35:57.955+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": null
+2026-10-25T00:35:57.960+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "1 - initialize schema"
+2026-10-25T00:35:57.975+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "2 - jdbc fixture"
+2026-10-25T00:35:57.995+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "3 - identity signup"
+2026-10-25T00:35:58.015+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "4 - jdbc sessions"
+2026-10-25T00:35:58.032+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "5 - account recovery profile addresses"
+2026-10-25T00:35:58.052+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "6 - operating permissions"
+2026-10-25T00:35:58.067+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "7 - account state audit"
+2026-10-25T00:35:58.082+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "8 - seller applications"
+2026-10-25T00:35:58.098+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "9 - stores"
+2026-10-25T00:35:58.112+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "10 - store operations"
+2026-10-25T00:35:58.126+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "11 - catalog categories"
+2026-10-25T00:35:58.139+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "12 - catalog products"
+2026-10-25T00:35:58.153+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "13 - category audit"
+2026-10-25T00:35:58.165+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "14 - store operation order"
+2026-10-25T00:35:58.178+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "15 - catalog skus"
+2026-10-25T00:35:58.193+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "16 - media assets"
+2026-10-25T00:35:58.211+09:00  INFO [requestId=] 76856 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 16 migrations to schema "marketplace", now at version v16 (execution time 00:00.092s)
+2026-10-25T00:35:58.329+09:00  INFO [requestId=] 76856 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginMembers
+2026-10-25T00:35:58.868+09:00  INFO [requestId=] 76856 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-25T00:35:58.961+09:00  INFO [requestId=] 76856 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 6360 (http) with context path '/'
+2026-10-25T00:35:58.969+09:00  INFO [requestId=] 76856 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Started PostgresJdbcIT in 3.389 seconds (process running for 4.315)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-25T00:35:59.584+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-25T00:35:59.593+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@67e12e28
+2026-10-25T00:35:59.593+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-25T00:36:00.115+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-10-25T00:36:00.116+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-10-25T00:36:00.129+09:00  INFO [requestId=] 76856 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-25T00:36:00.130+09:00  INFO [requestId=] 76856 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-25T00:36:00.134+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-25T00:36:00.136+09:00  INFO [requestId=] 76856 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.938 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[ERROR] com.example.marketplace.dbtest.PostgresJdbcIT.mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor -- Time elapsed: 1.145 s <<< ERROR!
+java.lang.IllegalStateException: Connection waiter must not hold file monitor
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor$21(PostgresJdbcIT.java:210)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor(PostgresJdbcIT.java:202)
+Caused by: java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:204)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor$21(PostgresJdbcIT.java:209)
+	... 4 more
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   PostgresJdbcIT.mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor:202->lambda$mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor$21:210 IllegalState Connection waiter must not hold file monitor
+[INFO] 
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- failsafe:3.5.6:verify (default) @ marketplace-api ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.439 s
+[INFO] Finished at: 2026-10-25T00:36:00+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.5.6:verify (default) on project marketplace-api: 
+[ERROR] 
+[ERROR] See D:\Workspace\ai-portfolio-practice\.local-tools\p04-c-pool-red\build\failsafe-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

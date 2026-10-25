@@ -106,6 +106,9 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .catalog-card textarea { min-height: 120px; resize: vertical; }
 .catalog-card li, .catalog-card button, .catalog-card small { overflow-wrap: anywhere; }
 .catalog-card small { color: #4b5e50; font-weight: normal; }
+.managed-image { display: block; max-width: 100%; max-height: 320px; object-fit: contain; margin: 12px 0; }
+.media-panel fieldset { display: grid; gap: 12px; min-width: 0; border: 1px solid #dcded6; border-radius: 8px; padding: 16px; }
+.media-panel input { max-width: 100%; }
 .not-found { padding: 70px 0; max-width: 750px; }
 .not-found h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -2px; }
 .unknown-path { overflow-wrap: anywhere; font-size: 13px; color: #5d695f; }

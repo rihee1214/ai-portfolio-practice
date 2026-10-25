@@ -1,0 +1,48 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run --run tests/unit/MediaStore.test.tsx
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/MediaStore.test.tsx (2 tests | 2 failed) 155ms
+   × 이미지 저장에서 401면 회원과 기존 이미지 목록을 폐기한다 82ms
+   × 이미지 저장에서 403면 회원과 기존 이미지 목록을 폐기한다 72ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/MediaStore.test.tsx > 이미지 저장에서 401면 회원과 기존 이미지 목록을 폐기한다
+ FAIL  tests/unit/MediaStore.test.tsx > 이미지 저장에서 403면 회원과 기존 이미지 목록을 폐기한다
+AssertionError: expected [ { slot: +0, …(5) } ] to be undefined
+
+- Expected:
+undefined
+
++ Received:
+[
+  {
+    "alt": "기존 이미지",
+    "assetId": "00000000-0000-4000-8000-000000000001",
+    "height": 3,
+    "slot": 0,
+    "version": 1,
+    "width": 4,
+  },
+]
+
+ ❯ tests/unit/MediaStore.test.tsx:19:37
+     17|   await waitFor(() => expect(store.getSnapshot().items).toHaveLength(1…
+     18|   await store.save(store.getSnapshot().items![0], new File(['image'], …
+     19|   expect(store.getSnapshot().items).toBeUndefined()
+       |                                     ^
+     20|   expect(auth.getSnapshot().member).toBeNull()
+     21|   disconnect()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  00:30:58
+   Duration  1.48s (environment 70%, setup 15%, tests 12%, transform 2%)
+

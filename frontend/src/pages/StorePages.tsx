@@ -6,6 +6,7 @@ import { ApiErrorNotice } from '../components/ApiErrorNotice'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import { requestJson } from '../api/http'
 import { StoreHistory } from './StoreLifecycle'
+import { MediaPanel, PublicMedia } from './MediaPanel'
 
 const fields: [keyof StoreFields, string, number][] = [['slug', '매대 URL 주소', 63], ['name', '매대 이름', 80], ['introduction', '매대 소개', 1000], ['address', '공개용 주소', 200], ['notice', '매대 공지', 1000], ['imageKey', '대표 이미지 키', 100], ['imageAlt', '이미지 대체 텍스트', 120]]
 export function StoreEditorPage() {
@@ -26,7 +27,7 @@ export function StoreEditorPage() {
   return <section className="auth-card store-card"><h1>내 매대</h1>
     <p>포트폴리오용 가상 정보만 입력하세요. 공개용 주소는 매대 공개 시 방문자에게 표시됩니다.</p>
     <p>URL 주소는 소문자 영문·숫자·내부 하이픈 3~63자이며 생성 후 변경할 수 없습니다.</p>
-    <p>대표 이미지는 키와 대체 텍스트만 저장합니다. 파일 업로드와 이미지 표시는 아직 제공하지 않습니다.</p>
+    <p>매대를 만든 뒤 아래에서 대표 이미지를 업로드할 수 있습니다. 이전 이미지 키·대체 텍스트는 기록용이며, 업로드한 대표 이미지를 표시합니다.</p>
     {state.busy && <p role="status">매대 정보를 확인하고 있습니다.</p>}
     {state.store && <p>운영 상태: <strong>{storeStates[state.store.state]}</strong></p>}
     {state.store !== undefined && (!state.store || state.store.state === 'OPEN') && <form key={state.store ? state.store.id + ':' + state.store.version : 'new'} onSubmit={submit}>
@@ -37,6 +38,7 @@ export function StoreEditorPage() {
       <button disabled={state.busy}>{state.store ? '매대 저장' : '매대 만들기'}</button>
     </form>}
     {state.store && <p><Link to={'/stores/' + state.store.slug}>공개 매대 확인</Link> · {state.store.visible ? '공개' : '비공개'}</p>}
+    {state.store && <MediaPanel key={state.store.id} kind="stores" target={state.store.id} disabled={state.store.state !== 'OPEN'} />}
     {state.store && state.store.state !== 'OPEN' && <p>편집과 신규 판매는 제한됩니다. 구매와 기존 거래 대응 공간은 계속 이용할 수 있습니다.</p>}
     {state.store && state.store.state !== 'CLOSED' && <form onSubmit={event => {
       event.preventDefault(); const data = new FormData(event.currentTarget); const reason = String(data.get('reason') ?? '').trim()
@@ -71,7 +73,7 @@ export function PublicStorePage() {
     {!current ? <p role="status">매대 정보를 확인하고 있습니다.</p> : state.store ? <>
       <h2>{state.store.name}</h2><p>{state.store.introduction}</p><h3>공개용 주소</h3><p>{state.store.address}</p>
       <h3>공지</h3><p>{state.store.notice || '등록된 공지가 없습니다.'}</p>
-      {state.store.imageKey && <p>대표 이미지 메타데이터 등록됨 · {state.store.imageAlt} (이미지 표시 준비 중)</p>}
+      <PublicMedia key={state.store.slug + ':' + attempt} kind="stores" slug={state.store.slug} />
       <p>상품 목록은 준비 중입니다.</p>
     </> : state.error && <ApiErrorNotice error={state.error} />}
     <button onClick={() => retry(value => value + 1)}>매대 다시 확인</button><p><Link to="/">홈으로</Link></p>

@@ -77,6 +77,7 @@ public class AuthConfiguration {
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/categories").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products", "/api/products/{slug}", "/api/products/{slug}/skus").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/media/{asset}/content", "/api/media/public/{kind}/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",
                                 "/api/auth/signup", "/api/auth/verify-email",
                                 "/api/auth/password/request", "/api/auth/password/reset").permitAll()

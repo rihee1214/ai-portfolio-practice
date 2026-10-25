@@ -104,7 +104,8 @@ worker는 주 앱과 같은 배포 버전·DB를 사용하는 Java 실행 역할
 | --- | --- | --- |
 | identity | User·RoleAssignment·Address·GuestBuyer·VerificationAttempt·세션 | 사용자 식별, 권한 확인, 전화 인증·비회원 조회 자격 |
 | seller | SellerApplication·SellerProfile·Store | 판매자 승인 상태, 매대 소유권·공개 상태 |
-| catalog | Category·Product·SKU·ProductMedia | 상품 정보·판매 자격·옵션·가격 조회와 변경 |
+| catalog | Category·Product·SKU | 상품 정보·판매 자격·옵션·가격 조회와 변경 |
+| media | MediaAsset·MediaSlot(상품/매대 연결)·저장소 namespace | 검증·재인코딩·소유권/공개 다운로드·교체/삭제·고아 정리 |
 | inventory | InventoryBalance·InventoryReservation·StockMovement | 가용 수량, 예약·확정·해제·반품 입고 |
 | cart | Cart·CartItem·Wishlist | 상품 선택과 수량, 회원 장바구니·찜 |
 | promotion | Promotion·CouponTemplate·IssuedCoupon·CouponReservation | 혜택 견적·사용 예약·확정·복구 |
@@ -436,3 +437,6 @@ dev/test/demo/운영 환경의 DB·키·저장소·모의 사용을 분리한다
 
 
 P04-B SKU 세부 계약은 [작업 기록](work-items/P04-B.md)을 따른다. 옵션 없는 상품도 비활성·0원 기본 SKU를 보유하며 옵션 조합은 NFC/공백 정규화 후 상품 내 고유하다. SKU 가격·활성을 별도 버전으로 변경하고 조합/코드는 불변이다. 옵션 추가 시 기본 SKU 비활성도 원자적으로 처리한다. 공개 SKU는 상품 공개 조건과 SKU active를 단일 읽기에서 확인하며 재고·구매 판정은 후속 단계다.
+
+
+P04-C의 세부 계약은 [작업 기록](work-items/P04-C.md)을 따른다. TwelveMonkeys imageio-webp 3.15.0과 JDK JPEG/PNG 디코더를 사용하고 메타데이터 없는 PNG로 재인코딩한다. 상품5슬롯·매대1슬롯, 5MiB 입력/출력·4096px 변·1600만 픽셀 제한과 명시적 MEDIA_ROOT를 적용한다. media가 자산과 연결 슬롯을 소유하며 catalog/seller 공개 API로 쓰기 자격과 잠금을 확인한다. DB 연결→회원→매대→상품 잠금 뒤 짧은 파일 모니터를 취하고, 읽기/정리도 연결을 먼저 확보한다. 새 DB마다 별도 namespace와 루트를 사용한다. 재고·구매는 P04-C 범위가 아니다.
