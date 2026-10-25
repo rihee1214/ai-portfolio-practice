@@ -1890,6 +1890,16 @@ class PostgresJdbcIT {
     private void runAuthBrowsersIfRequested() throws Exception {
         if (!"true".equals(System.getenv("A3_RUN_BROWSER"))) { return; }
         var cMembers = new java.util.ArrayList<UUID>();
+        // Keep the first operator page full so browser journeys must follow pagination,
+        // regardless of random store UUIDs or the order of other integration tests.
+        for (int index = 1; index <= 20; index++) {
+            UUID owner = activeMember("browser-page-fixture-" + index + "@example.com");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')", Map.of("id", owner));
+            cMembers.add(owner);
+            jdbc.update("INSERT INTO marketplace.seller_store(id,owner_id,slug,name,introduction,address,notice,image_key,image_alt) "
+                    + "VALUES(:id,:owner,:slug,'Pagination fixture','Test only','Test address','','','')",
+                    Map.of("id", new UUID(0, index), "owner", owner, "slug", "browser-page-fixture-" + index));
+        }
         for (String project : List.of("desktop", "mobile")) {
             UUID catalogSeller=activeMember("p4-seller-"+project+"@example.com");
             jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",catalogSeller));

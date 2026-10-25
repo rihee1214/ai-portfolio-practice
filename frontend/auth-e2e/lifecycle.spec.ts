@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import { randomUUID } from 'node:crypto'
+import { openManagedStore } from './managed-store'
 
 async function login(page: Page, email: string) {
   await page.goto('/login')
@@ -21,11 +22,12 @@ test('판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 �
   await page.getByRole('button', { name: '매대 만들기' }).click()
   await expect(page.getByText('매대 정보를 저장했습니다.')).toBeVisible()
   const context = await browser.newContext({ viewport: page.viewportSize() ?? { width: 1280, height: 720 } })
+  let failed = false
   try {
     const admin = await context.newPage()
     await login(admin, 'p3-admin-' + info.project.name + '@example.com')
-    await admin.goto('/admin/stores')
-    const card = admin.getByRole('article', { name: slug })
+    const { card, pageIndex } = await openManagedStore(admin, slug)
+    expect(pageIndex, '첫 페이지를 채운 회귀 fixture가 실제 페이지 이동을 강제한다').toBeGreaterThan(0)
     await card.getByLabel('조치 사유').fill('모의 정지 사유')
     await card.getByRole('button', { name: '판매 정지하기' }).focus()
     await admin.keyboard.press('Enter')
@@ -58,5 +60,13 @@ test('판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 �
     for (const target of [page, admin]) expect(await target.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
     await page.locator('.store-card').screenshot({ path: info.outputPath('closed-store.png') })
     await card.screenshot({ path: info.outputPath('store-operations.png') })
-  } finally { await context.close() }
+  } catch (error) {
+    failed = true
+    throw error
+  } finally {
+    await context.close().catch(error => {
+      if (!failed) throw error
+      console.warn('LIFECYCLE cleanup failed after the original test failure', error)
+    })
+  }
 })

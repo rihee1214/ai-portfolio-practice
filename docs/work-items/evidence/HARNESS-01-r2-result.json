@@ -1,0 +1,21 @@
+{
+  "commit": "4869547c1f985500cfe779905f170df67eff1b54",
+  "browser": 22,
+  "frontendUnit": 96,
+  "started": "2026-10-25T11:35:59.5416052+09:00",
+  "status": "passed",
+  "dirty": [
+    " M README.md",
+    " M docs/development-workflow.md",
+    " M docs/implementation-plan.md",
+    "?? docs/verification-harness.md",
+    "?? docs/work-items/HARNESS-01.md",
+    "?? verification/",
+    "?? verify.ps1"
+  ],
+  "finished": "2026-10-25T11:38:31.8668923+09:00",
+  "preservation": "passed",
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\harness-p04-d-20261025-r2",
+  "scope": "Existing implementation through P04-D",
+  "junit": 227
+}

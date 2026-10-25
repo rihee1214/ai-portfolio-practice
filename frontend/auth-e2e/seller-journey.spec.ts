@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import { randomUUID } from 'node:crypto'
+import { openManagedStore } from './managed-store'
 
 async function csrf(page: Page) { return (await (await page.request.get('/api/auth/csrf')).json()).token as string }
 async function login(page: Page, email: string, password: string) {
@@ -77,8 +78,8 @@ test('동일 회원이 신청·승인·매대 공개·정지·복구·재공개�
     expect(own).toMatchObject({ slug, state: 'OPEN', visible: true })
     await visitor.goto('/stores/' + slug)
     await expect(visitor.getByRole('heading', { name: fields.name, exact: true })).toBeVisible()
-    await operator.goto('/admin/stores')
-    const card = operator.getByRole('article', { name: slug })
+    const { card, pageIndex } = await openManagedStore(operator, slug)
+    expect(pageIndex, '첫 페이지 밖의 매대도 운영할 수 있어야 한다').toBeGreaterThan(0)
     await card.getByLabel('조치 사유').fill('연속 흐름 정지')
     await card.getByRole('button', { name: '판매 정지하기' }).click()
     await expect(card.getByRole('button', { name: '판매 복구하기' })).toBeVisible()

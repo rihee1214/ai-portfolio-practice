@@ -1,0 +1,19 @@
+{
+  "dirty": [
+    " M README.md",
+    " M docs/development-workflow.md",
+    " M docs/implementation-plan.md",
+    "?? docs/verification-harness.md",
+    "?? docs/work-items/HARNESS-01.md",
+    "?? verification/",
+    "?? verify.ps1"
+  ],
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\harness-p04-d-20261025-final",
+  "finished": "2026-10-25T11:41:35.5102055+09:00",
+  "status": "failed",
+  "error": "PostgreSQL integration verification failed; see D:\\Workspace\\ai-portfolio-practice\\.local-tools\\harness-p04-d-20261025-final\\db/maven.txt",
+  "commit": "4869547c1f985500cfe779905f170df67eff1b54",
+  "scope": "Existing implementation through P04-D",
+  "preservation": "passed",
+  "started": "2026-10-25T11:39:11.2827281+09:00"
+}

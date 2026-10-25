@@ -1,0 +1,354 @@
+[WebServer] (node:78284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:33336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.7s)
+  ok  2 [desktop] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (834ms)
+  ok  3 [desktop] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.3s)
+  ok  4 [desktop] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.5s)
+  ok  5 [desktop] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.8s)
+  ok  6 [desktop] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.2s)
+  ok  7 [desktop] › auth-e2e\catalog.spec.ts:12:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (5.3s)
+LIFECYCLE admin login start
+LIFECYCLE admin stores start
+LIFECYCLE original failure locator.fill: Test ended.
+Call log:
+  - waiting for getByRole('article', { name: 'lifecycle-b1a00585' }).getByLabel('조치 사유')
+
+    at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\lifecycle.spec.ts:31:36 {
+  log: [
+    "  - waiting for getByRole('article', { name: 'lifecycle-b1a00585' }).getByLabel('조치 사유')"
+  ]
+}
+  x   8 [desktop] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (30.0s)
+(node:66928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [desktop] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (30.1s)
+(node:63312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [desktop] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (1.9s)
+  ok 11 [desktop] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.4s)
+(node:35112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [mobile] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.7s)
+  ok 13 [mobile] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (711ms)
+  ok 14 [mobile] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.4s)
+  ok 15 [mobile] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.6s)
+  ok 16 [mobile] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.8s)
+  ok 17 [mobile] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+  ok 18 [mobile] › auth-e2e\catalog.spec.ts:12:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (6.0s)
+LIFECYCLE admin login start
+LIFECYCLE admin stores start
+LIFECYCLE original failure locator.fill: Test ended.
+Call log:
+  - waiting for getByRole('article', { name: 'lifecycle-dd7e188c' }).getByLabel('조치 사유')
+
+    at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\lifecycle.spec.ts:31:36 {
+  log: [
+    "  - waiting for getByRole('article', { name: 'lifecycle-dd7e188c' }).getByLabel('조치 사유')"
+  ]
+}
+  x  19 [mobile] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (30.1s)
+(node:4204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  20 [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (30.1s)
+(node:82664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [mobile] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (2.1s)
+  ok 22 [mobile] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.6s)
+
+
+  1) [desktop] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 ────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      68 |     console.error('LIFECYCLE original failure', error)
+      69 |     throw error
+    > 70 |   } finally { await context.close() }
+         |               ^
+      71 | })
+      72 |
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\lifecycle.spec.ts:70:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-desktop\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-desktop\error-context.md
+
+  2) [desktop] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: browserContext.close: Protocol error (Target.disposeBrowserContext): Failed to find context with id 4DDB14289011121E6B20CA22DBDD4E6E
+
+      122 |     expect(events[1]).toMatchObject({ actorId: operatorId, beforeState: 'SUSPENDED', afterState: 'OPEN', reason: '연속 흐름 복구' })
+      123 |     expect(events[2]).toMatchObject({ actorId: operatorId, beforeState: 'OPEN', afterState: 'SUSPENDED', reason: '연속 흐름 정지' })
+    > 124 |   } finally { await operatorContext.close(); await visitorContext.close() }
+          |               ^
+      125 | })
+      126 |
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\seller-journey.spec.ts:124:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-desktop\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-desktop\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-desktop\error-context.md
+
+  3) [mobile] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 ─────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launched> pid=71600
+    [pid=71600][err] [1025/115319.885:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115319.889:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115319.934:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115319.999:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.005:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.011:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.164:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.170:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.177:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.239:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.244:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.251:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.279:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.285:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.291:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.347:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.353:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.360:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.445:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.451:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.457:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.600:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.607:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.613:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.676:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.682:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.689:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.813:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.819:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.825:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115320.937:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115320.943:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115320.949:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.010:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.018:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.024:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.085:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.093:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.099:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.165:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.173:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.182:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.259:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.267:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.276:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.597:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.615:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.651:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115321.963:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115321.969:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115321.976:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115322.300:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115322.314:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115322.347:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115322.548:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115322.554:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115322.561:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115322.812:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115322.818:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115322.823:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115322.888:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115322.895:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115322.902:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115323.250:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115323.255:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115323.262:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115323.692:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115323.704:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115323.739:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115324.044:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115324.060:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115324.094:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115324.300:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115324.306:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115324.314:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115324.469:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115324.475:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115324.482:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115324.696:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115324.702:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115324.709:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115324.784:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115324.790:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115324.796:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115325.249:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115325.263:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115325.296:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115325.619:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115325.626:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115325.633:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115325.791:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115325.798:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115325.804:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115326.015:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115326.022:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115326.055:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115326.269:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115326.275:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115326.298:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115326.359:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115326.364:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115326.372:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115326.600:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115326.607:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115326.614:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115326.720:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115326.727:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115326.734:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115327.050:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115327.062:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115327.098:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115327.210:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115327.215:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115327.221:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115327.330:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115327.336:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115327.343:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115328.331:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115328.344:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115328.381:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115328.592:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115328.598:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115328.605:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115329.002:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115329.014:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115329.050:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115329.254:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115329.260:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115329.266:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115329.431:INFO:CONSOLE:0] "Pattern attribute value [a-z0-9][a-z0-9-]{1,61}[a-z0-9] is not a valid regular expression: Uncaught SyntaxError: Invalid regular expression: /[a-z0-9][a-z0-9-]{1,61}[a-z0-9]/v: Invalid character class", source: http://127.0.0.1:24176/seller/products (0)
+    [pid=71600][err] [1025/115331.297:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115331.304:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115331.313:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115333.339:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115333.344:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115333.352:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115334.329:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115334.333:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115334.378:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115334.544:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115334.551:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115334.558:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115334.924:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115334.937:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115334.972:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600][err] [1025/115335.147:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=71600][err] [1025/115335.155:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=71600][err] [1025/115335.161:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=71600] <gracefully close start>
+
+      68 |     console.error('LIFECYCLE original failure', error)
+      69 |     throw error
+    > 70 |   } finally { await context.close() }
+         |               ^
+      71 | })
+      72 |
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\lifecycle.spec.ts:70:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-mobile\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-mobile\error-context.md
+
+  4) [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ──────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    <launching> D:\Workspace\ai-portfolio-practice\.local-tools\playwright\chromium_headless_shell-1248\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\rihee\AppData\Local\Temp\playwright_chromiumdev_profile-qX5SPQ --remote-debugging-pipe --no-startup-window
+    <launched> pid=42172
+    [pid=42172][err] [1025/115405.047:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115405.060:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115405.093:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115405.293:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115405.299:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115405.311:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115405.696:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115405.709:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115405.742:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115405.917:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115405.923:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115405.930:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115406.152:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115406.159:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115406.165:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115406.216:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115406.221:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115406.227:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115406.472:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115406.485:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115406.519:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172][err] [1025/115406.580:INFO:CONSOLE:935] "[vite] connecting...", source: http://127.0.0.1:24176/@vite/client (935)
+    [pid=42172][err] [1025/115406.585:INFO:CONSOLE:1048] "[vite] connected.", source: http://127.0.0.1:24176/@vite/client (1048)
+    [pid=42172][err] [1025/115406.591:INFO:CONSOLE:15804] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:24176/node_modules/.vite/deps/react-dom_client.js?v=02841b18 (15804)
+    [pid=42172] <gracefully close start>
+
+      122 |     expect(events[1]).toMatchObject({ actorId: operatorId, beforeState: 'SUSPENDED', afterState: 'OPEN', reason: '연속 흐름 복구' })
+      123 |     expect(events[2]).toMatchObject({ actorId: operatorId, beforeState: 'OPEN', afterState: 'SUSPENDED', reason: '연속 흐름 정지' })
+    > 124 |   } finally { await operatorContext.close(); await visitorContext.close() }
+          |               ^
+      125 | })
+      126 |
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\seller-journey.spec.ts:124:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\lifecycle-pagination-red-20261025\db\browser-results\seller-journey-동일-회원이-신청·승인·매대-공개·정지·복구·재공개·폐점까지-이어간다-mobile\error-context.md
+
+  4 failed
+    [desktop] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 ─────────
+    [desktop] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ──────
+    [mobile] › auth-e2e\lifecycle.spec.ts:12:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 ──────────
+    [mobile] › auth-e2e\seller-journey.spec.ts:14:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 ───────
+  18 passed (2.7m)

@@ -1,0 +1,29 @@
+{
+  "scope": "Existing implementation through P04-D",
+  "started": "2026-10-25T11:51:04.1513557+09:00",
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\lifecycle-pagination-red-20261025",
+  "dirty": [
+    " M README.md",
+    " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    " M docs/development-workflow.md",
+    " M docs/implementation-plan.md",
+    " M frontend/auth-e2e/lifecycle.spec.ts",
+    "?? AGENTS.md",
+    "?? docs/verification-harness.md",
+    "?? docs/work-items/HARNESS-01.md",
+    "?? docs/work-items/evidence/HARNESS-01-browser-failure.txt",
+    "?? docs/work-items/evidence/HARNESS-01-gate-tests.txt",
+    "?? docs/work-items/evidence/HARNESS-01-inputs.json",
+    "?? docs/work-items/evidence/HARNESS-01-preservation.json",
+    "?? docs/work-items/evidence/HARNESS-01-r2-result.json",
+    "?? docs/work-items/evidence/HARNESS-01-result.json",
+    "?? docs/work-items/evidence/P04-E-before.json",
+    "?? verification/",
+    "?? verify.ps1"
+  ],
+  "preservation": "passed",
+  "finished": "2026-10-25T11:54:51.7589997+09:00",
+  "status": "failed",
+  "commit": "4869547c1f985500cfe779905f170df67eff1b54",
+  "error": "PostgreSQL integration verification failed; see D:\\Workspace\\ai-portfolio-practice\\.local-tools\\lifecycle-pagination-red-20261025\\db/maven.txt"
+}
