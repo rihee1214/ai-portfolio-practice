@@ -1,0 +1,3 @@
+오후 5:07:44 [vite] (client) Re-optimizing dependencies because vite config has changed
+PASS browser SDK → emulator → Java verification; forged proof, wrong code, replay, nonlocal and persistence guards
+오후 5:07:45 [vite] (client) dependencies optimized: firebase/app, firebase/auth

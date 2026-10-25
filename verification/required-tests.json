@@ -335,5 +335,26 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistOwnershipVisibilityAndIdempotency",
       "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistCapacityConcurrencyAndSuspension"
     ]
+  },
+  {
+    "id": "P06-A-provider-policy",
+    "tests": [
+      "com.example.marketplace.phone.PhoneProviderTest#normalizesOnlySupportedPhoneFormats",
+      "com.example.marketplace.phone.PhoneProviderTest#confirmationExpiresAtExactBoundaryAndConsumesSuccess",
+      "com.example.marketplace.phone.PhoneProviderTest#resendInvalidatesOldRequestAndLimitsIssuanceAcrossFormats",
+      "com.example.marketplace.phone.PhoneProviderTest#failedConfirmationLocksNumberAndResendCannotResetFailures",
+      "com.example.marketplace.phone.PhoneProviderTest#rejectsNonLocalModesAndAddresses",
+      "com.example.marketplace.phone.PhoneProviderTest#rejectsWrongNumberOrStaleProof",
+      "com.example.marketplace.phone.PhoneProviderTest#concurrentConfirmationHasExactlyOneWinner",
+      "com.example.marketplace.phone.PhoneProviderTest#rejectsExpiryDuringProviderCallAndFutureProof",
+      "com.example.marketplace.phone.PhoneProviderTest#issuanceFailureConsumesQuotaAndInvalidatesPreviousRequest",
+      "com.example.marketplace.phone.PhoneProviderTest#failedCodeExchangesShareTheConfirmationFailureBudget"
+    ]
+  },
+  {
+    "id": "P06-A-browser-SDK-Java-emulator",
+    "tests": [
+      "com.example.marketplace.phone.PhoneProviderEmulatorIT#browserSdkAndJavaVerifierEnforceProviderContract"
+    ]
   }
 ]

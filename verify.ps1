@@ -1,8 +1,14 @@
 param(
     [string]$EvidenceDirectory = ".local-tools/harness-$([guid]::NewGuid().ToString('N'))",
-    [switch]$Offline
+    [switch]$Offline,
+    [switch]$PhoneEmulatorReady
 )
 $ErrorActionPreference = 'Stop'
+if (-not $PhoneEmulatorReady) {
+    & "$PSScriptRoot/verification/Run-PhoneEmulator.ps1" -EvidenceDirectory $EvidenceDirectory -Offline:$Offline
+    return
+}
+if (-not $env:FIREBASE_AUTH_EMULATOR_HOST -or -not $env:GCLOUD_PROJECT.StartsWith('demo-')) { throw 'Fresh local phone emulator required' }
 . "$PSScriptRoot/verification/Gate.ps1"
 . "$PSScriptRoot/verification/Preservation.ps1"
 $output = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot $EvidenceDirectory))
@@ -11,7 +17,7 @@ if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { 
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
 $oldPath = $env:PATH
-$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Existing implementation through P05-D'; evidence=$output }
+$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Existing implementation through P06-A'; evidence=$output }
 function Get-Inputs {
     $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend verification verify.ps1)
     if ($LASTEXITCODE -ne 0) { throw 'Source inventory failed' }

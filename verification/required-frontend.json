@@ -125,6 +125,9 @@
     "tests/unit/PurchasePages.test.tsx#찜 화면은 비판매 정보를 숨기고 삭제하며 로그아웃 후 목록을 숨긴다",
     "tests/unit/PurchasePages.test.tsx#주문 준비는 재조회 대기·오류·계정 전환과 늦은 응답에서 이전 금액을 숨긴다",
     "tests/unit/InputFlow.test.tsx#수량 오류는 입력과 연결하고 포커스를 돌려 요청을 막으며 수정 후 한 번 제출한다",
-    "tests/unit/InputFlow.test.tsx#배송지 오류 포커스와 서버 실패 뒤 임시 입력 유지·재시도·계정 변경 폐기를 확인한다"
+    "tests/unit/InputFlow.test.tsx#배송지 오류 포커스와 서버 실패 뒤 임시 입력 유지·재시도·계정 변경 폐기를 확인한다",
+    "tests/unit/phone-provider.test.tsx#keeps provider credentials in memory and disposes the SDK after proof retrieval",
+    "tests/unit/phone-provider.test.tsx#rejects nonlocal production and malformed settings before SDK initialization",
+    "tests/unit/phone-provider.test.tsx#returns a safe retry message and disposes credentials after SDK failure"
   ]
 }
