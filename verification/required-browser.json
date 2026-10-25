@@ -1,5 +1,5 @@
 {
-  "id": "BROWSER-P01-P05-B",
+  "id": "BROWSER-P01-P05-D",
   "tests": [
     "desktop#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
     "mobile#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
@@ -32,6 +32,14 @@
     "desktop#purchase.spec.ts:회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
     "desktop#purchase.spec.ts:방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다",
     "mobile#purchase.spec.ts:회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
-    "mobile#purchase.spec.ts:방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다"
+    "mobile#purchase.spec.ts:방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다",
+    "desktop#input-flow.spec.ts:입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "desktop#input-flow.spec.ts:입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "desktop#input-flow.spec.ts:입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "desktop#input-flow.spec.ts:상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다",
+    "mobile#input-flow.spec.ts:입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "mobile#input-flow.spec.ts:입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "mobile#input-flow.spec.ts:입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+    "mobile#input-flow.spec.ts:상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다"
   ]
 }

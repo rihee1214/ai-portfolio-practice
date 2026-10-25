@@ -1,0 +1,16 @@
+{
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "inputsSha256": "289186B58D509A4A299FB1228152880A54BC119B9CCCD334925F37D4F2E31D23",
+  "before": ".local-tools/p05-d-commit-final-20261025/before.json",
+  "currentMedia": 927,
+  "oldDatabases": 158,
+  "oldMedia": 891,
+  "failureEvidenceFiles": 503,
+  "after": ".local-tools/p05-d-commit-recheck-20261025/after.json",
+  "currentDatabases": 160,
+  "status": "passed"
+}

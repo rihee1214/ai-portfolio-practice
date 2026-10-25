@@ -1,0 +1,175 @@
+
+> marketplace-frontend@0.0.1 lint
+> eslint . --max-warnings 0
+
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx
+   6:21   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:6:21
+  4 | }) {
+  5 |   const draft = useFormDraft({ quantity: String(initial) })
+> 6 |   return <form ref={draft.form} noValidate aria-busy={disabled} onSubmit={event => {
+    |                     ^^^^^^^^^^ Cannot access ref value during render
+  7 |     event.preventDefault()
+  8 |     if (disabled) return
+  9 |     if (draft.validate(v => /^\d+$/.test(v.quantity) && Number(v.quantity) >= 1 && Number(v.quantity) <= 99 ? null : { field: 'quantity', message: '수량은 1~99 사이의 정수로 입력해 주세요.' })) onSubmit(Number(draft.values.quantity))                                                                                                                                                                                                                                                                                 react-hooks/refs
+  11:128  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:11:128
+   9 |     if (draft.validate(v => /^\d+$/.test(v.quantity) && Number(v.quantity) >= 1 && Number(v.quantity) <= 99 ? null : { field: 'quantity', message: '수량은 1~99 사이의 정수로 입력해 주세요.' })) onSubmit(Number(draft.values.quantity))
+  10 |   }}>
+> 11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+     |                                                                                                                                ^^^^^ Passing a ref to a function may read its value during render
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+  13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+  14 |   </form>        react-hooks/refs
+  11:128  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:11:128
+   9 |     if (draft.validate(v => /^\d+$/.test(v.quantity) && Number(v.quantity) >= 1 && Number(v.quantity) <= 99 ? null : { field: 'quantity', message: '수량은 1~99 사이의 정수로 입력해 주세요.' })) onSubmit(Number(draft.values.quantity))
+  10 |   }}>
+> 11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+     |                                                                                                                                ^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+  13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+  14 |   </form>  react-hooks/refs
+  13:6    error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:13:6
+  11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+> 13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+     |      ^^^^^^^^^^^ Cannot access ref value during render
+  14 |   </form>
+  15 | }
+  16 |                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/refs
+  13:6    error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:13:6
+  11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+> 13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+     |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  14 |   </form>
+  15 | }
+  16 |                                                                                                                                                                                                                                                                                                                    react-hooks/refs
+  13:28   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:13:28
+  11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+> 13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+     |                            ^^^^^^^^^^^^^ Cannot access ref value during render
+  14 |   </form>
+  15 | }
+  16 |                                                                                                                                                                                                                                                                                                                                                           react-hooks/refs
+  13:57   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\forms\QuantityForm.tsx:13:57
+  11 |     <label htmlFor={id}>{label}</label><input id={id} type="number" min="1" max="99" step="1" required disabled={disabled} {...draft.input('quantity')} />
+  12 |     <button disabled={disabled} aria-label={action}>{action}</button>{children}
+> 13 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+     |                                                         ^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  14 |   </form>
+  15 | }
+  16 |                                                                                                                                                                                                                                                                                                                        react-hooks/refs
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx
+   92:21  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:92:21
+  90 |     if (await store.save(address ? 'PUT' : 'POST', { ...values, isDefault: data.get('isDefault') === 'on' }, address?.id)) onCancel()
+  91 |   }
+> 92 |   return <form ref={draft.form} noValidate onSubmit={event => { void submit(event) }} aria-busy={busy}>
+     |                     ^^^^^^^^^^ Cannot access ref value during render
+  93 |     <h2>{address ? '배송지 수정' : '새 배송지'}</h2>
+  94 |     {fields.map(field => <div key={field.name}><label htmlFor={'address-' + field.name}>{field.label}</label>
+  95 |       <input id={'address-' + field.name} {...draft.input(field.name)} required={field.required}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/refs
+   94:17  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:94:17
+   92 |   return <form ref={draft.form} noValidate onSubmit={event => { void submit(event) }} aria-busy={busy}>
+   93 |     <h2>{address ? '배송지 수정' : '새 배송지'}</h2>
+>  94 |     {fields.map(field => <div key={field.name}><label htmlFor={'address-' + field.name}>{field.label}</label>
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  95 |       <input id={'address-' + field.name} {...draft.input(field.name)} required={field.required}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  96 |         maxLength={field.name === 'postalCode' ? 5 : field.max * 2} type={field.name === 'phone' ? 'tel' : 'text'}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  97 |         pattern={field.name === 'postalCode' ? '[0-9]{5}' : undefined} inputMode={field.name === 'postalCode' ? 'numeric' : undefined} disabled={busy} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  98 |     </div>)}
+      | ^^^^^^^^^^^ Cannot access ref value during render
+   99 |     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
+  100 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+  101 |     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>  react-hooks/refs
+  100:6   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:100:6
+   98 |     </div>)}
+   99 |     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
+> 100 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+      |      ^^^^^^^^^^^ Cannot access ref value during render
+  101 |     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>
+  102 |     {address && <button type="button" disabled={busy} onClick={onCancel}>수정 취소</button>}
+  103 |   </form>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/refs
+  100:6   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:100:6
+   98 |     </div>)}
+   99 |     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
+> 100 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+      |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  101 |     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>
+  102 |     {address && <button type="button" disabled={busy} onClick={onCancel}>수정 취소</button>}
+  103 |   </form>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/refs
+  100:28  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:100:28
+   98 |     </div>)}
+   99 |     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
+> 100 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+      |                            ^^^^^^^^^^^^^ Cannot access ref value during render
+  101 |     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>
+  102 |     {address && <button type="button" disabled={busy} onClick={onCancel}>수정 취소</button>}
+  103 |   </form>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react-hooks/refs
+  100:57  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Workspace\ai-portfolio-practice\frontend\src\pages\AccountPages.tsx:100:57
+   98 |     </div>)}
+   99 |     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
+> 100 |     {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
+      |                                                         ^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  101 |     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>
+  102 |     {address && <button type="button" disabled={busy} onClick={onCancel}>수정 취소</button>}
+  103 |   </form>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/refs
+
+✖ 13 problems (13 errors, 0 warnings)
+

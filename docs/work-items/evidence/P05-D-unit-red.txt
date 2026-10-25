@@ -1,0 +1,126 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run tests/unit/InputFlow.test.tsx
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/InputFlow.test.tsx (2 tests | 2 failed) 223ms
+   × 수량 오류는 입력과 연결하고 포커스를 돌려 요청을 막으며 수정 후 한 번 제출한다 157ms
+   × 배송지 오류 포커스와 서버 실패 뒤 임시 입력 유지·재시도·계정 변경 폐기를 확인한다 66ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/InputFlow.test.tsx > 수량 오류는 입력과 연결하고 포커스를 돌려 요청을 막으며 수정 후 한 번 제출한다
+TestingLibraryElementError: Unable to find an accessible element with the role "alert"
+
+Here are the accessible roles:
+
+  spinbutton:
+
+  Name "담을 수량":
+  <input
+    id="cart-add-quantity"
+    max="99"
+    min="1"
+    required=""
+    type="number"
+    value=""
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "장바구니 담기":
+  <button />
+
+  --------------------------------------------------
+  link:
+
+  Name "장바구니 보기":
+  <a
+    data-discover="true"
+    href="/cart"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="cart-add"
+    >
+      <form>
+        <label
+          for="cart-add-quantity"
+        >
+          담을 수량
+        </label>
+        <input
+          id="cart-add-quantity"
+          max="99"
+          min="1"
+          required=""
+          type="number"
+          value=""
+        />
+        <button>
+          장바구니 담기
+        </button>
+      </form>
+      <a
+        data-discover="true"
+        href="/cart"
+      >
+        장바구니 보기
+      </a>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/unit/InputFlow.test.tsx:21:19
+     19|     await user.clear(input);if(value)await user.type(input,value)
+     20|     await user.click(screen.getByRole('button',{name:'장바구니 담기'}))
+     21|     expect(screen.getByRole('alert')).toHaveTextContent('1~99')
+       |                   ^
+     22|     expect(input).toHaveAttribute('aria-invalid','true');expect(input)…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/InputFlow.test.tsx > 배송지 오류 포커스와 서버 실패 뒤 임시 입력 유지·재시도·계정 변경 폐기를 확인한다
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <input
+  id="address-label"
+  maxlength="80"
+  name="label"
+  required=""
+  type="text"
+  value=""
+/>
+Received element with focus:
+  <button>
+  배송지 추가
+</button>
+ ❯ tests/unit/InputFlow.test.tsx:42:40
+     40|   const user=userEvent.setup();await screen.findByLabelText('이름표')
+     41|   await user.click(screen.getByRole('button',{name:'배송지 추가'}))
+     42|   expect(screen.getByLabelText('이름표')).toHaveFocus();expect(screen.get…
+       |                                        ^
+     43|   for(const [name,value] of Object.entries({이름표:'집',수령인:'구매자',전화번호:'01…
+     44|   await user.click(screen.getByRole('button',{name:'배송지 추가'}))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  15:14:25
+   Duration  1.19s (environment 54%, tests 22%, setup 11%, import 9%, transform 4%)
+

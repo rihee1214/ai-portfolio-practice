@@ -1,0 +1,1610 @@
+[
+  {
+    "sha256": "0D6F084BCDFAEC826C4877657B90A8390FAFC9022810C69129F7982804366538",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\maven.txt"
+  },
+  {
+    "sha256": "8466893ED9CC0CA944B930D48EF288B56A79530199288DA1FC9F9CBD844B33AC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\target.txt"
+  },
+  {
+    "sha256": "B1A0300209E9518219D0C13F83FAC34C16FCA31D4208FC3F543948981184E688",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "2AF22EB059105F6DC6BC824FB7D733DAF57A204ACC63574C9D6E78C3FAC29BD5",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "2B82C23FF83E971C45F392C4825435BBA81545CE5D3162D1D468E309D8CDF9BC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "5F6ACBC5FC10C66BF609A6DB17D6499A4D8A1893726F24D97EAE9AD2E71357EC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "BD28B4352B35B273CAE2A782684173EC06048CE5CC3EB8A826E5840E4934D59A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "38B4061EE7D6938A8046E28296D47663998999A6A0E191BA4C563E34D348350C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "20F6885424DEEB71E098EEF22FD58185FEFA6D4F62292EBA0573AC46B84FEE94",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "D632DCC6A50BD707312E1AD1F06D2A42394882BC6848CDB13C1527FA61B35518",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "8FC342D51510517E16C278D8E418EC3CB6CC58CBAFB3023D7EDE428D732F4AD9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "908A7A8034925409E1DE5F402DB02DF938641D0A3D67268DEBBF7C719A40C6E2",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "45E8DFDBFBF73FBEBBDC945BC89C214E854411467BEB735ABE592262990A8300",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "EC4F6653E32E0DD7EF59207CCE428382EFCDC260B59FBE0C41B3220EC8559C2F",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "54F19AC2A9BBEE3A555FC237126E57FE4424C53ABAA2C45FC9688797971D7518",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "0A6A09CE6FE69C2D2874B73F9AD762B24A2A1DD3042F024264761AAD0D8ED01E",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "AAE3CAC87D8894FA89740B024C57E069B69A00EFCE4DEFD74850013E4255C284",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "639D88120AAB8726B399E622EC8AEF04EC28CAD73833289B751405F993995BF7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "29B9442E98FB925D41EF5F3D0C24D93CEDCA208A765052584F62B5A4EEBE23FE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "DF2E45EE7D6DFA4D9BE034264ACF4094A61978C9C178F639DFBBC6B9059C7E38",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "E942B2D82118C0AE415F093170B3700766E90385AC3F878794392617EEA04645",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "4F6FA5CB659C322C60D0104A97D9CF66DCD6DFFFB223D6ED73FA8328C3C09D2B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-green-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "2C61A2118D64B93AE8F1CCFC273819EE19212904664679CAD29A79345D80E4BF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\maven.txt"
+  },
+  {
+    "sha256": "EC40F500B9008CCF35151A766C378F0CBA0E0D909BD9F7DE48F200280BC514D7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\target.txt"
+  },
+  {
+    "sha256": "3DAC9F6AAA4C2CA929A60CB053354C034FAF4E9A0C47183F460B72EFE952C2B6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "323AB5D76377FE5F97065745D808A43F9D31D4680E6E02B07860025EEAFF46BB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "575E04831D10B7EC20B193C7A0632DD62B66F43417AD11352ADBEAA3FF507A56",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "69A4666EBCA35A0DF49EBCA1D15D30A4DA8CF3F2097E947F75B5160F03285F7A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "3B5E8986EC6123B8E5ABF9E2D3EA0A46F6DBBD65B00145BBD3512DCFD818CDD1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "D4C923B3BB6C0EBAF1C2461050990AAD64263AC3E7F2D0B8B4B36C8815F08BC0",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "42878C72229F4B7B3E1C5620DA23B78D57356F5C9D2D93C0310AE9EFA0C9DF5F",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "54E0F890D09C9371614F49AAD13BD1A2A0B68612707FBAB71E29284EFE4AA8A5",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "4F15F4F085323FAA2F7F17E360757E782920E918A0C3E90F291BF45843A700A2",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "DDC6143EFB9F8BD31B08F697B6ED9969EDA7CB952EEC845DD089580D74B91A76",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "AE86D3591809658BD4CA1D8D093914502C10621395F81424CA46DD31F7DCA87B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "B1A29937A7DD4BF08AB43DFB5417194F452E09FD11288024B187F2208DD2A99A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "B14FC61EA75440078B106E4EACB7219CEC3743AA04AEF13CDEE9377FA0E62501",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "04FEA5476C9EA4EC35054C6ADBDC9866D65122DB166D5983324F2B156BC455C8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "DAA6CBEEB4C4F7BD7D292A4210852B8635E41EEE37FCDAD3C16D075E4F47848C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "69682AAA79729890C783768822313FDE0C5E95E946EB8BDC79D9676CF1B5FFF3",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "C23563B697275A431B06AAC3A26519AEE85D381984E8619E6F60EFF6DF31FCD8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "718D9A3ED51728C3D5E43BC36E9E74D01547640FCF3D5F8F75BDC7ED3EE475EF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "DCBADE10B7452840C86C56A384D79F11EC41029B778FC2F24874631C92FA998E",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "F3DF833050DBF111432FC0A4419F285AE618E05F1220E9D8E49FDCCDAAC998FA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "8FC5CADEFE58995818D8266D45999EBDA122F944E6C5B88A3B3216E3EB558E77",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\maven.txt"
+  },
+  {
+    "sha256": "2F4198AE24F51E5865E3015C6C12FC08F648F8B4C6C17095A80591E5DF465F2C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\target.txt"
+  },
+  {
+    "sha256": "3C8911F7C6A5C6AC015068A84A1E324F28129CF4D34E8E1BDA2BB0EDF778534B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "2E6505DD05C004318AC91264E7E515E91657E2F0F597FFCF0BF797EEB01AF659",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "0BF7529702CB7DA0DFCFF338B3C51F445F4944344C0F4B67AF06B331B8F0E054",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "F23D5AA0299622C0CF43468223B65A6357E2F8BE832DD2FBB29EE37586F95DB7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "6C28BF18CD3A943750FB876B4725CBDE9C5D84DED11DA2AF65A2B1A06C86EB07",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "C8CC3105A51B9521D5B8119AF94D506B1FF7170B72F8BF355CD722AD958C7CDA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "992095622644D6EE1DF64FDBFEC4CA7D867834C6397BCD740BAC28E7BC17EABB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "5A3AAE8BF9122BB0067C70C9C776CE15A9BFE13F628E90D674EE28554328F673",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "73B395E320FD6F977CE00C3C53929D23DBDDDEBBB15F519AE0EE9314F4D9274C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "F43C8E858C84281031F8A6C544D696DB01A943C3FFFA345C465CD931B43D7580",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "F8F6B19AF61CF4F1A45E45F387EDD1E1B1F7BD00C86B2C8B7DF5F3FDD6D587DA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "7BE637D4A4A456BC65D0FCAD5A7B2EAFD15360E16A243BD79BA59B6BDD24607D",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "444E6DB8CE1F21187F7A7977E026EAFA91B00E31443C6779527CE5D575CCBDFA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "9A44976780C89F22015D3F4EAAEEE10E70CACB223C704D1CCF8A34A6A04FA931",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "DC6AA1688603DFBB10C50FAC928E1C0B42E4EB59C14C38F46E25F60212EA2677",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "235339E16C44977253139F41C67EF1D0F857E92A0F8DAD96C19DEDA5493167CC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "86C183BF37A1338C3894A46D049FBEECC8CD79CBC9E79C13A60850F91EF52D7B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "C255470D29BB1B1664CE548829B1D2BED119FB14953FA70960DD074CA7F3577D",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "DB5CBF44D40A5BB78812FBAAFAAC6DB4618D242CC64CCFD6334A9475E6A2CB39",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "ABAA3A0C62427FE6DA1A409A409EC492D96BD4EFE061168CAB15E5248580A1F9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-browser-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "E6FE3B6F9B9D639A58D8E68EA9C8FD3F1A52A8B7E9A43F7A7E08F8681DB34B0E",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\result.json"
+  },
+  {
+    "sha256": "F9F595FBD281DDE612F3CB6DC30918E9E68662BB59F74130473A6C8498EFF319",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "58F6B64FD562CA9B0B216F98D031222D11937A4F2EE3CA52EFBE31D697A3AD96",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "DE242E4E4674E462B2C836414A27FF57FC813D913AFAEB319B790D9D80620054",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "B521C0E9989190F0CD5A396EC591A532582CA2763ADE98B303A231DBE4F95EE8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "15D9057E866902ACCBCA311722CBA2F7474D0B039FBC7A73909E5143407812A4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "47AF30676CD85F259EE42BECA4A319EE1549F885E9EC2D2DDEF8841025FEF958",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "CC28258C3BEA5BAC995808BBB05C54BF1694B5286A6735B7716D367CEC4BB821",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "78201FC471292E9806E02B98B57AC1E6086F5E37BE113FA40292A92CB6A9CD82",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "D918EF05DC8672E97DCC7BA052D44CF0995C894C63ED7BE86AE587A6B39D285D",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "84E5937463631A2F9C179131A3555AAFDC4B1C5376D1AA7FDDDC8579368CC8E6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "DC802F5A5C29E9AF864E10A081ABA87C490C934CE41559386ABAACA65F85C776",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "E561B4653A5137FDE5D6C534268AEAE195CEEDC85174D749B6544563D657F6A1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "4795EAE58753FE3127372AB724B7C6B2423AD2FAEA6FB31CA17B5C7DFD719525",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "14F3E996FA1269F30D157844ED291E149AF8B33CA596A4144E055382A12CB301",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "29A68857997B25CD9B238C6D176C8BEE6E8D166AF98797BE1EC64B793FFDE3E3",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "76F51CC8741D194DAC8F17939EEDADE4A285009A326A00ADA5939426F3118925",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "371271B284A2F1A058D27C300A05F3D1E7B833CE613932F433227D4831AE991C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "2487ABF40F751729E450201EB1A31C29D7E9E0C8BDDF15E5CB92FB7F28A74AF0",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "FD6B7FE8C4BD48432E0BF7AEFB910AF997B25D99C4846FAEA50DCDED1D0789B4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "10F413D24C20F587D94F6E57F06689B0C6F8EF41EFB45EC6E1D55B6A31DF28BF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "A93B28F8E2BCC1F2D8FA5759CF44911B29C4A91E75BB3F5E9BD762E6A466B499",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "AF3B48E9B27BA4021E5AB9FC9D920D5675B14A529EAFAB5E31C3A426962D0718",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "08955925E1CDA8F2E187F3402CDEA3693E4E3BB88583D7F0BE392C438DA53D6B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-final-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "AD6427F5EB40E3884A8E555DFA4115E5DCB784A3426C2D2943B0EEC948258F79",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\result.json"
+  },
+  {
+    "sha256": "29CC2FC6941807DBB376D213E345F14CA91D3F11097F6E660098F28DB07F6722",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "E34EC9F3A608D7B3C2A4DD361F04D02EAACFB4542DB376511A34AD145BBA61EE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "2BDDF11BAB4EAE476FC384BA8E88F9F5D0FF4456A665484C7439B1D597A35D29",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "72B4AD1C5A705B37CFC58DE96A184FBBE7B2079098092A20F1949CA6D8AA61ED",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "7C377AFF94DEA628B9B3192C7FE5F146A6874B774C24A51A431CA1B8546EB248",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "083CC638EB82A3509DD45A9A87AAA7A8DF4904D974CB31CBCDB24CE9018B5A4C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "B84271823BF62A1C2E1E0C8FE6096E0F87C8F57468C6616701D765FED5F37CDB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "EF2112B43FBE2D2F3C7593F12549CFF88F0630A1FEE5E44AC346EF450DE6BE24",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "89C4AB6F99D4EE6978F5689419E9EE6599943C31355B9DDD3B9A8A4A5B260F63",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "131676B67AFB9019AB3F73EF8B918E2B0C3F586674A57C87210BB6DA61742A52",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "AF0EE323A36363F970FEFADDDE636A71F85107D4654CBB5C396860B29D745D8B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "3ADCBDA4912C67DE3F40FBFBBAF7F625AB36FA94FE83D523A71CF0C48F57D818",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "C2D54DB55F211C1C062C965BDC2021614530D0DFA0BCE9E4CA6CCD623EBAD8CB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "CDA8A378DE70ADD29E995C5A154199823D7EA28138FD4E8631FFAD25FB29CD55",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "73B45F9CC0CE16968ADD1C9D180A7BBD228D0972A6C0DFB4793625355BAECCFE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "CFF4387ED1BF8F89BE0E6F715542365A618A9F40BAD1CB380B95947399F546DB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "00D0CF5536B7D8EC65B66699177FBE39D9FBCB69E2542560BEFAD89B5210C1DB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "044ADC810659D2F75BB9553B64F60E6EFDE2F92B934FCCD16EB08ED1F1CB6E89",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "539F6BDC2AA543C8F8FA12E725EE642FEEBF4EAB9B9B99B93A5363C664CA9B38",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "E5888CF9D5BCF89B28E03E87C875F87A75848AA2DB214E8600D8FEF352B17E95",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "9CED373BA31D5E5F89616E95BEAF0337A838FAB425ECB79C2EC1D0FF9F3B312E",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "A1C72AA8714B8D367079EE5052DBF27A0977498AAAC17B9FB968E1EE4B8792DE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "E506B6D71F5319FCB05957D70010D38D95F09C2B878F8503715393403107BEA8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "E5D79B9CF4F134AF6E972B03AFED3F1F608A2793FDB7195492B3E1D228E61CBB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\maven.txt"
+  },
+  {
+    "sha256": "9AC34A10A263301D9AE9404011CCE065D220AF75E81590B0A0F2479ECE8F3961",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\target.txt"
+  },
+  {
+    "sha256": "A93D718ADFE1C9B4681FA9DFF99B00DF71819F15632A81258CA04226108BA805",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "6444C82094F6EAB86180C590126FE2FABEDAE6762432A5474D5CDBAFC467164D",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "EA65AE7B5076A71C3BAA3AA52ECE587678E85E4394B7A93ED4D9AC3B4B46ED46",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "4566C3AFF8C6DD16563EABF34F2BD8AEFF568CE354064096355855D2E43136BA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "F4D5D7367BE07939C8AFC2207385715D236E0FD8AB2628E458173B87564E951B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "A3EC61CB9B684B13E9933C499E0529508741BD3DE68D12B00844838657F2127B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "D1D5CD104813DE0031FDD611756A3A52185B4AF014AEE60F6D0B56D0035CAACA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "DFF908B90B9C41DBBA75AF1469A9B95E9A07E1EEB8F249A7E321589F9C8A6764",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "C7EA22E0DD9184B6FE49062463BF016A430A21BF7AA2CB6F978BC134905083A8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "61997ED47427773A42015BA06C4AED505F5A3C3B64F81DEC3C210AE8B8643DCF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "550CF4E49CA93308B1B0D4C5C20CF56E5F0C53F65C93E94D659DEBEE6C69C401",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "225A6A091879FC0835BBA76C8356E926FF83087A02A07B62D62C00E2E9ADA8B5",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "6B1CC480159EF85050BA70E20A905980475AC46E9E1E8BDC9D1DB02A7AAC7560",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "7BB10CF29E9FF6358A01EFCE80B9AEE30A66CD10D5BE027954A638CF1C9DB6D6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "3706D58C263908132DAB64EF377E14A3204C78CBC38576E5EB72071A7CCB3E3F",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "60B2F7B0B800DE6B28344A42D996015E6AAEBBE693212B61415C922D0D566642",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "A9BD5F78CE299754701AF11836CED1F0B5A02BC3B73E604BAE15FF09FCA1DDD5",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "3CACEEE528163CFB75ACBDB3B4B5129AF75E46BCAEF82BDE327257F51B7D7C7B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "9778BCD2A03FAB90149D22F266787B56C215491C8031860BD9EF2F453E16DF0D",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "7BD4CB3E0F604BAF65B39F51C1DC1A29BF6CFB1BF00D25D20DD38CE5498E8FB4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-fraction-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "089F7F1E749BAA259B6ECAC0C33509183C9932E5B260E9EFB7E5D7EC27EA01D3",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\result.json"
+  },
+  {
+    "sha256": "744A9133C27D4186BB979175A5C87F51AA2C7AE53714AEBFEE1E6DE5397C505A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "15F821462704A1048BB089B1E312FEB9F5A8CD9F80ECDA4F6CC3125BECC2ECB8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "5407F755A1606DBECA45405D0529FDC53219C6F9932C4227D25100943595BF8A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "B6FE387DA6E2B6F9974A40178B9E5BCBD8B924F42B746AAF8ED42DBFB0AF8843",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "59A4864448BF8F59206F791A11424AC9E5FE40BEB38F39E8B2FD8409B2ED201E",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "59E34CAF5BBA10DED39AA0E03E0827A8088C8AFA322F2C029F6C3477DF172409",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "ED2388C9F36ED6373742766782F2661F9B2A842E507E552ED41CA205886A6D9A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "1462122303E61B219A74CA2F7F0448CC21F5F443C21990F74200C0C2D26CC4FA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "84068BE14F58A8D265767A9AF38C35E694A87998485EDA62D7D5E2847A1D6DB0",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "AC1DA0D3E16265985142F3ED63BA723E527B7DBE9EA90D48024B7147B5C12BCF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "AA3B61947AF3C50AC0E0B159F330F2E60EC47E69CC56ECAF4617B4D7A957777B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "1B1BC99F774DCFD9A443DFAD3D6D08FD4AF572B0B2DD3E418A811383DDEE7BE9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "5E6ADD17507398EAAEAC130633E30673BE0261A75C5E923BD3783BAB52CDD766",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "19179E8A0CCE68D16BBC1E128D15350FE652524740AB6558F70D1FD600EF3482",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "A86E86832422D64A2F7F63D47590C3DDE777ED7BCD58390194B4B8B3DD4C0408",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "71EC703CFA9FA4E269EF5780692A36E7DFEE154E7D52A92B4D352D1D44E05EDD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "0AF9D2119156A1F7464A4C0D4D8DD823B763223474B9D3C9FF9911D2EB6D081B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "4C3154ECAF18FC254A1682536E257CBF013FA1898D97A0717A5AB97A60460E16",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "EBA2EA13A0CD6CB564F03694320C71B9B606439F0D950C519F3FC3F231B73BE4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "1A38010C8B32C739FDDEFB8FEC1700D9AB81E5F499F714DDD1AC328CCB65DF4B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "C23F8D8D2B13BD00D3C6641916FC26FA7DA57A6F96AB253D7DA6C826C2C309E6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "6AC82C182AFE65A5836FCF555C6EEEA4618098B4881B80829F05E075836DA8FC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-route-fixed-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "F998C445CC0D8029C9AD8A25DE0A55A05725C0CF74E0616F192248520EB46356",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\maven.txt"
+  },
+  {
+    "sha256": "789C9E2D955D1BA808FCDA1880C28F69F1A5D59A86567D5B2266A1AB0EB001E9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\target.txt"
+  },
+  {
+    "sha256": "68E08334C16168C79FE7240C26C502109C7D7506F56C4B4253E848EBB6A1E1B2",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "73CF5893A2D72262590F7953523529167CDFEAACA1BB0562BCAA003D8C1B64F3",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "AB9C835BE1932F8D643129839FACB54B281F979F11CAE2E205DF15FDC2836A35",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "BD289D98F04CA34F313159E02258FF5B7836AD81B76593DD47E4B598A2C02575",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "95C05A8A14BD9E666A13836CB60E763C6A71FF36B577C88DB4BA1A4B60678753",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "D9DBA1BFFF1B04223F3D926F9DC3A9A953D1B1EE414BD4E7A1B6358CC262EBA7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "6518ED06E73D2A2914A9D61E1B92ADFE4CE32A983A6E3127A3D0E7B69320B840",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "35B3CA8C73A58DC173D4F5548BBBA59E4AF9D173F8E1D0AA9113D0D9985CB6D1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "88954725EB6A9503A265ACFBEEA79DE628F6201D3DC52E1D56FFE032EF9EF361",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "8CECDEA9CC918CE6DCB91C8F8B60976952ADC758369E148EA2E4128781C114A6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "E7B414A1297D4244EC59E3E2C14143FA2E7652B06D9CA416B4A9A2C5CAAAA0AD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "FB655AA4AAA955833E069D6AA6B9409A07BEC1CEB7AF768D09137BBDC61C3D1A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "EA60980B84EB3ADAFDD6048F2A3BB9D79CA549576354A6DAB45A3578E3839915",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "C39C3019B7F20AE14BCCE6B641087F7CE293ACB808BC5ED9D29953E392A3AB8A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "6F78B6D9ADB5B3A39067CBD875ABA1633109EBB8E6B9302F171CD78072FD8EAE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "C100A8954722329A968903E7038DFC97B3CB823672FD08081A84CCF2E5955BEC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "72B4099CBC23FDFDB0203FE45C8864BD535049F2ED2DA7C3AE388B514FA17AEA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "C08929B7D1223D52459B8F917CDBC22637B37A5B1630BAEE7F836D0FEF37C6C4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "692480C3516DA1315AE7B8E231D4E048898E816011E9FB072339580AA5F427C7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-rules-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "F7159D7112951BFEDD5007B49E3CF41221BF14FFAD2BB1427F1109743CF6AB1B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-red-20261025\\maven.txt"
+  },
+  {
+    "sha256": "C99754B2A27245FF0CE9AA29F825A1E56F4C274D52FF1E6D7F1F5DFCF4CB32FD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-red-20261025\\summary.json"
+  },
+  {
+    "sha256": "31423B2BECD647C5AF5EA8C8D1FDE1AC25485C8B34D041C1D97F71CEDB4ABC47",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-red-20261025\\target.txt"
+  },
+  {
+    "sha256": "399019956B784C80121332D1AF54030EA85F0BA243667B87D2352560C3C8F4D6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-green-20261025\\maven.txt"
+  },
+  {
+    "sha256": "572984D5003F6B5DD13707AC66E7C88B9CE40DE8191D65758CD28A419AD30F32",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-green-20261025\\target.txt"
+  },
+  {
+    "sha256": "D8ADD1D7C5BFEDC65167D4D310F83745D9464937BDF3477C3289001F773AB1ED",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-green2-20261025\\maven.txt"
+  },
+  {
+    "sha256": "0ADEB78195AD16A9B2AD875710F79642D6C137EECA0BC6C8B97BD4D7E10B5CF4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-green2-20261025\\summary.json"
+  },
+  {
+    "sha256": "C22AEB5F7E394448DCF1A7DA3E2DEAE41F91F047133489E59B03BF6F52519B8A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-api-green2-20261025\\target.txt"
+  },
+  {
+    "sha256": "124379C4897CA1459C218E55FBAC8B98A1D14DC808802BABAC675EDD6151527B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-browser-20261025\\browser.txt"
+  },
+  {
+    "sha256": "9FF9F2CF74FC15DE4877C9B138A22046C122EFEBB22E7F6D6353D5AEC7CF95AC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-browser-20261025\\maven.txt"
+  },
+  {
+    "sha256": "D2E1C18ECD235BFB4A75BC53EDC27A51BF6AB179B88E42FD81CA355D0B40FDDD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-browser-20261025\\summary.json"
+  },
+  {
+    "sha256": "07E3AE67E0E280AD614898D6A36BC8ABB43062916DCA469034991DC9A4951640",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-browser-20261025\\target.txt"
+  },
+  {
+    "sha256": "D339B209708F8DE27504135615B109377EE7808826BF49A6E737D60A8F33C2F3",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\result.json"
+  },
+  {
+    "sha256": "E3618702CAA882EC74ED40CE80B01F02C88912EC8E377DBD5DE2E6E232ED3DFD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "44949D03208178DAF57FB7FC326D8172659C6BBA0922D8D6A077CE930F23C389",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "C99754B2A27245FF0CE9AA29F825A1E56F4C274D52FF1E6D7F1F5DFCF4CB32FD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\db\\summary.json"
+  },
+  {
+    "sha256": "2624343A78C8BFC8765297C6BF81A1713ECD1037324712C430298141DBB7B6B7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "A3E9AC039FD934BAE2C8EB52C4F33207BDDA8D7D4C2B4C1C91318011A26C08D1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\result.json"
+  },
+  {
+    "sha256": "D05D49D6273348109E1B4C14AE6787F238594485B367922E39BBF4C672F77F2B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "C7BC1752A75F4BAD9CA69D56EF65E72E15BF35273E873F249B3162ED266242D4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "6358FF96B72D017602C2CA087B8C796A98814E8A09035049E0FAE6C9958693D1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\db\\summary.json"
+  },
+  {
+    "sha256": "599D226DC09DC3154E83C3F181C398BBC8546C3FCE9A1E3679806228EDAFE248",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "AE481545D2BB1CF07F9D61D856AE2163368F52D93E282914D7B131856D9AC188",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\result.json"
+  },
+  {
+    "sha256": "C40F136DDE9DD00E9A39ABA1F14700ED6542D7B8EEFA4CA08DD7021C6808DFF8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "358E25DAD8395020C82B7096D69C7D27C31F4C4E82433B45C2F313DC433725F8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "35DC3AFDDF194581E94B4A33DCCD6DD3C851902300067DF86F14B070CF7170D2",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "1F7C8A2CEC8768D7BDAF99C7F63770E1F7C5FB48AC4FC5BB13F08BC551297176",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\browser-results\\catalog-카테고리-운영과-상품-등록·공개·중지·보관을-실제-DB로-연결한다-mobile\\error-context.md"
+  },
+  {
+    "sha256": "F74CCE7E5A1256DE5329A687CBDA465AF40F6344F27D778A79DAC99D6AFBE2C9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "9005A4F6E311159B44B7E1215A611DA730104FF97A24AEB8CA73E470716F8CA9",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "6A3C41BF780C2202C17D5D6E87CE2ACCC083DF740BF524F62B3959DCC1A2E4BD",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "DA4F0701457B3D60D1F55C6570473648CC05EF58D2D40CC515DB482EF5346E5A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "8DEAD325E694D28810C11E309340800BCAF2C5BE6E62F5E1001EA5D79E793AC7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "A7543C697B72E970C847A61CE94DB78D785A945FA38B08FE6B989B6AB6A9208B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "3186115BA900467134678033F07B953EBC91CAC69E77871C9844E89F7D954848",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "A3C936DA1CA1D31345798938D9DDAF3CB93BB4F01CCEE261C6E4A8A610539009",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "07747C14F0D1712D72DD5B3508833520B9D4BF4A3D8B616C0114EEB5E06BED62",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "E5A2878F1C198A47925865889592DB2C9172CAC304E3813E511ECC13B23347A7",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "16625224E71326F2BD89CADD6BA6B8768B33517C478003F2460C1EA9ABF4B3BE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "35113F58EF829C6F33BEBECDB2730C114ABFA6484B78921E8EAE73B228808CC1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "0FA0355923B072A4748467D299FD3DB0DA7FF29465A8F544E3C85D6B97D883EF",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "DF49FD58A6A798086D96F05E6C6A7A885A74120FA783375DE8CD655990CAF29C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "6275D4B6F43CEC1A98D082FE9F9A8322E18EC6CC1181D5B533F253A759C2E048",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "BD87EA61105C916D4684B267E9523F5A99A671C66AD856222F71DFEBBEEC6547",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "65772998C220095117D7F53D1FC1A462F9C20329411337BC9BDF32DC852E70EC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "C62369CD67CAE266922057EDC3B22D51806122DB53785EFBD7B376252B6650FB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "B329BCEDD7DBFB735AEB6C9CBBF4E8C03DB8B3999748406973006DD7B95D734C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "E6467653BE631DE91D7064583166DB9F15BBBDA2B72A0EA81FFFB35E1B6282C1",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-closeout-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "sha256": "AC8AEE79D10C92F938DAE4F724D85E280E1D0EF009A0146EF0CB9BFE6D6B4221",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\result.json"
+  },
+  {
+    "sha256": "132EEA6ED5AF6F857905FE2B3123D0D0592AE93746E7153CB449815894BC8F44",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\browser.txt"
+  },
+  {
+    "sha256": "ED657BA83294237B71C745FCA4BD70DF39382257EF581441F6B4FD637E1AB8E4",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\maven.txt"
+  },
+  {
+    "sha256": "09BC73F1A971C7EA89AA452A08633E7715D757586CC47905367E25BF0ABC3824",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\target.txt"
+  },
+  {
+    "sha256": "45FBECA2A41CC0317D335DF38F8A39F9655E68BC0B69899908CD4BC5129E2900",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\browser-results\\catalog-카테고리-운영과-상품-등록·공개·중지·보관을-실제-DB로-연결한다-desktop\\error-context.md"
+  },
+  {
+    "sha256": "45FBECA2A41CC0317D335DF38F8A39F9655E68BC0B69899908CD4BC5129E2900",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\browser-results\\catalog-카테고리-운영과-상품-등록·공개·중지·보관을-실제-DB로-연결한다-mobile\\error-context.md"
+  },
+  {
+    "sha256": "7B96B00A0803AC3F5F9F0FB62BE90F99775609844D04BE39944D5935641CB0E5",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "sha256": "3B23EBED80EA309BFCF6A9475A6C4DF004CDA0471E6F17C21477EA9AB7211A0B",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "sha256": "84E29B9C4D56B41FFA1F7D148B772A624063C333D05249DBE9D1D745420F36F6",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "sha256": "11B3697C7A95BC8F7839708F0FA3A21010E437450379EC45BADDFE6D2AAEDEFB",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "sha256": "AAEBDFBF0479223506FAECEBF5E774F4474A1B90B690E04550D8EABD5F137907",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "sha256": "C52F555500F399853D2EA5A910B18B461A197B5F11DB7E1BAFABE6E25B900F69",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "sha256": "D7F0353C5F24D2A1C220192A233B4E31B35B1DE5DCF52E8F0EBB5ED2DC1FFD32",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "sha256": "DC96B03595ED78CD9162188AC69916620790D0BDFA0D1178B99C588C5E874A9F",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "sha256": "DEAE5B670995B9B605D8E83BFA292A074751D30DD63FCAA5E5078EE16EA7D5B8",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "sha256": "B1AA73AA4E0762AE3C510B6E09A5A450D03324A70BADA1312A9ABB3AC40BFE99",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "sha256": "7124FFD6F38758BB67A3324748E14E5B9DC5D2310D54A2B9C82C0A82E48C0D8C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "sha256": "DA82293D76A707E0B99560799EBE1D7022BF479A7DAD9771CE3CCB0CF8F446CE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "sha256": "AA9899A3B61640034BF2C745ED37D85B155107C3DABBAE9D7D0A2B048B8F2FDC",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "sha256": "316A5EE2CE767F12332421C95AAEA48BD01D5A3EDF1BCF93B79EE078D5102829",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "sha256": "C3BEC12992E994B74A8D830CC616AC3CFD3E1FF8AE60BCFB6605E6FDDCBF219A",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "sha256": "B59247B5FE5311F655798996B96EF512CDDD5A317C2F5EA2EC8DA464A9931E6C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "sha256": "4D793776E97AB3EE612F03B15160B16967A57110C487553930FCDA5104E7FC54",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "sha256": "68457F1F523E6642D7985F0ACC1707927CEC5A8D25ACF728DC9437D370CBAA4C",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "sha256": "C6BCC0158FE8E6A16A8E6B2470FFE689B9D63FAA2148AD2E1CFED0859C1234FE",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "sha256": "4DF334A1E10A9C91C9826C5C2EB4066348F1130979313E18C144E63740D571DA",
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-b-commit-fixed-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\maven.txt",
+    "sha256": "F08454716F438ACE8626DA6165B3BC7B675693B92677D12FFDC87952B925E549"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\summary.json",
+    "sha256": "DF67B0DA1F9857D8EF51FA22285E74BA8EA403B404CC3218039746B569C171FE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\target.txt",
+    "sha256": "3E49ECDF44C1BE0A7114B2ACC977E94BC3BA92F8279B0B5C24EFDD2E95C74249"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-16724581348564622980.txt",
+    "sha256": "6A27B20670E48B06CB02524C5652F409C102A737950F1B0B7791A24D1618D07B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-2400851223751842734.txt",
+    "sha256": "A6ED17B19238EED32CF6BD252F20F316D2A43B36881C745140E1CA7AB7D61603"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-4388389871628593561.txt",
+    "sha256": "B469F7C3D17695DA03F129434226C6C633FFCE532FFDC6E96C17859D5082AE14"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-4979224061094443004.txt",
+    "sha256": "B252A81375E00693435840243667DF13BC5032511950BFF4680E627F5EEB6163"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-5321411282966452730.txt",
+    "sha256": "49A47DE45CBF0C4C1F90A72C380E7F97D7D184F613E071B3A3FAA5BF0D3B58EE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\bootstrap-6237093973656939206.txt",
+    "sha256": "A6ED17B19238EED32CF6BD252F20F316D2A43B36881C745140E1CA7AB7D61603"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\checkstyle-checker.xml",
+    "sha256": "11D69D89D87480796F40A7C9D55A413C05360EC49B55873F8E1BA0E4F35985A7"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\checkstyle-result.xml",
+    "sha256": "15C54EDF162A5C3589109713B6DAE8EFC5E444A4C429938D0B2C415600C969D2"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\failsafe-reports\\com.example.marketplace.dbtest.PostgresJdbcIT.txt",
+    "sha256": "3B28D030A110FEF402F8339A4A0B1E950907BF216E88AA339D868181E1898BFA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\failsafe-reports\\failsafe-summary.xml",
+    "sha256": "EFA1B7DEF18237C4696EC4F709DF8E723EFEAF67E3D750747D39B291DBF40FDD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml",
+    "sha256": "6C05F69DFD595D7D217DDA9B2A04946432F2203EAA3017DBD10324BEEEDD1438"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.ActuatorPolicyHttpTest.txt",
+    "sha256": "EABFBAC129FA0000758F479F609BB5DDFC8F64B1C96B376E852D14BAE0BD7E2C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.ApiErrorHttpTest.txt",
+    "sha256": "43506D0E6A82A16B2E6ED7D3C3B9858B2803424659618248B095721C2A477B52"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.DatabaseSettingsTest.txt",
+    "sha256": "EBF4B28999705F6B6BD448E9EC2912642D127E3590945F6A30B1B4FE0CCB48CD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.ErrorHttpTest.txt",
+    "sha256": "A971D1D9123760D3E8B1B148DF93A912F6BDA4A60698110F5DEB73FB1D31C553"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.HealthMvcTest.txt",
+    "sha256": "874738E198159FF337C211BDF5480A7DB5FE5E26558252D771EF19C3D1119573"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.RequestIdFilterTest.txt",
+    "sha256": "6D3A48839D52535D9B22F9CEE4A1348408E64C8220B39CD3B52D74BAF1A86C77"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.RequestIdHttpTest.txt",
+    "sha256": "6706D7E2018F7F8AFDAE60E4302A7284F58D792016540581CE525E2C43A507E4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.api.UnhealthyMvcTest.txt",
+    "sha256": "01249307C6DB1DCFC61EDC33AB078C649D48A0A32FC2116B6754AC1BB6166DB2"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.architecture.ModuleArchitectureTest.txt",
+    "sha256": "DC5BB2DB3F6E8F91C12F3EFCE2B34110C3E218AED43BCD15DBCC7F10CC4EA323"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.architecture.ModuleRulesTest.txt",
+    "sha256": "20A9A3E77EAE18195EBAFA08A092ECC46084E83187D41440502F29409673240A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.cart.CartRulesTest.txt",
+    "sha256": "01F7BAF44218D8335E9D1F6C50B2A7067FCF51AE3043E893F3EC8EE385EFE281"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.identity.AccountRulesTest.txt",
+    "sha256": "CE6E7794E53210EE1F81556565DD48CC722E8E3D114E1FF0D0363DDB838D38D3"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.identity.AttemptWindowTest.txt",
+    "sha256": "5EA3F818DFEDB2D6EE07E81E5B1A9A211448E4B389C06C3C31FE0B9EC18D5575"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.identity.SignupRulesTest.txt",
+    "sha256": "12C704B5A1B3B1615FF268F29EED14F82E0ED8C6086EAC783B8BEB636F249C95"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.identity.SignupSecurityTest.txt",
+    "sha256": "BCA8EFC0EED63CEE06BF787F57E5E5716F05935A14A2FD70C64C9D64EBF9FCFE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.txt",
+    "sha256": "49B78006CB37C58B825C6AB854DB2AD42C6B5ABC925EE2DFD6747B025A911F44"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.txt",
+    "sha256": "AA62F7ED453050EAEF1A8708010B21BEF8B4CE278269A99635B3A3FB46EA4805"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.media.infrastructure.ImageNormalizerTest.txt",
+    "sha256": "186E81FC84AD66CB9EEFF9904B018EB944AF3D60E260031F701DA1DFCCC6CFA8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\com.example.marketplace.media.infrastructure.LocalImagesTest.txt",
+    "sha256": "2017F64A4234D90A17D1CE9940A31E397D0F3D63A1A0A829926322A99770D601"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml",
+    "sha256": "8E3BC9B4857D3D256D82AAABBCE603640B546CCA6F71B4EF03ADAC33ACDBBE8D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml",
+    "sha256": "D8758A708FEF09D3496EBB49E195325234DE1828C6A7D90B020A4863D09FD970"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml",
+    "sha256": "BD2B3365038748D8BB8200994A198EE0F5ADD13241A93B30D8F39196FF486558"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml",
+    "sha256": "CC9A6D374BAE84A8A2B915BC9001CEE77F3D273BD8B417E779D06582FD56F9D3"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml",
+    "sha256": "3C760B30F3138DBDE8E864B122218E6FDDFC1E1408473937F4CEB36C00FAA3CD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml",
+    "sha256": "5CFB5127A0B4DA7D18B13D05B61886E83D7D17ACCAF8AE6A4CABEDFC11AB2391"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml",
+    "sha256": "A7DD1E1690CEC0E67561D37332AFC98804C10D66F80EF6D316449294F2E8CABE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml",
+    "sha256": "8502E2BE33CF921A7AFCC5E104E2B7465A872B1D3C3C31CF8D94422643FDF63B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml",
+    "sha256": "231B04A0194C817925C3E69AA47583BEFB7865C45B7803F00DFC7E1352A69091"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml",
+    "sha256": "AB41CE6926E466DD05B74E5D14E55A117704F63CC04501D78E27D31E94DD12D0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml",
+    "sha256": "3748954D630BCD74D0A29F81F77C54A175140B14E8F7D4FE46EBFEE7E54D3C39"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml",
+    "sha256": "9A6AC97985B10554E752CCE1532FD248D5078185266F0076947DBAE44B14B61D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml",
+    "sha256": "0A7E1F87A93FCBD863421B5DD1BF78FCA3DCDEAF44BD11C628C0E7BE30176C97"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml",
+    "sha256": "4E3798FFC765B9B2F6B6121E281A2BB5EAAF871005D25F41494CA8E007682242"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml",
+    "sha256": "C2E0E0E610DD9063D53337FD8D4F837A142DFB4E9365DE9999612ABF73BFA659"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml",
+    "sha256": "61D31B5270FC58BDBAFCA594E0ACB5A07BD26A55824269F02D88FF6070FAE7FA"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml",
+    "sha256": "4A55C72E2B3A9300579613D80E8C991E9746021C6DE4958D7E3F3F857AAD9CC1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml",
+    "sha256": "CB79C5F6E50633E53715D740FD06EB0F7C25A0C4512CB83876F1A3458E12FF10"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml",
+    "sha256": "3BBEA0ED23900FCA0CA3808B54A027E79A5F161DBE8F9E5CA9132DB33ECC15B8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-c-api-red-20261025\\media\\untouched.txt",
+    "sha256": "6CA7EA2FEEFC88ECB5ED6356ED963F47DC9137F82526FDD25D618EA626D0803F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-unit-red-20261025\\result.txt",
+    "sha256": "505A592166151A1F656936C9FD44AD2B05F81D4395087484F39F0B574205D411"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\after.json",
+    "sha256": "C955F814BFB1441534C9C836E37C017728ED9565E334331D8E17255BDB9B7848"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\before.json",
+    "sha256": "DE2DBC0B66B48431A30AFDD5A197EDF7BFB9F980AA7DC73D18791F45AC454219"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\browser-coverage.json",
+    "sha256": "2FF2518EABC49F3F7AF02A6875FC6F4046777F65C0F4E1CAFA0D80BCFB599020"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\coverage.json",
+    "sha256": "BC3BE4C37186A748B89DC1E1DA401DB85EB408BE5D52DCBC26A2D3E3CAFAA809"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\inputs.json",
+    "sha256": "3ACCD4F2701FE7C2F537AFC3C03C05DB3448165D9859135C09E06E1D17C7E77E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\java-cases.json",
+    "sha256": "A3197B5FF62A98A7C25E154540D286EFD09E07E332FBCA29A80D9653704F60C6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\lint.txt",
+    "sha256": "58698E634164BA96C68F54BDE4ECFBE4664CB59339306DF208E0DB8AD9709C3F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\result.json",
+    "sha256": "424FACCAF2D9741801A292D1708A1CF6BC4CD0E71F5318E240EB407C72F4BBB5"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-report.json",
+    "sha256": "A1ACC1C41C79BC37B1FCB831576573E1C32EBEF4E3C1F89DC5052FCEB0674B3A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser.txt",
+    "sha256": "33D32887666DF4D63DD02E73C3335B04365E3DB8A88A4323DCBE56B3BBD11CCD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\maven.txt",
+    "sha256": "DAD9EEACFAF1BD510BF974FF618B611B0BF059E96736FDBBD7A7B32E38A2BA8B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04-category-desktop.png",
+    "sha256": "F1681C78BAA99801E1F71AB89A4C16BDD380154E919654FE37DD93933E7D1037"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04-category-mobile.png",
+    "sha256": "16606ADEFE26BC899522A9E493D8391181436286EE6C2151F24D905F24865369"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04-product-desktop.png",
+    "sha256": "44DDDE75CB7EB01E3C321AEB8E16ABABE34D0333A40C30447E3833DF27D1D202"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04-product-mobile.png",
+    "sha256": "28BBFE0F07681394AA79910E8CA3A606E1A1F8EC6DEBDCB254445BC492066A91"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04b-sku-desktop.png",
+    "sha256": "D61890E3F08A506D824E792F77224CB2B58B4719EC64666CE0B16B657B807F29"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04b-sku-mobile.png",
+    "sha256": "6935E53B000678D30994A9ABF7ED758ACFE770E462CEE51EB9E36A3B0F2E6B8C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04c-images-desktop.png",
+    "sha256": "3EF21DD0681BBBF55327F6D0A5076B1AD2E1C207FDFFDEC72992D5FCDB281DBD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04c-images-mobile.png",
+    "sha256": "CD8899E6C0700F66AE92A5825C49DB10923067289BFCC5AC1121331D7560F908"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04c-public-store-desktop.png",
+    "sha256": "B9421EEE137E6D2BEB2E4D93FA63A451F214B9DFF1CB22D53BBACF73588EA6D5"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04c-public-store-mobile.png",
+    "sha256": "84A1D0F757E8A75D9F33AC471E880F4C5485C465E91014631AB3967D803E126F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04d-admin-stock-desktop.png",
+    "sha256": "7BF927492861D42BFE2F941D205FAC4DBFC3C22F148489459D78F42CC16B438C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04d-admin-stock-mobile.png",
+    "sha256": "FA98CAA328E9AB5E30E59F5E0BCBEE6A5A5A0FE662E65E5ECEC1AC21A25817D2"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04d-stock-desktop.png",
+    "sha256": "6D7138185CC7FA6F7E2B724FD27ACD86D2E9F1E06DA7AD7F6196131D670DA207"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\p04d-stock-mobile.png",
+    "sha256": "5BAD6B37EFF075BF653F60152848D1BDC1058E7C602ED833685DE33E137FB132"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\summary.json",
+    "sha256": "20AF33C29A18011D8E13486D05CF1728CFF9BC49542F72B9CB63F4ADAB29BB43"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\target.txt",
+    "sha256": "80460BD2D925B040C47FD373F0F325B72395FA0BCF0BBBC0D713FD4CCCD25EF7"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\.last-run.json",
+    "sha256": "91D1C43004802CD49950D78EB11C8FA7D05DA8FFFFE219A8B13B2F561BC00903"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\access-직접-접근·새로고침·역할-개별-운영-권한-경계를-화면에서-확인-desktop\\permission.png",
+    "sha256": "05B9C2407806626260F25CAB375E5CBF3AD77AF197F0404D5EA0CDDE23AD6AF9"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\access-직접-접근·새로고침·역할-개별-운영-권한-경계를-화면에서-확인-mobile\\permission.png",
+    "sha256": "7972E0E5DF11376378069A9C6B06FB45A0AACBFD59BE4B00A5ADA3672AE1FF17"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\account-프로필·배송지-등록-수정-삭제와-기본-주소를-실제-DB로-확인-desktop\\addresses.png",
+    "sha256": "E96B10002F44C4EF60322047500E76D3C0E37F0A41C2D92ACBE55C1B97752A93"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\account-프로필·배송지-등록-수정-삭제와-기본-주소를-실제-DB로-확인-mobile\\addresses.png",
+    "sha256": "677FF75490AEE6665E471B70036F0D84BD3ECF168A85C15CD8912905BBAAEDF6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\auth-실제-DB-가입·확인·새로고침·다중-탭·독립-문맥과-로그아웃-desktop\\account.png",
+    "sha256": "CB72ABECB5FBEF1C473D15D96CA14D78D37BAC33BE5F14B7875364CFFA3A20F6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\auth-실제-DB-가입·확인·새로고침·다중-탭·독립-문맥과-로그아웃-mobile\\account.png",
+    "sha256": "5465050DF5783883E124D6A4E1C73914663AD8C3349DCD77FA4E960A8FC211E5"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-desktop\\closed-store.png",
+    "sha256": "1CF0A0413386612AF331062DA01DDB45764B09A2CEA53186A652C578C2DC763E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-desktop\\store-operations.png",
+    "sha256": "1659896C9B317328E3F18398A336CDB8C393CC90F4A89D9A0D28C88AD8AA5950"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-mobile\\closed-store.png",
+    "sha256": "184F28AAD9D8671C954D3CD6AD5470A837F45B48055D94D9BC9B993A3B0F8CED"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\lifecycle-판매-정지·복구·폐점은-구매-권한을-유지하고-기능과-공개-화면을-제한한다-mobile\\store-operations.png",
+    "sha256": "F0924BA2792BEB589705A5579E71B84C3587D41589A23BEB75429FCD58F6E73D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\seller-모의-판매-신청·반려·재신청·승인과-구매자-자격-유지-desktop\\seller-review.png",
+    "sha256": "011696026BC0DA463B654CC4C63F5442E2E2C640514F14A4C9C771021683D400"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\seller-모의-판매-신청·반려·재신청·승인과-구매자-자격-유지-mobile\\seller-review.png",
+    "sha256": "5285310CB620C5DD6F3FF965AA27057ECFEDF827A0CB100556982E804260EBE4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\store-판매자-매대-생성·수정·공개·비공개와-공개-페이지-새로고침-desktop\\public-store.png",
+    "sha256": "B9421EEE137E6D2BEB2E4D93FA63A451F214B9DFF1CB22D53BBACF73588EA6D5"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\store-판매자-매대-생성·수정·공개·비공개와-공개-페이지-새로고침-desktop\\store-editor.png",
+    "sha256": "1549C16FE14301FDBE04A48A3B49278B960B03838E185AE3D637C7DC63E010C4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\store-판매자-매대-생성·수정·공개·비공개와-공개-페이지-새로고침-mobile\\public-store.png",
+    "sha256": "84A1D0F757E8A75D9F33AC471E880F4C5485C465E91014631AB3967D803E126F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\browser-results\\store-판매자-매대-생성·수정·공개·비공개와-공개-페이지-새로고침-mobile\\store-editor.png",
+    "sha256": "9C17FDAB3DC9798CA9873A34CE5A7F9CCAB286B7490AE241E1F5FF54C5C7068B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-11372537007264757135.txt",
+    "sha256": "2268F4CCDD8ADA62FE83CAE608814DE9D39C8D8286198579687E949B33358C77"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-13706463494085783886.txt",
+    "sha256": "A9552627E42C3E772FAEFF1ABA374946036A3DC424ECAC61E22ACEFA86BA28DB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-13879150591554476583.txt",
+    "sha256": "C8800F774A4D61A4A3D07F16F51D62A968C46F6ADAEFFE33107BD51B8898ACCF"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-16350718045505442211.txt",
+    "sha256": "A6ED17B19238EED32CF6BD252F20F316D2A43B36881C745140E1CA7AB7D61603"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-16977916815219627091.txt",
+    "sha256": "FCF28FB6CD0318B76EC686928829E14E0E308CF8EBFFA3C082F21433E575E0CB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\bootstrap-4398343653396809580.txt",
+    "sha256": "A6ED17B19238EED32CF6BD252F20F316D2A43B36881C745140E1CA7AB7D61603"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\checkstyle-checker.xml",
+    "sha256": "11D69D89D87480796F40A7C9D55A413C05360EC49B55873F8E1BA0E4F35985A7"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\checkstyle-result.xml",
+    "sha256": "83D0A0D7CCF5BD49C5110CA5BA9209E5C121C1F44602F15863E7F2DA1BB19E29"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\failsafe-reports\\com.example.marketplace.dbtest.PostgresJdbcIT.txt",
+    "sha256": "8EE950A4133792B2DCD77A018B7E01C0CF39304DCC0EB76CBD1763E49613E551"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\failsafe-reports\\failsafe-summary.xml",
+    "sha256": "0CA9CD3D7E985161C9D9A2A949B5DA8C5B5A35F02A7BAA1BC8D2F92738F9A5CC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml",
+    "sha256": "2108C2D8F581954B11D9281D5A8B1F14D1B6C70FB42310E662012A57D2E966AD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.ActuatorPolicyHttpTest.txt",
+    "sha256": "94A2149AC234E94EF81AAC63B51ACBB3FF1EC487AB594EAE5450A3BED7AE6FE1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.ApiErrorHttpTest.txt",
+    "sha256": "57DC348E0CEF58DF0596411D48C3604891BA21E696B67D976B25FB0EC9F3A1F8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.DatabaseSettingsTest.txt",
+    "sha256": "BBE0F40B7E3CE39F973D49838A824991645E2B2824111FE9B93F515E25551311"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.ErrorHttpTest.txt",
+    "sha256": "B6A2E7C5A82A3FCA1303F505E4A1A9EFA103F2D3A446FD6216BD0811EFD02776"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.HealthMvcTest.txt",
+    "sha256": "808F2250342486EDE628D98EC08256F38EB12247EB751D42AAF3541E3910E89D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.RequestIdFilterTest.txt",
+    "sha256": "286B1EFE29FC9E52584D55F7CCB36614E713832C24DBD0B14279B64CA7160FED"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.RequestIdHttpTest.txt",
+    "sha256": "6DDEE9A86C288DB709A24A5F0CCBBB597395D5A79C9B049F2F9A53A708BF062C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.api.UnhealthyMvcTest.txt",
+    "sha256": "0FF4CB01A75AC99BE2C2B077D867B90920A60C0BF7821230A569FA6C203E1F42"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.architecture.ModuleArchitectureTest.txt",
+    "sha256": "5195089A7209709A8F844814B08533402C7DC75F7B750E11A933AA0B114F8EE3"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.architecture.ModuleRulesTest.txt",
+    "sha256": "CC397D3B48C2FF0D4F62EE0FBC7A50E1067DE4C55A4A13F728DABFB2A805D0C6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.cart.CartRulesTest.txt",
+    "sha256": "7631B6FBE6BA6B71AA67BCD26E7B8B33CA6752ECAF81D9A5D560BD4250F0E300"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.identity.AccountRulesTest.txt",
+    "sha256": "D646F6C45C10EBEDEC23B8F8C6B9E7C2EAD8BED6471F24A59296C2D466037A5F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.identity.AttemptWindowTest.txt",
+    "sha256": "9F54B031B8CCE87B63CF79B22B3A2BBEB1FED345937B4E75F23ED73EC21E60AB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.identity.SignupRulesTest.txt",
+    "sha256": "3D1401200CE35093022B5CC95ECD6B52692B2AD85932A9B5C7EE715ADF8880A3"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.identity.SignupSecurityTest.txt",
+    "sha256": "567C691CE143834E3258E0EA2B07AA674036654C48C850B38C5F1380A4FD331B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.txt",
+    "sha256": "F43C8CCAD5FAB1A858DCEF11C0EB084A8D231DC06D8475482B106001E19404DF"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.txt",
+    "sha256": "FC3214B5DDD2D53A857FADC7D94BA88997927DBC6E280F0C940ADCDA72260C11"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.media.infrastructure.ImageNormalizerTest.txt",
+    "sha256": "DE4DF8C1857FD32C7900E8ED03D89C30CB843CD5E870D093414DADB52B296AF9"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\com.example.marketplace.media.infrastructure.LocalImagesTest.txt",
+    "sha256": "E598515ECE3A738EDAF45EC2C8F81F9631130573D94C871BBB987687CECF2049"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml",
+    "sha256": "CD3CF0E29C67C6030B020079EF4D842EC8033E4EB979188CD8D1B19340006385"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml",
+    "sha256": "41E53A94A107CABB6A44178C4816CA8A3E889FB8DE15FD5A11EADF29844A2DAC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml",
+    "sha256": "88802E005D17131980F8E7FBDB0CA879CBF4BE37836012857B642AB60936FA06"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml",
+    "sha256": "8AEFCF2C9530BAAEFA2C052B37154DEC1EFEE223BCB6336EF31CA5BA065ED964"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml",
+    "sha256": "D0FAF209C49F825063CE68714BC055B0F479F58E177D70F224F3663CCA9C4E44"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml",
+    "sha256": "653BA5DC71E548D8765BC547A13E53A0C62055C88DD5269C05DCE4A88C9F1113"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml",
+    "sha256": "CCC9EE789982D9CD676D21357B3C8CD9945FE4A36D16B7157EFE7AF51023983D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml",
+    "sha256": "C3C924FD72B0758D48830F2432C0763552B75BADE0002129A2716A20EEAD4022"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml",
+    "sha256": "E3CDBB35554395D7DB9DC9647AEE495313A6FEED4436766DD8993F33E1D7652E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml",
+    "sha256": "168A9A7750EF30B6748D3DF67A2653CA7909D41C32FD278BA03297C3289D4556"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml",
+    "sha256": "1F740A5804E30D0F1C2F1E2220FD88009D7B463379A1071CC97C3F7BDD3321E0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml",
+    "sha256": "37BB87744E3F800B442AE03886F081B3EB7A8C2745A7311FE61C490FBCD490FC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml",
+    "sha256": "C7BA67B6522869DDF1FF7940BE0CE2F124EF8F8B443BA232F70811567891886E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml",
+    "sha256": "406BB8C71AD0AD14AE7CE0B7AD22418ADD1D57065BA0B0DD8BC83ACAB0D022E4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml",
+    "sha256": "9D9D131BA36AAB0602A73FA742169CADF7695C07B7D63659E9F55F10916859F7"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml",
+    "sha256": "DEFD954AE10C5BB6B4712B561281C6AE4D73744A48563075D46EF2C3EDE18CAD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml",
+    "sha256": "5352E011019B405A1C4628EA38CD5DE95B390245C57C95D3C9B417692B143857"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml",
+    "sha256": "AC4F79DACC1199D3E6600AD0E128A68D898DD40E66B82BFB52CD5EB0A896F00E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-d-full-20261025\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml",
+    "sha256": "68E52F0AAAED71DB2A12673BD02816610A27837BEBAEC2A072D3DA39EB5ECD6A"
+  }
+]

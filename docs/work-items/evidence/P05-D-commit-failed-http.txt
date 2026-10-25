@@ -1,0 +1,210 @@
+
+> marketplace-frontend@0.0.1 test
+> node --test tests/*.test.mjs
+
+✔ health {"kind":"success","status":200,"data":{"status":"UP"}} => healthy (0.6872ms)
+✔ health {"kind":"success","status":201,"data":{"status":"UP"}} => invalid (0.0739ms)
+✔ health {"kind":"success","status":200,"data":{"status":"UNKNOWN"}} => unhealthy (0.0488ms)
+✔ health {"kind":"success","status":200,"data":{"status":"DOWN"}} => unhealthy (0.0458ms)
+✔ health {"kind":"http","status":503,"data":{"status":"DOWN"}} => unhealthy (0.0697ms)
+✔ health {"kind":"http","status":503,"data":{"status":"OUT_OF_SERVICE"}} => unhealthy (0.0483ms)
+✔ health {"kind":"http","status":503,"data":{"status":"UP"}} => connection-error (0.0461ms)
+✔ health {"kind":"http","status":502} => connection-error (0.1002ms)
+✔ health {"kind":"network"} => connection-error (0.0891ms)
+✔ health {"kind":"invalid-response","status":200} => invalid (0.1417ms)
+✔ health {"kind":"success","status":200,"data":null} => invalid (0.0797ms)
+✔ health {"kind":"success","status":200,"data":{"status":7}} => invalid (0.0632ms)
+✔ health {"kind":"cancelled"} => cancelled (0.06ms)
+✔ new request wins even when the cancelled transport resolves late; dispose prevents updates (0.3633ms)
+✔ JSON request preserves path and sends Accept; returns unknown data with HTTP status (20.4045ms)
+✔ HTTP DOWN keeps parsed error body (0.3058ms)
+✔ HTML success is a contract error (0.2106ms)
+✔ malformed JSON is a contract error (0.2382ms)
+✔ 204 has no JSON document (0.1442ms)
+✔ malformed error JSON still preserves HTTP failure (0.2ms)
+✔ empty proxy error keeps HTTP status (0.6188ms)
+✔ non-JSON HTTP error keeps status (0.1562ms)
+✔ network failure and caller cancellation are distinct (0.2202ms)
+✔ cancellation during body read is not malformed JSON (0.6324ms)
+✔ a JSON body interrupted by the connection is a network failure, not malformed JSON (0.2386ms)
+▶ dev: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (16.5907ms)
+  ✔ /api/%2e%2e/actuator/health (2.9502ms)
+  ✔ /api/%2e%2e%2factuator/env (1.715ms)
+  ✔ /api/..;/actuator/env (1.7501ms)
+  ✔ /api/%252e%252e/actuator/env (1.9104ms)
+  ✔ /api/..%5cactuator/env (8.0488ms)
+  ✔ //actuator/env (3.4314ms)
+  ✔ /%61ctuator/env (1.1794ms)
+  ✔ /ACTUATOR/env (1.0874ms)
+  ✔ /%61pi/missing (1.2647ms)
+  ✔ /API/missing (0.7625ms)
+  ✔ /api%2fmissing (0.9112ms)
+  ✔ /actu%61tor/%zz (0.9561ms)
+  ✔ ordinary API identifiers and exact health remain usable (37.0656ms)
+✔ dev: API path aliases cannot escape into management routes or SPA fallback (170.4995ms)
+▶ preview: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (3.3208ms)
+  ✔ /api/%2e%2e/actuator/health (0.8029ms)
+  ✔ /api/%2e%2e%2factuator/env (0.6896ms)
+  ✔ /api/..;/actuator/env (0.6873ms)
+  ✔ /api/%252e%252e/actuator/env (0.7279ms)
+  ✔ /api/..%5cactuator/env (0.6463ms)
+  ✔ //actuator/env (0.656ms)
+  ✔ /%61ctuator/env (0.8648ms)
+  ✔ /ACTUATOR/env (0.7243ms)
+  ✔ /%61pi/missing (0.6706ms)
+  ✔ /API/missing (0.58ms)
+  ✔ /api%2fmissing (0.585ms)
+  ✔ /actu%61tor/%zz (0.5537ms)
+  ✔ ordinary API identifiers and exact health remain usable (10.729ms)
+✔ preview: API path aliases cannot escape into management routes or SPA fallback (36.785ms)
+▶ dev: real partial responses terminate on upstream failure
+  ✔ silent (10042.5116ms)
+  ✔ stall (10038.8755ms)
+  ✔ disconnect (334.7135ms)
+  ✔ stream (12045.793ms)
+  ✔ caller cancels while reading body and can retry (315.8918ms)
+✔ dev: real partial responses terminate on upstream failure (12478.6277ms)
+ℹ disconnect: 330ms {"kind":"network"}
+ℹ silent: 10037ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10034ms {"kind":"network"}
+ℹ stream: 12042ms {"kind":"success","status":200,"data":{"status":"UP"}}
+▶ preview: real partial responses terminate on upstream failure
+  ✖ silent (7.2218ms)
+  ✖ stall (6.9878ms)
+  ✖ disconnect (6.8995ms)
+  ✖ stream (6.642ms)
+  ✖ caller cancels while reading body and can retry (0.2735ms)
+✖ preview: real partial responses terminate on upstream failure (20.1554ms)
+ℹ silent: 1ms {"kind":"network"}
+ℹ stall: 1ms {"kind":"network"}
+ℹ disconnect: 6ms {"kind":"network"}
+ℹ stream: 6ms {"kind":"network"}
+✔ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (276.5973ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 62
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12823.1282
+
+✖ failing tests:
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ silent (7.2218ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'network' !== 'http'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:45:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 0)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'http',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stall (6.9878ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(elapsed >= 9000 && elapsed < 14_000)
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:51:67)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 1)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ disconnect (6.8995ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   kind: 'network'
+  -   data: {
+  -     status: 'UP'
+  -   },
+  -   kind: 'success',
+  -   status: 200
+    }
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:54:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 2)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'network' },
+    expected: { kind: 'success', status: 200, data: { status: 'UP' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:39:87
+✖ stream (6.642ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'success'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:48:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Promise.all (index 3)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'success',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proxy-stream.test.mjs:56:15
+✖ caller cancels while reading body and can retry (0.2735ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'network'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:58:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///D:/Workspace/ai-portfolio-practice/frontend/tests/proxy-stream.test.mjs:56:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'network',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

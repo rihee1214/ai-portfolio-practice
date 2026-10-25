@@ -2376,6 +2376,17 @@ class PostgresJdbcIT {
         UUID purchaseProduct=((com.example.marketplace.catalog.api.Products.Product)purchaseSeed.get("product")).id();
         jdbc.update("UPDATE marketplace.catalog_product SET slug='p05-c-second',title='P05-C second' WHERE id=:id",Map.of("id",purchaseProduct));
         jdbc.update("UPDATE marketplace.seller_store SET name='P05-C second store' WHERE id=(SELECT store_id FROM marketplace.catalog_product WHERE id=:id)",Map.of("id",purchaseProduct));
+        var inputSeed=browseFixture("input-flow",1500,10);
+        UUID inputProduct=((com.example.marketplace.catalog.api.Products.Product)inputSeed.get("product")).id();
+        jdbc.update("UPDATE marketplace.catalog_product SET slug='p05-d-input',title='P05-D input' WHERE id=:id",Map.of("id",inputProduct));
+        var inputSkus=context.getBean(com.example.marketplace.catalog.api.Skus.class);
+        for(int amount:List.of(1500,2500)) {
+            var inputOption=inputSkus.save((UUID)inputSeed.get("owner"),inputProduct,null,new com.example.marketplace.catalog.api.Skus.Input(List.of(new com.example.marketplace.catalog.api.Skus.Option("크기",amount==1500?"작은 것":"큰 것")),(long)amount,true,0L));
+            jdbc.update("INSERT INTO marketplace.inventory_balance(sku_id,on_hand) VALUES(:id,10)",Map.of("id",inputOption.id()));
+        }
+        for(String project:List.of("desktop","mobile")) {
+            for(int width:List.of(375,768,1440)) { activeMember("input-"+project+"-"+width+"@example.com"); }
+        }
         var cMembers = new java.util.ArrayList<UUID>();
         // Keep the first operator page full so browser journeys must follow pagination,
         // regardless of random store UUIDs or the order of other integration tests.

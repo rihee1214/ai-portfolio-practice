@@ -1,3 +1,4 @@
+import { useFormDraft } from '../forms/useFormDraft'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { Link } from 'react-router'
 import { AccountStore, type Address, type AddressFields, type Profile } from '../auth/AccountStore'
@@ -65,7 +66,7 @@ function AddressBook({ addresses, store, busy }: { addresses: Address[]; store: 
 }
 
 function AddressForm({ address, store, busy, onCancel }: { address: Address | null; store: AccountStore; busy: boolean; onCancel: () => void }) {
-  const [validation, setValidation] = useState('')
+  const draft = useFormDraft({ label: address?.label ?? '', recipient: address?.recipient ?? '', phone: address?.phone ?? '', postalCode: address?.postalCode ?? '', addressLine1: address?.addressLine1 ?? '', addressLine2: address?.addressLine2 ?? '' })
   const fields: { name: keyof Omit<AddressFields, 'isDefault'>; label: string; max: number; required: boolean }[] = [
     { name: 'label', label: '이름표', max: 40, required: true },
     { name: 'recipient', label: '수령인', max: 80, required: true },
@@ -77,23 +78,26 @@ function AddressForm({ address, store, busy, onCancel }: { address: Address | nu
   async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    const values = Object.fromEntries(fields.map(field => [field.name, String(data.get(field.name) ?? '').trim()])) as Omit<AddressFields, 'isDefault'>
-    const invalid = fields.find(field => [...values[field.name]].length > field.max || (field.required && !values[field.name]))
-    if (invalid || [...values.phone].length < 7) {
-      setValidation(invalid ? `${invalid.label} 입력 길이를 확인해 주세요. 최대 ${invalid.max}자입니다.` : '전화번호는 7~25자로 입력해 주세요.'); return
-    }
-    setValidation('')
+    if (busy) return
+    const values = Object.fromEntries(fields.map(field => [field.name, draft.values[field.name].trim()])) as Omit<AddressFields, 'isDefault'>
+    if (!draft.validate(event.currentTarget, () => {
+      const invalid = fields.find(field => [...values[field.name]].length > field.max || (field.required && !values[field.name]))
+      if (invalid) return { field: invalid.name, message: `${invalid.label} 입력 길이를 확인해 주세요. 최대 ${invalid.max}자입니다.` }
+      if ([...values.phone].length < 7) return { field: 'phone', message: '전화번호는 7~25자로 입력해 주세요.' }
+      if (!/^[0-9]{5}$/.test(values.postalCode)) return { field: 'postalCode', message: '우편번호는 숫자 5자리로 입력해 주세요.' }
+      return null
+    })) return
     if (await store.save(address ? 'PUT' : 'POST', { ...values, isDefault: data.get('isDefault') === 'on' }, address?.id)) onCancel()
   }
-  return <form onSubmit={event => { void submit(event) }} aria-busy={busy}>
+  return <form noValidate onSubmit={event => { void submit(event) }} aria-busy={busy}>
     <h2>{address ? '배송지 수정' : '새 배송지'}</h2>
     {fields.map(field => <div key={field.name}><label htmlFor={'address-' + field.name}>{field.label}</label>
-      <input id={'address-' + field.name} name={field.name} defaultValue={address?.[field.name] ?? ''} required={field.required}
+      <input id={'address-' + field.name} {...draft.input(field.name)} required={field.required}
         maxLength={field.name === 'postalCode' ? 5 : field.max * 2} type={field.name === 'phone' ? 'tel' : 'text'}
         pattern={field.name === 'postalCode' ? '[0-9]{5}' : undefined} inputMode={field.name === 'postalCode' ? 'numeric' : undefined} disabled={busy} />
     </div>)}
     <label className="checkbox-label"><input type="checkbox" name="isDefault" defaultChecked={address?.isDefault ?? false} disabled={busy} />기본 배송지</label>
-    {validation && <p role="alert">{validation}</p>}
+    {draft.error && <p id={draft.errorId} role="alert">{draft.error.message}</p>}
     <button disabled={busy}>{address ? '배송지 저장' : '배송지 추가'}</button>
     {address && <button type="button" disabled={busy} onClick={onCancel}>수정 취소</button>}
   </form>

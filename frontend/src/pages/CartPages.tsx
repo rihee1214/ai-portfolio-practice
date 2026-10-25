@@ -1,5 +1,6 @@
 import { purchaseSummary } from '../cart/Purchase'
-import { useContext, useState, useSyncExternalStore } from 'react'
+import { useContext, useSyncExternalStore } from 'react'
+import { QuantityForm } from '../forms/QuantityForm'
 import { Link } from 'react-router'
 import { CartContext } from '../cart/CartContext'
 import type { CartStore, Line } from '../cart/CartStore'
@@ -10,10 +11,8 @@ export function AddToCart({ sku, available }: { sku: string; available: number }
 }
 function AddForm({ store, sku, available }: { store: CartStore; sku: string; available: number }) {
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot)
-  const [quantity, setQuantity] = useState('1')
-  return <div className="cart-add"><form onSubmit={e => { e.preventDefault(); void store.add(sku, Number(quantity)) }}>
-    <label htmlFor="cart-add-quantity">담을 수량</label><input id="cart-add-quantity" type="number" min="1" max="99" required value={quantity} onChange={e => setQuantity(e.target.value)} disabled={state.busy || !state.ready || available === 0} />
-    <button disabled={state.busy || !state.ready || available === 0}>장바구니 담기</button></form><Link to="/cart">장바구니 보기</Link>
+  return <div className="cart-add"><QuantityForm id="cart-add-quantity" label="담을 수량" action="장바구니 담기"
+    disabled={state.busy || !state.ready || available === 0} onSubmit={quantity => { void store.add(sku, quantity) }} /><Link to="/cart">장바구니 보기</Link>
     {state.notice && <p role="status">{state.notice}</p>}{state.error && <p role="alert">{state.error.message} <Link to="/cart">장바구니에서 다시 확인</Link></p>}
   </div>
 }
@@ -25,10 +24,9 @@ function CartLine({ line, store }: { line: Line; store: CartStore }) {
     {offer ? <><p>{line.detail!.product.storeName} · {offer.options.length ? offer.options.map(o => o.name + ': ' + o.value).join(' / ') : '기본 상품'}</p>
       <p>개당 {money(offer.price)}</p><p>상품 금액: {money(offer.price * line.quantity)}</p>
       {offer.available === 0 ? <p>품절</p> : offer.available < line.quantity && <p>재고 부족: 현재 {offer.available}개</p>}</> : <p>비공개·판매 중지 또는 삭제된 옵션입니다. 이름과 가격을 표시하지 않습니다.</p>}
-    <form onSubmit={event => { event.preventDefault(); void store.set(line.skuId, Number(new FormData(event.currentTarget).get('quantity'))) }}>
-      <label htmlFor={'quantity-' + line.skuId}>{title} 수량</label><input id={'quantity-' + line.skuId} name="quantity" type="number" min="1" max="99" required defaultValue={line.quantity} />
-      <button aria-label={title + ' 수량 변경'}>수량 변경</button><button type="button" aria-label={title + ' 삭제'} onClick={() => { void store.set(line.skuId, 0) }}>삭제</button>
-    </form>
+    <QuantityForm id={'quantity-' + line.skuId} label={title + ' 수량'} initial={line.quantity} action={title + ' 수량 변경'} onSubmit={quantity => { void store.set(line.skuId, quantity) }}>
+      <button type="button" aria-label={title + ' 삭제'} onClick={() => { void store.set(line.skuId, 0) }}>삭제</button>
+    </QuantityForm>
   </article>
 }
 export function CartPage() {
