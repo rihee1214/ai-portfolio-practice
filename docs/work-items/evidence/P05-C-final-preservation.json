@@ -1,0 +1,16 @@
+{
+  "inputsSha256": "CD6D53335D694616EA974B87D6016A41EC13A92331EE955ED4BA2D5D5E99E660",
+  "currentMedia": 819,
+  "currentDatabases": 154,
+  "oldDatabases": 149,
+  "status": "passed",
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "before": "P05-C-prior-verified-baseline.json (P05-B independent closeout)",
+  "oldMedia": 741,
+  "after": "P05-C-final-after.json",
+  "failureEvidenceFiles": 306
+}

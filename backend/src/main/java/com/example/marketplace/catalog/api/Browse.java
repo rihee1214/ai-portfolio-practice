@@ -9,4 +9,6 @@ public interface Browse {
     Products.Page<Item> search(Query query);
     Detail detail(String slug);
     Detail forSku(UUID sku);
+    Detail forProduct(UUID product);
+    UUID identify(String slug);
 }

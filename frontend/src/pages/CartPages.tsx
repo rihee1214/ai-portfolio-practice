@@ -1,3 +1,4 @@
+import { purchaseSummary } from '../cart/Purchase'
 import { useContext, useState, useSyncExternalStore } from 'react'
 import { Link } from 'react-router'
 import { CartContext } from '../cart/CartContext'
@@ -37,6 +38,7 @@ export function CartPage() {
 }
 function CartContent({ store }: { store: CartStore }) {
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot)
+  const summary = purchaseSummary(state.items)
   const total = state.items.reduce((sum, row) => sum + (row.detail?.offers[0]?.price ?? 0) * row.quantity, 0)
   return <section className="cart-page"><h1>장바구니</h1><p>상품별 최대 99개, 최대 100종을 담을 수 있습니다. 재고를 예약하지 않으며 가격·배송비·할인은 주문 단계에서 다시 확인합니다.</p>
     {!state.ready && !state.error && <p role="status">장바구니와 로그인 상태를 확인하고 있습니다.</p>}
@@ -45,8 +47,10 @@ function CartContent({ store }: { store: CartStore }) {
     {state.notice && <p role="status">{state.notice}</p>}
     {state.ready && <><p>{state.member ? '회원 장바구니' : '방문자 장바구니 · 이 브라우저에만 저장됩니다.'}</p>
       {!state.member && <p><Link to="/login">로그인하면 회원 장바구니로 가져옵니다.</Link></p>}
-      {state.items.length ? <>{state.items.map(row => <CartLine key={row.skuId + ':' + row.quantity} line={row} store={store} />)}
+      {state.items.length ? <>{summary.groups.map(group => <section key={group.slug} aria-label={group.name + ' 장바구니 상품'}><h2>{group.name}</h2>{group.items.map(row => <CartLine key={row.skuId + ':' + row.quantity} line={row} store={store} />)}<p>매대 상품 금액: {money(group.subtotal)}</p></section>)}
+        {state.items.filter(row => !row.detail).map(row => <CartLine key={row.skuId + ':' + row.quantity} line={row} store={store} />)}
         <p>판매 가능한 항목의 상품 금액 합계: {money(total)}</p><p>품절·재고 부족 항목은 별도 안내를 확인하세요. 배송비·할인 미포함입니다.</p>
+        {summary.allowed ? <p><Link to="/checkout">주문서 준비</Link></p> : <p>판매 불가·품절·재고 부족 항목을 확인한 뒤 주문서를 준비할 수 있습니다.</p>}
         <button onClick={() => { void store.clear() }}>장바구니 비우기</button></> : <p>장바구니가 비어 있습니다.</p>}</>}
     {state.error && <form onSubmit={e => { e.preventDefault(); void store.discardGuest() }}><p>복구할 수 없는 방문자 저장값만 비울 수 있습니다. 이미 반영된 회원 장바구니는 유지됩니다.</p>
       <label><input type="checkbox" required />방문자 저장값과 가져오기 기록 삭제 확인</label><button disabled={state.busy}>방문자 가져오기 취소</button></form>}

@@ -1,3 +1,4 @@
+import { SaveWish } from './WishlistPages'
 import { AddToCart } from './CartPages'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
@@ -100,7 +101,7 @@ export function ProductDetailPage() {
     {!slugValid(slug) && <p role="alert">상품 주소가 올바르지 않습니다.</p>}
     {state.busy && <p role="status">상품을 불러오고 있습니다.</p>}
     {state.error && <p role="alert">{state.error.message} <button onClick={state.retry}>상품 다시 불러오기</button></p>}
-    {data && <><h2>{data.product.title}</h2><Link to={'/stores/' + data.product.storeSlug}>{data.product.storeName}</Link><p>{data.product.categoryName}</p>
+    {data && <><h2>{data.product.title}</h2><SaveWish slug={data.product.slug} /><Link to={'/stores/' + data.product.storeSlug}>{data.product.storeName}</Link><p>{data.product.categoryName}</p>
       <PublicMedia key={slug} kind="products" slug={slug!} />
       <p className="product-description">{data.product.description}</p>
       {offer ? <><label htmlFor="browse-option">상품 옵션</label><select id="browse-option" value={offer.id} onChange={e => select(e.target.value)}>

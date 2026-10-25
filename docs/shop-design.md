@@ -461,3 +461,8 @@ P04-E는 [예약 계약](work-items/P04-E.md)의 지정 범위 구현·검증·�
 모든 회원 API는 principal과 예상 owner가 같은지 확인하고 identity BUYER 정책을 적용한다. 변경은 회원→cart 잠금 순서로 정지·탈퇴와 직렬화한다. GET /api/cart?owner=, PUT /api/cart/items/{sku}(owner/quantity/version), DELETE /api/cart?owner=&version=, POST /api/cart/merge(owner/requestId/items)이며 익명 미리보기 POST /api/cart/preview(items)에도 CSRF가 필요하다. 수량과 version은 정확한 정수만 허용한다. 응답은 no-store이며 클라이언트는 인증 변경 중 기존 회원 품목을 숨기고 늦은 응답을 폐기한다.
 
 현재 공개 정보는 catalog Browse API로 조회한다. 공개 자격을 잃은 SKU는 detail=null로 이름·가격·매대 정보를 노출하지 않으며, 판매 가능 항목은 최신 가격·품절·재고 부족을 표시한다. 장바구니는 가격 확정이나 재고 예약이 아니다. 재고·주문·결제·찜·판매자별 묶음 및 P05-C는 이번 범위에 포함하지 않는다.
+
+## P05-C 구현 계약 (2026-10-25)
+회원 찜은 상품별 복합키(userId, productId), 최대100개이며 반복 추가·해제는 멱등이다. 본인 계정 사전조건과 회원행 잠금 후 ACTIVE/BUYER 재검사로 타계정 접근·동시상한·정지 경합을 제어한다. 공개 catalog API로 현재 표시 정보를 읽고 비공개/삭제 상품은 정보 없이 해제만 가능하다. 회원 찜은 로컬 저장하지 않는다.
+
+주문서 진입은 현재 장바구니 전체를 매대 식별자(storeSlug)별로 묶는 준비 화면까지이다. /checkout 직접 접근과 새로고침도 재조회한다. 확인 중·오류·빈 목록 또는 비판매·품절·재고 부족 항목이 있으면 전체 준비 내역을 숨기며 일부 품목만 진행하지 않는다. 가격은 상품 금액 소계/합계이고 견적 확정이 아니다. 회원과 방문자의 준비 내역은 구분하며 주문 생성·결제·재고 예약·배송지 입력 확장은 하지 않는다. 후속 P05-D는 이번 범위에 포함하지 않는다. 실행 증거와 제약조건은 work-items/P05-C.md, 독립 검토는 work-items/P05-C-review.md에 기록한다.

@@ -86,6 +86,78 @@ class PostgresJdbcIT {
         assertEquals(1,context.getBeansOfType(com.example.marketplace.cart.api.Carts.class).size(),"Cart implementation required");
         return context.getBean(com.example.marketplace.cart.api.Carts.class);
     }
+    @Test void wishlistOwnershipVisibilityAndIdempotency() throws Exception {
+        var f=browseFixture("wish-http",1700,5);
+        var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        UUID owner=activeMember("wish-owner@example.com"),other=activeMember("wish-other@example.com");
+        var browser=authBrowser();
+        assertEquals(401,accountRequest(browser,"GET","/api/wishlist?owner="+owner,null,null).statusCode());
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm("wish-owner@example.com",SIGNUP_PASSWORD),csrfToken(browser)).statusCode());
+        String csrf=csrfToken(browser),path="/api/wishlist/"+product.slug()+"?owner="+owner;
+        assertEquals(200,accountRequest(browser,"GET","/api/wishlist?owner="+owner,null,null).statusCode());
+        assertEquals(403,accountRequest(browser,"PUT",path,Map.of(),null).statusCode());
+        assertEquals(409,accountRequest(browser,"GET","/api/wishlist?owner="+other,null,null).statusCode());
+        assertEquals(409,accountRequest(browser,"PUT","/api/wishlist/"+product.slug()+"?owner="+other,Map.of(),csrf).statusCode());
+        for(int i=0;i<2;i++) { assertEquals(200,accountRequest(browser,"PUT",path,Map.of(),csrf).statusCode()); }
+        var list=authMapper.readTree(accountRequest(browser,"GET","/api/wishlist?owner="+owner,null,null).body());
+        assertEquals(1,list.get("items").size());assertEquals(product.id().toString(),list.get("items").get(0).get("productId").asText());
+        assertEquals("P05 wish-http",list.get("items").get(0).get("detail").get("product").get("title").asText());
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",product.id()));
+        list=authMapper.readTree(accountRequest(browser,"GET","/api/wishlist?owner="+owner,null,null).body());
+        assertTrue(list.get("items").get(0).get("detail").isNull());
+        assertEquals(404,accountRequest(browser,"PUT",path,Map.of(),csrf).statusCode());
+        assertEquals(409,accountRequest(browser,"DELETE","/api/wishlist/"+product.id()+"?owner="+other,null,csrf).statusCode());
+        for(int i=0;i<2;i++) { assertEquals(200,accountRequest(browser,"DELETE","/api/wishlist/"+product.id()+"?owner="+owner,null,csrf).statusCode()); }
+        assertEquals(0,authMapper.readTree(accountRequest(browser,"GET","/api/wishlist?owner="+owner,null,null).body()).get("items").size());
+        stockEquals((UUID)f.get("sku"),5,0,0);
+    }
+    @Test void wishlistCapacityConcurrencyAndSuspension() throws Exception {
+        var api=context.getBean(com.example.marketplace.cart.api.Wishlists.class);
+        UUID owner=activeMember("wish-race@example.com");var f=browseFixture("wish-race",100,5);
+        var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        assertEquals(List.of("ok","ok"),race(()->{api.add(owner,product.slug());return "ok";}));
+        assertEquals(1,api.get(owner).items().size());
+        for(int i=0;i<99;i++) { jdbc.update("INSERT INTO marketplace.wishlist(user_id,product_id) VALUES(:owner,:id)",Map.of("owner",owner,"id",UUID.randomUUID())); }
+        assertEquals(100,api.add(owner,product.slug()).items().size());
+        var second=(com.example.marketplace.catalog.api.Products.Product)browseFixture("wish-over",100,5).get("product");
+        assertEquals(409,assertThrows(com.example.marketplace.cart.api.CartException.class,()->api.add(owner,second.slug())).status());
+        assertEquals(100,api.get(owner).items().size());
+        UUID capOwner=activeMember("wish-cap-race@example.com");
+        for(int i=0;i<99;i++) { jdbc.update("INSERT INTO marketplace.wishlist(user_id,product_id) VALUES(:owner,:id)",Map.of("owner",capOwner,"id",UUID.randomUUID())); }
+        var index=new java.util.concurrent.atomic.AtomicInteger();
+        var accepted=new java.util.concurrent.ConcurrentLinkedQueue<UUID>();
+        var rejected=new java.util.concurrent.ConcurrentLinkedQueue<UUID>();
+        var contenders=List.of(product,second);
+        var capResults=race(()->{
+            var candidate=contenders.get(index.getAndIncrement());
+            try { api.add(capOwner,candidate.slug());accepted.add(candidate.id());return "ok"; }
+            catch(com.example.marketplace.cart.api.CartException e) { rejected.add(candidate.id());return ""+e.status(); }
+        });
+        assertEquals(1,capResults.stream().filter("ok"::equals).count());
+        assertEquals(1,capResults.stream().filter("409"::equals).count());
+        var capIds=api.get(capOwner).items().stream().map(com.example.marketplace.cart.api.Wishlists.Line::productId).toList();
+        assertEquals(100,capIds.size());assertTrue(capIds.containsAll(accepted));
+        assertFalse(capIds.contains(rejected.element()));
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.wishlist(user_id,product_id) VALUES(:owner,:id)",Map.of("owner",owner,"id",product.id())));
+        try(var executor=Executors.newSingleThreadExecutor()) {
+            var future=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<Integer>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE id=:id FOR UPDATE",Map.of("id",owner),UUID.class);
+                future.set(executor.submit(()->{try{api.remove(owner,product.id());return 200;}catch(com.example.marketplace.identity.api.AccessRejected e){return 403;}}));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    if(waiting) { break; }
+                    try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
+                }
+                assertTrue(waiting,"Wishlist removal must wait on member row");
+                jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner));
+            });
+            assertEquals(403,future.get().get(10,TimeUnit.SECONDS));
+        }
+        assertEquals(100,jdbc.queryForObject("SELECT count(*) FROM marketplace.wishlist WHERE user_id=:id",Map.of("id",owner),Integer.class));
+    }
     @Test void cartOwnershipCrudAndPublicAvailability() throws Exception {
         var f=browseFixture("cart-http",1700,5);UUID sku=(UUID)f.get("sku");var p=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
         UUID owner=activeMember("cart-owner@example.com"),other=activeMember("cart-other@example.com");var browser=authBrowser();
@@ -439,7 +511,7 @@ class PostgresJdbcIT {
         jdbc.update("INSERT INTO p4e_upgrade.stock_movement SELECT * FROM marketplace.stock_movement WHERE sku_id=:id",Map.of("id",sku));
         var movement=jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of());
         var migration=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();
-        assertEquals(3,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
+        assertEquals(4,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
         assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM p4e_upgrade.catalog_product WHERE created_at IS NOT NULL",Map.of(),Integer.class));
         assertEquals(row,jdbc.queryForMap("SELECT * FROM p4e_upgrade.inventory_balance WHERE sku_id=:id",Map.of("id",sku)));
         assertEquals(movement,jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of()));
@@ -2300,6 +2372,10 @@ class PostgresJdbcIT {
                 jdbc.update("INSERT INTO marketplace.inventory_balance(sku_id,on_hand) VALUES(:id,5)",Map.of("id",id));
             } else { jdbc.update("UPDATE marketplace.catalog_product SET slug='p05-browser-0',title='P05 browser 00' WHERE id=:id",Map.of("id",id)); }
         }
+        var purchaseSeed=browseFixture("purchase-second",2400,10);
+        UUID purchaseProduct=((com.example.marketplace.catalog.api.Products.Product)purchaseSeed.get("product")).id();
+        jdbc.update("UPDATE marketplace.catalog_product SET slug='p05-c-second',title='P05-C second' WHERE id=:id",Map.of("id",purchaseProduct));
+        jdbc.update("UPDATE marketplace.seller_store SET name='P05-C second store' WHERE id=(SELECT store_id FROM marketplace.catalog_product WHERE id=:id)",Map.of("id",purchaseProduct));
         var cMembers = new java.util.ArrayList<UUID>();
         // Keep the first operator page full so browser journeys must follow pagination,
         // regardless of random store UUIDs or the order of other integration tests.
@@ -2312,6 +2388,7 @@ class PostgresJdbcIT {
                     Map.of("id", new UUID(0, index), "owner", owner, "slug", "browser-page-fixture-" + index));
         }
         for (String project : List.of("desktop", "mobile")) {
+            activeMember("wish-browser-"+project+"@example.com");
             UUID cartBuyer=activeMember("cart-browser-"+project+"@example.com");
             UUID cartSku=jdbc.queryForObject("SELECT k.id FROM marketplace.catalog_sku k JOIN marketplace.catalog_product p ON p.id=k.product_id WHERE p.slug=:slug",Map.of("slug","p05-browser-1"),UUID.class);
             carts().set(cartBuyer,cartSku,98,0);

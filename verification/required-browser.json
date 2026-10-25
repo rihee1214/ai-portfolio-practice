@@ -28,6 +28,10 @@
     "desktop#cart.spec.ts:방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
     "mobile#cart.spec.ts:방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
     "desktop#cart.spec.ts:두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다",
-    "mobile#cart.spec.ts:두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다"
+    "mobile#cart.spec.ts:두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다",
+    "desktop#purchase.spec.ts:회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
+    "desktop#purchase.spec.ts:방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다",
+    "mobile#purchase.spec.ts:회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
+    "mobile#purchase.spec.ts:방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다"
   ]
 }

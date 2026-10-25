@@ -328,5 +328,12 @@
       "com.example.marketplace.cart.CartRulesTest#quantitiesAndCapacityRejectInvalidInputs",
       "com.example.marketplace.cart.CartRulesTest#duplicateSkuQuantitiesSaturateAndSortDeterministically"
     ]
+  },
+  {
+    "id": "P05-C-wishlist",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistOwnershipVisibilityAndIdempotency",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistCapacityConcurrencyAndSuspension"
+    ]
   }
 ]

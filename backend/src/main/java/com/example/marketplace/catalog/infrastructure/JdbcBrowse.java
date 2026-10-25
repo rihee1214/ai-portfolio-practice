@@ -80,6 +80,19 @@ public final class JdbcBrowse implements Browse {
             return offers.isEmpty()?null:new Detail(value.product(),offers);
         } catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
     }
+    @Override public Detail forProduct(UUID product) {
+        var slugs=jdbc.queryForList("SELECT slug FROM marketplace.catalog_product WHERE id=:id",Map.of("id",product),String.class);
+        if(slugs.isEmpty()) { return null; }
+        try { return detail(slugs.getFirst()); }
+        catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
+    }
+    @Override public UUID identify(String slug) {
+        if(slug==null||!slug.matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { return null; }
+        try { detail(slug); }
+        catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
+        var ids=jdbc.queryForList("SELECT id FROM marketplace.catalog_product WHERE slug=:slug",Map.of("slug",slug),UUID.class);
+        return ids.isEmpty()?null:ids.getFirst();
+    }
     private Item item(java.sql.ResultSet r) throws java.sql.SQLException {
         return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"));
     }

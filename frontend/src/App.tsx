@@ -1,3 +1,5 @@
+import { CheckoutPage } from './pages/PurchasePages'
+import { WishlistPage } from './pages/WishlistPages'
 import AuthProvider from './auth/AuthProvider'
 import CartProvider from './cart/CartProvider'
 import { CartPage } from './pages/CartPages'
@@ -38,7 +40,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
-          <Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
+          <Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />
@@ -47,12 +49,12 @@ export default function App() {
             <Route path="/verify-email" element={<AuthForm key="verify" mode="verify-email" />} />
             <Route path="/login" element={<AuthForm key="login" mode="login" />} />
             <Route path="/account">
-              <Route path="seller-application" element={<SellerApplicationsPage />} />
+              <Route path="wishlist" element={<WishlistPage />} /><Route path="seller-application" element={<SellerApplicationsPage />} />
               <Route index element={<AccountPage />} />
               <Route path="profile" element={<AccountDetailsPage key="profile" resource="profile" />} />
               <Route path="addresses" element={<AccountDetailsPage key="addresses" resource="addresses" />} />
               <Route element={<WorkspaceLayout workspace={workspaces[0]} />}>
-                {workspaces[0].features.filter(feature => feature.path !== 'addresses').map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
+                {workspaces[0].features.filter(feature => !['addresses','wishlist'].includes(feature.path)).map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
               </Route>
             </Route>
           {workspaces.filter(workspace => workspace.path !== '/account').map((workspace) => (
