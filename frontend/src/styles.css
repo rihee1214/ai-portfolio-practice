@@ -135,3 +135,11 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   .workspace-page { padding-top: 16px; }
   .page-description { font-size: 14px; }
 }
+.browse-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 24px 0; align-items: end; }
+.browse-form input:not([type="checkbox"]), .browse-form select { width: 100%; min-width: 0; }
+.browse-form label { display: block; margin-bottom: 6px; }
+.browse-form .checkbox-label { display: flex; align-items: center; }
+.product-description { white-space: pre-wrap; overflow-wrap: anywhere; }
+.product-info { overflow-wrap: anywhere; }
+nav[aria-label="상품 페이지"] { display: flex; gap: 16px; margin: 24px 0; }
+@media (max-width: 600px) { .browse-form { grid-template-columns: 1fr; } #browse-option { max-width: 100%; } }

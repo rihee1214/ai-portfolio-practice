@@ -1,0 +1,18 @@
+{
+  "ports": [
+    "127.0.0.1|15432|57168",
+    "127.0.0.1|15433|57168"
+  ],
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1"
+  },
+  "afterMedia": 515,
+  "existingMedia": 421,
+  "existingDatabases": 128,
+  "baseline": "docs/work-items/evidence/P05-A-before.json",
+  "after": ".local-tools/p05-a-final-full-20261025/after.json",
+  "afterDatabases": 134,
+  "status": "passed"
+}

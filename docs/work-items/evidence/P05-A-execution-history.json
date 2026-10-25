@@ -1,0 +1,1094 @@
+[
+  {
+    "result": null,
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 102,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_2ab498f33487485aa3211006a53ff89c",
+      "D2_CREATED_DATABASE=d2_it_2ab498f33487485aa3211006a53ff89c"
+    ],
+    "path": ".local-tools/p05-a-api-red-20261025"
+  },
+  {
+    "result": null,
+    "summary": null,
+    "target": "REQUESTED_DATABASE=d2_it_696e491dab2849f8a1bf5a88bbbc1328",
+    "path": ".local-tools/p05-a-api-green-20261025"
+  },
+  {
+    "result": null,
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 102,
+        "failures": 0,
+        "errors": 4,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_16c801f4614047d4a4f1169f6062c195",
+      "D2_CREATED_DATABASE=d2_it_16c801f4614047d4a4f1169f6062c195"
+    ],
+    "path": ".local-tools/p05-a-api-green2-20261025"
+  },
+  {
+    "result": null,
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 102,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_aeb30335283447bf8df196e6b72fe374",
+      "D2_CREATED_DATABASE=d2_it_aeb30335283447bf8df196e6b72fe374"
+    ],
+    "path": ".local-tools/p05-a-browser-20261025"
+  },
+  {
+    "result": {
+      "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025",
+      "finished": "2026-10-25T13:29:40.4381469+09:00",
+      "error": "PostgreSQL integration verification failed; see D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-full-20261025\\db/maven.txt",
+      "started": "2026-10-25T13:27:11.4338163+09:00",
+      "scope": "Existing implementation through P05-A",
+      "preservation": "passed",
+      "status": "failed",
+      "commit": "6dba0911709faff29fc9fc5efa87bc454d2ab1eb",
+      "dirty": [
+        " M backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+        " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+        " M frontend/src/App.tsx",
+        " M frontend/src/layouts/SiteLayout.tsx",
+        " M frontend/src/pages/HomePage.tsx",
+        " M frontend/src/pages/StorePages.tsx",
+        " M frontend/src/styles.css",
+        " M frontend/tests/unit/HomePage.test.tsx",
+        " M verification/Preservation.ps1",
+        " M verification/required-browser.json",
+        " M verification/required-frontend.json",
+        " M verification/required-tests.json",
+        " M verify.ps1",
+        "?? backend/src/main/java/com/example/marketplace/catalog/api/Browse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcBrowse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/web/BrowseController.java",
+        "?? backend/src/main/resources/db/migration/V19__product_creation_time.sql",
+        "?? docs/work-items/P05-A.md",
+        "?? docs/work-items/evidence/P05-A-before.json",
+        "?? frontend/auth-e2e/browse.spec.ts",
+        "?? frontend/src/catalog/Browse.ts",
+        "?? frontend/src/components/ShopNamePreview.tsx",
+        "?? frontend/src/pages/BrowsePages.tsx",
+        "?? frontend/tests/unit/Browse.test.tsx"
+      ]
+    },
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 102,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_8892c1b7c88e4c7bbdd93ca0d67719fd",
+      "D2_CREATED_DATABASE=d2_it_8892c1b7c88e4c7bbdd93ca0d67719fd"
+    ],
+    "path": ".local-tools/p05-a-full-20261025"
+  },
+  {
+    "result": {
+      "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025",
+      "scope": "Existing implementation through P05-A",
+      "finished": "2026-10-25T13:32:52.8198911+09:00",
+      "preservation": "passed",
+      "error": "PostgreSQL integration verification failed; see D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-review-fixed-full-20261025\\db/maven.txt",
+      "status": "failed",
+      "started": "2026-10-25T13:30:46.0490487+09:00",
+      "commit": "6dba0911709faff29fc9fc5efa87bc454d2ab1eb",
+      "dirty": [
+        " M README.md",
+        " M backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+        " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+        " M docs/implementation-plan.md",
+        " M frontend/src/App.tsx",
+        " M frontend/src/layouts/SiteLayout.tsx",
+        " M frontend/src/pages/HomePage.tsx",
+        " M frontend/src/pages/StorePages.tsx",
+        " M frontend/src/styles.css",
+        " M frontend/tests/unit/HomePage.test.tsx",
+        " M verification/Preservation.ps1",
+        " M verification/required-browser.json",
+        " M verification/required-frontend.json",
+        " M verification/required-tests.json",
+        " M verify.ps1",
+        "?? backend/src/main/java/com/example/marketplace/catalog/api/Browse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcBrowse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/web/BrowseController.java",
+        "?? backend/src/main/resources/db/migration/V19__product_creation_time.sql",
+        "?? docs/work-items/P05-A-review.md",
+        "?? docs/work-items/P05-A.md",
+        "?? docs/work-items/evidence/P05-A-before.json",
+        "?? frontend/auth-e2e/browse.spec.ts",
+        "?? frontend/src/catalog/Browse.ts",
+        "?? frontend/src/components/ShopNamePreview.tsx",
+        "?? frontend/src/pages/BrowsePages.tsx",
+        "?? frontend/tests/unit/Browse.test.tsx"
+      ]
+    },
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 103,
+        "failures": 0,
+        "errors": 1,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_36febe12442a484097b1ff0d557600da",
+      "D2_CREATED_DATABASE=d2_it_36febe12442a484097b1ff0d557600da"
+    ],
+    "path": ".local-tools/p05-a-review-fixed-full-20261025"
+  },
+  {
+    "result": {
+      "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p05-a-final-full-20261025",
+      "junit": 240,
+      "preservation": "passed",
+      "status": "passed",
+      "scope": "Existing implementation through P05-A",
+      "frontendUnit": 102,
+      "commit": "6dba0911709faff29fc9fc5efa87bc454d2ab1eb",
+      "started": "2026-10-25T13:33:14.3111649+09:00",
+      "browser": 24,
+      "dirty": [
+        " M README.md",
+        " M backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+        " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+        " M docs/implementation-plan.md",
+        " M docs/shop-design.md",
+        " M frontend/src/App.tsx",
+        " M frontend/src/layouts/SiteLayout.tsx",
+        " M frontend/src/pages/HomePage.tsx",
+        " M frontend/src/pages/StorePages.tsx",
+        " M frontend/src/styles.css",
+        " M frontend/tests/unit/HomePage.test.tsx",
+        " M verification/Preservation.ps1",
+        " M verification/required-browser.json",
+        " M verification/required-frontend.json",
+        " M verification/required-tests.json",
+        " M verify.ps1",
+        "?? backend/src/main/java/com/example/marketplace/catalog/api/Browse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcBrowse.java",
+        "?? backend/src/main/java/com/example/marketplace/catalog/web/BrowseController.java",
+        "?? backend/src/main/resources/db/migration/V19__product_creation_time.sql",
+        "?? docs/work-items/P05-A-review.md",
+        "?? docs/work-items/P05-A.md",
+        "?? docs/work-items/evidence/P05-A-before.json",
+        "?? frontend/auth-e2e/browse.spec.ts",
+        "?? frontend/src/catalog/Browse.ts",
+        "?? frontend/src/components/ShopNamePreview.tsx",
+        "?? frontend/src/pages/BrowsePages.tsx",
+        "?? frontend/tests/unit/Browse.test.tsx"
+      ],
+      "finished": "2026-10-25T13:36:04.833905+09:00"
+    },
+    "summary": [
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ApiErrorHttpTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.DatabaseSettingsTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.ErrorHttpTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.HealthMvcTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdFilterTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.RequestIdHttpTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.api.UnhealthyMvcTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleArchitectureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.architecture.ModuleRulesTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AccountRulesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.AttemptWindowTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupRulesTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.SignupSecurityTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "surefire",
+        "name": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "phase": "failsafe",
+        "name": "com.example.marketplace.dbtest.PostgresJdbcIT",
+        "tests": 103,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "target": [
+      "REQUESTED_DATABASE=d2_it_63b65b250d924e2daaab976c2e4d58b1",
+      "D2_CREATED_DATABASE=d2_it_63b65b250d924e2daaab976c2e4d58b1"
+    ],
+    "path": ".local-tools/p05-a-final-full-20261025"
+  }
+]

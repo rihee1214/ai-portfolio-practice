@@ -1,3 +1,4 @@
+import { BrowseList } from './BrowsePages'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { Link, useParams } from 'react-router'
 import { useAuthStore } from '../auth/AuthContext'
@@ -74,7 +75,7 @@ export function PublicStorePage() {
       <h2>{state.store.name}</h2><p>{state.store.introduction}</p><h3>공개용 주소</h3><p>{state.store.address}</p>
       <h3>공지</h3><p>{state.store.notice || '등록된 공지가 없습니다.'}</p>
       <PublicMedia key={state.store.slug + ':' + attempt} kind="stores" slug={state.store.slug} />
-      <p>상품 목록은 준비 중입니다.</p>
+      <BrowseList key={state.store.slug} store={state.store.slug} />
     </> : state.error && <ApiErrorNotice error={state.error} />}
     <button onClick={() => retry(value => value + 1)}>매대 다시 확인</button><p><Link to="/">홈으로</Link></p>
   </section>

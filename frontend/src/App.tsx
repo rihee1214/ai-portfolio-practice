@@ -1,3 +1,4 @@
+import { BrowsePage, ProductDetailPage } from './pages/BrowsePages'
 import { BrowserRouter, Route, Routes, useLocation, matchPath } from 'react-router'
 import { SiteLayout } from './layouts/SiteLayout'
 import { WorkspaceLayout } from './layouts/WorkspaceLayout'
@@ -32,7 +33,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<SiteLayout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<HomePage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />

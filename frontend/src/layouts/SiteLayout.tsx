@@ -22,7 +22,7 @@ export function SiteLayout() {
       <header className="site-header">
         <Link className="brand" to="/" aria-label="모아마켓 홈">모아<span>마켓</span><span className="brand-dot">.</span></Link>
         <nav className="primary-nav" aria-label="주요 화면">
-          <NavLink to="/" end>둘러보기</NavLink>
+          <NavLink to="/" end>둘러보기</NavLink><NavLink to="/products">상품</NavLink>
           {workspaces.map((workspace) => <NavLink key={workspace.path} to={workspace.path}>{workspace.label}</NavLink>)}
         </nav>
         <nav className="account-nav" aria-label="회원 서비스">

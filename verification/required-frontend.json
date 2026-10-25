@@ -1,5 +1,5 @@
 {
-  "id": "FRONTEND-P01-P04-D",
+  "id": "FRONTEND-P01-P05-A",
   "tests": [
     "tests/unit/AccountPages.test.tsx#탈퇴는 비밀번호와 확인 체크 후 한 번 제출하고 입력을 화면에서 제거한다",
     "tests/unit/AccountPages.test.tsx#프로필을 불러와 편집하고 저장하며 세션 재확인 시 입력 내용을 즉시 숨긴다",
@@ -96,6 +96,12 @@
     "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /ADMIN/users도 개별 운영 권한으로 검사한다",
     "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /admin/sellers/도 개별 운영 권한으로 검사한다",
     "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /admin/orders/도 개별 운영 권한으로 검사한다",
-    "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /ADMIN/moderation/도 개별 운영 권한으로 검사한다"
+    "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /ADMIN/moderation/도 개별 운영 권한으로 검사한다",
+    "tests/unit/Browse.test.tsx#탐색 URL은 조건과 페이지를 복원하고 잘못된 값은 거부한다",
+    "tests/unit/Browse.test.tsx#탐색은 취소를 무시한 이전 응답도 새 결과를 덮지 못한다",
+    "tests/unit/Browse.test.tsx#탐색 실패와 재시도는 이전 결과를 지우고 잘못된 응답을 거부한다",
+    "tests/unit/Browse.test.tsx#공개 상세 응답은 옵션·가격·가용량의 범위를 검증한다",
+    "tests/unit/Browse.test.tsx#상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제거한다",
+    "tests/unit/Browse.test.tsx#카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 페이지를 초기화한다"
   ]
 }

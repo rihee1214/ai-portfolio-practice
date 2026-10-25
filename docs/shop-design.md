@@ -445,3 +445,9 @@ P04-C의 세부 계약은 [작업 기록](work-items/P04-C.md)을 따른다. Twe
 P04-D의 수동 재고 조정은 [세부 계약](work-items/P04-D.md)을 따른다. inventory_balance와 stock_movement는 inventory가 소유하고 catalog의 공개 SKU 권한 계약으로 판매자/운영자 및 대상 상태를 확인한다. onHand 절대값을 입력 version으로 조정하며 reserved 하한을 지킨다. 잔액 변경과 actor·사유·원인·전후값·버전 이력은 같은 거래에 저장한다. 전역 requestId의 성공 재전송은 현재 접근/쓰기 자격 확인 뒤 최초 결과를 반환하고 다른 내용은409다. 기존 SKU0보충 및 새 SKU 최초 조정 생성으로 타 모듈의 inventory 테이블 쓰기를 피한다. P04-D 당시 예약 생성·확정·해제·만료는 제외했으며 후속 P04-E 결과는 아래를 따른다.
 
 P04-E는 [예약 계약](work-items/P04-E.md)의 지정 범위 구현·검증·독립 검토를 완료했다. 신뢰된 애플리케이션에서 호출하는 Reservations가 예약·확정·명시적 해제·기한 도래 해제를 묶음 처리한다. 예약/주문항목 전역 키의 정렬된 거래 잠금 → SKU 문자열순 잔액 잠금 → 예약 ID순 잠금, DB 현재 시각의 기한 판정, REQUIRED 전파로 묶음/외부 거래 rollback을 보장한다. 예약 ID 전역 멱등성과 주문항목 유일성을 유지한다. 모든 변화는 잔액 version과 inventory_reservation_event에 원인 및 전후값으로 기록한다. 이 예약 이력은 기존 stock_movement 수동 조정 이력과 구분한다. 주문/결제 상태·구매 자격 확인, 기본15분 정책, PROCESSING/UNKNOWN 해제 보류와 스케줄러는 P08 호출자 책임이다. P04-E는 공개 HTTP/주문/결제를 추가하지 않는다.
+
+### P05-A 공개 탐색 구현 계약 (2026-10-25)
+
+[P05-A 작업 기록](work-items/P05-A.md)은 F06/G10 중 공개 홈·상품 목록/상세·매대 탐색에 한정한다. 기존 `/api/products`와 SKU 조회 계약을 유지하고, 탐색용 읽기 projection인 GET `/api/browse/products` 및 `/api/browse/products/{slug}`를 추가한다. 상품·카테고리·매대·소유자의 공개 자격과 활성 옵션/가용량을 같은 SQL statement snapshot에서 읽으며 재고를 예약하지 않는다. catalog→inventory Java 의존을 추가하지 않는다.
+
+검색 조건(q/category/store/minPrice/maxPrice/inStock/sort/page)은 URL에 유지한다. 목록 가격은 품절 옵션을 포함한 활성 옵션 최저가이며 활성 옵션이 없으면 판매 준비 중으로 표시한다. 최신 등록순은 V19의 상품 created_at과 UUID 동률 순서로 정의한다. 기존 상품의 과거 생성시각은 알 수 없어 마이그레이션 트랜잭션 시각으로 채운다. 기존 DB·데모에는 이번 작업에서 마이그레이션하지 않는다. 공개 조회의 대량 검색 성능·SPA 검색엔진 한계는 기존 설계의 운영 준비 제한이며 이번 범위에서 별도 검색엔진이나 주문·장바구니 기능을 추가하지 않는다.

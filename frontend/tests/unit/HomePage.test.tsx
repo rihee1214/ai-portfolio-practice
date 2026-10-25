@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test } from 'vitest'
-import HomePage from '../../src/pages/HomePage'
+import HomePage from '../../src/components/ShopNamePreview'
 
 test('매대 이름 입력이 미리보기에 반영되고 초기화된다', async () => {
   const user = userEvent.setup()

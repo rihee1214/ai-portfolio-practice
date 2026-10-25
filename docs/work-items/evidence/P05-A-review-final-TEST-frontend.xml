@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="102" failures="0" errors="0" time="14.1935665">
+    <testsuite name="tests/unit/AccountPages.test.tsx" timestamp="2026-10-25T04:38:51.601Z" hostname="DESKTOP-J01M2P5" tests="5" failures="0" errors="0" skipped="0" time="2.6919303">
+        <testcase classname="tests/unit/AccountPages.test.tsx" name="탈퇴는 비밀번호와 확인 체크 후 한 번 제출하고 입력을 화면에서 제거한다" time="0.5370784">
+        </testcase>
+        <testcase classname="tests/unit/AccountPages.test.tsx" name="프로필을 불러와 편집하고 저장하며 세션 재확인 시 입력 내용을 즉시 숨긴다" time="0.2275829">
+        </testcase>
+        <testcase classname="tests/unit/AccountPages.test.tsx" name="배송지 폼은 전체 필드를 제출하고 수정 폼으로 기존 값을 불러온다" time="0.896739">
+        </testcase>
+        <testcase classname="tests/unit/AccountPages.test.tsx" name="복구 요청은 이메일만 보내고 같은 접수 안내를 보여 준다" time="0.3762325">
+        </testcase>
+        <testcase classname="tests/unit/AccountPages.test.tsx" name="비밀번호 길이를 검증하고 실패 응답의 요청 ID를 표시하며 민감한 입력을 지운다" time="0.6530379">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/AccountStore.test.tsx" timestamp="2026-10-25T04:38:51.607Z" hostname="DESKTOP-J01M2P5" tests="6" failures="0" errors="0" skipped="0" time="0.0706762">
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="프로필 저장은 CSRF 선행 후 수정 허용 필드만 보내며 정규 응답을 다시 읽는다" time="0.0084368">
+        </testcase>
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="인증 재확인과 로그아웃 시작은 개인 정보를 즉시 삭제하며 늦은 응답도 무시한다" time="0.0015265">
+        </testcase>
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="세션 만료는 편집 데이터와 인증 상태를 지우고 요청 ID를 보존한다" time="0.0013615">
+        </testcase>
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="배송지 삭제 뒤 승격된 기본 배송지를 조회하고 실패한 변경은 재전송하지 않는다" time="0.0014941">
+        </testcase>
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="프로필과 배송지 응답은 필수 필드와 기본 배송지 불변식을 검증한다" time="0.0009736">
+        </testcase>
+        <testcase classname="tests/unit/AccountStore.test.tsx" name="화면 종료 뒤 도착한 CSRF는 변경 요청을 보내지 않고 늦은 저장 응답도 개인정보를 복원하지 않는다" time="0.055715">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ApiErrorPreview.test.tsx" timestamp="2026-10-25T04:38:51.609Z" hostname="DESKTOP-J01M2P5" tests="11" failures="0" errors="0" skipped="0" time="1.3221752">
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="개발 확인 화면에서 수동 요청 후 공통 오류와 요청 ID를 표시한다" time="0.1648258">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="unknown code은 원문이나 ID 없이 일반 안내로 표시한다" time="0.0611763">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="missing message은 원문이나 ID 없이 일반 안내로 표시한다" time="0.0766933">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="wrong status은 원문이나 ID 없이 일반 안내로 표시한다" time="0.0608687">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="array은 원문이나 ID 없이 일반 안내로 표시한다" time="0.0761447">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="서버 임의 메시지와 잘못된 ID는 화면에 노출하지 않는다" time="0.0593298">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="HTML 실패 후 재시도는 새 ID만 표시한다" time="0.1373135">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="broken JSON 실패 후 재시도는 새 ID만 표시한다" time="0.1353537">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="network 실패 후 재시도는 새 ID만 표시한다" time="0.1369037">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="재요청·취소·화면 해제 후 늦은 응답을 반영하지 않는다" time="0.3051428">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorPreview.test.tsx" name="성공 응답은 오류나 이전 ID를 표시하지 않는다" time="0.1070511">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ApiErrorView.test.tsx" timestamp="2026-10-25T04:38:51.611Z" hostname="DESKTOP-J01M2P5" tests="22" failures="0" errors="0" skipped="0" time="0.0081649">
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="400 INVALID_REQUEST는 고정 안내와 요청 ID를 반환한다" time="0.0027118">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="401 AUTHENTICATION_REQUIRED는 고정 안내와 요청 ID를 반환한다" time="0.0003246">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="403 FORBIDDEN는 고정 안내와 요청 ID를 반환한다" time="0.0002923">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="404 NOT_FOUND는 고정 안내와 요청 ID를 반환한다" time="0.0002582">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="405 METHOD_NOT_ALLOWED는 고정 안내와 요청 ID를 반환한다" time="0.0002305">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="406 NOT_ACCEPTABLE는 고정 안내와 요청 ID를 반환한다" time="0.0002019">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="409 CONFLICT는 고정 안내와 요청 ID를 반환한다" time="0.0001926">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="415 UNSUPPORTED_MEDIA_TYPE는 고정 안내와 요청 ID를 반환한다" time="0.0001591">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="429 RATE_LIMITED는 고정 안내와 요청 ID를 반환한다" time="0.0002234">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="418 REQUEST_FAILED는 고정 안내와 요청 ID를 반환한다" time="0.0003622">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="500 INTERNAL_ERROR는 고정 안내와 요청 ID를 반환한다" time="0.0002174">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="503 INTERNAL_ERROR는 고정 안내와 요청 ID를 반환한다" time="0.0001454">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 body는 일반 오류이고 ID가 없다: null" time="0.0001753">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 body는 일반 오류이고 ID가 없다: {}" time="0.0001221">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 body는 일반 오류이고 ID가 없다: {&quot;code&quot;:&quot;NOT_FOUND&quot;,&quot;message&quot;:&quot;&quot;}" time="0.0001406">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 body는 일반 오류이고 ID가 없다: {&quot;code&quot;:&quot;NOT_FOUND&quot;,&quot;message&quot;:&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;}" time="0.0001512">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 ID undefined는 생략한다" time="0.0001978">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 ID 42는 생략한다" time="0.0001344">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 ID xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx는 생략한다" time="0.0001304">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 ID 11111111-1111-1111-8111-111111111111는 생략한다" time="0.0000907">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="잘못된 ID &lt;b&gt;id&lt;/b&gt;는 생략한다" time="0.0001189">
+        </testcase>
+        <testcase classname="tests/unit/ApiErrorView.test.tsx" name="성공·취소는 오류가 아니고 잘못된 성공 JSON은 일반 안내다" time="0.0002942">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/AuthStore.test.tsx" timestamp="2026-10-25T04:38:51.614Z" hostname="DESKTOP-J01M2P5" tests="6" failures="0" errors="0" skipped="0" time="0.0796503">
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="로그인 성공 뒤 토큰 재발급과 me를 조회하고 로그아웃 시작 즉시 개인 상태를 제거한다" time="0.0089026">
+        </testcase>
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="늦은 me 응답은 로그아웃 이후 개인 정보를 복원하지 않는다" time="0.0006506">
+        </testcase>
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="401·네트워크 오류는 개인 정보를 표시하지 않으며 잘못된 성공 응답을 거부한다" time="0.0010627">
+        </testcase>
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="탈퇴는 본인 API에 CSRF를 보내고 개인 상태를 제거한다" time="0.0010114">
+        </testcase>
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="탈퇴 오류를 자동 재시도하지 않고 늦은 성공 응답은 취소 뒤 표시하지 않는다" time="0.0658218">
+        </testcase>
+        <testcase classname="tests/unit/AuthStore.test.tsx" name="변경 요청은 CSRF를 먼저 받고 실패한 POST를 자동 재시도하지 않는다" time="0.0008663">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/Browse.test.tsx" timestamp="2026-10-25T04:38:51.615Z" hostname="DESKTOP-J01M2P5" tests="6" failures="0" errors="0" skipped="0" time="0.9041075">
+        <testcase classname="tests/unit/Browse.test.tsx" name="탐색 URL은 조건과 페이지를 복원하고 잘못된 값은 거부한다" time="0.0041969">
+        </testcase>
+        <testcase classname="tests/unit/Browse.test.tsx" name="탐색은 취소를 무시한 이전 응답도 새 결과를 덮지 못한다" time="0.0015224">
+        </testcase>
+        <testcase classname="tests/unit/Browse.test.tsx" name="탐색 실패와 재시도는 이전 결과를 지우고 잘못된 응답을 거부한다" time="0.0009314">
+        </testcase>
+        <testcase classname="tests/unit/Browse.test.tsx" name="공개 상세 응답은 옵션·가격·가용량의 범위를 검증한다" time="0.0004593">
+        </testcase>
+        <testcase classname="tests/unit/Browse.test.tsx" name="상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제거한다" time="0.4556101">
+        </testcase>
+        <testcase classname="tests/unit/Browse.test.tsx" name="카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 페이지를 초기화한다" time="0.4401623">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/Catalog.test.tsx" timestamp="2026-10-25T04:38:51.616Z" hostname="DESKTOP-J01M2P5" tests="8" failures="0" errors="0" skipped="0" time="3.1134775">
+        <testcase classname="tests/unit/Catalog.test.tsx" name="카테고리 입력은 서버와 같은 문자 기준으로 emoji 80자를 허용한다" time="2.4746604">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="저장된 여러 줄 설명과 선택창의 레이블 이름은 내용에 따라 바뀌지 않는다" time="0.0619861">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="운영 가능한 판매자의 상품 공간에 등록 폼을 표시한다" time="0.029633">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="상품 수정은 버전과 CSRF를 보내고 409를 자동 재시도하지 않는다" time="0.0746877">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="카테고리 저장 중 로그아웃하면 늦은 성공 응답을 폐기한다" time="0.150728">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="상품을 선택하면 기본 SKU 가격과 판매 여부를 관리할 수 있다" time="0.1361462">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="선택한 상품에 이미지 업로드와 대체 텍스트 입력이 있다" time="0.076881">
+        </testcase>
+        <testcase classname="tests/unit/Catalog.test.tsx" name="상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있다" time="0.10747">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/HealthPanel.test.tsx" timestamp="2026-10-25T04:38:51.618Z" hostname="DESKTOP-J01M2P5" tests="11" failures="0" errors="0" skipped="0" time="1.4024298">
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="초기 상태는 요청하지 않고 키보드로 시작하면 로딩 후 정상 상태를 표시한다" time="0.2421311">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="503 DOWN 오류를 안내하고 재시도하면 회복한다" time="0.1151945">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="500 오류를 안내하고 재시도하면 회복한다" time="0.1065485">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="잘못된 스키마 오류를 안내하고 재시도하면 회복한다" time="0.0591317">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="HTML 오류를 안내하고 재시도하면 회복한다" time="0.1064443">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="깨진 JSON 오류를 안내하고 재시도하면 회복한다" time="0.1218598">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="통신 거절을 안내하고 재시도할 수 있다" time="0.1204101">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="이전 응답이 로딩 중 도착해도 최신 상태를 덮어쓰지 않는다" time="0.1208206">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="이전 응답이 최신 성공 후 도착해도 최신 상태를 덮어쓰지 않는다" time="0.1076384">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="취소 후 늦은 응답을 무시하고 새 요청은 성공한다" time="0.1666856">
+        </testcase>
+        <testcase classname="tests/unit/HealthPanel.test.tsx" name="화면 해제 시 요청을 중단하고 이전 응답이 새 화면에 반영되지 않는다" time="0.1342674">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/HomePage.test.tsx" timestamp="2026-10-25T04:38:51.619Z" hostname="DESKTOP-J01M2P5" tests="3" failures="0" errors="0" skipped="0" time="1.100499">
+        <testcase classname="tests/unit/HomePage.test.tsx" name="매대 이름 입력이 미리보기에 반영되고 초기화된다" time="0.3529231">
+        </testcase>
+        <testcase classname="tests/unit/HomePage.test.tsx" name="공백 이름은 안내로 표시하고 사용자 입력은 30자로 제한한다" time="0.5754188">
+        </testcase>
+        <testcase classname="tests/unit/HomePage.test.tsx" name="다시 마운트하면 저장되지 않은 이름이 초기화된다" time="0.1709573">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/Inventory.test.tsx" timestamp="2026-10-25T04:38:51.620Z" hostname="DESKTOP-J01M2P5" tests="5" failures="0" errors="0" skipped="0" time="1.8779615">
+        <testcase classname="tests/unit/Inventory.test.tsx" name="재고 응답 유실 후 같은 의도는 같은 키로 재전송하고 변경된 의도는 새 키를 쓴다" time="0.7390205">
+        </testcase>
+        <testcase classname="tests/unit/Inventory.test.tsx" name="재고 저장 401면 기존 재고 폼과 회원 상태를 비운다" time="0.348847">
+        </testcase>
+        <testcase classname="tests/unit/Inventory.test.tsx" name="재고 저장 403면 기존 재고 폼과 회원 상태를 비운다" time="0.3337441">
+        </testcase>
+        <testcase classname="tests/unit/Inventory.test.tsx" name="재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다" time="0.3202227">
+        </testcase>
+        <testcase classname="tests/unit/Inventory.test.tsx" name="다른 상품을 선택한 뒤 도착한 이전 재고 응답을 표시하지 않는다" time="0.1349714">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/MediaStore.test.tsx" timestamp="2026-10-25T04:38:51.621Z" hostname="DESKTOP-J01M2P5" tests="2" failures="0" errors="0" skipped="0" time="0.1613479">
+        <testcase classname="tests/unit/MediaStore.test.tsx" name="이미지 저장에서 401면 회원과 기존 이미지 목록을 폐기한다" time="0.0844686">
+        </testcase>
+        <testcase classname="tests/unit/MediaStore.test.tsx" name="이미지 저장에서 403면 회원과 기존 이미지 목록을 폐기한다" time="0.0756152">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/SellerApplications.test.tsx" timestamp="2026-10-25T04:38:51.622Z" hostname="DESKTOP-J01M2P5" tests="3" failures="0" errors="0" skipped="0" time="0.6935994">
+        <testcase classname="tests/unit/SellerApplications.test.tsx" name="심사 실패는 요청 ID와 함께 표시하며 POST를 자동 재전송하지 않는다" time="0.0818851">
+        </testcase>
+        <testcase classname="tests/unit/SellerApplications.test.tsx" name="승인 전 회원의 모의 판매 신청은 CSRF와 함께 본인 신청 API로 전달된다" time="0.5855527">
+        </testcase>
+        <testcase classname="tests/unit/SellerApplications.test.tsx" name="로그인 상태 재확인 중 개인 신청을 숨기고 늦은 목록 응답을 무시한다" time="0.025005">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/StoreEditor.test.tsx" timestamp="2026-10-25T04:38:51.623Z" hostname="DESKTOP-J01M2P5" tests="3" failures="0" errors="0" skipped="0" time="0.2607651">
+        <testcase classname="tests/unit/StoreEditor.test.tsx" name="공개 매대 경로 변경 후 이전의 늦은 성공 응답은 404 화면을 덮지 않는다" time="0.1851161">
+        </testcase>
+        <testcase classname="tests/unit/StoreEditor.test.tsx" name="매대 생성은 CSRF와 버전0, 수정은 읽은 버전을 보내고 충돌을 자동 재시도하지 않는다" time="0.0724005">
+        </testcase>
+        <testcase classname="tests/unit/StoreEditor.test.tsx" name="세션 변경 후 늦게 도착한 유효한 매대 정보는 복원되지 않는다" time="0.001923">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/StoreLifecycle.test.tsx" timestamp="2026-10-25T04:38:51.624Z" hostname="DESKTOP-J01M2P5" tests="2" failures="0" errors="0" skipped="0" time="0.2192229">
+        <testcase classname="tests/unit/StoreLifecycle.test.tsx" name="운영 조치는 읽은 버전과 CSRF를 보내고 충돌은 자동 재전송하지 않는다" time="0.064092">
+        </testcase>
+        <testcase classname="tests/unit/StoreLifecycle.test.tsx" name="폐점 요청 뒤 세션이 사라지면 늦은 응답으로 매대 정보를 복원하지 않는다" time="0.1539422">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/WorkspaceAccess.test.tsx" timestamp="2026-10-25T04:38:51.624Z" hostname="DESKTOP-J01M2P5" tests="9" failures="0" errors="0" skipped="0" time="0.287559">
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="권한 확인 중 숨김, 서버 허용 후 표시, 세션 재확인 시 즉시 숨김" time="0.1257386">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="역할 ADMIN이어도 개별 권한403을 표시하고 업무를 숨긴다" time="0.0208648">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="로그아웃 뒤 도착한 허용 응답은 보호 업무를 복원하지 않는다" time="0.0183588">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /admin/users도 개별 운영 권한으로 검사한다" time="0.0271173">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /admin/users/도 개별 운영 권한으로 검사한다" time="0.0241784">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /ADMIN/users도 개별 운영 권한으로 검사한다" time="0.0172173">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /admin/sellers/도 개별 운영 권한으로 검사한다" time="0.0219128">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /admin/orders/도 개별 운영 권한으로 검사한다" time="0.0150905">
+        </testcase>
+        <testcase classname="tests/unit/WorkspaceAccess.test.tsx" name="라우터가 허용한 변형 경로 /ADMIN/moderation/도 개별 운영 권한으로 검사한다" time="0.0157883">
+        </testcase>
+    </testsuite>
+</testsuites>
