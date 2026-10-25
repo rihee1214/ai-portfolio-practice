@@ -1,0 +1,7 @@
+{
+  "manifest": "P05-B-failure-manifest.json",
+  "status": "passed",
+  "files": 180,
+  "priorManifest": "P05-A-commit-failure-manifest.json",
+  "priorFiles": 22
+}

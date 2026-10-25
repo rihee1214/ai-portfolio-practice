@@ -1,5 +1,8 @@
+import AuthProvider from './auth/AuthProvider'
+import CartProvider from './cart/CartProvider'
+import { CartPage } from './pages/CartPages'
 import { BrowsePage, ProductDetailPage } from './pages/BrowsePages'
-import { BrowserRouter, Route, Routes, useLocation, matchPath } from 'react-router'
+import { BrowserRouter, Route, Routes, useLocation, matchPath, Outlet } from 'react-router'
 import { SiteLayout } from './layouts/SiteLayout'
 import { WorkspaceLayout } from './layouts/WorkspaceLayout'
 import { workspaces } from './navigation'
@@ -28,12 +31,14 @@ function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   </WorkspaceAccess>
 }
 
+function ShoppingProviders() { return <AuthProvider><CartProvider><Outlet /></CartProvider></AuthProvider> }
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<SiteLayout />}>
-          <Route index element={<HomePage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
+        <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
+          <Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />
@@ -58,6 +63,7 @@ export default function App() {
               ))}
             </Route>
           ))}
+          </Route>
           </Route>
           {import.meta.env.DEV && <Route path="/dev/api-errors" element={<ApiErrorPreview />} />}
           <Route path="*" element={<NotFoundPage />} />

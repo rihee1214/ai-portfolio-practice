@@ -1,5 +1,5 @@
 {
-  "id": "FRONTEND-P01-P05-A",
+  "id": "FRONTEND-P01-P05-B",
   "tests": [
     "tests/unit/AccountPages.test.tsx#탈퇴는 비밀번호와 확인 체크 후 한 번 제출하고 입력을 화면에서 제거한다",
     "tests/unit/AccountPages.test.tsx#프로필을 불러와 편집하고 저장하며 세션 재확인 시 입력 내용을 즉시 숨긴다",
@@ -102,6 +102,18 @@
     "tests/unit/Browse.test.tsx#탐색 실패와 재시도는 이전 결과를 지우고 잘못된 응답을 거부한다",
     "tests/unit/Browse.test.tsx#공개 상세 응답은 옵션·가격·가용량의 범위를 검증한다",
     "tests/unit/Browse.test.tsx#상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제거한다",
-    "tests/unit/Browse.test.tsx#카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 페이지를 초기화한다"
+    "tests/unit/Browse.test.tsx#카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 페이지를 초기화한다",
+    "tests/unit/Cart.test.tsx#방문자 품목은 SKU와 수량만 보존하고 잘못된 저장값과 상한을 거부한다",
+    "tests/unit/Cart.test.tsx#방문자 병합은 확인 전 보존하고 재시도 식별자를 다시 사용한다",
+    "tests/unit/Cart.test.tsx#저장 거부와 병합 확인 정리 실패는 복구 데이터를 없애지 않는다",
+    "tests/unit/Cart.test.tsx#방문자 장바구니는 100종을 넘기지 않고 중복 저장량을 99로 정규화한다",
+    "tests/unit/Cart.test.tsx#로그인 병합 응답 유실은 방문자 기록을 유지하고 같은 요청으로 복구한다",
+    "tests/unit/Cart.test.tsx#로그아웃 뒤 늦게 도착한 회원 장바구니는 표시되거나 로컬 저장되지 않는다",
+    "tests/unit/CartPages.test.tsx#장바구니 화면은 최신 금액·재고 부족·비판매를 안내하고 수량과 삭제를 반영한다",
+    "tests/unit/Cart.test.tsx#동시 방문자 담기는 잠금 안에서 최신 저장 수량을 읽어 합산한다",
+    "tests/unit/Cart.test.tsx#회원 조회는 서버 쿠키 계정이 바뀌어도 예상 계정 밖의 품목을 받지 않는다",
+    "tests/unit/Cart.test.tsx#품목 삭제 뒤 journal 삭제만 실패해도 동일 요청으로 복구한다",
+    "tests/unit/Cart.test.tsx#다른 계정의 pending 병합 충돌은 journal과 방문자 품목을 보존한다",
+    "tests/unit/Cart.test.tsx#A에서 B로 전환한 뒤 늦은 A 응답은 B 장바구니를 덮지 않는다"
   ]
 }

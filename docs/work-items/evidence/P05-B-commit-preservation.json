@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "currentDatabases": 148,
+  "after": ".local-tools/p05-b-commit-final-20261025/after.json",
+  "currentMedia": 723,
+  "oldMedia": 675,
+  "oldDatabases": 145,
+  "hashes": {
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1",
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "before": ".local-tools/p05-b-commit-closeout-20261025/before.json"
+}

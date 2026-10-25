@@ -1,0 +1,22 @@
+{
+  "baseline": "P05-B-before.json",
+  "currentMedia": 657,
+  "currentDatabases": 144,
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1"
+  },
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1",
+    "68d17431a4b1 moa-market-local-db-test-1"
+  ],
+  "status": "passed",
+  "oldMedia": 551,
+  "oldDatabases": 136,
+  "ports": [
+    "127.0.0.1|15432|57168",
+    "127.0.0.1|15433|57168"
+  ],
+  "after": ".local-tools/p05-b-auth-fixture-full-20261025/after.json"
+}

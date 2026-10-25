@@ -1,5 +1,5 @@
 {
-  "id": "BROWSER-P01-P05-A",
+  "id": "BROWSER-P01-P05-B",
   "tests": [
     "desktop#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
     "mobile#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
@@ -24,6 +24,10 @@
     "desktop#store.spec.ts:판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침",
     "mobile#store.spec.ts:판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침",
     "desktop#browse.spec.ts:공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다",
-    "mobile#browse.spec.ts:공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다"
+    "mobile#browse.spec.ts:공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다",
+    "desktop#cart.spec.ts:방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
+    "mobile#cart.spec.ts:방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
+    "desktop#cart.spec.ts:두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다",
+    "mobile#cart.spec.ts:두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다"
   ]
 }

@@ -451,3 +451,13 @@ P04-E는 [예약 계약](work-items/P04-E.md)의 지정 범위 구현·검증·�
 [P05-A 작업 기록](work-items/P05-A.md)은 F06/G10 중 공개 홈·상품 목록/상세·매대 탐색에 한정한다. 기존 `/api/products`와 SKU 조회 계약을 유지하고, 탐색용 읽기 projection인 GET `/api/browse/products` 및 `/api/browse/products/{slug}`를 추가한다. 상품·카테고리·매대·소유자의 공개 자격과 활성 옵션/가용량을 같은 SQL statement snapshot에서 읽으며 재고를 예약하지 않는다. catalog→inventory Java 의존을 추가하지 않는다.
 
 검색 조건(q/category/store/minPrice/maxPrice/inStock/sort/page)은 URL에 유지한다. 목록 가격은 품절 옵션을 포함한 활성 옵션 최저가이며 활성 옵션이 없으면 판매 준비 중으로 표시한다. 최신 등록순은 V19의 상품 created_at과 UUID 동률 순서로 정의한다. 기존 상품의 과거 생성시각은 알 수 없어 마이그레이션 트랜잭션 시각으로 채운다. 기존 DB·데모에는 이번 작업에서 마이그레이션하지 않는다. 공개 조회의 대량 검색 성능·SPA 검색엔진 한계는 기존 설계의 운영 준비 제한이며 이번 범위에서 별도 검색엔진이나 주문·장바구니 기능을 추가하지 않는다.
+
+### P05-B 장바구니 구현 계약 (2026-10-25)
+
+[P05-B 작업 기록](work-items/P05-B.md)은 F07의 방문자/회원 CRUD와 로그인 병합에 한정한다. 방문자 품목 저장에는 SKU UUID와 수량만 포함하고, 별도 복구 journal에는 무작위 요청 ID와 같은 품목 snapshot만 둔다. Web Locks로 탭 간 저장·병합을 직렬화하며 서버 성공 확인 후 정리한다. 응답 유실이나 부분 정리 실패는 같은 요청 ID로 재시도한다.
+
+회원 cart/item은 회원 PK와 SKU 복합키, version, 수량 제약을 사용한다. SKU당1~99, 최대100종이며 직접 수정은 절대 수량(0은 삭제), 병합은 합산99 상한이다. 전역 병합 ID는 최초 회원·정규화 내용과 결합하며 동일 재시도는 한 번만 반영한다. 다른 회원/내용 재사용과 오래된 version은409, 품목 상한 초과는 전체 rollback이다. SKU FK는 두지 않아 사라진 상품도 비판매 항목으로 확인·삭제할 수 있다.
+
+모든 회원 API는 principal과 예상 owner가 같은지 확인하고 identity BUYER 정책을 적용한다. 변경은 회원→cart 잠금 순서로 정지·탈퇴와 직렬화한다. GET /api/cart?owner=, PUT /api/cart/items/{sku}(owner/quantity/version), DELETE /api/cart?owner=&version=, POST /api/cart/merge(owner/requestId/items)이며 익명 미리보기 POST /api/cart/preview(items)에도 CSRF가 필요하다. 수량과 version은 정확한 정수만 허용한다. 응답은 no-store이며 클라이언트는 인증 변경 중 기존 회원 품목을 숨기고 늦은 응답을 폐기한다.
+
+현재 공개 정보는 catalog Browse API로 조회한다. 공개 자격을 잃은 SKU는 detail=null로 이름·가격·매대 정보를 노출하지 않으며, 판매 가능 항목은 최신 가격·품절·재고 부족을 표시한다. 장바구니는 가격 확정이나 재고 예약이 아니다. 재고·주문·결제·찜·판매자별 묶음 및 P05-C는 이번 범위에 포함하지 않는다.

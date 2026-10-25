@@ -1,0 +1,8 @@
+{
+  "newInputInResponse": false,
+  "falsePositive": true,
+  "originalInvalidInput": "bad",
+  "note": "결정적 문자열 충돌 재현. 실패 실행의 실제 응답 본문은 assertion에 저장되지 않아 해당 requestId 자체를 복원한 증거는 아니다.",
+  "newInvalidInput": "invalid-email-input",
+  "response": "{\"code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"로그인이 필요합니다.\",\"requestId\":\"00000bad-0000-4000-8000-000000000001\"}"
+}

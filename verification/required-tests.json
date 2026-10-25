@@ -262,7 +262,10 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#browseSearchFiltersSortAndPages",
       "com.example.marketplace.dbtest.PostgresJdbcIT#browseVisibilityAndDetailAvailability",
       "com.example.marketplace.dbtest.PostgresJdbcIT#browseRejectsInvalidQueriesAndIsReadOnly",
-      "com.example.marketplace.dbtest.PostgresJdbcIT#browseDistinctFiltersSortAndOptionPrices"
+      "com.example.marketplace.dbtest.PostgresJdbcIT#browseDistinctFiltersSortAndOptionPrices",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#cartOwnershipCrudAndPublicAvailability",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#cartMergeReplayAndConcurrentUpdates",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#cartCapacityRollbackAndSuspension"
     ]
   },
   {
@@ -318,5 +321,12 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseOrderItemKeysAreSerialized"
     ],
     "id": "P04-E-10"
+  },
+  {
+    "id": "com.example.marketplace.cart.CartRulesTest",
+    "tests": [
+      "com.example.marketplace.cart.CartRulesTest#quantitiesAndCapacityRejectInvalidInputs",
+      "com.example.marketplace.cart.CartRulesTest#duplicateSkuQuantitiesSaturateAndSortDeterministically"
+    ]
   }
 ]

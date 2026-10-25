@@ -1,0 +1,47 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run --reporter=default --reporter=junit --outputFile=D:\Workspace\ai-portfolio-practice\.local-tools\p05-b-review-commit-final-20261025/TEST-frontend.xml
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ✓ tests/unit/Cart.test.tsx (11 tests) 104ms
+ ✓ tests/unit/AccountStore.test.tsx (6 tests) 83ms
+ ✓ tests/unit/MediaStore.test.tsx (2 tests) 158ms
+ ✓ tests/unit/StoreLifecycle.test.tsx (2 tests) 217ms
+Not implemented: Window's scrollTo() method
+ ✓ tests/unit/StoreEditor.test.tsx (3 tests) 302ms
+ ✓ tests/unit/WorkspaceAccess.test.tsx (9 tests) 400ms
+ ✓ tests/unit/CartPages.test.tsx (1 test) 441ms
+   ✓ 장바구니 화면은 최신 금액·재고 부족·비판매를 안내하고 수량과 삭제를 반영한다 441ms
+ ✓ tests/unit/SellerApplications.test.tsx (3 tests) 758ms
+   ✓ 승인 전 회원의 모의 판매 신청은 CSRF와 함께 본인 신청 API로 전달된다 650ms
+ ✓ tests/unit/Browse.test.tsx (6 tests) 978ms
+   ✓ 상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제거한다 554ms
+   ✓ 카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 페이지를 초기화한다 415ms
+ ✓ tests/unit/HomePage.test.tsx (3 tests) 1123ms
+   ✓ 매대 이름 입력이 미리보기에 반영되고 초기화된다 385ms
+   ✓ 공백 이름은 안내로 표시하고 사용자 입력은 30자로 제한한다 583ms
+ ✓ tests/unit/ApiErrorView.test.tsx (22 tests) 5ms
+ ✓ tests/unit/AuthStore.test.tsx (6 tests) 75ms
+ ✓ tests/unit/HealthPanel.test.tsx (11 tests) 1466ms
+ ✓ tests/unit/ApiErrorPreview.test.tsx (11 tests) 1244ms
+ ✓ tests/unit/Inventory.test.tsx (5 tests) 1859ms
+   ✓ 재고 응답 유실 후 같은 의도는 같은 키로 재전송하고 변경된 의도는 새 키를 쓴다 761ms
+   ✓ 재고 저장 401면 기존 재고 폼과 회원 상태를 비운다 305ms
+   ✓ 재고 저장 403면 기존 재고 폼과 회원 상태를 비운다 319ms
+   ✓ 재고 저장 성공 후 갱신된 입력 폼이 하나만 남는다 305ms
+ ✓ tests/unit/AccountPages.test.tsx (5 tests) 2709ms
+   ✓ 탈퇴는 비밀번호와 확인 체크 후 한 번 제출하고 입력을 화면에서 제거한다 371ms
+   ✓ 배송지 폼은 전체 필드를 제출하고 수정 폼으로 기존 값을 불러온다 901ms
+   ✓ 복구 요청은 이메일만 보내고 같은 접수 안내를 보여 준다 412ms
+   ✓ 비밀번호 길이를 검증하고 실패 응답의 요청 ID를 표시하며 민감한 입력을 지운다 807ms
+ ✓ tests/unit/Catalog.test.tsx (8 tests) 3212ms
+   ✓ 카테고리 입력은 서버와 같은 문자 기준으로 emoji 80자를 허용한다 2489ms
+
+ Test Files  17 passed (17)
+      Tests  114 passed (114)
+   Start at  14:44:04
+   Duration  5.14s (environment 48%, tests 38%, setup 9%, import 4%, transform 1%)
+
+JUNIT report written to D:/Workspace/ai-portfolio-practice/.local-tools/p05-b-review-commit-final-20261025/TEST-frontend.xml

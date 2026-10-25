@@ -8,4 +8,5 @@ public interface Browse {
     record Detail(Item product,List<Offer> offers) { }
     Products.Page<Item> search(Query query);
     Detail detail(String slug);
+    Detail forSku(UUID sku);
 }

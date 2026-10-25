@@ -1,10 +1,10 @@
 package com.example.marketplace.identity.api;
 
 public enum AccessArea {
-    SELLER, ADMIN, ACCOUNTS, CONTENT, SUPPORT, SETTLEMENTS, SYSTEM;
+    BUYER, SELLER, ADMIN, ACCOUNTS, CONTENT, SUPPORT, SETTLEMENTS, SYSTEM;
 
-    public String role() { return this == SELLER ? "SELLER" : "ADMIN"; }
-    public boolean permissionRequired() { return this != SELLER && this != ADMIN; }
+    public String role() { return this == BUYER ? "BUYER" : this == SELLER ? "SELLER" : "ADMIN"; }
+    public boolean permissionRequired() { return this != BUYER && this != SELLER && this != ADMIN; }
     public static AccessArea forAdminPath(String path) {
         if ("/api/admin/access".equals(path)) { return ADMIN; }
         for (AccessArea area : values()) {

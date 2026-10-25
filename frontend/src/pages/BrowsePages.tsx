@@ -1,3 +1,4 @@
+import { AddToCart } from './CartPages'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { BrowseResource, detailValid, pageValid, parseQuery, queryString, slugValid, type Item, type Query } from '../catalog/Browse'
@@ -104,7 +105,7 @@ export function ProductDetailPage() {
       <p className="product-description">{data.product.description}</p>
       {offer ? <><label htmlFor="browse-option">상품 옵션</label><select id="browse-option" value={offer.id} onChange={e => select(e.target.value)}>
         {data.offers.map(o => <option key={o.id} value={o.id}>{o.options.length ? o.options.map(x => x.name + ': ' + x.value).join(' / ') : '기본 상품'} · {price(o.price)}{o.available === 0 ? ' · 품절' : ''}</option>)}
-      </select><p>선택 가격: {price(offer.price)}</p><p>{offer.available === 0 ? '품절' : '가용 수량: ' + offer.available}</p><p>재고는 조회 시점의 수량입니다.</p></> : <p>판매 준비 중</p>}
+      </select><p>선택 가격: {price(offer.price)}</p><p>{offer.available === 0 ? '품절' : '가용 수량: ' + offer.available}</p><p>재고는 조회 시점의 수량입니다.</p><AddToCart sku={offer.id} available={offer.available} /></> : <p>판매 준비 중</p>}
     </>}
   </section>
 }

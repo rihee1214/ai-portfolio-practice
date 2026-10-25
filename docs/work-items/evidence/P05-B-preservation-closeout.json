@@ -1,0 +1,14 @@
+{
+  "after": ".local-tools/p05-b-review-final-20261025/after.json",
+  "hashes": {
+    "demo:app_42326df08aff4829b301a47e40379368": "CA2B1EB67642E28EE51D10E1E2716F0608892A8D5A1D576344145293482378D1",
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "currentMedia": 675,
+  "oldDatabases": 136,
+  "oldMedia": 551,
+  "status": "passed",
+  "baseline": "P05-B-before.json",
+  "currentDatabases": 145
+}

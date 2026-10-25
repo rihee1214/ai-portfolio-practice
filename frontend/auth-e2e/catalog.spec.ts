@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test'
+import { test, expect, type Page, type Locator } from '@playwright/test'
 import { resolve } from 'node:path'
 
 async function login(page: Page, email: string) {
@@ -9,6 +9,18 @@ async function login(page: Page, email: string) {
   await page.getByRole('button', { name: '로그인', exact: true }).click()
   await expect(page.getByText('로그인되었습니다.', { exact: true })).toBeVisible()
 }
+async function findOnPages(page: Page, target: Locator, label: string) {
+  const pager = page.getByRole('navigation', { name: label, exact: true })
+  for (let count = 0; count < 100; count++) {
+    if (await target.count()) break
+    const next = pager.getByRole('button', { name: '다음', exact: true })
+    if (await next.isDisabled()) break
+    const previous = await pager.locator('span').innerText()
+    await next.click()
+    await expect(pager.locator('span')).not.toHaveText(previous)
+  }
+  await expect(target).toHaveCount(1)
+}
 test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다', async ({ page, browser }, info) => {
   test.setTimeout(60000)
   page.setDefaultTimeout(10000)
@@ -18,8 +30,28 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
   const slug = 'p04-browser-product-' + suffix
   await login(page, 'c-admin-' + suffix + '@example.com')
   await page.goto('/admin/catalog')
+  await expect(page.getByLabel('카테고리 이름')).toBeEnabled()
+  // Seed this isolated DB explicitly; other test fixtures may leave fewer than 21 categories.
+  const csrf = await (await page.request.get('/api/auth/csrf')).json()
+  for (let index = 0; index < 21; index++) {
+    const created = await page.request.post('/api/admin/content/categories', {
+      headers: { [csrf.headerName]: csrf.token },
+      data: { name: 'P05-B paging ' + suffix + ' ' + index, active: true, version: 0 },
+    })
+    expect(created.status()).toBe(201)
+  }
+  await page.getByRole('button', { name: '목록 다시 확인', exact: true }).click()
+  await expect(page.getByLabel('카테고리 이름')).toBeEnabled()
+  // Prove traversal against an existing second-page row before testing the new random UUID.
+  const secondPage = await (await page.request.get('/api/admin/content/categories?page=1')).json()
+  expect(secondPage.items.length).toBeGreaterThan(0)
+  const existing = secondPage.items[0]
+  await findOnPages(page, page.getByRole('button', { name: existing.name + (existing.active ? ' · 활성' : ' · 비활성'), exact: true }), '카테고리 목록 페이지')
+  await expect(page.getByRole('navigation', { name: '카테고리 목록 페이지', exact: true }).locator('span')).not.toHaveText('1 페이지')
   await page.getByLabel('카테고리 이름').fill(category)
   await page.getByRole('button', { name: '카테고리 등록', exact: true }).click()
+  await expect(page.getByText('저장했습니다.', { exact: true })).toBeVisible()
+  await findOnPages(page, page.getByRole('button', { name: category + ' · 활성', exact: true }), '카테고리 목록 페이지')
   await expect(page.getByRole('button', { name: category + ' · 활성', exact: true })).toBeVisible()
   const sellerContext = await browser.newContext({ baseURL: 'http://127.0.0.1:24176', viewport: page.viewportSize() ?? undefined })
   const seller = await sellerContext.newPage()
@@ -30,6 +62,7 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
     await seller.getByLabel('상품 주소').fill(slug)
     await seller.getByLabel('상품명', { exact: true }).fill(title)
     await seller.getByLabel('설명', { exact: true }).fill('브라우저에서 등록한 상품\n둘째 줄 설명')
+    await findOnPages(seller, seller.getByRole('option', { name: category, exact: true }), '상품 카테고리 페이지')
     await seller.getByLabel('카테고리', { exact: true }).selectOption({ label: category })
     await seller.getByRole('button', { name: '상품 등록', exact: true }).click()
     await seller.getByRole('button', { name: title + ' · 초안', exact: true }).click()
@@ -128,6 +161,8 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
     expect((await seller.request.get('/api/products/' + slug + '/skus')).status()).toBe(404)
     await page.getByLabel('활성 카테고리').check()
     await page.getByRole('button', { name: '카테고리 저장', exact: true }).click()
+    await expect(page.getByText('저장했습니다.', { exact: true })).toBeVisible()
+  await findOnPages(page, page.getByRole('button', { name: category + ' · 활성', exact: true }), '카테고리 목록 페이지')
     await expect(page.getByRole('button', { name: category + ' · 활성', exact: true })).toBeVisible()
     expect((await seller.request.get('/api/products/' + slug)).status()).toBe(200)
     await seller.getByRole('button', { name: title + ' · 공개 등록', exact: true }).click()

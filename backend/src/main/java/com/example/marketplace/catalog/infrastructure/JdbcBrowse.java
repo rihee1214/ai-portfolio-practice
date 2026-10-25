@@ -71,6 +71,15 @@ public final class JdbcBrowse implements Browse {
         if(rows.isEmpty()) { throw new CatalogException(404); }
         return new Detail(rows.getFirst().product(),rows.stream().flatMap(r->r.offers().stream()).toList());
     }
+    @Override public Detail forSku(UUID sku) {
+        var slugs=jdbc.queryForList("SELECT p.slug FROM marketplace.catalog_product p JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku),String.class);
+        if(slugs.isEmpty()) { return null; }
+        try {
+            var value=detail(slugs.getFirst());
+            var offers=value.offers().stream().filter(o->o.id().equals(sku)).toList();
+            return offers.isEmpty()?null:new Detail(value.product(),offers);
+        } catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
+    }
     private Item item(java.sql.ResultSet r) throws java.sql.SQLException {
         return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"));
     }
