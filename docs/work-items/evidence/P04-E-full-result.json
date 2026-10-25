@@ -1,0 +1,23 @@
+{
+  "scope": "Existing implementation through P04-E",
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p04-e-full-20261025",
+  "started": "2026-10-25T12:30:44.3384199+09:00",
+  "finished": "2026-10-25T12:33:24.0486768+09:00",
+  "status": "passed",
+  "preservation": "passed",
+  "browser": 22,
+  "dirty": [
+    " M backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    " M verification/required-tests.json",
+    " M verify.ps1",
+    "?? backend/src/main/java/com/example/marketplace/inventory/api/Reservations.java",
+    "?? backend/src/main/java/com/example/marketplace/inventory/infrastructure/JdbcReservations.java",
+    "?? backend/src/main/resources/db/migration/V18__inventory_reservations.sql",
+    "?? docs/work-items/P04-E.md",
+    "?? docs/work-items/evidence/P04-E-before.json",
+    "?? docs/work-items/evidence/P04-E-resume-before.json"
+  ],
+  "commit": "d390c10f76f54062b62a23dde186a99d30583bfa",
+  "junit": 234,
+  "frontendUnit": 96
+}

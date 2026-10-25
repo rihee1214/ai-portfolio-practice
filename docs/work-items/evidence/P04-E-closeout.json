@@ -1,0 +1,10 @@
+{
+  "baseline": ".local-tools/p04-e-review-final-20261025/after.json",
+  "checkedAt": "2026-10-25T12:58:08.8719374+09:00",
+  "status": "passed",
+  "media": 420,
+  "sourceFiles": 243,
+  "scope": "Read-only local closeout; verified sources unchanged, no test rerun or database write",
+  "sourceEvidence": "P04-E-review-final-inputs.json",
+  "databases": 128
+}

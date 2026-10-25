@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: com.example.marketplace.dbtest.PostgresJdbcIT
+-------------------------------------------------------------------------------
+Tests run: 97, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 78.52 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+com.example.marketplace.dbtest.PostgresJdbcIT.reservationExpiryIsCheckedAfterBalanceLock -- Time elapsed: 2.150 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:69)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:41)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:195)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$reservationExpiryIsCheckedAfterBalanceLock$9(PostgresJdbcIT.java:147)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationExpiryIsCheckedAfterBalanceLock(PostgresJdbcIT.java:135)
+

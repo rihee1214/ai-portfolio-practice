@@ -1,0 +1,346 @@
+[
+  {
+    "id": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.ActuatorPolicyHttpTest#healthRejectsWrites",
+      "com.example.marketplace.api.ActuatorPolicyHttpTest#healthRemainsStatusOnlyWithRequestId",
+      "com.example.marketplace.api.ActuatorPolicyHttpTest#heapDumpOperationIsNotCreated",
+      "com.example.marketplace.api.ActuatorPolicyHttpTest#managementDetailsStayUnavailableEvenWhenWebExposureIsWidened",
+      "com.example.marketplace.api.ActuatorPolicyHttpTest#noActuatorMBeansAreRegisteredEvenWhenSpringJmxIsEnabled"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.ApiErrorHttpTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.ApiErrorHttpTest#apiRootIsIncluded",
+      "com.example.marketplace.api.ApiErrorHttpTest#headHasNoResponseBody",
+      "com.example.marketplace.api.ApiErrorHttpTest#invalidInputAndMalformedJsonAreSafe400",
+      "com.example.marketplace.api.ApiErrorHttpTest#methodNotAllowedPreservesAllow",
+      "com.example.marketplace.api.ApiErrorHttpTest#missingApiAlwaysUsesJson",
+      "com.example.marketplace.api.ApiErrorHttpTest#nonApiRetainsDefaultErrorShape",
+      "com.example.marketplace.api.ApiErrorHttpTest#sentStatusHasFixedPublicCode",
+      "com.example.marketplace.api.ApiErrorHttpTest#successfulApiIsNotWrapped",
+      "com.example.marketplace.api.ApiErrorHttpTest#unacceptableSuccessRepresentationStillHasJsonError",
+      "com.example.marketplace.api.ApiErrorHttpTest#unexpectedSyncAndAsyncFailuresAreSafe500",
+      "com.example.marketplace.api.ApiErrorHttpTest#unsupportedMediaTypeIs415"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.DatabaseSettingsTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.DatabaseSettingsTest#explicitDatasourcePropertiesOverrideMissingEnvironmentVariables",
+      "com.example.marketplace.api.DatabaseSettingsTest#invalidEffectiveSettingFailsBeforeAnyApplicationSingleton",
+      "com.example.marketplace.api.DatabaseSettingsTest#missingEnvironmentSettingsReportNamesWithoutConnectionAttempt",
+      "com.example.marketplace.api.DatabaseSettingsTest#profileWithoutDbDoesNotRequireDatabaseSettings",
+      "com.example.marketplace.api.DatabaseSettingsTest#unresolvedPlaceholderDoesNotExposeRawValueOrCause",
+      "com.example.marketplace.api.DatabaseSettingsTest#validEnvironmentSettingsPassWithoutConnectingToDatabase"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.ErrorHttpTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.ErrorHttpTest#normalHealthOnRealServerUsesSameStatusOnlyContract",
+      "com.example.marketplace.api.ErrorHttpTest#servlet404UsesJsonWithoutInternalDetails",
+      "com.example.marketplace.api.ErrorHttpTest#servlet405UsesJsonWithoutInternalDetails"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.HealthMvcTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.HealthMvcTest#d1ContextHasNoDatabaseOrMigrationBeans",
+      "com.example.marketplace.api.HealthMvcTest#frontendJsonContentNegotiationIsPreserved",
+      "com.example.marketplace.api.HealthMvcTest#healthExposesOnlyUp",
+      "com.example.marketplace.api.HealthMvcTest#healthRejectsPostWithAllowHeader",
+      "com.example.marketplace.api.HealthMvcTest#removedUnknownAndUnexposedPathsReturn404"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.RequestIdFilterTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.RequestIdFilterTest#exceptionalExitRestoresOuterContext",
+      "com.example.marketplace.api.RequestIdFilterTest#exceptionalExitWithoutOuterContextRemovesId",
+      "com.example.marketplace.api.RequestIdFilterTest#redispatchKeepsAttributeAndRebindsMdc",
+      "com.example.marketplace.api.RequestIdFilterTest#sequentialRequestsDoNotLeakAndOtherMdcKeysRemain"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.RequestIdHttpTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.RequestIdHttpTest#externalValidMalformedAndDuplicateIdsAreNotTrusted",
+      "com.example.marketplace.api.RequestIdHttpTest#healthBodyIsUnchangedAndEveryRequestGetsANewServerId",
+      "com.example.marketplace.api.RequestIdHttpTest#realAsyncRedispatchRebindsTheSameRequestId",
+      "com.example.marketplace.api.RequestIdHttpTest#realExceptionErrorDispatchKeepsOriginalRequestId",
+      "com.example.marketplace.api.RequestIdHttpTest#requestAttributeMdcHeaderAndLogHaveSameId",
+      "com.example.marketplace.api.RequestIdHttpTest#servlet404And405PreserveStatusAndRequestIdentity"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.api.UnhealthyMvcTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.api.UnhealthyMvcTest#unavailableHealthReturns503WithoutDetails"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.architecture.ModuleArchitectureTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.architecture.ModuleArchitectureTest#productionClassesRespectModuleBoundaries"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.architecture.ModuleRulesTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.architecture.ModuleRulesTest#applicationCanStillUsePlatform",
+      "com.example.marketplace.architecture.ModuleRulesTest#cyclesThroughPublicApisAreRejected",
+      "com.example.marketplace.architecture.ModuleRulesTest#domainCannotDependOnItsWebLayer",
+      "com.example.marketplace.architecture.ModuleRulesTest#genericJdbcTypeIsNotHiddenByJavaList",
+      "com.example.marketplace.architecture.ModuleRulesTest#jdbcTypesAreRejectedInContractsAndDomain",
+      "com.example.marketplace.architecture.ModuleRulesTest#otherModuleInternalsAreRejected",
+      "com.example.marketplace.architecture.ModuleRulesTest#ownInternalsAndOtherModuleApiAreAllowed",
+      "com.example.marketplace.architecture.ModuleRulesTest#platformCannotDependOnBusinessEvenThroughApi",
+      "com.example.marketplace.architecture.ModuleRulesTest#publicApiCannotDependOnPlatformEvenIfItsPackageIsNamedApi",
+      "com.example.marketplace.architecture.ModuleRulesTest#publicApiCannotDependOnPlatformWeb",
+      "com.example.marketplace.architecture.ModuleRulesTest#publicApiCannotExposeOwnInternalType",
+      "com.example.marketplace.architecture.ModuleRulesTest#securityPrincipalCannotLeakIntoApi"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.identity.AccountRulesTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.identity.AccountRulesTest#validatesCodePointsAndRejectsControlAndBrokenUnicode",
+      "com.example.marketplace.identity.AccountRulesTest#validatesPhoneAndKoreanPostalCode"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.identity.AttemptWindowTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.identity.AttemptWindowTest#capacityIsBoundedAndFailsClosed",
+      "com.example.marketplace.identity.AttemptWindowTest#windowLimitsAttemptsAndExpiresAtBoundary"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.identity.SignupRulesTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.identity.SignupRulesTest#normalizesEmailWithoutProviderSpecificAliases",
+      "com.example.marketplace.identity.SignupRulesTest#passwordBoundariesCountCodePointsAndDoNotTrim",
+      "com.example.marketplace.identity.SignupRulesTest#rejectsAmbiguousOrInvalidEmail"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.identity.SignupSecurityTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.identity.SignupSecurityTest#localMailboxHidesReservationsAndCanDiscardRollback",
+      "com.example.marketplace.identity.SignupSecurityTest#mailboxExpiryAndCapacityAreBounded",
+      "com.example.marketplace.identity.SignupSecurityTest#saltedArgonMatchesUnicodeWithoutTruncationAndRecordsCostOnly",
+      "com.example.marketplace.identity.SignupSecurityTest#tokensAreIndependentAndOnlyDigestIsStored"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest#bothRecoveryMutationsUseTheBoundedAttemptWindow",
+      "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest#withdrawalPasswordAttemptsAreBounded"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest#acceptsDedicatedD2TargetWithoutConnecting",
+      "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest#acceptsExplicitDedicatedTargetWithoutConnecting",
+      "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest#rejectsUnsafeTargetBeforeConnection"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.media.infrastructure.ImageNormalizerTest#jpegAndPngAreDecodedAndReencodedWithoutTrailingPayload",
+      "com.example.marketplace.media.infrastructure.ImageNormalizerTest#lossyAndAlphaWebpDecodeAndPreserveAlpha",
+      "com.example.marketplace.media.infrastructure.ImageNormalizerTest#rejectsAnimationSpoofedExtensionsAndBrokenImages",
+      "com.example.marketplace.media.infrastructure.ImageNormalizerTest#rejectsApngDamagedJpegAndOversizedReencodedOutput",
+      "com.example.marketplace.media.infrastructure.ImageNormalizerTest#rejectsByteAndPixelLimitsBeforeFullDecode"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.media.infrastructure.LocalImagesTest#namespaceAndExclusiveProcessLockProtectExistingFiles",
+      "com.example.marketplace.media.infrastructure.LocalImagesTest#unmanagedRootAndNonRegularAssetAreNeverDeleted"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#activationFailureRollsBackTokenConsumption",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#addressConcurrentFirstDefaultAndCapacityPreserveInvariants",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#adminPermissionsAreSeparateAndRevocationAppliesToExistingSession",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#anonymousAuthenticationContract",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#authMutationLimitReturns429WithoutChangingAccount",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#bootUsesVerifiedPostgresAndUnprivilegedRole",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#callerRollbackAlsoRollsBackSignupAndDiscardsUnpublishedMail",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#catalogCategoryHttpContract",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#catalogProductHttpOwnershipLifecycleAndPublicFilters",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#catalogValidationPublicEligibilityAndConcurrentUpdates",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#categoryAuditIsAtomicAndOwnedByOperator",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#categoryWaiterRechecksRevokedPermissionAndWritesNoAudit",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#caughtRequiredFailureRollsBackEarlierSuccessfulTransfer",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#checkedFailureAfterDebitRollsBack",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#concurrentDuplicateHasExactlyOneCommitAndOneMail",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#concurrentTokenConsumptionHasExactlyOneSuccess",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#csrfCannotBeOmittedOrCopiedBetweenSessions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#currentRolesAndAccountVersionAreCheckedEveryRequest",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#databaseConstraintsPreventNegativeBalanceAndOrphanEntry",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#databaseProfileDoesNotExposeManagementDetailsOrJmx",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#databaseSettingsValidatorAndActualDataSourceCoexist",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#duplicateReferenceRollsBackUpdatesAlreadyMade",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#expiredJdbcSessionCannotAuthenticateOrReuseCsrf",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#expiryBoundaryIsExclusiveAndExpiredTokenRemainsUnconsumed",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#initialAdminIsExplicitAtomicAndOnlyOneConcurrentWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#invalidCredentialsAndUnverifiedAccountsHaveSameJsonFailure",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#invalidInputDoesNotWriteOrDeliver",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#invalidSettingsFailBeforeSingletonsWithRealDatabaseAutoConfigurationEnabled",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryAdjustmentIsVersionedAuditedAndIdempotent",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryAdministratorPermissionIsRecheckedAfterProductLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryBoundariesOwnershipAndReservedFloorAreEnforced",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryConcurrentKeysHaveOneEffectAndAuditFailureRollsBack",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryGlobalRequestKeyCollisionRollsBackOtherOwnersBalance",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryHistoryPagesAndUpgradePreserveSkuData",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#loginRotatesSessionPersistsInJdbcAndLogoutRevokesCookie",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mailboxPreparationFailureRollsBackAllSignupRows",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaConcurrentCreateReplaceDeleteHasOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaOrphanScanWaitingForSingleConnectionDoesNotHoldFileMonitor",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaOuterTransactionAndAgedInFlightFileDoNotDeadlockOrGetCollected",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaRollbackAndCleanupKeepCurrentReferencesAndRetryPartialFailure",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaStoreOwnershipCsrfAndPublicProjectionAreEnforced",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaUploadReplaceDeleteAndDirectUrlRespectVisibility",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#memberReadsNeedOnlyOneDatabaseConnection",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#normalizedDuplicateIsRejectedWithoutExtraCredentialOrMail",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#parametersAndMappingHandleQuotesUnicodeDecimalAndNull",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#productCreatesOneInactiveDefaultSkuWithPublicEligibility",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#productDescriptionAcceptsMultilineButTitleRemainsSingleLine",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#profileAndAddressOwnershipDefaultAndRollback",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#publicStoreReadNeedsOnlyOneDatabaseConnection",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#realDatabaseHealthPreservesStatusOnlyAndRequestId",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryConcurrentConsumptionAndLatestRequestSerialize",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryConcurrentIssueAndConsumeLeavesOnlyReplacementValid",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryExpiryRollbackAndIneligibleMembersLeaveStateUntouched",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryFailureAfterSessionDeleteRollsBackAllState",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryHttpRequiresCsrfAndDoesNotRevealEligibility",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryLatestOnlyOneUseRevokesSessionsAndChangesPassword",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryRechecksExpiryAfterWaitingForMemberLock",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#roleSpacesDenyAnonymousAndBuyerEvenWithForgedSignupFields",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#sameProductionV1AndFixtureV2MigrateOnce",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#sellerApplicationHttpSubmissionReviewAndBuyerRolePreserved",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#sellerApplicationOwnershipPaginationAndNarrowSecurityException",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#sellerConcurrentApplicationsAndDecisionsHaveOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#sellerDecisionsRejectInvalidTransitionsAndRollbackRoleAndHistory",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#signupAndVerificationHttpRejectCsrfAndBadInputWithoutChanges",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#signupHttpRequiresCsrfAndReturnsNoSecrets",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#signupPersistsOnlyHashesAndBuyerThenVerificationActivates",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuConcurrentChangesDuplicatesAndCapacityHaveOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuDefaultTransitionIsAtomicAndSerializedWithActivation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuHttpTypesAndPublicFiltersRemainStrict",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuMigrationBackfillsExistingProductsAndCreationRollsBackAtomically",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuOptionsPricesOwnershipAndVersionsAreEnforcedOverHttp",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#skuWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#stateChangesRollbackAndSerializeAndCannotBypassServicePermission",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeCloseIsAtomicConcurrentAndKeepsCapabilityBoundary",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeConcurrentCreateAndUpdateAndValidation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeHttpOwnershipVisibilityAndVersion",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeInputLimitsAndInvalidUpdatesLeaveSavedValuesUnchanged",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeLifecycleHttpKeepsBuyingAndRestrictsNewSales",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#storeOperatorPermissionsAndConcurrentEditSuspendKeepRestriction",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#successCommitsBothBalancesAndEntry",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#suspendedAndWithdrawnAccountsLoseExistingSessions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterMemberLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterTokenLockWait"
+    ]
+  },
+  {
+    "id": "P04-E-01",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLifecycleHasOneEffectAndCompleteAudit"
+    ]
+  },
+  {
+    "id": "P04-E-02",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLastUnitRaceAndKeyCollisions"
+    ]
+  },
+  {
+    "id": "P04-E-03",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationTerminalAndExpiryRaces"
+    ]
+  },
+  {
+    "id": "P04-E-04",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationExpiryIsCheckedAfterBalanceLock"
+    ]
+  },
+  {
+    "id": "P04-E-05",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationBatchesAndOuterTransactionRollBack"
+    ]
+  },
+  {
+    "id": "P04-E-06",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationReverseBatchesAndManualAdjustmentSerialize"
+    ]
+  },
+  {
+    "id": "P04-E-07",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationValidationAndDatabaseConstraints"
+    ]
+  },
+  {
+    "id": "P04-E-09",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseReservationKeysAreSerialized"
+    ]
+  },
+  {
+    "id": "P04-E-10",
+    "status": "passed",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseOrderItemKeysAreSerialized"
+    ]
+  }
+]

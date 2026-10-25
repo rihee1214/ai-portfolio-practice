@@ -1,0 +1,21 @@
+{
+  "ports": [
+    "127.0.0.1|15432|57168",
+    "127.0.0.1|15433|57168"
+  ],
+  "containers": [
+    "6a9f494624c9 moa-market-local-db-dev-1",
+    "68d17431a4b1 moa-market-local-db-test-1"
+  ],
+  "checkedAt": "2026-10-25T12:38:09.2487324+09:00",
+  "newDatabases": [
+    "d2_it_519514e7d51d42a7bc9c7083ea48ebaa"
+  ],
+  "priorMedia": 354,
+  "status": "passed",
+  "hashes": {
+    "db-dev": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7",
+    "db-test": "6EC093D4CD1B10F9C5516130D120B045391789B6D3DBD462D54833ED96279BE7"
+  },
+  "priorDatabases": 124
+}

@@ -82,6 +82,240 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @org.springframework.context.annotation.Import(PostgresJdbcIT.TestMailboxEndpoint.class)
 class PostgresJdbcIT {
+    private com.example.marketplace.inventory.api.Reservations reservations() {
+        return context.getBean(com.example.marketplace.inventory.api.Reservations.class);
+    }
+    private UUID stockedSku(String suffix,long quantity) {
+        var f=skuFixture(suffix); UUID owner=(UUID)f.get("owner");
+        var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");
+        UUID sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst().id();
+        context.getBean(com.example.marketplace.inventory.api.Inventory.class).adjust(owner,product.id(),sku,false,
+            new com.example.marketplace.inventory.api.Inventory.Change(quantity,0L,"예약 검사 입고",UUID.randomUUID()));
+        return sku;
+    }
+    private com.example.marketplace.inventory.api.Reservations.Request reservationRequest(UUID sku,long quantity) {
+        return new com.example.marketplace.inventory.api.Reservations.Request(UUID.randomUUID(),UUID.randomUUID(),UUID.randomUUID(),sku,quantity,
+            Instant.now().plusSeconds(900).truncatedTo(java.time.temporal.ChronoUnit.MICROS));
+    }
+    private void stockEquals(UUID sku,long onHand,long reserved,long version) {
+        var row=jdbc.queryForMap("SELECT on_hand,reserved,version FROM marketplace.inventory_balance WHERE sku_id=:sku",Map.of("sku",sku));
+        assertEquals(onHand,((Number)row.get("on_hand")).longValue());
+        assertEquals(reserved,((Number)row.get("reserved")).longValue());
+        assertEquals(version,((Number)row.get("version")).longValue());
+    }
+    private String reservationAttempt(Runnable action) {
+        try { action.run();return "ok"; } catch(com.example.marketplace.inventory.api.InventoryException rejected) { return ""+rejected.status(); }
+    }
+    @Test
+    void reservationCrossSkuReverseReservationKeysAreSerialized() throws Exception { reservationCrossKeys(false); }
+    @Test
+    void reservationCrossSkuReverseOrderItemKeysAreSerialized() throws Exception { reservationCrossKeys(true); }
+    private void reservationCrossKeys(boolean orderItems) throws Exception {
+        String suffix=orderItems?"items":"ids";UUID a=stockedSku("cross-"+suffix+"-a",10),b=stockedSku("cross-"+suffix+"-b",10);
+        UUID x=UUID.randomUUID(),y=UUID.randomUUID(),checkout=UUID.randomUUID();Instant expiry=Instant.now().plusSeconds(900);
+        var left=List.of(new com.example.marketplace.inventory.api.Reservations.Request(orderItems?UUID.randomUUID():x,checkout,orderItems?x:UUID.randomUUID(),a,1,expiry),
+            new com.example.marketplace.inventory.api.Reservations.Request(orderItems?UUID.randomUUID():y,checkout,orderItems?y:UUID.randomUUID(),a,1,expiry));
+        var right=List.of(new com.example.marketplace.inventory.api.Reservations.Request(orderItems?UUID.randomUUID():y,checkout,orderItems?y:UUID.randomUUID(),b,1,expiry),
+            new com.example.marketplace.inventory.api.Reservations.Request(orderItems?UUID.randomUUID():x,checkout,orderItems?x:UUID.randomUUID(),b,1,expiry));
+        jdbc.getJdbcTemplate().execute("CREATE FUNCTION marketplace.p4e_insert_barrier() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN PERFORM pg_advisory_xact_lock_shared(187041); RETURN NEW; END $$");
+        jdbc.getJdbcTemplate().execute("CREATE TRIGGER p4e_insert_barrier AFTER INSERT ON marketplace.inventory_reservation FOR EACH ROW EXECUTE FUNCTION marketplace.p4e_insert_barrier()");
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var futures=new java.util.ArrayList<java.util.concurrent.Future<String>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.query("SELECT pg_advisory_xact_lock(187041)",Map.of(),(r,i)->r.getObject(1));
+                futures.add(pool.submit(()->reservationAttempt(()->reservations().reserve(left))));
+                futures.add(pool.submit(()->reservationAttempt(()->reservations().reserve(right))));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);int waiting=0;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=jdbc.queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event='advisory'",Map.of(),Integer.class);
+                    if(waiting==2) { break; } try { Thread.sleep(20); } catch(InterruptedException ex) { throw new IllegalStateException(ex); }
+                }
+                assertEquals(2,waiting,"both transactions must reach the key/insert barrier before it opens");
+            });
+            assertThat(List.of(futures.get(0).get(10,TimeUnit.SECONDS),futures.get(1).get(10,TimeUnit.SECONDS))).containsExactlyInAnyOrder("ok","409");
+            assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation WHERE checkout_id=:id",Map.of("id",checkout),Integer.class));
+            assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE sku_id IN (:a,:b)",Map.of("a",a,"b",b),Integer.class));
+            assertEquals(2,jdbc.queryForObject("SELECT sum(reserved) FROM marketplace.inventory_balance WHERE sku_id IN (:a,:b)",Map.of("a",a,"b",b),Long.class));
+            assertEquals(List.of(1L,3L),jdbc.queryForList("SELECT version FROM marketplace.inventory_balance WHERE sku_id IN (:a,:b) ORDER BY version",Map.of("a",a,"b",b),Long.class));
+            assertEquals(20,jdbc.queryForObject("SELECT sum(on_hand) FROM marketplace.inventory_balance WHERE sku_id IN (:a,:b)",Map.of("a",a,"b",b),Long.class));
+        } finally {
+            jdbc.getJdbcTemplate().execute("DROP TRIGGER p4e_insert_barrier ON marketplace.inventory_reservation");
+            jdbc.getJdbcTemplate().execute("DROP FUNCTION marketplace.p4e_insert_barrier()");
+        }
+    }
+    @Test
+    void reservationTerminalAndExpiryRaces() throws Exception {
+        UUID sku=stockedSku("reserve-terminal",10);var api=reservations();var request=reservationRequest(sku,2);api.reserve(List.of(request));
+        var calls=new java.util.concurrent.atomic.AtomicInteger();
+        assertThat(race(()->reservationAttempt(()-> { if(calls.getAndIncrement()==0) { api.commit(request.checkoutId(),List.of(request.id())); }
+            else { api.release(request.checkoutId(),List.of(request.id())); } }))).containsExactlyInAnyOrder("ok","409");
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE reservation_id=:id AND cause<>'RESERVE'",Map.of("id",request.id()),Integer.class));
+        var due=reservationRequest(sku,1);api.reserve(List.of(due));
+        assertEquals("RESERVED",api.expire(due.checkoutId(),List.of(due.id())).getFirst().status());
+        jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=clock_timestamp()-interval '1 second' WHERE id=:id",Map.of("id",due.id()));
+        assertEquals("409",reservationAttempt(()->api.commit(due.checkoutId(),List.of(due.id()))));
+        assertThat(race(()->reservationAttempt(()->api.expire(due.checkoutId(),List.of(due.id()))))).containsExactly("ok","ok");
+        assertEquals("RELEASED",api.expire(due.checkoutId(),List.of(due.id())).getFirst().status());
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE reservation_id=:id AND cause='EXPIRE'",Map.of("id",due.id()),Integer.class));
+        assertEquals(0,jdbc.queryForObject("SELECT reserved FROM marketplace.inventory_balance WHERE sku_id=:sku",Map.of("sku",sku),Long.class));
+        var expired=reservationRequest(sku,1);api.reserve(List.of(expired));
+        jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=clock_timestamp()-interval '1 second' WHERE id=:id",Map.of("id",expired.id()));
+        calls.set(0);
+        assertThat(race(()->reservationAttempt(()-> { if(calls.getAndIncrement()==0) { api.commit(expired.checkoutId(),List.of(expired.id())); }
+            else { api.expire(expired.checkoutId(),List.of(expired.id())); } }))).containsExactlyInAnyOrder("409","ok");
+    }
+    @Test
+    void reservationExpiryIsCheckedAfterBalanceLock() throws Exception {
+        UUID sku=stockedSku("reserve-lock-time",3);var api=reservations();var request=reservationRequest(sku,1);api.reserve(List.of(request));
+        try(var pool=Executors.newSingleThreadExecutor()) {
+            var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<String>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                jdbc.queryForObject("SELECT sku_id FROM marketplace.inventory_balance WHERE sku_id=:sku FOR UPDATE",Map.of("sku",sku),UUID.class);
+                pending.set(pool.submit(()->reservationAttempt(()->api.commit(request.checkoutId(),List.of(request.id())))));
+                long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;
+                while(System.nanoTime()<deadline) {
+                    jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%inventory_balance%')",Map.of(),Boolean.class));
+                    if(waiting) { break; } try { Thread.sleep(20); } catch(InterruptedException ex) { throw new IllegalStateException(ex); }
+                }
+                assertTrue(waiting,"commit must actually wait on the balance lock");
+                // Advance the fixture to the DB boundary only after the worker is observed waiting.
+                jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=clock_timestamp() WHERE id=:id",Map.of("id",request.id()));
+                var boundary=jdbc.queryForMap("SELECT expires_at,clock_timestamp() AS db_now,expires_at<=clock_timestamp() AS due FROM marketplace.inventory_reservation WHERE id=:id",Map.of("id",request.id()));
+                assertEquals(Boolean.TRUE,boundary.get("due"),boundary.toString());
+            });
+            assertEquals("409",pending.get().get(5,TimeUnit.SECONDS));stockEquals(sku,3,1,2);
+        }
+        api.expire(request.checkoutId(),List.of(request.id()));stockEquals(sku,3,0,3);
+    }
+    @Test
+    void reservationBatchesAndOuterTransactionRollBack() {
+        UUID a=stockedSku("reserve-rollback-a",5),b=stockedSku("reserve-rollback-b",1);var api=reservations();
+        var first=reservationRequest(a,2);var insufficient=reservationRequest(b,2);
+        assertEquals("409",reservationAttempt(()->api.reserve(List.of(first,insufficient))));stockEquals(a,5,0,1);stockEquals(b,1,0,1);
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation WHERE id IN (:a,:b)",Map.of("a",first.id(),"b",insufficient.id()),Integer.class));
+        assertThrows(IllegalStateException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+            api.reserve(List.of(first));throw new IllegalStateException("outer operation failed");
+        }));stockEquals(a,5,0,1);
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE sku_id=:sku",Map.of("sku",a),Integer.class));
+        api.reserve(List.of(first));
+        jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.inventory_reservation_event ADD CONSTRAINT p4e_audit_failure CHECK (cause<>'COMMIT') NOT VALID");
+        try {
+            assertThrows(DataIntegrityViolationException.class,()->api.commit(first.checkoutId(),List.of(first.id())));stockEquals(a,5,2,2);
+            assertEquals("RESERVED",jdbc.queryForObject("SELECT status FROM marketplace.inventory_reservation WHERE id=:id",Map.of("id",first.id()),String.class));
+        } finally { jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.inventory_reservation_event DROP CONSTRAINT p4e_audit_failure"); }
+        assertThrows(IllegalStateException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+            api.release(first.checkoutId(),List.of(first.id()));throw new IllegalStateException("outer release rollback");
+        }));stockEquals(a,5,2,2);
+        api.commit(first.checkoutId(),List.of(first.id()));stockEquals(a,3,0,3);
+        var x=reservationRequest(a,1);var original=reservationRequest(b,1);
+        var y=new com.example.marketplace.inventory.api.Reservations.Request(original.id(),x.checkoutId(),original.orderItemId(),b,1,original.expiresAt());
+        api.reserve(List.of(x,y));api.release(y.checkoutId(),List.of(y.id()));
+        assertEquals("409",reservationAttempt(()->api.commit(x.checkoutId(),List.of(x.id(),y.id()))));stockEquals(a,3,1,4);
+        assertEquals("RESERVED",jdbc.queryForObject("SELECT status FROM marketplace.inventory_reservation WHERE id=:id",Map.of("id",x.id()),String.class));
+    }
+    @Test
+    void reservationReverseBatchesAndManualAdjustmentSerialize() throws Exception {
+        UUID a=stockedSku("reserve-batch-a",6),b=stockedSku("reserve-batch-b",6);var api=reservations();
+        var calls=new java.util.concurrent.atomic.AtomicInteger();
+        var outcomes=race(()-> {var x=reservationRequest(a,2);var y=reservationRequest(b,2);
+            return reservationAttempt(()->api.reserve(calls.getAndIncrement()==0?List.of(x,y):List.of(y,x)));});
+        assertThat(outcomes).containsExactly("ok","ok");stockEquals(a,6,4,3);stockEquals(b,6,4,3);
+        var x=reservationRequest(a,1);var original=reservationRequest(b,1);
+        var y=new com.example.marketplace.inventory.api.Reservations.Request(original.id(),x.checkoutId(),original.orderItemId(),b,1,original.expiresAt());
+        api.reserve(List.of(x,y));calls.set(0);
+        assertThat(race(()->reservationAttempt(()->{if(calls.getAndIncrement()==0) { api.commit(x.checkoutId(),List.of(x.id(),y.id())); }
+            else { api.release(x.checkoutId(),List.of(y.id(),x.id())); } }))).containsExactlyInAnyOrder("ok","409");
+        assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE reservation_id IN (:x,:y) AND cause<>'RESERVE'",Map.of("x",x.id(),"y",y.id()),Integer.class));
+        var fixture=skuFixture("reserve-manual");UUID owner=(UUID)fixture.get("owner");var product=(com.example.marketplace.catalog.api.Products.Product)fixture.get("product");
+        UUID sku=context.getBean(com.example.marketplace.catalog.api.Skus.class).list(owner,product.id(),0).items().getFirst().id();var inventory=context.getBean(com.example.marketplace.inventory.api.Inventory.class);
+        inventory.adjust(owner,product.id(),sku,false,new com.example.marketplace.inventory.api.Inventory.Change(5L,0L,"입고",UUID.randomUUID()));
+        calls.set(0);assertThat(race(()->reservationAttempt(()-> { if(calls.getAndIncrement()==0) { api.reserve(List.of(reservationRequest(sku,4))); }
+            else { inventory.adjust(owner,product.id(),sku,false,new com.example.marketplace.inventory.api.Inventory.Change(2L,1L,"실사",UUID.randomUUID())); } }))).containsExactlyInAnyOrder("ok","409");
+        assertTrue(jdbc.queryForObject("SELECT reserved<=on_hand AND reserved>=0 FROM marketplace.inventory_balance WHERE sku_id=:sku",Map.of("sku",sku),Boolean.class));
+    }
+    @Test
+    void reservationValidationAndDatabaseConstraints() {
+        UUID sku=stockedSku("reserve-boundary",999999999);var api=reservations();var valid=reservationRequest(sku,999999999);
+        assertEquals("400",reservationAttempt(()->api.reserve(null)));assertEquals("400",reservationAttempt(()->api.reserve(List.of())));
+        assertEquals("400",reservationAttempt(()->api.reserve(List.of(valid,valid))));
+        for(long quantity:new long[]{0,-1,1000000000L}) {
+            var bad=new com.example.marketplace.inventory.api.Reservations.Request(valid.id(),valid.checkoutId(),valid.orderItemId(),sku,quantity,valid.expiresAt());
+            assertEquals("400",reservationAttempt(()->api.reserve(List.of(bad))));
+        }
+        var past=new com.example.marketplace.inventory.api.Reservations.Request(valid.id(),valid.checkoutId(),valid.orderItemId(),sku,1,Instant.EPOCH);
+        assertEquals("409",reservationAttempt(()->api.reserve(List.of(past))));
+        assertEquals("404",reservationAttempt(()->api.reserve(List.of(reservationRequest(UUID.randomUUID(),1)))));
+        assertEquals("400",reservationAttempt(()->api.commit(null,List.of(valid.id()))));assertEquals("400",reservationAttempt(()->api.release(valid.checkoutId(),List.of())));
+        assertEquals("400",reservationAttempt(()->api.expire(valid.checkoutId(),java.util.Arrays.asList((UUID)null))));
+        api.reserve(List.of(valid));stockEquals(sku,999999999,999999999,2);
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.inventory_reservation SET quantity=0 WHERE id=:id",Map.of("id",valid.id())));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.inventory_reservation SET status='COMMITTED' WHERE id=:id",Map.of("id",valid.id())));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.inventory_balance SET on_hand=0 WHERE sku_id=:id",Map.of("id",sku)));
+        api.release(valid.checkoutId(),List.of(valid.id()));stockEquals(sku,999999999,0,3);
+        jdbc.update("UPDATE marketplace.inventory_balance SET version=9007199254740991 WHERE sku_id=:id",Map.of("id",sku));
+        var overflow=reservationRequest(sku,1);assertEquals("409",reservationAttempt(()->api.reserve(List.of(overflow))));stockEquals(sku,999999999,0,9007199254740991L);
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation WHERE id=:id",Map.of("id",overflow.id()),Integer.class));
+        assertEquals("400",reservationAttempt(()->api.reserve(java.util.Collections.nCopies(101,valid))));
+        assertEquals("400",reservationAttempt(()->api.commit(valid.checkoutId(),List.of(valid.id(),valid.id()))));
+        var precise=new com.example.marketplace.inventory.api.Reservations.Request(UUID.randomUUID(),valid.checkoutId(),UUID.randomUUID(),sku,1,valid.expiresAt().plusNanos(123));
+        jdbc.update("UPDATE marketplace.inventory_balance SET version=3 WHERE sku_id=:id",Map.of("id",sku));
+        assertEquals(valid.expiresAt(),api.reserve(List.of(precise)).getFirst().expiresAt());api.reserve(List.of(precise));stockEquals(sku,999999999,1,4);
+        var row=jdbc.queryForMap("SELECT * FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",sku));
+        var ds=context.getBean(DataSource.class);String schema="p4e_upgrade";
+        Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").target("17").cleanDisabled(true).load().migrate();
+        jdbc.update("INSERT INTO p4e_upgrade.identity_user SELECT u.* FROM marketplace.identity_user u JOIN marketplace.seller_store s ON s.owner_id=u.id JOIN marketplace.catalog_product p ON p.store_id=s.id JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.seller_store SELECT s.* FROM marketplace.seller_store s JOIN marketplace.catalog_product p ON p.store_id=s.id JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.catalog_category SELECT c.* FROM marketplace.catalog_category c JOIN marketplace.catalog_product p ON p.category_id=c.id JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.catalog_product SELECT p.* FROM marketplace.catalog_product p JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.catalog_sku SELECT * FROM marketplace.catalog_sku WHERE id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.inventory_balance SELECT * FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",sku));
+        jdbc.update("INSERT INTO p4e_upgrade.stock_movement SELECT * FROM marketplace.stock_movement WHERE sku_id=:id",Map.of("id",sku));
+        var movement=jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of());
+        var migration=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();
+        assertEquals(1,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
+        assertEquals(row,jdbc.queryForMap("SELECT * FROM p4e_upgrade.inventory_balance WHERE sku_id=:id",Map.of("id",sku)));
+        assertEquals(movement,jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of()));
+    }
+    @Test
+    void reservationLifecycleHasOneEffectAndCompleteAudit() {
+        UUID sku=stockedSku("reserve-basic",10); var api=reservations(); var request=reservationRequest(sku,3);
+        assertEquals("RESERVED",api.reserve(List.of(request)).getFirst().status()); stockEquals(sku,10,3,2);
+        api.reserve(List.of(request)); stockEquals(sku,10,3,2);
+        assertEquals("COMMITTED",api.commit(request.checkoutId(),List.of(request.id())).getFirst().status()); stockEquals(sku,7,0,3);
+        api.commit(request.checkoutId(),List.of(request.id())); api.reserve(List.of(request)); stockEquals(sku,7,0,3);
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->api.release(request.checkoutId(),List.of(request.id()))).status());
+        var released=reservationRequest(sku,2); api.reserve(List.of(released));
+        api.release(released.checkoutId(),List.of(released.id())); api.release(released.checkoutId(),List.of(released.id())); stockEquals(sku,7,0,5);
+        var events=jdbc.queryForList("SELECT cause,before_on_hand,after_on_hand,before_reserved,after_reserved,before_version,version FROM marketplace.inventory_reservation_event WHERE sku_id=:sku ORDER BY version",Map.of("sku",sku));
+        assertEquals(List.of("RESERVE","COMMIT","RESERVE","RELEASE"),events.stream().map(e->e.get("cause")).toList());
+        long[][] expected={{10,10,0,3,1,2},{10,7,3,0,2,3},{7,7,0,2,3,4},{7,7,2,0,4,5}};
+        String[] keys={"before_on_hand","after_on_hand","before_reserved","after_reserved","before_version","version"};
+        for(int i=0;i<4;i++) { for(int j=0;j<6;j++) { assertEquals(expected[i][j],((Number)events.get(i).get(keys[j])).longValue()); } }
+    }
+    @Test
+    void reservationLastUnitRaceAndKeyCollisions() throws Exception {
+        UUID sku=stockedSku("reserve-last",1); var api=reservations();
+        var outcomes=race(()-> { try { api.reserve(List.of(reservationRequest(sku,1)));return "ok"; } catch(com.example.marketplace.inventory.api.InventoryException ex) { return ""+ex.status(); } });
+        assertThat(outcomes).containsExactlyInAnyOrder("ok","409"); stockEquals(sku,1,1,2);
+        UUID another=stockedSku("reserve-key",5); var request=reservationRequest(another,2);
+        assertThat(race(()->{api.reserve(List.of(request));return "ok";})).containsExactly("ok","ok"); stockEquals(another,5,2,2);
+        assertEquals(404,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->api.commit(UUID.randomUUID(),List.of(request.id()))).status());
+        var changed=new com.example.marketplace.inventory.api.Reservations.Request(request.id(),request.checkoutId(),request.orderItemId(),another,3,request.expiresAt());
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->api.reserve(List.of(changed))).status());
+        var collision=new com.example.marketplace.inventory.api.Reservations.Request(UUID.randomUUID(),request.checkoutId(),request.orderItemId(),sku,1,request.expiresAt());
+        assertEquals(409,assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->api.reserve(List.of(collision))).status());
+        stockEquals(another,5,2,2); stockEquals(sku,1,1,2);
+        UUID other=stockedSku("reserve-cross-key",5);var cross=new com.example.marketplace.inventory.api.Reservations.Request(request.id(),request.checkoutId(),UUID.randomUUID(),other,1,request.expiresAt());
+        assertEquals("409",reservationAttempt(()->api.reserve(List.of(cross))));stockEquals(other,5,0,1);
+        var key=UUID.randomUUID();var checkout=UUID.randomUUID();var index=new java.util.concurrent.atomic.AtomicInteger();
+        assertThat(race(()-> {UUID target=index.getAndIncrement()==0?another:other;
+            return reservationAttempt(()->api.reserve(List.of(new com.example.marketplace.inventory.api.Reservations.Request(key,checkout,UUID.randomUUID(),target,1,request.expiresAt()))));
+        })).containsExactlyInAnyOrder("ok","409");
+        assertEquals(3,jdbc.queryForObject("SELECT sum(reserved) FROM marketplace.inventory_balance WHERE sku_id IN (:a,:b)",Map.of("a",another,"b",other),Long.class));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.inventory_reservation_event WHERE reservation_id=:id",Map.of("id",key),Integer.class));
+    }
     @Test
     void inventoryAdjustmentIsVersionedAuditedAndIdempotent() throws Exception {
         var f=skuFixture("stock-basic"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");

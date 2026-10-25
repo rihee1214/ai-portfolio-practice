@@ -1,0 +1,104 @@
+-------------------------------------------------------------------------------
+Test set: com.example.marketplace.dbtest.PostgresJdbcIT
+-------------------------------------------------------------------------------
+Tests run: 99, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 29.76 s <<< FAILURE! -- in com.example.marketplace.dbtest.PostgresJdbcIT
+com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossSkuReverseOrderItemKeysAreSerialized -- Time elapsed: 1.116 s <<< ERROR!
+java.util.concurrent.ExecutionException: 
+org.springframework.dao.PessimisticLockingFailureException: PreparedStatementCallback; SQL [INSERT INTO marketplace.inventory_reservation(id,checkout_id,order_item_id,sku_id,quantity,expires_at,status) VALUES(?,?,?,?,?,?,'RESERVED')]; ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149553; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149554; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,39) in relation "inventory_reservation_order_item_id_key"
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:205)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossKeys(PostgresJdbcIT.java:136)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossSkuReverseOrderItemKeysAreSerialized(PostgresJdbcIT.java:112)
+Caused by: org.springframework.dao.PessimisticLockingFailureException: PreparedStatementCallback; SQL [INSERT INTO marketplace.inventory_reservation(id,checkout_id,order_item_id,sku_id,quantity,expires_at,status) VALUES(?,?,?,?,?,?,'RESERVED')]; ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149553; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149554; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,39) in relation "inventory_reservation_order_item_id_key"
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:146)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:102)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:111)
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:966)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:987)
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.update(NamedParameterJdbcTemplate.java:339)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.lambda$reserve$1(JdbcReservations.java:51)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.lambda$transaction$0(JdbcReservations.java:28)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.transaction(JdbcReservations.java:28)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.reserve(JdbcReservations.java:39)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$reservationCrossKeys$3(PostgresJdbcIT.java:127)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationAttempt(PostgresJdbcIT.java:107)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$reservationCrossKeys$4(PostgresJdbcIT.java:127)
+Caused by: org.postgresql.util.PSQLException: ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149553; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149554; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,39) in relation "inventory_reservation_order_item_id_key"
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$0(JdbcTemplate.java:971)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670)
+	... 11 more
+
+com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossSkuReverseReservationKeysAreSerialized -- Time elapsed: 1.106 s <<< ERROR!
+java.util.concurrent.ExecutionException: 
+org.springframework.dao.PessimisticLockingFailureException: PreparedStatementCallback; SQL [INSERT INTO marketplace.inventory_reservation(id,checkout_id,order_item_id,sku_id,quantity,expires_at,status) VALUES(?,?,?,?,?,?,'RESERVED')]; ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149669; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149670; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,47) in relation "inventory_reservation_pkey"
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:205)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossKeys(PostgresJdbcIT.java:136)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationCrossSkuReverseReservationKeysAreSerialized(PostgresJdbcIT.java:110)
+Caused by: org.springframework.dao.PessimisticLockingFailureException: PreparedStatementCallback; SQL [INSERT INTO marketplace.inventory_reservation(id,checkout_id,order_item_id,sku_id,quantity,expires_at,status) VALUES(?,?,?,?,?,?,'RESERVED')]; ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149669; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149670; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,47) in relation "inventory_reservation_pkey"
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:146)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:102)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:111)
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:966)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:987)
+	at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate.update(NamedParameterJdbcTemplate.java:339)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.lambda$reserve$1(JdbcReservations.java:51)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.lambda$transaction$0(JdbcReservations.java:28)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.transaction(JdbcReservations.java:28)
+	at com.example.marketplace.inventory.infrastructure.JdbcReservations.reserve(JdbcReservations.java:39)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$reservationCrossKeys$3(PostgresJdbcIT.java:127)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.reservationAttempt(PostgresJdbcIT.java:107)
+	at com.example.marketplace.dbtest.PostgresJdbcIT.lambda$reservationCrossKeys$4(PostgresJdbcIT.java:127)
+Caused by: org.postgresql.util.PSQLException: ERROR: deadlock detected
+  세부 정보: Process 734384 waits for ShareLock on transaction 149669; blocked by process 734383.
+Process 734383 waits for ShareLock on transaction 149670; blocked by process 734384.
+  힌트: See server log for query details.
+  위치: while inserting index tuple (0,47) in relation "inventory_reservation_pkey"
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$0(JdbcTemplate.java:971)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670)
+	... 11 more
+

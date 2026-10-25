@@ -260,5 +260,59 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterMemberLockWait",
       "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterTokenLockWait"
     ]
+  },
+  {
+    "id": "P04-E-01",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLifecycleHasOneEffectAndCompleteAudit"
+    ]
+  },
+  {
+    "id": "P04-E-02",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLastUnitRaceAndKeyCollisions"
+    ]
+  },
+  {
+    "id": "P04-E-03",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationTerminalAndExpiryRaces"
+    ]
+  },
+  {
+    "id": "P04-E-04",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationExpiryIsCheckedAfterBalanceLock"
+    ]
+  },
+  {
+    "id": "P04-E-05",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationBatchesAndOuterTransactionRollBack"
+    ]
+  },
+  {
+    "id": "P04-E-06",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationReverseBatchesAndManualAdjustmentSerialize"
+    ]
+  },
+  {
+    "id": "P04-E-07",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationValidationAndDatabaseConstraints"
+    ]
+  },
+  {
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseReservationKeysAreSerialized"
+    ],
+    "id": "P04-E-09"
+  },
+  {
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseOrderItemKeysAreSerialized"
+    ],
+    "id": "P04-E-10"
   }
 ]

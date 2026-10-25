@@ -1,0 +1,28 @@
+{
+  "id": "BROWSER-P01-P04-D",
+  "status": "passed",
+  "tests": [
+    "desktop#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
+    "mobile#access.spec.ts:직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
+    "desktop#account.spec.ts:탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다",
+    "desktop#account.spec.ts:프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인",
+    "desktop#account.spec.ts:비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인",
+    "mobile#account.spec.ts:탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다",
+    "mobile#account.spec.ts:프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인",
+    "mobile#account.spec.ts:비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인",
+    "desktop#auth.spec.ts:실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃",
+    "desktop#auth.spec.ts:입력·미확인·토큰 오류·반복 실패를 화면에서 처리",
+    "mobile#auth.spec.ts:실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃",
+    "mobile#auth.spec.ts:입력·미확인·토큰 오류·반복 실패를 화면에서 처리",
+    "desktop#catalog.spec.ts:카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다",
+    "mobile#catalog.spec.ts:카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다",
+    "desktop#lifecycle.spec.ts:판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다",
+    "mobile#lifecycle.spec.ts:판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다",
+    "desktop#seller-journey.spec.ts:동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다",
+    "mobile#seller-journey.spec.ts:동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다",
+    "desktop#seller.spec.ts:모의 판매 신청·반려·재신청·승인과 구매자 자격 유지",
+    "mobile#seller.spec.ts:모의 판매 신청·반려·재신청·승인과 구매자 자격 유지",
+    "desktop#store.spec.ts:판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침",
+    "mobile#store.spec.ts:판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침"
+  ]
+}

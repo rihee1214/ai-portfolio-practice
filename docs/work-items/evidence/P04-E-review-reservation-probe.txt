@@ -1,0 +1,4 @@
+LEFT=ok
+RIGHT=PessimisticLockingFailureException:40P01
+PROBE_BALANCES=[{sku_id=7ea2b68e-951c-4888-8e0b-54c6f2d0292a, on_hand=10, reserved=0, version=0}, {sku_id=48e5ca92-be28-462c-9a57-24dbe3fb9d9b, on_hand=10, reserved=2, version=2}]
+PROBE_ROWS=2
