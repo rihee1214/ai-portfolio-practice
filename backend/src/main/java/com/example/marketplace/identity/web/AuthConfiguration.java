@@ -77,7 +77,8 @@ public class AuthConfiguration {
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/orders", "/api/guest/orders/{number}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/access/password", "/api/guest/access/recovery-code", "/api/guest/recovery/start", "/api/guest/recovery/{id}/exchange", "/api/guest/recovery/{id}/verify", "/api/guest/recovery/reset").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout/password", "/api/guest/access/login", "/api/guest/access/logout").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout/link/*").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout/password", "/api/guest/checkout/link", "/api/guest/access/login", "/api/guest/access/logout").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout", "/api/guest/verifications",
                                 "/api/guest/verifications/{id}/exchange", "/api/guest/verifications/{id}/verify").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()

@@ -1,0 +1,32 @@
+[
+  {
+    "phase": "P06-A-review",
+    "files": 2162,
+    "mismatches": 0
+  },
+  {
+    "phase": "P06-B",
+    "files": 405,
+    "mismatches": 0
+  },
+  {
+    "phase": "P06-C",
+    "files": 791,
+    "mismatches": 0
+  },
+  {
+    "phase": "P06-D",
+    "files": 882,
+    "mismatches": 0
+  },
+  {
+    "phase": "P06-D-commit",
+    "files": 5,
+    "mismatches": 0
+  },
+  {
+    "phase": "P06-E",
+    "files": 1375,
+    "mismatches": 0
+  }
+]

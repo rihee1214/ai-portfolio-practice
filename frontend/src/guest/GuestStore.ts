@@ -1,9 +1,9 @@
 import { requestJson } from '../api/http'
 import { confirmPhoneCode } from '../phone/FirebasePhoneClient'
 
-type View = { busy: boolean; state: 'INPUT' | 'SENT' | 'VERIFIED'; attempt: string; maskedPhone: string; error: string; expiresAt: string; passwordReady: boolean }
+type View = { busy: boolean; state: 'INPUT' | 'SENT' | 'VERIFIED'; attempt: string; maskedPhone: string; error: string; expiresAt: string; passwordReady: boolean; linkMode: 'NEW' | 'EXISTING'; linkReady: boolean; linkRevision: number; linkKnown: boolean }
 type Fetcher = typeof fetch
-const empty = (): View => ({ busy: false, state: 'INPUT', attempt: '', maskedPhone: '', error: '', expiresAt: '', passwordReady: false })
+const empty = (): View => ({ busy: false, state: 'INPUT', attempt: '', maskedPhone: '', error: '', expiresAt: '', passwordReady: false, linkMode: 'NEW', linkReady: false, linkRevision: 0, linkKnown: true })
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object'
 export class GuestStore {
   private view = empty()
@@ -36,12 +36,16 @@ export class GuestStore {
     const generation = this.generation
     this.set({ busy: true, error: '' })
     try { await action() }
-    catch (error) { if (generation === this.generation) this.set({ error: error instanceof Error && error.message === 'limit' ? '요청이 많습니다. 잠시 후 새 인증을 시작해 주세요.' : '인증을 완료하지 못했습니다. 번호·유효시간을 확인하거나 새 인증을 시작해 주세요.' }) }
+    catch (error) { if (generation === this.generation) this.set({ error: error instanceof Error && error.message === 'limit' ? '요청이 많습니다. 잠시 후 새 인증을 시작해 주세요.' : '인증을 완료하지 못했습니다. 기존 묶음은 조회 인증과 같은 번호의 구매 인증이 필요합니다. 상태를 다시 확인하거나 새 인증을 시작해 주세요.' }) }
     finally { if (generation === this.generation) this.set({ busy: false }) }
   }
   load = () => {
     if (this.controller.signal.aborted) this.controller = new AbortController()
     return this.run(async () => {
+    const loadGeneration = this.generation
+    const previousMode = this.view.linkMode, hadState = this.view.state !== 'INPUT'
+    let loadedVerified = false
+    this.set({ linkReady: false, passwordReady: false, linkKnown: false })
     try {
       const result = await this.call('/api/guest/checkout')
       if (result.state === 'VERIFIED' || result.state === 'SENT') {
@@ -50,10 +54,14 @@ export class GuestStore {
           this.phone = result.phone
         }
         this.accept(result)
-      } else if (result.state !== 'OPEN') {
-        this.set({ error: '이전 인증을 이어갈 수 없습니다. 새 인증번호를 요청해 주세요.' })
+        if (result.state === 'VERIFIED') { loadedVerified = true; this.set({ linkMode: previousMode, linkKnown: false }); await this.refreshLink() }
+      } else {
+        this.set({ ...empty(), error: result.state === 'OPEN' ? '' : '이전 인증을 이어갈 수 없습니다. 새 인증번호를 요청해 주세요.' })
       }
-    } catch { /* No current session is a normal first visit; only explicit mutations show failures. */ }
+    } catch {
+      if (loadGeneration !== this.generation) return
+      this.set({ linkMode: previousMode, linkReady: false, passwordReady: false, linkKnown: false, error: hadState || loadedVerified ? '서버 준비 상태를 확인하지 못했습니다. 상태를 다시 확인해 주세요.' : '' })
+    }
     })
   }
   expire = () => {
@@ -85,11 +93,22 @@ export class GuestStore {
   private accept(result: Record<string, unknown>) {
     if (!['SENT', 'VERIFIED'].includes(String(result.state)) || typeof result.attemptId !== 'string' || !/^[0-9a-f-]{36}$/.test(result.attemptId)
       || typeof result.maskedPhone !== 'string' || !/^010-\*{4}-\d{4}$/.test(result.maskedPhone) || typeof result.expiresAt !== 'string' || !Number.isFinite(Date.parse(result.expiresAt))) throw new Error('schema')
-    this.set({ state: result.state as 'SENT' | 'VERIFIED', attempt: result.attemptId, maskedPhone: result.maskedPhone, expiresAt: result.expiresAt, passwordReady: result.passwordReady === true })
+    this.set({ state: result.state as 'SENT' | 'VERIFIED', attempt: result.attemptId, maskedPhone: result.maskedPhone, expiresAt: result.expiresAt, passwordReady: result.passwordReady === true, linkMode: 'NEW', linkReady: false, linkRevision: 0, linkKnown: true })
   }
+  private acceptLink(result: Record<string, unknown>) {
+    if (!['NEW', 'EXISTING'].includes(String(result.mode)) || typeof result.ready !== 'boolean' || !Number.isInteger(result.revision) || Number(result.revision) < 0) throw new Error('schema')
+    this.set({ linkMode: result.mode as 'NEW' | 'EXISTING', linkReady: result.mode === 'EXISTING' && result.ready, passwordReady: result.mode === 'NEW' && result.ready, linkRevision: Number(result.revision), linkKnown: true })
+  }
+  private async refreshLink() { this.acceptLink(await this.call('/api/guest/checkout/link/' + this.view.attempt)) }
+  selectLink = (mode: 'NEW' | 'EXISTING') => this.run(async () => {
+    if (this.view.state !== 'VERIFIED') throw new Error('state')
+    this.set({ linkReady: false, passwordReady: false, linkKnown: false })
+    const result = await this.call('/api/guest/checkout/link', { attemptId: this.view.attempt, mode, revision: this.view.linkRevision })
+    this.acceptLink(result)
+  })
   preparePassword = (password: string, confirmation: string) => this.run(async () => {
-    if (this.view.state !== 'VERIFIED' || password !== confirmation || [...password].length < 12 || [...password].length > 128) throw new Error('password')
-    const result = await this.call('/api/guest/checkout/password', { attemptId: this.view.attempt, password, confirmation })
+    if (this.view.state !== 'VERIFIED' || this.view.linkMode !== 'NEW' || !this.view.linkKnown || password !== confirmation || [...password].length < 12 || [...password].length > 128) throw new Error('password')
+    const result = await this.call('/api/guest/checkout/password', { attemptId: this.view.attempt, password, confirmation, revision: this.view.linkRevision })
     if (result.status !== 'PASSWORD_READY') throw new Error('schema')
     this.set({ passwordReady: true })
   })

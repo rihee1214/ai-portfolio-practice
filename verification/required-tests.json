@@ -411,5 +411,23 @@
       "com.example.marketplace.guest.RecoverySecretsTest#usesRandomBoundedSecretsAndConstantHashComparison"
     ],
     "id": "com.example.marketplace.guest.RecoverySecretsTest"
+  },
+  {
+    "id": "P06-E-link-contracts",
+    "tests": [
+      "com.example.marketplace.guest.GuestLinkPolicyTest#requiresExplicitModeAndMatchingNormalizedPhoneWithoutFallback",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRequiresBothCredentials",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestNewPurchaseNeverMergesByPhone",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseCannotOverwriteCredentials",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkPreparationIsBoundToCurrentAttempt",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseConsumptionIsAtomic",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkRevisionAndSlowPasswordCannotRestoreOldChoice",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRechecksAccessAfterLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRechecksPurchaseAfterLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRacesPasswordChangeWithoutDeadlock",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkHttpCsrfAndDisabledBoundaries",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestNewLinkFailureRollsBackBuyerAndConsumption",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkRejectsOtherBuyerAndRecoveryProofs"
+    ]
   }
 ]

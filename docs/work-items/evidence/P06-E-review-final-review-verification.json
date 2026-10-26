@@ -1,0 +1,38 @@
+{
+  "developmentDifference": 0,
+  "inputsHash": "5624AF038FBFDE8F09E198F19F6926260C466A2DEDEEA8E31F499F5581736853",
+  "sourceCount": 337,
+  "failures": [
+    {
+      "mismatches": 0,
+      "files": 2162,
+      "manifest": "P06-A-review-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 405,
+      "manifest": "P06-B-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 791,
+      "manifest": "P06-C-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 882,
+      "manifest": "P06-D-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 5,
+      "manifest": "P06-D-commit-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 1375,
+      "manifest": "P06-E-failure-manifest.json"
+    }
+  ],
+  "sourceMismatch": 0
+}

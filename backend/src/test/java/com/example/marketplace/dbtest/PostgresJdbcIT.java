@@ -82,6 +82,132 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @org.springframework.context.annotation.Import({PostgresJdbcIT.TestMailboxEndpoint.class,PostgresJdbcIT.GuestOrderFixture.class,PostgresJdbcIT.GuestFixtureSecurity.class})
 class PostgresJdbcIT {
+    @Test void guestRepurchaseRequiresBothCredentials() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);
+        String session=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink(f.browser,next,"EXISTING",null));
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink("wrong",next,"EXISTING",session));
+        assertEquals("EXISTING",a.selectLink(f.browser,next,"EXISTING",session).mode());
+        assertTrue(a.linkStatus(f.browser,next,session).ready());
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,null,"E-NO-"+f.browser));
+        assertEquals(buyer,a.attachOrder(f.browser,next,session,"E-YES-"+f.browser));
+        assertEquals(2,a.orders(session).size());
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,session,"E-DUP-"+f.browser));
+    }
+    @Test void guestNewPurchaseNeverMergesByPhone() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);String session=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);
+        UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",session);a.selectLink(f.browser,next,"NEW",session);
+        assertFalse(a.linkStatus(f.browser,next,session).ready());
+        a.prepare(f.browser,next,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        UUID created=a.attachOrder(f.browser,next,session,"E-NEW-"+f.browser);assertFalse(buyer.equals(created));assertEquals(1,a.orders(session).size());
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.order(session,"E-NEW-"+f.browser));
+    }
+    @Test void guestRepurchaseCannotOverwriteCredentials() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);recovery(f).initialCode(buyer);
+        String session=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);var before=jdbc.queryForMap("SELECT * FROM marketplace.guest_buyer WHERE id=:b",Map.of("b",buyer));UUID next=guestRepeat(f);
+        a.selectLink(f.browser,next,"EXISTING",session);
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.prepare(f.browser,next,new com.example.marketplace.guest.api.GuestPassword("other password","other password")));
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.createBuyer(f.browser,next));
+        a.attachOrder(f.browser,next,session,"E-KEEP-"+f.browser);assertEquals(before,jdbc.queryForMap("SELECT * FROM marketplace.guest_buyer WHERE id=:b",Map.of("b",buyer)));
+        var other=new GuestFixture();var otherAccess=guestAccess(other);UUID different=guestVerified(other);
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->otherAccess.selectLink(other.browser,different,"EXISTING",session));
+        assertEquals("NEW",otherAccess.linkStatus(other.browser,different,null).mode());
+    }
+    @Test void guestLinkPreparationIsBoundToCurrentAttempt() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;guestBuyer(f,a,old);String session=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);
+        a.selectLink(f.browser,next,"EXISTING",session);a.logout(session);
+        assertFalse(a.linkStatus(f.browser,next,session).ready());assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,session,"E-BAD-"+f.browser));
+        String replacement=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);
+        assertFalse(a.linkStatus(f.browser,next,replacement).ready());a.selectLink(f.browser,next,"EXISTING",replacement);
+        recovery(f).manage(replacement,GUEST_PASSWORD,null,f.source);assertTrue(a.linkStatus(f.browser,next,replacement).ready());
+        recovery(f).manage(replacement,GUEST_PASSWORD,new com.example.marketplace.guest.api.GuestPassword("changed password","changed password"),f.source);
+        assertFalse(a.linkStatus(f.browser,next,replacement).ready());
+        f.service.create(f.browser);assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink(f.browser,next,"NEW",null));
+    }
+    @Test void guestRepurchaseConsumptionIsAtomic() throws Exception {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);String session=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",session);
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,()->a.attachOrder(f.browser,next,session,old));
+        assertEquals("VERIFIED",f.service.status(f.browser,f.token).state());assertEquals(1,a.orders(session).size());
+        assertThat(race(()->{try{a.attachOrder(f.browser,next,session,"E-RACE-"+UUID.randomUUID());return "ok";}catch(com.example.marketplace.guest.api.GuestRejected e){return "rejected";}})).containsExactlyInAnyOrder("ok","rejected");
+        assertEquals(2,a.orders(session).size());assertEquals(buyer,jdbc.queryForObject("SELECT guest_buyer_id FROM marketplace.guest_order_reference WHERE order_number=:o",Map.of("o",old),UUID.class));
+    }
+    @Test void guestLinkRevisionAndSlowPasswordCannotRestoreOldChoice() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;guestBuyer(f,a,old);String token=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);
+        assertEquals(1,a.selectLink(f.browser,next,"EXISTING",token,0).revision());
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink(f.browser,next,"NEW",token,0));
+        a.selectLink(f.browser,next,"NEW",token,1);
+        var real=new com.example.marketplace.identity.infrastructure.SharedPasswordHashes();
+        var slow=new com.example.marketplace.identity.api.PasswordHashes(){public boolean matches(String p,String h){return real.matches(p,h);}public String encode(String p){if(!p.equals("non-account-dummy-password")){a.selectLink(f.browser,next,"EXISTING",token);a.selectLink(f.browser,next,"NEW",token);}return real.encode(p);}};
+        var racing=new com.example.marketplace.guest.infrastructure.JdbcGuestAccess(jdbc,transactionManager,f.service,slow,f.clock,true);
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->racing.prepare(f.browser,next,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD)));
+        assertFalse(a.linkStatus(f.browser,next,token).ready());assertEquals(4,a.linkStatus(f.browser,next,token).revision());
+    }
+    @Test void guestRepurchaseRechecksAccessAfterLockWait() throws Exception {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);String token=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",token);
+        jdbc.update("UPDATE marketplace.guest_access_session SET expires_at=:e,idle_expires_at=:e WHERE token_hash=:t",Map.of("e",java.sql.Timestamp.from(f.clock.instant().plusSeconds(2)),"t",com.example.marketplace.guest.infrastructure.JdbcGuestPurchases.hash(token)));
+        var locked=new CountDownLatch(1);var release=new CountDownLatch(1);
+        try(var executor=Executors.newFixedThreadPool(2)){
+            var holder=executor.submit(()->new TransactionTemplate(transactionManager).executeWithoutResult(status->{jdbc.queryForObject("SELECT id FROM marketplace.guest_buyer WHERE id=:b FOR UPDATE",Map.of("b",buyer),UUID.class);locked.countDown();try{assertTrue(release.await(10,TimeUnit.SECONDS));}catch(InterruptedException e){throw new IllegalStateException(e);}}));assertTrue(locked.await(5,TimeUnit.SECONDS));
+            var consume=executor.submit(()->assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,token,"E-EXPIRED-"+f.browser)));
+            try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%guest_buyer%'",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);f.clock.advance(2);}finally{release.countDown();}
+            holder.get(5,TimeUnit.SECONDS);assertEquals(401,consume.get(5,TimeUnit.SECONDS).status());
+        }
+        assertEquals("VERIFIED",f.service.status(f.browser,f.token).state());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_order_reference WHERE order_number=:o",Map.of("o","E-EXPIRED-"+f.browser),Integer.class));
+    }
+    @Test void guestRepurchaseRechecksPurchaseAfterLockWait() throws Exception {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);String token=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",token);
+        jdbc.update("UPDATE marketplace.guest_attempt SET expires_at=:e WHERE id=:id",Map.of("e",java.sql.Timestamp.from(f.clock.instant().plusSeconds(2)),"id",next));
+        var locked=new CountDownLatch(1);var release=new CountDownLatch(1);
+        try(var executor=Executors.newFixedThreadPool(2)){
+            var holder=executor.submit(()->new TransactionTemplate(transactionManager).executeWithoutResult(status->{jdbc.queryForObject("SELECT id FROM marketplace.guest_buyer WHERE id=:b FOR UPDATE",Map.of("b",buyer),UUID.class);locked.countDown();try{assertTrue(release.await(10,TimeUnit.SECONDS));}catch(InterruptedException e){throw new IllegalStateException(e);}}));assertTrue(locked.await(5,TimeUnit.SECONDS));
+            var consume=executor.submit(()->assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,token,"E-EXPIRED-"+f.browser)));
+            try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%guest_buyer%'",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);f.clock.advance(2);}finally{release.countDown();}
+            holder.get(5,TimeUnit.SECONDS);assertEquals(409,consume.get(5,TimeUnit.SECONDS).status());
+        }
+        assertEquals("EXPIRED",f.service.status(f.browser,f.token).state());assertEquals(null,jdbc.queryForObject("SELECT consumed_at FROM marketplace.guest_attempt WHERE id=:id",Map.of("id",next),java.sql.Timestamp.class));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_order_reference WHERE order_number=:o",Map.of("o","E-EXPIRED-"+f.browser),Integer.class));
+    }
+    @Test void guestRepurchaseRacesPasswordChangeWithoutDeadlock() throws Exception {
+        var f=new GuestFixture();var a=guestAccess(f);var r=recovery(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);r.initialCode(buyer);String token=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",token);
+        var start=new CountDownLatch(1);
+        try(var executor=Executors.newFixedThreadPool(2)){
+            var link=executor.submit(()->{start.await();try{a.attachOrder(f.browser,next,token,"E-R-"+f.browser);return true;}catch(com.example.marketplace.guest.api.GuestRejected e){return false;}});
+            var change=executor.submit(()->{start.await();return r.manage(token,GUEST_PASSWORD,new com.example.marketplace.guest.api.GuestPassword("new valid password","new valid password"),f.source);});start.countDown();boolean linked=link.get(10,TimeUnit.SECONDS);assertEquals(43,change.get(10,TimeUnit.SECONDS).length());
+            assertEquals(linked?2:1,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_order_reference WHERE guest_buyer_id=:b",Map.of("b",buyer),Integer.class));
+        }
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.orders(token));
+    }
+    @Test void guestLinkHttpCsrfAndDisabledBoundaries() throws Exception {
+        var client=authBrowser();String csrf=csrfToken(client);var bad=Map.of("attemptId",UUID.randomUUID().toString(),"mode","EXISTING","revision",0);
+        assertEquals(403,accountRequest(client,"POST","/api/guest/checkout/link",bad,null).statusCode());
+        var rejected=accountRequest(client,"POST","/api/guest/checkout/link",bad,csrf);assertEquals(409,rejected.statusCode());assertEquals("no-store",rejected.headers().firstValue("Cache-Control").orElseThrow());
+        var f=new GuestFixture();var disabled=new com.example.marketplace.guest.infrastructure.JdbcGuestAccess(jdbc,transactionManager,f.service,new com.example.marketplace.identity.infrastructure.SharedPasswordHashes(),f.clock,false);
+        assertEquals(503,assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->disabled.selectLink(f.browser,UUID.randomUUID(),"NEW",null)).status());
+        assertEquals(503,assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->disabled.linkStatus(f.browser,UUID.randomUUID(),null)).status());
+        assertEquals(503,assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->disabled.attachOrder(f.browser,UUID.randomUUID(),null,"NO")).status());
+    }
+
+    @Test void guestNewLinkFailureRollsBackBuyerAndConsumption() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;guestBuyer(f,a,old);UUID next=guestRepeat(f);a.prepare(f.browser,next,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        int count=jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_buyer",Map.of(),Integer.class);
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,()->a.attachOrder(f.browser,next,null,old));
+        assertEquals(count,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_buyer",Map.of(),Integer.class));assertEquals("VERIFIED",f.service.status(f.browser,f.token).state());
+        a.attachOrder(f.browser,next,null,"E-NEW-"+f.browser);assertEquals(count+1,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_buyer",Map.of(),Integer.class));
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,null,"E-NEW2-"+f.browser));assertEquals(count+1,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_buyer",Map.of(),Integer.class));
+    }
+    @Test void guestLinkRejectsOtherBuyerAndRecoveryProofs() {
+        var f=new GuestFixture();var a=guestAccess(f);String old="E-"+f.browser;UUID buyer=guestBuyer(f,a,old);String code=recovery(f).initialCode(buyer),token=a.login(old,f.phone,GUEST_PASSWORD,f.source,null);UUID next=guestRepeat(f);a.selectLink(f.browser,next,"EXISTING",token);
+        UUID other=UUID.randomUUID();jdbc.update("INSERT INTO marketplace.guest_buyer(id,buyer_name,verified_phone,password_hash,created_at) SELECT :b,buyer_name,verified_phone,password_hash,created_at FROM marketplace.guest_buyer WHERE id=:old",Map.of("b",other,"old",buyer));String otherOrder="E-OTHER-"+f.browser;a.registerOrder(other,otherOrder);
+        String otherToken=a.login(otherOrder,f.phone,GUEST_PASSWORD,f.source,token);
+        assertFalse(a.linkStatus(f.browser,next,otherToken).ready());assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.attachOrder(f.browser,next,otherToken,"E-NO-"+f.browser));
+        var r=recovery(f);UUID recoveryId=r.start(f.browser,old,f.phone,code,f.source).attemptId();r.exchange(f.browser,recoveryId,"123456");String grant=r.verify(f.browser,recoveryId,"valid-proof");
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink(f.browser,recoveryId,"EXISTING",otherToken));
+        assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->a.selectLink(f.browser,next,"EXISTING",grant));
+        a.selectLink(f.browser,next,"EXISTING",otherToken);assertEquals(other,a.attachOrder(f.browser,next,otherToken,"E-OTHER-NEW-"+f.browser));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_order_reference WHERE guest_buyer_id=:b",Map.of("b",buyer),Integer.class));
+    }
+
+    private UUID guestRepeat(GuestFixture f) { f.clock.advance(60);f.service.create(f.browser);return guestVerified(f); }
+
     @Test void guestRecoveryInitialLimitAndCredentialRacesAreSerialized() throws Exception {
         var f=new GuestFixture();var access=guestAccess(f);var r=recovery(f);String order="D-"+f.browser;UUID buyer=guestBuyer(f,access,order);
         var code=new java.util.concurrent.atomic.AtomicReference<String>();
@@ -359,7 +485,7 @@ class PostgresJdbcIT {
     static class GuestFixtureSecurity {
         @org.springframework.context.annotation.Bean @org.springframework.core.annotation.Order(0)
         org.springframework.security.web.SecurityFilterChain guestFixtureChain(org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
-            return http.securityMatcher("/__test/guest-order","/__test/guest-recovery-order").csrf(csrf->csrf.csrfTokenRepository(new org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository()))
+            return http.securityMatcher("/__test/guest-order","/__test/guest-recovery-order","/__test/guest-linked-order").csrf(csrf->csrf.csrfTokenRepository(new org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository()))
                     .authorizeHttpRequests(auth->auth.anyRequest().permitAll()).build();
         }
     }
@@ -370,6 +496,8 @@ class PostgresJdbcIT {
         private final NamedParameterJdbcTemplate fixtureJdbc;
         @Autowired private com.example.marketplace.guest.infrastructure.JdbcGuestRecovery recovery;
         GuestOrderFixture(com.example.marketplace.guest.infrastructure.JdbcGuestAccess access,PlatformTransactionManager manager,NamedParameterJdbcTemplate jdbc){this.access=access;this.tx=new TransactionTemplate(manager);this.fixtureJdbc=jdbc;}
+        @org.springframework.web.bind.annotation.ExceptionHandler(com.example.marketplace.guest.api.GuestRejected.class)
+        org.springframework.http.ResponseEntity<?> rejected(com.example.marketplace.guest.api.GuestRejected error){return org.springframework.http.ResponseEntity.status(error.status()).header("Cache-Control","no-store").body(Map.of("error","FIXTURE_REJECTED"));}
         record Historical(String phone,String password,String orderNumber) { }
         @org.springframework.web.bind.annotation.PostMapping("/__test/guest-recovery-order")
         Map<String,String> historical(@org.springframework.web.bind.annotation.RequestBody Historical input){
@@ -377,6 +505,12 @@ class PostgresJdbcIT {
             new com.example.marketplace.guest.api.GuestPassword(input.password(),input.password());
             String hash=new com.example.marketplace.identity.infrastructure.SharedPasswordHashes().encode(input.password());
             return tx.execute(status->{UUID buyer=UUID.randomUUID();fixtureJdbc.update("INSERT INTO marketplace.guest_buyer(id,buyer_name,verified_phone,password_hash,created_at) VALUES(:b,'Historical fixture',:p,:h,now()-interval '1 day')",Map.of("b",buyer,"p",phone,"h",hash));access.registerOrder(buyer,input.orderNumber());return Map.of("orderNumber",input.orderNumber(),"recoveryCode",recovery.initialCode(buyer));});
+        }
+        record LinkedInput(UUID attemptId,String orderNumber,boolean loseResponse) { }
+        @org.springframework.web.bind.annotation.PostMapping("/__test/guest-linked-order")
+        Map<String,String> linked(jakarta.servlet.http.HttpSession session,@org.springframework.web.bind.annotation.RequestBody LinkedInput input,@org.springframework.web.bind.annotation.CookieValue(name="GUEST_ACCESS",required=false) String token){
+            Map<String,String> result=tx.execute(status->{String order=input.orderNumber()==null?"FIXTURE-"+UUID.randomUUID():input.orderNumber();boolean fresh="NEW".equals(access.linkStatus(session.getId(),input.attemptId(),token).mode());UUID buyer=access.attachOrder(session.getId(),input.attemptId(),token,order);return fresh?Map.of("orderNumber",order,"recoveryCode",recovery.initialCode(buyer)):Map.of("orderNumber",order);});
+            if(input.loseResponse()){throw new com.example.marketplace.guest.api.GuestRejected(503);}return result;
         }
         record Input(UUID attemptId) { }
         @org.springframework.web.bind.annotation.PostMapping("/__test/guest-order")
@@ -1123,7 +1257,7 @@ class PostgresJdbcIT {
         jdbc.update("INSERT INTO p4e_upgrade.stock_movement SELECT * FROM marketplace.stock_movement WHERE sku_id=:id",Map.of("id",sku));
         var movement=jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of());
         var migration=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();
-        assertEquals(7,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
+        assertEquals(8,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
         assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM p4e_upgrade.catalog_product WHERE created_at IS NOT NULL",Map.of(),Integer.class));
         assertEquals(row,jdbc.queryForMap("SELECT * FROM p4e_upgrade.inventory_balance WHERE sku_id=:id",Map.of("id",sku)));
         assertEquals(movement,jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of()));

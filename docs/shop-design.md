@@ -485,3 +485,11 @@ P06-C 최종 상태: 개발 및 독립 전체검증 통과, 제약별 결과와 
 구매 증명 재사용을 막기 위해 제공자 custom token에 교환별 난수claim을 추가하고 실제SDK 검증에서 그 교환과 대조한다. 사용자번호가 같거나 인증시각이 같아도 이전교환의 토큰은 재사용할 수 없다. 첫코드 응답유실은 현재pw로그인후코드재발급, 변경/reset응답유실은 새pw로그인후코드재발급, grant응답유실은 제한시간후새전화인증으로 복구한다. 모든 원문은 브라우저메모리에서만 유지한다. 코드분실은 지원안내만 제공하며 전화만으로 자동복구하지 않는다.
 
 초기발급/과거주문 생성은 테스트소스 c3-fixture와 내부계약이다. 실제 주문의 최초발급 시점/거래는 P08-C에서 연결한다. 실제SMS/운영다중인스턴스는 미검증이며 P06-E 묶음연결은 구현하지 않는다. 구체 assertion과 개발/독립 검증 및 실패 이력은 [P06-D 작업 기록](work-items/P06-D.md)과 [검토](work-items/P06-D-review.md)를 따른다.
+
+### P06-E 재구매 연결 계약 (2026-10-26)
+
+기존 조회 인증과 현재 구매의 PURCHASE 전화 인증을 모두 확인하고 등록 번호가 일치할 때만 기존 GuestBuyer에 새 가상 주문 참조를 연결한다. 같은 이름·전화만으로 묶음을 찾거나 병합하지 않는다. NEW는 조회 쿠키가 있어도 별도 buyer를 생성하며 EXISTING은 기존 이름·번호·비밀번호 해시/version·복구 코드를 변경하지 않는다. 실제 주문 거래는 P08-C에 남긴다.
+
+현재 구매 attempt에 NEW/EXISTING 선택, 조회 세션 token hash, link_revision을 저장한다. `POST /api/guest/checkout/link`는 attemptId/mode/revision을 받고 세션 쿠키에서 대상을 결정한다. `GET /api/guest/checkout/link/{attempt}`는 mode/ready/revision만 반환한다. 기존 비밀번호 준비 API도 revision을 확인한다(이전 C 호출의 누락값은0). 첫 hash 전 실제 revision과 hash 뒤 revision이 다르면 거부한다. 새 모드 선택은 준비된 비밀번호를 비우고 revision을 증가시킨다. 응답이 유실되거나 다른 탭과 충돌하면 자동 전환하지 않고 서버 상태 재확인이 필요하다.
+
+내부 `JdbcGuestAccess.attachOrder`는 checkout→buyer→session 잠금과 최신 권한/시간 검사 뒤 인증 소비·참조 등록을 한 거래로 묶는다. 기존 createBuyer도 EXISTING 선택을 거부한다. 토큰 교체·폐기·비밀번호 변경 시 이전 준비가 무효이며 코드만 재발급한 경우 조회 세션을 유지하는 D 정책은 유지한다. 준비 여부를 확인하지 못한 화면은 선택을 확정하거나 새 비밀번호 입력을 노출하지 않는다. 제약별 실제 결과와 독립 검토는 [P06-E 작업 기록](work-items/P06-E.md)을 따른다.

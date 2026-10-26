@@ -52,6 +52,12 @@
     "desktop#guest-recovery.spec.ts:최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
     "desktop#guest-recovery.spec.ts:재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다",
     "mobile#guest-recovery.spec.ts:최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
-    "mobile#guest-recovery.spec.ts:재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다"
+    "mobile#guest-recovery.spec.ts:재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다",
+    "desktop#guest-repurchase.spec.ts:재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다",
+    "mobile#guest-repurchase.spec.ts:재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다",
+    "desktop#guest-repurchase.spec.ts:같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
+    "mobile#guest-repurchase.spec.ts:같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
+    "desktop#guest-repurchase.spec.ts:등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다",
+    "mobile#guest-repurchase.spec.ts:등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다"
   ]
 }

@@ -1,0 +1,141 @@
+[WebServer] (node:7116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 58 tests using 1 worker
+
+(node:45784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.8s)
+  ok  2 [desktop] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (686ms)
+  ok  3 [desktop] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.5s)
+  ok  4 [desktop] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.6s)
+  ok  5 [desktop] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (1.9s)
+  ok  6 [desktop] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+  ok  7 [desktop] › auth-e2e\browse.spec.ts:2:1 › 공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다 (1.2s)
+  ok  8 [desktop] › auth-e2e\cart.spec.ts:2:1 › 방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다 (2.4s)
+  ok  9 [desktop] › auth-e2e\cart.spec.ts:65:1 › 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 (815ms)
+  ok 10 [desktop] › auth-e2e\catalog.spec.ts:24:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (6.0s)
+C lookup: prepared and fixture created
+C lookup: independent page ready
+C lookup: authenticated after lost response
+C lookup: logout verified
+  ok 11 [desktop] › auth-e2e\guest-lookup.spec.ts:2:1 › 직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다 (2.0s)
+  ok 12 [desktop] › auth-e2e\guest-recovery.spec.ts:2:1 › 복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다 (1.7s)
+  ok 13 [desktop] › auth-e2e\guest-recovery.spec.ts:47:1 › 최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다 (1.4s)
+  ok 14 [desktop] › auth-e2e\guest-recovery.spec.ts:73:1 › 재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다 (794ms)
+  ok 15 [desktop] › auth-e2e\guest-repurchase.spec.ts:23:1 › 재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다 (1.7s)
+  ok 16 [desktop] › auth-e2e\guest-repurchase.spec.ts:42:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 (1.3s)
+  ok 17 [desktop] › auth-e2e\guest-repurchase.spec.ts:55:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 (1.2s)
+  ok 18 [desktop] › auth-e2e\guest.spec.ts:3:1 › 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 (970ms)
+  ok 19 [desktop] › auth-e2e\guest.spec.ts:62:1 › 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 (780ms)
+  ok 20 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 21 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 22 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 23 [desktop] › auth-e2e\input-flow.spec.ts:42:1 › 상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다 (322ms)
+MANAGED_STORE found on page 2
+  ok 24 [desktop] › auth-e2e\lifecycle.spec.ts:13:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.3s)
+  ok 25 [desktop] › auth-e2e\purchase.spec.ts:10:1 › 회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다 (1.2s)
+  ok 26 [desktop] › auth-e2e\purchase.spec.ts:32:1 › 방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다 (1.6s)
+MANAGED_STORE found on page 3
+  ok 27 [desktop] › auth-e2e\seller-journey.spec.ts:15:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (3.3s)
+  ok 28 [desktop] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (1.9s)
+  ok 29 [desktop] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.5s)
+(node:39528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 30 [mobile] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (2.0s)
+  ok 31 [mobile] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (777ms)
+  ok 32 [mobile] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.5s)
+  ok 33 [mobile] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.7s)
+  ok 34 [mobile] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (2.0s)
+  ok 35 [mobile] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+  ok 36 [mobile] › auth-e2e\browse.spec.ts:2:1 › 공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다 (1.2s)
+  ok 37 [mobile] › auth-e2e\cart.spec.ts:2:1 › 방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다 (2.4s)
+  ok 38 [mobile] › auth-e2e\cart.spec.ts:65:1 › 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 (698ms)
+  ok 39 [mobile] › auth-e2e\catalog.spec.ts:24:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (6.7s)
+C lookup: prepared and fixture created
+C lookup: independent page ready
+C lookup: authenticated after lost response
+C lookup: logout verified
+  ok 40 [mobile] › auth-e2e\guest-lookup.spec.ts:2:1 › 직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다 (2.0s)
+  ok 41 [mobile] › auth-e2e\guest-recovery.spec.ts:2:1 › 복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다 (1.7s)
+  ok 42 [mobile] › auth-e2e\guest-recovery.spec.ts:47:1 › 최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다 (1.5s)
+  ok 43 [mobile] › auth-e2e\guest-recovery.spec.ts:73:1 › 재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다 (858ms)
+  ok 44 [mobile] › auth-e2e\guest-repurchase.spec.ts:23:1 › 재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다 (1.9s)
+  x  45 [mobile] › auth-e2e\guest-repurchase.spec.ts:42:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 (1.4s)
+(node:45708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  46 [mobile] › auth-e2e\guest-repurchase.spec.ts:55:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 (5.4s)
+(node:42348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 47 [mobile] › auth-e2e\guest.spec.ts:3:1 › 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 (1.1s)
+  ok 48 [mobile] › auth-e2e\guest.spec.ts:62:1 › 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 (723ms)
+  ok 49 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 50 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.3s)
+  ok 51 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.3s)
+  ok 52 [mobile] › auth-e2e\input-flow.spec.ts:42:1 › 상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다 (354ms)
+MANAGED_STORE found on page 2
+  ok 53 [mobile] › auth-e2e\lifecycle.spec.ts:13:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.6s)
+  ok 54 [mobile] › auth-e2e\purchase.spec.ts:10:1 › 회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다 (1.2s)
+  ok 55 [mobile] › auth-e2e\purchase.spec.ts:32:1 › 방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다 (1.6s)
+MANAGED_STORE found on page 2
+  ok 56 [mobile] › auth-e2e\seller-journey.spec.ts:15:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (3.5s)
+  ok 57 [mobile] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (2.1s)
+  ok 58 [mobile] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.7s)
+
+
+  1) [mobile] › auth-e2e\guest-repurchase.spec.ts:42:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: [{"orderNumber": "E-NEW-LOST-4a61c0e7-efb7-4be8-95ee-3b13b358fd4b"}]
+    Received: undefined
+
+      51 |   expect((await attach(context, input)).status()).toBe(503); expect((await attach(context, input)).status()).toBe(409)
+      52 |   await context.request.post('/api/guest/access/login', { headers: await csrf(context), data: { orderNumber: value.orderNumber, phone, password: 'separate group password' } })
+    > 53 |   const orders = await (await context.request.get('/api/guest/orders')).json(); expect(orders.orders).toEqual([{ orderNumber: value.orderNumber }]); expect((await context.request.get('/api/guest/orders/' + old)).status()).toBe(404)
+         |                                                                                                       ^
+      54 | })
+      55 | test('등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다', async ({ page, context }, info) => {
+      56 |   const phone = info.project.name === 'desktop' ? '+821065000021' : '+821065000022', other = info.project.name === 'desktop' ? '+821065000031' : '+821065000032'
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\guest-repurchase.spec.ts:53:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\p06-e-dev3-20261026\db\browser-results\guest-repurchase-같은-번호의-새--3f76c-며-조회-로그아웃-뒤-기존-연결을-사용할-수-없다-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\p06-e-dev3-20261026\db\browser-results\guest-repurchase-같은-번호의-새--3f76c-며-조회-로그아웃-뒤-기존-연결을-사용할-수-없다-mobile\error-context.md
+
+  2) [mobile] › auth-e2e\guest-repurchase.spec.ts:55:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '연결된 주문' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: '연결된 주문' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: '연결된 주문' })
+
+
+       6 |   const response = await context.request.post(`http://127.0.0.1:${process.env.A3_API_PORT}/__test/guest-recovery-order`, { headers: await csrf(context), data: { phone, password, orderNumber } })
+       7 |   expect(response.status()).toBe(200)
+    >  8 |   await page.getByLabel('주문번호', { exact: true }).fill(orderNumber); await page.getByLabel('등록 전화번호').fill(phone); await page.getByLabel('조회 비밀번호', { exact: true }).fill(password); await page.getByRole('button', { name: '주문 조회 인증' }).click(); await expect(page.getByRole('heading', { name: '연결된 주문' })).toBeVisible()
+         |                                                                                                                                                                                                                                                                                                               ^
+       9 |   return orderNumber
+      10 | }
+      11 | async function purchase(page: Page, phone: string) {
+        at historical (D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\guest-repurchase.spec.ts:8:303)
+        at D:\Workspace\ai-portfolio-practice\frontend\auth-e2e\guest-repurchase.spec.ts:57:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\.local-tools\p06-e-dev3-20261026\db\browser-results\guest-repurchase-등록-번호와-다른-구매-번호는-기존-묶음-연결을-거부하고-새-묶음으로-안내한다-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\.local-tools\p06-e-dev3-20261026\db\browser-results\guest-repurchase-등록-번호와-다른-구매-번호는-기존-묶음-연결을-거부하고-새-묶음으로-안내한다-mobile\error-context.md
+
+  2 failed
+    [mobile] › auth-e2e\guest-repurchase.spec.ts:42:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 
+    [mobile] › auth-e2e\guest-repurchase.spec.ts:55:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 
+  56 passed (1.7m)

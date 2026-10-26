@@ -31,13 +31,15 @@ public final class JdbcGuestAccess {
         this.dummyHash=hashes.encode("non-account-dummy-password");
         this.enabled=enabled;
     }
-    public void prepare(String browser, UUID attempt, GuestPassword password) {
+    public void prepare(String browser, UUID attempt, GuestPassword password) { prepare(browser,attempt,password,null); }
+    public void prepare(String browser, UUID attempt, GuestPassword password, Integer revision) {
         available();
         outsideTransaction();
-        purchases.verified(browser,purchases.credential(browser),attempt);
+        int preparedRevision=tx.execute(status->{purchases.verified(browser,purchases.credential(browser),attempt);requireNew(attempt,revision);return ((Number)linkRow(attempt).get("link_revision")).intValue();});
         String hash=hashes.encode(password.value());
         tx.executeWithoutResult(status->{
             purchases.verified(browser,purchases.credential(browser),attempt);
+            requireNew(attempt,preparedRevision);
             jdbc.update("UPDATE marketplace.guest_attempt SET prepared_password_hash=:h WHERE id=:id",Map.of("h",hash,"id",attempt));
         });
     }
@@ -46,6 +48,7 @@ public final class JdbcGuestAccess {
         available();
         return tx.execute(status->{
             var verified=purchases.verified(browser,purchases.credential(browser),attempt);
+            requireNew(attempt,null);
             String hash=jdbc.queryForObject("SELECT prepared_password_hash FROM marketplace.guest_attempt WHERE id=:id",Map.of("id",attempt),String.class);
             if(hash==null) { throw new GuestRejected(409); }
             purchases.consume(browser,purchases.credential(browser),attempt,verified.phone(),"PURCHASE");
@@ -55,6 +58,67 @@ public final class JdbcGuestAccess {
             return id;
         });
     }
+    public record LinkStatus(String mode, boolean ready, int revision) { }
+    public LinkStatus selectLink(String browser, UUID attempt, String mode, String token) { return selectLink(browser,attempt,mode,token,null); }
+    public LinkStatus selectLink(String browser, UUID attempt, String mode, String token, Integer expectedRevision) {
+        available();
+        var selected=com.example.marketplace.guest.api.GuestLinkPolicy.parse(mode);
+        return tx.execute(status->{
+            var verified=purchases.verified(browser,purchases.credential(browser),attempt);
+            var row=linkRow(attempt);checkRevision(row,expectedRevision);
+            String binding=null;
+            if(selected==com.example.marketplace.guest.api.GuestLinkPolicy.EXISTING) {
+                UUID buyer=authorize(token);
+                samePhone(buyer,verified.phone());
+                purchases.verified(browser,purchases.credential(browser),attempt);
+                binding=JdbcGuestPurchases.hash(token);
+            }
+            var args=new java.util.HashMap<String,Object>();args.put("id",attempt);args.put("mode",mode);args.put("binding",binding);
+            jdbc.update("UPDATE marketplace.guest_attempt SET link_mode=:mode,link_session_hash=:binding,prepared_password_hash=NULL,link_revision=link_revision+1 WHERE id=:id",args);
+            return linkStatus(browser,attempt,token);
+        });
+    }
+    public LinkStatus linkStatus(String browser, UUID attempt, String token) {
+        available();
+        return tx.execute(status->{
+            var verified=purchases.verified(browser,purchases.credential(browser),attempt);var row=linkRow(attempt);
+            boolean ready=row.get("prepared_password_hash")!=null;
+            if("EXISTING".equals(row.get("link_mode"))) {
+                ready=false;
+                if(token!=null && JdbcGuestPurchases.hash(token).equals(row.get("link_session_hash"))) {
+                    try { UUID buyer=authorize(token);samePhone(buyer,verified.phone());purchases.verified(browser,purchases.credential(browser),attempt);ready=true; }
+                    catch(GuestRejected rejected) { ready=false; }
+                }
+            }
+            return new LinkStatus((String)row.get("link_mode"),ready,((Number)row.get("link_revision")).intValue());
+        });
+    }
+    /** Internal only: caller's order transaction joins selection, consumption and reference insertion. */
+    public UUID attachOrder(String browser, UUID attempt, String token, String order) {
+        available();
+        return tx.execute(status->{
+            var verified=purchases.verified(browser,purchases.credential(browser),attempt);var row=linkRow(attempt);UUID buyer;
+            if("EXISTING".equals(row.get("link_mode"))) {
+                if(token==null || !JdbcGuestPurchases.hash(token).equals(row.get("link_session_hash"))) { throw new GuestRejected(401); }
+                buyer=authorize(token);samePhone(buyer,verified.phone());
+                purchases.consume(browser,purchases.credential(browser),attempt,verified.phone(),"PURCHASE");
+            } else { buyer=createBuyer(browser,attempt); }
+            registerOrder(buyer,order);return buyer;
+        });
+    }
+    private Map<String,Object> linkRow(UUID attempt) { return jdbc.queryForMap("SELECT link_mode,link_session_hash,link_revision,prepared_password_hash FROM marketplace.guest_attempt WHERE id=:id",Map.of("id",attempt)); }
+    private void samePhone(UUID buyer,String phone) {
+        String registered=jdbc.queryForObject("SELECT verified_phone FROM marketplace.guest_buyer WHERE id=:b",Map.of("b",buyer),String.class);
+        com.example.marketplace.guest.api.GuestLinkPolicy.requireSamePhone(registered,phone);
+    }
+    private void requireNew(UUID attempt,Integer revision) {
+        var row=linkRow(attempt);checkRevision(row,revision);
+        if(!"NEW".equals(row.get("link_mode"))) { throw new GuestRejected(409); }
+    }
+    private void checkRevision(Map<String,Object> row,Integer revision) {
+        if(revision!=null && revision.intValue()!=((Number)row.get("link_revision")).intValue()) { throw new GuestRejected(409); }
+    }
+
     public void registerOrder(UUID buyer, String order) {
         available();
         if(order==null || !order.matches("[A-Za-z0-9-]{1,64}")) { throw new IllegalArgumentException("Invalid order reference"); }

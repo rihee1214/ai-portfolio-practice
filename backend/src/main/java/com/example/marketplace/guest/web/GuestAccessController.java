@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 @RestController @Profile("db")
 public class GuestAccessController {
-    public record PasswordInput(UUID attemptId, String password, String confirmation) {
+    public record PasswordInput(UUID attemptId, String password, String confirmation, Integer revision) {
         @Override public String toString() { return "PasswordInput[REDACTED]"; }
     }
     public record Login(String orderNumber, String phone, String password) {
@@ -29,8 +29,16 @@ public class GuestAccessController {
     public GuestAccessController(JdbcGuestAccess access,@Value("${marketplace.session.secure:true}") boolean secure) { this.access=access; this.secure=secure; }
     @PostMapping("/api/guest/checkout/password") public ResponseEntity<?> prepare(HttpSession session,@RequestBody PasswordInput input) {
         if(input==null) { throw new GuestRejected(400); }
-        access.prepare(session.getId(),input.attemptId(),new GuestPassword(input.password(),input.confirmation()));
+        access.prepare(session.getId(),input.attemptId(),new GuestPassword(input.password(),input.confirmation()),input.revision()==null?0:input.revision());
         return response(Map.of("status","PASSWORD_READY"));
+    }
+    public record LinkInput(UUID attemptId,String mode,Integer revision) { }
+    @PostMapping("/api/guest/checkout/link") public ResponseEntity<?> selectLink(HttpSession session,@RequestBody LinkInput input,@CookieValue(name="GUEST_ACCESS",required=false) String token) {
+        if(input==null || input.attemptId()==null || input.revision()==null) { throw new GuestRejected(400); }
+        return response(access.selectLink(session.getId(),input.attemptId(),input.mode(),token,input.revision()));
+    }
+    @GetMapping("/api/guest/checkout/link/{attempt}") public ResponseEntity<?> link(HttpSession session,@PathVariable UUID attempt,@CookieValue(name="GUEST_ACCESS",required=false) String token) {
+        return response(access.linkStatus(session.getId(),attempt,token));
     }
     @PostMapping("/api/guest/access/login") public ResponseEntity<?> login(@RequestBody Login input,HttpServletRequest request,
             @CookieValue(name="GUEST_ACCESS",required=false) String previous) {

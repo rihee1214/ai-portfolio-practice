@@ -23,7 +23,8 @@ export function GuestPage() {
       <button disabled={view.busy}>인증 확인</button>
     </form>}
     {view.state === 'VERIFIED' && <p role="status">{view.maskedPhone} 구매 인증을 확인했습니다. 이 결과는 현재 구매 세션에서만 유효합니다.</p>}
-    {view.state === 'VERIFIED' && (view.passwordReady ? <p role="status">조회 비밀번호 준비 완료. 아직 주문은 생성되지 않았습니다.</p> : <GuestPasswordForm key={view.attempt} store={store} busy={view.busy} />)}
+    {view.state === 'VERIFIED' && <section aria-label="주문 묶음 선택"><h2>주문 묶음 선택</h2><p>새 묶음은 같은 번호라도 이전 주문과 합치지 않습니다. 기존 묶음은 먼저 조회 인증한 뒤 같은 번호로 현재 구매 인증을 완료해야 합니다. 번호가 다르면 새 묶음을 선택해 주세요.</p><p><Link to="/guest/orders/login">기존 묶음 조회 인증</Link></p><button disabled={view.busy} onClick={() => void store.selectLink('NEW')}>새 묶음 선택</button><button disabled={view.busy} onClick={() => void store.selectLink('EXISTING')}>기존 묶음 연결</button><button disabled={view.busy} onClick={() => void store.load()}>서버 준비 상태 다시 확인</button><p>현재 선택: {!view.linkKnown ? '서버 확인 필요' : view.linkMode === 'NEW' ? '새 묶음' : '기존 묶음'}</p>{view.linkMode === 'EXISTING' && <p role="status">{view.linkReady ? '기존 묶음 연결 준비 완료. 기존 비밀번호를 유지합니다. 아직 주문은 생성되지 않았습니다.' : '기존 묶음 연결 자격을 다시 확인해 주세요.'}</p>}</section>}
+    {view.state === 'VERIFIED' && view.linkMode === 'NEW' && view.linkKnown && (view.passwordReady ? <p role="status">조회 비밀번호 준비 완료. 아직 주문은 생성되지 않았습니다.</p> : <GuestPasswordForm key={view.attempt + view.linkRevision} store={store} busy={view.busy} />)}
     {view.state !== 'INPUT' && <button disabled={view.busy} onClick={() => { setCode(''); setName(''); setPhone(''); void store.reset() }}>정보 변경·새 인증 시작</button>}
     <p>재요청은 60초 뒤 가능합니다. 번호별 15분에 3회, 실패 5회까지 허용합니다. 인증을 마치지 못하면 새 인증을 시작해 주세요.</p>
     <p><Link to="/checkout">주문서 준비로 돌아가기</Link></p>

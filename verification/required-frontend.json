@@ -143,6 +143,11 @@
     "tests/unit/GuestRecoveryStore.test.tsx#requires server grant and clears one-time secrets on leaving",
     "tests/unit/GuestRecoveryStore.test.tsx#blocks duplicates and ignores late responses after disposal",
     "tests/unit/GuestRecoveryStore.test.tsx#does not claim success after a lost response and permits explicit retry",
-    "tests/unit/GuestRecoveryStore.test.tsx#explains the resend and window limits after a 429 without exposing protected data"
+    "tests/unit/GuestRecoveryStore.test.tsx#explains the resend and window limits after a 429 without exposing protected data",
+    "tests/unit/GuestLinkStore.test.tsx#restores the server link mode and rejects password preparation for an existing group",
+    "tests/unit/GuestLinkStore.test.tsx#does not claim a lost selection response succeeded and restores it through explicit refresh",
+    "tests/unit/GuestLinkStore.test.tsx#suppresses duplicate link requests and discards the response after disposal",
+    "tests/unit/GuestLinkStore.test.tsx#keeps an existing selection unconfirmed on link lookup failure and clears readiness on reset",
+    "tests/unit/GuestLinkStore.test.tsx#clears a previous ready state when checkout refresh fails or expires"
   ]
 }

@@ -1,0 +1,58 @@
+
+> marketplace-frontend@0.0.1 test:unit
+> vitest run tests/unit/GuestLinkStore.test.tsx
+
+
+ RUN  v5.0.5 D:/Workspace/ai-portfolio-practice/frontend
+
+ ❯ tests/unit/GuestLinkStore.test.tsx (5 tests | 2 failed) 78ms
+   × keeps an existing selection unconfirmed on link lookup failure and clears readiness on reset 5ms
+   × clears a previous ready state when checkout refresh fails or expires 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/GuestLinkStore.test.tsx > keeps an existing selection unconfirmed on link lookup failure and clears readiness on reset
+AssertionError: expected { Object (busy, state, ...) } to match object { linkMode: 'EXISTING', …(3) }
+(7 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "linkKnown": false,
+-   "linkMode": "EXISTING",
++   "linkMode": "NEW",
+    "linkReady": false,
+    "passwordReady": false,
+  }
+
+ ❯ tests/unit/GuestLinkStore.test.tsx:43:55
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/GuestLinkStore.test.tsx > clears a previous ready state when checkout refresh fails or expires
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/GuestLinkStore.test.tsx:50:67
+     48|   for (const result of [json({}, 401), json({ state: 'EXPIRED' }), jso…
+     49|     const f = fixture(); await f.store.load(); await f.store.selectLin…
+     50|     await f.store.load(); expect(f.store.getSnapshot().linkReady).toBe…
+       |                                                                   ^
+     51|   }
+     52| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  20:40:44
+   Duration  1.47s (environment 71%, setup 18%, tests 6%, transform 3%, import 2%)
+
