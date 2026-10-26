@@ -75,6 +75,8 @@ public class AuthConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/orders", "/api/guest/orders/{number}").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout/password", "/api/guest/access/login", "/api/guest/access/logout").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/guest/checkout", "/api/guest/verifications",
                                 "/api/guest/verifications/{id}/exchange", "/api/guest/verifications/{id}/verify").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()

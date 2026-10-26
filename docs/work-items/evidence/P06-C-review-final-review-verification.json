@@ -1,0 +1,23 @@
+{
+  "sourceFiles": 323,
+  "currentMismatch": 0,
+  "developmentDifference": 0,
+  "inputsHash": "B1717B43F425B6B8ABFCBE1F035D7500D2FB52FF97D44CB0F61B4BFD895132B1",
+  "failures": [
+    {
+      "manifest": "docs/work-items/evidence/P06-A-review-failure-manifest.json",
+      "files": 2162,
+      "mismatches": 0
+    },
+    {
+      "manifest": "docs/work-items/evidence/P06-B-failure-manifest.json",
+      "files": 405,
+      "mismatches": 0
+    },
+    {
+      "manifest": "docs/work-items/evidence/P06-C-failure-manifest.json",
+      "files": 791,
+      "mismatches": 0
+    }
+  ]
+}

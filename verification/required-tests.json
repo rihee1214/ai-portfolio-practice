@@ -273,7 +273,16 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestResendFailureAndSourceLimitsPersistAcrossSessions",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestHttpRequiresCsrfAndBrowserBindingWithoutGrantingAccountAccess",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestDatabaseFailureLateProviderAndLostResponseRecoverWithoutFalseSuccess",
-      "com.example.marketplace.dbtest.PostgresJdbcIT#guestProviderStagesWindowsAndRestartFailClosed"
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestProviderStagesWindowsAndRestartFailClosed",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordHashPreparationAndCreationAreBoundAtomicAndNeverMerge",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordHashingRechecksExpiryOutsideTransactions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupSessionsEnforceIdleMaximumVersionRotationAndLogout",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupLimitsAndCredentialFailuresAreUniformAndDurable",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupLockWaitRechecksExpiryAndRevocation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupHttpChecksCsrfCookieUniformErrorsAndMemberSeparation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupRechecksVersionAfterHashAndEnforcesLocalAndSecureBoundaries",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestSessionRotationFailureRollsBackAndLookupSerializesWithLogout",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordPreparationReplacementsCannotChangeConsumedBuyer"
     ]
   },
   {
@@ -377,5 +386,12 @@
     "tests": [
       "com.example.marketplace.guest.GuestLocalPolicyTest#requiresExplicitLoopbackModeAndRejectsProductionProfiles"
     ]
+  },
+  {
+    "tests": [
+      "com.example.marketplace.guest.GuestPasswordTest#preservesSpacesAndUnicodeWithinTwelveTo128CodePoints",
+      "com.example.marketplace.guest.GuestPasswordTest#rejectsMismatchBoundsAndMalformedUnicode"
+    ],
+    "id": "com.example.marketplace.guest.GuestPasswordTest"
   }
 ]

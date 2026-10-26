@@ -80,3 +80,13 @@ it('SDK failure never confirms and explicit new authentication recovers', async 
   await f.store.issue('새 가상', '01012345678'); await f.store.verify('123456')
   expect(f.store.getSnapshot().state).toBe('VERIFIED')
 })
+it('prepares only matching passwords for the verified attempt and never keeps their values', async () => {
+  const f = fixture(); await f.store.issue('가상', '01012345678'); await f.store.verify('123456')
+  const before = f.requests.length
+  await f.store.preparePassword('short', 'short'); await f.store.preparePassword('long password', 'different password')
+  expect(f.requests).toHaveLength(before)
+  f.fetcher.mockImplementation(async path => String(path).endsWith('/csrf') ? json({ token: 'csrf', headerName: 'X-CSRF-TOKEN' }) : json({ status: 'PASSWORD_READY' }))
+  await f.store.preparePassword('  long password  ', '  long password  ')
+  expect(f.store.getSnapshot().passwordReady).toBe(true)
+  expect(JSON.stringify(f.store.getSnapshot())).not.toContain('long password')
+})

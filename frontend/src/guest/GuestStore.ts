@@ -1,9 +1,9 @@
 import { requestJson } from '../api/http'
 import { confirmPhoneCode } from '../phone/FirebasePhoneClient'
 
-type View = { busy: boolean; state: 'INPUT' | 'SENT' | 'VERIFIED'; attempt: string; maskedPhone: string; error: string; expiresAt: string }
+type View = { busy: boolean; state: 'INPUT' | 'SENT' | 'VERIFIED'; attempt: string; maskedPhone: string; error: string; expiresAt: string; passwordReady: boolean }
 type Fetcher = typeof fetch
-const empty = (): View => ({ busy: false, state: 'INPUT', attempt: '', maskedPhone: '', error: '', expiresAt: '' })
+const empty = (): View => ({ busy: false, state: 'INPUT', attempt: '', maskedPhone: '', error: '', expiresAt: '', passwordReady: false })
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object'
 export class GuestStore {
   private view = empty()
@@ -85,7 +85,13 @@ export class GuestStore {
   private accept(result: Record<string, unknown>) {
     if (!['SENT', 'VERIFIED'].includes(String(result.state)) || typeof result.attemptId !== 'string' || !/^[0-9a-f-]{36}$/.test(result.attemptId)
       || typeof result.maskedPhone !== 'string' || !/^010-\*{4}-\d{4}$/.test(result.maskedPhone) || typeof result.expiresAt !== 'string' || !Number.isFinite(Date.parse(result.expiresAt))) throw new Error('schema')
-    this.set({ state: result.state as 'SENT' | 'VERIFIED', attempt: result.attemptId, maskedPhone: result.maskedPhone, expiresAt: result.expiresAt })
+    this.set({ state: result.state as 'SENT' | 'VERIFIED', attempt: result.attemptId, maskedPhone: result.maskedPhone, expiresAt: result.expiresAt, passwordReady: result.passwordReady === true })
   }
+  preparePassword = (password: string, confirmation: string) => this.run(async () => {
+    if (this.view.state !== 'VERIFIED' || password !== confirmation || [...password].length < 12 || [...password].length > 128) throw new Error('password')
+    const result = await this.call('/api/guest/checkout/password', { attemptId: this.view.attempt, password, confirmation })
+    if (result.status !== 'PASSWORD_READY') throw new Error('schema')
+    this.set({ passwordReady: true })
+  })
 }
 

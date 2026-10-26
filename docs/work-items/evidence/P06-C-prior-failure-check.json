@@ -1,0 +1,12 @@
+[
+  {
+    "mismatches": 0,
+    "count": 2162,
+    "manifest": "docs/work-items/evidence/P06-A-review-failure-manifest.json"
+  },
+  {
+    "mismatches": 0,
+    "count": 405,
+    "manifest": "docs/work-items/evidence/P06-B-failure-manifest.json"
+  }
+]

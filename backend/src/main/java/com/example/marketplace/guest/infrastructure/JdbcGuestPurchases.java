@@ -20,7 +20,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 /** Short database transitions bracket external calls; no token/code is persisted. */
 public final class JdbcGuestPurchases {
-    public record Status(String state, UUID attemptId, Instant expiresAt, String maskedPhone, String phone) { }
+    public record Status(String state, UUID attemptId, Instant expiresAt, String maskedPhone, String phone, boolean passwordReady) { }
     public record Verified(String name, String phone, String purpose) { }
     private record Attempt(UUID id, UUID checkout, String name, String phone, String provider, Instant issued, Instant expires, String state) { }
     private final NamedParameterJdbcTemplate jdbc;
@@ -63,10 +63,10 @@ public final class JdbcGuestPurchases {
         return tx.execute(status -> {
             var checkout = checkout(browser, token);
             UUID current = (UUID) checkout.get("current_attempt");
-            if (current == null) { return new Status("OPEN", null, instant(checkout, "expires_at"), "", ""); }
+            if (current == null) { return new Status("OPEN", null, instant(checkout, "expires_at"), "", "", false); }
             Attempt attempt = attempt(current);
             String state = clock.instant().isBefore(attempt.expires()) ? attempt.state() : "EXPIRED";
-            return new Status(state, current, attempt.expires(), "010-****-" + attempt.phone().substring(attempt.phone().length() - 4), "SENT".equals(state) ? attempt.phone() : "");
+            return new Status(state, current, attempt.expires(), "010-****-" + attempt.phone().substring(attempt.phone().length() - 4), "SENT".equals(state) ? attempt.phone() : "", "VERIFIED".equals(state) && Boolean.TRUE.equals(jdbc.queryForObject("SELECT prepared_password_hash IS NOT NULL FROM marketplace.guest_attempt WHERE id=:id", Map.of("id",current), Boolean.class)));
         });
     }
     public Status issue(String browser, String token, GuestInput input, String source) {
@@ -89,7 +89,7 @@ public final class JdbcGuestPurchases {
             bound(browser, token, reserved.id(), input.phone(), input.purpose(), "ISSUING");
             if (request == null || request.id() == null || !clock.instant().isBefore(request.expiresAt())) { throw new GuestRejected(409); }
             jdbc.update("UPDATE marketplace.guest_attempt SET state='SENT',provider_id=:p WHERE id=:a", Map.of("p", request.id(), "a", reserved.id()));
-            return new Status("SENT", reserved.id(), reserved.expires(), "010-****-" + input.phone().substring(input.phone().length() - 4), input.phone());
+            return new Status("SENT", reserved.id(), reserved.expires(), "010-****-" + input.phone().substring(input.phone().length() - 4), input.phone(), false);
         });
     }
     public String exchange(String browser, String token, UUID id, String phone, String purpose, String code) {
@@ -119,10 +119,20 @@ public final class JdbcGuestPurchases {
             bound(browser, token, id, phone, purpose, "CONFIRMING");
             jdbc.update("UPDATE marketplace.guest_attempt SET state='VERIFIED',authenticated_at=:at WHERE id=:id", Map.of("id", id, "at", Timestamp.from(proof.authenticatedAt())));
             jdbc.update("UPDATE marketplace.guest_checkout SET state='VERIFIED' WHERE id=:id", Map.of("id", reserved.checkout()));
-            return new Status("VERIFIED", id, reserved.expires(), "010-****-" + reserved.phone().substring(reserved.phone().length() - 4), "");
+            return new Status("VERIFIED", id, reserved.expires(), "010-****-" + reserved.phone().substring(reserved.phone().length() - 4), "", false);
         });
     }
     /** Internal fixture contract only. Real order atomicity is deferred to P08-C. No HTTP endpoint. */
+    public Verified verified(String browser, String token, UUID id) {
+        available();
+        return tx.execute(status -> {
+            var checkout = checkout(browser, token);
+            if (id == null || !id.equals(checkout.get("current_attempt"))) { throw new GuestRejected(409); }
+            Attempt current = attempt(id);
+            Attempt checked = bound(browser, token, id, current.phone(), "PURCHASE", "VERIFIED");
+            return new Verified(checked.name(), checked.phone(), "PURCHASE");
+        });
+    }
     public Verified consume(String browser, String token, UUID id, String phone, String purpose) {
         available();
         return tx.execute(status -> {
@@ -186,3 +196,4 @@ public final class JdbcGuestPurchases {
     private static Instant instant(Map<String,Object> row, String key) { return ((Timestamp) row.get(key)).toInstant(); }
     private void available() { if (provider == null) { throw new GuestRejected(503); } }
 }
+

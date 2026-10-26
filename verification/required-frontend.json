@@ -134,6 +134,11 @@
     "tests/unit/GuestStore.test.tsx#discards late SDK proof after leaving and never sends the verify request",
     "tests/unit/GuestStore.test.tsx#server rejection never grants success and expiration clears the visible verification",
     "tests/unit/GuestStore.test.tsx#restores a pending attempt after refresh and requires a fresh attempt after interrupted exchange",
-    "tests/unit/GuestStore.test.tsx#SDK failure never confirms and explicit new authentication recovers"
+    "tests/unit/GuestStore.test.tsx#SDK failure never confirms and explicit new authentication recovers",
+    "tests/unit/GuestAccessStore.test.tsx#requires server authentication and clears orders on logout without retaining passwords",
+    "tests/unit/GuestAccessStore.test.tsx#blocks duplicate submissions and stale responses after leaving",
+    "tests/unit/GuestAccessStore.test.tsx#does not retain protected data after session expiry or transport failure",
+    "tests/unit/GuestStore.test.tsx#prepares only matching passwords for the verified attempt and never keeps their values",
+    "tests/unit/GuestAccessStore.test.tsx#retains an explicit logout retry after failure without restoring protected orders"
   ]
 }

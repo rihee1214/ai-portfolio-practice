@@ -23,8 +23,19 @@ export function GuestPage() {
       <button disabled={view.busy}>인증 확인</button>
     </form>}
     {view.state === 'VERIFIED' && <p role="status">{view.maskedPhone} 구매 인증을 확인했습니다. 이 결과는 현재 구매 세션에서만 유효합니다.</p>}
+    {view.state === 'VERIFIED' && (view.passwordReady ? <p role="status">조회 비밀번호 준비 완료. 아직 주문은 생성되지 않았습니다.</p> : <GuestPasswordForm key={view.attempt} store={store} busy={view.busy} />)}
     {view.state !== 'INPUT' && <button disabled={view.busy} onClick={() => { setCode(''); setName(''); setPhone(''); void store.reset() }}>정보 변경·새 인증 시작</button>}
     <p>재요청은 60초 뒤 가능합니다. 번호별 15분에 3회, 실패 5회까지 허용합니다. 인증을 마치지 못하면 새 인증을 시작해 주세요.</p>
     <p><Link to="/checkout">주문서 준비로 돌아가기</Link></p>
+    <p><Link to="/guest/orders/login">비회원 주문 조회</Link></p>
   </section>
+}
+function GuestPasswordForm({ store, busy }: { store: GuestStore; busy: boolean }) {
+  const [password, setPassword] = useState(''), [confirmation, setConfirmation] = useState('')
+  return <form onSubmit={event => { event.preventDefault(); const first = password, second = confirmation; setPassword(''); setConfirmation(''); void store.preparePassword(first, second) }}>
+    <h2>조회 비밀번호 설정</h2><p>12~128자, 공백과 붙여넣기를 사용할 수 있습니다. 주문번호·전화번호와 함께 조회에 사용합니다.</p>
+    <p><label>조회 비밀번호 <input type="password" autoComplete="new-password" required value={password} disabled={busy} onChange={event => setPassword(event.target.value)} /></label></p>
+    <p><label>조회 비밀번호 확인 <input type="password" autoComplete="new-password" required value={confirmation} disabled={busy} onChange={event => setConfirmation(event.target.value)} /></label></p>
+    <button disabled={busy}>조회 비밀번호 준비</button>
+  </form>
 }
