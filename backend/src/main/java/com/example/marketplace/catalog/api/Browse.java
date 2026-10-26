@@ -9,6 +9,9 @@ public interface Browse {
     Products.Page<Item> search(Query query);
     Detail detail(String slug);
     Detail forSku(UUID sku);
+    record QuoteOffer(UUID skuId,UUID productId,UUID storeId,String storeSlug,String storeName,String title,List<Skus.Option> options,long price,long available,long productVersion,long skuVersion,long storeVersion) { public QuoteOffer { options=List.copyOf(options); } }
+    QuoteOffer quoteOffer(UUID sku);
+
     Detail forProduct(UUID product);
     UUID identify(String slug);
 }

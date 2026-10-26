@@ -1,0 +1,37 @@
+[
+  {
+    "manifest": "P06-A-review-failure-manifest.json",
+    "files": 2162,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-B-failure-manifest.json",
+    "files": 405,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-C-failure-manifest.json",
+    "files": 791,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-D-failure-manifest.json",
+    "files": 882,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-D-commit-failure-manifest.json",
+    "files": 5,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-E-failure-manifest.json",
+    "files": 1375,
+    "mismatches": []
+  },
+  {
+    "manifest": "P07-A-failure-manifest.json",
+    "files": 2577,
+    "mismatches": []
+  }
+]

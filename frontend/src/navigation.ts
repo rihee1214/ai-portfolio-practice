@@ -29,6 +29,8 @@ export const workspaces: Workspace[] = [
     description: '나만의 매대를 가꾸고, 상품과 주문을 관리할 공간입니다.',
     features: [
       { path: 'store', title: '내 매대', description: '매대의 소개와 공개 정보를 관리합니다.', planned: '판매 신청·승인 후 본인 매대를 관리하도록 연결할 예정입니다.' },
+      { path: 'coupons', title: '회원 쿠폰', description: '쿠폰 조건과 발급 한도를 관리합니다.', planned: '회원 쿠폰 발급·조건 관리' },
+      { path: 'promotions', title: '공개 행사', description: '상품·배송 행사를 관리합니다.', planned: '회원·비회원 동일 공개 행사' },
       { path: 'products', title: '상품 관리', description: '상품과 옵션, 이미지, 재고를 관리합니다.', planned: '본인 매대의 상품 등록·수정·판매 중지를 연결할 예정입니다.' },
       { path: 'orders', title: '판매 주문', description: '주문을 확인하고 발송을 준비합니다.', planned: '본인 매대의 주문과 배송 처리를 연결할 예정입니다.' },
       { path: 'settlements', title: '매출·모의 정산', description: '매출과 정산 내역을 확인합니다.', planned: '모의 정산 조회를 연결할 예정이며 실제 송금은 제공하지 않습니다.' },

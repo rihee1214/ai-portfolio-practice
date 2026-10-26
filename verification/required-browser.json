@@ -58,6 +58,16 @@
     "desktop#guest-repurchase.spec.ts:같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
     "mobile#guest-repurchase.spec.ts:같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
     "desktop#guest-repurchase.spec.ts:등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다",
-    "mobile#guest-repurchase.spec.ts:등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다"
+    "mobile#guest-repurchase.spec.ts:등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다",
+    "desktop#promotions.spec.ts:판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다",
+    "mobile#promotions.spec.ts:판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다",
+    "desktop#promotions.spec.ts:공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다",
+    "mobile#promotions.spec.ts:공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다",
+    "desktop#coupons.spec.ts:회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다",
+    "mobile#coupons.spec.ts:회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다",
+    "desktop#quotes.spec.ts:서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다",
+    "mobile#quotes.spec.ts:서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다",
+    "desktop#coupon-reservations.spec.ts:쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다",
+    "mobile#coupon-reservations.spec.ts:쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다"
   ]
 }

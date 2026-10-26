@@ -73,6 +73,8 @@ public class AuthConfiguration {
                 .requestCache(cache -> cache.disable())
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/quotes").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/events", "/api/events/*").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/orders", "/api/guest/orders/{number}").permitAll()

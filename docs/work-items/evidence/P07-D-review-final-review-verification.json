@@ -1,0 +1,68 @@
+{
+  "sourceCount": 376,
+  "sourceMismatch": 0,
+  "developmentDifference": 0,
+  "inputsHash": "5FFE17663244E3DA156E9D689F2D4EC0E91C056A649E97878A65B7176238E58D",
+  "failures": [
+    {
+      "manifest": "P06-A-review-failure-manifest.json",
+      "files": 2162,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P06-B-failure-manifest.json",
+      "files": 405,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P06-C-failure-manifest.json",
+      "files": 791,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P06-D-failure-manifest.json",
+      "files": 882,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P06-D-commit-failure-manifest.json",
+      "files": 5,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P06-E-failure-manifest.json",
+      "files": 1375,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P07-A-failure-manifest.json",
+      "files": 2577,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P07-B-failure-manifest.json",
+      "files": 2663,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P07-C-failure-manifest.json",
+      "files": 1196,
+      "mismatches": 0,
+      "afterMismatches": 0
+    },
+    {
+      "manifest": "P07-D-failure-manifest.json",
+      "files": 2102,
+      "mismatches": 0,
+      "afterMismatches": 0
+    }
+  ]
+}

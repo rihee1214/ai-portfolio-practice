@@ -148,6 +148,20 @@
     "tests/unit/GuestLinkStore.test.tsx#does not claim a lost selection response succeeded and restores it through explicit refresh",
     "tests/unit/GuestLinkStore.test.tsx#suppresses duplicate link requests and discards the response after disposal",
     "tests/unit/GuestLinkStore.test.tsx#keeps an existing selection unconfirmed on link lookup failure and clears readiness on reset",
-    "tests/unit/GuestLinkStore.test.tsx#clears a previous ready state when checkout refresh fails or expires"
+    "tests/unit/GuestLinkStore.test.tsx#clears a previous ready state when checkout refresh fails or expires",
+    "tests/unit/PromotionStore.test.tsx#PromotionStore > checks server promotion fields and unsafe values",
+    "tests/unit/PromotionStore.test.tsx#PromotionStore > shows explicit Korea time independently of browser timezone",
+    "tests/unit/PromotionStore.test.tsx#keeps select labels stable without option text",
+    "tests/unit/PromotionStore.test.tsx#exposes public pagination and detail links",
+    "tests/unit/CouponStore.test.tsx#validates immutable coupon terms and expiration display",
+    "tests/unit/CouponStore.test.tsx#blocks duplicate claims and reloads after a lost response",
+    "tests/unit/CouponStore.test.tsx#drops late coupon results when the member session ends",
+    "tests/unit/CouponStore.test.tsx#identifies the store on owned coupons after availability ends",
+    "tests/unit/QuoteStore.test.tsx#validates exact decimal amounts and every allocation total",
+    "tests/unit/QuoteStore.test.tsx#discards stale quotes and clears selections when the session changes",
+    "tests/unit/QuoteStore.test.tsx#rejects a response for different selected quantities",
+    "tests/unit/QuoteStore.test.tsx#keeps the coupon select name independent of its options",
+    "tests/unit/QuoteStore.test.tsx#clears an actual coupon selection on unauthorized response and restores after login",
+    "tests/unit/CouponStore.test.tsx#shows reserved used and restored-expired coupons without extending their period"
   ]
 }

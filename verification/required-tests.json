@@ -294,7 +294,12 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLostGrantRestartsWithoutReusingPurchaseProof",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryHttpRejectsCsrfAndReturnsUniformPrivateErrors",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryInitialLimitAndCredentialRacesAreSerialized",
-      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCrossBuyerLoginAndVersionChangesCannotRestoreRevokedState"
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCrossBuyerLoginAndVersionChangesCannotRestoreRevokedState",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#promotionOwnershipVersionAndAudit",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#promotionPublicationAndTime",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#promotionAccessAfterLockWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#promotionPublicationMatrixAndNumericContract",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#promotionArchivedTargetsCanBeRetiredWithoutBypassingOwnership"
     ]
   },
   {
@@ -428,6 +433,63 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkHttpCsrfAndDisabledBoundaries",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestNewLinkFailureRollsBackBuyerAndConsumption",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkRejectsOtherBuyerAndRecoveryProofs"
+    ]
+  },
+  {
+    "id": "com.example.marketplace.promotion.PromotionRulesTest",
+    "tests": [
+      "com.example.marketplace.promotion.PromotionRulesTest#periodAndDiscountBoundaries",
+      "com.example.marketplace.promotion.PromotionRulesTest#freeShippingCannotPromisePartialDiscount",
+      "com.example.marketplace.promotion.PromotionRulesTest#safeInputsAndDeterministicMaximum"
+    ]
+  },
+  {
+    "id": "P07-B-coupon-contracts",
+    "tests": [
+      "com.example.marketplace.promotion.CouponRulesTest#couponEligibilityAndSnapshot",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponIssuanceIsBoundedAndIdempotent",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponOwnershipAndTemplateSnapshot",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponIssuanceRechecksAuthority",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponHttpAmountsAndStoreIdentity",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponCrossClaimsAndManagementTransactions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponAvailabilityRetryAndPagingBoundaries"
+    ]
+  },
+  {
+    "id": "P07-C-quote-contracts",
+    "tests": [
+      "com.example.marketplace.promotion.QuoteCalculatorTest#shippingThresholdAndDiscountOrder",
+      "com.example.marketplace.promotion.QuoteCalculatorTest#allocationConservesEveryWon",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quotesUseCurrentAuthorizedInputs",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quoteSnapshotsRemainStable",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quoteReadSnapshotSurvivesConcurrentPrices",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quoteShippingAndZeroTotalsUsePromotionOrder",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quoteMultipleLinesFingerprintAndHttpContract",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#quoteRejectsEveryUnavailableProjection"
+    ]
+  },
+  {
+    "id": "P07-D-reservation-contracts",
+    "tests": [
+      "com.example.marketplace.promotion.CouponReservationRulesTest#transitionsAndRestoration",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationIsAtomicAndIdempotent",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponRestoreCannotAffectNewReservation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponCommitReleaseAndExpiryRace",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationRechecksWaitsAndQuoteContent",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationBatchAndAuditRollback",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponRestorationPreservesExpiryAndCause",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponFixtureIsDisabledOutsideTests",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationCrossSellerAndConcurrentRetries",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponCheckoutCannotAcceptAnotherBatch",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchRetryHasOneReadSnapshot",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponFullRestoreRejectsUnusedStates",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationRechecksDistinctBuyerSellerChanges",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponTransitionsAndRestoreAuditFailuresRollback",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponDifferentRestoreCausesCannotAffectNextUse",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationDeadlineBoundariesAndRetry",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchMigrationPreservesPriorDataAndRejectsConflicts",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchInsertPreservesCrossSellerLockOrder",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchInsertPreservesSameBuyerLockOrder"
     ]
   }
 ]
