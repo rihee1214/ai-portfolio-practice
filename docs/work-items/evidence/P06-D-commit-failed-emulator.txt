@@ -1,0 +1,16 @@
+i  emulators: Starting emulators: auth
+i  emulators: Detected demo project ID "demo-p06-b2fa2bd73e4a", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  Running script: pwsh -NoProfile -File D:\Workspace\ai-portfolio-practice\verify.ps1 -PhoneEmulatorReady -EvidenceDirectory .local-tools/p06-d-commit-final-20261026 -Offline
+service "db-dev" is not running
+Exception: D:\Workspace\ai-portfolio-practice\verification\Preservation.ps1:5
+Line |
+   5 |          if ($LASTEXITCODE -ne 0) { throw 'Database snapshot failed' }
+     |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Database snapshot failed
+!  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "pwsh -NoProfile -File D:\Workspace\ai-portfolio-practice\verify.ps1 -PhoneEmulatorReady -EvidenceDirectory .local-tools/p06-d-commit-final-20261026 -Offline" exited with code 1

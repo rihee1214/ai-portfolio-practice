@@ -74,7 +74,7 @@ public final class JdbcGuestAccess {
         boolean match=hashes.matches(password,hash);
         if(candidate==null || !match || !normalized.equals(candidate.get("verified_phone"))) { throw new GuestRejected(401); }
         return tx.execute(status->{
-            if(previous!=null) { jdbc.queryForList("SELECT token_hash FROM marketplace.guest_access_session WHERE token_hash=:t FOR UPDATE",Map.of("t",JdbcGuestPurchases.hash(previous))); }
+            jdbc.queryForList("SELECT id FROM marketplace.guest_buyer WHERE id=:b OR id IN (SELECT guest_buyer_id FROM marketplace.guest_access_session WHERE token_hash=:t) ORDER BY id FOR UPDATE",Map.of("b",candidate.get("id"),"t",previous==null?"":JdbcGuestPurchases.hash(previous)));
             var buyer=jdbc.queryForMap("SELECT * FROM marketplace.guest_buyer WHERE id=:id FOR UPDATE",Map.of("id",candidate.get("id")));
             if(!buyer.get("password_hash").equals(hash) || !buyer.get("password_version").equals(candidate.get("password_version"))
                     || !buyer.get("verified_phone").equals(candidate.get("verified_phone"))) { throw new GuestRejected(401); }
@@ -104,10 +104,11 @@ public final class JdbcGuestAccess {
     }
     private UUID authorize(String token) {
         if(token==null || token.length()!=43) { throw new GuestRejected(401); }
-        var sessions=jdbc.queryForList("SELECT * FROM marketplace.guest_access_session WHERE token_hash=:t FOR UPDATE",Map.of("t",JdbcGuestPurchases.hash(token)));
+        var sessions=jdbc.queryForList("SELECT * FROM marketplace.guest_access_session WHERE token_hash=:t",Map.of("t",JdbcGuestPurchases.hash(token)));
         if(sessions.isEmpty()) { throw new GuestRejected(401); }
         var session=sessions.getFirst();
         var buyer=jdbc.queryForMap("SELECT password_version FROM marketplace.guest_buyer WHERE id=:id FOR UPDATE",Map.of("id",session.get("guest_buyer_id")));
+        session=jdbc.queryForMap("SELECT * FROM marketplace.guest_access_session WHERE token_hash=:t FOR UPDATE",Map.of("t",JdbcGuestPurchases.hash(token)));
         Instant now=clock.instant(), maximum=((Timestamp)session.get("expires_at")).toInstant();
         if(session.get("revoked_at")!=null || !buyer.get("password_version").equals(session.get("password_version"))
                 || !now.isBefore(maximum) || !now.isBefore(((Timestamp)session.get("idle_expires_at")).toInstant())) { throw new GuestRejected(401); }

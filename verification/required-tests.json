@@ -282,7 +282,19 @@
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupHttpChecksCsrfCookieUniformErrorsAndMemberSeparation",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupRechecksVersionAfterHashAndEnforcesLocalAndSecureBoundaries",
       "com.example.marketplace.dbtest.PostgresJdbcIT#guestSessionRotationFailureRollsBackAndLookupSerializesWithLogout",
-      "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordPreparationReplacementsCannotChangeConsumedBuyer"
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordPreparationReplacementsCannotChangeConsumedBuyer",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCodesChangePasswordsAndRevokeAllSessions",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRequiresEveryFactorAndConsumesGrantOnce",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryResetRollbackExpiryAndRotationKeepBoundaries",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLimitsSurviveFailuresAndExpireAtWindowBoundary",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRechecksExternalWorkExpiryVersionAndDisabledMode",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLateFailureRollsBackAndSerializesWithLookup",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryFinalWriteRollbackAndDifferentGrantsHaveOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRechecksGrantAfterBuyerLockAndHashSideEffects",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLostGrantRestartsWithoutReusingPurchaseProof",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryHttpRejectsCsrfAndReturnsUniformPrivateErrors",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryInitialLimitAndCredentialRacesAreSerialized",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCrossBuyerLoginAndVersionChangesCannotRestoreRevokedState"
     ]
   },
   {
@@ -393,5 +405,11 @@
       "com.example.marketplace.guest.GuestPasswordTest#rejectsMismatchBoundsAndMalformedUnicode"
     ],
     "id": "com.example.marketplace.guest.GuestPasswordTest"
+  },
+  {
+    "tests": [
+      "com.example.marketplace.guest.RecoverySecretsTest#usesRandomBoundedSecretsAndConstantHashComparison"
+    ],
+    "id": "com.example.marketplace.guest.RecoverySecretsTest"
   }
 ]

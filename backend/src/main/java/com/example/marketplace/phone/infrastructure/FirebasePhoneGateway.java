@@ -27,7 +27,7 @@ public final class FirebasePhoneGateway implements PhoneProvider.Gateway, AutoCl
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
     private final Gson gson = new Gson();
     private final Map<String, Exchanged> exchanged = new java.util.concurrent.ConcurrentHashMap<>();
-    private record Exchanged(String uid, String phone, Instant authenticatedAt, Instant expiresAt) { }
+    private record Exchanged(String uid, String phone, Instant authenticatedAt, Instant expiresAt, String binding) { }
 
     public FirebasePhoneGateway(String mode, String project, String host) {
         if (!"local-test".equals(mode) || project == null || !project.matches("demo-[a-z0-9-]+")
@@ -63,8 +63,9 @@ public final class FirebasePhoneGateway implements PhoneProvider.Gateway, AutoCl
             if (!"phone".equals(claims.get("sign_in_provider"))) { throw new IllegalStateException("Rejected"); }
             String phone = PhoneProvider.normalize((String) server.getClaims().get("phone_number"));
             Instant time = Instant.ofEpochSecond(((Number) server.getClaims().get("auth_time")).longValue());
-            String customToken = auth.createCustomToken(server.getUid());
-            exchanged.put(session, new Exchanged(server.getUid(), phone, time, Instant.now().plusSeconds(300)));
+            String binding=UUID.randomUUID().toString();
+            String customToken = auth.createCustomToken(server.getUid(),Map.of("phone_exchange",binding));
+            exchanged.put(session, new Exchanged(server.getUid(), phone, time, Instant.now().plusSeconds(300),binding));
             return customToken;
         } catch (Exception rejected) { throw new IllegalStateException("Phone code rejected"); }
     }
@@ -79,6 +80,7 @@ public final class FirebasePhoneGateway implements PhoneProvider.Gateway, AutoCl
             Number expiry = (Number) browser.getClaims().get("exp");
             Object firebase = browser.getClaims().get("firebase");
             if (!(firebase instanceof Map<?, ?> claims) || !"custom".equals(claims.get("sign_in_provider"))
+                    || !expected.binding().equals(browser.getClaims().get("phone_exchange"))
                     || !browser.getUid().equals(expected.uid()) || phone == null
                     || !phone.equals(expected.phone()) || expiry == null
                     || !Instant.now().isBefore(Instant.ofEpochSecond(expiry.longValue()))) {

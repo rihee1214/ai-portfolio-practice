@@ -47,6 +47,22 @@ try {
   assert.equal(verified.body.phone, '+821012345678')
   assert.ok(verified.body.authenticatedAt)
   assert.equal((await post('/confirm', { id: issued.body.id, code, token })).status, 400)
+  // Gateway binding test: same phone and same second, independent of the provider cooldown policy.
+  let previousToken = token
+  for (let i = 0; i < 2; i++) {
+    const fresh = await post('/binding-issue', { phone: '01012345678' })
+    assert.equal(fresh.status, 200)
+    const freshCode = await codeFor(fresh.body.session)
+    const custom = await post('/binding-exchange', { session: fresh.body.session, code: freshCode })
+    assert.equal(custom.status, 200)
+    const freshToken = await page.evaluate(async ({ host, project, customToken }) => {
+      const client = await import('/src/phone/FirebasePhoneClient.ts')
+      return client.confirmPhoneCode(host, project, customToken)
+    }, { host, project, customToken: custom.body.customToken })
+    assert.equal((await post('/binding-confirm', { session: fresh.body.session, token: previousToken })).status, 400, 'earlier same-phone purchase/recovery proof must not satisfy a new exchange')
+    assert.equal((await post('/binding-confirm', { session: fresh.body.session, token: freshToken })).status, 200, 'only the exact exchange proof succeeds')
+    previousToken = freshToken
+  }
   const other = await post('/issue', { phone: '01099999999' })
   assert.equal(other.status, 200)
   const otherCode = await codeFor(other.body.session)

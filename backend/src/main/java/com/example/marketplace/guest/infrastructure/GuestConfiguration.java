@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 @Configuration(proxyBeanMethods = false) @Profile("db")
 public class GuestConfiguration {
+    @Bean JdbcGuestRecovery guestRecovery(NamedParameterJdbcTemplate jdbc,PlatformTransactionManager manager,com.example.marketplace.identity.api.PasswordHashes hashes,ObjectProvider<PhoneVerifications> provider) {
+        return new JdbcGuestRecovery(jdbc,manager,hashes,provider.getIfAvailable(),Clock.systemUTC());
+    }
     @Bean JdbcGuestAccess guestAccess(NamedParameterJdbcTemplate jdbc, PlatformTransactionManager manager, JdbcGuestPurchases purchases, com.example.marketplace.identity.api.PasswordHashes hashes, ObjectProvider<PhoneVerifications> provider) {
         return new JdbcGuestAccess(jdbc,manager,purchases,hashes,Clock.systemUTC(),provider.getIfAvailable()!=null);
     }

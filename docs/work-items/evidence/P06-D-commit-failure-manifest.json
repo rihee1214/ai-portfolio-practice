@@ -1,0 +1,22 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p06-d-commit-final-20261026\\inputs.json",
+    "sha256": "C23695F38C45B29442F8DB61DAB61EF04DBBEFDD326075A220D26AC925EAFFFE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p06-d-commit-final-20261026\\result.json",
+    "sha256": "CA15249F8D21409447D34C60447111B6EC4D78E59F9347B4F52BD2620F87630C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-98fc6795f6c44488be48705f5cfb638d\\emulator.txt",
+    "sha256": "D2FC2EEB7AB8FF65D6323CEB56B5C80192B6BA9C5696FF7499E8FB44409FB0D0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-98fc6795f6c44488be48705f5cfb638d\\firebase.json",
+    "sha256": "2741D62A8237E58A063C568516B865682CE78896659CFCDA809E9AF6D78EDE97"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-98fc6795f6c44488be48705f5cfb638d\\result.json",
+    "sha256": "FA1DD85E6583A3248CC1EC0210888E25A778E356E6D2A52E37478C443CEF239D"
+  }
+]

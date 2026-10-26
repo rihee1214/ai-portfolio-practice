@@ -1,5 +1,6 @@
 import { CheckoutPage } from './pages/PurchasePages'
 import { GuestPage } from './pages/GuestPage'
+import { GuestRecoveryPage } from './pages/GuestRecoveryPage'
 import { GuestOrdersPage } from './pages/GuestOrdersPage'
 import { WishlistPage } from './pages/WishlistPages'
 import AuthProvider from './auth/AuthProvider'
@@ -43,6 +44,7 @@ export default function App() {
       <Routes>
         <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
           <Route path="/checkout/guest" element={<GuestPage />} />
+          <Route path="/guest/recovery" element={<GuestRecoveryPage />} /><Route path="/guest/security" element={<GuestRecoveryPage manage />} />
           <Route path="/guest/orders/login" element={<GuestOrdersPage />} /><Route path="/guest/orders" element={<GuestOrdersPage />} />
           <Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />

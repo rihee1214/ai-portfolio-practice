@@ -1,0 +1,28 @@
+{
+  "developmentDifference": 0,
+  "failures": [
+    {
+      "mismatches": 0,
+      "files": 2162,
+      "manifest": "P06-A-review-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 405,
+      "manifest": "P06-B-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 791,
+      "manifest": "P06-C-failure-manifest.json"
+    },
+    {
+      "mismatches": 0,
+      "files": 882,
+      "manifest": "P06-D-failure-manifest.json"
+    }
+  ],
+  "sourceMismatch": 0,
+  "inputsHash": "C23695F38C45B29442F8DB61DAB61EF04DBBEFDD326075A220D26AC925EAFFFE",
+  "sourceCount": 332
+}

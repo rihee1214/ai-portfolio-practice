@@ -46,6 +46,12 @@
     "desktop#guest.spec.ts:확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다",
     "mobile#guest.spec.ts:확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다",
     "desktop#guest-lookup.spec.ts:직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다",
-    "mobile#guest-lookup.spec.ts:직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다"
+    "mobile#guest-lookup.spec.ts:직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다",
+    "desktop#guest-recovery.spec.ts:복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다",
+    "mobile#guest-recovery.spec.ts:복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다",
+    "desktop#guest-recovery.spec.ts:최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
+    "desktop#guest-recovery.spec.ts:재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다",
+    "mobile#guest-recovery.spec.ts:최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
+    "mobile#guest-recovery.spec.ts:재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다"
   ]
 }

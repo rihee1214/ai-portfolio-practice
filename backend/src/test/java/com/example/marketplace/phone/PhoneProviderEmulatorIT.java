@@ -47,7 +47,13 @@ class PhoneProviderEmulatorIT {
                 String response;
                 try {
                     var body = gson.fromJson(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8), JsonObject.class);
-                    if (exchange.getRequestURI().getPath().equals("/issue")) {
+                    if (exchange.getRequestURI().getPath().equals("/binding-issue")) {
+                        response=gson.toJson(java.util.Map.of("session",gateway.issue(body.get("phone").getAsString())));
+                    } else if(exchange.getRequestURI().getPath().equals("/binding-exchange")) {
+                        response=gson.toJson(java.util.Map.of("customToken",gateway.exchange(body.get("session").getAsString(),body.get("code").getAsString())));
+                    } else if(exchange.getRequestURI().getPath().equals("/binding-confirm")) {
+                        response=gson.toJson(java.util.Map.of("phone",gateway.confirm(body.get("session").getAsString(),body.get("token").getAsString()).phone()));
+                    } else if (exchange.getRequestURI().getPath().equals("/issue")) {
                         var request = provider.issue(body.get("phone").getAsString());
                         response = gson.toJson(java.util.Map.of("id", request.id(), "session", request.session()));
                     } else if (exchange.getRequestURI().getPath().equals("/exchange")) {

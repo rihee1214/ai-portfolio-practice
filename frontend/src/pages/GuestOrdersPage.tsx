@@ -17,6 +17,7 @@ export function GuestOrdersPage() {
         <p><label>조회 비밀번호 <input type="password" value={password} required disabled={view.busy} autoComplete="off" onChange={event => setPassword(event.target.value)} /></label></p>
         <button disabled={view.busy}>주문 조회 인증</button>
       </form>}
+    <p><Link to="/guest/security">비밀번호 변경·복구 코드 관리</Link></p><p><Link to="/guest/recovery">비밀번호를 잊으셨나요?</Link></p>
     <p><Link to="/checkout/guest">방문자 구매 인증</Link></p>
   </section>
 }

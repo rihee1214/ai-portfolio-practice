@@ -139,6 +139,10 @@
     "tests/unit/GuestAccessStore.test.tsx#blocks duplicate submissions and stale responses after leaving",
     "tests/unit/GuestAccessStore.test.tsx#does not retain protected data after session expiry or transport failure",
     "tests/unit/GuestStore.test.tsx#prepares only matching passwords for the verified attempt and never keeps their values",
-    "tests/unit/GuestAccessStore.test.tsx#retains an explicit logout retry after failure without restoring protected orders"
+    "tests/unit/GuestAccessStore.test.tsx#retains an explicit logout retry after failure without restoring protected orders",
+    "tests/unit/GuestRecoveryStore.test.tsx#requires server grant and clears one-time secrets on leaving",
+    "tests/unit/GuestRecoveryStore.test.tsx#blocks duplicates and ignores late responses after disposal",
+    "tests/unit/GuestRecoveryStore.test.tsx#does not claim success after a lost response and permits explicit retry",
+    "tests/unit/GuestRecoveryStore.test.tsx#explains the resend and window limits after a 429 without exposing protected data"
   ]
 }
