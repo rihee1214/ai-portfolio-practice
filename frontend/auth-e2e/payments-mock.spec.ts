@@ -19,4 +19,3 @@ test('다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 �
  await page.getByRole('button',{name:'서버 결과 확인',exact:true}).click();await ready
  const other=await context.newPage();try{await login(other,info.project.name,'session');await expect(panel.getByText(/^0원/)).toHaveCount(0);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toHaveCount(0);release();await page.unroute('**/api/payments/'+saved.order_number);await expect(panel.getByText(/^0원/)).toHaveCount(0);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toHaveCount(0);expect(posts).toBe(0);expect((await context.request.get('/api/payments/'+saved.order_number)).status()).toBe(401)}finally{release();await other.close()}
 })
-

@@ -28,8 +28,3 @@ test('가격 충돌은 새 견적 확인과 새 키를 요구하고 세션 만�
  const keys:string[]=[];page.on('request',r=>{if(r.url().endsWith('/api/orders'))keys.push(r.postDataJSON().requestKey)});const conflict=page.waitForResponse(r=>r.url().endsWith('/api/orders'));await page.getByRole('button',{name:'주문 생성',exact:true}).click();expect((await conflict).status()).toBe(409);await expect(page.getByLabel('기본 주소',{exact:true})).toHaveValue('서울시 테스트로');await page.getByRole('button',{name:'새 견적을 확인하고 다시 주문 준비'}).click();await expect(page.getByRole('checkbox',{name:'현재 상품·수량·견적과 배송 정보를 확인했습니다'})).not.toBeChecked();await expect(page.getByTestId('quote-total')).toBeVisible();await page.getByRole('checkbox',{name:'현재 상품·수량·견적과 배송 정보를 확인했습니다'}).check()
  expect((await context.request.post('/api/auth/logout',{headers:await headers(context)})).status()).toBe(200);const denied=page.waitForResponse(r=>r.url().endsWith('/api/orders'));await page.getByRole('button',{name:'주문 생성',exact:true}).click();expect((await denied).status()).toBe(401);await expect(page.getByText('인증이 만료되었습니다. 자동으로 주문을 다시 전송하지 않습니다.',{exact:true})).toBeVisible();expect(keys).toHaveLength(2);expect(keys[0]).not.toBe(keys[1]);await expect(page.getByRole('button',{name:'같은 요청으로 주문 결과 확인'})).toHaveCount(0)
 })
-
-
-
-
-

@@ -28,5 +28,3 @@ export function OrderCreationPanel({auth,cart,quote,refresh}:{auth:AuthStore;car
  {state.conflict&&<button onClick={()=>{setConfirmed('');void refresh().then(()=>store.confirmAgain())}}>새 견적을 확인하고 다시 주문 준비</button>}
  </section>
 }
-
-

@@ -27,4 +27,3 @@ public class OrderErrors {
         return ResponseEntity.status(status).header("Cache-Control","no-store").body(error);
     }
 }
-

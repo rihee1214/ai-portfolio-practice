@@ -69,4 +69,3 @@ it.each(['csrf','response'])('requires an explicit retry after %s failure and an
  await store.poll();expect(store.getSnapshot().view?.paymentState).toBe('NONE');expect(calls.filter(c=>c.startsWith('POST'))).toHaveLength(beforeRetry)
  await store.approve();expect(store.getSnapshot().view?.orderState).toBe('PAID');expect(calls.filter(c=>c.startsWith('POST'))).toHaveLength(beforeRetry+1)
 })
-
