@@ -5,9 +5,9 @@ import { setTimeout as delay } from 'node:timers/promises'
 import { setInterval, clearInterval } from 'node:timers'
 import { performance } from 'node:perf_hooks'
 /* global AbortSignal */
-import { fileURLToPath } from 'node:url'
 import { createServer as createViteServer, preview } from 'vite'
-import { apiProxy } from '../vite/apiProxy.ts'
+import { resolve } from 'node:path'
+import { proxyViteConfig } from './proxyViteConfig.mjs'
 import { requestJson } from '../src/api/http.ts'
 
 for (const mode of ['dev', 'preview']) {
@@ -28,12 +28,14 @@ for (const mode of ['dev', 'preview']) {
       }
     })
     await new Promise(resolve => upstream.listen(0, '127.0.0.1', resolve))
-    const config = { root: fileURLToPath(new URL('..', import.meta.url)), configFile: false, plugins: [apiProxy(`http://127.0.0.1:${upstream.address().port}`)], logLevel: 'silent' }
     let vite
     try {
+      const config = await proxyViteConfig(`http://127.0.0.1:${upstream.address().port}`)
       vite = mode === 'dev'
         ? await createViteServer({ ...config, server: { host: '127.0.0.1', port: 0 } })
         : await preview({ ...config, preview: { host: '127.0.0.1', port: 0 } })
+      assert.equal(resolve(vite.config.cacheDir), resolve(config.cacheDir))
+      t.diagnostic(`owned cache: ${vite.config.cacheDir}`)
       if (mode === 'dev') await vite.listen()
       const base = `http://127.0.0.1:${vite.httpServer.address().port}/actuator/health`
       await Promise.all(['silent', 'stall', 'disconnect', 'stream'].map(scenario => t.test(scenario, { concurrency: true }, async () => {

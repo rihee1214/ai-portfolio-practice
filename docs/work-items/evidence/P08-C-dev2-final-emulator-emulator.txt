@@ -1,0 +1,93 @@
+i  emulators: Starting emulators: auth
+i  emulators: Detected demo project ID "demo-p06-2b246a1b5a8f", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  Running script: pwsh -NoProfile -File D:\Workspace\ai-portfolio-practice\verify.ps1 -PhoneEmulatorReady -EvidenceDirectory .local-tools/p08-c-dev2-20261027 -Offline
+i  To verify the phone number +821063000001, use the code 471814.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821064000001, use the code 792653.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821064000021, use the code 339206.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000001, use the code 917162.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000011, use the code 339239.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000031, use the code 941374.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821061000001, use the code 312316.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821062000001, use the code 800713.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821068000001, use the code 601761.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821063000002, use the code 692623.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821064000002, use the code 755570.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821064000022, use the code 029468.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000002, use the code 797939.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000012, use the code 343301.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821065000032, use the code 252850.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821061000002, use the code 104141.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821062000002, use the code 638981.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821068000002, use the code 062115.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821000000001, use the code 200287.
+i  To verify the phone number +821012345678, use the code 417834.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821012345678, use the code 946891.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821012345678, use the code 053958.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+i  To verify the phone number +821099999999, use the code 260435.
+!  Received a signed custom token. Auth Emulator does not validate JWTs and IS NOT SECURE
+
+phase    name                                                               tests failures errors skipped
+-----    ----                                                               ----- -------- ------ -------
+surefire com.example.marketplace.api.ActuatorPolicyHttpTest                    16        0      0       0
+surefire com.example.marketplace.api.ApiErrorHttpTest                          25        0      0       0
+surefire com.example.marketplace.api.DatabaseSettingsTest                      14        0      0       0
+surefire com.example.marketplace.api.ErrorHttpTest                              7        0      0       0
+surefire com.example.marketplace.api.HealthMvcTest                             11        0      0       0
+surefire com.example.marketplace.api.RequestIdFilterTest                        5        0      0       0
+surefire com.example.marketplace.api.RequestIdHttpTest                          6        0      0       0
+surefire com.example.marketplace.api.UnhealthyMvcTest                           1        0      0       0
+surefire com.example.marketplace.architecture.ModuleArchitectureTest            1        0      0       0
+surefire com.example.marketplace.architecture.ModuleRulesTest                  20        0      0       0
+surefire com.example.marketplace.cart.CartRulesTest                             2        0      0       0
+surefire com.example.marketplace.guest.GuestInputTest                           2        0      0       0
+surefire com.example.marketplace.guest.GuestLinkPolicyTest                      1        0      0       0
+surefire com.example.marketplace.guest.GuestLocalPolicyTest                     1        0      0       0
+surefire com.example.marketplace.guest.GuestPasswordTest                        2        0      0       0
+surefire com.example.marketplace.guest.RecoverySecretsTest                      1        0      0       0
+surefire com.example.marketplace.identity.AccountRulesTest                      2        0      0       0
+surefire com.example.marketplace.identity.AttemptWindowTest                     2        0      0       0
+surefire com.example.marketplace.identity.SignupRulesTest                       3        0      0       0
+surefire com.example.marketplace.identity.SignupSecurityTest                    4        0      0       0
+surefire com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest     2        0      0       0
+surefire com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest       14        0      0       0
+surefire com.example.marketplace.media.infrastructure.ImageNormalizerTest       5        0      0       0
+surefire com.example.marketplace.media.infrastructure.LocalImagesTest           2        0      0       0
+surefire com.example.marketplace.order.domain.OrderRequestHashTest              1        0      0       0
+surefire com.example.marketplace.order.domain.OrderRulesTest                    3        0      0       0
+surefire com.example.marketplace.phone.PhoneProviderTest                       10        0      0       0
+surefire com.example.marketplace.platform.JobRulesTest                          1        0      0       0
+surefire com.example.marketplace.promotion.CouponReservationRulesTest           1        0      0       0
+surefire com.example.marketplace.promotion.CouponRulesTest                      1        0      0       0
+surefire com.example.marketplace.promotion.PromotionRulesTest                   3        0      0       0
+surefire com.example.marketplace.promotion.QuoteCalculatorTest                  2        0      0       0
+failsafe com.example.marketplace.dbtest.PostgresJdbcIT                        216        0      0       0
+failsafe com.example.marketplace.phone.PhoneProviderEmulatorIT                  1        0      0       0
+
+PASS PostgreSQL integration verification; evidence: D:\Workspace\ai-portfolio-practice\.local-tools\p08-c-dev2-20261027\db
+PASS integrated harness: D:\Workspace\ai-portfolio-practice\.local-tools\p08-c-dev2-20261027/result.json
++  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator

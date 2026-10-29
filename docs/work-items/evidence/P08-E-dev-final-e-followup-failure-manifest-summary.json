@@ -1,0 +1,16 @@
+{
+  "created": "2026-10-28T17:38:58.4628904+09:00",
+  "manifest": "docs/work-items/evidence/P08-E-development-followup-failure-manifest.json",
+  "sha256": "DCB6ECDDFB1E8C11BD7A322D9FF3524BE493AEC70E693237C96A7BB62973700F",
+  "files": 1786,
+  "failedDirectories": [
+    "p08-e-dev1-20261028",
+    "p08-e-routing-red1-20261028",
+    "p08-e-routing-focused-green1-20261028"
+  ],
+  "emulatorDirectories": [
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-0f08ba086fe6434dabd14c98e57a0912",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-a525440f7e0747ffb32e1171cc9bb7b4"
+  ],
+  "sidecarCount": 3
+}

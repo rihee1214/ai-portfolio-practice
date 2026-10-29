@@ -1,0 +1,12 @@
+F independent DEMO review PASSED; no remaining required local blockers.
+Command ./verify.ps1 -Offline -EvidenceDirectory .local-tools/p08-f-review1-20261028
+No MAVEN_ARGS or test selection. Outer exit0/status+preservation passed.
+2026-10-28 18:51:54..18:59:27 KST
+Java429 (unit182 DB247), browser90, frontend187, Node73. Required47 groups passed; missing/fail/error/skip0. Type/lint/build passed.
+HEAD460aa8bb0bb22f5138849eb00c050abd18f6fb53 dirty
+Inputs453 SHA649C318C0A763FD8CBF63A5C3E1ED738C9FD133286FD3CA06C1DDD556D45A5FE developer/reviewer identical; before/after current mismatch0.
+27 failure manifests/49431 unique files; before/after file and manifest mismatch0.
+DB d2_it_5d92172c863c4498831ccd447ec2a24d
+Media .local-tools/p08-f-review1-20261028/db/media
+Phone .local-tools/phone-emulator-0a2ef130c1954fae8591661aecd16693
+E actual SANDBOX/webhook product provisioning/time-format/public access remains blocked/unverified. F1 not implemented; no commits/push/deployment/resource deletion.

@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-27T16:07:32.8068481+09:00",
+  "priorFiles": 14158,
+  "priorMismatch": 0,
+  "currentFiles": 4721,
+  "currentMismatch": 0,
+  "manifests": [
+    "docs/work-items/evidence\\P07-D-failure-manifest.json",
+    "docs/work-items/evidence\\P07-C-failure-manifest.json",
+    "docs/work-items/evidence\\P07-B-failure-manifest.json",
+    "docs/work-items/evidence\\P07-A-failure-manifest.json",
+    "docs/work-items/evidence\\P06-E-failure-manifest.json",
+    "docs/work-items/evidence\\P06-D-failure-manifest.json",
+    "docs/work-items/evidence\\P06-D-commit-failure-manifest.json",
+    "docs/work-items/evidence\\P06-C-failure-manifest.json",
+    "docs/work-items/evidence\\P06-B-failure-manifest.json",
+    "docs/work-items/evidence\\P06-A-review-failure-manifest.json"
+  ]
+}

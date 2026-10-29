@@ -1,0 +1,10 @@
+{
+  "project": "demo-p06-a3803af687f1",
+  "ports": [
+    8784,
+    8785,
+    8786
+  ],
+  "exitCode": 0,
+  "evidence": ".local-tools/p08-d-dev2-20261028"
+}

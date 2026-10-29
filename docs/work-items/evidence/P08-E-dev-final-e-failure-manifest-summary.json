@@ -1,0 +1,24 @@
+{
+  "created": "2026-10-28T17:28:53.3304959+09:00",
+  "manifest": "docs/work-items/evidence/P08-E-development-failure-manifest.json",
+  "sha256": "677016DDF17FE9533DDA41CF70228ADBD5E361A19F9E36F912AB449A9F5F0F87",
+  "files": 3964,
+  "failedDirectories": [
+    "p08-e-unit-red3-20261028",
+    "p08-e-webhook-red1-20261028",
+    "p08-e-contract-red1-20261028",
+    "p08-e-contract-red2-20261028",
+    "p08-e-focused1-20261028",
+    "p08-e-adapter-review-red1-20261028",
+    "p08-e-focused2-20261028",
+    "p08-e-focused3-20261028"
+  ],
+  "emulatorDirectories": [
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-19eb5ffc49764133b7604557c625f866",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-2bdf8c10729b47d09703357c2c4bd3d2",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-72868543a951423abd0caac658c34c04",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-f489ae642ddb48b2a7f71e111ad82d39",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-f8a6cce09a38406c83b7d182a3c72300"
+  ],
+  "sidecarCount": 14
+}

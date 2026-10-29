@@ -50,8 +50,8 @@ public class GuestAccessController {
         access.logout(token);
         return ResponseEntity.ok().header("Cache-Control","no-store").header("Set-Cookie",cookie("",0)).body(Map.of("status","LOGGED_OUT"));
     }
-    @GetMapping("/api/guest/orders") public ResponseEntity<?> orders(@CookieValue(name="GUEST_ACCESS",required=false) String token) { return response(Map.of("orders",access.orders(token))); }
-    @GetMapping("/api/guest/orders/{number}") public ResponseEntity<?> order(@CookieValue(name="GUEST_ACCESS",required=false) String token,@PathVariable String number) { return response(access.order(token,number)); }
+    @GetMapping("/api/guest/access/references") public ResponseEntity<?> orders(@CookieValue(name="GUEST_ACCESS",required=false) String token) { return response(Map.of("orders",access.orders(token))); }
+    @GetMapping("/api/guest/access/references/{number}") public ResponseEntity<?> order(@CookieValue(name="GUEST_ACCESS",required=false) String token,@PathVariable String number) { return response(access.order(token,number)); }
     private String cookie(String token,long seconds) { return ResponseCookie.from("GUEST_ACCESS",token).httpOnly(true).secure(secure).sameSite("Lax").path("/").maxAge(seconds).build().toString(); }
     private ResponseEntity<?> response(Object body) { return ResponseEntity.ok().header("Cache-Control","no-store").body(body); }
 }

@@ -79,3 +79,17 @@ SDK13.1.0은 브라우저 메모리 persistence, Admin Java9.11.0은 공식 검�
 ## P06-E 묶음 연결 검증 추가 (2026-10-26)
 
 NEW/EXISTING 명시 선택·기존 조회+현재 구매 인증·동일 번호 검사·기존 자격 불변·revision 충돌·느린 hash 중 변경·조회/구매 잠금 대기 만료·신규/기존 rollback·응답 유실 검사를 추가한다. 기존 필수 목록을 유지하고 JUnit1·PostgreSQL12·프런트5·PC/모바일 브라우저6을 등록했다. 테스트 fixture의 커밋 후503은 성공 응답을 잃는 상태의 모의 검사이며 실제 네트워크 유실과 구분한다. [작업 기록](work-items/P06-E.md)의 실제 실행 결과와 [독립 검토](work-items/P06-E-review.md)를 함께 확인한다. P07-A는 진행하지 않는다.
+
+## P08-E Toss 로컬 계약 검증 추가 (2026-10-28)
+
+기존 필수 목록을 보존하고 JUnit9·새 PostgreSQL5·프런트4·PC/모바일 브라우저4를 추가했다. 기본 Offline 루트는 HTTP stub과 테스트 소스의 가짜 SDK 인증으로 주문/금액/시도 결합·응답 유실 후 서버조회·서명/재조회/중복 웹훅·CSRF·현재 세션·전체예약 원자성을 검사한다. 실제 Toss SANDBOX 실행은 이 결과에 포함되지 않으며, 접근키/MID/API버전/웹훅 보안키가 없으면 [P08-E](work-items/P08-E.md)에 외부 미검증·차단을 남기고 E 전체 완료를 선언하지 않는다. 운영키/실제과금은 사용하지 않는다.
+
+프로덕션 구성은 공식 HTTPS API 주소만 허용하고, 격리 검사 소스의 별도 Settings만 loopback HTTP 제공자 fixture를 주입한다. 실제 제공자 비밀키는 서버 환경 변수, 공개 test clientKey는 권한 있는 준비 응답으로 분리한다. PostgreSQL 로그의 비밀 검사는 새 실행 시간 구간의 합성 fixture 키를 메모리에서만 대조하고 원문 로그/키 대신 구간·개수·통과 여부만 보존한다. 이전 실행 기록은 당시 범위로 유지한다.
+
+## P08-F 실제 주문·결제 이력 조회 검증 추가 (2026-10-28)
+
+P08-E 실제 Toss SANDBOX의 외부 차단은 유지하면서 승인된 DEMO 후속 범위 F를 검증했다. 기존 필수 이름을 보존하고 PostgreSQL8·프런트8·PC/mobile 브라우저6을 추가했다. 회원 서버세션/version과 별도 GuestAccessSession을 사용하는 실제 주문 조회, order행 잠금 대기 뒤 idle/max/current-session 재검사, 양쪽 판매자의 최소 projection/EXISTING_TRADES, 동일시각 커서·원래 금액/단위 스냅샷, 실제 비회원 NEW/EXISTING·reset·탈퇴/동일email재가입의 소유권 격리, 최종 UI publish 경계의 stale 응답 폐기를 검사한다. 결제 이력의 운영 확인 파생 상태는 provider/쓰기 없이 검증한다.
+
+P06의 fixture 소유권 참조 읽기는 `/api/guest/access/references[/{number}]`로 명확히 분리했다. 기존 P06 assertion은 이 경로에서 유지하고 `/api/guest/orders`는 실제 주문 페이지로 사용한다. strict `/api/payments/{number}/history` 조회는 새 브라우저의 조회 자격을 받지만 기존 D 구매브라우저 status/approval 권한을 확장하지 않는다. 실제 배송은 F1/F2 범위다.
+
+개발 최종 `.local-tools/p08-f-dev1-20261028`은 선택 없는 Offline 루트로 Java429·브라우저90·프런트187·Node73 및 보존을 통과했다. 소스453개·실패49431파일의 해시/존재 대조와 실패 이력, 제약별 실제 assertion은 [P08-F](work-items/P08-F.md)에 기록했다. 독립 전체 검토와 최종 F 완료 판정은 부모 검토세션에 남으며 실제 Toss 제공자/실기기/배송 완료를 이 로컬 결과로 주장하지 않는다.

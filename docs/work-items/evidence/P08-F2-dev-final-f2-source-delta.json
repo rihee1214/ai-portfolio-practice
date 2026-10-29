@@ -1,0 +1,103 @@
+{
+  "added": [
+    {
+      "path": "frontend/auth-e2e/shipments.spec.ts",
+      "sha256": "20816FCC27E4733E7DB5995EBBFE3ABA365BA1FE954AA76B93C758DF431C4E13"
+    },
+    {
+      "path": "frontend/src/fulfillment/ShipmentStore.ts",
+      "sha256": "E48998391C9C3460E6F4760EA9581E5EB88B8B17B33B9A0E78B158922002FE3C"
+    },
+    {
+      "path": "frontend/src/fulfillment/ShipmentViews.tsx",
+      "sha256": "1BD98BEFE44D55574AD19F001FB1BC6E0293A93506E802D579D4F6B13BA081B0"
+    },
+    {
+      "path": "frontend/src/pages/SellerShipmentsPage.tsx",
+      "sha256": "0212023239CF24AAFBCFEC370B518F239435AF2FAA03017F89A6010E8E4D506B"
+    },
+    {
+      "path": "frontend/tests/unit/ShipmentPanels.test.tsx",
+      "sha256": "6210400F2A768FE1104ECF6D2BD94567B74FEB75F2778531F311C39BB2E5E34B"
+    },
+    {
+      "path": "frontend/tests/unit/ShipmentStore.test.tsx",
+      "sha256": "9391EC4EB4025B834CD53A3183B96A6641837EBE3CEC8429F10BD399A6F0C187"
+    }
+  ],
+  "changed": [
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/api/OrderQueries.java",
+      "sha256": "EFB17C272AE9EE11F62C4909546513B862BE23E85EB9563E1390130D82241182"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderQueries.java",
+      "sha256": "59D9072BD89B6E9FF3E0AAE881B38AE78FC726D2312A9EF1B0194CA95CF6ABBD"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/web/OrderQueryController.java",
+      "sha256": "7787C9E62A5EF0246C1EE563C7C1C635BD2CD14A61904F33779A58F2D6E1BFAE"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+      "sha256": "D587B76BAA4ADDF6977EB4C0A72D817A042841EAC429DD16781E01D32435F13B"
+    },
+    {
+      "path": "frontend/auth-e2e/lifecycle.spec.ts",
+      "sha256": "5EB1566FD14072D89246B19A5053FA623B289C06B0A282F7B329D4C9B47C2753"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "0395E311787914A6E72FE8B69BA329405B22277DDD4EC8DAA6D6C150C1918ED7"
+    },
+    {
+      "path": "frontend/src/layouts/WorkspaceLayout.tsx",
+      "sha256": "559AB1E0273F8E8817001AE18F1CC4EFD534AB36FF22B121DE1C0692CB9F315F"
+    },
+    {
+      "path": "frontend/src/navigation.ts",
+      "sha256": "FF0A993A38B2D1E0F31C5C4F1AD6391CD2F920ED68405CBB2A0830C0CF5EAE94"
+    },
+    {
+      "path": "frontend/src/pages/GuestOrdersPage.tsx",
+      "sha256": "F5C0805C5A85F8F244C5BA53F6AE33263C1F3F417FCC8B97660A64EAD42C3912"
+    },
+    {
+      "path": "frontend/src/pages/OrderDetailPage.tsx",
+      "sha256": "05F2E4AE07EFB3B3AE929BC60FB6FCAAAB23C418B5852D8344AE29015216D7EB"
+    },
+    {
+      "path": "frontend/src/styles.css",
+      "sha256": "10AAB6C1A1187AA25403A8982C5F2C11DFB3F288885E6A64E5766947388C553A"
+    },
+    {
+      "path": "frontend/tests/phone-resources.test.mjs",
+      "sha256": "4EA4D9D4036040AD465746E69262955E4FEB790B34365F2F02C89FEC24D9CD2E"
+    },
+    {
+      "path": "verification/phone-browser.mjs",
+      "sha256": "8305E6849AA409F60DC3FF31245478AA033CB85DF6346180D5D5D16D5B2107F7"
+    },
+    {
+      "path": "verification/phone-resources.mjs",
+      "sha256": "5A3BD1E2F75FE75D7F40F00F207D16F4A80C15002BA6A547643A5ECA91263672"
+    },
+    {
+      "path": "verification/required-browser.json",
+      "sha256": "6443495813F47A5D01E3D767A1A584F756FD1E615B68A89D921F94EA1068354A"
+    },
+    {
+      "path": "verification/required-frontend.json",
+      "sha256": "E553A947F42F1BEEAAF9120F4C4873BF921AAE9E947D8C9C6ED7C59CBB7BCB55"
+    },
+    {
+      "path": "verification/required-tests.json",
+      "sha256": "B1781033E78B026A9ED7C274C3A76A35AB243E4AFD33A04F788F59334DBD37B6"
+    },
+    {
+      "path": "verify.ps1",
+      "sha256": "0322371D20BAA2F2D75EFBD2AA5B4CBD518F07135A043E20C44F68CEB01546F4"
+    }
+  ],
+  "deleted": []
+}

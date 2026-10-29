@@ -27,7 +27,7 @@ export class GuestAccessStore {
     return response.data
   }
   private async read() {
-    const data = await this.call('/api/guest/orders')
+    const data = await this.call('/api/guest/access/references')
     if (!Array.isArray(data.orders) || !data.orders.every(item => object(item) && typeof item.orderNumber === 'string' && /^[A-Za-z0-9-]{1,64}$/.test(item.orderNumber))) throw new Error('schema')
     this.set({ authenticated: true, orders: data.orders.map(item => item.orderNumber as string) })
   }

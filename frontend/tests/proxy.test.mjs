@@ -2,10 +2,11 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
-import { fileURLToPath } from 'node:url'
 import { apiProxy } from '../vite/apiProxy.ts'
+import { resolve } from 'node:path'
+import { proxyViteConfig } from './proxyViteConfig.mjs'
 
-test('real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback', async () => {
+test('real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback', async t => {
   assert.equal(typeof apiProxy, 'function', 'proxy plugin must exist')
   const upstream = createHttpServer((req, res) => {
     res.setHeader('Content-Type', 'application/json')
@@ -16,7 +17,10 @@ test('real Vite proxy preserves health/API errors, blocks other management paths
   const target = `http://127.0.0.1:${upstream.address().port}`
   let vite
   try {
-    vite = await createViteServer({ root: fileURLToPath(new URL('..', import.meta.url)), configFile: false, plugins: [apiProxy(target)], server: { host: '127.0.0.1', port: 0 }, logLevel: 'silent' })
+    const config = await proxyViteConfig(target)
+    vite = await createViteServer({ ...config, server: { host: '127.0.0.1', port: 0 } })
+    assert.equal(resolve(vite.config.cacheDir), resolve(config.cacheDir))
+    t.diagnostic(`owned cache: ${vite.config.cacheDir}`)
     await vite.listen()
     const base = `http://127.0.0.1:${vite.httpServer.address().port}`
     for (const path of ['/actuator/health', '/actuator/health?check=1']) {

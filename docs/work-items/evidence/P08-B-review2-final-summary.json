@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "java": 373,
+  "browser": 68,
+  "frontend": 162,
+  "node": 73,
+  "failure": 0,
+  "error": 0,
+  "skipped": 0,
+  "missing": 0,
+  "source396Mismatch": 0,
+  "failure22350Mismatch": 0,
+  "sharedCacheFiles": 339,
+  "unchangedCacheFiles": 338,
+  "changedCacheFile": "vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json",
+  "change": "Vitest test-run duration/lastRun result cache updated; dependency cache preserved"
+}

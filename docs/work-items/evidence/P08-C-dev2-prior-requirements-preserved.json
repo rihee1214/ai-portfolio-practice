@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "browser",
+    "previousRequired": 68,
+    "currentRequired": 74,
+    "missing": 0
+  },
+  {
+    "kind": "frontend",
+    "previousRequired": 162,
+    "currentRequired": 170,
+    "missing": 0
+  }
+]

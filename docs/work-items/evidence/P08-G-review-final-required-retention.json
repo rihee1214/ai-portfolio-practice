@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "java",
+    "old": 384,
+    "current": 387,
+    "missing": []
+  },
+  {
+    "kind": "browser",
+    "old": 96,
+    "current": 106,
+    "missing": []
+  },
+  {
+    "kind": "frontend",
+    "old": 206,
+    "current": 216,
+    "missing": []
+  }
+]

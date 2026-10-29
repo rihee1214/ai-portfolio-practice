@@ -81,8 +81,1235 @@ import static org.assertj.core.api.Assertions.assertThat;
             "management.endpoints.jmx.domain=com.example.marketplace.dbfollowup",
             "spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@org.springframework.context.annotation.Import({PostgresJdbcIT.TestMailboxEndpoint.class,PostgresJdbcIT.GuestOrderFixture.class,PostgresJdbcIT.GuestFixtureSecurity.class,PostgresJdbcIT.CouponFixture.class})
+@org.springframework.context.annotation.Import({PostgresJdbcIT.TestMailboxEndpoint.class,PostgresJdbcIT.GuestOrderFixture.class,PostgresJdbcIT.GuestFixtureSecurity.class,PostgresJdbcIT.CouponFixture.class,PostgresJdbcIT.PaymentFixtureEndpoint.class,PostgresJdbcIT.ShipmentBrowserFixture.class,PostgresJdbcIT.TossTestConfiguration.class})
 class PostgresJdbcIT {
+    private static final java.util.concurrent.ConcurrentHashMap<String,Map<String,Object>> TOSS_FIXTURES=new java.util.concurrent.ConcurrentHashMap<>();
+    private static final java.util.concurrent.ConcurrentHashMap<String,java.util.concurrent.atomic.AtomicInteger> TOSS_CALLS=new java.util.concurrent.ConcurrentHashMap<>();
+    private static final String TOSS_WEBHOOK_FIXTURE="fixture-only-security-key-not-real";
+    private static final com.sun.net.httpserver.HttpServer TOSS_STUB=startTossStub();
+    private static com.sun.net.httpserver.HttpServer startTossStub() {
+        try {
+            var server=com.sun.net.httpserver.HttpServer.create(new java.net.InetSocketAddress("127.0.0.1",0),0);
+            server.createContext("/v1/payments",exchange->{
+                String path=exchange.getRequestURI().getPath(),method=exchange.getRequestMethod();var mapper=new tools.jackson.databind.ObjectMapper();
+                var input=method.equals("POST")?mapper.readTree(exchange.getRequestBody().readAllBytes()):null;
+                String key=path.endsWith("/confirm")?input.path("paymentKey").asText():path.substring("/v1/payments/".length()).replace("/cancel","");
+                TOSS_CALLS.computeIfAbsent(key+":"+method+(path.endsWith("/cancel")?":cancel":""),ignored->new java.util.concurrent.atomic.AtomicInteger()).incrementAndGet();
+                assertEquals("Basic "+java.util.Base64.getEncoder().encodeToString("test_sk_fixture-integration-only:".getBytes(java.nio.charset.StandardCharsets.UTF_8)),exchange.getRequestHeaders().getFirst("Authorization"));
+                var data=TOSS_FIXTURES.get(key);
+                if(data==null) { exchange.sendResponseHeaders(404,-1);exchange.close();return; }
+                if(method.equals("POST")) {
+                    String attempt=exchange.getRequestHeaders().getFirst("Idempotency-Key");assertTrue(attempt!=null&&attempt.matches("[0-9a-f-]{36}"));
+                    if(path.endsWith("/confirm")) { assertEquals(data.get("orderId"),input.path("orderId").asText());assertEquals(data.get("totalAmount"),input.path("amount").asLong()); }
+                    if(path.endsWith("/cancel")) { data.put("status","CANCELED");data.put("balanceAmount",0L); }
+                    else if(data.remove("lose")!=null) { data.put("status","DONE");exchange.close();return; }
+                }
+                byte[] bytes=mapper.writeValueAsBytes(data);exchange.getResponseHeaders().set("Content-Type","application/json");exchange.sendResponseHeaders(200,bytes.length);exchange.getResponseBody().write(bytes);exchange.close();
+            });server.start();return server;
+        }catch(java.io.IOException failure) { throw new IllegalStateException("TOSS_FIXTURE_SETUP",failure); }
+    }
+    @org.springframework.test.context.DynamicPropertySource
+    static void tossStubProperties(org.springframework.test.context.DynamicPropertyRegistry registry) {
+        registry.add("marketplace.toss.client-key",()->"test_ck_fixture-integration-only");registry.add("marketplace.toss.secret-key",()->"test_sk_fixture-integration-only");registry.add("marketplace.toss.mid",()->"fixture-mid");registry.add("marketplace.toss.api-version",()->"2024-06-01");registry.add("marketplace.toss.webhook-security-key",()->TOSS_WEBHOOK_FIXTURE);
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods=false)
+    static class TossTestConfiguration {
+        @org.springframework.context.annotation.Bean @org.springframework.context.annotation.Primary
+        com.example.marketplace.payment.infrastructure.PaymentProviderConfiguration.Settings stubTossSettings() { return new com.example.marketplace.payment.infrastructure.PaymentProviderConfiguration.Settings("test_ck_fixture-integration-only","test_sk_fixture-integration-only","fixture-mid","2024-06-01",TOSS_WEBHOOK_FIXTURE,"http://127.0.0.1:"+TOSS_STUB.getAddress().getPort()); }
+    }
+    @org.junit.jupiter.api.AfterAll static void stopTossStub() { TOSS_STUB.stop(0); }
+    private PaymentFixture sandboxFixture(String suffix,boolean zero) throws Exception { var f=paymentFixture("sandbox-"+suffix,zero);jdbc.update("UPDATE marketplace.purchase_order SET mode='SANDBOX' WHERE id=:id",Map.of("id",f.order().id()));return new PaymentFixture(orders().find(f.order().orderNumber()),f.browser(),f.authority()); }
+    private Map<String,Object> tossFixture(PaymentFixture f,String key,String state) {
+        var data=new java.util.concurrent.ConcurrentHashMap<String,Object>();data.putAll(Map.of("paymentKey",key,"orderId",f.order().id().toString(),"totalAmount",f.order().quote().total(),"balanceAmount",f.order().quote().total(),"status",state,"currency","KRW","method","카드","mId","fixture-mid","version","2024-06-01"));TOSS_FIXTURES.put(key,data);return data;
+    }
+    private Map<String,String> tossConfirm(PaymentFixture f,String key) { return Map.of("paymentKey",key,"orderId",f.order().id().toString(),"amount",Long.toString(f.order().quote().total())); }
+    private int tossCalls(String key,String method) { return TOSS_CALLS.getOrDefault(key+":"+method,new java.util.concurrent.atomic.AtomicInteger()).get(); }
+    @Test void sandboxConcurrentConfirmationsAndReusedProviderKeyHaveOneEffect(CapturedOutput output) throws Exception {
+        var f=sandboxFixture("concurrent",false);String key="fixture-e-concurrent-"+UUID.randomUUID(),otherKey="fixture-e-concurrent-other-"+UUID.randomUUID();tossFixture(f,key,"DONE");tossFixture(f,otherKey,"DONE");String csrf=csrfToken(f.browser());var barrier=new java.util.concurrent.CyclicBarrier(2);
+        try(var pool=Executors.newFixedThreadPool(2)) { var results=List.of(key,otherKey).stream().map(k->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);return accountRequest(f.browser(),"POST","/api/payments/"+f.order().orderNumber()+"/confirm",tossConfirm(f,k),csrf).statusCode();})).toList();var statuses=List.of(results.get(0).get(10,TimeUnit.SECONDS),results.get(1).get(10,TimeUnit.SECONDS));assertThat(statuses).containsExactlyInAnyOrder(200,400); }
+        paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(1,tossCalls(key,"POST")+tossCalls(otherKey,"POST"));String bound=tossCalls(key,"POST")==1?key:otherKey;var other=sandboxFixture("key-reuse",false);int before=tossCalls(bound,"POST");assertEquals(400,accountRequest(other.browser(),"POST","/api/payments/"+other.order().orderNumber()+"/confirm",tossConfirm(other,bound),csrfToken(other.browser())).statusCode());paymentStates(other,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",other.order().id()),Integer.class));assertEquals(before,tossCalls(bound,"POST"));assertFalse(output.getAll().contains(bound));
+    }
+    @Test void sandboxConfirmationWaitRechecksCurrentSession() throws Exception {
+        var f=sandboxFixture("session-wait",false);String key="fixture-e-session-"+UUID.randomUUID();tossFixture(f,key,"DONE");String csrf=csrfToken(f.browser());
+        try(var connection=context.getBean(DataSource.class).getConnection();var pool=Executors.newSingleThreadExecutor()) { connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { sql.setObject(1,f.authority().member());sql.executeQuery().close(); }var response=pool.submit(()->accountRequest(f.browser(),"POST","/api/payments/"+f.order().orderNumber()+"/confirm",tossConfirm(f,key),csrf));awaitCouponLock("identity_user");jdbc.update("DELETE FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",f.authority().browser()));connection.commit();assertEquals(401,response.get(10,TimeUnit.SECONDS).statusCode()); }
+        assertEquals(0,tossCalls(key,"POST"));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+    }
+    @Test void sandboxConfirmationBindsStoredOrderAndCurrentAuthority() throws Exception {
+        var f=sandboxFixture("server-binding",false);String path="/api/payments/"+f.order().orderNumber();
+        assertEquals(200,accountRequest(f.browser(),"POST",path+"/sandbox",Map.of(),csrfToken(f.browser())).statusCode());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));
+        assertEquals(403,accountRequest(f.browser(),"POST",path+"/sandbox",Map.of(),null).statusCode());String key="fixture-e-bind-"+UUID.randomUUID();tossFixture(f,key,"DONE");var input=tossConfirm(f,key);
+        assertEquals(403,accountRequest(f.browser(),"POST",path+"/confirm",input,null).statusCode());var other=paymentFixture("sandbox-other",false);assertEquals(401,accountRequest(other.browser(),"POST",path+"/confirm",input,csrfToken(other.browser())).statusCode());
+        for(var forged:List.of(Map.of("paymentKey",key,"orderId",UUID.randomUUID().toString(),"amount",input.get("amount")),Map.of("paymentKey",key,"orderId",input.get("orderId"),"amount","1"),Map.of("paymentKey",key,"orderId",input.get("orderId"),"amount",input.get("amount"),"mode","DEMO"))) { assertEquals(400,accountRequest(f.browser(),"POST",path+"/confirm",forged,csrfToken(f.browser())).statusCode()); }
+        assertEquals(0,tossCalls(key,"POST"));assertEquals(200,accountRequest(f.browser(),"POST",path+"/confirm",input,csrfToken(f.browser())).statusCode());paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(200,accountRequest(f.browser(),"POST",path+"/confirm",input,csrfToken(f.browser())).statusCode());assertEquals(1,tossCalls(key,"POST"));
+        assertEquals(400,accountRequest(f.browser(),"POST",path+"/confirm",tossConfirm(f,"another-key"),csrfToken(f.browser())).statusCode());assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_toss_binding WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+        var demo=paymentFixture("sandbox-demo-reject",false);assertEquals(409,accountRequest(demo.browser(),"POST","/api/payments/"+demo.order().orderNumber()+"/confirm",tossConfirm(demo,key),csrfToken(demo.browser())).statusCode());
+    }
+    private static String tossSignature(String body,String time) throws Exception { var mac=javax.crypto.Mac.getInstance("HmacSHA256");mac.init(new javax.crypto.spec.SecretKeySpec(TOSS_WEBHOOK_FIXTURE.getBytes(java.nio.charset.StandardCharsets.UTF_8),"HmacSHA256"));return "v1:"+java.util.Base64.getEncoder().encodeToString(mac.doFinal((body+":"+time).getBytes(java.nio.charset.StandardCharsets.UTF_8))); }
+    private HttpResponse<String> webhook(String path,String body,String time,String signature) throws Exception {
+        var builder=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+path)).header("Content-Type","application/json").header("tosspayments-webhook-transmission-id",UUID.randomUUID().toString()).POST(HttpRequest.BodyPublishers.ofString(body));if(time!=null) { builder.header("tosspayments-webhook-transmission-time",time); }if(signature!=null) { builder.header("tosspayments-webhook-signature",signature); }return HttpClient.newHttpClient().send(builder.build(),HttpResponse.BodyHandlers.ofString());
+    }
+    @Test void paymentWebhookRequiresProviderEvidence() throws Exception {
+        var f=sandboxFixture("webhook",false);String key="fixture-e-webhook-"+UUID.randomUUID();var data=tossFixture(f,key,"IN_PROGRESS");data.put("lose",true);String path="/api/payments/"+f.order().orderNumber();assertEquals(200,accountRequest(f.browser(),"POST",path+"/confirm",tossConfirm(f,key),csrfToken(f.browser())).statusCode());paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+        data.put("status","DONE");String body=authMapper.writeValueAsString(Map.of("eventType","PAYMENT_STATUS_CHANGED","createdAt","2020-01-01T00:00:00","data",data));String time=Instant.now().toString(),sig=tossSignature(body,time);var before=paymentParticipantState();
+        assertEquals(403,webhook("/api/payments/webhooks/toss",body,null,null).statusCode());assertEquals(403,webhook("/api/payments/webhooks/toss",body,time,"v1:Zm9yZ2Vk").statusCode());assertEquals(403,webhook("/api/payments/webhooks/toss",body+" ",time,sig).statusCode());String old=Instant.now().minusSeconds(301).toString();assertEquals(403,webhook("/api/payments/webhooks/toss",body,old,tossSignature(body,old)).statusCode());assertEquals(before,paymentParticipantState());assertEquals(0,tossCalls(key,"GET"));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_webhook_receipt",Map.of(),Integer.class));
+        assertEquals(503,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->paymentWith(Clock.systemUTC(),stage->{ }).webhook(body.getBytes(java.nio.charset.StandardCharsets.UTF_8),time,sig,"fixture-disabled")).status());assertEquals(before,paymentParticipantState());assertEquals(0,tossCalls(key,"GET"));
+        for(String invalid:List.of(body.replace("\"totalAmount\":"+f.order().quote().total(),"\"totalAmount\":184467440737095516160000"),body.replace(f.order().id().toString(),UUID.randomUUID().toString()),body.replace(key,"fixture-unbound-key"),body.replace("fixture-mid","foreign-mid"))) { assertEquals(409,webhook("/api/payments/webhooks/toss",invalid,time,tossSignature(invalid,time)).statusCode());assertEquals(0,tossCalls(key,"GET"));assertEquals(before,paymentParticipantState()); }
+        for(String wrongPath:List.of("/api/payments/webhooks/other","/api/payments/webhooks/toss/extra","/api/payments/webhooks/toss/")) { assertEquals(403,webhook(wrongPath,body,time,sig).statusCode()); }
+        data.put("totalAmount",1L);assertEquals(409,webhook("/api/payments/webhooks/toss",body,time,sig).statusCode());assertEquals(before,paymentParticipantState());data.put("totalAmount",f.order().quote().total());
+        assertEquals(200,webhook("/api/payments/webhooks/toss",body,time,"v1:invalid,"+sig).statusCode());assertEquals(200,webhook("/api/payments/webhooks/toss",body,time,sig).statusCode());paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_webhook_receipt WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_event WHERE attempt_id=:id AND action='SUCCEEDED'",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+        String reverse=body.replace("DONE","ABORTED");assertEquals(409,webhook("/api/payments/webhooks/toss",reverse,time,tossSignature(reverse,time)).statusCode());paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(1,tossCalls(key,"POST"));
+    }
+    @Test void sandboxLostResponseAndLateSuccessUseSameAttempt(CapturedOutput output) throws Exception {
+        var f=sandboxFixture("lost",false);String key="fixture-e-lost-"+UUID.randomUUID();var data=tossFixture(f,key,"DONE");data.put("lose",true);assertEquals(200,accountRequest(f.browser(),"POST","/api/payments/"+f.order().orderNumber()+"/confirm",tossConfirm(f,key),csrfToken(f.browser())).statusCode());assertEquals("UNKNOWN",paymentAttempt(f).get("state"));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");paymentQuery(f,false);paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(1,tossCalls(key,"POST"));assertEquals(1,tossCalls(key,"GET"));
+        var late=sandboxFixture("late",false);String lateKey="fixture-e-late-"+UUID.randomUUID();var lateData=tossFixture(late,lateKey,"IN_PROGRESS");accountRequest(late.browser(),"POST","/api/payments/"+late.order().orderNumber()+"/confirm",tossConfirm(late,lateKey),csrfToken(late.browser()));var attempt=paymentAttempt(late);lateData.put("status","DONE");var timed=paymentWith(Clock.fixed(late.order().expiresAt(),ZoneOffset.UTC),stage->{ });timed.query(late.order().orderNumber(),0,0,false);assertEquals("PENDING",paymentAttempt(late).get("compensation"));paymentQuery(late,true);paymentQuery(late,true);paymentStates(late,"CANCELED","RELEASED","RELEASED");assertEquals(attempt.get("id"),paymentAttempt(late).get("id"));assertEquals(1,tossCalls(lateKey,"POST:cancel"));assertEquals(1,tossCalls(lateKey,"POST"));assertFalse(output.getAll().contains(key));assertFalse(output.getAll().contains(lateKey));assertFalse(output.getAll().contains("test_sk_fixture-integration-only"));
+        var zero=sandboxFixture("zero",true);int operations=TOSS_CALLS.values().stream().mapToInt(java.util.concurrent.atomic.AtomicInteger::get).sum();assertEquals(200,paymentPost(zero.browser(),zero.order().orderNumber(),"{}",csrfToken(zero.browser())).statusCode());paymentStates(zero,"PAID","COMMITTED","COMMITTED");assertEquals(operations,TOSS_CALLS.values().stream().mapToInt(java.util.concurrent.atomic.AtomicInteger::get).sum());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_toss_binding WHERE attempt_id=:id",Map.of("id",paymentAttempt(zero).get("id")),Integer.class));
+    }
+    @Test void paymentZeroInitialDeadlineNeverSchedulesCompensation() throws Exception {
+        var f=paymentFixture("zero-initial-deadline",true);var clock=new JobClock();clock.now=Instant.now();var before=paymentParticipantState();var api=paymentWith(clock,stage->{if(stage.equals("PREPARE")) { clock.now=f.order().expiresAt(); }});
+        assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->api.approve(f.order().orderNumber(),f.authority()));assertEquals(before,paymentParticipantState());paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+    }
+
+    @Test void paymentApprovalProcessRecoveryBeforeAndAfterProvider() throws Exception {
+        for(String point:List.of("PREPARED","PROVIDER")) {
+            var f=paymentFixture("approval-crash-"+point,false);var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("approval-worker-"+UUID.randomUUID()));var clock=new JobClock();clock.now=Instant.now();var jobs=jobs(clock);String type="approval-process-"+UUID.randomUUID();UUID id=jobs.enqueue(jobCommand(type,clock.instant()));
+            Process first=zeroWorkerProcess(folder,"first",clock.instant(),type,id,f,true,point),second=null;
+            try {
+                awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"approval worker never reached checkpoint");assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")));first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals("PROCESSING",paymentAttempt(f).get("state"));clock.advance(31);
+                second=zeroWorkerProcess(folder,"second",clock.instant(),type,id,f,false,point);assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue());paymentStates(f,point.equals("PREPARED")?"CANCELED":"PAID",point.equals("PREPARED")?"RELEASED":"COMMITTED",point.equals("PREPARED")?"RELEASED":"COMMITTED");assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));
+                assertEquals(point.equals("PREPARED")?0:1,jdbc.queryForObject("SELECT coalesce(sum(approval_calls),0) FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+            }finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+        }
+    }
+    @Test void paymentRepeatedWorkerCrashExhaustionNeedsReviewWithoutRelease() throws Exception {
+        var f=paymentFixture("five-crashes",false);mockPayment(f,"QUERY_FAILURE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("exhausted-worker-"+UUID.randomUUID()));var clock=new JobClock();clock.now=Instant.now();var jobs=jobs(clock);String type="exhausted-process-"+UUID.randomUUID();UUID id=jobs.enqueue(jobCommand(type,clock.instant()));jdbc.update("UPDATE marketplace.payment_attempt SET next_job=:job WHERE order_id=:id",Map.of("job",id,"id",f.order().id()));
+        for(int i=0;i<5;i++) {
+            String phase="crash-"+i;Process child=paymentWorkerProcess(folder,phase,clock.instant(),type,id,f,false,true,"QUERY_PROVIDER");try { awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve(phase+"-effect.txt"))||!child.isAlive(),"owned worker did not reach query");assertTrue(java.nio.file.Files.exists(folder.resolve(phase+"-effect.txt")));child.destroyForcibly();assertTrue(child.waitFor(10,TimeUnit.SECONDS)); }finally { if(child.isAlive()) { child.destroyForcibly();child.waitFor(10,TimeUnit.SECONDS); } }clock.advance(31);
+        }
+        assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());assertEquals("FAILED",jobs.find(id).orElseThrow().status());assertEquals("LEASE_EXPIRED",jobs.find(id).orElseThrow().lastError());assertTrue(payments().get(f.order().orderNumber(),f.authority()).reviewRequired());assertEquals(0,paymentAttempt(f).get("query_count"));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+    }
+
+    private Process zeroWorkerProcess(java.nio.file.Path folder,String phase,Instant now,String type,UUID job,PaymentFixture f,boolean block,String point) throws Exception {
+        var args=folder.resolve(phase+".args");var marker=folder.resolve(phase+"-effect.txt");String cp=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path")).replace((char)92,'/');
+        java.nio.file.Files.writeString(args,"-cp\n\""+cp+"\"\ncom.example.marketplace.dbtest.PaymentApprovalProbe\n"+now+"\n"+type+"\n\""+marker.toString().replace((char)92,'/')+"\"\n"+block+"\n"+job+"\n"+f.order().orderNumber()+"\n"+point+"\n"+f.authority().browser()+"\n"+f.authority().member()+"\n"+f.authority().version()+"\n");
+        var process=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"@"+args).redirectErrorStream(true).redirectOutput(folder.resolve(phase+".log").toFile()).start();java.nio.file.Files.writeString(folder.resolve(phase+"-pid.txt"),Long.toString(process.pid()));return process;
+    }
+    @Test void paymentZeroCrashRecoveryNeverCallsAnyProviderOperation() throws Exception {
+        for(String point:List.of("COUPON","INVENTORY","PREPARED")) {
+            var f=paymentFixture("zero-crash-"+point,true);var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("zero-worker-"+UUID.randomUUID()));var clock=new JobClock();clock.now=Instant.now();var jobs=jobs(clock);String type="zero-process-"+UUID.randomUUID();UUID id=jobs.enqueue(jobCommand(type,clock.instant()));var before=paymentParticipantState();before.remove("job");
+            Process first=zeroWorkerProcess(folder,"first",clock.instant(),type,id,f,true,point),second=null;
+            try {
+                awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"zero worker never reached checkpoint");assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")),"inspect preserved zero worker log");first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));
+                if(!point.equals("PREPARED")) { var after=paymentParticipantState();after.remove("job");assertEquals(before,after,"uncommitted zero transaction must roll back every participant");paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED"); }else { paymentStates(f,"PAID","COMMITTED","COMMITTED"); }
+                clock.advance(31);second=zeroWorkerProcess(folder,"second",clock.instant(),type,id,f,false,point);assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue());paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());assertFalse(java.nio.file.Files.exists(folder.resolve("forbidden-provider.txt")));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_event WHERE attempt_id=:id AND action='SUCCEEDED'",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+            }finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+        }
+        var f=paymentFixture("zero-boundary",true);var before=paymentParticipantState();var api=paymentWith(Clock.systemUTC(),stage->{if(stage.equals("COUPON")) { jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=clock_timestamp()-interval '1 second' WHERE checkout_id=:id",Map.of("id",f.order().checkoutId())); }});
+        assertThrows(com.example.marketplace.inventory.api.InventoryException.class,()->api.approve(f.order().orderNumber(),f.authority()));assertEquals(before,paymentParticipantState());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_mock WHERE attempt_id IN (SELECT id FROM marketplace.payment_attempt WHERE order_id=:id)",Map.of("id",f.order().id()),Integer.class));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+    }
+    @Test void paymentApprovalExpiryContendOnTheSameOrderLock() throws Exception {
+        for(boolean approveFirst:List.of(false,true)) {
+            var f=paymentFixture("order-lock-"+approveFirst,false);mockPayment(f,"QUERY_FAILURE","SUCCESS");var due=paymentWith(Clock.fixed(f.order().expiresAt(),ZoneOffset.UTC),stage->{ });
+            try(var connection=context.getBean(DataSource.class).getConnection();var pool=Executors.newFixedThreadPool(2)) {
+                connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.purchase_order WHERE id=? FOR UPDATE")) { sql.setObject(1,f.order().id());sql.executeQuery().close(); }
+                Callable<String> approval=()->{try { return payments().approve(f.order().orderNumber(),f.authority()).paymentState(); }catch(com.example.marketplace.order.api.OrderRejected denied) { return "DENIED"; }};
+                Callable<String> expiry=()->{due.expire(f.order().orderNumber());return "EXPIRED";};var first=pool.submit(approveFirst?approval:expiry);
+                awaitJobCondition(()->jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%purchase_order%FOR UPDATE%'",Integer.class)>=1,"first order waiter missing");var second=pool.submit(approveFirst?expiry:approval);
+                awaitJobCondition(()->jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%purchase_order%FOR UPDATE%'",Integer.class)>=2,"both order paths must actually contend");connection.commit();first.get(10,TimeUnit.SECONDS);second.get(10,TimeUnit.SECONDS);
+            }
+            if(approveFirst) { paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals("UNKNOWN",paymentAttempt(f).get("state"));assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class)); }
+            else { paymentStates(f,"EXPIRED","RELEASED","RELEASED");assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class)); }
+        }
+    }
+    @Test void paymentRejectsMislinkedOrIncompleteReservationHandoffs() throws Exception {
+        for(String mode:List.of("missing","coupon","deadline","member")) {
+            var f=paymentFixture("handoff-"+mode,false);var ids=orders().reservations(f.order().orderNumber());
+            if(mode.equals("missing")) { jdbc.update("DELETE FROM marketplace.order_reservation WHERE reservation_id=:id",Map.of("id",ids.inventory().getFirst())); }
+            if(mode.equals("deadline")) { jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=expires_at-interval '1 second' WHERE id=:id",Map.of("id",ids.inventory().getFirst())); }
+            if(mode.equals("coupon")) { UUID old=f.order().quote().stores().getFirst().coupon().id();var stored=coupons().own(f.authority().member(),old);var other=couponTemplate(f.authority().member(),"다른 쿠폰",3);var issued=coupons().claim(f.authority().member(),other.id());UUID rid=jdbc.queryForObject("SELECT id FROM marketplace.coupon_reservation WHERE coupon_id=:id",Map.of("id",stored.id()),UUID.class);jdbc.update("UPDATE marketplace.coupon_reservation SET coupon_id=:coupon WHERE id=:id",Map.of("coupon",issued.id(),"id",rid)); }
+            if(mode.equals("member")) { UUID other=activeMember("payment-handoff-other@example.com");var intact=paymentParticipantState();assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.coupon_reservation SET member_id=:member WHERE id=:id",Map.of("member",other,"id",ids.coupons().getFirst())));assertEquals(intact,paymentParticipantState());continue; }
+            var before=paymentParticipantState();assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->payments().approve(f.order().orderNumber(),f.authority()));assertEquals(before,paymentParticipantState());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));
+        }
+    }
+
+    @org.springframework.web.bind.annotation.RestController @org.springframework.context.annotation.Profile("c3-fixture")
+    static class PaymentFixtureEndpoint {
+        private final NamedParameterJdbcTemplate jdbc;private final com.example.marketplace.payment.infrastructure.PaymentCoordinator payments;
+        PaymentFixtureEndpoint(NamedParameterJdbcTemplate jdbc,com.example.marketplace.payment.infrastructure.PaymentCoordinator payments) { this.jdbc=jdbc;this.payments=payments; }
+        @org.springframework.web.bind.annotation.GetMapping("/api/__test/payment") Object own(java.security.Principal principal) {
+            return jdbc.queryForList("SELECT o.order_number,o.id AS provider_order_id,o.amount,o.state,coalesce(m.approval_calls,0) AS approval_calls,coalesce(m.approval_effects,0) AS approval_effects,(SELECT count(*) FROM marketplace.order_reservation r JOIN marketplace.inventory_reservation i ON i.id=r.reservation_id WHERE r.order_id=o.id AND i.status='COMMITTED') AS inventory_committed,(SELECT count(*) FROM marketplace.order_reservation r JOIN marketplace.coupon_reservation c ON c.id=r.reservation_id WHERE r.order_id=o.id AND c.state='COMMITTED') AS coupon_committed FROM marketplace.purchase_order o LEFT JOIN marketplace.payment_attempt a ON a.order_id=o.id LEFT JOIN marketplace.payment_mock m ON m.attempt_id=a.id WHERE o.member_id=:id ORDER BY o.created_at",Map.of("id",UUID.fromString(principal.getName())));
+        }
+        @org.springframework.web.bind.annotation.PostMapping("/api/__test/payment/query") Object query(java.security.Principal principal,@org.springframework.web.bind.annotation.RequestBody Map<String,String> body) {
+            var rows=jdbc.queryForList("SELECT a.* FROM marketplace.payment_attempt a JOIN marketplace.purchase_order o ON o.id=a.order_id WHERE o.member_id=:id AND o.order_number=:n",Map.of("id",UUID.fromString(principal.getName()),"n",body.get("number")));if(rows.size()!=1) { throw new com.example.marketplace.order.api.OrderRejected(404); }var a=rows.getFirst();payments.query(body.get("number"),((Number)a.get("round")).intValue(),((Number)a.get("query_count")).intValue(),false);return Map.of("done",true);
+        }
+    }
+    @Test void paymentMockFixtureIsNotProductionApi() {
+        try(var isolated=new org.springframework.context.annotation.AnnotationConfigApplicationContext()) { isolated.register(PaymentFixtureEndpoint.class);isolated.refresh();assertTrue(isolated.getBeansOfType(PaymentFixtureEndpoint.class).isEmpty()); }
+        assertTrue(PaymentFixtureEndpoint.class.getProtectionDomain().getCodeSource().getLocation().toString().contains("test-classes"));
+    }
+
+    private Process paymentWorkerProcess(java.nio.file.Path folder,String phase,Instant now,String type,UUID job,PaymentFixture f,boolean cancel,boolean block,String point) throws Exception {
+        var args=folder.resolve(phase+".args");var marker=folder.resolve(phase+"-effect.txt");var a=paymentAttempt(f);String cp=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path")).replace((char)92,'/');
+        java.nio.file.Files.writeString(args,"-cp\n\""+cp+"\"\ncom.example.marketplace.dbtest.PaymentWorkerProbe\n"+now+"\n"+type+"\n\""+marker.toString().replace((char)92,'/')+"\"\n"+block+"\n"+job+"\n"+f.order().orderNumber()+"\n"+a.get("round")+"\n"+a.get("query_count")+"\n"+cancel+"\n"+point+"\n");
+        var process=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"@"+args).redirectErrorStream(true).redirectOutput(folder.resolve(phase+".log").toFile()).start();java.nio.file.Files.writeString(folder.resolve(phase+"-pid.txt"),Long.toString(process.pid()));return process;
+    }
+    @Test void paymentWorkerRestartKeepsEffects() throws Exception {
+        for(boolean cancel:List.of(false,true)) {
+            var f=paymentFixture("worker-"+cancel,false);mockPayment(f,"DELAYED_SUCCESS","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());
+            if(cancel) { var a=paymentAttempt(f);context.getBean(com.example.marketplace.payment.api.PaymentProvider.class).query(new com.example.marketplace.payment.api.PaymentProvider.Request((UUID)a.get("id"),f.order().id(),f.order().quote().total(),"DEMO"));paymentWith(Clock.fixed(f.order().expiresAt(),ZoneOffset.UTC),stage->{ }).apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED); }
+            var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("payment-worker-"+UUID.randomUUID()));var clock=new JobClock();clock.now=Instant.now();var jobs=jobs(clock);String type="payment-process-"+UUID.randomUUID();UUID id=jobs.enqueue(jobCommand(type,clock.instant()));
+            Process first=paymentWorkerProcess(folder,"first",clock.instant(),type,id,f,cancel,true,cancel?"CANCEL_PROVIDER":"QUERY_PROVIDER"),second=null;
+            try {
+                awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"payment worker never reached provider effect");assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")),"inspect preserved owned worker log");assertEquals("RUNNING",jobs.find(id).orElseThrow().status());paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+                first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));clock.advance(31);second=paymentWorkerProcess(folder,"second",clock.instant(),type,id,f,cancel,false,"none");assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue(),"inspect payment worker second.log");assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());assertEquals(2,jobs.find(id).orElseThrow().attempts());
+                paymentStates(f,cancel?"CANCELED":"PAID",cancel?"RELEASED":"COMMITTED",cancel?"RELEASED":"COMMITTED");var a=paymentAttempt(f);assertEquals(1,jdbc.queryForObject("SELECT approval_effects FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));assertEquals(cancel?1:0,jdbc.queryForObject("SELECT cancel_effects FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));
+            }finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+        }
+    }
+
+    @Test void paymentReviewRequiresAuthorizedReconcile() throws Exception {
+        var f=paymentFixture("ops",false);mockPayment(f,"QUERY_FAILURE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());for(int i=0;i<5;i++) { paymentQuery(f,false); }
+        var before=paymentParticipantState();assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->payments().reconcile(f.order().orderNumber(),f.authority(),"provider checked"));assertEquals(before,paymentParticipantState());
+        jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",f.authority().member()));assertThrows(com.example.marketplace.identity.api.AccessRejected.class,()->payments().reconcile(f.order().orderNumber(),f.authority(),"provider checked"));
+        jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'SYSTEM')",Map.of("id",f.authority().member()));assertTrue(payments().reviewQueue(f.authority()).stream().anyMatch(v->v.orderNumber().equals(f.order().orderNumber())));
+        payments().reconcile(f.order().orderNumber(),f.authority(),"provider checked");var a=paymentAttempt(f);assertEquals(1,a.get("round"));assertEquals(0,a.get("query_count"));assertEquals(false,a.get("review_required"));
+        assertEquals("provider checked",jdbc.queryForObject("SELECT reason FROM marketplace.payment_event WHERE attempt_id=:id AND action='RECONCILE_REQUESTED' AND actor=:actor",Map.of("id",a.get("id"),"actor",f.authority().member()),String.class));
+        jdbc.update("UPDATE marketplace.payment_mock SET approval='SUCCESS',state='SUCCEEDED',approval_effects=1 WHERE attempt_id=:id",Map.of("id",a.get("id")));paymentQuery(f,false);paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));
+    }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"demo-coupon","demo-inventory","zero","sandbox","confirm"})
+    void paymentPreparationRechecksExpiryAfterReservationWait(String shape) throws Exception {
+        var f=shape.equals("sandbox")||shape.equals("confirm")?sandboxFixture("final-"+shape,false):paymentFixture("final-"+shape,shape.equals("zero"));
+        var clock=new JobClock();clock.now=Instant.now();long expiry=clock.millis()+60000;
+        jdbc.update("UPDATE marketplace.spring_session SET expiry_time=:expiry WHERE session_id=:s",Map.of("expiry",expiry,"s",f.authority().browser()));
+        var sessions=new com.example.marketplace.identity.infrastructure.JdbcPurchaseSessions(jdbc,clock);
+        var api=paymentAuthorityFixture(sessions,context.getBean(com.example.marketplace.guest.api.GuestOrders.class));
+        String key="fixture-final-"+UUID.randomUUID();if(shape.equals("confirm")) { tossFixture(f,key,"DONE"); }
+        boolean coupon=shape.equals("demo-coupon");String table=coupon?"issued_coupon":"inventory_balance",column=coupon?"id":"sku_id";
+        UUID locked=coupon?f.order().quote().stores().getFirst().coupon().id():f.order().sellers().getFirst().items().getFirst().skuId();
+        var before=paymentParticipantState();String providerBefore=paymentProviderState();
+        try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+            connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT "+column+" FROM marketplace."+table+" WHERE "+column+"=? FOR UPDATE")) { sql.setObject(1,locked);sql.executeQuery().close(); }
+            var response=pool.submit(()->{try { if(shape.equals("sandbox")) { api.sandbox(f.order().orderNumber(),f.authority()); }else if(shape.equals("confirm")) { api.confirm(f.order().orderNumber(),f.authority(),new com.example.marketplace.payment.infrastructure.PaymentCoordinator.Confirmation(key,f.order().id().toString(),Long.toString(f.order().quote().total()))); }else { api.approve(f.order().orderNumber(),f.authority()); }return 200; }catch(com.example.marketplace.order.api.OrderRejected denied) { return denied.status(); }});
+            awaitCouponLock(table);clock.now=Instant.ofEpochMilli(expiry);assertTrue(clock.instant().isBefore(f.order().expiresAt()));connection.commit();assertEquals(401,response.get(10,TimeUnit.SECONDS),shape);
+        }
+        assertEquals(before,paymentParticipantState());assertEquals(providerBefore,paymentProviderState());assertEquals(0,tossCalls(key,"POST"));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+    }
+    private String paymentProviderState() { return jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace.payment_mock t",String.class); }
+    private com.example.marketplace.payment.infrastructure.PaymentCoordinator paymentAuthorityFixture(com.example.marketplace.identity.api.PurchaseSessions sessions,com.example.marketplace.guest.api.GuestOrders guest) {
+        var saved=new com.example.marketplace.order.infrastructure.JdbcOrders(jdbc,authMapper,transactionManager);
+        org.springframework.test.util.ReflectionTestUtils.invokeMethod(saved,"authorities",context.getBean(com.example.marketplace.identity.api.SellerMembership.class),sessions,guest);
+        var api=new com.example.marketplace.payment.infrastructure.PaymentCoordinator(jdbc,saved,reservations(),couponReservations(),context.getBean(com.example.marketplace.payment.api.PaymentProvider.class),context.getBean(com.example.marketplace.platform.api.Jobs.class),context.getBean(com.example.marketplace.platform.api.Outbox.class),transactionManager,context.getBean(com.example.marketplace.identity.api.AccessPolicy.class),context.getBean(com.example.marketplace.identity.api.SellerMembership.class),sessions,Clock.systemUTC(),stage->{ });
+        org.springframework.test.util.ReflectionTestUtils.setField(api,"sandboxSettings",context.getBean(com.example.marketplace.payment.infrastructure.PaymentProviderConfiguration.Settings.class));return api;
+    }
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"status","approve"})
+    void paymentExistingGuestRechecksMaximumAfterOrderWait(String shape) throws Exception {
+        var f=new GuestFixture();var access=guestAccess(f);var product=browseFixture("final-guest-"+shape,10000,10);var lines=List.of(quoteLine((UUID)product.get("sku"),1));var quote=quotes().calculate(null,lines,List.of());var contact=new com.example.marketplace.order.api.Orders.Contact("ignored",f.phone,"수령인",f.phone,"01234","주소","");
+        UUID first=guestVerified(f);access.prepare(f.browser,first,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var original=creationWith(access,stage->{ }).create(f.browser,null,null,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("first",lines,List.of(),quote.fingerprint(),contact,first,0));
+        String token=access.login(original.orderNumber(),f.phone,GUEST_PASSWORD,f.source,null);
+        Instant maximum=jdbc.queryForObject("SELECT expires_at FROM marketplace.guest_access_session WHERE token_hash=:t",Map.of("t",com.example.marketplace.guest.infrastructure.JdbcGuestPurchases.hash(token)),java.sql.Timestamp.class).toInstant();
+        // Genuine activity keeps idle authority valid. Create the new purchase one second before the immutable maximum.
+        while(f.clock.instant().isBefore(maximum.minusSeconds(61))) {
+            f.clock.advance(Math.min(1500,Duration.between(f.clock.instant(),maximum.minusSeconds(61)).getSeconds()));
+            new TransactionTemplate(transactionManager).executeWithoutResult(t->assertEquals(original.guestBuyerId(),access.requireCurrent(token)));
+        }
+        UUID next=guestRepeat(f);var link=access.selectLink(f.browser,next,"EXISTING",token,0);
+        var order=creationWith(access,stage->{ }).create(f.browser,null,token,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("linked",lines,List.of(),quote.fingerprint(),contact,next,link.revision()));
+        long now=System.currentTimeMillis();jdbc.update("INSERT INTO marketplace.spring_session(primary_id,session_id,creation_time,last_access_time,max_inactive_interval,expiry_time) VALUES(:id,:s,:now,:now,3600,:expiry)",Map.of("id",UUID.randomUUID().toString(),"s",f.browser,"now",now,"expiry",now+3600000));
+        var sessions=context.getBean(com.example.marketplace.identity.api.PurchaseSessions.class);var api=paymentAuthorityFixture(sessions,access);var authority=new com.example.marketplace.payment.api.Payments.Authority(f.browser,null,null,token);
+        assertEquals(maximum.minusSeconds(1),f.clock.instant());
+        assertEquals(maximum,jdbc.queryForObject("SELECT idle_expires_at FROM marketplace.guest_access_session WHERE token_hash=:t",Map.of("t",com.example.marketplace.guest.infrastructure.JdbcGuestPurchases.hash(token)),java.sql.Timestamp.class).toInstant());
+        var before=paymentParticipantState();String providerBefore=paymentProviderState();
+        try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+            connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.purchase_order WHERE id=? FOR UPDATE")) { sql.setObject(1,order.id());sql.executeQuery().close(); }
+            var response=pool.submit(()->{try { if(shape.equals("status")) { api.get(order.orderNumber(),authority); }else { api.approve(order.orderNumber(),authority); }return 200; }catch(com.example.marketplace.order.api.OrderRejected denied) { return denied.status(); }catch(com.example.marketplace.guest.api.GuestRejected denied) { return denied.status(); }});
+            awaitCouponLock("purchase_order");f.clock.now=maximum;assertTrue(Boolean.TRUE.equals(new TransactionTemplate(transactionManager).execute(t->sessions.lockCurrent(f.browser,null,null))));connection.commit();assertEquals(401,response.get(10,TimeUnit.SECONDS),shape);
+        }
+        assertEquals(before,paymentParticipantState());assertEquals(providerBefore,paymentProviderState());assertEquals("PENDING_PAYMENT",orders().find(order.orderNumber()).state());
+    }
+    @Test void paymentHttpWaitRechecksSessionAndWorkerSurvivesSuspension() throws Exception {
+        var f=paymentFixture("http-wait",false);String csrf=csrfToken(f.browser());
+        try(var connection=context.getBean(DataSource.class).getConnection();var pool=Executors.newSingleThreadExecutor()) {
+            connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { sql.setObject(1,f.authority().member());sql.executeQuery().close(); }
+            var response=pool.submit(()->paymentPost(f.browser(),f.order().orderNumber(),"{}",csrf));awaitCouponLock("identity_user");jdbc.update("DELETE FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",f.authority().browser()));connection.commit();assertEquals(401,response.get(10,TimeUnit.SECONDS).statusCode());
+        }
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+        var suspended=paymentFixture("suspended-after-provider",false);mockPayment(suspended,"LOST_RESPONSE","SUCCESS");payments().approve(suspended.order().orderNumber(),suspended.authority());jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",suspended.authority().member()));paymentQuery(suspended,false);paymentStates(suspended,"PAID","COMMITTED","COMMITTED");
+    }
+    private HttpResponse<String> paymentPost(HttpClient browser,String number,String body,String csrf) throws Exception {
+        var builder=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/payments/"+number+"/approve")).header("Content-Type","application/json").POST(HttpRequest.BodyPublishers.ofString(body));if(csrf!=null) { builder.header("X-CSRF-TOKEN",csrf); }return browser.send(builder.build(),HttpResponse.BodyHandlers.ofString());
+    }
+    @Test void paymentHttpRejectsOwnershipAmountModeAndMissingCsrf() throws Exception {
+        var f=paymentFixture("http-denials",false);String token=csrfToken(f.browser());assertEquals(403,paymentPost(f.browser(),f.order().orderNumber(),"{}",null).statusCode());
+        for(String body:List.of("{\"amount\":\"0\"}","{\"mode\":\"SANDBOX\"}","{\"reservationIds\":[]}","{\"result\":\"SUCCESS\"}")) { assertEquals(400,paymentPost(f.browser(),f.order().orderNumber(),body,token).statusCode()); }
+        var other=paymentFixture("http-other",false);assertEquals(401,paymentPost(other.browser(),f.order().orderNumber(),"{}",csrfToken(other.browser())).statusCode());assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));
+        assertEquals(200,paymentPost(f.browser(),f.order().orderNumber(),"{}",token).statusCode());paymentStates(f,"PAID","COMMITTED","COMMITTED");assertEquals(200,paymentPost(f.browser(),f.order().orderNumber(),"{}",token).statusCode());assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+    }
+
+    @Test void realOrdersRequireCurrentOwner() throws Exception {
+        var f=paymentFixture("f-owner",false);String number=f.order().orderNumber();
+        var detail=accountRequest(f.browser(),"GET","/api/orders/"+number,null,null);assertEquals(200,detail.statusCode());assertTrue(detail.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+        var stranger=authBrowser();for(String n:List.of(number,"Ononexistent")) { for(String path:List.of("/api/orders/"+n,"/api/payments/"+n+"/history")) {var denied=accountRequest(stranger,"GET",path,null,null);assertEquals(404,denied.statusCode());assertTrue(denied.headers().firstValue("Cache-Control").orElse("").contains("no-store"));} }
+        var other=paymentFixture("f-other",false);assertEquals(404,accountRequest(other.browser(),"GET","/api/orders/"+number,null,null).statusCode());
+        assertEquals(200,accountRequest(f.browser(),"GET","/api/payments/"+number+"/history",null,null).statusCode());jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='BUYER'",Map.of("id",f.authority().member()));assertEquals(200,accountRequest(f.browser(),"GET","/api/orders/"+number,null,null).statusCode());
+        jdbc.update("DELETE FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",f.authority().browser()));assertEquals(404,accountRequest(f.browser(),"GET","/api/orders/"+number,null,null).statusCode());
+    }
+    @Test void realGuestOrdersUseIndependentAccessSessions() throws Exception {
+        var f=new GuestFixture();var access=guestAccess(f);var api=creationWith(access,stage->{ });var product=browseFixture("f-guest-real",10000,20);var lines=List.of(quoteLine((UUID)product.get("sku"),1));var quote=quotes().calculate(null,lines,List.of());var contact=new com.example.marketplace.order.api.Orders.Contact("ignored",f.phone,"수령인",f.phone,"01234","실제 주문 주소","");
+        UUID a=guestVerified(f);access.prepare(f.browser,a,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var first=api.create(f.browser,null,null,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("f-first",lines,List.of(),quote.fingerprint(),contact,a,0));
+        UUID b=guestRepeat(f);access.prepare(f.browser,b,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var second=api.create(f.browser,null,null,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("f-second",lines,List.of(),quote.fingerprint(),contact,b,0));assertThat(second.guestBuyerId()).isNotEqualTo(first.guestBuyerId());
+        String old=access.login(first.orderNumber(),f.phone,GUEST_PASSWORD,f.source,null);UUID c=guestRepeat(f);var link=access.selectLink(f.browser,c,"EXISTING",old,0);
+        var third=api.create(f.browser,null,old,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("f-third",lines,List.of(),quote.fingerprint(),contact,c,link.revision()));assertEquals(first.guestBuyerId(),third.guestBuyerId());
+        var browser=authBrowser();String csrf=csrfToken(browser);assertEquals(200,accountRequest(browser,"POST","/api/guest/access/login",Map.of("orderNumber",first.orderNumber(),"phone",f.phone,"password",GUEST_PASSWORD),csrf).statusCode());
+        var listing=authMapper.readTree(accountRequest(browser,"GET","/api/guest/orders",null,null).body()).get("orders");assertEquals(2,listing.size());var numbers=new java.util.HashSet<String>();listing.forEach(r->numbers.add(r.get("orderNumber").asText()));assertEquals(java.util.Set.of(first.orderNumber(),third.orderNumber()),numbers);
+        for(String path:List.of("/api/orders/"+first.orderNumber(),"/api/payments/"+first.orderNumber()+"/history","/api/orders/"+first.orderNumber()+"/shipments")) { assertEquals(200,accountRequest(browser,"GET",path,null,null).statusCode()); }
+        assertEquals(404,accountRequest(browser,"GET","/api/orders/"+second.orderNumber(),null,null).statusCode());assertEquals(404,accountRequest(browser,"GET","/api/orders/"+second.orderNumber()+"/shipments",null,null).statusCode());assertEquals(401,paymentPost(browser,first.orderNumber(),"{}",csrfToken(browser)).statusCode());
+        assertEquals(200,accountRequest(browser,"POST","/api/guest/access/logout",Map.of(),csrfToken(browser)).statusCode());assertEquals(404,accountRequest(browser,"GET","/api/orders/"+first.orderNumber(),null,null).statusCode());
+        for(String expiry:List.of("idle_expires_at","expires_at","password_version")) {
+            assertEquals(200,accountRequest(browser,"POST","/api/guest/access/login",Map.of("orderNumber",first.orderNumber(),"phone",f.phone,"password",GUEST_PASSWORD),csrfToken(browser)).statusCode());
+            if(expiry.equals("password_version")) { jdbc.update("UPDATE marketplace.guest_buyer SET password_version=password_version+1 WHERE id=:id",Map.of("id",first.guestBuyerId())); }
+            else { jdbc.update("UPDATE marketplace.guest_access_session SET idle_expires_at=LEAST(idle_expires_at,now()-interval '1 second')"+(expiry.equals("expires_at")?",expires_at=LEAST(expires_at,now()-interval '1 second')":"")+" WHERE guest_buyer_id=:id",Map.of("id",first.guestBuyerId())); }
+            assertEquals(404,accountRequest(browser,"GET","/api/orders/"+first.orderNumber(),null,null).statusCode());assertEquals(404,accountRequest(browser,"GET","/api/payments/"+first.orderNumber()+"/history",null,null).statusCode());assertEquals(404,accountRequest(browser,"GET","/api/orders/"+first.orderNumber()+"/shipments",null,null).statusCode());
+        }
+        var secondBrowser=authBrowser();for(var client:List.of(browser,secondBrowser)) { assertEquals(200,accountRequest(client,"POST","/api/guest/access/login",Map.of("orderNumber",third.orderNumber(),"phone",f.phone,"password",GUEST_PASSWORD),csrfToken(client)).statusCode());assertEquals(200,accountRequest(client,"GET","/api/orders/"+first.orderNumber(),null,null).statusCode()); }
+        var recovery=recovery(f);String code=recovery.initialCode(first.guestBuyerId());String grant=resetGrant(f,recovery,first.orderNumber(),code);String replacement="f actual reset password";recovery.reset(f.browser,grant,new com.example.marketplace.guest.api.GuestPassword(replacement,replacement));
+        for(var client:List.of(browser,secondBrowser)) { assertEquals(404,accountRequest(client,"GET","/api/orders/"+first.orderNumber(),null,null).statusCode());assertEquals(404,accountRequest(client,"GET","/api/payments/"+first.orderNumber()+"/history",null,null).statusCode());assertEquals(404,accountRequest(client,"GET","/api/orders/"+first.orderNumber()+"/shipments",null,null).statusCode()); }
+        assertEquals(401,accountRequest(browser,"POST","/api/guest/access/login",Map.of("orderNumber",third.orderNumber(),"phone",f.phone,"password",GUEST_PASSWORD),csrfToken(browser)).statusCode());assertEquals(200,accountRequest(browser,"POST","/api/guest/access/login",Map.of("orderNumber",third.orderNumber(),"phone",f.phone,"password",replacement),csrfToken(browser)).statusCode());assertEquals(200,accountRequest(browser,"GET","/api/orders/"+first.orderNumber(),null,null).statusCode());
+    }
+    @org.springframework.web.bind.annotation.RestController @org.springframework.context.annotation.Profile("c3-fixture")
+    static class ShipmentBrowserFixture {
+        private final NamedParameterJdbcTemplate jdbc;private final DataSource source;private final PlatformTransactionManager manager;private final com.example.marketplace.order.api.OrderQueries queries;private final List<com.example.marketplace.platform.api.JobHandler> handlers;
+        ShipmentBrowserFixture(NamedParameterJdbcTemplate jdbc,DataSource source,PlatformTransactionManager manager,com.example.marketplace.order.api.OrderQueries queries,List<com.example.marketplace.platform.api.JobHandler> handlers) { this.jdbc=jdbc;this.source=source;this.manager=manager;this.queries=queries;this.handlers=handlers; }
+        private void own(String number,java.security.Principal principal,jakarta.servlet.http.HttpSession session,jakarta.servlet.http.HttpServletRequest request,String token) { new TransactionTemplate(manager).executeWithoutResult(t->queries.requireOwned(number,new com.example.marketplace.order.api.OrderQueries.Authority(session.getId(),principal==null?null:UUID.fromString(principal.getName()),principal instanceof org.springframework.security.core.Authentication authentication && authentication.getPrincipal() instanceof com.example.marketplace.identity.infrastructure.SessionMember saved?saved.authVersion():null,token))); }
+        @org.springframework.web.bind.annotation.PostMapping("/api/__test/shipments/{number}/worker")
+        Object worker(@org.springframework.web.bind.annotation.PathVariable String number,@org.springframework.web.bind.annotation.RequestBody Map<String,String> input,java.security.Principal principal,jakarta.servlet.http.HttpSession session,jakarta.servlet.http.HttpServletRequest request,@org.springframework.web.bind.annotation.CookieValue(name="GUEST_ACCESS",required=false) String token) {
+            own(number,principal,session,request,token);String key;
+            if("prepare".equals(input.get("action"))) { key=jdbc.queryForObject("SELECT dedupe_key FROM marketplace.job WHERE type='PAYMENT_SETTLED' AND payload LIKE :p",Map.of("p",number+":%"),String.class); }
+            else { UUID shipment=UUID.fromString(input.get("shipment"));if(jdbc.queryForObject("SELECT count(*) FROM marketplace.shipment WHERE id=:id AND order_number=:n",Map.of("id",shipment,"n",number),Integer.class)!=1) { throw new com.example.marketplace.order.api.OrderRejected(404); }key="progress:"+shipment+":"+input.get("target"); }
+            UUID id=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",key),UUID.class);Instant at=jdbc.queryForObject("SELECT next_run_at FROM marketplace.job WHERE id=:id",Map.of("id",id),java.sql.Timestamp.class).toInstant();
+            var jobs=new com.example.marketplace.platform.infrastructure.JdbcJobs(new OneJobJdbc(source,id),manager,Clock.fixed(at,ZoneOffset.UTC));try(var engine=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,handlers)) { if(!engine.runOnce()||!jobs.find(id).orElseThrow().status().equals("SUCCEEDED")) { throw new IllegalStateException("FIXTURE_WORKER_FAILED"); } }return Map.of("done",true);
+        }
+        @org.springframework.web.bind.annotation.GetMapping("/api/__test/purchase/{number}/database")
+        Object purchaseDatabase(@org.springframework.web.bind.annotation.PathVariable String number,java.security.Principal principal,jakarta.servlet.http.HttpSession session,jakarta.servlet.http.HttpServletRequest request,@org.springframework.web.bind.annotation.CookieValue(name="GUEST_ACCESS",required=false) String token) {
+            own(number,principal,session,request,token);var args=Map.of("n",number);var result=new java.util.LinkedHashMap<String,Object>();
+            result.put("order",jdbc.queryForMap("SELECT id,state,amount FROM marketplace.purchase_order WHERE order_number=:n",args));
+            result.put("inventory",jdbc.queryForList("SELECT i.sku_id,i.quantity,i.status FROM marketplace.order_reservation r JOIN marketplace.purchase_order o ON o.id=r.order_id JOIN marketplace.inventory_reservation i ON i.id=r.reservation_id WHERE o.order_number=:n ORDER BY i.sku_id",args));
+            result.put("coupons",jdbc.queryForList("SELECT c.state FROM marketplace.order_reservation r JOIN marketplace.purchase_order o ON o.id=r.order_id JOIN marketplace.coupon_reservation c ON c.id=r.reservation_id WHERE o.order_number=:n",args));
+            result.put("attempts",jdbc.queryForList("SELECT a.state,a.compensation,coalesce(m.approval_calls,0) AS approval_calls,coalesce(m.approval_effects,0) AS approval_effects,coalesce(m.cancel_effects,0) AS cancel_effects,(SELECT count(*) FROM marketplace.payment_event e WHERE e.attempt_id=a.id AND e.action='SUCCEEDED') AS success_events FROM marketplace.payment_attempt a JOIN marketplace.purchase_order o ON o.id=a.order_id LEFT JOIN marketplace.payment_mock m ON m.attempt_id=a.id WHERE o.order_number=:n",args));
+            return result;
+        }
+        @org.springframework.web.bind.annotation.GetMapping("/api/__test/shipments/{number}/database")
+        Object database(@org.springframework.web.bind.annotation.PathVariable String number,java.security.Principal principal,jakarta.servlet.http.HttpSession session,jakarta.servlet.http.HttpServletRequest request,@org.springframework.web.bind.annotation.CookieValue(name="GUEST_ACCESS",required=false) String token) {
+            own(number,principal,session,request,token);return Map.of("shipments",jdbc.queryForList("SELECT id,seller_order_id,state,version FROM marketplace.shipment WHERE order_number=:n ORDER BY id",Map.of("n",number)),"items",jdbc.queryForList("SELECT i.shipment_id,i.order_item_id,i.quantity FROM marketplace.shipment_item i JOIN marketplace.shipment s ON s.id=i.shipment_id WHERE s.order_number=:n ORDER BY i.shipment_id,i.order_item_id",Map.of("n",number)),"events",jdbc.queryForList("SELECT e.id,e.shipment_id,e.source,e.actor,e.occurred_at,e.processed_at,e.previous_state,e.next_state,e.version,e.applied FROM marketplace.shipment_event e JOIN marketplace.shipment s ON s.id=e.shipment_id WHERE s.order_number=:n ORDER BY e.event_sequence",Map.of("n",number)));
+        }
+    }
+    @Test void shipmentBrowserFixtureIsNotProductionApi() { try(var isolated=new org.springframework.context.annotation.AnnotationConfigApplicationContext()) { isolated.register(ShipmentBrowserFixture.class);isolated.refresh();assertTrue(isolated.getBeansOfType(ShipmentBrowserFixture.class).isEmpty()); } }
+    @Test void sellerOrderListIsBoundedScopedAndCurrent() throws Exception {
+        var f=paymentFixture("f2-list",false);var original=f.order();UUID own=ownSeller(f);var expected=new java.util.HashSet<String>();expected.add(own.toString());
+        // Public order persistence creates real seller/item snapshots; no synthetic shipment/payment rows.
+        for(int i=0;i<22;i++) { var saved=orders().save(new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),"f2-list-"+i,"a".repeat(64),original.memberId(),null,null,"DEMO",original.quote(),original.contact(),original.createdAt(),original.expiresAt()));expected.add(saved.sellers().stream().filter(s->s.storeId().equals(original.sellers().stream().filter(x->x.id().equals(own)).findFirst().orElseThrow().storeId())).findFirst().orElseThrow().id().toString()); }
+        var response=accountRequest(f.browser(),"GET","/api/seller/orders",null,null);assertEquals(200,response.statusCode());assertTrue(response.headers().firstValue("Cache-Control").orElse("").contains("no-store"));var page=authMapper.readTree(response.body());assertEquals(20,page.get("orders").size());var seen=new java.util.HashSet<String>();
+        for(var row:page.get("orders")) { var keys=new java.util.HashSet<String>();row.properties().forEach(e->keys.add(e.getKey()));assertEquals(java.util.Set.of("sellerOrderId","orderNumber","orderState","total","createdAt"),keys);assertTrue(seen.add(row.get("sellerOrderId").asText())); }
+        String cursor=page.get("nextCursor").asText();var next=authMapper.readTree(accountRequest(f.browser(),"GET","/api/seller/orders?cursor="+cursor,null,null).body());assertEquals(3,next.get("orders").size());next.get("orders").forEach(r->assertTrue(seen.add(r.get("sellerOrderId").asText())));assertEquals(expected,seen);assertTrue(next.get("nextCursor").isNull());
+        for(int size:List.of(0,-1,51)) { assertEquals(400,accountRequest(f.browser(),"GET","/api/seller/orders?size="+size,null,null).statusCode()); }assertEquals(400,accountRequest(f.browser(),"GET","/api/seller/orders?cursor=invalid",null,null).statusCode());assertEquals(23,authMapper.readTree(accountRequest(f.browser(),"GET","/api/seller/orders?size=50",null,null).body()).get("orders").size());
+        var other=paymentFixture("f2-other-list",false);var foreign=authMapper.readTree(accountRequest(other.browser(),"GET","/api/seller/orders?cursor="+cursor,null,null).body());for(var row:foreign.get("orders")) { assertFalse(expected.contains(row.get("sellerOrderId").asText())); }
+        var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);var store=stores.own(f.authority().member());jdbc.update("UPDATE marketplace.seller_store SET visible=false WHERE id=:id",Map.of("id",store.id()));assertEquals(200,accountRequest(f.browser(),"GET","/api/seller/orders",null,null).statusCode());stores.transition(f.authority().member(),store.id(),"close",new com.example.marketplace.seller.api.Stores.Change(store.version(),"기존 주문 목록 보존"));assertEquals(200,accountRequest(f.browser(),"GET","/api/seller/orders",null,null).statusCode());
+        jdbc.update("UPDATE marketplace.spring_session SET last_access_time=:at,expiry_time=:expiry WHERE session_id=:id",Map.of("at",Instant.now().minusSeconds(1801).toEpochMilli(),"expiry",Instant.now().minusSeconds(1).toEpochMilli(),"id",other.authority().browser()));
+        assertEquals(404,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->context.getBean(com.example.marketplace.order.api.OrderQueries.class).sellerOrders(shipmentAuthority(other),20,null)).status());
+        jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",f.authority().member()));assertEquals(401,accountRequest(f.browser(),"GET","/api/seller/orders",null,null).statusCode());
+    }
+    @Test void sellerOrderProjectionIsScoped() throws Exception {
+        var f=paymentFixture("f-seller",false);var own=f.order().sellers().stream().filter(s->s.storeId().equals(f.order().quote().stores().stream().filter(qs->qs.slug().contains("reserve")).findFirst().orElseThrow().storeId())).findFirst().orElseThrow();var initialAuthority=new com.example.marketplace.order.api.OrderQueries.Authority(f.authority().browser(),f.authority().member(),f.authority().version(),null);assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->context.getBean(com.example.marketplace.order.api.OrderQueries.class).paidSellerOrder(own.id(),initialAuthority)).status());payments().approve(f.order().orderNumber(),f.authority());
+        var result=accountRequest(f.browser(),"GET","/api/seller/orders/"+own.id(),null,null);assertEquals(200,result.statusCode());assertTrue(result.headers().firstValue("Cache-Control").orElse("").contains("no-store"));var data=authMapper.readTree(result.body());
+        var keys=new java.util.HashSet<String>();data.properties().forEach(entry->keys.add(entry.getKey()));assertEquals(java.util.Set.of("sellerOrderId","orderNumber","orderState","total","recipient","items"),keys);assertEquals(own.id().toString(),data.get("sellerOrderId").asText());assertEquals("PAID",data.get("orderState").asText());assertEquals(1,data.get("items").size());assertEquals("수령인",data.get("recipient").get("name").asText());
+        for(String forbidden:List.of("buyerName","buyerPhone","memberId","guestBuyerId","password","recovery","paymentKey","paymentState","attempts","stores")) { assertFalse(result.body().contains("\""+forbidden+"\""),forbidden); }
+        var other=f.order().sellers().stream().filter(s->!s.id().equals(own.id())).findFirst().orElseThrow();assertFalse(result.body().contains(other.storeId().toString()));assertEquals(404,accountRequest(f.browser(),"GET","/api/seller/orders/"+other.id(),null,null).statusCode());assertEquals(404,accountRequest(f.browser(),"GET","/api/seller/orders/"+UUID.randomUUID(),null,null).statusCode());
+        for(var seller:f.order().sellers()) {
+            UUID owner=jdbc.queryForObject("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",seller.storeId()),UUID.class);String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",owner),String.class);var client=authBrowser();assertEquals(200,authRequest(client,"/api/auth/login",loginForm(email," A1-private-passphrase-가나다 "),csrfToken(client)).statusCode());
+            var projected=authMapper.readTree(accountRequest(client,"GET","/api/seller/orders/"+seller.id(),null,null).body());var snapshot=f.order().quote().stores().stream().filter(q->q.storeId().equals(seller.storeId())).findFirst().orElseThrow();assertEquals(Long.toString(snapshot.total()),projected.get("total").asText());assertEquals(snapshot.lines().getFirst().quantity(),projected.get("items").get(0).get("quantity").asInt());assertEquals(Long.toString(snapshot.lines().getFirst().units().getFirst().net()),projected.get("items").get(0).get("units").get(0).get("net").asText());
+            var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);var current=stores.own(owner);jdbc.update("UPDATE marketplace.seller_store SET visible=false WHERE id=:id",Map.of("id",seller.storeId()));assertEquals(200,accountRequest(client,"GET","/api/seller/orders/"+seller.id(),null,null).statusCode());stores.transition(owner,seller.storeId(),"close",new com.example.marketplace.seller.api.Stores.Change(current.version(),"거래 조회 보존"));assertEquals(200,accountRequest(client,"GET","/api/seller/orders/"+seller.id(),null,null).statusCode());
+            String session=jdbc.queryForObject("SELECT session_id FROM marketplace.spring_session WHERE principal_name=:id ORDER BY creation_time DESC LIMIT 1",Map.of("id",owner.toString()),String.class);Long version=jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",Map.of("id",owner),Long.class);var authority=new com.example.marketplace.order.api.OrderQueries.Authority(session,owner,version,null);assertEquals(seller.id(),context.getBean(com.example.marketplace.order.api.OrderQueries.class).paidSellerOrder(seller.id(),authority).sellerOrderId());
+        }
+    }
+    @Test void orderHistoryPreservesSnapshotsAndPagination() throws Exception {
+        var f=paymentFixture("f-pages",false);var original=f.order();var ids=new java.util.HashSet<String>();ids.add(original.orderNumber());
+        for(int i=0;i<22;i++) { var draft=new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),"history-"+i,"a".repeat(64),original.memberId(),null,null,"DEMO",original.quote(),original.contact(),original.createdAt(),original.expiresAt());ids.add(orders().save(draft).orderNumber()); }
+        var firstPage=accountRequest(f.browser(),"GET","/api/account/orders",null,null);assertEquals(200,firstPage.statusCode());var page=authMapper.readTree(firstPage.body());assertEquals(20,page.get("orders").size());String cursor=page.get("nextCursor").asText();assertFalse(cursor.isBlank());
+        var seen=new java.util.HashSet<String>();page.get("orders").forEach(r->assertTrue(seen.add(r.get("orderNumber").asText())));
+        var newer=orders().save(new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),"insert-between-pages","a".repeat(64),original.memberId(),null,null,"DEMO",original.quote(),original.contact(),original.createdAt().plusSeconds(1),original.expiresAt().plusSeconds(1)));new TransactionTemplate(transactionManager).executeWithoutResult(t->orders().transition(original.orderNumber(),"PAID"));
+        var second=authMapper.readTree(accountRequest(f.browser(),"GET","/api/account/orders?cursor="+cursor,null,null).body());assertEquals(3,second.get("orders").size());assertTrue(second.get("nextCursor").isNull());second.get("orders").forEach(r->assertTrue(seen.add(r.get("orderNumber").asText())));assertEquals(ids,seen);
+        assertEquals(24,authMapper.readTree(accountRequest(f.browser(),"GET","/api/account/orders?size=50",null,null).body()).get("orders").size());assertFalse(seen.contains(newer.orderNumber()));for(int invalid:List.of(0,-1,51)) { assertEquals(400,accountRequest(f.browser(),"GET","/api/account/orders?size="+invalid,null,null).statusCode()); }assertEquals(400,accountRequest(f.browser(),"GET","/api/account/orders?cursor=invalid",null,null).statusCode());
+        String before=accountRequest(f.browser(),"GET","/api/orders/"+original.orderNumber(),null,null).body();var line=original.quote().stores().getFirst().lines().getFirst();
+        jdbc.update("UPDATE marketplace.catalog_product SET title='변경 후 비공개',is_hidden_by_admin=true WHERE id=:id",Map.of("id",line.productId()));jdbc.update("UPDATE marketplace.catalog_sku SET price=7 WHERE id=:id",Map.of("id",line.skuId()));jdbc.update("UPDATE marketplace.issued_coupon SET title='변경된 혜택' WHERE id=:id",Map.of("id",original.quote().stores().getFirst().coupon().id()));
+        assertEquals(before,accountRequest(f.browser(),"GET","/api/orders/"+original.orderNumber(),null,null).body());var detail=authMapper.readTree(before);assertTrue(detail.get("stores").get(0).has("couponTitle"));assertEquals(original.quote().stores().getFirst().coupon().title(),detail.get("stores").get(0).get("couponTitle").asText());assertEquals(Long.toString(original.quote().total()),detail.get("total").asText());assertEquals(Long.toString(line.units().getFirst().net()),detail.get("stores").get(0).get("items").get(0).get("units").get(0).get("net").asText());assertFalse(before.contains("\"memberId\""));assertFalse(before.contains("\"guestBuyerId\""));
+        var retained=orders().find(original.orderNumber());String oldEmail=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",original.memberId()),String.class);context.getBean(com.example.marketplace.identity.api.AccountStateOperations.class).withdraw(original.memberId()," A1-private-passphrase-가나다 ","WITHDRAW");assertEquals(retained,orders().find(original.orderNumber()));assertEquals(24,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",original.memberId()),Integer.class));
+        UUID replacement=activeMember(oldEmail);assertThat(replacement).isNotEqualTo(original.memberId());var replacementBrowser=authBrowser();assertEquals(200,authRequest(replacementBrowser,"/api/auth/login",loginForm(oldEmail," A1-private-passphrase-가나다 "),csrfToken(replacementBrowser)).statusCode());assertEquals(404,accountRequest(replacementBrowser,"GET","/api/orders/"+original.orderNumber(),null,null).statusCode());assertEquals(0,authMapper.readTree(accountRequest(replacementBrowser,"GET","/api/account/orders",null,null).body()).get("orders").size());
+    }
+
+    @Test void paymentHistoryShowsExhaustionWithoutMutation() throws Exception {
+        for(String reason:List.of("COUNT","TIME","JOB")) {
+            var f=paymentFixture("f-review-"+reason.toLowerCase(java.util.Locale.ROOT),false);mockPayment(f,"QUERY_FAILURE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());var attempt=paymentAttempt(f);
+            if(reason.equals("COUNT")) { jdbc.update("UPDATE marketplace.payment_attempt SET query_count=5 WHERE id=:id",Map.of("id",attempt.get("id"))); }
+            if(reason.equals("TIME")) { jdbc.update("UPDATE marketplace.payment_attempt SET round_started_at=now()-interval '901 seconds' WHERE id=:id",Map.of("id",attempt.get("id"))); }
+            if(reason.equals("JOB")) { jdbc.update("UPDATE marketplace.job SET status='FAILED',last_error='DELIVERY_EXHAUSTED' WHERE id=:id",Map.of("id",attempt.get("next_job"))); }
+            var before=paymentParticipantState();var mockBefore=jdbc.queryForMap("SELECT * FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",attempt.get("id")));
+            var response=accountRequest(f.browser(),"GET","/api/payments/"+f.order().orderNumber()+"/history",null,null);assertEquals(200,response.statusCode());assertTrue(authMapper.readTree(response.body()).get("reviewRequired").asBoolean(),reason);assertEquals(before,paymentParticipantState());assertEquals(mockBefore,jdbc.queryForMap("SELECT * FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",attempt.get("id"))));
+            var historyKeys=new java.util.HashSet<String>();authMapper.readTree(response.body()).properties().forEach(e->historyKeys.add(e.getKey()));assertEquals(java.util.Set.of("orderNumber","orderState","paymentState","compensation","reviewRequired","amount","mode","events"),historyKeys);
+            for(String compensation:List.of("PENDING","UNKNOWN")) { jdbc.update("UPDATE marketplace.payment_attempt SET state='FAILED',compensation=:c,query_count=5 WHERE id=:id",Map.of("c",compensation,"id",attempt.get("id")));var unchanged=paymentParticipantState();var value=accountRequest(f.browser(),"GET","/api/payments/"+f.order().orderNumber()+"/history",null,null);assertTrue(authMapper.readTree(value.body()).get("reviewRequired").asBoolean());assertEquals(unchanged,paymentParticipantState()); }
+            jdbc.update("UPDATE marketplace.payment_attempt SET state='SUCCEEDED',compensation='CANCELED',review_required=false WHERE id=:id",Map.of("id",attempt.get("id")));var terminal=paymentParticipantState();assertFalse(authMapper.readTree(accountRequest(f.browser(),"GET","/api/payments/"+f.order().orderNumber()+"/history",null,null).body()).get("reviewRequired").asBoolean());assertEquals(terminal,paymentParticipantState());assertEquals(mockBefore,jdbc.queryForMap("SELECT * FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",attempt.get("id"))));
+        }
+    }
+    @Test void orderHistoryRechecksAuthorityAfterActualWait() throws Exception {
+        var f=paymentFixture("f-read-wait",false);var queries=context.getBean(com.example.marketplace.order.api.OrderQueries.class);var authority=new com.example.marketplace.order.api.OrderQueries.Authority(f.authority().browser(),f.authority().member(),f.authority().version(),null);
+        try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+            connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { sql.setObject(1,f.authority().member());sql.executeQuery().close(); }
+            var reader=pool.submit(()->assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->queries.detail(f.order().orderNumber(),authority)).status());awaitHistoryLock("identity_user");jdbc.update("DELETE FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",f.authority().browser()));connection.commit();assertEquals(404,reader.get(10,TimeUnit.SECONDS));
+        }
+    }
+
+    private void awaitHistoryLock(String table) { long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);while(System.nanoTime()<deadline) { jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");if(Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :table AND query LIKE '%FOR SHARE%')",Map.of("table","%"+table+"%"),Boolean.class))) { return; }try { Thread.sleep(20); }catch(InterruptedException interrupted) { Thread.currentThread().interrupt();throw new IllegalStateException(interrupted); } }throw new AssertionError("Actual history FOR SHARE wait on "+table); }
+    @Test void guestHistoryRechecksExpiryAfterOrderWait() throws Exception {
+        for(long seconds:List.of(1800L,43200L)) {
+            var f=new GuestFixture();var access=guestAccess(f);var fixture=browseFixture("f-guest-wait-"+seconds,10000,10);var lines=List.of(quoteLine((UUID)fixture.get("sku"),1));var quote=quotes().calculate(null,lines,List.of());UUID attempt=guestVerified(f);access.prepare(f.browser,attempt,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));var contact=new com.example.marketplace.order.api.Orders.Contact("ignored",f.phone,"수령인",f.phone,"01234","주소","");
+            var order=creationWith(access,stage->{ }).create(f.browser,null,null,new com.example.marketplace.order.infrastructure.OrderCreationService.Input("wait",lines,List.of(),quote.fingerprint(),contact,attempt,0));String token=access.login(order.orderNumber(),f.phone,GUEST_PASSWORD,f.source,null);var authority=new com.example.marketplace.order.api.OrderQueries.Authority("independent-browser",null,null,token);
+            var queries=new com.example.marketplace.order.infrastructure.JdbcOrderQueries(jdbc,orders(),access,context.getBean(com.example.marketplace.identity.api.HistorySessions.class),context.getBean(com.example.marketplace.seller.api.Stores.class),transactionManager);
+            try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.purchase_order WHERE id=? FOR UPDATE")) { sql.setObject(1,order.id());sql.executeQuery().close(); }
+                var reader=pool.submit(()->{try { queries.detail(order.orderNumber(),authority);return 200; }catch(com.example.marketplace.order.api.OrderRejected denied) { return denied.status(); }});awaitHistoryLock("purchase_order");f.clock.advance(seconds);connection.commit();assertEquals(404,reader.get(10,TimeUnit.SECONDS));
+            }
+        }
+    }
+
+    @Test void memberAndSellerHistoryRecheckExpiryAfterOrderWait() throws Exception {
+        for(String shape:List.of("BUYER","PAYMENT","SELLER")) {
+            var f=paymentFixture("f-session-clock-"+shape.toLowerCase(java.util.Locale.ROOT),false);var current=new java.util.concurrent.atomic.AtomicReference<>(Instant.now());Clock clock=new Clock() { @Override public java.time.ZoneId getZone() { return ZoneOffset.UTC; } @Override public Clock withZone(java.time.ZoneId zone) { return this; } @Override public Instant instant() { return current.get(); } };
+            var sessions=new com.example.marketplace.identity.infrastructure.JdbcPurchaseSessions(jdbc,clock);var queries=new com.example.marketplace.order.infrastructure.JdbcOrderQueries(jdbc,orders(),context.getBean(com.example.marketplace.guest.api.GuestAccessSessions.class),sessions,context.getBean(com.example.marketplace.seller.api.Stores.class),transactionManager);var history=new com.example.marketplace.payment.infrastructure.JdbcPaymentQueries(jdbc,queries,context.getBean(com.example.marketplace.platform.api.Jobs.class),transactionManager);var authority=new com.example.marketplace.order.api.OrderQueries.Authority(f.authority().browser(),f.authority().member(),f.authority().version(),null);UUID ownStore=context.getBean(com.example.marketplace.seller.api.Stores.class).own(f.authority().member()).id();UUID seller=f.order().sellers().stream().filter(s->s.storeId().equals(ownStore)).findFirst().orElseThrow().id();long expires=jdbc.queryForObject("SELECT expiry_time FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",authority.browser()),Long.class);
+            try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.purchase_order WHERE id=? FOR UPDATE")) { sql.setObject(1,f.order().id());sql.executeQuery().close(); }
+                var reader=pool.submit(()->{try { if(shape.equals("SELLER")) { queries.sellerOrder(seller,authority); }else if(shape.equals("PAYMENT")) { history.history(f.order().orderNumber(),authority); }else { queries.detail(f.order().orderNumber(),authority); }return 200; }catch(com.example.marketplace.order.api.OrderRejected denied) { return denied.status(); }});awaitHistoryLock("purchase_order");current.set(Instant.ofEpochMilli(expires));connection.commit();assertEquals(404,reader.get(10,TimeUnit.SECONDS),shape);
+            }
+        }
+        var f=paymentFixture("f-seller-role-wait",false);var queries=context.getBean(com.example.marketplace.order.api.OrderQueries.class);var authority=new com.example.marketplace.order.api.OrderQueries.Authority(f.authority().browser(),f.authority().member(),f.authority().version(),null);UUID store=context.getBean(com.example.marketplace.seller.api.Stores.class).own(authority.member()).id();UUID seller=f.order().sellers().stream().filter(s->s.storeId().equals(store)).findFirst().orElseThrow().id();
+        try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+            connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { sql.setObject(1,authority.member());sql.executeQuery().close(); }
+            var reader=pool.submit(()->assertThrows(com.example.marketplace.seller.api.StoreException.class,()->queries.sellerOrder(seller,authority)).status());awaitCouponLock("identity_user");jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",authority.member()));connection.commit();assertEquals(403,reader.get(10,TimeUnit.SECONDS));
+        }
+    }
+
+    private com.example.marketplace.fulfillment.infrastructure.JdbcShipments shipments() { return context.getBean(com.example.marketplace.fulfillment.infrastructure.JdbcShipments.class); }
+    private com.example.marketplace.order.api.OrderQueries.Authority shipmentAuthority(PaymentFixture f) { return new com.example.marketplace.order.api.OrderQueries.Authority(f.authority().browser(),f.authority().member(),f.authority().version(),null); }
+    private UUID ownSeller(PaymentFixture f) { UUID store=context.getBean(com.example.marketplace.seller.api.Stores.class).own(f.authority().member()).id();return f.order().sellers().stream().filter(s->s.storeId().equals(store)).findFirst().orElseThrow().id(); }
+    private UUID settlementJob(PaymentFixture f) { return jdbc.queryForObject("SELECT id FROM marketplace.job WHERE type='PAYMENT_SETTLED' AND payload LIKE :p",Map.of("p",f.order().orderNumber()+":%"),UUID.class); }
+    private void shipmentJob(UUID id,Instant now) {
+        var jobs=new com.example.marketplace.platform.infrastructure.JdbcJobs(new OneJobJdbc(context.getBean(DataSource.class),id),transactionManager,Clock.fixed(now,ZoneOffset.UTC));
+        try(var worker=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,List.copyOf(context.getBeansOfType(com.example.marketplace.platform.api.JobHandler.class).values()))) { assertTrue(worker.runOnce()); }
+        assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status(),jobs.find(id).orElseThrow().lastError());
+    }
+    private com.example.marketplace.fulfillment.api.Shipments.View paidShipment(PaymentFixture f) { payments().approve(f.order().orderNumber(),f.authority());shipmentJob(settlementJob(f),Instant.now());return shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst(); }
+    private com.example.marketplace.fulfillment.api.Shipments.Command shipCommand(com.example.marketplace.fulfillment.api.Shipments.View v,String key) { return new com.example.marketplace.fulfillment.api.Shipments.Command(key,v.version(),v.items()); }
+    private Map<String,Object> shipBody(com.example.marketplace.fulfillment.api.Shipments.View v,String key) { return Map.of("key",key,"version",v.version(),"items",v.items()); }
+    private Map<String,List<Map<String,Object>>> shipmentState() { var state=new java.util.LinkedHashMap<String,List<Map<String,Object>>>();for(String table:List.of("shipment","shipment_item","shipment_event","shipment_audit","job","outbox_event")) { state.put(table,jdbc.queryForList("SELECT * FROM marketplace."+table+" ORDER BY 1,2",Map.of())); }return state; }
+    @Test void basicShipmentRequiresPaidSellerOrder() throws Exception {
+        var f=paymentFixture("f1-basic",false);UUID own=ownSeller(f);
+        var response=accountRequest(f.browser(),"GET","/api/seller/orders/"+own+"/shipments",null,null);assertEquals(200,response.statusCode());assertEquals(0,authMapper.readTree(response.body()).size());
+        var before=shipmentState();shipments().prepare(f.order().orderNumber());assertEquals(before,shipmentState());
+        var v=paidShipment(f);assertEquals("PREPARING",v.state());assertEquals(0,v.version());assertEquals("MOCK",v.provider());assertEquals(2,shipments().buyer(f.order().orderNumber(),shipmentAuthority(f)).size());
+        for(var seller:f.order().sellers()) {
+            var rows=jdbc.queryForList("SELECT si.order_item_id,si.quantity FROM marketplace.shipment s JOIN marketplace.shipment_item si ON si.shipment_id=s.id WHERE s.seller_order_id=:id",Map.of("id",seller.id()));assertEquals(seller.items().size(),rows.size());for(var item:seller.items()) { assertTrue(rows.stream().anyMatch(r->item.id().equals(r.get("order_item_id"))&&item.quantity()==((Number)r.get("quantity")).intValue())); }
+        }
+        var unchanged=shipmentState();shipments().prepare(f.order().orderNumber());assertEquals(unchanged,shipmentState());
+        for(String mode:List.of("REJECT","QUERY_FAILURE")) { var denied=paymentFixture("f1-nonpaid-"+mode,false);mockPayment(denied,mode,"SUCCESS");payments().approve(denied.order().orderNumber(),denied.authority());if(mode.equals("REJECT")) { shipmentJob(settlementJob(denied),Instant.now()); }else { shipments().prepare(denied.order().orderNumber()); }assertEquals(0,shipments().buyer(denied.order().orderNumber(),shipmentAuthority(denied)).size()); }
+        var other=f.order().sellers().stream().filter(row->!row.id().equals(own)).findFirst().orElseThrow().items().getFirst();
+        for(var invalid:List.of(new com.example.marketplace.fulfillment.api.Shipments.Item(other.id(),other.quantity()),new com.example.marketplace.fulfillment.api.Shipments.Item(v.items().getFirst().orderItemId(),v.items().getFirst().quantity()+1))) { var state=shipmentState();assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("wrong",0L,List.of(invalid)))).status());assertEquals(state,shipmentState()); }
+        assertEquals(404,accountRequest(authBrowser(),"GET","/api/orders/"+f.order().orderNumber()+"/shipments",null,null).statusCode());assertTrue(response.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+    }
+    @Test void shipmentWriteRechecksSellerAuthority() throws Exception {
+        var f=paymentFixture("f1-authority",false);var v=paidShipment(f);String path="/api/seller/shipments/"+v.id()+"/ship";var body=shipBody(v,"once");var other=paymentFixture("f1-other",false);var before=shipmentState();
+        assertEquals(403,accountRequest(f.browser(),"POST",path,body,null).statusCode());
+        assertEquals(404,accountRequest(other.browser(),"POST",path,body,csrfToken(other.browser())).statusCode());
+        for(String field:List.of("state","actor","source")) { var forged=new java.util.LinkedHashMap<>(body);forged.put(field,"DELIVERED");assertEquals(400,accountRequest(f.browser(),"POST",path,forged,csrfToken(f.browser())).statusCode()); }
+        assertEquals(404,accountRequest(f.browser(),"POST","/api/seller/shipments/"+v.id()+"/delivered",body,csrfToken(f.browser())).statusCode());assertEquals(before,shipmentState());
+        jdbc.update("UPDATE marketplace.seller_store SET visible=false WHERE id=:id",Map.of("id",context.getBean(com.example.marketplace.seller.api.Stores.class).own(f.authority().member()).id()));
+        assertEquals(200,accountRequest(f.browser(),"POST",path,body,csrfToken(f.browser())).statusCode());var saved=shipmentState();String existingCsrf=csrfToken(f.browser());jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",f.authority().member()));assertEquals(401,accountRequest(f.browser(),"POST",path,body,existingCsrf).statusCode());assertEquals(saved,shipmentState());
+        for(String invalidation:List.of("ROLE","SESSION","SUSPEND")) {
+            var waiting=paymentFixture("f1-wait-"+invalidation,false);var target=paidShipment(waiting);var initial=shipmentState();
+            try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { sql.setObject(1,waiting.authority().member());sql.executeQuery().close(); }
+                var write=pool.submit(()->{try { shipments().ship(target.id(),shipmentAuthority(waiting),shipCommand(target,"wait"));return 200; }catch(com.example.marketplace.order.api.OrderRejected e) { return e.status(); }catch(com.example.marketplace.seller.api.StoreException e) { return e.status(); }catch(com.example.marketplace.identity.api.AccountException e) { return 409; }});awaitCouponLock("identity_user");
+                if(invalidation.equals("ROLE")) { jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",waiting.authority().member())); }else if(invalidation.equals("SESSION")) { jdbc.update("DELETE FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",waiting.authority().browser())); }else { try(var update=connection.prepareStatement("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=?")) { update.setObject(1,waiting.authority().member());update.executeUpdate(); } }connection.commit();assertTrue(List.of(403,404,409).contains(write.get(10,TimeUnit.SECONDS)),invalidation);
+            }assertEquals(initial,shipmentState());
+        }
+    }
+    @Test void shipmentEventsAreIdempotent() throws Exception {
+        var f=paymentFixture("f1-events",false);var v=paidShipment(f);var command=shipCommand(v,"ship");var result=shipments().ship(v.id(),shipmentAuthority(f),command);assertEquals("SHIPPED",result.state());assertEquals(1,result.version());var before=shipmentState();assertEquals(result,shipments().ship(v.id(),shipmentAuthority(f),command));assertEquals(before,shipmentState());
+        assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("ship",1L,v.items()))).status());assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),shipCommand(v,"another"))).status());
+        Instant at=Instant.parse("2026-10-28T00:00:00Z");assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().progress(v.id(),"early","DELIVERED",1,at)).status());
+        UUID transit=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key","progress:"+v.id()+":IN_TRANSIT"),UUID.class);shipmentJob(transit,Instant.now().plusSeconds(30));UUID delivered=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key","progress:"+v.id()+":DELIVERED"),UUID.class);shipmentJob(delivered,Instant.now().plusSeconds(30));
+        var done=shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst();assertEquals("DELIVERED",done.state());assertEquals(3,done.version());assertEquals(v.items(),done.items());assertEquals(4,done.events().size());
+        var original=context.getBean(com.example.marketplace.platform.api.Jobs.class).find(transit).orElseThrow();var stable=shipmentState();var prior=shipments().progress(v.id(),original.command().dedupeKey(),"IN_TRANSIT",1,original.command().nextRunAt());assertEquals("IN_TRANSIT",prior.state());assertEquals(2,prior.version());assertEquals(stable,shipmentState());
+        assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().progress(v.id(),original.command().dedupeKey(),"DELIVERED",1,original.command().nextRunAt())).status());
+        var ignored=shipments().progress(v.id(),"late-transit","IN_TRANSIT",1,at);assertFalse(ignored.applied());assertEquals("DELIVERED",ignored.state());assertEquals(3,ignored.version());var lateState=shipmentState();assertEquals(ignored,shipments().progress(v.id(),"late-transit","IN_TRANSIT",1,at));assertEquals(lateState,shipmentState());
+        var events=shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst().events();assertEquals("SYSTEM",events.getFirst().source());assertTrue(events.stream().anyMatch(e->e.source().equals("SELLER")&&e.actor().equals(f.authority().member().toString())&&e.previousState().equals("PREPARING")&&e.nextState().equals("SHIPPED")&&e.version()==1));assertTrue(events.stream().anyMatch(e->e.key().equals("late-transit")&&e.occurredAt().equals(at)&&e.actor().equals("mock-shipment-worker")&&!e.applied()));assertTrue(events.stream().allMatch(e->e.processedAt()!=null));assertEquals(events.size(),jdbc.queryForObject("SELECT count(*) FROM marketplace.shipment_audit WHERE shipment_id=:id",Map.of("id",v.id()),Integer.class));
+    }
+
+    private com.example.marketplace.fulfillment.infrastructure.JdbcShipments shipmentsWith(com.example.marketplace.order.api.OrderQueries queries,com.example.marketplace.fulfillment.infrastructure.JdbcShipments.Checkpoint checkpoint) { return new com.example.marketplace.fulfillment.infrastructure.JdbcShipments(jdbc,queries,context.getBean(com.example.marketplace.order.api.FulfillmentOrders.class),context.getBean(com.example.marketplace.platform.api.Outbox.class),transactionManager,Clock.systemUTC(),checkpoint); }
+    @Test void shipmentExpiryRecheckedAfterOrderAndShipmentWaits() throws Exception {
+        for(String table:List.of("purchase_order","shipment")) {
+            var f=paymentFixture("f1-expiry-"+table,false);var v=paidShipment(f);var current=new java.util.concurrent.atomic.AtomicReference<>(Instant.now());Clock clock=new Clock() { @Override public java.time.ZoneId getZone() { return ZoneOffset.UTC; }@Override public Clock withZone(java.time.ZoneId zone) { return this; }@Override public Instant instant() { return current.get(); } };
+            var sessions=new com.example.marketplace.identity.infrastructure.JdbcPurchaseSessions(jdbc,clock);var queries=new com.example.marketplace.order.infrastructure.JdbcOrderQueries(jdbc,orders(),context.getBean(com.example.marketplace.guest.api.GuestAccessSessions.class),sessions,context.getBean(com.example.marketplace.seller.api.Stores.class),transactionManager);var api=shipmentsWith(queries,stage->{ });long expiry=jdbc.queryForObject("SELECT expiry_time FROM marketplace.spring_session WHERE session_id=:s",Map.of("s",f.authority().browser()),Long.class);var before=shipmentState();
+            try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var statement=connection.prepareStatement("SELECT id FROM marketplace."+table+" WHERE id=? FOR UPDATE")) { statement.setObject(1,table.equals("shipment")?v.id():f.order().id());statement.executeQuery().close(); }
+                var future=pool.submit(()->assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->api.ship(v.id(),shipmentAuthority(f),shipCommand(v,"expiry"))).status());awaitCouponLock(table);current.set(Instant.ofEpochMilli(expiry));connection.commit();assertEquals(404,future.get(10,TimeUnit.SECONDS));
+            }assertEquals(before,shipmentState());
+        }
+    }
+    @Test void shipmentAtomicRollbackAndCancellationRace() throws Exception {
+        for(String operation:List.of("PREPARE","SHIP")) { for(String point:operation.equals("PREPARE")?List.of("ITEMS","EVENT","AUDIT","OUTBOX"):List.of("STATE","EVENT","AUDIT","OUTBOX")) { for(boolean checked:List.of(false,true)) {
+            var f=paymentFixture("f1-rollback-"+operation+point+checked,false);payments().approve(f.order().orderNumber(),f.authority());if(operation.equals("SHIP")) { shipmentJob(settlementJob(f),Instant.now()); }var before=shipmentState();var api=shipmentsWith(context.getBean(com.example.marketplace.order.api.OrderQueries.class),stage->{if(stage.equals(point)) { if(checked) { throw new java.io.IOException("injected"); }throw new IllegalStateException("injected"); }});
+            if(operation.equals("PREPARE")) { assertThrows(IllegalStateException.class,()->api.prepare(f.order().orderNumber())); }else { var v=shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst();assertThrows(IllegalStateException.class,()->api.ship(v.id(),shipmentAuthority(f),shipCommand(v,"rollback"))); }assertEquals(before,shipmentState(),operation+point+checked);
+        }}}
+        // The existing D compensation path converges from PENDING, never makes a late success shippable.
+        var late=paymentFixture("f1-compensation",false);mockPayment(late,"DELAYED_SUCCESS","SUCCESS");payments().approve(late.order().orderNumber(),late.authority());var timed=paymentWith(Clock.fixed(late.order().expiresAt(),ZoneOffset.UTC),stage->{ });timed.apply(late.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);shipmentJob(context.getBean(com.example.marketplace.platform.api.Jobs.class).enqueue(new com.example.marketplace.platform.api.Jobs.Command("FULFILLMENT_PREPARE","f1-late-"+late.order().id(),late.order().id().toString(),late.order().orderNumber(),Instant.EPOCH)),Instant.now());assertTrue(shipments().buyer(late.order().orderNumber(),shipmentAuthority(late)).isEmpty());timed.query(late.order().orderNumber(),((Number)paymentAttempt(late).get("round")).intValue(),0,true);shipmentJob(settlementJob(late),late.order().expiresAt().plusSeconds(1));assertTrue(shipments().buyer(late.order().orderNumber(),shipmentAuthority(late)).isEmpty());
+        for(boolean alreadyPrepared:List.of(false,true)) {
+            var f=paymentFixture("f1-cancel-wins-"+alreadyPrepared,false);payments().approve(f.order().orderNumber(),f.authority());if(alreadyPrepared) { shipmentJob(settlementJob(f),Instant.now()); }var target=alreadyPrepared?shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst():null;var before=shipmentState();
+            try(var pool=Executors.newSingleThreadExecutor();var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var sql=connection.prepareStatement("SELECT id FROM marketplace.purchase_order WHERE id=? FOR UPDATE")) { sql.setObject(1,f.order().id());sql.executeQuery().close(); }
+                var write=pool.submit(()->{if(alreadyPrepared) { return assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(target.id(),shipmentAuthority(f),shipCommand(target,"canceled"))).status(); }shipments().prepare(f.order().orderNumber());return 200;});awaitCouponLock("purchase_order");try(var sql=connection.prepareStatement("UPDATE marketplace.purchase_order SET state='CANCELED',version=version+1 WHERE id=?")) { sql.setObject(1,f.order().id());sql.executeUpdate(); }connection.commit();assertEquals(alreadyPrepared?409:200,write.get(10,TimeUnit.SECONDS));
+            }assertEquals(before,shipmentState());
+        }
+        var first=paymentFixture("f1-prepare-wins",false);payments().approve(first.order().orderNumber(),first.authority());var entered=new CountDownLatch(1);var release=new CountDownLatch(1);var api=shipmentsWith(context.getBean(com.example.marketplace.order.api.OrderQueries.class),stage->{if(stage.equals("ITEMS")) { entered.countDown();assertTrue(release.await(10,TimeUnit.SECONDS)); }});
+        try(var pool=Executors.newFixedThreadPool(2)) { var preparing=pool.submit(()->api.prepare(first.order().orderNumber()));assertTrue(entered.await(10,TimeUnit.SECONDS));var cancel=pool.submit(()->new TransactionTemplate(transactionManager).executeWithoutResult(t->{orders().lock(first.order().orderNumber());orders().transition(first.order().orderNumber(),"CANCELED");}));try { awaitCouponLock("purchase_order"); }finally { release.countDown(); }preparing.get(10,TimeUnit.SECONDS);cancel.get(10,TimeUnit.SECONDS); }
+        var prepared=shipments().seller(ownSeller(first),shipmentAuthority(first)).getFirst();assertEquals("PREPARING",prepared.state());assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(prepared.id(),shipmentAuthority(first),shipCommand(prepared,"denied"))).status());
+    }
+    @Test void shipmentConcurrentPurposeAndVersionHaveOneEffect() throws Exception {
+        var f=paymentFixture("f1-concurrent",false);payments().approve(f.order().orderNumber(),f.authority());var gate=new CountDownLatch(1);
+        try(var pool=Executors.newFixedThreadPool(2)) { var a=pool.submit(()->{gate.await();shipments().prepare(f.order().orderNumber());return true;});var b=pool.submit(()->{gate.await();shipments().prepare(f.order().orderNumber());return true;});gate.countDown();assertTrue(a.get(10,TimeUnit.SECONDS));assertTrue(b.get(10,TimeUnit.SECONDS)); }
+        assertEquals(2,shipments().buyer(f.order().orderNumber(),shipmentAuthority(f)).size());var v=shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst();var start=new CountDownLatch(1);
+        try(var pool=Executors.newFixedThreadPool(2)) { var writes=new java.util.ArrayList<java.util.concurrent.Future<Integer>>();for(String key:List.of("one","two")) { writes.add(pool.submit(()->{start.await();try { shipments().ship(v.id(),shipmentAuthority(f),shipCommand(v,key));return 200; }catch(com.example.marketplace.order.api.OrderRejected denied) { return denied.status(); }})); }start.countDown();var statuses=List.of(writes.get(0).get(10,TimeUnit.SECONDS),writes.get(1).get(10,TimeUnit.SECONDS));assertTrue(statuses.contains(200));assertTrue(statuses.contains(409)); }
+        var current=shipments().seller(ownSeller(f),shipmentAuthority(f)).getFirst();assertEquals(1,current.version());assertEquals(2,current.events().size());assertEquals(v.items(),current.items());
+        for(int invalid:List.of(0,-1,100)) { assertEquals(400,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("quantity",1L,List.of(new com.example.marketplace.fulfillment.api.Shipments.Item(v.items().getFirst().orderItemId(),invalid))))).status()); }
+        assertEquals(400,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("duplicate",1L,List.of(v.items().getFirst(),v.items().getFirst())))).status());
+    }
+
+    @Test void shipmentHistoryUsesCausalOrder() throws Exception {
+        var f=paymentFixture("f1-causal",false);payments().approve(f.order().orderNumber(),f.authority());var now=new JobClock();now.now=Instant.parse("2026-10-28T01:00:00Z");var api=new com.example.marketplace.fulfillment.infrastructure.JdbcShipments(jdbc,context.getBean(com.example.marketplace.order.api.OrderQueries.class),context.getBean(com.example.marketplace.order.api.FulfillmentOrders.class),context.getBean(com.example.marketplace.platform.api.Outbox.class),transactionManager,now,stage->{ });api.prepare(f.order().orderNumber());var v=api.seller(ownSeller(f),shipmentAuthority(f)).getFirst();now.now=now.now.minusSeconds(10);api.ship(v.id(),shipmentAuthority(f),shipCommand(v,"causal"));api.progress(v.id(),"same-time","IN_TRANSIT",1,now.instant());api.progress(v.id(),"ignored-same-time","IN_TRANSIT",1,now.instant());api.progress(v.id(),"delivered-same-time","DELIVERED",2,now.instant());
+        assertEquals(List.of("basic","seller:causal","same-time","ignored-same-time","delivered-same-time"),api.seller(ownSeller(f),shipmentAuthority(f)).getFirst().events().stream().map(com.example.marketplace.fulfillment.api.Shipments.Event::key).toList());
+    }
+    private Process shipmentWorkerProcess(java.nio.file.Path folder,String phase,Instant now,UUID job,boolean block) throws Exception {
+        var args=folder.resolve(phase+".args");var marker=folder.resolve(phase+"-effect.txt");String cp=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path")).replace((char)92,'/');
+        java.nio.file.Files.writeString(args,"-cp\n\""+cp+"\"\ncom.example.marketplace.dbtest.ShipmentWorkerProbe\n"+now+"\n"+job+"\n\""+marker.toString().replace((char)92,'/')+"\"\n"+block+"\n");
+        var process=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"@"+args).redirectErrorStream(true).redirectOutput(folder.resolve(phase+".log").toFile()).start();java.nio.file.Files.writeString(folder.resolve(phase+"-pid.txt"),Long.toString(process.pid()));return process;
+    }
+    @Test void shipmentOutboxAndWorkerRecovery() throws Exception {
+        var f=paymentFixture("f1-crash",false);payments().approve(f.order().orderNumber(),f.authority());UUID id=settlementJob(f);var jobs=context.getBean(com.example.marketplace.platform.api.Jobs.class);var command=jobs.find(id).orElseThrow().command();var unrelated=jdbc.queryForList("SELECT * FROM marketplace.job WHERE id<>:id ORDER BY id",Map.of("id",id));var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("shipment-worker-"+UUID.randomUUID()));Instant now=Instant.now();Process first=shipmentWorkerProcess(folder,"first",now,id,true),second=null;
+        try {
+            awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"shipment worker did not reach committed effect");assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")),"inspect preserved child log");assertEquals("RUNNING",jobs.find(id).orElseThrow().status());var committed=shipments().buyer(f.order().orderNumber(),shipmentAuthority(f));assertEquals(2,committed.size());assertTrue(committed.stream().allMatch(v->v.events().size()==1&&v.state().equals("PREPARING")));
+            first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));second=shipmentWorkerProcess(folder,"second",now.plusSeconds(31),id,false);assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue(),"inspect second.log");assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());assertEquals(2,jobs.find(id).orElseThrow().attempts());assertEquals(command,jobs.find(id).orElseThrow().command());assertEquals(committed,shipments().buyer(f.order().orderNumber(),shipmentAuthority(f)));assertTrue(java.nio.file.Files.readString(folder.resolve("completed.txt")).contains("nonweb=true"));
+            for(var row:unrelated) { assertEquals(row,jdbc.queryForMap("SELECT * FROM marketplace.job WHERE id=:id",Map.of("id",row.get("id")))); }
+        }finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+    }
+
+    @Test void shipmentDatabaseItemScopeAndMalformedInput() throws Exception {
+        var f=paymentFixture("f1-db-scope",false);var v=paidShipment(f);var foreign=f.order().sellers().stream().filter(row->!row.id().equals(v.sellerOrderId())).findFirst().orElseThrow().items().getFirst();var before=shipmentState();
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.shipment_item(shipment_id,seller_order_id,order_item_id,quantity) VALUES(:shipment,:seller,:item,1)",Map.of("shipment",v.id(),"seller",v.sellerOrderId(),"item",foreign.id())));assertEquals(before,shipmentState());
+        assertEquals(400,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("null-item",0L,List.of(v.items().getFirst(),new com.example.marketplace.fulfillment.api.Shipments.Item(null,1))))).status());
+        new TransactionTemplate(transactionManager).executeWithoutResult(t->{UUID future=UUID.randomUUID();jdbc.update("INSERT INTO marketplace.shipment(id,order_id,seller_order_id,order_number,purpose_key,state,version,created_at) VALUES(:id,:order,:seller,:number,'FUTURE_TEST','PREPARING',0,now())",Map.of("id",future,"order",f.order().id(),"seller",v.sellerOrderId(),"number",f.order().orderNumber()));jdbc.update("INSERT INTO marketplace.shipment_item(shipment_id,seller_order_id,order_item_id,quantity) VALUES(:id,:seller,:item,1)",Map.of("id",future,"seller",v.sellerOrderId(),"item",v.items().getFirst().orderItemId()));assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.shipment WHERE seller_order_id=:id",Map.of("id",v.sellerOrderId()),Integer.class));t.setRollbackOnly();});assertEquals(before,shipmentState());
+        jdbc.update("UPDATE marketplace.shipment_item SET quantity=2 WHERE shipment_id=:id",Map.of("id",v.id()));var corrupt=shipmentState();assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().prepare(f.order().orderNumber())).status());assertEquals(corrupt,shipmentState());
+
+    }
+    @Test void shipmentBackfillResumesAndSharesLivePurpose() throws Exception {
+        var old=paymentFixture("f1-legacy",false);payments().approve(old.order().orderNumber(),old.authority());UUID oldJob=settlementJob(old);var jobs=context.getBean(com.example.marketplace.platform.api.Jobs.class);var legacyJobs=new com.example.marketplace.platform.infrastructure.JdbcJobs(new OneJobJdbc(context.getBean(DataSource.class),oldJob),transactionManager,Clock.systemUTC());var claimed=legacyJobs.claim(java.util.Set.of("PAYMENT_SETTLED")).orElseThrow();assertTrue(legacyJobs.complete(oldJob,claimed.ownerToken()));var oldRecord=jobs.find(oldJob).orElseThrow();assertTrue(shipments().buyer(old.order().orderNumber(),shipmentAuthority(old)).isEmpty());
+        var legacyNumbers=new java.util.ArrayList<String>();legacyNumbers.add(old.order().orderNumber());for(int i=0;i<51;i++) { var o=old.order();var copy=orders().save(new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),"legacy-"+i,"b".repeat(64),o.memberId(),null,null,"DEMO",o.quote(),o.contact(),o.createdAt(),o.expiresAt()));new TransactionTemplate(transactionManager).executeWithoutResult(t->orders().transition(copy.orderNumber(),"PAID"));legacyNumbers.add(copy.orderNumber()); }
+        var live=paymentFixture("f1-backfill-live",false);payments().approve(live.order().orderNumber(),live.authority());var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("shipment-backfill-worker-"+UUID.randomUUID()));UUID sentinel=jobs.enqueue(new com.example.marketplace.platform.api.Jobs.Command("SHIPMENT_CREATED","startup-probe-"+UUID.randomUUID(),"startup-probe","none",Instant.EPOCH));var bootstrap=shipmentWorkerProcess(folder,"bootstrap",Instant.now(),sentinel,false);
+        try { assertTrue(bootstrap.waitFor(40,TimeUnit.SECONDS));assertEquals(0,bootstrap.exitValue()); }finally { if(bootstrap.isAlive()) { bootstrap.destroyForcibly();bootstrap.waitFor(10,TimeUnit.SECONDS); } }
+        UUID scan=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key='fulfillment-backfill-v1:START'",Map.of(),UUID.class);assertEquals("READY",jobs.find(scan).orElseThrow().status());
+        // A mid-batch durable enqueue failure must not leave either preceding work or the next cursor.
+        var candidates=new TransactionTemplate(transactionManager).execute(t->context.getBean(com.example.marketplace.order.api.FulfillmentOrders.class).paidCandidates(null,50));String blocked=candidates.get(1).number();var initial=shipmentState();
+        jdbc.getJdbcTemplate().execute("CREATE FUNCTION marketplace.f1_fail_backfill() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.type='FULFILLMENT_PREPARE' AND NEW.payload='"+blocked+"' THEN RAISE EXCEPTION 'injected backfill enqueue failure'; END IF; RETURN NEW; END $$");jdbc.getJdbcTemplate().execute("CREATE TRIGGER f1_fail_backfill BEFORE INSERT ON marketplace.job FOR EACH ROW EXECUTE FUNCTION marketplace.f1_fail_backfill()");
+        try { var handler=context.getBeansOfType(com.example.marketplace.platform.api.JobHandler.class).values().stream().filter(h->h.type().equals("FULFILLMENT_BACKFILL")).findFirst().orElseThrow();assertThrows(RuntimeException.class,()->handler.handle(jobs.find(scan).orElseThrow()));assertEquals(initial,shipmentState()); }finally { jdbc.getJdbcTemplate().execute("DROP TRIGGER f1_fail_backfill ON marketplace.job");jdbc.getJdbcTemplate().execute("DROP FUNCTION marketplace.f1_fail_backfill()"); }
+        Instant now=Instant.now();Process first=shipmentWorkerProcess(folder,"first",now,scan,true),second=null;
+        try { awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"backfill did not reach batch commit");assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")));var batch=jdbc.queryForList("SELECT * FROM marketplace.job WHERE type='FULFILLMENT_PREPARE' AND dedupe_key LIKE 'fulfillment-backfill-v1:order:%' ORDER BY id",Map.of());assertEquals(50,batch.size());first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));second=shipmentWorkerProcess(folder,"second",now.plusSeconds(31),scan,false);assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue());assertEquals(2,jobs.find(scan).orElseThrow().attempts());assertEquals(batch,jdbc.queryForList("SELECT * FROM marketplace.job WHERE type='FULFILLMENT_PREPARE' AND dedupe_key LIKE 'fulfillment-backfill-v1:order:%' ORDER BY id",Map.of()));
+        }finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+        for(int i=0;i<100;i++) { var pending=jdbc.queryForList("SELECT id FROM marketplace.job WHERE type='FULFILLMENT_BACKFILL' AND status='READY' ORDER BY id",Map.of(),UUID.class);if(pending.isEmpty()) { break; }for(UUID id:pending) { shipmentJob(id,Instant.now()); } }
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE type='FULFILLMENT_BACKFILL' AND status<>'SUCCEEDED'",Map.of(),Integer.class));
+        for(String number:legacyNumbers) { UUID prepare=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE type='FULFILLMENT_PREPARE' AND payload=:n",Map.of("n",number),UUID.class);shipmentJob(prepare,Instant.now());assertEquals(2,shipments().buyer(number,shipmentAuthority(old)).size()); }
+        UUID liveBackfill=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE type='FULFILLMENT_PREPARE' AND payload=:n",Map.of("n",live.order().orderNumber()),UUID.class);var gate=new CountDownLatch(1);
+        try(var pool=Executors.newFixedThreadPool(2)) { var a=pool.submit(()->{gate.await();shipmentJob(liveBackfill,Instant.now());return true;});var b=pool.submit(()->{gate.await();shipmentJob(settlementJob(live),Instant.now());return true;});gate.countDown();assertTrue(a.get(10,TimeUnit.SECONDS));assertTrue(b.get(10,TimeUnit.SECONDS)); }
+        assertEquals(2,shipments().buyer(live.order().orderNumber(),shipmentAuthority(live)).size());assertTrue(shipments().buyer(live.order().orderNumber(),shipmentAuthority(live)).stream().allMatch(v->v.events().size()==1));assertEquals(oldRecord,jobs.find(oldJob).orElseThrow());
+    }
+
+    @Test void shipmentDatabaseParentOwnershipIsLinked() throws Exception {
+        var first=paymentFixture("f1-parent-a",false);var second=paymentFixture("f1-parent-b",false);var before=shipmentState();
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.shipment(id,order_id,seller_order_id,order_number,purpose_key,state,version,created_at) VALUES(:id,:order,:seller,:number,'BASIC','PREPARING',0,now())",Map.of("id",UUID.randomUUID(),"order",first.order().id(),"seller",second.order().sellers().getFirst().id(),"number",first.order().orderNumber())));assertEquals(before,shipmentState());
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.shipment(id,order_id,seller_order_id,order_number,purpose_key,state,version,created_at) VALUES(:id,:order,:seller,:number,'BASIC','PREPARING',0,now())",Map.of("id",UUID.randomUUID(),"order",first.order().id(),"seller",first.order().sellers().getFirst().id(),"number",second.order().orderNumber())));assertEquals(before,shipmentState());
+    }
+
+    private record PaymentFixture(com.example.marketplace.order.api.Orders.Snapshot order,HttpClient browser,com.example.marketplace.payment.api.Payments.Authority authority) { }
+    private PaymentFixture paymentFixture(String suffix,boolean zero) throws Exception {
+        suffix=suffix.toLowerCase(java.util.Locale.ROOT).replace('_','-');var d=orderDraft("d-"+suffix);var input=creationInput(d);
+        var other=browseFixture("d-other-"+suffix,10000,10);UUID owner=(UUID)other.get("owner"),sku=(UUID)other.get("sku");
+        var t=couponTemplate(owner,"두번째 쿠폰",5);var c=coupons().claim(d.memberId(),t.id());
+        var lines=new java.util.ArrayList<>(input.lines());lines.add(quoteLine(sku,1));if(suffix.equals("g-totals")) { lines.set(0,quoteLine(lines.getFirst().skuId(),3));lines.set(1,quoteLine(sku,2)); }var selections=new java.util.ArrayList<>(input.coupons());selections.add(new com.example.marketplace.promotion.api.Quotes.CouponSelection(t.storeId(),c.id()));
+        if(zero) {
+            // Fixture creates genuine free shipping + full-value coupons before the trusted quote/order flow.
+            for(var selection:selections) { jdbc.update("UPDATE marketplace.issued_coupon SET value=10000 WHERE id=:id",Map.of("id",selection.couponId())); }
+            for(UUID seller:List.of(d.memberId(),owner)) {
+                var now=Instant.now();var pi=new com.example.marketplace.promotion.api.Promotions.Input("무료 배송","SHIPPING",List.of(),now.minusSeconds(10),now.plusSeconds(3600),"FREE",0L,null,"DRAFT",0L);
+                var p=promotions().save(seller,null,pi);promotions().save(seller,p.id(),new com.example.marketplace.promotion.api.Promotions.Input("무료 배송","SHIPPING",List.of(),pi.startsAt(),pi.endsAt(),"FREE",0L,null,"ACTIVE",0L));
+            }
+        }
+        var q=quotes().calculate(d.memberId(),lines,selections);if(zero) { assertEquals(0,q.total()); }
+        var saved=creation().create(d.purchaseSessionId().toString(),d.memberId(),null,new com.example.marketplace.order.infrastructure.OrderCreationService.Input(input.requestKey(),lines,selections,q.fingerprint(),input.contact(),null,0));
+        var browser=authBrowser();String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",d.memberId()),String.class);
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm(email," A1-private-passphrase-가나다 "),csrfToken(browser)).statusCode());
+        String session=jdbc.queryForObject("SELECT session_id FROM marketplace.spring_session WHERE principal_name=:id",Map.of("id",d.memberId().toString()),String.class);
+        Long version=jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",Map.of("id",d.memberId()),Long.class);
+        return new PaymentFixture(saved,browser,new com.example.marketplace.payment.api.Payments.Authority(session,d.memberId(),version,null));
+    }
+    private com.example.marketplace.payment.infrastructure.PaymentCoordinator payments() { return context.getBean(com.example.marketplace.payment.infrastructure.PaymentCoordinator.class); }
+    private com.example.marketplace.payment.infrastructure.PaymentCoordinator paymentWith(Clock clock,com.example.marketplace.payment.infrastructure.PaymentCoordinator.Checkpoint checkpoint) {
+        return new com.example.marketplace.payment.infrastructure.PaymentCoordinator(jdbc,orders(),reservations(),couponReservations(),context.getBean(com.example.marketplace.payment.api.PaymentProvider.class),context.getBean(com.example.marketplace.platform.api.Jobs.class),context.getBean(com.example.marketplace.platform.api.Outbox.class),transactionManager,context.getBean(com.example.marketplace.identity.api.AccessPolicy.class),context.getBean(com.example.marketplace.identity.api.SellerMembership.class),context.getBean(com.example.marketplace.identity.api.PurchaseSessions.class),clock,checkpoint);
+    }
+    private void mockPayment(PaymentFixture f,String approval,String cancellation) { jdbc.update("INSERT INTO marketplace.payment_mock_setting(order_id,approval,cancellation) VALUES(:id,:a,:c)",Map.of("id",f.order().id(),"a",approval,"c",cancellation)); }
+    private Map<String,Object> paymentAttempt(PaymentFixture f) { return jdbc.queryForMap("SELECT * FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id())); }
+    private void paymentQuery(PaymentFixture f,boolean compensation) { var a=paymentAttempt(f);payments().query(f.order().orderNumber(),((Number)a.get("round")).intValue(),((Number)a.get("query_count")).intValue(),compensation); }
+    private void paymentStates(PaymentFixture f,String order,String inventory,String coupon) {
+        assertEquals(order,orders().find(f.order().orderNumber()).state());var ids=orders().reservations(f.order().orderNumber());assertEquals(2,ids.inventory().size());assertEquals(2,ids.coupons().size());
+        assertTrue(reservations().inspect(f.order().checkoutId(),ids.inventory()).stream().allMatch(r->r.status().equals(inventory)));
+        assertTrue(couponReservations().inspect(f.order().checkoutId(),ids.coupons()).stream().allMatch(r->r.state().equals(coupon)));
+    }
+    private Map<String,String> paymentParticipantState() { var state=new java.util.TreeMap<>(orderParticipantState());for(String table:List.of("payment_attempt","payment_event","payment_toss_binding","payment_webhook_receipt")) { state.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class)); }return state; }
+    @Test void purchaseTotalsAndReservationsConverge() throws Exception {
+        var f=paymentFixture("g-totals",false);var original=f.order();paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");
+        assertEquals(2,original.quote().stores().size());assertEquals(55800,original.quote().total());
+        var balance=new java.util.HashMap<UUID,Integer>();for(var store:original.quote().stores()) { for(var line:store.lines()) { balance.put(line.skuId(),jdbc.queryForObject("SELECT on_hand FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",line.skuId()),Integer.class)); } }
+        assertEquals(200,paymentPost(f.browser(),original.orderNumber(),"{}",csrfToken(f.browser())).statusCode());
+        assertEquals(200,paymentPost(f.browser(),original.orderNumber(),"{}",csrfToken(f.browser())).statusCode());
+        payments().apply(original.orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);paymentStates(f,"PAID","COMMITTED","COMMITTED");
+        var detail=authMapper.readTree(accountRequest(f.browser(),"GET","/api/orders/"+original.orderNumber(),null,null).body());long parent=0;
+        for(var store:detail.get("stores")) { long gross=0,promotion=0,coupon=0,net=0;for(var item:store.get("items")) { long ug=0,up=0,uc=0,un=0;assertEquals(item.get("quantity").asInt(),item.get("units").size());for(var unit:item.get("units")) { ug+=unit.get("gross").asLong();up+=unit.get("promotionDiscount").asLong();uc+=unit.get("couponDiscount").asLong();un+=unit.get("net").asLong();assertEquals(unit.get("gross").asLong()-unit.get("promotionDiscount").asLong()-unit.get("couponDiscount").asLong(),unit.get("net").asLong()); }assertEquals(ug,item.get("gross").asLong());assertEquals(up,item.get("promotionDiscount").asLong());assertEquals(uc,item.get("couponDiscount").asLong());assertEquals(un,item.get("net").asLong());gross+=ug;promotion+=up;coupon+=uc;net+=un;
+                UUID sku=UUID.fromString(item.get("skuId").asText());assertEquals(balance.get(sku)-item.get("quantity").asInt(),jdbc.queryForObject("SELECT on_hand FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",sku),Integer.class));
+            }assertEquals(gross,store.get("subtotal").asLong());assertEquals(promotion,store.get("productDiscount").asLong());assertEquals(coupon,store.get("couponDiscount").asLong());assertEquals(net+store.get("shippingBase").asLong()-store.get("shippingDiscount").asLong(),store.get("total").asLong());parent+=store.get("total").asLong(); }
+        assertEquals(55800,parent);assertEquals(parent,detail.get("total").asLong());assertEquals(parent,jdbc.queryForObject("SELECT amount FROM marketplace.purchase_order WHERE id=:id",Map.of("id",original.id()),Long.class));
+        var attempt=paymentAttempt(f);assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",attempt.get("id")),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT approval_effects FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",attempt.get("id")),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_event WHERE attempt_id=:id AND action='SUCCEEDED'",Map.of("id",attempt.get("id")),Integer.class));
+        shipmentJob(settlementJob(f),Instant.now());var rows=shipments().buyer(original.orderNumber(),shipmentAuthority(f));assertEquals(2,rows.size());for(var seller:original.sellers()) { var row=rows.stream().filter(r->r.sellerOrderId().equals(seller.id())).findFirst().orElseThrow();assertEquals("PREPARING",row.state());assertEquals(seller.items().stream().map(i->new com.example.marketplace.fulfillment.api.Shipments.Item(i.id(),i.quantity())).toList(),row.items());assertEquals(1,row.events().size()); }
+        shipments().prepare(original.orderNumber());assertEquals(rows,shipments().buyer(original.orderNumber(),shipmentAuthority(f)));
+    }
+    @Test void zeroPaymentCommitsAllOnce() throws Exception {
+        var f=paymentFixture("zero",true);assertEquals("PAID",payments().approve(f.order().orderNumber(),f.authority()).orderState());payments().approve(f.order().orderNumber(),f.authority());payments().apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);
+        paymentStates(f,"PAID","COMMITTED","COMMITTED");var a=paymentAttempt(f);assertEquals("SUCCEEDED",a.get("state"));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_event WHERE attempt_id=:id AND action='SUCCEEDED'",Map.of("id",a.get("id")),Integer.class));
+    }
+    @Test void paymentApprovalAndExpiryHaveOneOutcome() throws Exception {
+        var f=paymentFixture("race",false);var entered=new CountDownLatch(1);var release=new CountDownLatch(1);var api=paymentWith(Clock.systemUTC(),stage->{if(stage.equals("PREPARED")) { entered.countDown();assertTrue(release.await(10,TimeUnit.SECONDS)); }});
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var approval=pool.submit(()->api.approve(f.order().orderNumber(),f.authority()));assertTrue(entered.await(10,TimeUnit.SECONDS));
+            var due=paymentWith(Clock.fixed(f.order().expiresAt(),ZoneOffset.UTC),stage->{ });var expiry=pool.submit(()->due.expire(f.order().orderNumber()));expiry.get(10,TimeUnit.SECONDS);paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals("PROCESSING",paymentAttempt(f).get("state"));
+            payments().approve(f.order().orderNumber(),f.authority());assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_attempt WHERE order_id=:id",Map.of("id",f.order().id()),Integer.class));release.countDown();assertEquals("PAID",approval.get(10,TimeUnit.SECONDS).orderState());paymentStates(f,"PAID","COMMITTED","COMMITTED");
+        }finally { release.countDown(); }
+        var expired=paymentFixture("expiry-first",false);paymentWith(Clock.fixed(expired.order().expiresAt(),ZoneOffset.UTC),stage->{ }).expire(expired.order().orderNumber());paymentStates(expired,"EXPIRED","RELEASED","RELEASED");assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->payments().approve(expired.order().orderNumber(),expired.authority()));
+    }
+    @Test void paymentUnknownAndLateSuccessConverge() throws Exception {
+        var f=paymentFixture("lost",false);mockPayment(f,"LOST_RESPONSE","SUCCESS");assertEquals("UNKNOWN",payments().approve(f.order().orderNumber(),f.authority()).paymentState());paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");paymentQuery(f,false);paymentStates(f,"PAID","COMMITTED","COMMITTED");payments().apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.FAILED);paymentStates(f,"PAID","COMMITTED","COMMITTED");
+        for(String cancel:List.of("SUCCESS","LOST_RESPONSE","REJECT","QUERY_FAILURE")) {
+            var late=paymentFixture("late-"+cancel,false);mockPayment(late,"DELAYED_SUCCESS",cancel);payments().approve(late.order().orderNumber(),late.authority());var clock=new JobClock();clock.now=late.order().expiresAt();var timed=paymentWith(clock,stage->{ });
+            // Provider success after the actual order deadline: no reservation deadline is extended or bypassed.
+            var a=paymentAttempt(late);var provider=context.getBean(com.example.marketplace.payment.api.PaymentProvider.class);provider.query(new com.example.marketplace.payment.api.PaymentProvider.Request((UUID)a.get("id"),late.order().id(),late.order().quote().total(),"DEMO"));
+            timed.apply(late.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);assertEquals("PENDING",paymentAttempt(late).get("compensation"));paymentStates(late,"PENDING_PAYMENT","RESERVED","RESERVED");
+            paymentQuery(late,true);if(cancel.equals("LOST_RESPONSE")) { paymentQuery(late,true); }
+            if(cancel.equals("SUCCESS")||cancel.equals("LOST_RESPONSE")) { paymentStates(late,"CANCELED","RELEASED","RELEASED");assertEquals("CANCELED",paymentAttempt(late).get("compensation")); }
+            else if(cancel.equals("REJECT")) { assertEquals(true,paymentAttempt(late).get("review_required"));paymentStates(late,"PENDING_PAYMENT","RESERVED","RESERVED"); }
+            else { for(int i=1;i<5;i++) { paymentQuery(late,true); }assertEquals(true,paymentAttempt(late).get("review_required"));paymentStates(late,"PENDING_PAYMENT","RESERVED","RESERVED"); }
+            timed.apply(late.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_event WHERE attempt_id=:id AND action='COMPENSATION_PENDING'",Map.of("id",a.get("id")),Integer.class));
+        }
+        var released=paymentFixture("released-late",false);mockPayment(released,"REJECT","SUCCESS");payments().approve(released.order().orderNumber(),released.authority());paymentStates(released,"CANCELED","RELEASED","RELEASED");var a=paymentAttempt(released);jdbc.update("UPDATE marketplace.payment_mock SET state='SUCCEEDED',approval_effects=1 WHERE attempt_id=:id",Map.of("id",a.get("id")));payments().apply(released.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);paymentQuery(released,true);paymentStates(released,"CANCELED","RELEASED","RELEASED");assertEquals(1,jdbc.queryForObject("SELECT cancel_effects FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",a.get("id")),Integer.class));
+    }
+    @Test void paymentResultRollbackAndDuplicateEvents() throws Exception {
+        for(boolean checked:List.of(false,true)) { for(String point:List.of("COUPON","INVENTORY","ORDER","AUDIT","OUTBOX")) {
+            var f=paymentFixture("rollback-"+point+checked,false);mockPayment(f,"LOST_RESPONSE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());var before=paymentParticipantState();var api=paymentWith(Clock.systemUTC(),stage->{if(stage.equals(point)) { if(checked) { throw new java.io.IOException("checked"); }throw new IllegalStateException("runtime"); }});
+            assertThrows(IllegalStateException.class,()->api.apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED));assertEquals(before,paymentParticipantState(),point+checked);paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");paymentQuery(f,false);paymentStates(f,"PAID","COMMITTED","COMMITTED");payments().apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.UNKNOWN);paymentStates(f,"PAID","COMMITTED","COMMITTED");
+        } }
+        var f=paymentFixture("boundary-after-coupon",false);mockPayment(f,"LOST_RESPONSE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());UUID stock=orders().reservations(f.order().orderNumber()).inventory().getLast();
+        // The real inventory clock sees an expired row; coupon commit occurred first inside the result transaction.
+        jdbc.update("UPDATE marketplace.inventory_reservation SET expires_at=clock_timestamp()-interval '1 second' WHERE id=:id",Map.of("id",stock));payments().apply(f.order().orderNumber(),com.example.marketplace.payment.api.PaymentProvider.Result.SUCCEEDED);paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals("PENDING",paymentAttempt(f).get("compensation"));paymentQuery(f,true);paymentStates(f,"CANCELED","RELEASED","RELEASED");
+    }
+    @Test void paymentUnknownHoldsReservationsAndExhaustedJobsAreVisible() throws Exception {
+        for(String mode:List.of("queries","time","delivery")) {
+            var f=paymentFixture("review-"+mode,false);mockPayment(f,"QUERY_FAILURE","SUCCESS");payments().approve(f.order().orderNumber(),f.authority());
+            if(mode.equals("queries")) { for(int i=0;i<5;i++) { paymentQuery(f,false); } }
+            else if(mode.equals("time")) { var a=paymentAttempt(f);paymentWith(Clock.fixed(((java.sql.Timestamp)a.get("round_started_at")).toInstant().plusSeconds(900),ZoneOffset.UTC),stage->{ }).get(f.order().orderNumber(),f.authority()); }
+            else { var a=paymentAttempt(f);jdbc.update("UPDATE marketplace.job SET attempts=5,status='RUNNING',owner_token=:token,lease_until=clock_timestamp()-interval '1 second' WHERE id=:id",Map.of("id",a.get("next_job"),"token",UUID.randomUUID()));context.getBean(com.example.marketplace.platform.api.Jobs.class).claim(java.util.Set.of("PAYMENT_QUERY"));payments().get(f.order().orderNumber(),f.authority()); }
+            assertEquals(true,paymentAttempt(f).get("review_required"));payments().approve(f.order().orderNumber(),f.authority());paymentWith(Clock.fixed(f.order().expiresAt(),ZoneOffset.UTC),stage->{ }).expire(f.order().orderNumber());paymentStates(f,"PENDING_PAYMENT","RESERVED","RESERVED");assertEquals(1,jdbc.queryForObject("SELECT approval_calls FROM marketplace.payment_mock WHERE attempt_id=:id",Map.of("id",paymentAttempt(f).get("id")),Integer.class));
+        }
+    }
+
+
+    @Test void paymentHttpOwnershipAndTampering() throws Exception {
+        var d=orderDraft("d-http");var saved=creation().create(d.purchaseSessionId().toString(),d.memberId(),null,creationInput(d));var browser=authBrowser();
+        String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",d.memberId()),String.class);
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm(email," A1-private-passphrase-가나다 "),csrfToken(browser)).statusCode());
+        var result=browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/payments/"+saved.orderNumber())).GET().build(),HttpResponse.BodyHandlers.ofString());
+        assertEquals(200,result.statusCode());assertTrue(result.body().contains("PENDING_PAYMENT"));
+    }
+
+
+
+    private com.example.marketplace.order.infrastructure.OrderCreationService creation() { return context.getBean(com.example.marketplace.order.infrastructure.OrderCreationService.class); }
+    private com.example.marketplace.order.infrastructure.OrderCreationService.Input creationInput(com.example.marketplace.order.api.Orders.Draft d) {
+        return new com.example.marketplace.order.infrastructure.OrderCreationService.Input(d.requestKey(),d.quote().stores().stream().flatMap(s->s.lines().stream()).map(l->quoteLine(l.skuId(),l.quantity())).toList(),d.quote().stores().stream().filter(s->s.coupon()!=null).map(s->new com.example.marketplace.promotion.api.Quotes.CouponSelection(s.storeId(),s.coupon().id())).toList(),d.quote().fingerprint(),d.contact(),d.guestAttemptId(),0);
+    }
+    @Test void orderCreationLockOrderAndAuthorityRaces() throws Exception {
+        var d=orderDraft("c-lock");var input=creationInput(d);
+        try(var connection=context.getBean(DataSource.class).getConnection();var pool=Executors.newSingleThreadExecutor()) {
+            connection.setAutoCommit(false);
+            try(var statement=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")) { statement.setObject(1,d.memberId());statement.executeQuery().close(); }
+            var future=pool.submit(()->{try { creation().create(d.purchaseSessionId().toString(),d.memberId(),null,input);return true; }catch(RuntimeException rejected) { return false; }});
+            try { awaitCouponLock("identity_user");try(var statement=connection.prepareStatement("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=?")) { statement.setObject(1,d.memberId());statement.executeUpdate(); }connection.commit();assertFalse(future.get(10,TimeUnit.SECONDS)); }
+            finally { connection.rollback(); }
+        }
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",d.memberId()),Integer.class));
+    }
+    @Test void orderRetryReturnsSameResult() throws Exception {
+        var d=orderDraft("c-retry");var input=creationInput(d);var line=d.quote().stores().getFirst().lines().getFirst();
+        jdbc.update("UPDATE marketplace.inventory_balance SET on_hand=1 WHERE sku_id=:id",Map.of("id",line.skuId()));
+        var barrier=new java.util.concurrent.CyclicBarrier(2);
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var tasks=List.of(0,1).stream().map(index->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);return creation().create(d.purchaseSessionId().toString(),d.memberId(),null,input);})).toList();
+            var first=tasks.get(0).get(15,TimeUnit.SECONDS);assertEquals(first,tasks.get(1).get(15,TimeUnit.SECONDS));
+            assertEquals(first,creation().create(d.purchaseSessionId().toString(),d.memberId(),null,input));
+            assertEquals("PENDING_PAYMENT",first.state());assertEquals(1,first.sellers().size());assertEquals(1,orders().reservations(first.orderNumber()).inventory().size());assertEquals(1,orders().reservations(first.orderNumber()).coupons().size());
+            assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_reservation WHERE order_id=:id",Map.of("id",first.id()),Integer.class));
+            assertEquals(1,jdbc.queryForObject("SELECT reserved FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",line.skuId()),Integer.class));
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_event WHERE order_id=:id",Map.of("id",first.id()),Integer.class));
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.outbox_event WHERE id=:id",Map.of("id",first.id()),Integer.class));
+            assertEquals(first.expiresAt(),jdbc.queryForObject("SELECT scheduled_at FROM marketplace.job WHERE cause_key=:id",Map.of("id",first.id().toString()),java.sql.Timestamp.class).toInstant());
+            var changed=new com.example.marketplace.order.infrastructure.OrderCreationService.Input(input.requestKey(),input.lines(),input.coupons(),"c".repeat(64),input.contact(),null,0);
+            assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->creation().create(d.purchaseSessionId().toString(),d.memberId(),null,changed)).status());
+            UUID other=activeMember("c-retry-other@example.com");
+            assertEquals(401,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->creation().create(d.purchaseSessionId().toString(),other,null,input)).status());
+        }
+    }
+    private com.example.marketplace.order.infrastructure.OrderCreationService creationWith(com.example.marketplace.guest.api.GuestOrders guest,com.example.marketplace.order.infrastructure.OrderCreationService.Checkpoint probe) {
+        return new com.example.marketplace.order.infrastructure.OrderCreationService(jdbc,orders(),quotes(),context.getBean(com.example.marketplace.catalog.api.PurchaseOffers.class),guest,context.getBean(com.example.marketplace.identity.api.SellerMembership.class),couponReservations(),context.getBean(com.example.marketplace.inventory.api.Reservations.class),context.getBean(com.example.marketplace.platform.api.Outbox.class),transactionManager,"DEMO",probe);
+    }
+    private Map<String,String> orderParticipantState() {
+        var result=new java.util.TreeMap<String,String>();
+        for(String table:List.of("guest_checkout","guest_attempt","guest_buyer","guest_access_session","guest_order_reference","order_checkout_attempt","purchase_order","seller_order","order_item","order_unit","order_contact","order_reservation","order_event","inventory_balance","inventory_reservation","inventory_reservation_event","coupon_reservation_batch","issued_coupon","coupon_reservation","coupon_reservation_event","job","outbox_event")) {
+            result.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class));
+        }
+        return result;
+    }
+    @Test void orderCreationRollsBackAllParticipants() {
+        var d=orderDraft("c-rollback");var memberInput=creationInput(d);
+        var f=new GuestFixture();var access=guestAccess(f);UUID attempt=guestVerified(f);access.prepare(f.browser,attempt,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var guestQuote=quotes().calculate(null,memberInput.lines(),List.of());
+        var guestInput=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("guest-rollback",memberInput.lines(),List.of(),guestQuote.fingerprint(),d.contact(),attempt,0);
+        for(boolean guest:List.of(false,true)) { for(boolean checked:List.of(false,true)) { for(String point:List.of("GUEST","ORDER","COUPON","INVENTORY","REFERENCE","AUDIT","OUTBOX")) {
+            var api=creationWith(access,stage->{if(stage.equals(point)) { if(checked) { throw new java.io.IOException("checked injection"); }throw new IllegalStateException("runtime injection"); }});
+            var before=orderParticipantState();
+            var failure=assertThrows(IllegalStateException.class,()->api.create(guest?f.browser:d.purchaseSessionId().toString(),guest?null:d.memberId(),null,guest?guestInput:memberInput));
+            if(checked) { assertTrue(failure.getCause() instanceof java.io.IOException); }
+            assertEquals(before,orderParticipantState(),"all rows restored after "+point+" guest="+guest+" checked="+checked);
+        } } }
+    }
+    @Test void guestOrderConsumesVerificationAtomically() {
+        var f=new GuestFixture();var access=guestAccess(f);var api=creationWith(access,stage->{ });UUID firstAttempt=guestVerified(f);access.prepare(f.browser,firstAttempt,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var fixture=browseFixture("c-guest",10000,10);var lines=List.of(quoteLine((UUID)fixture.get("sku"),1));
+        var contact=new com.example.marketplace.order.api.Orders.Contact("ignored","01012345678","수령인","01012345678","01234","주소","상세");
+        var q=quotes().calculate(null,lines,List.of());
+        var input=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("first",lines,List.of(),q.fingerprint(),contact,firstAttempt,0);
+        var first=api.create(f.browser,null,null,input);assertEquals(first,api.create(f.browser,null,null,input));assertEquals("가상 구매자",first.contact().buyerName());
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.guest_order_reference WHERE order_number=:n AND guest_buyer_id=:id",Map.of("n",first.orderNumber(),"id",first.guestBuyerId()),Integer.class));
+        assertEquals(first,api.create(f.browser,null,null,input));
+        UUID next=guestRepeat(f);access.prepare(f.browser,next,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var secondInput=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("second",lines,List.of(),q.fingerprint(),contact,next,0);
+        var second=api.create(f.browser,null,null,secondInput);assertThat(second.guestBuyerId()).isNotEqualTo(first.guestBuyerId());
+        assertEquals(first,api.create(f.browser,null,null,input));
+        String token=access.login(first.orderNumber(),f.phone,GUEST_PASSWORD,f.source,null);UUID third=guestRepeat(f);var link=access.selectLink(f.browser,third,"EXISTING",token,0);
+        var thirdInput=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("third",lines,List.of(),q.fingerprint(),contact,third,link.revision());
+        var before=orderParticipantState();assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->api.create(f.browser,null,null,thirdInput));assertEquals(before,orderParticipantState());
+        var linked=api.create(f.browser,null,token,thirdInput);assertEquals(first.guestBuyerId(),linked.guestBuyerId());assertEquals(linked,api.create(f.browser,null,token,thirdInput));
+        access.logout(token);assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->api.create(f.browser,null,token,thirdInput));
+        f.clock.advance(901);UUID fourth=guestRepeat(f);access.prepare(f.browser,fourth,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+        var stale=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("stale",lines,List.of(),q.fingerprint(),contact,fourth,0);
+        access.selectLink(f.browser,fourth,"NEW",null,0);before=orderParticipantState();assertThrows(com.example.marketplace.guest.api.GuestRejected.class,()->api.create(f.browser,null,null,stale));assertEquals(before,orderParticipantState());
+    }
+    @Test void orderHttpCsrfAndCurrentSessionOwnership() throws Exception {
+        var d=orderDraft("c-http");var browser=authBrowser();
+        String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",d.memberId()),String.class);
+        assertEquals(200,authRequest(browser,"/api/auth/login",loginForm(email," A1-private-passphrase-가나다 "),csrfToken(browser)).statusCode());
+        var input=creationInput(d);String body=authMapper.writeValueAsString(input);
+        var denied=browser.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/orders")).header("Content-Type","application/json").POST(HttpRequest.BodyPublishers.ofString(body)).build(),HttpResponse.BodyHandlers.ofString());assertEquals(403,denied.statusCode());
+        String csrf=csrfToken(browser);
+        var request=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/orders")).header("Content-Type","application/json").header("X-CSRF-TOKEN",csrf).POST(HttpRequest.BodyPublishers.ofString(body)).build();
+        var success=browser.send(request,HttpResponse.BodyHandlers.ofString());assertEquals(200,success.statusCode());assertTrue(success.headers().firstValue("Cache-Control").orElse("").contains("no-store"));
+        assertEquals(success.body(),browser.send(request,HttpResponse.BodyHandlers.ofString()).body());assertFalse(success.body().contains("buyerPhone"));assertEquals("PENDING_PAYMENT",authMapper.readTree(success.body()).get("state").asText());
+    }
+    @Test void orderCartReconciliationPreservesChangedAndAddedItems() {
+        UUID buyer=activeMember("c-cleanup@example.com");var a=browseFixture("c-cart-a",100,10);var b=browseFixture("c-cart-b",100,10);var c=browseFixture("c-cart-c",100,10);
+        var view=carts().set(buyer,(UUID)a.get("sku"),1,0);view=carts().set(buyer,(UUID)b.get("sku"),2,view.version());
+        var submitted=view.items().stream().map(l->new com.example.marketplace.cart.api.Carts.Submitted(l.skuId(),l.quantity(),l.revision())).toList();
+        view=carts().set(buyer,(UUID)b.get("sku"),3,view.version());view=carts().set(buyer,(UUID)b.get("sku"),2,view.version());view=carts().set(buyer,(UUID)c.get("sku"),1,view.version());
+        UUID order=UUID.randomUUID();var cleaned=org.junit.jupiter.api.Assertions.assertDoesNotThrow(()->carts().reconcile(buyer,order,submitted));
+        assertThat(cleaned.items().stream().map(l->l.skuId()).toList()).containsExactlyInAnyOrder((UUID)b.get("sku"),(UUID)c.get("sku"));
+        var added=carts().set(buyer,(UUID)a.get("sku"),1,cleaned.version());assertEquals(added,carts().reconcile(buyer,order,submitted));
+        assertThrows(com.example.marketplace.cart.api.CartException.class,()->carts().reconcile(buyer,order,List.of()));
+    }
+    private com.example.marketplace.order.infrastructure.OrderCreationService.Input orderInput(UUID buyer,List<com.example.marketplace.promotion.api.Quotes.LineRequest> lines,List<com.example.marketplace.promotion.api.Quotes.CouponSelection> selected,String key) {
+        var q=quotes().calculate(buyer,lines,selected);
+        return new com.example.marketplace.order.infrastructure.OrderCreationService.Input(key,lines,selected,q.fingerprint(),new com.example.marketplace.order.api.Orders.Contact("구매자","01012345678","수령인","01087654321","01234","서울","101호"),null,null);
+    }
+    @Test void orderAuthorityChangesAfterActualRowWait() throws Exception {
+        for(String mode:List.of("seller","store","product","category","price","coupon","expiry")) {
+            var d=orderDraft("c-authority-"+mode);var input=creationInput(d);var store=d.quote().stores().getFirst();var line=store.lines().getFirst();
+            String table=switch(mode) {case "seller"->"identity_user";case "store"->"seller_store";case "product"->"catalog_product";case "category"->"catalog_category";case "price"->"catalog_sku";default->"issued_coupon";};
+            UUID id=switch(mode) {case "seller"->d.memberId();case "store"->store.storeId();case "product"->line.productId();case "category"->jdbc.queryForObject("SELECT category_id FROM marketplace.catalog_product WHERE id=:id",Map.of("id",line.productId()),UUID.class);case "price"->line.skuId();default->store.coupon().id();};
+            try(var pool=Executors.newSingleThreadExecutor()) {
+                var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<Boolean>>();
+                new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                    jdbc.queryForObject("SELECT id FROM marketplace."+table+" WHERE id=:id FOR UPDATE",Map.of("id",id),UUID.class);
+                    pending.set(pool.submit(()->{try {creation().create(d.purchaseSessionId().toString(),d.memberId(),null,input);return true;}catch(RuntimeException rejected){return false;}}));
+                    awaitCouponLock(table);
+                    String change=switch(mode) {case "seller"->"state='SUSPENDED'";case "store"->"visible=false";case "product"->"is_hidden_by_admin=true";case "category"->"active=false";case "price"->"price=price+1,version=version+1";case "coupon"->"state='USED',version=version+1";default->"ends_at=clock_timestamp()-interval '1 second'";};
+                    jdbc.update("UPDATE marketplace."+table+" SET "+change+" WHERE id=:id",Map.of("id",id));
+                });
+                assertFalse(pending.get().get(15,TimeUnit.SECONDS),mode);
+            }
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",d.memberId()),Integer.class),mode);
+            assertEquals(0,jdbc.queryForObject("SELECT reserved FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",line.skuId()),Integer.class),mode);
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.coupon_reservation WHERE coupon_id=:id",Map.of("id",store.coupon().id()),Integer.class),mode);
+        }
+    }
+    @Test void orderAdministratorAuditLocksDoNotCycle() throws Exception {
+        for(boolean category:List.of(true,false)) {
+            var a=browseFixture("c-admin-a-"+category,10000,10);var b=browseFixture("c-admin-b-"+category,10000,10);
+            var left=((UUID)a.get("owner")).toString().compareTo(((UUID)b.get("owner")).toString())<0?a:b;var right=left==a?b:a;
+            UUID actor=(UUID)left.get("owner"),seller=(UUID)right.get("owner");var product=(com.example.marketplace.catalog.api.Products.Product)right.get("product");
+            jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')",Map.of("id",actor));jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'CONTENT'),(:id,'ACCOUNTS')",Map.of("id",actor));
+            var input=orderInput(actor,List.of(quoteLine((UUID)right.get("sku"),1)),List.of(),"admin");String browser=UUID.randomUUID().toString();
+            try(var pool=Executors.newSingleThreadExecutor()) {
+                var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<Boolean>>();
+                new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                    String table=category?"catalog_category":"identity_user";UUID locked=category?product.categoryId():seller;
+                    jdbc.queryForObject("SELECT id FROM marketplace."+table+" WHERE id=:id FOR UPDATE",Map.of("id",locked),UUID.class);
+                    pending.set(pool.submit(()->{try {creation().create(browser,actor,null,input);return true;}catch(RuntimeException rejected){return false;}}));
+                    awaitCouponLock(table);
+                    // Real administrator command writes an actor FK while C owns actor's purchase lock.
+                    if(category) {var row=jdbc.queryForMap("SELECT name,version FROM marketplace.catalog_category WHERE id=:id",Map.of("id",locked));context.getBean(com.example.marketplace.catalog.api.Categories.class).save(actor,locked,new com.example.marketplace.catalog.api.Categories.Input((String)row.get("name"),false,((Number)row.get("version")).longValue()));}
+                    else {context.getBean(com.example.marketplace.identity.api.AccountStateOperations.class).suspend(actor,seller,"order audit race");}
+                });
+                assertFalse(pending.get().get(15,TimeUnit.SECONDS));
+            }
+            String audit=category?"category_event":"account_state_audit";assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace."+audit+" WHERE actor_id=:id",Map.of("id",actor),Integer.class));
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",actor),Integer.class));
+        }
+    }
+    @Test void orderCrossSellerAndSameBuyerBatchesSerializeBeforeForeignKeys() throws Exception {
+        for(boolean cross:List.of(true,false)) {
+            var a=reservationRequest("c-cross-a-"+cross);var b=reservationRequest("c-cross-b-"+cross);
+            UUID first=cross?a.memberId():activeMember("c-samebuyer@example.com"),second=cross?b.memberId():first;
+            var buyers=List.of(first,second);var sources=List.of(b,a);var inputs=new java.util.ArrayList<com.example.marketplace.order.infrastructure.OrderCreationService.Input>();
+            for(int i=0;i<2;i++) {var source=sources.get(i);var coupon=coupons().claim(buyers.get(i),coupons().own(source.memberId(),source.issuedCouponId()).templateId());inputs.add(orderInput(buyers.get(i),List.of(quoteLine(source.quoteSnapshot().stores().getFirst().lines().getFirst().skuId(),1)),List.of(new com.example.marketplace.promotion.api.Quotes.CouponSelection(coupon.storeId(),coupon.id())),"cross-"+i));}
+            UUID locked=cross?java.util.stream.Stream.of(first,second).min(java.util.Comparator.comparing(UUID::toString)).orElseThrow():first;
+            try(var pool=Executors.newFixedThreadPool(2);var connection=context.getBean(DataSource.class).getConnection()) {
+                connection.setAutoCommit(false);try(var statement=connection.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")){statement.setObject(1,locked);statement.executeQuery().close();}
+                var tasks=List.of(0,1).stream().map(i->pool.submit(()->creation().create(UUID.randomUUID().toString(),buyers.get(i),null,inputs.get(i)))).toList();
+                try {awaitJobCondition(()->jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR NO KEY UPDATE%'",Integer.class)>=2,"both purchases actually wait before FK insertion");connection.commit();for(var task:tasks){var saved=task.get(15,TimeUnit.SECONDS);assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_reservation WHERE order_id=:id",Map.of("id",saved.id()),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_event WHERE order_id=:id",Map.of("id",saved.id()),Integer.class));}}
+                finally {connection.rollback();}
+            }
+        }
+    }
+    @Test void orderLastStockHasOneWinnerAndNoPartialCoupon() throws Exception {
+        var seller=browseFixture("c-last-stock",10000,1);UUID owner=(UUID)seller.get("owner"),sku=(UUID)seller.get("sku");var template=couponTemplate(owner,"last stock",5);
+        var buyers=List.of(activeMember("c-stock-first@example.com"),activeMember("c-stock-second@example.com"));var inputs=new java.util.ArrayList<com.example.marketplace.order.infrastructure.OrderCreationService.Input>();var issued=new java.util.ArrayList<UUID>();
+        for(UUID buyer:buyers){var coupon=coupons().claim(buyer,template.id());issued.add(coupon.id());inputs.add(orderInput(buyer,List.of(quoteLine(sku,1)),List.of(new com.example.marketplace.promotion.api.Quotes.CouponSelection(coupon.storeId(),coupon.id())),"last"));}
+        var barrier=new java.util.concurrent.CyclicBarrier(2);int winners=0;
+        try(var pool=Executors.newFixedThreadPool(2)){var tasks=List.of(0,1).stream().map(i->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);try{return creation().create(UUID.randomUUID().toString(),buyers.get(i),null,inputs.get(i));}catch(com.example.marketplace.promotion.api.PromotionRejected rejected){assertEquals(409,rejected.status());return null;}})).toList();for(var task:tasks){if(task.get(15,TimeUnit.SECONDS)!=null){winners++;}}}
+        assertEquals(1,winners);assertEquals(1,jdbc.queryForObject("SELECT reserved FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",sku),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.issued_coupon WHERE id IN (:ids) AND state='RESERVED'",Map.of("ids",issued),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.issued_coupon WHERE id IN (:ids) AND state='AVAILABLE'",Map.of("ids",issued),Integer.class));
+    }
+    @Test void guestOrderRejectsStaleQuoteAndCurrentCredentialChanges(CapturedOutput output) throws Exception {
+        for(String mode:List.of("price","expired","replaced","revoked","coupons","checkout-wait")) {
+            var f=new GuestFixture();var access=guestAccess(f);UUID attempt=guestVerified(f);access.prepare(f.browser,attempt,new com.example.marketplace.guest.api.GuestPassword(GUEST_PASSWORD,GUEST_PASSWORD));
+            var fixture=browseFixture("c-guest-reject-"+mode,10000,10);UUID sku=(UUID)fixture.get("sku");var lines=List.of(quoteLine(sku,1));var q=quotes().calculate(null,lines,List.of());var contact=new com.example.marketplace.order.api.Orders.Contact("ignored","01012345678","수령인","01012345678","01234","주소","");
+            var selected=mode.equals("coupons")?List.of(new com.example.marketplace.promotion.api.Quotes.CouponSelection(UUID.randomUUID(),UUID.randomUUID())):List.<com.example.marketplace.promotion.api.Quotes.CouponSelection>of();
+            var input=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("reject",lines,selected,q.fingerprint(),contact,attempt,0);var api=creationWith(access,stage->{ });
+            switch(mode) {
+                case "price"->jdbc.update("UPDATE marketplace.catalog_sku SET price=price+1000,version=version+1 WHERE id=:id",Map.of("id",sku));
+                case "expired"->f.clock.advance(181);
+                case "replaced"->{f.clock.advance(60);f.service.issue(f.browser,f.token,new com.example.marketplace.guest.api.GuestInput("changed","01099998888","PURCHASE"),f.source);}
+                case "revoked"->jdbc.update("UPDATE marketplace.guest_checkout SET state='REVOKED' WHERE current_attempt=:id",Map.of("id",attempt));
+                default->{ }
+            }
+            var before=orderParticipantState();
+            if(mode.equals("checkout-wait")) {
+                try(var pool=Executors.newSingleThreadExecutor()) {
+                    var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<Boolean>>();
+                    new TransactionTemplate(transactionManager).executeWithoutResult(s->{jdbc.queryForObject("SELECT id FROM marketplace.guest_checkout WHERE current_attempt=:id FOR UPDATE",Map.of("id",attempt),UUID.class);pending.set(pool.submit(()->{try{api.create(f.browser,null,null,input);return true;}catch(RuntimeException denied){return false;}}));awaitCouponLock("guest_checkout");f.clock.advance(181);});assertFalse(pending.get().get(10,TimeUnit.SECONDS));
+                }
+            } else {
+                var rejected=assertThrows(RuntimeException.class,()->api.create(f.browser,null,null,input));
+                if(mode.equals("price")) {var changed=(com.example.marketplace.order.api.OrderRejected)rejected;assertEquals(409,changed.status());assertThat(changed.quote()).isNotNull();assertThat(changed.quote().fingerprint()).isNotEqualTo(q.fingerprint());}
+            }
+            assertEquals(before,orderParticipantState(),mode);
+            assertFalse(String.join("",before.values()).contains(GUEST_PASSWORD));assertFalse(output.getAll().contains(GUEST_PASSWORD));assertFalse(output.getAll().contains("valid-proof"));
+        }
+    }
+    @Test void purchaseAccountLockAllowsAuditForeignKeysButExcludesMutations() {
+        UUID member=activeMember("c-lock-strength@example.com");var membership=context.getBean(com.example.marketplace.identity.api.SellerMembership.class);
+        new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+            membership.lockActiveBuyer(member);
+            try(var other=context.getBean(DataSource.class).getConnection()) {
+                other.setAutoCommit(false);
+                try(var statement=other.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR KEY SHARE NOWAIT")){statement.setObject(1,member);assertTrue(statement.executeQuery().next());}other.rollback();
+                try(var statement=other.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE NOWAIT")){statement.setObject(1,member);assertEquals("55P03",assertThrows(java.sql.SQLException.class,statement::executeQuery).getSQLState());}other.rollback();
+                try(var statement=other.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR NO KEY UPDATE NOWAIT")){statement.setObject(1,member);assertEquals("55P03",assertThrows(java.sql.SQLException.class,statement::executeQuery).getSQLState());}other.rollback();
+            }catch(java.sql.SQLException e){throw new IllegalStateException(e);}
+        });
+    }
+    @Test void orderManualStockAdjustmentSerializesAndRechecksAvailability() throws Exception {
+        var fixture=browseFixture("c-manual-stock",10000,1);UUID owner=(UUID)fixture.get("owner"),sku=(UUID)fixture.get("sku");var product=(com.example.marketplace.catalog.api.Products.Product)fixture.get("product");var input=orderInput(owner,List.of(quoteLine(sku,1)),List.of(),"manual");
+        try(var pool=Executors.newSingleThreadExecutor()) {
+            var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<Boolean>>();
+            new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                context.getBean(com.example.marketplace.identity.api.SellerMembership.class).lockActiveBuyer(owner);
+                pending.set(pool.submit(()->{try{creation().create(UUID.randomUUID().toString(),owner,null,input);return true;}catch(RuntimeException denied){return false;}}));awaitCouponLock("identity_user");
+                context.getBean(com.example.marketplace.inventory.api.Inventory.class).adjust(owner,product.id(),sku,false,new com.example.marketplace.inventory.api.Inventory.Change(0L,0L,"concurrent reduction",UUID.randomUUID()));
+            });assertFalse(pending.get().get(10,TimeUnit.SECONDS));
+        }
+        assertEquals(0,jdbc.queryForObject("SELECT reserved FROM marketplace.inventory_balance WHERE sku_id=:id",Map.of("id",sku),Integer.class));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",owner),Integer.class));
+    }
+    @Test void orderHttpRechecksSessionAfterActualAccountWait() throws Exception {
+        for(boolean retry:List.of(false,true)) { for(String mode:List.of("logout","expired","password")) {
+            var d=orderDraft("c-session-"+mode+retry);var browser=authBrowser();String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",d.memberId()),String.class);
+            assertEquals(200,authRequest(browser,"/api/auth/login",loginForm(email," A1-private-passphrase-가나다 "),csrfToken(browser)).statusCode());
+            String csrf=csrfToken(browser);var input=creationInput(d);var request=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/orders")).header("Content-Type","application/json").header("X-CSRF-TOKEN",csrf).POST(HttpRequest.BodyPublishers.ofString(authMapper.writeValueAsString(input))).build();
+            var recovery=context.getBean(com.example.marketplace.identity.api.PasswordRecoveryOperations.class);String token=null;
+            if(mode.equals("password")) {recovery.request(email);token=context.getBean(LocalPasswordResetMailbox.class).messages().stream().filter(message->message.recipient().equals(email)).findFirst().orElseThrow().token();}
+            String recoveryToken=token;
+            if(retry) { assertEquals(200,browser.send(request,HttpResponse.BodyHandlers.ofString()).statusCode()); }
+            var participants=orderParticipantState();
+            try(var pool=Executors.newSingleThreadExecutor()) {
+                var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<HttpResponse<String>>>();
+                new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+                    jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE id=:id FOR UPDATE",Map.of("id",d.memberId()),UUID.class);
+                    pending.set(pool.submit(()->browser.send(request,HttpResponse.BodyHandlers.ofString())));awaitCouponLock("identity_user");
+                    if(mode.equals("password")){recovery.reset(recoveryToken,"replacement session password");}
+                    else if(mode.equals("expired")){jdbc.update("UPDATE marketplace.spring_session SET expiry_time=0 WHERE principal_name=:id",Map.of("id",d.memberId().toString()));}
+                    else {try{assertEquals(200,authRequest(browser,"/api/auth/logout","",csrf).statusCode());}catch(Exception e){throw new IllegalStateException(e);}}
+                });
+                assertEquals(401,pending.get().get(15,TimeUnit.SECONDS).statusCode(),mode);
+            }
+            assertEquals(retry?1:0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE member_id=:id",Map.of("id",d.memberId()),Integer.class),mode);
+            assertEquals(participants,orderParticipantState(),mode+" retry="+retry);
+        } }
+    }
+    @Test void jobWritesRecheckLeaseAfterRowLockWait() throws Exception {
+        for(String operation:List.of("heartbeat","complete","fail")) {
+            var clock=new JobClock();var jobs=jobs(clock);var type="wait-"+UUID.randomUUID();var id=jobs.enqueue(jobCommand(type,clock.instant()));var job=jobs.claim(java.util.Set.of(type)).orElseThrow();
+            try(var lock=context.getBean(DataSource.class).getConnection()) {
+                lock.setAutoCommit(false);try(var statement=lock.prepareStatement("SELECT id FROM marketplace.job WHERE id=? FOR UPDATE")) { statement.setObject(1,id);statement.executeQuery().close(); }
+                var pool=Executors.newSingleThreadExecutor();
+                try {
+                    var result=pool.submit(()->switch(operation) { case "heartbeat" -> jobs.heartbeat(id,job.ownerToken());case "complete" -> jobs.complete(id,job.ownerToken());default -> jobs.fail(id,job.ownerToken(),false,"WAITED"); });
+                    awaitJobCondition(()->jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%marketplace.job WHERE id=%'",Integer.class)>0,"owner write must actually wait for row lock");
+                    clock.advance(30);lock.commit();assertFalse(result.get(10,TimeUnit.SECONDS));assertEquals("RUNNING",jobs.find(id).orElseThrow().status());assertEquals(job.ownerToken(),jobs.find(id).orElseThrow().ownerToken());
+                } finally { lock.rollback();pool.shutdownNow(); }
+            }
+        }
+    }
+    @Test void workerHeartbeatProtectsLongHandler() throws Exception {
+        var clock=new JobClock();var jobs=jobs(clock);String type="heartbeat-"+UUID.randomUUID();var id=jobs.enqueue(jobCommand(type,clock.instant()));var entered=new CountDownLatch(1);var release=new CountDownLatch(1);
+        var handler=new com.example.marketplace.platform.api.JobHandler() {
+            public String type() { return type; }
+            public Result handle(com.example.marketplace.platform.api.Jobs.Job job) throws Exception { entered.countDown();if(!release.await(25,TimeUnit.SECONDS)) { throw new IllegalStateException("test release absent"); }return Result.COMPLETE; }
+        };
+        try(var worker=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,List.of(handler))) {
+            worker.start();try {
+                assertTrue(entered.await(5,TimeUnit.SECONDS));clock.advance(15);
+                awaitJobCondition(()->jobs.find(id).orElseThrow().leaseUntil().equals(clock.instant().plusSeconds(30)),"independent heartbeat must renew during handler");
+                clock.advance(16);assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());release.countDown();awaitJobCondition(()->jobs.find(id).orElseThrow().status().equals("SUCCEEDED"),"long handler should complete with renewed lease");
+            } finally { release.countDown(); }
+        }
+    }
+    @Test void outboxConcurrentDedupeAndAtomicInsertFailure() throws Exception {
+        var clock=new JobClock();var jobs=jobs(clock);var outbox=new com.example.marketplace.platform.infrastructure.JdbcOutbox(jdbc,transactionManager,jobs);var command=jobCommand("dedupe",clock.instant());var event=new com.example.marketplace.platform.api.Outbox.Event(UUID.randomUUID(),command);var barrier=new java.util.concurrent.CyclicBarrier(2);
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var futures=List.of(0,1).stream().map(index->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);return outbox.append(event);})).toList();assertEquals(futures.get(0).get(10,TimeUnit.SECONDS),futures.get(1).get(10,TimeUnit.SECONDS));
+        }
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",command.dedupeKey()),Integer.class));assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.outbox_event WHERE id=:id",Map.of("id",event.id()),Integer.class));
+        var conflict=jobCommand("conflict",clock.instant());var changed=new com.example.marketplace.platform.api.Jobs.Command(conflict.type(),conflict.dedupeKey(),conflict.causeKey(),"different",conflict.nextRunAt());var simultaneous=new java.util.concurrent.CyclicBarrier(2);
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var futures=List.of(conflict,changed).stream().map(c->pool.submit(()->{simultaneous.await(10,TimeUnit.SECONDS);try { return jobs.enqueue(c); }catch(IllegalArgumentException rejected) { assertEquals("JOB_KEY_CONFLICT",rejected.getMessage());return null; }})).toList();
+            int winners=0;for(var future:futures) { if(future.get(10,TimeUnit.SECONDS)!=null) { winners++; } }assertEquals(1,winners);
+        }
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",conflict.dedupeKey()),Integer.class));
+        var invisible=new com.example.marketplace.platform.api.Outbox.Event(UUID.randomUUID(),jobCommand("visibility",clock.instant()));
+        new TransactionTemplate(transactionManager).executeWithoutResult(status->{
+            var id=outbox.append(invisible);
+            try(var other=context.getBean(DataSource.class).getConnection();var query=other.prepareStatement("SELECT count(*) FROM marketplace.job WHERE id=?")) { query.setObject(1,id);try(var rs=query.executeQuery()) { rs.next();assertEquals(0,rs.getInt(1)); } }catch(java.sql.SQLException ex) { throw new IllegalStateException(ex); }
+        });
+        var broken=new com.example.marketplace.platform.api.Outbox.Event(UUID.randomUUID(),jobCommand("injected",clock.instant()));
+        jdbc.getJdbcTemplate().execute("CREATE FUNCTION marketplace.reject_probe_outbox() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.id='"+broken.id()+"'::uuid THEN RAISE EXCEPTION 'test only insertion failure'; END IF; RETURN NEW; END $$");
+        jdbc.getJdbcTemplate().execute("CREATE TRIGGER probe_outbox_failure BEFORE INSERT ON marketplace.outbox_event FOR EACH ROW EXECUTE FUNCTION marketplace.reject_probe_outbox()");
+        assertThrows(org.springframework.dao.DataAccessException.class,()->outbox.append(broken));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",broken.command().dedupeKey()),Integer.class));
+        UUID id=jobs.enqueue(jobCommand("constraints",clock.instant()));
+        for(String update:List.of("attempts=6","status='RUNNING'","owner_token='"+UUID.randomUUID()+"'","status='UNKNOWN'")) { assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.job SET "+update+" WHERE id=:id",Map.of("id",id))); }
+    }
+    @Test void workerFailureResultsAreDurableAndSanitized() {
+        var clock=new JobClock();var jobs=jobs(clock);
+        for(String mode:List.of("RETRY","TERMINAL","EXCEPTION")) {
+            String type="result-"+UUID.randomUUID();var id=jobs.enqueue(jobCommand(type,clock.instant()));var handler=new com.example.marketplace.platform.api.JobHandler() {
+                public String type() { return type; }
+                public Result handle(com.example.marketplace.platform.api.Jobs.Job job) { if(mode.equals("EXCEPTION")) { throw new IllegalArgumentException("private provider credentials"); }return Result.valueOf(mode); }
+            };
+            try(var worker=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,List.of(handler))) { assertTrue(worker.runOnce());assertEquals(mode.equals("TERMINAL")?"FAILED":"READY",jobs.find(id).orElseThrow().status());assertEquals("HANDLER_"+mode,jobs.find(id).orElseThrow().lastError());assertFalse(worker.runOnce());assertThrows(IllegalStateException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(status->worker.runOnce())); }
+        }
+    }
+    private static Process workerProcess(java.nio.file.Path folder,String phase,Instant now,String type,UUID id,boolean block) throws Exception {
+        var args=folder.resolve(phase+".args");var marker=folder.resolve(phase+"-effect.txt");
+        String cp=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path")).replace('\\','/');
+        java.nio.file.Files.writeString(args,"-cp\n\""+cp+"\"\ncom.example.marketplace.dbtest.WorkerProcessProbe\n"+now+"\n"+type+"\n\""+marker.toString().replace('\\','/')+"\"\n"+block+"\n"+id+"\n");
+        var process=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"@"+args).redirectErrorStream(true).redirectOutput(folder.resolve(phase+".log").toFile()).start();
+        java.nio.file.Files.writeString(folder.resolve(phase+"-pid.txt"),Long.toString(process.pid()));return process;
+    }
+    private static void awaitJobCondition(java.util.function.BooleanSupplier condition,String message) throws Exception {
+        long end=System.nanoTime()+Duration.ofSeconds(30).toNanos();while(System.nanoTime()<end&&!condition.getAsBoolean()) { Thread.sleep(25); }assertTrue(condition.getAsBoolean(),message);
+    }
+    @Test void workerRestartKeepsDurableEffects() throws Exception {
+        var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getenv("A3_EVIDENCE")).resolve("worker-"+UUID.randomUUID()));
+        jdbc.getJdbcTemplate().execute("CREATE TABLE marketplace.worker_probe_effect(cause_key TEXT PRIMARY KEY,effects INTEGER NOT NULL)");
+        var clock=new JobClock();var jobs=jobs(clock);var type="process-"+UUID.randomUUID();var command=jobCommand(type,clock.instant());var id=jobs.enqueue(command);
+        Process first=workerProcess(folder,"first",clock.instant(),type,id,true);Process second=null;
+        try {
+            awaitJobCondition(()->java.nio.file.Files.exists(folder.resolve("first-effect.txt"))||!first.isAlive(),"owned worker never reached effect barrier");
+            assertTrue(java.nio.file.Files.exists(folder.resolve("first-effect.txt")),"child must commit effect before kill; inspect preserved first.log");
+            assertEquals(1,jdbc.queryForObject("SELECT effects FROM marketplace.worker_probe_effect WHERE cause_key=:key",Map.of("key",command.causeKey()),Integer.class));
+            assertEquals("RUNNING",jobs.find(id).orElseThrow().status());assertEquals(1,jobs.find(id).orElseThrow().attempts());
+            first.destroyForcibly();assertTrue(first.waitFor(10,TimeUnit.SECONDS));assertFalse(first.isAlive());clock.advance(31);
+            second=workerProcess(folder,"second",clock.instant(),type,id,false);assertThat(second.pid()).isNotEqualTo(first.pid());assertTrue(second.waitFor(40,TimeUnit.SECONDS));assertEquals(0,second.exitValue(),"inspect preserved second.log");
+            assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());assertEquals(2,jobs.find(id).orElseThrow().attempts());assertEquals(1,jdbc.queryForObject("SELECT effects FROM marketplace.worker_probe_effect WHERE cause_key=:key",Map.of("key",command.causeKey()),Integer.class));assertTrue(java.nio.file.Files.readString(folder.resolve("completed.txt")).contains("nonweb=true"));
+        } finally { if(first.isAlive()) { first.destroyForcibly();first.waitFor(10,TimeUnit.SECONDS); }if(second!=null&&second.isAlive()) { second.destroyForcibly();second.waitFor(10,TimeUnit.SECONDS); } }
+    }
+    @Test void workerDispatchesOutsideTransactionsAndRejectsDuplicateTypes() {
+        var clock=new JobClock();var jobs=jobs(clock);var type="dispatch-"+UUID.randomUUID();var id=jobs.enqueue(jobCommand(type,clock.instant()));var calls=new java.util.concurrent.atomic.AtomicInteger();
+        var handler=new com.example.marketplace.platform.api.JobHandler() {
+            public String type() { return type; }
+            public Result handle(com.example.marketplace.platform.api.Jobs.Job job) {
+                assertFalse(org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive());assertEquals("RUNNING",jobs.find(id).orElseThrow().status());assertEquals(id,job.id());assertEquals(1,calls.incrementAndGet());return Result.COMPLETE;
+            }
+        };
+        try(var worker=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,List.of(handler))) { assertTrue(worker.runOnce());assertFalse(worker.runOnce()); }
+        assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());assertEquals(1,calls.get());
+        assertThrows(IllegalArgumentException.class,()->new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,List.of(handler,handler)));
+        assertTrue(context.getBeansOfType(com.example.marketplace.platform.infrastructure.WorkerEngine.class).isEmpty());assertEquals(java.util.Set.of("ORDER_EXPIRY","PAYMENT_QUERY","PAYMENT_COMPENSATE","PAYMENT_SETTLED","FULFILLMENT_PREPARE","FULFILLMENT_BACKFILL","SHIPMENT_CREATED","SHIPMENT_PROGRESS"),context.getBeansOfType(com.example.marketplace.platform.api.JobHandler.class).values().stream().map(com.example.marketplace.platform.api.JobHandler::type).collect(java.util.stream.Collectors.toSet()));
+    }
+    static final class JobClock extends Clock {
+        private volatile Instant now=Instant.parse("2030-01-01T00:00:00Z");
+        void advance(long seconds) { now=now.plusSeconds(seconds); }
+        @Override public java.time.ZoneId getZone() { return ZoneOffset.UTC; }
+        @Override public Clock withZone(java.time.ZoneId zone) { return this; }
+        @Override public Instant instant() { return now; }
+    }
+    private com.example.marketplace.platform.infrastructure.JdbcJobs jobs(Clock clock) { return new com.example.marketplace.platform.infrastructure.JdbcJobs(jdbc,transactionManager,clock); }
+    private com.example.marketplace.platform.api.Jobs.Command jobCommand(String type,Instant due) { return new com.example.marketplace.platform.api.Jobs.Command(type,UUID.randomUUID().toString(),UUID.randomUUID().toString(),"{}",due); }
+    @Test void outboxJoinsBusinessTransaction() {
+        var clock=new JobClock();var jobs=jobs(clock);var outbox=new com.example.marketplace.platform.infrastructure.JdbcOutbox(jdbc,transactionManager,jobs);
+        var event=new com.example.marketplace.platform.api.Outbox.Event(UUID.randomUUID(),jobCommand("transaction",clock.instant()));
+        UUID id=outbox.append(event);assertThat(id).isNotNull();assertEquals(id,outbox.append(event));assertEquals(id,jobs.enqueue(event.command()));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE id=:id",Map.of("id",id),Integer.class));
+        var other=new com.example.marketplace.platform.api.Jobs.Command("changed",event.command().dedupeKey(),event.command().causeKey(),"{}",clock.instant());
+        assertThrows(IllegalArgumentException.class,()->jobs.enqueue(other));
+        assertThrows(IllegalArgumentException.class,()->outbox.append(new com.example.marketplace.platform.api.Outbox.Event(event.id(),jobCommand("different",clock.instant()))));
+        var rollback=new com.example.marketplace.platform.api.Outbox.Event(UUID.randomUUID(),jobCommand("rollback",clock.instant()));var draft=orderDraft("outbox-rollback");
+        assertThrows(IllegalStateException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(status->{orders().save(draft);outbox.append(rollback);throw new IllegalStateException("rollback");}));
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.outbox_event WHERE id=:id",Map.of("id",rollback.id()),Integer.class));
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",rollback.command().dedupeKey()),Integer.class));
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",draft.purchaseSessionId()),Integer.class));
+        new TransactionTemplate(transactionManager).executeWithoutResult(status->{orders().save(draft);outbox.append(rollback);});
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.outbox_event WHERE id=:id",Map.of("id",rollback.id()),Integer.class));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.job WHERE dedupe_key=:key",Map.of("key",rollback.command().dedupeKey()),Integer.class));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",draft.purchaseSessionId()),Integer.class));
+    }
+    @Test void jobLeaseFencesStaleWorkers() throws Exception {
+        var clock=new JobClock();String type="lease-"+UUID.randomUUID();var first=jobs(clock);var second=jobs(clock);UUID id=first.enqueue(jobCommand(type,clock.instant()));assertThat(id).isNotNull();var barrier=new java.util.concurrent.CyclicBarrier(2);
+        com.example.marketplace.platform.api.Jobs.Job acquired;
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var futures=List.of(first,second).stream().map(api->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);return api.claim(java.util.Set.of(type));})).toList();
+            var results=List.of(futures.get(0).get(10,TimeUnit.SECONDS),futures.get(1).get(10,TimeUnit.SECONDS));assertEquals(1,results.stream().filter(java.util.Optional::isPresent).count());acquired=results.stream().flatMap(java.util.Optional::stream).findFirst().orElseThrow();
+        }
+        assertEquals(1,acquired.attempts());clock.advance(29);assertTrue(second.claim(java.util.Set.of(type)).isEmpty());assertTrue(first.heartbeat(id,acquired.ownerToken()));assertEquals(clock.instant().plusSeconds(30),first.find(id).orElseThrow().leaseUntil());
+        clock.advance(29);assertTrue(second.claim(java.util.Set.of(type)).isEmpty());clock.advance(1);assertFalse(first.heartbeat(id,acquired.ownerToken()));assertFalse(first.complete(id,acquired.ownerToken()));assertFalse(first.fail(id,acquired.ownerToken(),true,"STALE"));
+        var replacement=second.claim(java.util.Set.of(type)).orElseThrow();assertThat(replacement.ownerToken()).isNotEqualTo(acquired.ownerToken());assertEquals(2,replacement.attempts());
+        assertFalse(first.complete(id,acquired.ownerToken()));assertFalse(first.heartbeat(id,acquired.ownerToken()));assertFalse(first.fail(id,acquired.ownerToken(),true,"STALE"));assertTrue(second.complete(id,replacement.ownerToken()));assertEquals("SUCCEEDED",second.find(id).orElseThrow().status());assertFalse(second.complete(id,replacement.ownerToken()));
+    }
+    @Test void jobRetryAndDueBoundaries() {
+        var clock=new JobClock();var jobs=jobs(clock);String type="retry-"+UUID.randomUUID();var id=jobs.enqueue(jobCommand(type,clock.instant().plusSeconds(1)));assertThat(id).isNotNull();assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());clock.advance(1);assertTrue(jobs.claim(java.util.Set.of("unsupported")).isEmpty());
+        long[] delays={5,15,60,300};for(int attempt=1;attempt<=5;attempt++) {
+            var job=jobs.claim(java.util.Set.of(type)).orElseThrow();assertEquals(attempt,job.attempts());assertTrue(jobs.fail(id,job.ownerToken(),false,"TRANSIENT"));
+            if(attempt<5) { assertEquals(clock.instant().plusSeconds(delays[attempt-1]),jobs.find(id).orElseThrow().nextRunAt());clock.advance(delays[attempt-1]-1);assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());clock.advance(1); }
+        }
+        assertEquals("FAILED",jobs.find(id).orElseThrow().status());assertTrue(jobs.failed(100).stream().anyMatch(j->j.id().equals(id)&&j.attempts()==5&&"TRANSIENT".equals(j.lastError())));clock.advance(10000);assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());
+        var permanent=jobs.enqueue(jobCommand(type,clock.instant()));var p=jobs.claim(java.util.Set.of(type)).orElseThrow();assertTrue(jobs.fail(permanent,p.ownerToken(),true,"INVALID"));assertEquals(1,jobs.find(permanent).orElseThrow().attempts());
+        var crashes=jobs.enqueue(jobCommand(type,clock.instant()));for(int attempt=1;attempt<=5;attempt++) { assertEquals(attempt,jobs.claim(java.util.Set.of(type)).orElseThrow().attempts());clock.advance(30); }
+        assertTrue(jobs.claim(java.util.Set.of(type)).isEmpty());assertEquals("FAILED",jobs.find(crashes).orElseThrow().status());assertEquals("LEASE_EXPIRED",jobs.find(crashes).orElseThrow().lastError());
+    }
+
+    @Test void couponBatchConcurrentIdenticalInsertsRespectAllUniqueKeys() throws Exception {
+        for(int round=0;round<8;round++) {
+            var request=reservationRequest("all-unique-"+round);var barrier=new java.util.concurrent.CyclicBarrier(2);
+            try(var pool=Executors.newFixedThreadPool(2)) {
+                var futures=List.of(0,1).stream().map(index->pool.submit(()->{barrier.await(10,TimeUnit.SECONDS);return couponReservations().reserve(List.of(request));})).toList();
+                var first=futures.get(0).get(15,TimeUnit.SECONDS);assertEquals(first,futures.get(1).get(15,TimeUnit.SECONDS));assertEquals("RESERVED",first.getFirst().state());
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.coupon_reservation_batch WHERE checkout_id=:id",Map.of("id",request.checkoutId()),Integer.class));
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.coupon_reservation_event WHERE reservation_id=:id",Map.of("id",request.reservationId()),Integer.class));
+            }
+        }
+    }
+    private com.example.marketplace.order.api.Orders orders() { return context.getBean(com.example.marketplace.order.api.Orders.class); }
+    private com.example.marketplace.order.api.Orders.Draft orderDraft(String suffix) {
+        var r=reservationRequest("order-"+suffix);var now=Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+        return new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),"key","b".repeat(64),r.memberId(),null,null,"DEMO",r.quoteSnapshot(),new com.example.marketplace.order.api.Orders.Contact("구매자","01012345678","수령인","01087654321","01234","서울시 테스트로","101호"),now,now.plusSeconds(600));
+    }
+    @Test void orderSnapshotsSurviveSourceChanges() {
+        var original=orderDraft("snapshot");UUID productId=original.quote().stores().getFirst().lines().getFirst().productId();
+        var promo=promotions().save(original.memberId(),null,promotionInput(productId,"DRAFT",0));promotions().save(original.memberId(),promo.id(),promotionInput(productId,"ACTIVE",0));
+        var quote=quotes().calculate(original.memberId(),List.of(quoteLine(original.quote().stores().getFirst().lines().getFirst().skuId(),1)),List.of(new com.example.marketplace.promotion.api.Quotes.CouponSelection(original.quote().stores().getFirst().storeId(),original.quote().stores().getFirst().coupon().id())));
+        var draft=new com.example.marketplace.order.api.Orders.Draft(original.purchaseSessionId(),original.requestKey(),original.requestHash(),original.memberId(),null,null,original.mode(),quote,original.contact(),original.createdAt(),original.expiresAt());
+        var saved=orders().save(draft);assertThat(saved).isNotNull();
+        assertEquals(draft.quote(),saved.quote());assertEquals(draft.contact(),saved.contact());
+        var line=draft.quote().stores().getFirst().lines().getFirst();var coupon=draft.quote().stores().getFirst().coupon();
+        assertThat(line.promotion()).isNotNull();promotions().save(draft.memberId(),promo.id(),promotionInput(productId,"STOPPED",1));
+        jdbc.update("UPDATE marketplace.catalog_product SET title='나중에 수정',is_hidden_by_admin=true WHERE id=:id",Map.of("id",line.productId()));
+        jdbc.update("UPDATE marketplace.catalog_sku SET price=123 WHERE id=:id",Map.of("id",line.skuId()));
+        jdbc.update("UPDATE marketplace.issued_coupon SET title='수정된 쿠폰' WHERE id=:id",Map.of("id",coupon.id()));
+        assertEquals(saved,orders().find(saved.orderNumber()));
+        assertEquals(saved.quote().total(),jdbc.queryForObject("SELECT sum(total) FROM marketplace.seller_order WHERE order_id=:id",Map.of("id",saved.id()),Long.class));
+        assertEquals(line.net(),jdbc.queryForObject("SELECT sum(u.net) FROM marketplace.order_unit u JOIN marketplace.order_item i ON i.id=u.item_id WHERE i.order_id=:id",Map.of("id",saved.id()),Long.class));
+        var failed=orderDraft("rollback");
+        assertThrows(IllegalStateException.class,()->new TransactionTemplate(transactionManager).executeWithoutResult(s->{orders().save(failed);throw new IllegalStateException("caller");}));
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",failed.purchaseSessionId()),Integer.class));
+    }
+    @Test void checkoutAttemptsAndOrderNumbersAreDistinct() {
+        var d=orderDraft("attempt");var first=orders().save(d);assertThat(first).isNotNull();assertEquals(first,orders().save(d));
+        var other=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),"second",d.requestHash(),d.memberId(),null,null,"SANDBOX",d.quote(),d.contact(),d.createdAt(),d.expiresAt());
+        var second=orders().save(other);assertThat(second.checkoutId()).isNotEqualTo(first.checkoutId());assertThat(second.orderNumber()).isNotEqualTo(first.orderNumber());
+        assertEquals("DEMO",orders().find(first.orderNumber()).mode());assertEquals("SANDBOX",orders().find(second.orderNumber()).mode());
+        var changed=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),"c".repeat(64),d.memberId(),null,null,d.mode(),d.quote(),d.contact(),d.createdAt(),d.expiresAt());
+        assertThrows(RuntimeException.class,()->orders().save(changed));
+        for(String mode:List.of("LIVE","")) { assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET mode=:mode WHERE id=:id",Map.of("mode",mode,"id",first.id()))); }
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET mode=NULL WHERE id=:id",Map.of("id",first.id())));
+        assertEquals(first,orders().find(first.orderNumber()));
+    }
+    @Test void orderNumberCollisionsRetryWithoutOrphans() {
+        var d=orderDraft("collision");var first=orders().save(d);UUID collision=UUID.fromString(first.orderNumber().substring(1).replaceFirst("(.{8})(.{4})(.{4})(.{4})(.{12})","$1-$2-$3-$4-$5"));
+        var sequence=new java.util.concurrent.atomic.AtomicInteger();var api=new com.example.marketplace.order.infrastructure.JdbcOrders(jdbc,authMapper,transactionManager,()->sequence.getAndIncrement()==0?collision:UUID.randomUUID());
+        var another=orderDraft("collision-second");var second=api.save(another);assertEquals(2,sequence.get());assertThat(second.orderNumber()).isNotEqualTo(first.orderNumber());assertEquals(second,api.find(second.orderNumber()));
+        var stuck=new com.example.marketplace.order.infrastructure.JdbcOrders(jdbc,authMapper,transactionManager,()->collision);var rejected=orderDraft("collision-exhausted");
+        assertThrows(IllegalStateException.class,()->stuck.save(rejected));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",rejected.purchaseSessionId()),Integer.class));
+    }
+    @Test void orderDeadlineAndMalformedSnapshotsLeaveNoRows() {
+        var d=orderDraft("invalid");
+        for(Instant expires:List.of(d.createdAt(),d.createdAt().minusSeconds(1),d.createdAt().plusSeconds(901),d.createdAt().plusNanos(1))) {
+            var bad=new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),d.quote(),d.contact(),d.createdAt(),expires);
+            assertThrows(IllegalArgumentException.class,()->orders().save(bad));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",bad.purchaseSessionId()),Integer.class));
+        }
+        var q=d.quote();var altered=new com.example.marketplace.promotion.api.Quotes.Quote(q.memberId(),q.policyVersion(),q.evaluatedAt(),q.stores(),q.total()+1,q.fingerprint());
+        var bad=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),altered,d.contact(),d.createdAt(),d.expiresAt());
+        assertThrows(IllegalArgumentException.class,()->orders().save(bad));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",bad.purchaseSessionId()),Integer.class));
+        var atLimit=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),q,d.contact(),d.createdAt(),d.createdAt().plusSeconds(900));
+        assertEquals(atLimit.expiresAt(),orders().save(atLimit).expiresAt());
+        var couponEnd=q.stores().getFirst().coupon().terms().endsAt();var created=couponEnd.minusSeconds(600);
+        var boundary=new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),q,d.contact(),created,couponEnd);
+        assertEquals(couponEnd,orders().save(boundary).expiresAt());
+        var over=new com.example.marketplace.order.api.Orders.Draft(UUID.randomUUID(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),q,d.contact(),created,couponEnd.plusNanos(1000));
+        assertThrows(IllegalArgumentException.class,()->orders().save(over));
+    }
+    @Test void orderMultiStoreUnitsAndDatabaseBoundaries() {
+        var d=orderDraft("multi");var a=d.quote().stores().getFirst().lines().getFirst();var other=browseFixture("order-other",101,20);
+        var extra=browseFixture("order-extra",203,20);UUID extraProduct=((com.example.marketplace.catalog.api.Products.Product)extra.get("product")).id();
+        jdbc.update("UPDATE marketplace.catalog_product SET store_id=:store WHERE id=:id",Map.of("store",d.quote().stores().getFirst().storeId(),"id",extraProduct));
+        var productPromo=promotions().save(d.memberId(),null,promotionInput(a.productId(),"DRAFT",0));promotions().save(d.memberId(),productPromo.id(),promotionInput(a.productId(),"ACTIVE",0));
+        var shippingInput=new com.example.marketplace.promotion.api.Promotions.Input("배송 700원 할인","SHIPPING",List.of(),d.createdAt().minusSeconds(60),d.createdAt().plusSeconds(3600),"FIXED",700L,null,"DRAFT",0L);
+        var shippingPromo=promotions().save(d.memberId(),null,shippingInput);promotions().save(d.memberId(),shippingPromo.id(),new com.example.marketplace.promotion.api.Promotions.Input(shippingInput.title(),shippingInput.scope(),shippingInput.productIds(),shippingInput.startsAt(),shippingInput.endsAt(),shippingInput.kind(),shippingInput.value(),shippingInput.cap(),"ACTIVE",0L));
+        var q=quotes().calculate(d.memberId(),List.of(quoteLine(a.skuId(),3),quoteLine((UUID)other.get("sku"),3),quoteLine((UUID)extra.get("sku"),2)),List.of(new com.example.marketplace.promotion.api.Quotes.CouponSelection(d.quote().stores().getFirst().storeId(),d.quote().stores().getFirst().coupon().id())));
+        var draft=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),d.requestHash(),d.memberId(),null,null,d.mode(),q,d.contact(),d.createdAt(),d.expiresAt());
+        var saved=orders().save(draft);assertEquals(q,saved.quote());assertEquals(2,saved.sellers().size());
+        assertEquals(q.total(),jdbc.queryForObject("SELECT amount FROM marketplace.purchase_order WHERE id=:id",Map.of("id",saved.id()),Long.class));
+        var discounted=q.stores().stream().filter(s->s.coupon()!=null).findFirst().orElseThrow();assertTrue(discounted.productDiscount()>0);assertTrue(discounted.couponDiscount()>0);assertEquals(3000,discounted.shippingBase());assertEquals(700,discounted.shippingDiscount());
+        assertEquals(8,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_unit u JOIN marketplace.order_item i ON i.id=u.item_id WHERE i.order_id=:id",Map.of("id",saved.id()),Integer.class));
+        for(var store:q.stores()) {
+            UUID seller=saved.sellers().stream().filter(s->s.storeId().equals(store.storeId())).findFirst().orElseThrow().id();
+            assertEquals(store.total(),jdbc.queryForObject("SELECT total FROM marketplace.seller_order WHERE id=:id",Map.of("id",seller),Long.class));
+            assertEquals(List.of(store.subtotal(),store.productDiscount(),store.couponDiscount(),store.shippingBase(),store.shippingDiscount(),store.total()),jdbc.queryForObject("SELECT subtotal,product_discount,coupon_discount,shipping_base,shipping_discount,total FROM marketplace.seller_order WHERE id=:id",Map.of("id",seller),(rs,n)->List.of(rs.getLong(1),rs.getLong(2),rs.getLong(3),rs.getLong(4),rs.getLong(5),rs.getLong(6))));
+            for(var line:store.lines()) {
+                assertEquals(List.of(line.unitPrice(),line.gross(),line.promotionDiscount(),line.couponDiscount(),line.net()),jdbc.queryForObject("SELECT unit_price,gross,promotion_discount,coupon_discount,net FROM marketplace.order_item WHERE seller_order_id=:seller AND sku_id=:sku",Map.of("seller",seller,"sku",line.skuId()),(rs,n)->List.of(rs.getLong(1),rs.getLong(2),rs.getLong(3),rs.getLong(4),rs.getLong(5))));
+                assertEquals(line,authMapper.readValue(jdbc.queryForObject("SELECT line_snapshot::text FROM marketplace.order_item WHERE seller_order_id=:seller AND sku_id=:sku",Map.of("seller",seller,"sku",line.skuId()),String.class),com.example.marketplace.promotion.api.Quotes.Line.class));
+                var actual=jdbc.query("SELECT u.ordinal,u.gross,u.promotion_discount,u.coupon_discount,u.net FROM marketplace.order_unit u JOIN marketplace.order_item i ON i.id=u.item_id WHERE i.seller_order_id=:seller AND i.sku_id=:sku ORDER BY u.ordinal",Map.of("seller",seller,"sku",line.skuId()),(rs,n)->new com.example.marketplace.promotion.api.Quotes.Unit(rs.getInt(1),rs.getLong(2),rs.getLong(3),rs.getLong(4),rs.getLong(5)));
+                assertEquals(line.units(),actual);
+            }
+        }
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET member_id=NULL WHERE id=:id",Map.of("id",saved.id())));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET amount=-1 WHERE id=:id",Map.of("id",saved.id())));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET state='SHIPPED' WHERE id=:id",Map.of("id",saved.id())));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.seller_order SET store_id=:store WHERE order_id=:id",Map.of("id",saved.id(),"store",q.stores().getFirst().storeId())));
+        assertEquals(saved,orders().find(saved.orderNumber()));
+    }
+    @Test void orderConcurrentKeysHaveOneDurableResult() throws Exception {
+        for(boolean conflict:List.of(false,true)) {
+            var d=orderDraft("concurrent-"+conflict);var other=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),conflict?"d".repeat(64):d.requestHash(),d.memberId(),null,null,d.mode(),d.quote(),d.contact(),d.createdAt(),d.expiresAt());
+            var barrier=new java.util.concurrent.CyclicBarrier(2);
+            try(var pool=Executors.newFixedThreadPool(2)) {
+                var futures=List.of(d,other).stream().map(draft->pool.submit(()->{
+                    try { return new TransactionTemplate(transactionManager).execute(status->{try { barrier.await(10,TimeUnit.SECONDS); } catch(Exception ex) { throw new IllegalStateException(ex); } return orders().save(draft);}); }
+                    catch(IllegalArgumentException ex) { assertEquals("ORDER_REQUEST_CONFLICT",ex.getMessage());return null; }
+                })).toList();
+                var results=new java.util.ArrayList<com.example.marketplace.order.api.Orders.Snapshot>();for(var future:futures) { var result=future.get(15,TimeUnit.SECONDS);if(result!=null) { results.add(result); } }
+                assertEquals(conflict?1:2,results.size());if(!conflict) { assertEquals(results.get(0),results.get(1)); }
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",d.purchaseSessionId()),Integer.class));
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE checkout_id=:id",Map.of("id",results.getFirst().checkoutId()),Integer.class));
+                assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_contact WHERE order_id=:id",Map.of("id",results.getFirst().id()),Integer.class));
+            }
+        }
+    }
+    @Test void orderGuestAttemptBindingSurvivesCheckoutRestart() throws Exception {
+        var d=orderDraft("guest");UUID checkout=UUID.randomUUID(),attempt=UUID.randomUUID(),buyer=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.guest_checkout(id,token_hash,browser_hash,purpose,expires_at,state,created_at) VALUES(:id,:token,:browser,'PURCHASE',clock_timestamp()+interval '30 minutes','VERIFIED',clock_timestamp())",Map.of("id",checkout,"token",UUID.randomUUID().toString(),"browser",UUID.randomUUID().toString()));
+        jdbc.update("INSERT INTO marketplace.guest_attempt(id,checkout_id,buyer_name,phone,purpose,state,issued_at,expires_at) VALUES(:id,:checkout,'가상 구매자','01012345678','PURCHASE','VERIFIED',clock_timestamp(),clock_timestamp()+interval '3 minutes')",Map.of("id",attempt,"checkout",checkout));
+        jdbc.update("UPDATE marketplace.guest_checkout SET current_attempt=:attempt WHERE id=:id",Map.of("id",checkout,"attempt",attempt));
+        jdbc.update("INSERT INTO marketplace.guest_buyer(id,buyer_name,verified_phone,password_hash,created_at) VALUES(:id,'가상 구매자','01012345678','{argon2id}test-fixture',clock_timestamp())",Map.of("id",buyer));
+        var q=quotes().calculate(null,List.of(quoteLine(d.quote().stores().getFirst().lines().getFirst().skuId(),2)),List.of());
+        var guest=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),d.requestKey(),d.requestHash(),null,buyer,attempt,d.mode(),q,d.contact(),d.createdAt(),d.expiresAt());
+        com.example.marketplace.order.api.Orders.Snapshot saved;
+        var start=new java.util.concurrent.CyclicBarrier(2);
+        try(var pool=Executors.newFixedThreadPool(2)) {
+            var futures=List.of(0,1).stream().map(index->pool.submit(()->new TransactionTemplate(transactionManager).execute(status->{try { start.await(10,TimeUnit.SECONDS); } catch(Exception ex) { throw new IllegalStateException(ex); } return orders().save(guest); }))).toList();
+            saved=futures.get(0).get(15,TimeUnit.SECONDS);assertEquals(saved,futures.get(1).get(15,TimeUnit.SECONDS));
+        }
+        assertEquals(buyer,saved.guestBuyerId());assertNull(saved.memberId());
+        jdbc.update("UPDATE marketplace.guest_checkout SET current_attempt=NULL,state='OPEN' WHERE id=:id",Map.of("id",checkout));
+        assertEquals(saved,orders().save(guest));assertEquals(attempt,jdbc.queryForObject("SELECT guest_attempt_id FROM marketplace.order_checkout_attempt WHERE id=:id",Map.of("id",saved.checkoutId()),UUID.class));
+        var reused=new com.example.marketplace.order.api.Orders.Draft(d.purchaseSessionId(),"another-key",d.requestHash(),null,buyer,attempt,d.mode(),q,d.contact(),d.createdAt(),d.expiresAt());
+        assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->orders().save(reused)).status());
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE guest_attempt_id=:id",Map.of("id",attempt),Integer.class));
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("UPDATE marketplace.purchase_order SET member_id=:member WHERE id=:id",Map.of("member",d.memberId(),"id",saved.id())));
+        assertEquals(saved,orders().find(saved.orderNumber()));
+    }
+    @Test void orderOwnerAndAttemptConstraints() {
+        assertThat(jdbc.getJdbcTemplate().queryForObject("SELECT to_regclass('marketplace.purchase_order')::text",String.class)).isNotNull();
+        UUID member=activeMember("p08-owner@example.com"),session=UUID.randomUUID();
+        UUID attempt=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.order_checkout_attempt(id,purchase_session_id,request_key,request_hash,created_at,expires_at) VALUES(:id,:session,'first',:hash,clock_timestamp(),clock_timestamp()+interval '10 minutes')",Map.of("id",attempt,"session",session,"hash","a".repeat(64)));
+        for(String mode:List.of("DEMO","SANDBOX")) {
+            UUID id=UUID.randomUUID();
+            assertThrows(DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.purchase_order(id,checkout_id,order_number,mode,state,amount,policy_version,quote_snapshot,created_at,expires_at) VALUES(:id,:checkout,:number,:mode,'PENDING_PAYMENT',0,'p08','{}',clock_timestamp(),clock_timestamp()+interval '10 minutes')",Map.of("id",id,"checkout",attempt,"number",UUID.randomUUID().toString(),"mode",mode)));
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.purchase_order WHERE id=:id",Map.of("id",id),Integer.class));
+        }
+        assertThrows(DataIntegrityViolationException.class,()->jdbc.update("INSERT INTO marketplace.order_checkout_attempt(id,purchase_session_id,request_key,request_hash,created_at,expires_at) VALUES(:id,:session,'first',:hash,clock_timestamp(),clock_timestamp()+interval '10 minutes')",Map.of("id",UUID.randomUUID(),"session",session,"hash","a".repeat(64))));
+        assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_checkout_attempt WHERE purchase_session_id=:id",Map.of("id",session),Integer.class));
+        assertThat(member).isNotNull();
+    }
     @Test void couponBatchInsertPreservesCrossSellerLockOrder() throws Exception {couponBatchInsertLockOrder(true);}
     @Test void couponBatchInsertPreservesSameBuyerLockOrder() throws Exception {couponBatchInsertLockOrder(false);}
     private void couponBatchInsertLockOrder(boolean cross) throws Exception {
@@ -94,7 +1321,7 @@ class PostgresJdbcIT {
     }
     @Test void couponBatchMigrationPreservesPriorDataAndRejectsConflicts(){
         var a=reservationRequest("upgrade-a");var b=reservationRequest("upgrade-b");couponReservations().reserve(List.of(a));couponReservations().reserve(List.of(b));var ds=context.getBean(DataSource.class);var before=reservationState();
-        for(boolean conflict:List.of(false,true)){String schema=conflict?"p07_d_conflict":"p07_d_upgrade";Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").target("28").cleanDisabled(true).load().migrate();for(String table:List.of("identity_user","seller_store","coupon_template","issued_coupon","coupon_reservation","coupon_reservation_event")){jdbc.getJdbcTemplate().execute("INSERT INTO "+schema+"."+table+" SELECT * FROM marketplace."+table);}if(conflict){jdbc.update("UPDATE "+schema+".coupon_reservation SET checkout_id=:checkout WHERE id=:id",Map.of("checkout",a.checkoutId(),"id",b.reservationId()));}var upgrade=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();if(conflict){assertThrows(org.flywaydb.core.api.FlywayException.class,upgrade::migrate);assertNull(jdbc.getJdbcTemplate().queryForObject("SELECT to_regclass('"+schema+".coupon_reservation_batch')",String.class));}else{assertEquals(2,upgrade.migrate().migrationsExecuted);assertEquals(0,upgrade.migrate().migrationsExecuted);assertEquals(0,jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM "+schema+".coupon_reservation r JOIN "+schema+".coupon_reservation_batch b ON b.checkout_id=r.checkout_id WHERE b.member_id<>r.member_id OR b.request_hash<>r.request_hash",Integer.class));assertEquals(jdbc.getJdbcTemplate().queryForObject("SELECT count(DISTINCT checkout_id) FROM "+schema+".coupon_reservation",Integer.class),jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM "+schema+".coupon_reservation_batch",Integer.class));}assertEquals(before,reservationState());}
+        for(boolean conflict:List.of(false,true)){String schema=conflict?"p07_d_conflict":"p07_d_upgrade";Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").target("28").cleanDisabled(true).load().migrate();for(String table:List.of("identity_user","seller_store","coupon_template","issued_coupon","coupon_reservation","coupon_reservation_event")){jdbc.getJdbcTemplate().execute("INSERT INTO "+schema+"."+table+" SELECT * FROM marketplace."+table);}if(conflict){jdbc.update("UPDATE "+schema+".coupon_reservation SET checkout_id=:checkout WHERE id=:id",Map.of("checkout",a.checkoutId(),"id",b.reservationId()));}var upgrade=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();if(conflict){assertThrows(org.flywaydb.core.api.FlywayException.class,upgrade::migrate);assertNull(jdbc.getJdbcTemplate().queryForObject("SELECT to_regclass('"+schema+".coupon_reservation_batch')",String.class));}else{assertEquals(8,upgrade.migrate().migrationsExecuted);assertEquals(0,upgrade.migrate().migrationsExecuted);assertEquals(0,jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM "+schema+".coupon_reservation r JOIN "+schema+".coupon_reservation_batch b ON b.checkout_id=r.checkout_id WHERE b.member_id<>r.member_id OR b.request_hash<>r.request_hash",Integer.class));assertEquals(jdbc.getJdbcTemplate().queryForObject("SELECT count(DISTINCT checkout_id) FROM "+schema+".coupon_reservation",Integer.class),jdbc.getJdbcTemplate().queryForObject("SELECT count(*) FROM "+schema+".coupon_reservation_batch",Integer.class));}assertEquals(before,reservationState());}
     }
     @Test void couponReservationRechecksDistinctBuyerSellerChanges() throws Exception {
         for(String mode:List.of("seller","hidden","store","role","price","promotion","coupon")){var original=reservationRequest("distinct-"+mode);UUID buyer=activeMember("reservation-distinct-"+mode+"@example.com");var c=coupons().claim(buyer,coupons().own(original.memberId(),original.issuedCouponId()).templateId());var line=original.quoteSnapshot().stores().getFirst().lines().getFirst();UUID promotion=null;
@@ -162,7 +1389,7 @@ class PostgresJdbcIT {
         var r=reservationRequest("same-retry");var start=new CountDownLatch(1);try(var pool=Executors.newFixedThreadPool(2)){var x=pool.submit(()->{start.await();return api.reserve(List.of(r));});var y=pool.submit(()->{start.await();return api.reserve(List.of(r));});start.countDown();assertEquals(x.get(10,TimeUnit.SECONDS),y.get(10,TimeUnit.SECONDS));}api.commit(r.checkoutId(),List.of(r.reservationId()));var restore=new CouponReservations.RestoreRequest(UUID.randomUUID(),r.sellerOrderRef(),r.reservationId(),new CouponReservations.RefundCompletion(true,true));var restoreGo=new CountDownLatch(1);try(var pool=Executors.newFixedThreadPool(2)){var x=pool.submit(()->{restoreGo.await();return api.restore(restore);});var y=pool.submit(()->{restoreGo.await();return api.restore(restore);});restoreGo.countDown();assertEquals(x.get(10,TimeUnit.SECONDS),y.get(10,TimeUnit.SECONDS));}assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.coupon_restoration WHERE reservation_id=:id",Map.of("id",r.reservationId()),Integer.class));
     }
     private CouponReservations reservationClock(Clock clock){return new com.example.marketplace.promotion.infrastructure.JdbcCouponReservations(jdbc,quotes(),coupons(),context.getBean(com.example.marketplace.identity.api.SellerMembership.class),context.getBean(com.example.marketplace.seller.api.Stores.class),authMapper,transactionManager,clock);}
-    private void awaitCouponLock(String table){long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :q)",Map.of("q","%"+table+"%FOR UPDATE%"),Boolean.class));if(waiting){break;}try{Thread.sleep(20);}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IllegalStateException(e);}}assertTrue(waiting,"actual lock wait on "+table);}
+    private void awaitCouponLock(String table){long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND (query LIKE :q OR query LIKE :q2))",Map.of("q","%"+table+"%FOR UPDATE%","q2","%"+table+"%FOR NO KEY UPDATE%"),Boolean.class));if(waiting){break;}try{Thread.sleep(20);}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IllegalStateException(e);}}assertTrue(waiting,"actual lock wait on "+table);}
     @Test void couponCommitReleaseAndExpiryRace() throws Exception {
         var api=couponReservations();var r=reservationRequest("race");api.reserve(List.of(r));var go=new CountDownLatch(1);var ids=List.of(r.reservationId());
         try(var pool=Executors.newFixedThreadPool(2)){var commit=pool.submit(()->{go.await();try{api.commit(r.checkoutId(),ids);return true;}catch(com.example.marketplace.promotion.api.PromotionRejected e){return false;}});var release=pool.submit(()->{go.await();try{api.release(r.checkoutId(),ids);return true;}catch(com.example.marketplace.promotion.api.PromotionRejected e){return false;}});go.countDown();assertTrue(commit.get(10,TimeUnit.SECONDS)^release.get(10,TimeUnit.SECONDS));}
@@ -366,7 +1593,7 @@ class PostgresJdbcIT {
                     jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE id=:id FOR UPDATE",Map.of("id",lock),UUID.class);locked.countDown();try{assertTrue(release.await(8,TimeUnit.SECONDS));}catch(InterruptedException ex){throw new IllegalStateException(ex);}
                     if(change.equals("time")){System.out.println("P07_CLOCK java="+Instant.now()+" database="+jdbc.queryForObject("SELECT clock_timestamp()",Map.of(),java.time.OffsetDateTime.class));jdbc.update("UPDATE marketplace.coupon_template SET issue_end=:end WHERE id=:id",Map.of("id",t.id(),"end",java.sql.Timestamp.from(Instant.now().minusSeconds(1))));}else{jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",lock));}return true;}));
                 assertTrue(locked.await(5,TimeUnit.SECONDS));var writer=pool.submit(()->assertThrows(RuntimeException.class,()->api.claim(buyer,t.id()),"wait scenario="+change));
-                try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%'",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
+                try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%')",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
                 holder.get(5,TimeUnit.SECONDS);writer.get(5,TimeUnit.SECONDS);assertEquals(0,jdbc.queryForObject("SELECT issued_count FROM marketplace.coupon_template WHERE id=:id",Map.of("id",t.id()),Long.class));
             }
         }
@@ -398,7 +1625,7 @@ class PostgresJdbcIT {
                 products.save(owner2,p2.id(),new com.example.marketplace.catalog.api.Products.Input(p2.categoryId(),p2.slug(),p2.title(),p2.description(),"ARCHIVED",p2.version()));
                 locked.countDown();try{assertTrue(release.await(8,TimeUnit.SECONDS));}catch(InterruptedException ex){throw new IllegalStateException(ex);}return true;}));
             assertTrue(locked.await(5,TimeUnit.SECONDS));var writer=pool.submit(()->api.save(owner2,mixed.id(),new com.example.marketplace.promotion.api.Promotions.Input("복합","PRODUCT",ids,start,end,"FIXED",10L,null,"STOPPED",1L)));
-            try{long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<deadline){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%'",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
+            try{long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<deadline){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%')",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
             holder.get(5,TimeUnit.SECONDS);var retired=writer.get(5,TimeUnit.SECONDS);assertEquals("STOPPED",retired.state());assertEquals(2,retired.version());assertEquals(new java.util.HashSet<>(ids),new java.util.HashSet<>(retired.productIds()));
         }
     }
@@ -467,7 +1694,7 @@ class PostgresJdbcIT {
             var holder=pool.submit(()->new TransactionTemplate(context.getBean(PlatformTransactionManager.class)).execute(status->{
                 jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE id=:id FOR UPDATE",Map.of("id",owner),UUID.class);locked.countDown();try{assertTrue(release.await(8,TimeUnit.SECONDS));}catch(InterruptedException ex){throw new IllegalStateException(ex);}jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner));return true;}));
             assertTrue(locked.await(5,TimeUnit.SECONDS));var writer=pool.submit(()->assertThrows(RuntimeException.class,()->api.save(owner,d.id(),promotionInput(product,"ACTIVE",0))));
-            try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%'",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
+            try{long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;while(System.nanoTime()<end){waiting=jdbc.queryForObject("SELECT count(*)>0 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%')",Map.of(),Boolean.class);if(waiting){break;}Thread.sleep(20);}assertTrue(waiting);}finally{release.countDown();}
             holder.get(5,TimeUnit.SECONDS);writer.get(5,TimeUnit.SECONDS);assertEquals("DRAFT",jdbc.queryForObject("SELECT state FROM marketplace.promotion WHERE id=:id",Map.of("id",d.id()),String.class));
         }
     }
@@ -677,7 +1904,7 @@ class PostgresJdbcIT {
         assertEquals(401,accountRequest(client,"POST","/api/guest/access/recovery-code",Map.of("currentPassword",GUEST_PASSWORD),csrf).statusCode());
         accountRequest(client,"POST","/api/guest/access/login",Map.of("orderNumber",order,"phone",f.phone,"password",GUEST_PASSWORD),csrf);
         var result=accountRequest(client,"POST","/api/guest/access/recovery-code",Map.of("currentPassword",GUEST_PASSWORD),csrf);assertEquals(200,result.statusCode());assertEquals("no-store",result.headers().firstValue("Cache-Control").orElseThrow());
-        String rotated=authMapper.readTree(result.body()).get("recoveryCode").asText();assertFalse(rotated.equals(code));var listing=accountRequest(client,"GET","/api/guest/orders",null,null);assertFalse(listing.body().contains(rotated));
+        String rotated=authMapper.readTree(result.body()).get("recoveryCode").asText();assertFalse(rotated.equals(code));var listing=accountRequest(client,"GET","/api/guest/access/references",null,null);assertFalse(listing.body().contains(rotated));
     }
 
     @Test void guestRecoveryLimitsSurviveFailuresAndExpireAtWindowBoundary() {
@@ -875,7 +2102,7 @@ class PostgresJdbcIT {
     static class GuestFixtureSecurity {
         @org.springframework.context.annotation.Bean @org.springframework.core.annotation.Order(0)
         org.springframework.security.web.SecurityFilterChain guestFixtureChain(org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
-            return http.securityMatcher("/__test/guest-order","/__test/guest-recovery-order","/__test/guest-linked-order").csrf(csrf->csrf.csrfTokenRepository(new org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository()))
+            return http.securityMatcher("/__test/guest-order","/__test/guest-recovery-order","/__test/guest-linked-order","/api/__test/shipments/**","/api/__test/purchase/**").csrf(csrf->csrf.csrfTokenRepository(new org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository()))
                     .authorizeHttpRequests(auth->auth.anyRequest().permitAll()).build();
         }
     }
@@ -1015,9 +2242,9 @@ class PostgresJdbcIT {
         var result=accountRequest(client,"POST","/api/guest/access/login",input,csrf);assertEquals(200,result.statusCode());
         String cookie=result.headers().firstValue("Set-Cookie").orElseThrow();assertTrue(cookie.contains("HttpOnly"));assertTrue(cookie.contains("SameSite=Lax"));assertFalse(cookie.contains("Secure"));
         assertFalse(result.body().contains("token"));assertEquals("no-store",result.headers().firstValue("Cache-Control").orElseThrow());
-        assertEquals(200,accountRequest(client,"GET","/api/guest/orders",null,null).statusCode());assertEquals(401,accountRequest(client,"GET","/api/account/profile",null,null).statusCode());
+        assertEquals(200,accountRequest(client,"GET","/api/guest/access/references",null,null).statusCode());assertEquals(401,accountRequest(client,"GET","/api/account/profile",null,null).statusCode());
         assertEquals(403,accountRequest(client,"POST","/api/guest/access/logout",Map.of(),null).statusCode());
-        assertEquals(200,accountRequest(client,"POST","/api/guest/access/logout",Map.of(),csrf).statusCode());assertEquals(401,accountRequest(client,"GET","/api/guest/orders",null,null).statusCode());
+        assertEquals(200,accountRequest(client,"POST","/api/guest/access/logout",Map.of(),csrf).statusCode());assertEquals(401,accountRequest(client,"GET","/api/guest/access/references",null,null).statusCode());
     }
 
     @Test void guestProviderStagesWindowsAndRestartFailClosed() {
@@ -1283,7 +2510,7 @@ class PostgresJdbcIT {
                 long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;
                 while(System.nanoTime()<deadline) {
                     jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%'))",Map.of(),Boolean.class));
                     if(waiting) { break; }
                     try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
                 }
@@ -1350,7 +2577,7 @@ class PostgresJdbcIT {
                 long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);boolean waiting=false;
                 while(System.nanoTime()<deadline) {
                     jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%'))",Map.of(),Boolean.class));
                     if(waiting) {break;}
                     try{Thread.sleep(20);}catch(InterruptedException e){throw new IllegalStateException(e);}
                 }
@@ -1647,7 +2874,7 @@ class PostgresJdbcIT {
         jdbc.update("INSERT INTO p4e_upgrade.stock_movement SELECT * FROM marketplace.stock_movement WHERE sku_id=:id",Map.of("id",sku));
         var movement=jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of());
         var migration=Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").cleanDisabled(true).load();
-        assertEquals(13,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
+        assertEquals(19,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);
         assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM p4e_upgrade.catalog_product WHERE created_at IS NOT NULL",Map.of(),Integer.class));
         assertEquals(row,jdbc.queryForMap("SELECT * FROM p4e_upgrade.inventory_balance WHERE sku_id=:id",Map.of("id",sku)));
         assertEquals(movement,jdbc.queryForList("SELECT * FROM p4e_upgrade.stock_movement",Map.of()));
@@ -1915,7 +3142,7 @@ class PostgresJdbcIT {
                 long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
                 while(System.nanoTime()<deadline) {
                     jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%'))",Map.of(),Boolean.class));
                     if(waiting) { break; }
                     try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
                 }
@@ -2052,7 +3279,7 @@ class PostgresJdbcIT {
                     long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
                     while(System.nanoTime()<deadline) {
                         jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+"%FOR UPDATE%"),Boolean.class));
+                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+(member?"%FOR NO KEY UPDATE%":"%FOR UPDATE%")),Boolean.class));
                         if(waiting) { break; }
                         try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
                     }
@@ -2081,7 +3308,7 @@ class PostgresJdbcIT {
                     long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
                     while(System.nanoTime()<deadline) {
                         jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+"%FOR UPDATE%"),Boolean.class));
+                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+(member?"%FOR NO KEY UPDATE%":"%FOR UPDATE%")),Boolean.class));
                         if(waiting) { break; }
                         try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
                     }
@@ -2110,7 +3337,7 @@ class PostgresJdbcIT {
                     long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
                     while(System.nanoTime()<deadline) {
                         jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+"%FOR UPDATE%"),Boolean.class));
+                        waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE :query)",Map.of("query","%"+table+(member?"%FOR NO KEY UPDATE%":"%FOR UPDATE%")),Boolean.class));
                         if(waiting) { break; }
                         try { Thread.sleep(20); } catch(InterruptedException e) { throw new IllegalStateException(e); }
                     }
@@ -2294,7 +3521,7 @@ class PostgresJdbcIT {
                 long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5); boolean waiting=false;
                 while(System.nanoTime()<deadline) {
                     jdbc.getJdbcTemplate().execute("SELECT pg_stat_clear_snapshot()");
-                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND query LIKE '%identity_user%FOR UPDATE%')",Map.of(),Boolean.class));
+                    waiting=Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND pid<>pg_backend_pid() AND wait_event_type='Lock' AND (query LIKE '%identity_user%FOR UPDATE%' OR query LIKE '%identity_user%FOR NO KEY UPDATE%'))",Map.of(),Boolean.class));
                     if(waiting) { break; }
                     try { Thread.sleep(20); } catch(InterruptedException interrupted) { throw new IllegalStateException(interrupted); }
                 }
@@ -3521,6 +4748,14 @@ class PostgresJdbcIT {
             jdbc.update("INSERT INTO marketplace.inventory_balance(sku_id,on_hand) VALUES(:id,10)",Map.of("id",inputOption.id()));
         }
         for(String project:List.of("desktop","mobile")) {
+            for(String scenario:List.of("create","guest","conflict","historyguest","shipmentmember","shipmentguest","shipmentkeyboard","gmember","gguest","ghistory")) {
+                UUID buyer=(scenario.equals("guest")||scenario.equals("historyguest")||scenario.equals("shipmentguest")||scenario.equals("gguest"))?null:activeMember("order-"+scenario+"-"+project+"@example.com");
+                for(String side:List.of("a","b","c")) {
+                    var fixture=browseFixture("order-"+scenario+"-"+project+"-"+side,side.equals("a")?10000:20000,10);
+                    if((scenario.equals("gguest")||scenario.equals("ghistory"))&&!side.equals("c")) { var now=Instant.now();var pi=new com.example.marketplace.promotion.api.Promotions.Input("G 공개 행사 "+side,"PRODUCT",List.of(((com.example.marketplace.catalog.api.Products.Product)fixture.get("product")).id()),now.minusSeconds(10),now.plusSeconds(3600),"FIXED",1000L,null,"DRAFT",0L);var promo=promotions().save((UUID)fixture.get("owner"),null,pi);promotions().save((UUID)fixture.get("owner"),promo.id(),new com.example.marketplace.promotion.api.Promotions.Input(pi.title(),pi.scope(),pi.productIds(),pi.startsAt(),pi.endsAt(),pi.kind(),pi.value(),pi.cap(),"ACTIVE",0L)); }
+                    if((scenario.equals("create")||scenario.equals("gmember")||scenario.equals("ghistory"))&&!side.equals("c")) {var template=couponTemplate((UUID)fixture.get("owner"),"주문 할인 "+side,5);coupons().claim(buyer,template.id());}
+                }
+            }
             for(int width:List.of(375,768,1440)) { activeMember("input-"+project+"-"+width+"@example.com"); }
         }
         var cMembers = new java.util.ArrayList<UUID>();
@@ -3534,7 +4769,8 @@ class PostgresJdbcIT {
                     + "VALUES(:id,:owner,:slug,'Pagination fixture','Test only','Test address','','','')",
                     Map.of("id", new UUID(0, index), "owner", owner, "slug", "browser-page-fixture-" + index));
         }
-        for (String project : List.of("desktop", "mobile")) {
+        for(String project:List.of("desktop","mobile")) { for(String mode:List.of("unknown","failed","lost","zero")) { var f=paymentFixture("g-browser-"+project+"-"+mode,mode.equals("zero"));if(!mode.equals("zero")) { mockPayment(f,mode.equals("unknown")?"QUERY_FAILURE":mode.equals("failed")?"REJECT":"LOST_RESPONSE","SUCCESS"); } } }
+        for (String project : List.of("desktop", "mobile")) { for(String fMode:List.of("success","failed","unknown")) { var f=paymentFixture("f-browser-"+project+"-"+fMode,false);mockPayment(f,fMode.equals("failed")?"REJECT":fMode.equals("unknown")?"QUERY_FAILURE":"SUCCESS","SUCCESS");payments().approve(f.order().orderNumber(),f.authority()); } for(String eMode:List.of("success","lost")) { var e=sandboxFixture("browser-"+project+"-"+eMode,false);var data=tossFixture(e,"fixture-e-browser-"+project+"-"+eMode,"DONE");if(eMode.equals("lost")) { data.put("lose",true); } } for(String mode:List.of("zero","lost","session")) { var pf=paymentFixture("browser-"+project+"-"+mode,mode.equals("zero"));if(mode.equals("lost")) { mockPayment(pf,"LOST_RESPONSE","SUCCESS"); } }
             var rf=browseFixture("reservation-browser-"+project,10000,10);UUID rm=activeMember("reservation-member-"+project+"@example.com");activeMember("reservation-other-"+project+"@example.com");var rt=couponTemplate((UUID)rf.get("owner"),"예약 확인 쿠폰",5);coupons().claim(rm,rt.id());
             var qa=browseFixture("quote-browser-"+project+"-a",30000,10);browseFixture("quote-browser-"+project+"-b",40000,10);UUID qm=activeMember("quote-member-"+project+"@example.com"),qo=(UUID)qa.get("owner");var qt=coupons().saveTemplate(qo,null,couponInput("견적 3000원",3000,5,"DRAFT",0));qt=coupons().saveTemplate(qo,qt.id(),couponInput("견적 3000원",3000,5,"ACTIVE",0));coupons().claim(qm,qt.id());
             browseFixture("promotion-browser-"+project,10001,10);
@@ -4262,13 +5498,3 @@ class PostgresJdbcIT {
         entryCount("batch-first", "0");
     }
 }
-
-
-
-
-
-
-
-
-
-

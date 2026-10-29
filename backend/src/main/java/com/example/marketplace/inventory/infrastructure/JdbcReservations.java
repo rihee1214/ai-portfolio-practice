@@ -57,6 +57,9 @@ public final class JdbcReservations implements Reservations {
         });
     }
     @Override public List<Reservation> commit(UUID checkoutId,List<UUID> ids) { return finish(checkoutId,ids,"COMMIT"); }
+    @Override public List<Reservation> inspect(UUID checkout,List<UUID> ids) {
+        return transaction(()-> { var rows=ids.stream().map(id->owned(checkout,id,false)).toList();lockBalances(rows.stream().map(Reservation::skuId).toList());return ids.stream().sorted(Comparator.comparing(UUID::toString)).map(id->owned(checkout,id,true)).toList(); });
+    }
     @Override public List<Reservation> release(UUID checkoutId,List<UUID> ids) { return finish(checkoutId,ids,"RELEASE"); }
     @Override public List<Reservation> expire(UUID checkoutId,List<UUID> ids) { return finish(checkoutId,ids,"EXPIRE"); }
     private List<Reservation> finish(UUID checkout,List<UUID> ids,String cause) {

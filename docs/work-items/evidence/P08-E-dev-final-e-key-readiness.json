@@ -1,0 +1,61 @@
+{
+  "checked": "2026-10-28T17:22:23.4723727+09:00",
+  "environment": [
+    {
+      "name": "TOSS_CLIENT_KEY",
+      "present": false,
+      "testPrefix": false,
+      "livePrefix": false
+    },
+    {
+      "name": "TOSS_SECRET_KEY",
+      "present": false,
+      "testPrefix": false,
+      "livePrefix": false
+    },
+    {
+      "name": "TOSS_MID",
+      "present": false,
+      "testPrefix": false,
+      "livePrefix": false
+    },
+    {
+      "name": "TOSS_API_VERSION",
+      "present": false,
+      "testPrefix": false,
+      "livePrefix": false
+    },
+    {
+      "name": "TOSS_WEBHOOK_SECURITY_KEY",
+      "present": false,
+      "testPrefix": false,
+      "livePrefix": false
+    }
+  ],
+  "environmentFiles": [
+    {
+      "path": ".env",
+      "names": [
+        "DEV_ADMIN_PASSWORD",
+        "DEV_DB_PASSWORD",
+        "TEST_ADMIN_PASSWORD",
+        "TEST_DB_PASSWORD",
+        "DEV_DB_PORT",
+        "TEST_DB_PORT"
+      ]
+    },
+    {
+      "path": ".env.example",
+      "names": [
+        "DEV_ADMIN_PASSWORD",
+        "DEV_DB_PASSWORD",
+        "TEST_ADMIN_PASSWORD",
+        "TEST_DB_PASSWORD",
+        "DEV_DB_PORT",
+        "TEST_DB_PORT"
+      ]
+    }
+  ],
+  "actualSandbox": "BLOCKED: no configured Toss test keys/MID/API version/webhook security key; no provider calls attempted",
+  "valuesRecorded": false
+}

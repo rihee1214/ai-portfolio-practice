@@ -1,0 +1,28 @@
+{
+  "created": "2026-10-28T19:37:36.3154947+09:00",
+  "manifest": "docs/work-items/evidence/P08-F1-development-failure-manifest.json",
+  "sha256": "3B90C1B12ED63F6B5AC640F7B4394F11DE13FFE5CCA40464D87BA6B9FD7FFE03",
+  "files": 5518,
+  "failedDirectories": [
+    "p08-f1-focused1-20261028",
+    "p08-f1-focused2-20261028",
+    "p08-f1-focused3-20261028",
+    "p08-f1-focused4-20261028",
+    "p08-f1-focused5-20261028",
+    "p08-f1-focused6-20261028",
+    "p08-f1-parent-red1-20261028",
+    "p08-f1-red1-20261028",
+    "p08-f1-unit-red2-20261028"
+  ],
+  "emulatorDirectories": [
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-0927f23d305f4023be3deea9fa4bfee0",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-4abc7dbd3a5241489cf06dd9113f5341",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-8946a12bc33a4513a11495ca857d93bc",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-9717961452d24f29b4776afa7b80c47b",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-b4a19f1fe15f4233bce2d8addd9b9219",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-eef177ac7a5d4886ac94bb7450e95571",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-f9b30526cf374c01919456e5113ba2b8",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-fa1e88af3052427b8484af4429c772d3"
+  ],
+  "sidecarCount": 10
+}

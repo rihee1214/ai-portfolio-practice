@@ -1,0 +1,4048 @@
+{
+  "config": {
+    "argv": [
+      "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\node-v24.22.0-win-x64\\node.exe",
+      "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config=auth-e2e/playwright.config.ts"
+    ],
+    "configFile": "D:\\Workspace\\ai-portfolio-practice\\frontend\\auth-e2e\\playwright.config.ts",
+    "rootDir": "D:/Workspace/ai-portfolio-practice/frontend/auth-e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Workspace/ai-portfolio-practice/.local-tools/p08-g-dev1-20261028/db/browser-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "D:/Workspace/ai-portfolio-practice/frontend/auth-e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Workspace/ai-portfolio-practice/.local-tools/p08-g-dev1-20261028/db/browser-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "D:/Workspace/ai-portfolio-practice/frontend/auth-e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev1-20261028\\db\\browser-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "desktop",
+        "testDir": "D:\\Workspace\\ai-portfolio-practice\\frontend\\auth-e2e",
+        "snapshotDir": "D:\\Workspace\\ai-portfolio-practice\\frontend\\auth-e2e",
+        "testIgnore": [],
+        "testMatch": "*.spec.ts",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:24176",
+          "trace": "off",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev1-20261028\\db\\browser-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile",
+        "testDir": "D:\\Workspace\\ai-portfolio-practice\\frontend\\auth-e2e",
+        "snapshotDir": "D:\\Workspace\\ai-portfolio-practice\\frontend\\auth-e2e",
+        "testIgnore": [],
+        "testMatch": "*.spec.ts",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:24176",
+          "trace": "off",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 412,
+            "height": 839
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev1-20261028\\db\\browser-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node node_modules/vite/bin/vite.js --config auth-e2e/vite.config.ts --host 127.0.0.1 --port 24176 --strictPort",
+      "cwd": "D:\\Workspace\\ai-portfolio-practice\\frontend",
+      "url": "http://127.0.0.1:24176",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "access.spec.ts",
+      "file": "access.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:25.901Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9e7a053a61b60e2af93d-231c392f7f5c1696220b",
+          "file": "access.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:19.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9e7a053a61b60e2af93d-b77bd486ce0a5a2aa3a6",
+          "file": "access.spec.ts",
+          "line": 11,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "account.spec.ts",
+      "file": "account.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:28.106Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-cd75f0a12a98a693abab",
+          "file": "account.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:28.990Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-25c7bd6bad654a0eabee",
+          "file": "account.spec.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1723,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:30.535Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-f7929a75834875f91d71",
+          "file": "account.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:21.566Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-5e55e22eba94e27d0bf7",
+          "file": "account.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:22.393Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-f06190e6d93c07aae941",
+          "file": "account.spec.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:24.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ad4620ead4e6d9cc2627-7ffb4b62225bd9a5b694",
+          "file": "account.spec.ts",
+          "line": 84,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:32.282Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-1e0fd8cd2a45c603accf",
+          "file": "auth.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "입력·미확인·토큰 오류·반복 실패를 화면에서 처리",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:34.320Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-74882388f3cf2ac9979a",
+          "file": "auth.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2141,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:25.826Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-4d82c01086eef5e6b930",
+          "file": "auth.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "입력·미확인·토큰 오류·반복 실패를 화면에서 처리",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:27.974Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-770ae934681502195ecf",
+          "file": "auth.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "browse.spec.ts",
+      "file": "browse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1206,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:35.674Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c72c9889f434a3c409e-f5d3f5688dc13bdfab55",
+          "file": "browse.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1343,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:29.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c72c9889f434a3c409e-516f5f2e9ace0c3997c6",
+          "file": "browse.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "cart.spec.ts",
+      "file": "cart.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:36.897Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1981448f0b79506fb670-84aab49040ce95acc36c",
+          "file": "cart.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:39.376Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1981448f0b79506fb670-75c273066be5abcd8cbc",
+          "file": "cart.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:30.715Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1981448f0b79506fb670-94f87cf12f330a3f1fea",
+          "file": "cart.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 728,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:33.291Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1981448f0b79506fb670-7d4f3aee6412bfd1a018",
+          "file": "cart.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "catalog.spec.ts",
+      "file": "catalog.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:40.075Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "30aa42b97d8966d0c2dc-c192753e2484bb0443f8",
+          "file": "catalog.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6757,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:34.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "30aa42b97d8966d0c2dc-d9e24613b494faa1651c",
+          "file": "catalog.spec.ts",
+          "line": 24,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "coupon-reservations.spec.ts",
+      "file": "coupon-reservations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:47.665Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d758aee2456c8d150845-c4551fe24abea52cbe72",
+          "file": "coupon-reservations.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:40.822Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d758aee2456c8d150845-8a987fe288a176f85238",
+          "file": "coupon-reservations.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "coupons.spec.ts",
+      "file": "coupons.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3676,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "coupon stage: anonymous boundary\n"
+                    },
+                    {
+                      "text": "coupon stage: owned loaded\n"
+                    },
+                    {
+                      "text": "coupon stage: twin reload\n"
+                    },
+                    {
+                      "text": "coupon stage: csrf boundary\n"
+                    },
+                    {
+                      "text": "coupon stage: claim intercept\n"
+                    },
+                    {
+                      "text": "coupon stage: claim recovery\n"
+                    },
+                    {
+                      "text": "coupon stage: claim idempotent\n"
+                    },
+                    {
+                      "text": "coupon stage: stop issuance\n"
+                    },
+                    {
+                      "text": "coupon stage: snapshot reload\n"
+                    },
+                    {
+                      "text": "coupon stage: logout\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:15.040Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "754bc36b729af055b674-6f77fcc8f37e21655034",
+          "file": "coupons.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3787,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "coupon stage: anonymous boundary\n"
+                    },
+                    {
+                      "text": "coupon stage: owned loaded\n"
+                    },
+                    {
+                      "text": "coupon stage: twin reload\n"
+                    },
+                    {
+                      "text": "coupon stage: csrf boundary\n"
+                    },
+                    {
+                      "text": "coupon stage: claim intercept\n"
+                    },
+                    {
+                      "text": "coupon stage: claim recovery\n"
+                    },
+                    {
+                      "text": "coupon stage: claim idempotent\n"
+                    },
+                    {
+                      "text": "coupon stage: stop issuance\n"
+                    },
+                    {
+                      "text": "coupon stage: snapshot reload\n"
+                    },
+                    {
+                      "text": "coupon stage: logout\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:09:08.127Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "754bc36b729af055b674-7c106c1457882d63d0d9",
+          "file": "coupons.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "guest-lookup.spec.ts",
+      "file": "guest-lookup.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2141,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "C lookup: prepared and fixture created\n"
+                    },
+                    {
+                      "text": "C lookup: independent page ready\n"
+                    },
+                    {
+                      "text": "C lookup: authenticated after lost response\n"
+                    },
+                    {
+                      "text": "C lookup: logout verified\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:49.376Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5fd5948cc5113610df35-c09c64a538ec11292e68",
+          "file": "guest-lookup.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1969,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "C lookup: prepared and fixture created\n"
+                    },
+                    {
+                      "text": "C lookup: independent page ready\n"
+                    },
+                    {
+                      "text": "C lookup: authenticated after lost response\n"
+                    },
+                    {
+                      "text": "C lookup: logout verified\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:42.508Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5fd5948cc5113610df35-6f71263ed4cebffde211",
+          "file": "guest-lookup.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "guest-recovery.spec.ts",
+      "file": "guest-recovery.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1787,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:51.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-893a8032d5fb37df8e66",
+          "file": "guest-recovery.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1667,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:53.337Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-0db62b0fa4c45647fe3b",
+          "file": "guest-recovery.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 836,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:55.010Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-a878b5971d05348167dc",
+          "file": "guest-recovery.spec.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:44.499Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-86bba20ffc2b2a2c884d",
+          "file": "guest-recovery.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:46.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-d18c46bd6d184f1bf890",
+          "file": "guest-recovery.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:47.863Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cc840f522cf0a8c6dd9-60fd9ed90bb0a1ca56c2",
+          "file": "guest-recovery.spec.ts",
+          "line": 73,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "guest-repurchase.spec.ts",
+      "file": "guest-repurchase.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:55.859Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-f8e931d7d2e4e49ba3ae",
+          "file": "guest-repurchase.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1890,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:58.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-7879c2997d5c7b17e104",
+          "file": "guest-repurchase.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1473,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:05:59.935Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-80c39e82cd72264f30a7",
+          "file": "guest-repurchase.spec.ts",
+          "line": 69,
+          "column": 1
+        },
+        {
+          "title": "재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2130,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:48.692Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-5831751d4afd2f1aaee2",
+          "file": "guest-repurchase.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1826,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:50.828Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-28dc93610e972dbf199b",
+          "file": "guest-repurchase.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:52.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d226d24a7d1af3877cc5-115fd8cd1f64a7e57a5b",
+          "file": "guest-repurchase.spec.ts",
+          "line": 69,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "guest.spec.ts",
+      "file": "guest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:01.424Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7ce7f8ccaa30f427d5e-d18008d716cf867cad16",
+          "file": "guest.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 708,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:02.456Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7ce7f8ccaa30f427d5e-3167090d6fec298f1274",
+          "file": "guest.spec.ts",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:54.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7ce7f8ccaa30f427d5e-4bccde5e5d46886f517b",
+          "file": "guest.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 789,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:55.248Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7ce7f8ccaa30f427d5e-fd211482bb2b7e5bbc0b",
+          "file": "guest.spec.ts",
+          "line": 62,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "input-flow.spec.ts",
+      "file": "input-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1512,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:03.179Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-7edc9113604fededb0a5",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1460,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:04.699Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-378764f11ae5d196095d",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1303,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:06.165Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-3603c857a04f73b1e9b3",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:07.475Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-bed00ddc6cc83f0282f3",
+          "file": "input-flow.spec.ts",
+          "line": 43,
+          "column": 1
+        },
+        {
+          "title": "입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:56.060Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-062048c8f987896fa1b6",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:57.510Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-8a37b4678fb2d98e27a7",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:58.909Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-063fba1e7dafbf65e97f",
+          "file": "input-flow.spec.ts",
+          "line": 3,
+          "column": 35
+        },
+        {
+          "title": "상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:00.379Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1e4d4e3121e53010127b-8c126f25222bddc2fa8d",
+          "file": "input-flow.spec.ts",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "lifecycle.spec.ts",
+      "file": "lifecycle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2608,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "MANAGED_STORE found on page 3\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "운영 매대 목록을 페이지별로 탐색한다",
+                      "duration": 343
+                    }
+                  ],
+                  "startTime": "2026-10-28T13:06:07.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1f1785dee40219527314-0cf4fbb4dce0e4ad2a9e",
+          "file": "lifecycle.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3648,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "MANAGED_STORE found on page 13\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "운영 매대 목록을 페이지별로 탐색한다",
+                      "duration": 1203
+                    }
+                  ],
+                  "startTime": "2026-10-28T13:08:00.795Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1f1785dee40219527314-675a90c6bc181e435bb8",
+          "file": "lifecycle.spec.ts",
+          "line": 13,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "orders-create.spec.ts",
+      "file": "orders-create.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "회원 두 매대 주문은 응답 유실에도 같은 키로 복구하고 변경된 장바구니를 보존한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1776,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:10.468Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-6d43c2af35fba0732cfd",
+          "file": "orders-create.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "비회원은 실제 전화 인증과 새 묶음 준비 후 두 매대 주문을 생성하고 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1846,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:12.250Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-d604a0a7a7058cb057d5",
+          "file": "orders-create.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "가격 충돌은 새 견적 확인과 새 키를 요구하고 세션 만료 후 자동 재전송하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1506,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:14.102Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-e2f7ea435e6bc18f9d35",
+          "file": "orders-create.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "회원 두 매대 주문은 응답 유실에도 같은 키로 복구하고 변경된 장바구니를 보존한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1686,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:04.466Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-a677281fec2430df64e6",
+          "file": "orders-create.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "비회원은 실제 전화 인증과 새 묶음 준비 후 두 매대 주문을 생성하고 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1756,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:06.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-6f03c1f3812450959cf0",
+          "file": "orders-create.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "가격 충돌은 새 견적 확인과 새 키를 요구하고 세션 만료 후 자동 재전송하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:07.919Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "234fd5445a79e0b3c537-7d557099bdffa148311f",
+          "file": "orders-create.spec.ts",
+          "line": 25,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "orders-query.spec.ts",
+      "file": "orders-query.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "실제 두 매대 주문의 성공 실패 확인중 이력은 서버 스냅샷과 일치한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:15.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-b48d635e254fa2ff4900",
+          "file": "orders-query.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "새 브라우저의 실제 비회원 주문 조회는 구매 승인 권한과 분리되고 응답 유실 로그아웃에 숨는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:17.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-fca462a00b120bfcb3c5",
+          "file": "orders-query.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "계정 전환 뒤 늦은 이전 주문 응답은 표시하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 744,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:19.839Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-59d0a1e660aacb855ac4",
+          "file": "orders-query.spec.ts",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "실제 두 매대 주문의 성공 실패 확인중 이력은 서버 스냅샷과 일치한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1879,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:09.431Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-707017b9ec16227291af",
+          "file": "orders-query.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "새 브라우저의 실제 비회원 주문 조회는 구매 승인 권한과 분리되고 응답 유실 로그아웃에 숨는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2485,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:11.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-b203f43ccb5c594f33d1",
+          "file": "orders-query.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "계정 전환 뒤 늦은 이전 주문 응답은 표시하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:13.807Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c6f3d5b55c0e24022842-536ada1f9d2d80d3d3ac",
+          "file": "orders-query.spec.ts",
+          "line": 27,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "payments-mock.spec.ts",
+      "file": "payments-mock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:20.603Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-9dd96f18af60d275696a",
+          "file": "payments-mock.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:21.607Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-8e8e114b440a4109cf26",
+          "file": "payments-mock.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1694,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:24.768Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-70412484d8927f5e1fd5",
+          "file": "payments-mock.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 828,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:14.573Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-29ea5cf994ce14c5d583",
+          "file": "payments-mock.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:15.407Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-3cd723996c589ba371bf",
+          "file": "payments-mock.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1537,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:18.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1eac116cf3a41ffe5719-abbea871cafb4954a138",
+          "file": "payments-mock.spec.ts",
+          "line": 11,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "payments-sandbox.spec.ts",
+      "file": "payments-sandbox.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "로컬 테스트 SDK 인증 주소는 확정하지 않고 명시적 서버 승인으로 전체 예약을 확정한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:26.488Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "987dfe4b0d4675aa9869-dca62aa5653152e27a6b",
+          "file": "payments-sandbox.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "로컬 제공자 승인 응답 유실은 서버 재조회로 수렴하고 성공 주소 변조는 승인하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3540,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:27.756Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "987dfe4b0d4675aa9869-1671a952c1890957a2cf",
+          "file": "payments-sandbox.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "로컬 테스트 SDK 인증 주소는 확정하지 않고 명시적 서버 승인으로 전체 예약을 확정한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1235,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:20.188Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "987dfe4b0d4675aa9869-2bb1212b11467e18f076",
+          "file": "payments-sandbox.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "로컬 제공자 승인 응답 유실은 서버 재조회로 수렴하고 성공 주소 변조는 승인하지 않는다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3551,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:21.429Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "987dfe4b0d4675aa9869-e88a4fe13546cf8b5ba3",
+          "file": "payments-sandbox.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "promotions.spec.ts",
+      "file": "promotions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:31.315Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "50791752974ef4adecee-c10fad16525d778609e9",
+          "file": "promotions.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:33.566Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "50791752974ef4adecee-4a9fa39e1fabaab22ca9",
+          "file": "promotions.spec.ts",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:25.005Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "50791752974ef4adecee-da725e3f93b38cf9f8a3",
+          "file": "promotions.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:27.270Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "50791752974ef4adecee-e1580a67765776b07488",
+          "file": "promotions.spec.ts",
+          "line": 60,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "purchase-complete.spec.ts",
+      "file": "purchase-complete.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "memberMultiStorePurchase",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3455,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:35.081Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-3f31cbd372f565851e32",
+          "file": "purchase-complete.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "guestPurchaseAndNewBrowserLookup",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:38.541Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-026ddabff55536f5f89d",
+          "file": "purchase-complete.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "uncertainFailureAndZeroPayment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5014,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:41.700Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-389ee58bc1311ccc883f",
+          "file": "purchase-complete.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "historyAndSellerIsolation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:46.721Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-199658c7cac6a445f29e",
+          "file": "purchase-complete.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "memberMultiStorePurchase",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3349,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:28.786Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-3018b6b106c47214c3e0",
+          "file": "purchase-complete.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "guestPurchaseAndNewBrowserLookup",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3245,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:32.141Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-11133afa12bf9c7a4a3f",
+          "file": "purchase-complete.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "uncertainFailureAndZeroPayment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5007,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:35.392Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-5158b19ef762ac3db862",
+          "file": "purchase-complete.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "historyAndSellerIsolation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:40.404Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "80eba93e7b2cd0406c16-ff4d19b1da76a18bf6b0",
+          "file": "purchase-complete.spec.ts",
+          "line": 39,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "purchase.spec.ts",
+      "file": "purchase.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1304,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:51.093Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "993c92a1c717c9480450-40956bd343e95993e4d5",
+          "file": "purchase.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:52.403Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "993c92a1c717c9480450-5b9a5af5c77abbfe13be",
+          "file": "purchase.spec.ts",
+          "line": 32,
+          "column": 1
+        },
+        {
+          "title": "회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:44.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "993c92a1c717c9480450-c2cdab3d5aa2583e9315",
+          "file": "purchase.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:46.153Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "993c92a1c717c9480450-821832d460e68b995be8",
+          "file": "purchase.spec.ts",
+          "line": 32,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "quotes.spec.ts",
+      "file": "quotes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:54.054Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c771cb32dcc0e8b24d4c-3249906bb8d9ed3eab73",
+          "file": "quotes.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1771,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:47.899Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c771cb32dcc0e8b24d4c-2c892001912a54f15875",
+          "file": "quotes.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "seller-journey.spec.ts",
+      "file": "seller-journey.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4023,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "MANAGED_STORE found on page 7\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "운영 매대 목록을 페이지별로 탐색한다",
+                      "duration": 717
+                    }
+                  ],
+                  "startTime": "2026-10-28T13:06:55.931Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f6e30a26b901c66248fd-66cdde47f4d143795daf",
+          "file": "seller-journey.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3351,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "MANAGED_STORE found on page 2\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "운영 매대 목록을 페이지별로 탐색한다",
+                      "duration": 239
+                    }
+                  ],
+                  "startTime": "2026-10-28T13:08:49.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f6e30a26b901c66248fd-629154aec53c5c0034b6",
+          "file": "seller-journey.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "seller.spec.ts",
+      "file": "seller.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "모의 판매 신청·반려·재신청·승인과 구매자 자격 유지",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:06:59.964Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23512d0903473c131880-3baae459ada3f01b4312",
+          "file": "seller.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "모의 판매 신청·반려·재신청·승인과 구매자 자격 유지",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:53.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23512d0903473c131880-e54a474a2ebf461dd498",
+          "file": "seller.spec.ts",
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shipments.spec.ts",
+      "file": "shipments.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sellerOrdersShowDifferentDeliveryStates",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4166,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:02.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-47dba0253f62784d1b5f",
+          "file": "shipments.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "guestDeliveryOnNewContext",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3952,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:06.441Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-6140fcb24026100241b6",
+          "file": "shipments.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "keyboardAndResponsiveShipmentFlow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2574,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:10.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-5b3c926fbbd2e7076781",
+          "file": "shipments.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "sellerOrdersShowDifferentDeliveryStates",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4136,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:55.231Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-dff6ed8232bf921feba5",
+          "file": "shipments.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "guestDeliveryOnNewContext",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3829,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:08:59.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-f52fd42120a6ec1ca7de",
+          "file": "shipments.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "keyboardAndResponsiveShipmentFlow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2736,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:09:03.207Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6937cdf51f93ccab313e-12a0d847756bc2ab301f",
+          "file": "shipments.spec.ts",
+          "line": 19,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "store.spec.ts",
+      "file": "store.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1618,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:07:12.996Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "142cdf6a1adeb8604bd3-16e4b1aa5cec97d4ff71",
+          "file": "store.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile",
+              "projectName": "mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T13:09:05.961Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "142cdf6a1adeb8604bd3-079878ea0d6eb3f3a620",
+          "file": "store.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-28T13:05:24.748Z",
+    "duration": 227606.73200000002,
+    "expected": 104,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

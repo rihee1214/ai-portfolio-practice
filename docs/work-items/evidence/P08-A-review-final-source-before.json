@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-27T16:06:41.4221128+09:00",
+  "inputCount": 382,
+  "inputMismatches": 0,
+  "failureManifests": [
+    {
+      "manifest": "docs/work-items/evidence/P07-D-failure-manifest.json",
+      "count": 2102,
+      "mismatches": 0
+    },
+    {
+      "manifest": "docs/work-items/evidence/P08-A-failure-manifest.json",
+      "count": 4697,
+      "mismatches": 0
+    }
+  ],
+  "mavenArgs": null
+}

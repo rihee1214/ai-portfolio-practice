@@ -1,0 +1,25 @@
+{
+  "evidence": ".local-tools/p08-f2-dev1-20261028",
+  "started": "2026-10-28T20:50:08.7934501+09:00",
+  "finished": "2026-10-28T20:58:03.5560797+09:00",
+  "rootStatus": "failed",
+  "preservation": "passed",
+  "unit": 183.0,
+  "integration": 260.0,
+  "failures": 1.0,
+  "errors": 0.0,
+  "skips": 0.0,
+  "browser": {
+    "startTime": "2026-10-28T11:52:35.529Z",
+    "duration": 191432.354,
+    "expected": 96,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failedTest": "PhoneProviderEmulatorIT.browserSdkAndJavaVerifierEnforceProviderContract",
+  "originalFailure": "child TypeError fetch failed; original stage/networkcause unavailable",
+  "reproduction": "fresh phone-focused1 all unit183 + PhoneProviderEmulatorIT1 passed; root selected coverage failure expected",
+  "cause": "UNCONFIRMED; diagnostic-only change, no network behavior/retry/timeout fix",
+  "frontendAndNode": "NOT RUN in failed dev1"
+}

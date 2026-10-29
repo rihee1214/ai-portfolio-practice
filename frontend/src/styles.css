@@ -144,6 +144,10 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 nav[aria-label="상품 페이지"] { display: flex; gap: 16px; margin: 24px 0; }
 @media (max-width: 600px) { .browse-form { grid-template-columns: 1fr; } #browse-option { max-width: 100%; } }
 .cart-page { max-width: 960px; margin: 24px auto; }
+.shipment-content, .order-detail { overflow-wrap: anywhere; min-width: 0; }
+.shipment-content form { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 16px 0; }
+.shipment-content article { border-bottom: 1px solid #dcded6; padding: 12px 0; }
+.shipment-content [role="alert"]:focus { outline: 2px solid #8b2f25; outline-offset: 4px; }
 .cart-line { border-bottom: 1px solid #dcded6; padding: 20px 0; overflow-wrap: anywhere; }
 .cart-line form, .cart-add form { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 12px 0; }
 .cart-line input, .cart-add input { max-width: 100px; }

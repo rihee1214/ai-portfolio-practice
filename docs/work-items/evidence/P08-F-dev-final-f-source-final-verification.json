@@ -1,0 +1,9 @@
+{
+  "checked": "2026-10-28T18:50:48.9248596+09:00",
+  "inputs": 453,
+  "inputsSha256": "649C318C0A763FD8CBF63A5C3E1ED738C9FD133286FD3CA06C1DDD556D45A5FE",
+  "sourceMismatches": 0,
+  "requiredGroups": 47,
+  "requiredNonPassed": 0,
+  "javaNonPassed": 0
+}

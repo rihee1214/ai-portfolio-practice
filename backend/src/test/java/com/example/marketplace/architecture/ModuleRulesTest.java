@@ -43,6 +43,21 @@ class ModuleRulesTest {
     }
 
     @Test
+    void platformApiCanUseOwnContracts() throws Exception {
+        assertFalse(violates(compile(Map.of("platform.api.Jobs", "e6fixture.platform.api.Command value;", "platform.api.Command", "String id;"))));
+    }
+
+    @Test
+    void businessImplementationCanUsePlatformContracts() throws Exception {
+        assertFalse(violates(compile(Map.of("order.infrastructure.Jobs", "e6fixture.platform.api.Command value;", "platform.api.Command", "String id;"))));
+    }
+
+    @Test
+    void platformApiCannotExposePlatformInternals() throws Exception {
+        assertTrue(violates(compile(Map.of("platform.api.Jobs", "e6fixture.platform.infrastructure.Internal value;", "platform.infrastructure.Internal", ""))));
+    }
+
+    @Test
     void ownInternalsAndOtherModuleApiAreAllowed() throws Exception {
         var classes = compile(Map.of("order.application.Service", "e6fixture.catalog.api.Product product; e6fixture.order.domain.Order order;",
                 "catalog.api.Product", "String name;", "order.domain.Order", "String id;"));

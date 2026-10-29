@@ -1,0 +1,217 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-45555be0-1be2-4ce7-a51a-251757a96813\\completed.txt",
+    "sha256": "7D504CD421773F8A979919D98D00067D2E1927A167B25F8588BA69A7EF9836F3",
+    "content": "nonweb=true;pid=52180"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-45555be0-1be2-4ce7-a51a-251757a96813\\first-effect.txt",
+    "sha256": "08BA17EFAEBC9AD83824C66CFC10C64EB2221C905FBCDB0995CFFEC2D6D28CE6",
+    "content": "checkpoint=PROVIDER;pid=16732"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-45555be0-1be2-4ce7-a51a-251757a96813\\first-pid.txt",
+    "sha256": "0ADF361D5464132E95990AF86794E23339B585257E66B1700DF9011E38668336",
+    "content": "16732"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-45555be0-1be2-4ce7-a51a-251757a96813\\second-pid.txt",
+    "sha256": "7BAF7165C620D08D3513089CF9C25662A9366835AEA248A6AABE5FC4292CB553",
+    "content": "52180"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-55210c73-5a44-4674-bb69-05af90724a27\\completed.txt",
+    "sha256": "2FB2C6746E1AE1DC51F536F2933BAB2051C48D7CAAEBD00A91F741BE48F3FCF2",
+    "content": "nonweb=true;pid=36044"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-55210c73-5a44-4674-bb69-05af90724a27\\first-effect.txt",
+    "sha256": "C1317DB94BACB37B7BE5EF5D367A512C76230763920B33570FDA7A6F16722D46",
+    "content": "checkpoint=PREPARED;pid=38536"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-55210c73-5a44-4674-bb69-05af90724a27\\first-pid.txt",
+    "sha256": "0823F026509A7F80085943337B98A3FECE9E8E58C1C0F5AF06A9D9DEDA7866FA",
+    "content": "38536"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\approval-worker-55210c73-5a44-4674-bb69-05af90724a27\\second-pid.txt",
+    "sha256": "04C0C4B75C2FEA1E8350BEE1AEB2FA19328B553996C6DA7EBF301628007FF944",
+    "content": "36044"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-0-effect.txt",
+    "sha256": "4F427A5C4DD6104FB29811D5D8E1AECB170156C3728295014D3229D6532935C9",
+    "content": "provider effect durable;pid=57140"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-0-pid.txt",
+    "sha256": "6A8CD968E7816946C78A395E2C41C0AE23213E4AF7CC696D9BD2FE31C92CADD2",
+    "content": "57140"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-1-effect.txt",
+    "sha256": "7C223255384B2756282D588CC9DCA2EA3761F12D206F249073CE18D2D9F26069",
+    "content": "provider effect durable;pid=34252"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-1-pid.txt",
+    "sha256": "8AC4774D612B75A86517C7CCAA0ACBEF8930FA9A0444CED2999328C6583E913F",
+    "content": "34252"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-2-effect.txt",
+    "sha256": "0DD06D7B1E05F362DA5BDC6E95FFE06E863B5342D486FDA3BD12F7857778B453",
+    "content": "provider effect durable;pid=48200"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-2-pid.txt",
+    "sha256": "54AF9A7431410F0C9D6B4A47C93579F44A7D1344BA2CD7B1E6A8DB782D7CE4C2",
+    "content": "48200"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-3-effect.txt",
+    "sha256": "E455A18DFFE95F6B4A974EBFB8C0BEECB453E019144DDDB3D6F70C45804E165E",
+    "content": "provider effect durable;pid=13884"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-3-pid.txt",
+    "sha256": "A81C6DAAA46F2F7256B34147FBFD4848D9DB32080D37625A7DCC17E59266473A",
+    "content": "13884"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-4-effect.txt",
+    "sha256": "815ABEED32EBAB9CCCBFC8ABE59DD204AF09623F6DA0B68F8FDA91E0107C1582",
+    "content": "provider effect durable;pid=34460"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\exhausted-worker-15183cc6-372f-43bb-bc94-c36e59d093be\\crash-4-pid.txt",
+    "sha256": "1CA0C0511531AF6F7EFA49524F8E70BEE5FE3309F7814101109F74DA8E5CFC4D",
+    "content": "34460"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-27e0db31-1078-4e5c-b585-675394792d44\\completed.txt",
+    "sha256": "63C2D667259DF740188F5FCCB296870C3927834FF3B510A5F5840CE9BB1B6A69",
+    "content": "nonweb=true;pid=54104"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-27e0db31-1078-4e5c-b585-675394792d44\\first-effect.txt",
+    "sha256": "D0A36E4EB1C93FFE272138AF5FE784842C8CBBF9297293902F899C35933D8DDB",
+    "content": "provider effect durable;pid=20924"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-27e0db31-1078-4e5c-b585-675394792d44\\first-pid.txt",
+    "sha256": "1393708EA519A59A984236D8113213594D3A4641644FB9E76B5445221DC0C0FB",
+    "content": "20924"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-27e0db31-1078-4e5c-b585-675394792d44\\second-pid.txt",
+    "sha256": "86C68BA432E7FE297A771E759E3CDE16F22B84130D65588B80ED9D982019C743",
+    "content": "54104"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-f338f204-d167-4c46-b5f8-7e8661738974\\completed.txt",
+    "sha256": "0B9E9FD0C64210746071E4B96D2D9D8D0D1E97A23F1A77F5097944E70C6B8737",
+    "content": "nonweb=true;pid=54628"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-f338f204-d167-4c46-b5f8-7e8661738974\\first-effect.txt",
+    "sha256": "BB6C7D335680595FAF093E41FF2A4E3A15E534A6A4184716A289DB57A4751AA0",
+    "content": "provider effect durable;pid=47116"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-f338f204-d167-4c46-b5f8-7e8661738974\\first-pid.txt",
+    "sha256": "2B85E3F760D5383C73E67D6A1547EE63ACF7D14D1C1CDDC37F9E27D19F1B2CA1",
+    "content": "47116"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\payment-worker-f338f204-d167-4c46-b5f8-7e8661738974\\second-pid.txt",
+    "sha256": "D50BF7B19EB3906EACF597BE714ED090DE2F6DFD55D4E8CA9D34D7967C899FAB",
+    "content": "54628"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\worker-05d831cf-584e-4459-9cb7-7e6c2fa7f0c7\\completed.txt",
+    "sha256": "55E69EC5FA2846102999839D0E9ADF275E77606555F5FBFC795524964E114C97",
+    "content": "pid=40884;nonweb=true;status=SUCCEEDED"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\worker-05d831cf-584e-4459-9cb7-7e6c2fa7f0c7\\first-effect.txt",
+    "sha256": "87E04B893237F168AE3E5DDCD350B663AABDAAC1A3FD5453C92432F478AD3CA6",
+    "content": "effect committed;pid=55376"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\worker-05d831cf-584e-4459-9cb7-7e6c2fa7f0c7\\first-pid.txt",
+    "sha256": "F65184141D8A278C664CC1870ADB79506FD00F09A935F8105F6F7A671C6C639A",
+    "content": "55376"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\worker-05d831cf-584e-4459-9cb7-7e6c2fa7f0c7\\second-effect.txt",
+    "sha256": "4A9F1EF0940F0559F08E92BFF3077296E382BE285FEB6882BA2DFD4F1FC00F7B",
+    "content": "effect committed;pid=40884"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\worker-05d831cf-584e-4459-9cb7-7e6c2fa7f0c7\\second-pid.txt",
+    "sha256": "9C8DD5A4F8A003833AF7DE65AB5188ABFBFCA58C6652B4A23DFDB1AB05B1C474",
+    "content": "40884"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-2082040b-8004-4cb2-a621-67ed7e93f806\\completed.txt",
+    "sha256": "2FAD1C7CC76E89FC71B76851DE3CD4DDEBDD6D33A66BCDC588B7DA425A2EEE3C",
+    "content": "nonweb=true;pid=56200"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-2082040b-8004-4cb2-a621-67ed7e93f806\\first-effect.txt",
+    "sha256": "58FCFFAAB5AF0D84DAC81D9E0D03ACFB1C61900BD308F6BF227A8801B4C3A903",
+    "content": "checkpoint=COUPON;pid=36336"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-2082040b-8004-4cb2-a621-67ed7e93f806\\first-pid.txt",
+    "sha256": "DBC1CFBC9097DE34E94C278E9EEE6CCC4C402B7176D4298D05E7EC02408FD412",
+    "content": "36336"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-2082040b-8004-4cb2-a621-67ed7e93f806\\second-pid.txt",
+    "sha256": "36F6DB935A0A501AA4B4EC37A822D77980641586464FF76C8B151B62E58E9AA6",
+    "content": "56200"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a0680e76-16da-4eef-b35d-72ad43676a40\\completed.txt",
+    "sha256": "0D41BC2BC4AC3F3DDBEB1E1298CB9C5ACE431E42A9918AA5182DDDBE4E1F2B52",
+    "content": "nonweb=true;pid=15720"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a0680e76-16da-4eef-b35d-72ad43676a40\\first-effect.txt",
+    "sha256": "C1FAB3349F70AD0A712EA78DF49E00AC6C0B804B2FD37C130381BBE8EA7E29A0",
+    "content": "checkpoint=INVENTORY;pid=10956"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a0680e76-16da-4eef-b35d-72ad43676a40\\first-pid.txt",
+    "sha256": "7DDD7145088C1D8DFD390972029E8F8A5F0DB7CB858184856436A8CA57268F8E",
+    "content": "10956"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a0680e76-16da-4eef-b35d-72ad43676a40\\second-pid.txt",
+    "sha256": "94DD088E081BC6A7FFD50348C66B9C9D2E8B7D5A79F81E063AB243136E816599",
+    "content": "15720"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a8a8798b-6d1c-4a4b-abb0-b429996a0dbc\\completed.txt",
+    "sha256": "9F6BDD3DCB9A9C57681846DA37A2285E440683629DE8E7C1ED370713143D01B7",
+    "content": "nonweb=true;pid=47088"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a8a8798b-6d1c-4a4b-abb0-b429996a0dbc\\first-effect.txt",
+    "sha256": "7793AF3F20201BF2F72B09EA31DAD15EFBA896D7FA7D9DE68D1673F8873ACB77",
+    "content": "checkpoint=PREPARED;pid=50608"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a8a8798b-6d1c-4a4b-abb0-b429996a0dbc\\first-pid.txt",
+    "sha256": "C5182C624213E7C94754650955D0A2D0C0399E5CEF654530B9B3DA972C04C00D",
+    "content": "50608"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\zero-worker-a8a8798b-6d1c-4a4b-abb0-b429996a0dbc\\second-pid.txt",
+    "sha256": "325812347FE79E93B08FA8381113777B520A1886448C3FB7D5EBFFF189FFFD5E",
+    "content": "47088"
+  }
+]

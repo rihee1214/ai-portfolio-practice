@@ -1,0 +1,82 @@
+[
+  {
+    "manifest": "P06-A-review-failure-manifest.json",
+    "files": 2162,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-B-failure-manifest.json",
+    "files": 405,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-C-failure-manifest.json",
+    "files": 791,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-D-failure-manifest.json",
+    "files": 882,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-D-commit-failure-manifest.json",
+    "files": 5,
+    "mismatches": []
+  },
+  {
+    "manifest": "P06-E-failure-manifest.json",
+    "files": 1375,
+    "mismatches": []
+  },
+  {
+    "manifest": "P07-A-failure-manifest.json",
+    "files": 2577,
+    "mismatches": []
+  },
+  {
+    "manifest": "P07-B-failure-manifest.json",
+    "files": 2663,
+    "mismatches": []
+  },
+  {
+    "manifest": "P07-C-failure-manifest.json",
+    "files": 1196,
+    "mismatches": []
+  },
+  {
+    "manifest": "P07-D-failure-manifest.json",
+    "files": 2102,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-A-failure-manifest.json",
+    "files": 4721,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-B-failure-manifest.json",
+    "files": 2894,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-B-review1-failure-manifest.json",
+    "files": 576,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-B-cache-fix-failure-manifest.json",
+    "files": 1,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-C-development-failure-manifest.json",
+    "files": 5388,
+    "mismatches": []
+  },
+  {
+    "manifest": "P08-C-development-followup-failure-manifest.json",
+    "files": 1109,
+    "mismatches": []
+  }
+]

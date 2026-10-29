@@ -1,0 +1,2330 @@
+[
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "healthRejectsWrites",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "healthRemainsStatusOnlyWithRequestId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[6]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[7]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[8]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[9]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[10]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[11]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "managementDetailsStayUnavailableEvenWhenWebExposureIsWidened(String)[12]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "noActuatorMBeansAreRegisteredEvenWhenSpringJmxIsEnabled",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+    "name": "heapDumpOperationIsNotCreated",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ActuatorPolicyHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "unsupportedMediaTypeIs415",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "apiRootIsIncluded(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "apiRootIsIncluded(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "unacceptableSuccessRepresentationStillHasJsonError",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "nonApiRetainsDefaultErrorShape(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "nonApiRetainsDefaultErrorShape(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "nonApiRetainsDefaultErrorShape(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "nonApiRetainsDefaultErrorShape(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[6]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "sentStatusHasFixedPublicCode(int, String)[7]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "successfulApiIsNotWrapped",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "unexpectedSyncAndAsyncFailuresAreSafe500(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "unexpectedSyncAndAsyncFailuresAreSafe500(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "invalidInputAndMalformedJsonAreSafe400",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "missingApiAlwaysUsesJson(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "missingApiAlwaysUsesJson(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "missingApiAlwaysUsesJson(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "missingApiAlwaysUsesJson(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "headHasNoResponseBody",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ApiErrorHttpTest",
+    "name": "methodNotAllowedPreservesAllow",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ApiErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "unresolvedPlaceholderDoesNotExposeRawValueOrCause(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[6]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[7]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[8]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "invalidEffectiveSettingFailsBeforeAnyApplicationSingleton(String, String)[9]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "explicitDatasourcePropertiesOverrideMissingEnvironmentVariables",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "validEnvironmentSettingsPassWithoutConnectingToDatabase",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "missingEnvironmentSettingsReportNamesWithoutConnectionAttempt",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.DatabaseSettingsTest",
+    "name": "profileWithoutDbDoesNotRequireDatabaseSettings",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.DatabaseSettingsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet404UsesJsonWithoutInternalDetails(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet404UsesJsonWithoutInternalDetails(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet404UsesJsonWithoutInternalDetails(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet404UsesJsonWithoutInternalDetails(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet404UsesJsonWithoutInternalDetails(String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "servlet405UsesJsonWithoutInternalDetails",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.ErrorHttpTest",
+    "name": "normalHealthOnRealServerUsesSameStatusOnlyContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.ErrorHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "healthRejectsPostWithAllowHeader",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "d1ContextHasNoDatabaseOrMigrationBeans",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "frontendJsonContentNegotiationIsPreserved",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "removedUnknownAndUnexposedPathsReturn404(String)[6]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "healthExposesOnlyUp(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.HealthMvcTest",
+    "name": "healthExposesOnlyUp(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.HealthMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdFilterTest",
+    "name": "exceptionalExitRestoresOuterContext",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdFilterTest",
+    "name": "exceptionalExitWithoutOuterContextRemovesId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdFilterTest",
+    "name": "sequentialRequestsDoNotLeakAndOtherMdcKeysRemain",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdFilterTest",
+    "name": "redispatchKeepsAttributeAndRebindsMdc(DispatcherType)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdFilterTest",
+    "name": "redispatchKeepsAttributeAndRebindsMdc(DispatcherType)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdFilterTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "externalValidMalformedAndDuplicateIdsAreNotTrusted",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "realAsyncRedispatchRebindsTheSameRequestId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "realExceptionErrorDispatchKeepsOriginalRequestId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "requestAttributeMdcHeaderAndLogHaveSameId(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "healthBodyIsUnchangedAndEveryRequestGetsANewServerId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.RequestIdHttpTest",
+    "name": "servlet404And405PreserveStatusAndRequestIdentity",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.RequestIdHttpTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.api.UnhealthyMvcTest",
+    "name": "unavailableHealthReturns503WithoutDetails",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.api.UnhealthyMvcTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleArchitectureTest",
+    "name": "productionClassesRespectModuleBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleArchitectureTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "publicApiCannotDependOnPlatformWeb",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "domainCannotDependOnItsWebLayer",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "otherModuleInternalsAreRejected(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "otherModuleInternalsAreRejected(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "otherModuleInternalsAreRejected(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "otherModuleInternalsAreRejected(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "otherModuleInternalsAreRejected(String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "platformApiCanUseOwnContracts",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "publicApiCannotExposeOwnInternalType",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "platformCannotDependOnBusinessEvenThroughApi",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "businessImplementationCanUsePlatformContracts",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "securityPrincipalCannotLeakIntoApi",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "ownInternalsAndOtherModuleApiAreAllowed",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "genericJdbcTypeIsNotHiddenByJavaList",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "cyclesThroughPublicApisAreRejected",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "publicApiCannotDependOnPlatformEvenIfItsPackageIsNamedApi",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "platformApiCannotExposePlatformInternals",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "jdbcTypesAreRejectedInContractsAndDomain(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "jdbcTypesAreRejectedInContractsAndDomain(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.architecture.ModuleRulesTest",
+    "name": "applicationCanStillUsePlatform",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.architecture.ModuleRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.cart.CartRulesTest",
+    "name": "quantitiesAndCapacityRejectInvalidInputs",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.cart.CartRulesTest",
+    "name": "duplicateSkuQuantitiesSaturateAndSortDeterministically",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.cart.CartRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestInputTest",
+    "name": "acceptsOnlyPurchaseAndNormalizesPhoneAndName",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestInputTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestInputTest",
+    "name": "rejectsOtherPurposeInvalidPhoneAndUnsafeNames",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestInputTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestLinkPolicyTest",
+    "name": "requiresExplicitModeAndMatchingNormalizedPhoneWithoutFallback",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestLinkPolicyTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestLocalPolicyTest",
+    "name": "requiresExplicitLoopbackModeAndRejectsProductionProfiles",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestLocalPolicyTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestPasswordTest",
+    "name": "rejectsMismatchBoundsAndMalformedUnicode",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestPasswordTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.GuestPasswordTest",
+    "name": "preservesSpacesAndUnicodeWithinTwelveTo128CodePoints",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.GuestPasswordTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.guest.RecoverySecretsTest",
+    "name": "usesRandomBoundedSecretsAndConstantHashComparison",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.guest.RecoverySecretsTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.AccountRulesTest",
+    "name": "validatesPhoneAndKoreanPostalCode",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.AccountRulesTest",
+    "name": "validatesCodePointsAndRejectsControlAndBrokenUnicode",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AccountRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.AttemptWindowTest",
+    "name": "windowLimitsAttemptsAndExpiresAtBoundary",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.AttemptWindowTest",
+    "name": "capacityIsBoundedAndFailsClosed",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.AttemptWindowTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupRulesTest",
+    "name": "rejectsAmbiguousOrInvalidEmail",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupRulesTest",
+    "name": "passwordBoundariesCountCodePointsAndDoNotTrim",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupRulesTest",
+    "name": "normalizesEmailWithoutProviderSpecificAliases",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupSecurityTest",
+    "name": "mailboxExpiryAndCapacityAreBounded",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupSecurityTest",
+    "name": "tokensAreIndependentAndOnlyDigestIsStored",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupSecurityTest",
+    "name": "localMailboxHidesReservationsAndCanDiscardRollback",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.SignupSecurityTest",
+    "name": "saltedArgonMatchesUnicodeWithoutTruncationAndRecordsCostOnly",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.SignupSecurityTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+    "name": "withdrawalPasswordAttemptsAreBounded",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+    "name": "bothRecoveryMutationsUseTheBoundedAttemptWindow",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "acceptsExplicitDedicatedTargetWithoutConnecting",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[6]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[7]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[8]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[9]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[10]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[11]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "rejectsUnsafeTargetBeforeConnection(String, String, String)[12]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+    "name": "acceptsDedicatedD2TargetWithoutConnecting",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "name": "rejectsApngDamagedJpegAndOversizedReencodedOutput",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "name": "jpegAndPngAreDecodedAndReencodedWithoutTrailingPayload",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "name": "lossyAndAlphaWebpDecodeAndPreserveAlpha",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "name": "rejectsAnimationSpoofedExtensionsAndBrokenImages",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+    "name": "rejectsByteAndPixelLimitsBeforeFullDecode",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.ImageNormalizerTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+    "name": "unmanagedRootAndNonRegularAssetAreNeverDeleted",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+    "name": "namespaceAndExclusiveProcessLockProtectExistingFiles",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.media.infrastructure.LocalImagesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.order.domain.OrderRequestHashTest",
+    "name": "canonicalInputsExcludeSecrets",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.order.domain.OrderRequestHashTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.order.domain.OrderRulesTest",
+    "name": "forbiddenTransitionsAreRejected",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.order.domain.OrderRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.order.domain.OrderRulesTest",
+    "name": "snapshotAmountsConserve",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.order.domain.OrderRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.order.domain.OrderRulesTest",
+    "name": "snapshotStructureAndUnitAmountsAreValidated",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.order.domain.OrderRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "confirmationExpiresAtExactBoundaryAndConsumesSuccess",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "rejectsWrongNumberOrStaleProof",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "rejectsExpiryDuringProviderCallAndFutureProof",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "resendInvalidatesOldRequestAndLimitsIssuanceAcrossFormats",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "concurrentConfirmationHasExactlyOneWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "failedConfirmationLocksNumberAndResendCannotResetFailures",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "rejectsNonLocalModesAndAddresses",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "normalizesOnlySupportedPhoneFormats",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "failedCodeExchangesShareTheConfirmationFailureBudget",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderTest",
+    "name": "issuanceFailureConsumesQuotaAndInvalidatesPreviousRequest",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.phone.PhoneProviderTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.platform.JobRulesTest",
+    "name": "retryAndLeaseBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.platform.JobRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.CouponReservationRulesTest",
+    "name": "transitionsAndRestoration",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.CouponReservationRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.CouponRulesTest",
+    "name": "couponEligibilityAndSnapshot",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.CouponRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.PromotionRulesTest",
+    "name": "periodAndDiscountBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.PromotionRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.PromotionRulesTest",
+    "name": "safeInputsAndDeterministicMaximum",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.PromotionRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.PromotionRulesTest",
+    "name": "freeShippingCannotPromisePartialDiscount",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.PromotionRulesTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.QuoteCalculatorTest",
+    "name": "allocationConservesEveryWon",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.QuoteCalculatorTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.promotion.QuoteCalculatorTest",
+    "name": "shippingThresholdAndDiscountOrder",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\surefire-reports\\TEST-com.example.marketplace.promotion.QuoteCalculatorTest.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "catalogCategoryHttpContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestOrderConsumesVerificationAtomically",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "expiryBoundaryIsExclusiveAndExpiredTokenRemainsUnconsumed",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponBatchRetryHasOneReadSnapshot",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryBoundariesOwnershipAndReservedFloorAreEnforced",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "jobWritesRecheckLeaseAfterRowLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationReverseBatchesAndManualAdjustmentSerialize",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponBatchInsertPreservesSameBuyerLockOrder",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryLostGrantRestartsWithoutReusingPurchaseProof",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderRetryReturnsSameResult",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderNumberCollisionsRetryWithoutOrphans",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "currentRolesAndAccountVersionAreCheckedEveryRequest",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "initialAdminIsExplicitAtomicAndOnlyOneConcurrentWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestSessionRotationFailureRollsBackAndLookupSerializesWithLogout",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseRechecksAccessAfterLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLinkHttpCsrfAndDisabledBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestBindingReuseAndOneTimeConsumption",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quoteShippingAndZeroTotalsUsePromotionOrder",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestExpiryIsRecheckedAfterDatabaseLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryLatestOnlyOneUseRevokesSessionsAndChangesPassword(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponIssuanceRechecksAuthority",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "cartCapacityRollbackAndSuspension",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaOuterTransactionAndAgedInFlightFileDoNotDeadlockOrGetCollected",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationTerminalAndExpiryRaces",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderHttpCsrfAndCurrentSessionOwnership",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "adminPermissionsAreSeparateAndRevocationAppliesToExistingSession",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuOptionsPricesOwnershipAndVersionsAreEnforcedOverHttp",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponBatchInsertPreservesCrossSellerLockOrder",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestOrderRejectsStaleQuoteAndCurrentCredentialChanges(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryFinalWriteRollbackAndDifferentGrantsHaveOneWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationBatchAndAuditRollback",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "promotionPublicationMatrixAndNumericContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "sellerConcurrentApplicationsAndDecisionsHaveOneWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderCreationLockOrderAndAuthorityRaces",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponCrossClaimsAndManagementTransactions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "authMutationLimitReturns429WithoutChangingAccount",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "sameProductionV1AndFixtureV2MigrateOnce",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryConcurrentKeysHaveOneEffectAndAuditFailureRollsBack",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationDeadlineBoundariesAndRetry",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationLifecycleHasOneEffectAndCompleteAudit",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "caughtRequiredFailureRollsBackEarlierSuccessfulTransfer",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "roleSpacesDenyAnonymousAndBuyerEvenWithForgedSignupFields",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLookupRechecksVersionAfterHashAndEnforcesLocalAndSecureBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryAdministratorPermissionIsRecheckedAfterProductLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "suspendedAndWithdrawnAccountsLoseExistingSessions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "bootUsesVerifiedPostgresAndUnprivilegedRole",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "outboxConcurrentDedupeAndAtomicInsertFailure",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "activationFailureRollsBackTokenConsumption",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestDatabaseFailureLateProviderAndLostResponseRecoverWithoutFalseSuccess",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderCrossSellerAndSameBuyerBatchesSerializeBeforeForeignKeys",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestProviderStagesWindowsAndRestartFailClosed",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderOwnerAndAttemptConstraints",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryAdjustmentIsVersionedAuditedAndIdempotent",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "publicStoreReadNeedsOnlyOneDatabaseConnection",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "purchaseAccountLockAllowsAuditForeignKeysButExcludesMutations",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationRechecksWaitsAndQuoteContent",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "promotionPublicationAndTime",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeLifecycleHttpKeepsBuyingAndRestrictsNewSales",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaConcurrentCreateReplaceDeleteHasOneWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestHttpRequiresCsrfAndBrowserBindingWithoutGrantingAccountAccess",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponRestorationPreservesExpiryAndCause",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryInitialLimitAndCredentialRacesAreSerialized",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderAuthorityChangesAfterActualRowWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseRequiresBothCredentials",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderManualStockAdjustmentSerializesAndRechecksAvailability",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponAvailabilityRetryAndPagingBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "invalidSettingsFailBeforeSingletonsWithRealDatabaseAutoConfigurationEnabled",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryExpiryRollbackAndIneligibleMembersLeaveStateUntouched",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "anonymousAuthenticationContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryGlobalRequestKeyCollisionRollsBackOtherOwnersBalance",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryResetRollbackExpiryAndRotationKeepBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestBusinessExpiryBeforeAndAfterProviderAndSessionExpiry",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "signupHttpRequiresCsrfAndReturnsNoSecrets",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quoteMultipleLinesFingerprintAndHttpContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "workerHeartbeatProtectsLongHandler",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "sellerApplicationOwnershipPaginationAndNarrowSecurityException",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseConsumptionIsAtomic",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "promotionOwnershipVersionAndAudit",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryConcurrentIssueAndConsumeLeavesOnlyReplacementValid",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "cartOwnershipCrudAndPublicAvailability",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLookupLimitsAndCredentialFailuresAreUniformAndDurable",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderAdministratorAuditLocksDoNotCycle",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryConcurrentConsumptionAndLatestRequestSerialize",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "concurrentDuplicateHasExactlyOneCommitAndOneMail",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLinkPreparationIsBoundToCurrentAttempt",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quotesUseCurrentAuthorizedInputs",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestPasswordHashPreparationAndCreationAreBoundAtomicAndNeverMerge",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationBatchesAndOuterTransactionRollBack",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "jobLeaseFencesStaleWorkers",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLinkRejectsOtherBuyerAndRecoveryProofs",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestConcurrentVerificationHasOneWinnerAndNoExternalTransaction",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponHttpAmountsAndStoreIdentity",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "verificationRechecksExpiryAfterTokenLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "signupPersistsOnlyHashesAndBuyerThenVerificationActivates(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponCheckoutCannotAcceptAnotherBatch",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "categoryAuditIsAtomicAndOwnedByOperator",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationIsAtomicAndIdempotent",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryRechecksExternalWorkExpiryVersionAndDisabledMode",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderGuestAttemptBindingSurvivesCheckoutRestart",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderHttpRechecksSessionAfterActualAccountWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeCloseIsAtomicConcurrentAndKeepsCapabilityBoundary",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "browseSearchFiltersSortAndPages",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "csrfCannotBeOmittedOrCopiedBetweenSessions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponBatchMigrationPreservesPriorDataAndRejectsConflicts",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "realDatabaseHealthPreservesStatusOnlyAndRequestId",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestNewPurchaseNeverMergesByPhone",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryHttpRequiresCsrfAndDoesNotRevealEligibility",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderCreationRollsBackAllParticipants",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponIssuanceIsBoundedAndIdempotent",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "stateChangesRollbackAndSerializeAndCannotBypassServicePermission",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuDefaultTransitionIsAtomicAndSerializedWithActivation",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "addressConcurrentFirstDefaultAndCapacityPreserveInvariants",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryRequiresEveryFactorAndConsumesGrantOnce",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderMultiStoreUnitsAndDatabaseBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationValidationAndDatabaseConstraints",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "sellerApplicationHttpSubmissionReviewAndBuyerRolePreserved",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderCartReconciliationPreservesChangedAndAddedItems",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "invalidCredentialsAndUnverifiedAccountsHaveSameJsonFailure",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponCommitReleaseAndExpiryRace",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "duplicateReferenceRollsBackUpdatesAlreadyMade",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaRollbackAndCleanupKeepCurrentReferencesAndRetryPartialFailure",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponBatchConcurrentIdenticalInsertsRespectAllUniqueKeys",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryRechecksExpiryAfterWaitingForMemberLock",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "workerDispatchesOutsideTransactionsAndRejectsDuplicateTypes",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuConcurrentChangesDuplicatesAndCapacityHaveOneWinner",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "productCreatesOneInactiveDefaultSkuWithPublicEligibility",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaUploadReplaceDeleteAndDirectUrlRespectVisibility",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "invalidInputDoesNotWriteOrDeliver",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "inventoryHistoryPagesAndUpgradePreserveSkuData",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "profileAndAddressOwnershipDefaultAndRollback",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "workerRestartKeepsDurableEffects",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "recoveryFailureAfterSessionDeleteRollsBackAllState",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quoteReadSnapshotSurvivesConcurrentPrices",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "memberReadsNeedOnlyOneDatabaseConnection",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "loginRotatesSessionPersistsInJdbcAndLogoutRevokesCookie(CapturedOutput)",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestPasswordHashingRechecksExpiryOutsideTransactions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeInputLimitsAndInvalidUpdatesLeaveSavedValuesUnchanged",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderLastStockHasOneWinnerAndNoPartialCoupon",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLinkRevisionAndSlowPasswordCannotRestoreOldChoice",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "productDescriptionAcceptsMultilineButTitleRemainsSingleLine",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "jobRetryAndDueBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "promotionArchivedTargetsCanBeRetiredWithoutBypassingOwnership",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderConcurrentKeysHaveOneDurableResult",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeOperatorPermissionsAndConcurrentEditSuspendKeepRestriction",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderDeadlineAndMalformedSnapshotsLeaveNoRows",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLookupSessionsEnforceIdleMaximumVersionRotationAndLogout",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "promotionAccessAfterLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLookupHttpChecksCsrfCookieUniformErrorsAndMemberSeparation",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "sellerDecisionsRejectInvalidTransitionsAndRollbackRoleAndHistory",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "callerRollbackAlsoRollsBackSignupAndDiscardsUnpublishedMail",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "categoryWaiterRechecksRevokedPermissionAndWritesNoAudit",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "expiredJdbcSessionCannotAuthenticateOrReuseCsrf",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationCrossSellerAndConcurrentRetries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "workerFailureResultsAreDurableAndSanitized",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaOrphanScanWaitingForSingleConnectionDoesNotHoldFileMonitor",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "browseRejectsInvalidQueriesAndIsReadOnly",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "databaseConstraintsPreventNegativeBalanceAndOrphanEntry",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mailboxPreparationFailureRollsBackAllSignupRows",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponRestoreCannotAffectNewReservation",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuHttpTypesAndPublicFiltersRemainStrict",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeHttpOwnershipVisibilityAndVersion",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryLateFailureRollsBackAndSerializesWithLookup",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationCrossSkuReverseOrderItemKeysAreSerialized",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "checkoutAttemptsAndOrderNumbersAreDistinct",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "concurrentTokenConsumptionHasExactlyOneSuccess",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponReservationRechecksDistinctBuyerSellerChanges",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "catalogValidationPublicEligibilityAndConcurrentUpdates",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseRacesPasswordChangeWithoutDeadlock",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "browseVisibilityAndDetailAvailability",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "wishlistCapacityConcurrencyAndSuspension",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestPasswordPreparationReplacementsCannotChangeConsumedBuyer",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponOwnershipAndTemplateSnapshot",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryCodesChangePasswordsAndRevokeAllSessions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationExpiryIsCheckedAfterBalanceLock",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quoteSnapshotsRemainStable",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "normalizedDuplicateIsRejectedWithoutExtraCredentialOrMail",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseRechecksPurchaseAfterLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponFullRestoreRejectsUnusedStates",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationCrossSkuReverseReservationKeysAreSerialized",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestResendFailureAndSourceLimitsPersistAcrossSessions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "databaseProfileDoesNotExposeManagementDetailsOrJmx",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestNewLinkFailureRollsBackBuyerAndConsumption",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "parametersAndMappingHandleQuotesUnicodeDecimalAndNull",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "checkedFailureAfterDebitRollsBack",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponFixtureIsDisabledOutsideTests",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestLookupLockWaitRechecksExpiryAndRevocation",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "catalogProductHttpOwnershipLifecycleAndPublicFilters",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryRechecksGrantAfterBuyerLockAndHashSideEffects",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "wishlistOwnershipVisibilityAndIdempotency",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "skuMigrationBackfillsExistingProductsAndCreationRollsBackAtomically",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "successCommitsBothBalancesAndEntry",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "reservationLastUnitRaceAndKeyCollisions",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryHttpRejectsCsrfAndReturnsUniformPrivateErrors",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryLimitsSurviveFailuresAndExpireAtWindowBoundary",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "signupAndVerificationHttpRejectCsrfAndBadInputWithoutChanges",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "cartMergeReplayAndConcurrentUpdates",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRepurchaseCannotOverwriteCredentials",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "databaseSettingsValidatorAndActualDataSourceCoexist",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "browseDistinctFiltersSortAndOptionPrices",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "storeConcurrentCreateAndUpdateAndValidation",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "guestRecoveryCrossBuyerLoginAndVersionChangesCannotRestoreRevokedState",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponTransitionsAndRestoreAuditFailuresRollback",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "quoteRejectsEveryUnavailableProjection",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "orderSnapshotsSurviveSourceChanges",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "couponDifferentRestoreCausesCannotAffectNextUse",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "outboxJoinsBusinessTransaction",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "verificationRechecksExpiryAfterMemberLockWait",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "mediaStoreOwnershipCsrfAndPublicProjectionAreEnforced",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.phone.PhoneProviderEmulatorIT",
+    "name": "browserSdkAndJavaVerifierEnforceProviderContract",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-c-dev2-20261027\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.phone.PhoneProviderEmulatorIT.xml"
+  }
+]

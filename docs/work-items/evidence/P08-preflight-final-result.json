@@ -1,0 +1,26 @@
+{
+  "commit": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "evidence": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-preflight-20261027-02",
+  "status": "passed",
+  "browser": 68,
+  "dirty": [
+    " M README.md",
+    " M docs/implementation-plan.md",
+    "?? docs/work-items/P08-A.md",
+    "?? docs/work-items/P08-B.md",
+    "?? docs/work-items/P08-C.md",
+    "?? docs/work-items/P08-D.md",
+    "?? docs/work-items/P08-E.md",
+    "?? docs/work-items/P08-F.md",
+    "?? docs/work-items/P08-F1.md",
+    "?? docs/work-items/P08-F2.md",
+    "?? docs/work-items/P08-G.md",
+    "?? docs/work-items/P08.md"
+  ],
+  "junit": 348,
+  "preservation": "passed",
+  "finished": "2026-10-27T15:33:55.8437602+09:00",
+  "started": "2026-10-27T15:29:23.7703362+09:00",
+  "frontendUnit": 162,
+  "scope": "Existing implementation through P07-D"
+}

@@ -1,0 +1,131 @@
+[WebServer] (node:50952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 84 tests using 1 worker
+
+(node:34176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.9s)
+  ok  2 [desktop] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (721ms)
+  ok  3 [desktop] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.4s)
+  ok  4 [desktop] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.6s)
+  ok  5 [desktop] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (2.0s)
+  ok  6 [desktop] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+  ok  7 [desktop] › auth-e2e\browse.spec.ts:2:1 › 공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다 (1.1s)
+  ok  8 [desktop] › auth-e2e\cart.spec.ts:2:1 › 방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다 (2.4s)
+  ok  9 [desktop] › auth-e2e\cart.spec.ts:65:1 › 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 (673ms)
+  ok 10 [desktop] › auth-e2e\catalog.spec.ts:24:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (5.7s)
+  ok 11 [desktop] › auth-e2e\coupon-reservations.spec.ts:2:1 › 쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다 (1.4s)
+C lookup: prepared and fixture created
+C lookup: independent page ready
+C lookup: authenticated after lost response
+C lookup: logout verified
+  ok 12 [desktop] › auth-e2e\guest-lookup.spec.ts:2:1 › 직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다 (2.0s)
+  ok 13 [desktop] › auth-e2e\guest-recovery.spec.ts:2:1 › 복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다 (1.7s)
+  ok 14 [desktop] › auth-e2e\guest-recovery.spec.ts:47:1 › 최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다 (1.5s)
+  ok 15 [desktop] › auth-e2e\guest-recovery.spec.ts:73:1 › 재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다 (764ms)
+  ok 16 [desktop] › auth-e2e\guest-repurchase.spec.ts:57:1 › 재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다 (2.0s)
+  ok 17 [desktop] › auth-e2e\guest-repurchase.spec.ts:76:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 (1.8s)
+  ok 18 [desktop] › auth-e2e\guest-repurchase.spec.ts:89:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 (1.5s)
+  ok 19 [desktop] › auth-e2e\guest.spec.ts:3:1 › 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 (996ms)
+  ok 20 [desktop] › auth-e2e\guest.spec.ts:62:1 › 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 (660ms)
+  ok 21 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 22 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 23 [desktop] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.2s)
+  ok 24 [desktop] › auth-e2e\input-flow.spec.ts:43:1 › 상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다 (322ms)
+MANAGED_STORE found on page 5
+  ok 25 [desktop] › auth-e2e\lifecycle.spec.ts:13:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.5s)
+  ok 26 [desktop] › auth-e2e\orders-create.spec.ts:6:1 › 회원 두 매대 주문은 응답 유실에도 같은 키로 복구하고 변경된 장바구니를 보존한다 (1.6s)
+  ok 27 [desktop] › auth-e2e\orders-create.spec.ts:19:1 › 비회원은 실제 전화 인증과 새 묶음 준비 후 두 매대 주문을 생성하고 조회한다 (1.8s)
+  ok 28 [desktop] › auth-e2e\orders-create.spec.ts:25:1 › 가격 충돌은 새 견적 확인과 새 키를 요구하고 세션 만료 후 자동 재전송하지 않는다 (1.4s)
+  ok 29 [desktop] › auth-e2e\payments-mock.spec.ts:5:1 › 결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다 (834ms)
+  ok 30 [desktop] › auth-e2e\payments-mock.spec.ts:8:1 › 응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다 (3.1s)
+  ok 31 [desktop] › auth-e2e\payments-mock.spec.ts:11:1 › 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 (1.5s)
+  ok 32 [desktop] › auth-e2e\payments-sandbox.spec.ts:6:1 › 로컬 테스트 SDK 인증 주소는 확정하지 않고 명시적 서버 승인으로 전체 예약을 확정한다 (1.1s)
+  ok 33 [desktop] › auth-e2e\payments-sandbox.spec.ts:9:1 › 로컬 제공자 승인 응답 유실은 서버 재조회로 수렴하고 성공 주소 변조는 승인하지 않는다 (3.4s)
+  ok 34 [desktop] › auth-e2e\promotions.spec.ts:2:1 › 판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다 (2.2s)
+  ok 35 [desktop] › auth-e2e\promotions.spec.ts:60:1 › 공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다 (1.4s)
+  ok 36 [desktop] › auth-e2e\purchase.spec.ts:10:1 › 회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다 (1.2s)
+  ok 37 [desktop] › auth-e2e\purchase.spec.ts:32:1 › 방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다 (1.6s)
+  ok 38 [desktop] › auth-e2e\quotes.spec.ts:2:1 › 서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다 (1.7s)
+MANAGED_STORE found on page 5
+  ok 39 [desktop] › auth-e2e\seller-journey.spec.ts:15:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (3.4s)
+  ok 40 [desktop] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (1.9s)
+  ok 41 [desktop] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.5s)
+(node:2456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+coupon stage: anonymous boundary
+coupon stage: owned loaded
+coupon stage: twin reload
+coupon stage: csrf boundary
+coupon stage: claim intercept
+coupon stage: claim recovery
+coupon stage: claim idempotent
+coupon stage: stop issuance
+coupon stage: snapshot reload
+coupon stage: logout
+  ok 42 [desktop] › auth-e2e\coupons.spec.ts:3:1 › 회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다 (3.5s)
+(node:41328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 43 [mobile] › auth-e2e\access.spec.ts:11:1 › 직접 접근·새로고침·역할/개별 운영 권한 경계를 화면에서 확인 (1.9s)
+  ok 44 [mobile] › auth-e2e\account.spec.ts:6:1 › 탈퇴 확인 후 이전 계정 로그인과 직접 회원 API 접근을 차단한다 (688ms)
+  ok 45 [mobile] › auth-e2e\account.spec.ts:45:1 › 프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로 확인 (1.5s)
+  ok 46 [mobile] › auth-e2e\account.spec.ts:84:1 › 비밀번호 복구 뒤 이전 세션·비밀번호를 거부하고 새 비밀번호로 로그인 (1.7s)
+  ok 47 [mobile] › auth-e2e\auth.spec.ts:13:1 › 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 (2.0s)
+  ok 48 [mobile] › auth-e2e\auth.spec.ts:66:1 › 입력·미확인·토큰 오류·반복 실패를 화면에서 처리 (1.3s)
+  ok 49 [mobile] › auth-e2e\browse.spec.ts:2:1 › 공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를 연결한다 (1.2s)
+  ok 50 [mobile] › auth-e2e\cart.spec.ts:2:1 › 방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다 (2.3s)
+  ok 51 [mobile] › auth-e2e\cart.spec.ts:65:1 › 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 (613ms)
+  ok 52 [mobile] › auth-e2e\catalog.spec.ts:24:1 › 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 (6.4s)
+  ok 53 [mobile] › auth-e2e\coupon-reservations.spec.ts:2:1 › 쿠폰 예약·사용·전체복구를 재조회하고 재시도와 다른 회원 접근을 검증한다 (1.5s)
+C lookup: prepared and fixture created
+C lookup: independent page ready
+C lookup: authenticated after lost response
+C lookup: logout verified
+  ok 54 [mobile] › auth-e2e\guest-lookup.spec.ts:2:1 › 직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶음만 조회한다 (1.9s)
+  ok 55 [mobile] › auth-e2e\guest-recovery.spec.ts:2:1 › 복구 코드와 별도 전화 재인증으로 비밀번호를 바꾸고 이전 세션을 폐기한다 (1.8s)
+  ok 56 [mobile] › auth-e2e\guest-recovery.spec.ts:47:1 › 최초 코드·재발급·변경 응답 유실은 현재 비밀번호로 로그인하여 복구한다 (1.5s)
+  ok 57 [mobile] › auth-e2e\guest-recovery.spec.ts:73:1 › 재설정 권한 응답을 잃으면 성공을 표시하지 않고 새 인증의 재요청 제한을 안내한다 (766ms)
+  ok 58 [mobile] › auth-e2e\guest-repurchase.spec.ts:57:1 › 재구매 연결은 조회 인증과 현재 전화 인증을 요구하고 응답 유실·다른 탭 충돌을 복구한다 (2.0s)
+  ok 59 [mobile] › auth-e2e\guest-repurchase.spec.ts:76:1 › 같은 번호의 새 구매도 별도 묶음이며 조회 로그아웃 뒤 기존 연결을 사용할 수 없다 (1.8s)
+  ok 60 [mobile] › auth-e2e\guest-repurchase.spec.ts:89:1 › 등록 번호와 다른 구매 번호는 기존 묶음 연결을 거부하고 새 묶음으로 안내한다 (1.4s)
+  ok 61 [mobile] › auth-e2e\guest.spec.ts:3:1 › 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 (1.0s)
+  ok 62 [mobile] › auth-e2e\guest.spec.ts:62:1 › 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 (696ms)
+  ok 63 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 375px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.3s)
+  ok 64 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 768px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.3s)
+  ok 65 [mobile] › auth-e2e\input-flow.spec.ts:3:35 › 입력 흐름 1440px는 키보드 상품·옵션·수량·주소와 실패 복구를 연결한다 (1.4s)
+  ok 66 [mobile] › auth-e2e\input-flow.spec.ts:43:1 › 상품 요청 대기와 오류를 안내하고 키보드 재시도로 실제 상품을 복원한다 (378ms)
+MANAGED_STORE found on page 3
+  ok 67 [mobile] › auth-e2e\lifecycle.spec.ts:13:1 › 판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 공개 화면을 제한한다 (2.5s)
+  ok 68 [mobile] › auth-e2e\orders-create.spec.ts:6:1 › 회원 두 매대 주문은 응답 유실에도 같은 키로 복구하고 변경된 장바구니를 보존한다 (1.5s)
+  ok 69 [mobile] › auth-e2e\orders-create.spec.ts:19:1 › 비회원은 실제 전화 인증과 새 묶음 준비 후 두 매대 주문을 생성하고 조회한다 (1.7s)
+  ok 70 [mobile] › auth-e2e\orders-create.spec.ts:25:1 › 가격 충돌은 새 견적 확인과 새 키를 요구하고 세션 만료 후 자동 재전송하지 않는다 (1.4s)
+  ok 71 [mobile] › auth-e2e\payments-mock.spec.ts:5:1 › 결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다 (899ms)
+  ok 72 [mobile] › auth-e2e\payments-mock.spec.ts:8:1 › 응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다 (3.1s)
+  ok 73 [mobile] › auth-e2e\payments-mock.spec.ts:11:1 › 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 (1.4s)
+  ok 74 [mobile] › auth-e2e\payments-sandbox.spec.ts:6:1 › 로컬 테스트 SDK 인증 주소는 확정하지 않고 명시적 서버 승인으로 전체 예약을 확정한다 (1.2s)
+  ok 75 [mobile] › auth-e2e\payments-sandbox.spec.ts:9:1 › 로컬 제공자 승인 응답 유실은 서버 재조회로 수렴하고 성공 주소 변조는 승인하지 않는다 (3.5s)
+  ok 76 [mobile] › auth-e2e\promotions.spec.ts:2:1 › 판매자가 상품·배송 행사를 공개하고 응답 유실·충돌 뒤 서버 상태를 다시 확인한다 (2.2s)
+  ok 77 [mobile] › auth-e2e\promotions.spec.ts:60:1 › 공개 행사 목록은 다음 페이지와 대상 매대 상세를 제공한다 (1.5s)
+  ok 78 [mobile] › auth-e2e\purchase.spec.ts:10:1 › 회원 찜은 저장·새로고침·삭제와 로그아웃 후 비노출을 실제 DB로 확인한다 (1.2s)
+  ok 79 [mobile] › auth-e2e\purchase.spec.ts:32:1 › 방문자와 회원 주문서 준비는 두 매대로 묶고 빈 장바구니 직접 진입을 차단한다 (1.7s)
+  ok 80 [mobile] › auth-e2e\quotes.spec.ts:2:1 › 서버 견적은 매대별 배송·쿠폰과 가격 변경을 반영하고 이전 응답은 유지한다 (1.7s)
+MANAGED_STORE found on page 4
+  ok 81 [mobile] › auth-e2e\seller-journey.spec.ts:15:1 › 동일 회원이 신청·승인·매대 공개·정지·복구·재공개·폐점까지 이어간다 (3.4s)
+  ok 82 [mobile] › auth-e2e\seller.spec.ts:14:1 › 모의 판매 신청·반려·재신청·승인과 구매자 자격 유지 (2.1s)
+  ok 83 [mobile] › auth-e2e\store.spec.ts:5:1 › 판매자 매대 생성·수정·공개·비공개와 공개 페이지 새로고침 (1.6s)
+(node:37820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+coupon stage: anonymous boundary
+coupon stage: owned loaded
+coupon stage: twin reload
+coupon stage: csrf boundary
+coupon stage: claim intercept
+coupon stage: claim recovery
+coupon stage: claim idempotent
+coupon stage: stop issuance
+coupon stage: snapshot reload
+coupon stage: logout
+  ok 84 [mobile] › auth-e2e\coupons.spec.ts:3:1 › 회원 쿠폰은 발급 응답 유실·중복 요청 뒤 복구되고 기존 조건과 만료 표시를 유지한다 (3.5s)
+
+  84 passed (2.5m)

@@ -1,0 +1,25 @@
+{
+  "added": [
+    "backend/src/main/java/com/example/marketplace/fulfillment/api/Shipments.java",
+    "backend/src/main/java/com/example/marketplace/fulfillment/domain/ShipmentRules.java",
+    "backend/src/main/java/com/example/marketplace/fulfillment/infrastructure/JdbcShipments.java",
+    "backend/src/main/java/com/example/marketplace/fulfillment/infrastructure/MockShipmentJobs.java",
+    "backend/src/main/java/com/example/marketplace/fulfillment/web/ShipmentController.java",
+    "backend/src/main/java/com/example/marketplace/order/api/FulfillmentOrders.java",
+    "backend/src/main/resources/db/migration/V36__basic_shipments.sql",
+    "backend/src/test/java/com/example/marketplace/dbtest/OneJobJdbc.java",
+    "backend/src/test/java/com/example/marketplace/dbtest/ShipmentWorkerProbe.java",
+    "backend/src/test/java/com/example/marketplace/fulfillment/domain/ShipmentRulesTest.java"
+  ],
+  "changed": [
+    "backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+    "backend/src/main/java/com/example/marketplace/order/api/OrderQueries.java",
+    "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderQueries.java",
+    "backend/src/main/java/com/example/marketplace/order/web/OrderErrors.java",
+    "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentJobs.java",
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "verification/required-tests.json",
+    "verify.ps1"
+  ],
+  "deleted": []
+}

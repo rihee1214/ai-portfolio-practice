@@ -1,3 +1,7 @@
+import { PaymentPage } from './payment/PaymentPage'
+import { OrdersPage } from './pages/OrdersPage'
+import { OrderDetailPage } from './pages/OrderDetailPage'
+import { SellerShipmentsPage } from './pages/SellerShipmentsPage'
 import { CouponPage, CouponTemplatePage } from './pages/CouponPages'
 import { PromotionPage, PublicPromotionPage } from './pages/PromotionPages'
 import { CheckoutPage } from './pages/PurchasePages'
@@ -45,9 +49,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
-          <Route path="/checkout/guest" element={<GuestPage />} />
+          <Route path="/payments/:number" element={<PaymentPage />} /><Route path="/payments/:number/success" element={<PaymentPage />} /><Route path="/payments/:number/failure" element={<PaymentPage />} /><Route path="/checkout/guest" element={<GuestPage />} />
           <Route path="/guest/recovery" element={<GuestRecoveryPage />} /><Route path="/guest/security" element={<GuestRecoveryPage manage />} />
-          <Route path="/guest/orders/login" element={<GuestOrdersPage />} /><Route path="/guest/orders" element={<GuestOrdersPage />} />
+          <Route path="/guest/orders/login" element={<GuestOrdersPage />} /><Route path="/guest/orders" element={<GuestOrdersPage />} /><Route path="/guest/orders/:number" element={<OrderDetailPage guest />} />
           <Route path="/events" element={<PublicPromotionPage />} /><Route path="/events/:id" element={<PublicPromotionPage />} /><Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
@@ -57,19 +61,21 @@ export default function App() {
             <Route path="/verify-email" element={<AuthForm key="verify" mode="verify-email" />} />
             <Route path="/login" element={<AuthForm key="login" mode="login" />} />
             <Route path="/account">
+              <Route path="orders" element={<OrdersPage />} /><Route path="orders/:number" element={<OrderDetailPage />} />
               <Route path="coupons" element={<CouponPage />} /><Route path="wishlist" element={<WishlistPage />} /><Route path="seller-application" element={<SellerApplicationsPage />} />
               <Route index element={<AccountPage />} />
               <Route path="profile" element={<AccountDetailsPage key="profile" resource="profile" />} />
               <Route path="addresses" element={<AccountDetailsPage key="addresses" resource="addresses" />} />
               <Route element={<WorkspaceLayout workspace={workspaces[0]} />}>
-                {workspaces[0].features.filter(feature => !['addresses','wishlist','coupons'].includes(feature.path)).map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
+                {workspaces[0].features.filter(feature => !['addresses','wishlist','coupons','orders'].includes(feature.path)).map(feature => <Route key={feature.path} path={feature.path} element={<FeaturePage feature={feature} />} />)}
               </Route>
             </Route>
           {workspaces.filter(workspace => workspace.path !== '/account').map((workspace) => (
             <Route key={workspace.path} path={workspace.path} element={<ProtectedWorkspace workspace={workspace} />}>
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
+              {workspace.path === '/seller' && <Route path="orders/:id" element={<SellerShipmentsPage />} />}
               {workspace.features.map((feature) => (
-                <Route key={feature.path} path={feature.path} element={workspace.path === '/seller' ? feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
+                <Route key={feature.path} path={feature.path} element={workspace.path === '/seller' ? feature.path === 'orders' ? <SellerShipmentsPage /> : feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}

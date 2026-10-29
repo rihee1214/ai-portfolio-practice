@@ -15,7 +15,7 @@ public final class JdbcSellerMembership implements SellerMembership {
     public JdbcSellerMembership(NamedParameterJdbcTemplate jdbc, AccessPolicy access) { this.jdbc = jdbc; this.access = access; }
     @Override public boolean lockActiveBuyer(UUID member) {
         if (!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
-        var states = jdbc.queryForList("SELECT state FROM marketplace.identity_user WHERE id=:id FOR UPDATE", Map.of("id", member), String.class);
+        var states = jdbc.queryForList("SELECT state FROM marketplace.identity_user WHERE id=:id FOR NO KEY UPDATE", Map.of("id", member), String.class);
         var roles = jdbc.queryForList("SELECT role FROM marketplace.role_assignment WHERE user_id=:id", Map.of("id", member), String.class);
         if (states.isEmpty() || !"ACTIVE".equals(states.getFirst()) || !roles.contains("BUYER")) { throw new AccountException("STATE_CONFLICT"); }
         return roles.contains("SELLER");

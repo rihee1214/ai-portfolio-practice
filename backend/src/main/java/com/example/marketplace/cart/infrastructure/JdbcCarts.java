@@ -38,9 +38,10 @@ public final class JdbcCarts implements Carts {
     private List<Input> stored(UUID owner) { return jdbc.query("SELECT sku_id,quantity FROM marketplace.cart_item WHERE user_id=:id ORDER BY sku_id",Map.of("id",owner),(r,n)->new Input(r.getObject(1,UUID.class),r.getInt(2))); }
     private View view(UUID owner) {
         var versions=jdbc.queryForList("SELECT version FROM marketplace.cart WHERE user_id=:id",Map.of("id",owner),Long.class);
-        return new View(versions.isEmpty()?0:versions.getFirst(),lines(stored(owner)));
+        var revisions=jdbc.queryForList("SELECT sku_id,revision FROM marketplace.cart_item WHERE user_id=:id",Map.of("id",owner));
+        return new View(versions.isEmpty()?0:versions.getFirst(),stored(owner).stream().map(i->new Line(i.skuId(),i.quantity(),browse.forSku(i.skuId()),revisions.stream().filter(r->i.skuId().equals(r.get("sku_id"))).map(r->((Number)r.get("revision")).longValue()).findFirst().orElseThrow())).toList());
     }
-    private List<Line> lines(List<Input> items) { return items.stream().map(i->new Line(i.skuId(),i.quantity(),browse.forSku(i.skuId()))).toList(); }
+    private List<Line> lines(List<Input> items) { return items.stream().map(i->new Line(i.skuId(),i.quantity(),browse.forSku(i.skuId()),0)).toList(); }
     @Override public View preview(List<Input> items) { return new View(0,lines(CartRules.normalize(items))); }
     @Override public View get(UUID owner) { return tx.execute(status->{lockOwner(owner);return view(owner);}); }
     @Override public View set(UUID owner,UUID sku,int quantity,long expected) {
@@ -55,10 +56,27 @@ public final class JdbcCarts implements Carts {
         });
     }
     private void put(UUID owner,Input item) {
-        jdbc.update("INSERT INTO marketplace.cart_item(user_id,sku_id,quantity) VALUES(:owner,:sku,:quantity) ON CONFLICT(user_id,sku_id) DO UPDATE SET quantity=excluded.quantity",Map.of("owner",owner,"sku",item.skuId(),"quantity",item.quantity()));
+        jdbc.update("INSERT INTO marketplace.cart_item(user_id,sku_id,quantity,revision) VALUES(:owner,:sku,:quantity,(SELECT version+1 FROM marketplace.cart WHERE user_id=:owner)) ON CONFLICT(user_id,sku_id) DO UPDATE SET quantity=excluded.quantity,revision=excluded.revision",Map.of("owner",owner,"sku",item.skuId(),"quantity",item.quantity()));
     }
     @Override public View clear(UUID owner,long expected) {
         return tx.execute(status->{lockOwner(owner);version(expected,lockCart(owner));jdbc.update("DELETE FROM marketplace.cart_item WHERE user_id=:id",Map.of("id",owner));bump(owner);return view(owner);});
+    }
+    @Override public View reconcile(UUID owner,UUID orderId,List<Submitted> submitted) {
+        if(orderId==null||submitted==null||submitted.isEmpty()||submitted.size()>20||submitted.stream().anyMatch(i->i==null||i.skuId()==null||i.quantity()<1||i.quantity()>99||i.revision()<0)||submitted.stream().map(Submitted::skuId).distinct().count()!=submitted.size()) { throw new CartException(400); }
+        var items=submitted.stream().sorted(java.util.Comparator.comparing(i->i.skuId().toString())).toList();
+        String payload=items.stream().map(i->i.skuId()+":"+i.quantity()+":"+i.revision()).collect(java.util.stream.Collectors.joining(","));
+        return tx.execute(status->{
+            lockOwner(owner);long current=lockCart(owner);
+            int inserted=jdbc.update("INSERT INTO marketplace.cart_order_cleanup(order_id,user_id,payload) VALUES(:order,:owner,:payload) ON CONFLICT DO NOTHING",Map.of("order",orderId,"owner",owner,"payload",payload));
+            if(inserted==0) {
+                var prior=jdbc.queryForMap("SELECT user_id,payload FROM marketplace.cart_order_cleanup WHERE order_id=:id",Map.of("id",orderId));
+                if(!owner.equals(prior.get("user_id"))||!payload.equals(prior.get("payload"))) { throw new CartException(409); }
+                return view(owner);
+            }
+            version(current,current);int deleted=0;
+            for(var item:items) { deleted+=jdbc.update("DELETE FROM marketplace.cart_item WHERE user_id=:owner AND sku_id=:sku AND quantity=:quantity AND revision=:revision",Map.of("owner",owner,"sku",item.skuId(),"quantity",item.quantity(),"revision",item.revision())); }
+            if(deleted>0) { bump(owner); }return view(owner);
+        });
     }
     @Override public View merge(UUID owner,UUID requestId,List<Input> items) {
         if(requestId==null) { throw new CartException(400); }

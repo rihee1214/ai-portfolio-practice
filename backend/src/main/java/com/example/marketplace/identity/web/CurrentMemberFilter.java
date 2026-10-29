@@ -39,6 +39,7 @@ final class CurrentMemberFilter extends OncePerRequestFilter {
             context.setAuthentication(UsernamePasswordAuthenticationToken.authenticated(
                     current, null, current.getAuthorities()));
             SecurityContextHolder.setContext(context);
+            request.setAttribute(com.example.marketplace.identity.api.PurchaseSessions.AUTH_VERSION_ATTRIBUTE,current.authVersion());
         }
         chain.doFilter(request, response);
     }

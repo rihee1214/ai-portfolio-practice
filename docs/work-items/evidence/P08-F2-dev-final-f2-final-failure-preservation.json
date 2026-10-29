@@ -1,0 +1,12 @@
+{
+  "checked": "2026-10-28T21:19:28.7735581+09:00",
+  "beforeManifests": 30,
+  "afterManifests": 30,
+  "beforeFiles": 60795,
+  "afterFiles": 60795,
+  "manifestOwnShaChanged": 0,
+  "missing": 0,
+  "changed": 0,
+  "conflicts": 0,
+  "passed": true
+}

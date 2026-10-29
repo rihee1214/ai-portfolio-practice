@@ -1,0 +1,1358 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\_metadata.json",
+    "sha256": "2D17B60E39336CF1EA5557BED12189E052F63A8D052B279DAD6263B33DA60077"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\firebase_app.js",
+    "sha256": "FB287929DDCBF8B1D5EA0E4E150D133853A0A49D8763E2BB6A6A0E3DD38E0B85"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\firebase_auth.js",
+    "sha256": "0DF022B983A1B34090DBA0D9B33B3B7FEA17B0811746841D7FD0A80B0583BF99"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\index.esm-Btck6knh.js",
+    "sha256": "FA3690BB660BCA00A32661BD46F829B2CAB534A377AF648059CF6BFD6E323403"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\index.esm-Btck6knh.js.map",
+    "sha256": "5AE3CD5DC2A861BC162E30F32D558D047D7721FC7FCD7542225845BBA58584D0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react_jsx-dev-runtime.js",
+    "sha256": "0DA9F17CA11EB65D0EC6B34319A935DE0128BD6FFA76FB842F85211929A864DE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-BXPoIc2D.js",
+    "sha256": "40CEE7EF558C151B04332B71B905F27166A2BFBEE136DF7E14BBB21590404084"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-BXPoIc2D.js.map",
+    "sha256": "E2ACE44141DB83308EDA81B2464320B27F882EAC8CA488C11763BAEF5BF4EE7F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-dom_client.js",
+    "sha256": "66E14D0926897FA392B54948F778E3636894E66157ACE834D6072A1DA0D8765E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-router.js",
+    "sha256": "56DBAD808E0BF9ADFB3F3C402A9FDA57DE9804C373AA2AD5E017EDC14F05770A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps\\react.js",
+    "sha256": "EFD9462D7BB758D84FD52D1CC0B852FC98D12693023638A38A0A4DD7EA4F35A6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_002dd434\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_1d517e0d\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_2ecfadfa\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_43e90ef8\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_4b6eb05f\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_560345b0\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_5db00cf9\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_69f1e012\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_75a98311\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_7aee0b9c\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_967af265\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_a3eb8f22\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b2b06a37\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_b44b4567\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_be3d9461\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cb37e3f2\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cd79cd39\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_cfcbe9d5\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_d5b69c31\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\firebase_app.js",
+    "sha256": "5F0131B5EA94891B96C8746AE0B2A27D0D237176DB84AF4195552C87B0FF8FB1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\firebase_app.js.map",
+    "sha256": "189DCCDB30BF460050A311A88EF4A220ECA72C014DD2E2CC4291A55A76B77283"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\firebase_auth.js",
+    "sha256": "8FE715D8F2FF71F151F4693DB191779E34F6393B70EDA86EB4F85967F9BF0CE6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\firebase_auth.js.map",
+    "sha256": "16AE3CED196BF223BAC002D71B9B2ED4CAA200CC6E12DF4EBB6C947485A82330"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\index.esm-DRy3Ph90.js",
+    "sha256": "52A1ABC084610CBD8B5EF919386C8015073A3BF2F0FC3ACD7F816D2A8ACBB979"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\index.esm-DRy3Ph90.js.map",
+    "sha256": "380182739487B488937C28DD8A2DC5E3D84CCF31E9E2FFFBB0B4621097187510"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\package.json",
+    "sha256": "3CA9D4AFD21425087CF31893B8F9F63C81B0B8408DB5E343CA76E5F8AA26AB9A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react_jsx-dev-runtime.js",
+    "sha256": "38728449CACF31C957E3AF679C3C03EAEF372D1A4DCDE05FE9DC53DF89C49BEC"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react_jsx-dev-runtime.js.map",
+    "sha256": "9CB889FB49D8B32498605D4FA6D6B76A250145935BE258625923B53D33EF57FB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-B5n0qS82.js",
+    "sha256": "8B1D9EC455AC6C5327E359F05762EA0B4EDEBB7D818510C0B95BE2651D1F2D16"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-B5n0qS82.js.map",
+    "sha256": "B83216DDA5C9728CC7D6E18974A1989DD4974373D2BA25003204FF4E2016D7E6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-dom_client.js",
+    "sha256": "6FAE5655CF1F28AF5685B59E39532D412B69715886BD0DCAD0F80F71569E655B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-dom_client.js.map",
+    "sha256": "8F9B8D63A68ACDCAD6167F30D0EE64E6AABD9C8A6BEBBE2C930561FAF7CEA58E"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-router.js",
+    "sha256": "E87E6659CF63010C4B63AD263348907FABBF5D8EB83BACE79A55012554A8F94B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react-router.js.map",
+    "sha256": "B37C1E8DCF55C78EE3DA52596DE1D19230910793C6D8BA4DF18E7600E0DC7452"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\deps_temp_f31e4391\\react.js",
+    "sha256": "DA4D8F1334DDA4DA1CBA9FC2C67E51ACC701CB621A97306535530751A33D8106"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\vitest\\CACHEDIR.TAG",
+    "sha256": "27152E3A202F6AD01EF3BED0C581CBB1C38E0FC8842C23017C59F2DD8DA54662"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\frontend\\node_modules\\.vite\\vitest\\da39a3ee5e6b4b0d3255bfef95601890afd80709\\results.json",
+    "sha256": "50861504AE0FD639D18090BB550E15469CEEA9E0DB60C414104122EE081F086F"
+  }
+]

@@ -3,7 +3,9 @@ import type {AuthStore} from '../auth/AuthStore'
 import {QuoteStore,formatMoney,type LineRequest} from './QuoteStore'
 import {CouponStore,couponStatus} from './CouponStore'
 import {Link} from 'react-router'
-export function QuotePanel({auth,lines}:{auth:AuthStore;lines:LineRequest[]}){
+import type {CartStore} from '../cart/CartStore'
+import {OrderCreationPanel} from '../order/OrderCreationPanel'
+export function QuotePanel({auth,lines,cart}:{auth:AuthStore;lines:LineRequest[];cart?:CartStore}){
  const [quotes]=useState(()=>new QuoteStore(auth)),[coupons]=useState(()=>new CouponStore(auth))
  const state=useSyncExternalStore(quotes.subscribe,quotes.getSnapshot),owned=useSyncExternalStore(coupons.subscribe,coupons.getSnapshot),member=useSyncExternalStore(auth.subscribe,auth.getSnapshot)
  useEffect(()=>quotes.connect(),[quotes]);useEffect(()=>coupons.connect(),[coupons])
@@ -19,5 +21,6 @@ export function QuotePanel({auth,lines}:{auth:AuthStore;lines:LineRequest[]}){
  <p>상품 정가: {formatMoney(s.subtotal)}</p><p>상품 행사 할인: {formatMoney(s.productDiscount)}</p><p>쿠폰 할인: {formatMoney(s.couponDiscount)}</p><p>기본 배송비: {formatMoney(s.shippingBase)}</p><p>배송 행사 할인: {formatMoney(s.shippingDiscount)}</p><p>매대 견적: {formatMoney(s.total)}</p>
  {s.lines.map(l=><details key={l.skuId}><summary>{l.title} · {l.quantity}개 · 할인 후 {formatMoney(l.net)}</summary>{l.promotion&&<p>상품 행사: {l.promotion.title} (가장 큰 할인, 동률은 행사 ID 순)</p>}{l.units.map(u=><p key={u.ordinal}>{u.ordinal+1}번째 상품: {formatMoney(u.net)} · 행사 {formatMoney(u.promotionDiscount)} · 쿠폰 {formatMoney(u.couponDiscount)}</p>)}</details>)}{s.shippingPromotion&&<p>배송 행사: {s.shippingPromotion.title}</p>}
  </section>)}{state.quote&&<p data-testid="quote-total">현재 견적 합계: {formatMoney(state.quote.total)}</p>}
+ {cart&&<OrderCreationPanel auth={auth} cart={cart} quote={state.quote} refresh={quotes.refresh}/>}
  </section>
 }

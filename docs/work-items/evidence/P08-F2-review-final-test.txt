@@ -1,0 +1,104 @@
+
+> marketplace-frontend@0.0.1 test
+> node --test tests/*.test.mjs
+
+✔ health {"kind":"success","status":200,"data":{"status":"UP"}} => healthy (0.6745ms)
+✔ health {"kind":"success","status":201,"data":{"status":"UP"}} => invalid (0.0917ms)
+✔ health {"kind":"success","status":200,"data":{"status":"UNKNOWN"}} => unhealthy (0.051ms)
+✔ health {"kind":"success","status":200,"data":{"status":"DOWN"}} => unhealthy (0.0546ms)
+✔ health {"kind":"http","status":503,"data":{"status":"DOWN"}} => unhealthy (0.0636ms)
+✔ health {"kind":"http","status":503,"data":{"status":"OUT_OF_SERVICE"}} => unhealthy (0.2138ms)
+✔ health {"kind":"http","status":503,"data":{"status":"UP"}} => connection-error (0.1047ms)
+✔ health {"kind":"http","status":502} => connection-error (0.1069ms)
+✔ health {"kind":"network"} => connection-error (0.0962ms)
+✔ health {"kind":"invalid-response","status":200} => invalid (0.1894ms)
+✔ health {"kind":"success","status":200,"data":null} => invalid (0.0812ms)
+✔ health {"kind":"success","status":200,"data":{"status":7}} => invalid (0.0834ms)
+✔ health {"kind":"cancelled"} => cancelled (0.0691ms)
+✔ new request wins even when the cancelled transport resolves late; dispose prevents updates (0.3255ms)
+✔ JSON request preserves path and sends Accept; returns unknown data with HTTP status (21.3592ms)
+✔ HTTP DOWN keeps parsed error body (0.3421ms)
+✔ HTML success is a contract error (0.2732ms)
+✔ malformed JSON is a contract error (0.3612ms)
+✔ 204 has no JSON document (0.1898ms)
+✔ malformed error JSON still preserves HTTP failure (0.2335ms)
+✔ empty proxy error keeps HTTP status (0.6836ms)
+✔ non-JSON HTTP error keeps status (0.1588ms)
+✔ network failure and caller cancellation are distinct (0.2301ms)
+✔ cancellation during body read is not malformed JSON (0.6819ms)
+✔ a JSON body interrupted by the connection is a network failure, not malformed JSON (0.2484ms)
+✔ phone probe cleans owned resources after listen failure (1.2301ms)
+✔ phone probe cleans owned resources after launch failure (0.6534ms)
+✔ phone probe cleans owned resources after run failure (0.1276ms)
+✔ phone probe cleans owned resources after browser-close failure (0.104ms)
+✔ phone probe diagnostics identify network stage and cause without printing credentials (0.2304ms)
+✔ phone probe diagnostics bound aggregate network causes and redact untrusted stage names and messages (0.1709ms)
+▶ dev: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (30.6555ms)
+  ✔ /api/%2e%2e/actuator/health (3.2595ms)
+  ✔ /api/%2e%2e%2factuator/env (1.8315ms)
+  ✔ /api/..;/actuator/env (1.7797ms)
+  ✔ /api/%252e%252e/actuator/env (2.2781ms)
+  ✔ /api/..%5cactuator/env (12.5529ms)
+  ✔ //actuator/env (5.8945ms)
+  ✔ /%61ctuator/env (1.5548ms)
+  ✔ /ACTUATOR/env (0.9493ms)
+  ✔ /%61pi/missing (0.8729ms)
+  ✔ /API/missing (0.825ms)
+  ✔ /api%2fmissing (0.8377ms)
+  ✔ /actu%61tor/%zz (1.0266ms)
+  ✔ ordinary API identifiers and exact health remain usable (30.7416ms)
+✔ dev: API path aliases cannot escape into management routes or SPA fallback (190.4412ms)
+▶ preview: API path aliases cannot escape into management routes or SPA fallback
+  ✔ /api/../actuator/env (1.6881ms)
+  ✔ /api/%2e%2e/actuator/health (0.8295ms)
+  ✔ /api/%2e%2e%2factuator/env (0.6728ms)
+  ✔ /api/..;/actuator/env (0.6517ms)
+  ✔ /api/%252e%252e/actuator/env (0.767ms)
+  ✔ /api/..%5cactuator/env (0.7255ms)
+  ✔ //actuator/env (0.8366ms)
+  ✔ /%61ctuator/env (0.6317ms)
+  ✔ /ACTUATOR/env (0.7968ms)
+  ✔ /%61pi/missing (0.8335ms)
+  ✔ /API/missing (0.7672ms)
+  ✔ /api%2fmissing (0.7182ms)
+  ✔ /actu%61tor/%zz (0.7357ms)
+  ✔ ordinary API identifiers and exact health remain usable (15.9663ms)
+✔ preview: API path aliases cannot escape into management routes or SPA fallback (44.5992ms)
+✔ concurrent proxy test servers own distinct caches outside the shared frontend cache (335.8578ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-A9YzVt
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-dRXWPt
+▶ dev: real partial responses terminate on upstream failure
+  ✔ silent (10044.0877ms)
+  ✔ stall (10041.5869ms)
+  ✔ disconnect (346.1433ms)
+  ✔ stream (12052.6498ms)
+  ✔ caller cancels while reading body and can retry (305.7968ms)
+✔ dev: real partial responses terminate on upstream failure (12452.5074ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-ALRvVD
+ℹ disconnect: 340ms {"kind":"network"}
+ℹ silent: 10040ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10039ms {"kind":"network"}
+ℹ stream: 12048ms {"kind":"success","status":200,"data":{"status":"UP"}}
+▶ preview: real partial responses terminate on upstream failure
+  ✔ silent (10010.9832ms)
+  ✔ stall (10011.4155ms)
+  ✔ disconnect (317.6252ms)
+  ✔ stream (12016.544ms)
+  ✔ caller cancels while reading body and can retry (304.4942ms)
+✔ preview: real partial responses terminate on upstream failure (12332.1264ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-nYLCw8
+ℹ disconnect: 315ms {"kind":"network"}
+ℹ silent: 10007ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10007ms {"kind":"network"}
+ℹ stream: 12014ms {"kind":"success","status":200,"data":{"status":"UP"}}
+✔ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (358.3542ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-s34ro6
+ℹ tests 75
+ℹ suites 0
+ℹ pass 75
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25113.786

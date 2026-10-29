@@ -1,0 +1,62 @@
+{
+  "checked": "2026-10-28T22:13:14.8269856+09:00",
+  "evidence": ".local-tools/p08-g-dev1-20261028",
+  "database": "d2_it_2730407667434a10b15c2e061f4ea60e",
+  "readOnly": true,
+  "productionQuotaChanged": false,
+  "counts": [
+    {
+      "source": "127.0.0.1",
+      "recordedAttempts": 20,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.2",
+      "recordedAttempts": 13,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.3",
+      "recordedAttempts": 14,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.4",
+      "recordedAttempts": 4,
+      "productionLimit": 20,
+      "withinLimit": true
+    }
+  ],
+  "phoneCounts": [
+    {
+      "source": "127.0.0.1",
+      "recordedSends": 20,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.2",
+      "recordedSends": 0,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.3",
+      "recordedSends": 0,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.4",
+      "recordedSends": 2,
+      "productionLimit": 20,
+      "withinLimit": true
+    }
+  ],
+  "browserSourceBudget": "Old GAS .1=20/.2=13/.3=14; new G real TCP .4 GAS4 and phone2 in separate quota tables, old phone .1=20. No source/phone counter resets/config changes.",
+  "limitations": "Persisted counters do not count rejected over-limit attempts; combine with actual successful browser report and explicit status assertions.",
+  "passed": true
+}

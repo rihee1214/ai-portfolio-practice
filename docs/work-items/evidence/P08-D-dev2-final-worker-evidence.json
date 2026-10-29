@@ -1,0 +1,517 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\completed.txt",
+    "sha256": "17A92E465E995A3C245B80F439C9EEC4757CFFC4E0FA7A6ACA1E74DC0CF975E4",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\first-effect.txt",
+    "sha256": "B066A6F9EA777317D908C6DB99AE8830FA289CA008BE4E7DD3AEC68FADBE1ECB",
+    "bytes": 29
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\first-pid.txt",
+    "sha256": "60922AB40CC80C9D7CC8FDEE41B8C1F8CBF010F97C0F10FF0AE19A0F79A05A0F",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\first.args",
+    "sha256": "2FE3C0B29252678FE38D1D74B8C8DFE4466E72856A364BFDF61B1E7244AFF521",
+    "bytes": 32963
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\first.log",
+    "sha256": "D67B483D6091750BA68414AAE521B9DE48A3379CC48E5ABCEDE7AFFB1EA8F149",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\second-pid.txt",
+    "sha256": "4433080BE68EABDD338BDA9C8C30BEE3FC1F696B6212F13BCB77721E1D738C7A",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\second.args",
+    "sha256": "9EA6BF7FEA5ED9EBF2CCD721A600FF606B1E75BFAF41CD3DA0B0A90D3B15955C",
+    "bytes": 32965
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\second.log",
+    "sha256": "ABC4E11347445CBC174F469DFD54A0FBBEB1661CA908ED8A550721DAE2F51C17",
+    "bytes": 2617
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-10354e2f-bfc4-4dbf-9286-f81de3eac22d\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\completed.txt",
+    "sha256": "80184BB66AE2D48760BA4AFD41A999B126E69FDBBFF29DB866999D2236AAF2FE",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\first-effect.txt",
+    "sha256": "B99D98888AD11B53BF7E4EA798B3D80D315EB39F1C7FC273631BBFFCF77D1A4B",
+    "bytes": 29
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\first-pid.txt",
+    "sha256": "40D3EAF3E0DD6D11E985EFB38E4C88B4A1600625B8742BA46E01D0CB198867B2",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\first.args",
+    "sha256": "F78E07A91253705C375672CD32DE100C708457F4B3248F08B4D9658DD3FB2D9B",
+    "bytes": 32960
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\first.log",
+    "sha256": "879BBF8255C3C49B60D3D5404D00222EDEA9D454C6297A9A0F498DBE3EDEC48A",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\second-pid.txt",
+    "sha256": "5BDA785199D6FA0882FEAD5B6A5080484303C3FD90109ED7ECB36FEE6F056F5E",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\second.args",
+    "sha256": "F4D416C77C658A5C85CAC519B94588393F62DB6E14F03693586DB516CD0735D7",
+    "bytes": 32962
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\second.log",
+    "sha256": "0093B03D5725CFF5D34BD7256CF25E7445658E21ACE06F67441538D0C8FDFBF3",
+    "bytes": 2618
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\approval-worker-e88d3315-9143-4f74-83c6-b04d39f30e50\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-0-effect.txt",
+    "sha256": "6BC80E33F0D9725D7E37A98F273DEA5268E3909A7073A003E60F2EF9DC70C05C",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-0-pid.txt",
+    "sha256": "A7746F884B38D0E8F4220B74495E380269DBE392363D1521E83D7C7A73429B65",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-0.args",
+    "sha256": "2B1B2FC8591417752CBA89A10EF97E5DBFADFCEBF938507832A8D8A21B0804F5",
+    "bytes": 32905
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-0.log",
+    "sha256": "2BA18E6015254FDA9F49180E6D61B7AE77BE4FEF088B211B72DBE5490D1E7A77",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-1-effect.txt",
+    "sha256": "1735BCC5E548B8D05A86D424BE14212931689993C629504EF0726F3C5D08E5A5",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-1-pid.txt",
+    "sha256": "E5BBF372B82B5332213DCFF566764D36A62C6E36FA7A10B9371B2C89D3A46020",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-1.args",
+    "sha256": "933FC071F99180C341F6FF2FA79E80AFD288F2C96689DFD314A9F5B8BCAEAEC0",
+    "bytes": 32905
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-1.log",
+    "sha256": "8F0CA47783DB6ADB55FA3F51EDEDA412AFF520A3145D0B0B7BA91C339410F82A",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-2-effect.txt",
+    "sha256": "AFF1E6C1D201F16B426D5E5704AA23D6AB206A4DBF9EEA20254EF71768B63ED3",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-2-pid.txt",
+    "sha256": "F773A2FF600A7A545D6A2B11EC2ED513200D651EDE8303F0FA0709AFE808E7ED",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-2.args",
+    "sha256": "07D0599A4EB2DE43ED467C38CAFB816FA0DFBE45F0D884634E92BC1302350710",
+    "bytes": 32905
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-2.log",
+    "sha256": "1D1BDFC28F7561C9EAA585AA4B8D7F0FE2CEF7472D8D661BA88080EF47A9BBCB",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-3-effect.txt",
+    "sha256": "A91D5C3C678566CAF49EDBC861EB8D7E5417E55A14EBD45A1219E40DB74C0456",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-3-pid.txt",
+    "sha256": "53779C7CD53B0AA14E66D75A2DA671D9294F71F482BEF1093624CE0486E300B6",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-3.args",
+    "sha256": "838D9B2D8E72982640202EAB518777F28BA832A51B359219E110EA1542AACCDC",
+    "bytes": 32905
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-3.log",
+    "sha256": "84156E1A2D46E09DD449327BFAC90B65C7B0D788FCB5C49278CE709CFC63BAD8",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-4-effect.txt",
+    "sha256": "1A01B2B578F37822B645ABCB712EFAFD3D9607BEC1EFD39606BBD2F34FFE2EC6",
+    "bytes": 32
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-4-pid.txt",
+    "sha256": "B0A1CAFD46C582F82B4CD19B94D6E1DCE4305E3536EFB5949E3FC1193496D802",
+    "bytes": 4
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-4.args",
+    "sha256": "AF659A88C33927C0FC49D01E61B0157655954FA402E78AFD37DD8033588213EE",
+    "bytes": 32905
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\crash-4.log",
+    "sha256": "B2E6EFD34687A3AD2993AA537D7891CA1BC999BF24C07B44ECEDE551447BD546",
+    "bytes": 2100
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\exhausted-worker-761c5566-2c2e-438a-b9fa-55edcb159253\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\completed.txt",
+    "sha256": "26A36B3C42A9DABCF3F0698F3EDC0507DD4F170784E2C1C36720B8859810B03F",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\first-effect.txt",
+    "sha256": "DECBEBD5C49AA2F69E2C54D8BF96526DA1C28EA120C582B16F71CB62DE683EFC",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\first-pid.txt",
+    "sha256": "592AD4269EBE384F9CA44E8EDB5EF1D6F48061806A7CF3D1F1F7F2FD6D6D4184",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\first.args",
+    "sha256": "D623C747AD670EF3FFB46637006547936622E6ECD77CAC95088C4BA76A6681A2",
+    "bytes": 32899
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\first.log",
+    "sha256": "612D5CFAC7D15BCFE2D67CB1572D3A1ABA919B08D98108D545B1746265B9A583",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\second-pid.txt",
+    "sha256": "70D347FEF6C3487BAE6F4C4C9636FF1864173E83E5E8ABF4B179D4955AD49764",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\second.args",
+    "sha256": "7504FFFEFD0E1F1FE74F98477E28E08418C8502F2CF96A8DD8AC4A35A35ECBA7",
+    "bytes": 32890
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\second.log",
+    "sha256": "6BB42DD7119E4C84EFEA505041E821E62EA7D0ECA0A7F72FF3C4B59FAC479E33",
+    "bytes": 2616
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-62014093-2009-4cab-b1f7-c5a5bd5bc34a\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\completed.txt",
+    "sha256": "E83847884B0C3AADC9D625B18BFFC6A154110C1D2D1D6BD0874AC8EC926175C5",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\first-effect.txt",
+    "sha256": "65D2DCAA47434770D2A4D88F82385557CDCDAABC7E8CF0A2DF9DA6838C197497",
+    "bytes": 33
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\first-pid.txt",
+    "sha256": "5F1183E16DAFD122CED695B93E88AE02E9F396ED43BA8FD6EC0DBD993EAF8521",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\first.args",
+    "sha256": "C454326D1E4022FFCBE920BCD51D49056BAC9B2D73CBC5A54CD519C966B7A11F",
+    "bytes": 32899
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\first.log",
+    "sha256": "E0C6B0A5777B5EE985EA54E6A9B531E7E08296B33B0B4AC4326B795B7005DCF7",
+    "bytes": 2110
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\second-pid.txt",
+    "sha256": "E22478B154F26B62107E7DED46232B944AB46A3D36AFAA7D20CD1679C7F9D847",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\second.args",
+    "sha256": "13469F24FF5C7FE17B5E414607EB4B35008E452D86712554AB8CF59089575A4B",
+    "bytes": 32891
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\second.log",
+    "sha256": "097994A09D3C319915CFBA9BE7AEEB49C9B60665E25ED05BBA3057636A82763C",
+    "bytes": 2616
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\payment-worker-6b5ddd6f-08bd-41c1-9c36-6d95e2f24678\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\completed.txt",
+    "sha256": "C8EF77A4A73762E056BA76DABE0F606C2F7649B89DBEDD34A694D0F5A07FA9F2",
+    "bytes": 38
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\first-effect.txt",
+    "sha256": "DF90F68BAC7112F92626B520384FC27BBAA9BA2E0696D198FBEC61497A8912D9",
+    "bytes": 26
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\first-pid.txt",
+    "sha256": "279B652C1925CC5A9216069643F45E358189973B7695A5704D9071AEF0D76DD0",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\first.args",
+    "sha256": "43BC9824CC5AA54692260E483F59B929B26678DCEDCF1A38AEBB42890ACE1A59",
+    "bytes": 32814
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\first.log",
+    "sha256": "2225B1A725DE68304E009271604805984BE477FCD116705454C59ADCC3F3A755",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\second-effect.txt",
+    "sha256": "B01E41F5FFBE2B85BADA7DD087F3B02E8EB8071E51994FE69A8846902F48D9DB",
+    "bytes": 26
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\second-pid.txt",
+    "sha256": "9A5C27EE65DFB628882610B51F9678401A6FBE214F1957E0E1751CF10EF0EA00",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\second.args",
+    "sha256": "0ABD08A5F8687EE57BFA6CF6C70C2674A1B663C2A555F5060109698AA2CF23C9",
+    "bytes": 32816
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\second.log",
+    "sha256": "04472F81D4C68BB82901F21C7565904710FB40391D62E576C346D1EADF5B0439",
+    "bytes": 2616
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\worker-a6b6457e-a33e-4d84-abb1-94e98fa6e17d\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\completed.txt",
+    "sha256": "4877A5F198E806506D874BC264075BA8AC67310C304E26E06193A8819BC2DB35",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\first-effect.txt",
+    "sha256": "BF224347F24AE2517425898E9B4D97941C848F98DED5A45D62B16779DAF32239",
+    "bytes": 30
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\first-pid.txt",
+    "sha256": "99B75F5982B83DD87618200538E3CC1D77D6B4115084296D6452D9FC9249C89D",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\first.args",
+    "sha256": "AFD8E60AE0D584E946684059C0D30B65E26E5DBF99955E899F227BF0B59D19D6",
+    "bytes": 32956
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\first.log",
+    "sha256": "52E81CB5850E6ED87CE48345C5D31D0FD708F9E4FDC48B5A95675185B424E487",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\second-pid.txt",
+    "sha256": "AEAD1C0C4523A4CD1D2590083CA09D48B4570CB86705B7145D41471ED4F94D68",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\second.args",
+    "sha256": "03ABD621B6E5E5EC1D13C663D648282F864EE7C19574CDC415A62D940609115B",
+    "bytes": 32958
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\second.log",
+    "sha256": "A3D079FD0D6DAF4B2A9F8CEC3D556EAE15198D2FD604D996C8C80DC982FECFF8",
+    "bytes": 2618
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-15ee7108-70c9-4fb2-b2f2-9a276b49cd0d\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\completed.txt",
+    "sha256": "928FD6170C7637E17D92452A2A560D5DEE8024619682D4042C230C0A84EB22A6",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\first-effect.txt",
+    "sha256": "C464966DF76EB9A8EF3D7166BFA0A24F11D92E5074F2D9D581992DB217CB5A9A",
+    "bytes": 29
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\first-pid.txt",
+    "sha256": "2C65D45E479458EDDFEA5C400DC82DC9DCDCA3A79481CDA50AB70DA9A887E837",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\first.args",
+    "sha256": "0BEA77BEB6736A0703B332D1C6469898174E31557A80C3DF6E59D3C7358A573A",
+    "bytes": 32955
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\first.log",
+    "sha256": "35479C1AF19EE7571EEC0033A1D0F40D58E792312048708AF9EB5F610AB4ADF6",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\second-pid.txt",
+    "sha256": "FD1375994AEE9533170F19E94D89FB91AC50C2CF95B769E3FD0C3267F7BB8CA2",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\second.args",
+    "sha256": "A92E8E2BC9ED1493CF808F4FBCE50CB396FA093A2C1B8E1C168D4A40908859FC",
+    "bytes": 32957
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\second.log",
+    "sha256": "5EE422781B74BA90957A02CB52AA2A613A9F14545EF4976E4444E27E7403C3B0",
+    "bytes": 2618
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-5159e35b-8c90-4cc7-befa-d161c7b6c70a\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\completed.txt",
+    "sha256": "BB8EE4B7733BE6A0B87A36EA1B50294DBD7DE2E1F288BAE37B2205E4B1535E01",
+    "bytes": 21
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\first-effect.txt",
+    "sha256": "1F054D7C704D11F60D848D5D8532E37345D8AF2FC20B648B64DF65989FB33F98",
+    "bytes": 27
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\first-pid.txt",
+    "sha256": "63A1B909BC8ACC8C97A2C1FEE436CCEA7AEF4170B808865A8A1FA8E69A54C08A",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\first.args",
+    "sha256": "AB62F163BFA61CB56FCEFBE06569F13F54C474D2C170765746BC1DA410EB60B3",
+    "bytes": 32953
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\first.log",
+    "sha256": "93B2129B849993CA61CB8634636508E461F93FB67693F8E12281C78090AC78AB",
+    "bytes": 2109
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\second-pid.txt",
+    "sha256": "A5DABB1F9C8D402B8D503014066A1D893D8AE74A09DC9218F27A18FA1CBF7A9E",
+    "bytes": 5
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\second.args",
+    "sha256": "1CCD846C22C0C3429640D799D84F7711EE3DB7EBC0C0AE7B3CDED7DEEF9491EE",
+    "bytes": 32955
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\second.log",
+    "sha256": "1961D22158AB05F3C3DE377AED4D8BC0A25E46D7AEEAADE6B77C6331CCEA8653",
+    "bytes": 2618
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\media\\.database",
+    "sha256": "1506DAAFBC66E37C1C7F34B2E4F3184B325DB81F86F5475C547BE8FA7AEBB0AE",
+    "bytes": 36
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\zero-worker-c011927a-dc8c-4ad4-a73f-80162ea8afa3\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "bytes": 0
+  }
+]

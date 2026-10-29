@@ -1,0 +1,3 @@
+db-test-1  | 2026-10-27 06:55:31.433 UTC [356566] ERROR:  duplicate key value violates unique constraint "coupon_batch_identity"
+db-test-1  | 2026-10-27 06:55:31.433 UTC [356566] DETAIL:  Key (checkout_id, member_id, request_hash)=(42994b4a-0324-4f3b-8372-76249bf24fab, 395fcb07-e2e4-423b-8df9-37dd88c4af47, 498def73dd90f1df489c3050ad6943c3adfe8bef463bc2deb2492d9bfb9810d9) already exists.
+db-test-1  | 2026-10-27 06:55:31.433 UTC [356566] STATEMENT:  INSERT INTO marketplace.coupon_reservation_batch(checkout_id,member_id,request_hash) VALUES($1,$2,$3) ON CONFLICT(checkout_id) DO NOTHING

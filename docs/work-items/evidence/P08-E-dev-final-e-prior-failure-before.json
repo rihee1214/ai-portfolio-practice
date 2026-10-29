@@ -1,0 +1,107 @@
+{
+  "checked": "2026-10-28T17:24:23.4901825+09:00",
+  "manifestCount": 24,
+  "uniqueFiles": 36552,
+  "manifestConflicts": 0,
+  "missing": 0,
+  "changed": 0,
+  "passed": true,
+  "manifests": [
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-A-commit-failure-manifest.json",
+      "sha256": "1E0F539E1C1165F6D3D69382E0FC15D935EFB98E5B4A35840DFC362C377A36E6"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-B-commit-failure-manifest.json",
+      "sha256": "00D4E8E5176634E101368691E6E05DF1E634FAF0AF7096630F0512EF4826136A"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-B-failure-manifest.json",
+      "sha256": "C79BB344FF795FC2A69BC2734EAC9C82F7E306C861A5820F15C0E14D9355F17C"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-C-failure-manifest.json",
+      "sha256": "D04B51D96E687C44ECE22F2373FD96C41740660A55611DC344CB39BF901BB9B2"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-D-commit-failure-manifest.json",
+      "sha256": "335EF003821E3E699D2DAACDD5E4DA959955BA10AC848C8A58850FF34801984C"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-D-failure-manifest.json",
+      "sha256": "2016C3BEB1176B1DDB9C3E691C8600B0154A937EA18A44D9A051565417A69C21"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-A-review-failure-manifest.json",
+      "sha256": "B5F03AC34504869CE3688BB32D4CB762194A234CEBE3D5FFE87AC1449CADDEDA"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-B-failure-manifest.json",
+      "sha256": "15EBA6BD3409D324253DFEC38116CA3891F5DC2E859575BCBA9D4EE3F2E38652"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-C-failure-manifest.json",
+      "sha256": "D36C5187B2EDB452F15B6048C61C09C3F36CD58D7CB89CF7F1797A65D7253508"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-D-commit-failure-manifest.json",
+      "sha256": "53F34FD738D0D6B968820DD28B51A7CC6867700C5EBB9DC70B5C3D3AB99156B8"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-D-failure-manifest.json",
+      "sha256": "8A83B6445F8E9300597B95E3398051015990A98542DF1F5FEBF76479D8A9E24C"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-E-failure-manifest.json",
+      "sha256": "BA39F097CB71B5D18F6766DF21CA38746347BE6BF4D2149171B8B6FD2B54ECA9"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-A-failure-manifest.json",
+      "sha256": "F997BA02AC0A2555A0F82A42B1D71E5E86C9AB3969223AD34B25F7455B3E80DC"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-B-failure-manifest.json",
+      "sha256": "30EBD1F3F7003883646E32EBFA5FED7FFAF8D5DE68951E828C660C825E544B94"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-C-failure-manifest.json",
+      "sha256": "078CA4EEB27A23F198BF089B28DA448C63DA8D15BCE6F3DE50195B481764785A"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-D-failure-manifest.json",
+      "sha256": "D4177E2EF38918B52F129CECA6020AB5D59595C4132BD3C0259DFE62E95D6292"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-A-failure-manifest.json",
+      "sha256": "720A0F59B01D8B68DAD385EA6576B566D86612F62B86E0491225CC5F6CD5025E"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-cache-fix-failure-manifest.json",
+      "sha256": "63742FBA0BDFB1573906B36BE2AE485E0EF86B54F0A9DFEF16624D52F6F1E993"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-failure-manifest.json",
+      "sha256": "D5BD3CC22C7C85B8AFB23F3351AD7C3D77CAE93F33246BD7BBEF0795623C5CD2"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-review1-failure-manifest.json",
+      "sha256": "AD2F090E43F55736919F62CE7FE75B2AB4420E4E9F042EFC55311F00040F6C25"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-C-development-failure-manifest.json",
+      "sha256": "81B597E3F5D94032F823CA8044CEF66AFE7FEB061845E7A6C7E21C411DB7D091"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-C-development-followup-failure-manifest.json",
+      "sha256": "DD3D428F57CEBFFD7CDE02D811E2AD31B060208091B4341C37DD16C45A476BA6"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-D-development-failure-manifest.json",
+      "sha256": "993DDAB4C92C4384F4CFFC7917ADF6DA2687D215828D88648B0CBF797E900B50"
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-D-development-followup-failure-manifest.json",
+      "sha256": "EBC575B7DCD31F39AA5BA2BDC89FA5CA800004128F21E78A0BA7403F0BFE08EF"
+    }
+  ]
+}

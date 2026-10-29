@@ -1,0 +1,246 @@
+{
+  "scope": "G final developer proof; independent pending and G05 blocked",
+  "artifactCount": 48,
+  "artifacts": [
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-after.json",
+      "sha256": "B0E50FDF14753F5CD5CCBEABA7CE35E3871D8787C6B8E27B5E0D1C6F7675FEB8",
+      "bytes": 497513
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-before.json",
+      "sha256": "5498BBF595AFC794A45116E8A377D720B2196A10C53EA46981699BDF340197BA",
+      "bytes": 493906
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-browser-coverage.json",
+      "sha256": "B24C47B3B510802CCDDC0D32772E94F5163B2798DD52CA56286C00D9525CD2DD",
+      "bytes": 13464
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-build.txt",
+      "sha256": "F3A86032C8B2CD4AE6EFE79902BB3B75E3A06F4092B088D9807802D9DDB3593A",
+      "bytes": 797
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-coverage.json",
+      "sha256": "B8197C701E0D20D4E83C804D0FA0C65F3207CDDA6DC5FE224194EF087AE7B2DD",
+      "bytes": 45519
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-browser-report.json",
+      "sha256": "D1838DF58DCFD3D4AA5E6B9F0F88004A585CB84CE0539DB76D42CE0A6A954064",
+      "bytes": 129171
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-browser.txt",
+      "sha256": "4959B699C2F5A31C184A589186BC9B9F027063D142D17A57176646DE19D671B6",
+      "bytes": 18629
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-build-failsafe-reports-TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml",
+      "sha256": "9C632857806D92336AB8357768E1BF11A7CC5E3E2983B6C5923CC8B4011DED95",
+      "bytes": 173725
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-build-failsafe-reports-TEST-com.example.marketplace.phone.PhoneProviderEmulatorIT.xml",
+      "sha256": "5B4FF4AD41313CC66C5D32460B61F54B2AAB1DC763D554F000F16EAA3FB2B710",
+      "bytes": 73276
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-phone-browser.txt",
+      "sha256": "32A21E5C5FD322FB4D933C4BB48E1A0428AEA7367650CFC8A7B5939E104E94D8",
+      "bytes": 210
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-summary.json",
+      "sha256": "A0752E3931B3DA4ACB0C7EF151D0C7F9181AFA2C607676C041F25E97E887AB10",
+      "bytes": 6971
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-db-target.txt",
+      "sha256": "642B054D1C673CAFE3396ED0A5F192AFFE728DE2FDA655F91FD61307E94A8D49",
+      "bytes": 119
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-emulator-firebase.json",
+      "sha256": "5C8AE7623CBB5614656E525A73906F4E1512E705B50B4529B435DFA5EC8E18A7",
+      "bytes": 320
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-emulator-result.json",
+      "sha256": "1AE414DF8422863133C1CC4428F699E76DF024E192501748CE60499CE5A6FF3E",
+      "bytes": 165
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-finalfix-failure-manifest-summary.json",
+      "sha256": "A1CF67FF75BE1448A7BBE25D9AB20EB878D70446F4A2CDA870C2D34989A9B6F4",
+      "bytes": 928
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-finalfix-focused2-verification.json",
+      "sha256": "A9EFF3A25A52CB4566FBF257D75545BAC47EBC45720DD092A5F1190150CF4821",
+      "bytes": 1139
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-frontend-coverage.json",
+      "sha256": "F18A193024F7B557E8D07850FC744D095675F78F2C526D6AAF9FADCFF986C941",
+      "bytes": 28023
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-all-failure-after.json",
+      "sha256": "BDC96B2FB3DCB4670920EFD270CB0E6762F97FAE02ABDACB1C0CD1C67B0666FD",
+      "bytes": 7192
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-all-failure-before.json",
+      "sha256": "0485676518C3661A6B3DBAF090CE7C4C10CA0D6B03EDF6536B342ADB1FEF10AF",
+      "bytes": 6961
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-all-failure-before2.json",
+      "sha256": "F897EF73DE04C12480971E8CCD0D5A2AA2A3BB207576886FFE01F1631B3539CE",
+      "bytes": 7192
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-dev-database-log-audit.json",
+      "sha256": "FD6EC02EE54155CB9AF0D97FE87782DF81047DC19AAD84CD21AB2283643A4167",
+      "bytes": 590
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-dev-final-verification.json",
+      "sha256": "56BB5BD22796CC54F50D65DA510016C4810D462D7C1B8DCC0B96234727ECABD9",
+      "bytes": 1246
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-dev-login-quota.json",
+      "sha256": "9E283848881369FB23288BDF3668BAF72FA000D4BC8DB6B41AC3E0A41EBAD5A7",
+      "bytes": 1674
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-dev2-release-verification.json",
+      "sha256": "53B2EC3B251BB57F6DEF77BF64BCBDAB4366EDBFB3C912B66B4830EB669D8D11",
+      "bytes": 1155
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-evidence-link-setup-error1.txt",
+      "sha256": "865124382370BD24931E89D811D4214199770E3D2D6D30648D66C4112EBA38D4",
+      "bytes": 706
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-failure-manifest-summary.json",
+      "sha256": "09AABF7DBD8961B32EA1C946C216A0806415B64FBA436387D724856041FEE25A",
+      "bytes": 884
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-final-constraint-evidence.json",
+      "sha256": "81D186964F68E767457B883F07C13F33988C76EFCEB7F842B23334FFF593AA95",
+      "bytes": 27927
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-final-failure-preservation.json",
+      "sha256": "EA9F4B2948D96CD00A2197B5C397DA082D1D4DF60F7C0D0930799860EC6CAE7E",
+      "bytes": 259
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-focused3-phone-quota-cause.json",
+      "sha256": "C0C0648E1425ECF9C382AD0DB9ABE71BC66D9828DFCCA20C3229351F408263AB",
+      "bytes": 468
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-focused4-login-quota.json",
+      "sha256": "40829BD8623824179E5CB563D4AA5E1960D438F05BADE5E2AFBE8E02FB54D651",
+      "bytes": 1677
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-focused4-verification.json",
+      "sha256": "0D8E5A4B447C3CEFB3600EC7042119DFC05E115A6F17731723A4205B385B57DF",
+      "bytes": 566
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-predecessor-inventory.json",
+      "sha256": "BB6B9266827A6C267DEA4C4C7380D8BC9AA8A3AB2BCEEF92A758033ED03E032E",
+      "bytes": 425701
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-prefull-failure-audit2.json",
+      "sha256": "20298820055EFD6BE07C326087ADA8D79A71E0160A14BBEBD28C69E855D25CA3",
+      "bytes": 151
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-prior-failure-before.json",
+      "sha256": "FB9F275CEF2BC59B135402AE4A391C084FEECAAFB32600B704B2F9E59F8342A9",
+      "bytes": 6738
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-required-retention.json",
+      "sha256": "8AFC5E2F42C77EF20682DDFB6CD4CEDE7D6B1EE73A0839B098FFE90131CCA696",
+      "bytes": 538
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-source-delta2.json",
+      "sha256": "5C9FADF548FA03BD201DDF7F3686DA37C843115C30FE7380C2F4AD7A93BADDF8",
+      "bytes": 1604
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-source-final-verification.json",
+      "sha256": "9FF97722C0206E6381C66BF8FEB6930E293D383865D9F6D6D0E52ABAFA992302",
+      "bytes": 347
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-g-source-freeze2-summary.json",
+      "sha256": "B16DFDB829A67046B531801843E9003705495A10ADF852CA823F76A526EA077B",
+      "bytes": 565
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-gate-tests.txt",
+      "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94",
+      "bytes": 550
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-inputs.json",
+      "sha256": "A20ECE665A7F2EEE4CB04ED91819C97945CF58219C64CB6B600C7501E42BF9BF",
+      "bytes": 80734
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-java-cases.json",
+      "sha256": "98AEE7C0A6F9973D3B5B1E8A6578C79901AE7343588B4ACB3E9AF8A53EB0A8FD",
+      "bytes": 155922
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-lint.txt",
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05",
+      "bytes": 68
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-result.json",
+      "sha256": "CC39654949C3D42F144EFC1BBB119CE952F94828C80AFE63640FD18EF13FD0E9",
+      "bytes": 47091
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-task-final-fix-report.md",
+      "sha256": "478411C9C09EF45FDA72E52F5ACD99D6A8043EB217003CFB53AF82F631EF3120",
+      "bytes": 5921
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-TEST-frontend.xml",
+      "sha256": "6ABFF6A2B7797237656BB9D209744E663ADAE264BBB60307C9B937E628675859",
+      "bytes": 49810
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-test-unit.txt",
+      "sha256": "BF608F8652D693D44B67DE3233BBF20F45493E0F6A09B8D160F1CDFB80BA9D9E",
+      "bytes": 4865
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-test.txt",
+      "sha256": "92894A634FE21528C76890907A626B742B702A952799E37F3C7E2B03BA32FC15",
+      "bytes": 5877
+    },
+    {
+      "path": "docs\\work-items\\evidence\\P08-G-dev-final-typecheck.txt",
+      "sha256": "9F0F239E9F36F85C7039425725C61E7890F395414EAF5F49415B0059C9F71754",
+      "bytes": 274
+    }
+  ]
+}

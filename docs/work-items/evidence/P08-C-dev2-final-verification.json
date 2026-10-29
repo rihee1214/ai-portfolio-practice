@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-27T18:16:33.2231165+09:00",
+  "head": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "inputCount": 412,
+  "inputsSha256": "11FCDABD57149864B01808E0EC108A961FA41C0D8AA482BD1F92F7EA51A2F633",
+  "currentInputMismatch": 0,
+  "priorJavaRequiredMissing": 0,
+  "failureFiles": 28847,
+  "failureHashMismatches": 0,
+  "sourceFrozen": true
+}

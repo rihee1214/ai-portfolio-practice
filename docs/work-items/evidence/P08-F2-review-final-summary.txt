@@ -1,0 +1,13 @@
+F2 independent DEMO/mock-shipment UI PASSED; no required blocker.
+./verify.ps1 -Offline -EvidenceDirectory .local-tools/p08-f2-review1-20261028
+MAVEN_ARGS unset; no selection; outerexit0/status+preservationpassed.
+2026-10-28 21:23:16..21:32:05 KST
+Java443(unit183 DB260),browser96,frontend206,Node75;required49pass,missing/fail/error/skip0;type/lint/buildpass.
+HEAD460aa8bb0bb22f5138849eb00c050abd18f6fb53 dirty
+Source469 B095D13D07F1E2D9C19CBA8218C91BCE78C137B8CCA500784AD1A2B250F450F2 developer/reviewer identical; current before/after mismatch0.
+30failuremanifests/60795unique files and manifestSHA before/after mismatch0.
+DB d2_it_39bebeeb93f44ca78818581c9ceec171
+media .local-tools/p08-f2-review1-20261028/db/media
+phone .local-tools/phone-emulator-949790298f6145f09ee90b157def21af
+Prior dev1 Phone TypeError fetch failure cause remains UNCONFIRMED, not claimed fixed. New independent phone probe/full passes. Diagnostic only safe allowlists; no retry/timeout change.
+E actual SANDBOX externalblocked; no G/P09/commit/push/deployment/resource deletion.

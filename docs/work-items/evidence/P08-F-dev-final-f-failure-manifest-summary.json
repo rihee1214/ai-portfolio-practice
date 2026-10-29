@@ -1,0 +1,39 @@
+{
+  "created": "2026-10-28T18:40:00.8697765+09:00",
+  "manifest": "docs/work-items/evidence/P08-F-development-failure-manifest.json",
+  "sha256": "F5D901F323E43594E9709DC74434CBAC1ED8639D1E4BFBE2FC52BA17462A36FD",
+  "files": 7129,
+  "failedDirectories": [
+    "p08-f-red1-20261028",
+    "p08-f-red2-20261028",
+    "p08-f-red3-20261028",
+    "p08-f-focused1-20261028",
+    "p08-f-focused2-20261028",
+    "p08-f-focused3-20261028",
+    "p08-f-review-red1-20261028",
+    "p08-f-focused4-20261028",
+    "p08-f-wait-red1-20261028",
+    "p08-f-wait-red2-20261028",
+    "p08-f-member-wait-red1-20261028",
+    "p08-f-focused5-20261028",
+    "p08-f-focused6-20261028",
+    "p08-f-focused7-20261028"
+  ],
+  "emulatorDirectories": [
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-0bc9cf53e83b4cc1b7f3fc569e02d7e2",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-227418e190644cfb952d5f1ec390fcdc",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-22787fbc32f7462eb8a7dbe6f4655ce6",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-2a1203ad58c94dffbea7432fb14f96a7",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-404e430fa8454cd78392bd678b1f5194",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-61f3c21848344ca9b9eec8ac09b1fb30",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-63c77aba18be4b088af7c117148b29db",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-70a2fb8a43af49cd94119b1b8a2d6306",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-a19a2eb22fd54d8f899a07b2840ec7da",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-e13c7648ce6541579ad55e98a31e1a1d",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-e685149046c04027b811209add0d1df6",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-e9917fd106be46b2b064984f5c423406",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-f3138ec3ec124265826812448a68d43d",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-f923f5d573714fe1bdeca4dde674148b"
+  ],
+  "sidecarCount": 39
+}

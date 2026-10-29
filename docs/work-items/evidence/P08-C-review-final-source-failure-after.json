@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-27T18:23:08.3474981+09:00",
+  "inputCount": 412,
+  "inputMismatch": 0,
+  "inputHash": "11FCDABD57149864B01808E0EC108A961FA41C0D8AA482BD1F92F7EA51A2F633",
+  "matchesDevelopment": true,
+  "preservedCount": 28847.0,
+  "failures": [
+    {
+      "manifest": "docs/work-items/evidence\\P06-A-review-failure-manifest.json",
+      "count": 2162,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P06-B-failure-manifest.json",
+      "count": 405,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P06-C-failure-manifest.json",
+      "count": 791,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P06-D-commit-failure-manifest.json",
+      "count": 5,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P06-D-failure-manifest.json",
+      "count": 882,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P07-B-failure-manifest.json",
+      "count": 2663,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P06-E-failure-manifest.json",
+      "count": 1375,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P07-A-failure-manifest.json",
+      "count": 2577,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P08-B-review1-failure-manifest.json",
+      "count": 576,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P08-B-failure-manifest.json",
+      "count": 2894,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P08-B-cache-fix-failure-manifest.json",
+      "count": 1,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P08-A-failure-manifest.json",
+      "count": 4721,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P07-D-failure-manifest.json",
+      "count": 2102,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence\\P07-C-failure-manifest.json",
+      "count": 1196,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence/P08-C-development-failure-manifest.json",
+      "count": 5388,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    },
+    {
+      "manifest": "docs/work-items/evidence/P08-C-development-followup-failure-manifest.json",
+      "count": 1109,
+      "mismatches": 0,
+      "manifestUnchanged": true
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 export type Input = { skuId: string; quantity: number }
 export const GUEST_KEY = 'marketplace-guest-cart'
 export const JOURNAL_KEY = 'marketplace-cart-merge'
+const REVISIONS_KEY='marketplace-cart-revisions'
+const CLEANUP_KEY='marketplace-cart-order-cleanup'
 export const uuid = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(v)
 export function inputs(value: unknown): Input[] {
   if (!Array.isArray(value) || value.length > 100) throw new Error('장바구니 저장값을 확인할 수 없습니다.')
@@ -22,6 +24,18 @@ export class GuestCart {
     if (quantity) rows.push({ skuId: sku.toLowerCase(), quantity })
     if (rows.length > 100) throw new Error('장바구니는 최대 100종까지 담을 수 있습니다.')
     this.storage.setItem(GUEST_KEY, JSON.stringify(inputs(rows)))
+    const revisions=JSON.parse(this.storage.getItem(REVISIONS_KEY)??'{}') as Record<string,string>
+    revisions[sku.toLowerCase()]=crypto.randomUUID();this.storage.setItem(REVISIONS_KEY,JSON.stringify(revisions))
+  }
+  capture() {const revisions=JSON.parse(this.storage.getItem(REVISIONS_KEY)??'{}') as Record<string,string>;return this.read().map(row=>({...row,revision:revisions[row.skuId]??'legacy'}))}
+  reconcile(orderId:string,submitted:ReturnType<GuestCart['capture']>) {
+    if(this.storage.getItem(JOURNAL_KEY))throw new Error('장바구니 가져오기 후 다시 확인해 주세요.')
+    const completed=JSON.parse(this.storage.getItem(CLEANUP_KEY)??'[]') as string[]
+    if(completed.includes(orderId))return
+    const current=this.capture(),remaining=current.filter(row=>!submitted.some(old=>old.skuId===row.skuId&&old.quantity===row.quantity&&old.revision===row.revision))
+    // A crash between these synchronous writes conservatively preserves items, never deletes a later addition.
+    this.storage.setItem(CLEANUP_KEY,JSON.stringify([...completed,orderId].slice(-1000)))
+    this.storage.setItem(GUEST_KEY,JSON.stringify(remaining.map(({skuId,quantity})=>({skuId,quantity}))))
   }
   prepare(): Journal | null {
     const saved = this.storage.getItem(JOURNAL_KEY)
@@ -40,7 +54,7 @@ export class GuestCart {
     if (journal.requestId !== requestId) throw new Error('가져오기 기록이 변경되었습니다.')
     const current = this.read()
     if (current.length && JSON.stringify(current) !== JSON.stringify(journal.items)) throw new Error('방문자 품목이 변경되었습니다. 확인 후 다시 시도해 주세요.')
-    this.storage.removeItem(GUEST_KEY); this.storage.removeItem(JOURNAL_KEY)
+    this.storage.removeItem(GUEST_KEY); this.storage.removeItem(REVISIONS_KEY); this.storage.removeItem(JOURNAL_KEY)
   }
-  clear() { this.storage.removeItem(GUEST_KEY); this.storage.removeItem(JOURNAL_KEY) }
+  clear() { this.storage.removeItem(GUEST_KEY); this.storage.removeItem(REVISIONS_KEY); this.storage.removeItem(JOURNAL_KEY) }
 }

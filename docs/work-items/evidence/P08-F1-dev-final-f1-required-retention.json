@@ -1,0 +1,26 @@
+{
+  "source": "F final full coverage names, exact case and multiplicity",
+  "oldRequired": 370,
+  "currentRequired": 382,
+  "added": [
+    "com.example.marketplace.fulfillment.domain.ShipmentRulesTest#basicTransitionsAndEvents",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#basicShipmentRequiresPaidSellerOrder",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentWriteRechecksSellerAuthority",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentEventsAreIdempotent",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentExpiryRecheckedAfterOrderAndShipmentWaits",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentAtomicRollbackAndCancellationRace",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentConcurrentPurposeAndVersionHaveOneEffect",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentHistoryUsesCausalOrder",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentOutboxAndWorkerRecovery",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseItemScopeAndMalformedInput",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentBackfillResumesAndSharesLivePurpose",
+    "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseParentOwnershipIsLinked"
+  ],
+  "missing": [],
+  "required-browser.json": {
+    "unchangedSinceF": true
+  },
+  "required-frontend.json": {
+    "unchangedSinceF": true
+  }
+}

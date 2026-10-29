@@ -2,7 +2,7 @@ import { createRequire } from 'node:module'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import assert from 'node:assert/strict'
-import { withPhoneResources } from './phone-resources.mjs'
+import { withPhoneResources, phoneProbeFailure } from './phone-resources.mjs'
 const require = createRequire(resolve('frontend/package.json'))
 const { createServer } = await import(pathToFileURL(require.resolve('vite')).href)
 process.env.PLAYWRIGHT_BROWSERS_PATH = resolve('.local-tools/playwright')
@@ -12,15 +12,19 @@ assert.match(host, /^127\.0\.0\.1:[0-9]+$/)
 assert.match(project, /^demo-/)
 const server = await createServer({ root: resolve('frontend'), configFile: false, server: { host: '127.0.0.1', port: 0 }, appType: 'custom' })
 server.middlewares.use('/', (_req, res) => { res.setHeader('Content-Type', 'text/html'); res.end('<html><body>Provider test fixture</body></html>') })
+let stage = 'BROWSER_LISTEN'
 try {
  await withPhoneResources(server, () => chromium.launch({ headless: true }), async browser => {
   const page = await browser.newPage()
+  stage = 'BROWSER_NAVIGATION'
   await page.goto('http://127.0.0.1:' + server.httpServer.address().port)
   async function post(path, body) {
+    stage = ({ '/issue': 'JAVA_ISSUE', '/exchange': 'JAVA_EXCHANGE', '/confirm': 'JAVA_CONFIRM', '/binding-issue': 'JAVA_BINDING_ISSUE', '/binding-exchange': 'JAVA_BINDING_EXCHANGE', '/binding-confirm': 'JAVA_BINDING_CONFIRM' })[path] ?? 'UNKNOWN'
     const response = await fetch(base + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
     return { status: response.status, body: await response.json() }
   }
   async function codeFor(session) {
+    stage = 'EMULATOR_CODES'
     const response = await fetch('http://' + host + '/emulator/v1/projects/' + project + '/verificationCodes')
     const body = await response.json()
     const entry = body.verificationCodes.find(item => item.sessionInfo === session)
@@ -35,6 +39,7 @@ try {
   const exchanged = await post('/exchange', { id: issued.body.id, code })
   assert.equal(exchanged.status, 200, 'server exchanges OTP exactly once')
   assert.equal((await post('/exchange', { id: issued.body.id, code })).status, 400, 'OTP exchange replay rejected')
+  stage = 'BROWSER_SDK'
   const token = await page.evaluate(async ({ host, project, customToken }) => {
     const client = await import('/src/phone/FirebasePhoneClient.ts')
     return client.confirmPhoneCode(host, project, customToken)
@@ -55,6 +60,7 @@ try {
     const freshCode = await codeFor(fresh.body.session)
     const custom = await post('/binding-exchange', { session: fresh.body.session, code: freshCode })
     assert.equal(custom.status, 200)
+    stage = 'BROWSER_SDK'
     const freshToken = await page.evaluate(async ({ host, project, customToken }) => {
       const client = await import('/src/phone/FirebasePhoneClient.ts')
       return client.confirmPhoneCode(host, project, customToken)
@@ -68,6 +74,7 @@ try {
   const otherCode = await codeFor(other.body.session)
   const otherExchanged = await post('/exchange', { id: other.body.id, code: otherCode })
   assert.equal(otherExchanged.status, 200)
+  stage = 'BROWSER_SDK'
   const otherToken = await page.evaluate(async ({ host, project, customToken }) => {
     const client = await import('/src/phone/FirebasePhoneClient.ts')
     return client.confirmPhoneCode(host, project, customToken)
@@ -84,6 +91,7 @@ try {
   }
   assert.equal((await post('/confirm', { id: other.body.id, code: otherCode, token: otherToken })).status, 200)
   assert.equal(await page.evaluate(() => localStorage.length), 0)
+  stage = 'BROWSER_SDK'
   const rejected = await page.evaluate(async () => {
     const client = await import('/src/phone/FirebasePhoneClient.ts')
     try { await client.confirmPhoneCode('example.com:9099', 'real-project', 'x'); return false } catch { return true }
@@ -92,6 +100,6 @@ try {
   console.log('PASS browser SDK → emulator → Java verification; forged proof, wrong code, replay, nonlocal and persistence guards')
  })
 } catch (error) {
-  console.error('FAIL provider browser probe:', error.name, error.message)
+  console.error('FAIL provider browser probe:', JSON.stringify(phoneProbeFailure(stage, error)))
   process.exitCode = 1
 }

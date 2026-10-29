@@ -1,0 +1,22 @@
+{
+  "evidence": ".local-tools/p08-f2-focused6-20261028",
+  "selection": "DB4 + all browser",
+  "unit": 183.0,
+  "integration": 4.0,
+  "failures": 0.0,
+  "errors": 0.0,
+  "skips": 0.0,
+  "browser": {
+    "startTime": "2026-10-28T11:43:32.97Z",
+    "duration": 188066.114,
+    "expected": 96,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "rootStatus": "failed",
+  "rootError": "Missing required test: com.example.marketplace.dbtest.PostgresJdbcIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+  "preservation": "passed",
+  "inputsSHA": "9AF9A9D9BFC6FF7C69FA7BC08F319822E33E9FD2514489C5D0510D8EB4B89DE9",
+  "freezeSHA": "9AF9A9D9BFC6FF7C69FA7BC08F319822E33E9FD2514489C5D0510D8EB4B89DE9"
+}

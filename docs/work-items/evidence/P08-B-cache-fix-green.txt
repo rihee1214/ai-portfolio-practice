@@ -1,0 +1,37 @@
+✔ concurrent proxy test servers own distinct caches outside the shared frontend cache (186.0097ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-M4MmMm
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-mSQ8j9
+▶ dev: real partial responses terminate on upstream failure
+  ✔ silent (10045.4734ms)
+  ✔ stall (10041.5332ms)
+  ✔ disconnect (347.6803ms)
+  ✔ stream (12045.1637ms)
+  ✔ caller cancels while reading body and can retry (317.3405ms)
+✔ dev: real partial responses terminate on upstream failure (12437.0461ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-vH0p8f
+ℹ disconnect: 343ms {"kind":"network"}
+ℹ silent: 10041ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10037ms {"kind":"network"}
+ℹ stream: 12042ms {"kind":"success","status":200,"data":{"status":"UP"}}
+▶ preview: real partial responses terminate on upstream failure
+  ✔ silent (10011.9329ms)
+  ✔ stall (10012.4218ms)
+  ✔ disconnect (316.8248ms)
+  ✔ stream (12019.0745ms)
+  ✔ caller cancels while reading body and can retry (317.1236ms)
+✔ preview: real partial responses terminate on upstream failure (12346.6391ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-GHZT98
+ℹ disconnect: 315ms {"kind":"network"}
+ℹ silent: 10008ms {"kind":"http","status":502,"data":{"error":"UPSTREAM_UNAVAILABLE"}}
+ℹ stall: 10009ms {"kind":"network"}
+ℹ stream: 12017ms {"kind":"success","status":200,"data":{"status":"UP"}}
+✔ real Vite proxy preserves health/API errors, blocks other management paths before SPA fallback (257.088ms)
+ℹ owned cache: D:/Workspace/ai-portfolio-practice/.local-tools/vite-proxy-test-StwWdF
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25019.8588

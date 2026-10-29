@@ -1,0 +1,12 @@
+F1 independent basic MOCK fulfillment PASSED; no required blocker.
+./verify.ps1 -Offline -EvidenceDirectory .local-tools/p08-f1-review1-20261028
+MAVEN_ARGS unset, no selection. Outerexit0/status+preservationpassed.
+2026-10-28 19:50:24..19:58:20 KST
+Java441(unit183 DB258),browser90,frontend187,Node73; required48groupspass,missing/fail/error/skip0; type/lint/buildpass.
+HEAD460aa8bb0bb22f5138849eb00c050abd18f6fb53 dirty
+Source463 F077524124595397AB87CEA04E19F1BCA7F1C3D11E877679382292C0F66B08EB developer/reviewer identical,currentbefore/aftermismatch0.
+28failuremanifests/54949unique files before/after file+manifest mismatch0.
+DB d2_it_384c76e7a1e942bfb48f1b0cf45bf18d
+media .local-tools/p08-f1-review1-20261028/db/media
+phone .local-tools/phone-emulator-e7d66746679347e1a0b1f5e900bdbc83
+E actual SANDBOX external blocked; actual carriers/splits/claims/F2 excluded. No source edits, commits,push,deployment,resource deletion.

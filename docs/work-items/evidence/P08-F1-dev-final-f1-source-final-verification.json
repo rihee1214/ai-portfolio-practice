@@ -1,0 +1,10 @@
+{
+  "unit": 183.0,
+  "integration": 258.0,
+  "groups": 48,
+  "groupsNotPassed": 0,
+  "casesNotPassed": 0,
+  "inputs": 463,
+  "sourceMismatches": 0,
+  "sha256": "F077524124595397AB87CEA04E19F1BCA7F1C3D11E877679382292C0F66B08EB"
+}

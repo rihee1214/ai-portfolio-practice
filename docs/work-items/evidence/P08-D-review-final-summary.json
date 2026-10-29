@@ -1,0 +1,30 @@
+{
+  "verdict": "passed",
+  "scope": "P08-D only",
+  "started": "2026-10-28T16:44:04.7918354+09:00",
+  "finished": "2026-10-28T16:50:48.128692+09:00",
+  "inputs": 428,
+  "inputsSHA256": "EBADA9D50642EFAB23E9F0A368B815A92D5E55678D0E702A34EEBCBD7170EE10",
+  "developmentInputsEqual": true,
+  "currentMismatch": 0,
+  "java": 407,
+  "javaUnit": 173,
+  "javaDb": 234,
+  "browser": 80,
+  "frontend": 175,
+  "node": 73,
+  "coverageGroups": 45,
+  "preservedFailureFiles": 36552,
+  "manifests": 24,
+  "failureMismatch": 0,
+  "manifestMismatch": 0,
+  "database": "d2_it_3ca14632770e4e04942b9d21e5356276",
+  "media": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-review1-20261028\\db\\media",
+  "phoneEmulator": "phone-emulator-b099b0a7acb04c0ab5424030c1f04645",
+  "limitations": [
+    "DEMO only; real PG and refunds not tested",
+    "Process restart uses actual Java child processes on test classpath, not packaged deployment",
+    "Exhausted UNKNOWN is surfaced on authorized status/operations reads; no production monitoring claim",
+    "Existing linked guest credential rules retained; new-browser payment access not introduced"
+  ]
+}

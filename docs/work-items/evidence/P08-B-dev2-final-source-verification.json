@@ -1,0 +1,14 @@
+{
+  "count": 396,
+  "mismatches": [],
+  "inputsSha256": "85F3C6E15DBAFAA45F30AE5E6F2F139F0B0DF61F3996786BA3F8918552869774",
+  "changedFromDev1": [
+    "frontend/tests/proxy-stream.test.mjs",
+    "frontend/tests/proxy.test.mjs"
+  ],
+  "addedFromDev1": [
+    "frontend/tests/proxy-cache.test.mjs",
+    "frontend/tests/proxyViteConfig.mjs"
+  ],
+  "removedFromDev1": []
+}

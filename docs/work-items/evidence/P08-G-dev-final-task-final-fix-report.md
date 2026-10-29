@@ -1,0 +1,29 @@
+# P08 final fix developer handoff — SCOPED READY, SOURCE FROZEN
+
+R-FINAL-01 and R-FINAL-02 implemented with actual RED→focused GREEN. No P08/full completion claim. Parent owns one consolidated scoped rereview, then fresh unselected developer and independent roots sequentially. No commit/push/deploy/P09 or existing DB/media/server deletion.
+
+## Frozen source
+
+HEAD460aa8bb0bb22f5138849eb00c050abd18f6fb53 dirty. Current=focused2=freeze472 inputs SHA A20ECE665A7F2EEE4CB04ED91819C97945CF58219C64CB6B600C7501E42BF9BF, mismatch0. Gdev1 delta10 files, added/deleted0: product PaymentStore.ts,PaymentPage.tsx,PaymentCoordinator.java,JdbcOrders.java; tests PostgresJdbcIT.java,PaymentStore.test.tsx,payments-mock.spec.ts; three mandatory registries. No source edits after focused2 start.
+
+## Actual focused evidence
+
+./verify.ps1 -Offline -EvidenceDirectory .local-tools/p08-finalfix-focused2-20261028 with MAVEN_ARGS selected PostgresJdbcIT methods. 22:32:42–22:38:27 KST. Unit/ArchUnit183 + selectedPostgres17 =200 pass, browser106 pass, failure/error/skip/flaky0, preservationpassed. Root exit1/statusfailed solely missing unselected historical accountHttpOwnerCsrfValidationAndPrivacyBoundaries. It did NOT reach full coverage/front-end gates; coverage.json/java-cases.json absent. Full root is still mandatory.
+
+New isolatedDB d2_it_7a302836a30b41c3995318754ac7334d; media focused2/db/media; emulator .local-tools/phone-emulator-3f9effb6aa8b4ea380de8005bd3c18c4 retained. Frontend standalone full216 pass, typecheck/lint0 in finalfix-frontend-all1.txt/typecheck1/lint1. These frontend sources remained unchanged afterward. Predicted next unselected full totals451 Java/106browser/216frontend/75Node are predictions, not results.
+
+Focused methods: paymentPreparationRechecksExpiryAfterReservationWait(5); paymentExistingGuestRechecksMaximumAfterOrderWait(2); paymentHttpWaitRechecksSessionAndWorkerSurvivesSuspension; paymentHttpRejectsOwnershipAmountModeAndMissingCsrf; paymentApprovalExpiryContendOnTheSameOrderLock; paymentUnknownAndLateSuccessConverge; zeroPaymentCommitsAllOnce; paymentZeroCrashRecoveryNeverCallsAnyProviderOperation; paymentZeroInitialDeadlineNeverSchedulesCompensation; sandboxConcurrentConfirmationsAndReusedProviderKeyHaveOneEffect; realGuestOrdersUseIndependentAccessSessions; signupHttpRequiresCsrfAndReturnsNoSecrets(browserhost).
+
+## Contracts and assertions
+
+R01: AuthStore subscription clears private amount/status immediately, cancels requests and advances own generation. Every async result/error and final publication is generation guarded, including old401 so newAuth is not rejected. Auth refresh allows newGET only and retains approval latch until fresh authenticated NONE/PENDING; no automaticPOST. Current401/403 including CSRF clears view and blocks retry. UNKNOWN no newapproval, explicit SDK confirmation, lostresponse and prePOST-CSRF manualretry retained. Real StrictMode PaymentPage DOM + late A→B success/error + same-ID newgeneration + staleSANDBOX tests; real cross-tab BroadcastChannel browser on PC/mobile. Newunit10/browser2 registered without removing existing/multiplicity.
+
+R02: post-reservation inspect reauthorizes same already-held authority/order rows before attempt write or SANDBOX setup return. JdbcOrders repeats EXISTING guest authority after orderwait before final HTTP check. No new key/row lock order, customer authority checks NOT added to worker settlement. Newmemberparameter5 observes actual issued_coupon/inventory_balance lock; only injected session clock crosses stored naturalexpiry while orderdeadline remainsvalid; rejects401 and allparticipant/provider state unchanged. DEMO coupon/inventory,zero,SANDBOX setup/confirm allcovered. Guestparameter2 uses genuine GAS activity25min or less to max−61 then actualnewEXISTINGpurchase at max−1; idle==max asserted; heldorder SQLwait observed then advance1second toexactmax with HTTPsessionvalid. Status/approve401 and allparticipant/provider unchanged. Existing guest independenthistory vs originalpurchasebrowser approval and worker-after-suspension tests pass.
+
+## Failure history / immutable preservation
+
+frontend-red1 actual4assertionfail/7pass; backend-red1 compile2errors (NOT requirementRED), corrected names/Boolean overload; backend-red2 all7 expected401/actual200 (errors/skip0) with read-only actualeffectsnapshot; frontend-red2 3fail/13pass (firstfix overblocked routine refresh + existing2CSRF401 viewretention), allfixed. focused1 unit183/selected17:16pass1browserhostfailure; browsers105/106. Existing coupon-reservations desktop lastrelease→reload showed networkalert; DB bothdesktop/mobile AVAILABLE/version5, historyRESTORED+RELEASED. No cause established, no coupon/product/timeout/testweakening. Same retainedcase and all106 browsers passed freshfocused2. This does NOT prove the original connection cause. Earlier phonefetch cause also remains unconfirmed.
+
+New immutable docs/work-items/evidence/P08-final-fix-development-failure-manifest.json:2458files,4failedroots/4emulators/8sidecars, SHA B73AD0841A11AFCBDD50629D0DEC3F6152C15868FADABAAF4E46D8E7F5E41103. Combined32manifests65820files hash/existence/conflicts0, old31manifest ownSHAchanged0. finalfix-final-failure-audit.json actualproof. Nineteen essential copies under docs/work-items/evidence/P08-final-fix-focused2-* and inventory finalfix-evidence-copies.json. Two missing fullcoverage file copy attempts explicitly recorded; no fabricated outputs.
+
+Authoritative workdoc docs/work-items/P08-final-fix.md, finalfix-focused2-verification.json, source-freeze/changes, actualJUnit/browser originals. I now own docs/evidence only. Actual Toss SANDBOX/realcard/webhook remains externallyBLOCKED; realdevices/userdirectconfirmation notdone. Parent should record scopedreview and new unselected final developer+independent results before localfinal acceptance; P08overall remainsincomplete whileactualPGblocked.

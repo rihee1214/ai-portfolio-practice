@@ -1,0 +1,28 @@
+{
+  "checked": "2026-10-28T22:39:06.7596696+09:00",
+  "head": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "sourceFiles": 472,
+  "sourceSha": "A20ECE665A7F2EEE4CB04ED91819C97945CF58219C64CB6B600C7501E42BF9BF",
+  "focusedInputsSha": "A20ECE665A7F2EEE4CB04ED91819C97945CF58219C64CB6B600C7501E42BF9BF",
+  "sourceMismatches": 0,
+  "changedFiles": 10,
+  "rootStatus": "failed",
+  "rootPreservation": "passed",
+  "rootError": "Missing required test: com.example.marketplace.dbtest.PostgresJdbcIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+  "javaTests": 200.0,
+  "javaFailed": 0,
+  "browser": {
+    "startTime": "2026-10-28T13:34:26.767Z",
+    "duration": 224918.302,
+    "expected": 106,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "frontendUnitEvidence": "finalfix-frontend-all1.txt:216 passed",
+  "typecheck": "finalfix-typecheck1.txt exit0",
+  "lint": "finalfix-lint1.txt exit0",
+  "scope": "Focused only; selected root omits required historical Java methods and is NOT a passing full harness",
+  "finalFull": "Parent developer and independent runs pending",
+  "actualPG": "BLOCKED"
+}

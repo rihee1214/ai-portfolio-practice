@@ -1,0 +1,34 @@
+[
+  {
+    "file": "required-tests.json",
+    "oldCount": 362,
+    "oldUnique": 361,
+    "currentCount": 370,
+    "currentUnique": 369,
+    "missing": [],
+    "newDuplicateNames": [],
+    "existingDuplicateNames": [
+      "com.example.marketplace.architecture.ModuleRulesTest#securityPrincipalCannotLeakIntoApi"
+    ]
+  },
+  {
+    "file": "required-browser.json",
+    "oldCount": 84,
+    "oldUnique": 84,
+    "currentCount": 90,
+    "currentUnique": 90,
+    "missing": [],
+    "newDuplicateNames": [],
+    "existingDuplicateNames": []
+  },
+  {
+    "file": "required-frontend.json",
+    "oldCount": 179,
+    "oldUnique": 179,
+    "currentCount": 187,
+    "currentUnique": 187,
+    "missing": [],
+    "newDuplicateNames": [],
+    "existingDuplicateNames": []
+  }
+]

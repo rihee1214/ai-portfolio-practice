@@ -13,4 +13,5 @@ public interface Reservations {
     List<Reservation> commit(UUID checkoutId, List<UUID> ids);
     List<Reservation> release(UUID checkoutId, List<UUID> ids);
     List<Reservation> expire(UUID checkoutId, List<UUID> ids);
+    List<Reservation> inspect(UUID checkoutId,List<UUID> ids);
 }

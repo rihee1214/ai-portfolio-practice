@@ -1,0 +1,18 @@
+{
+  "rootStatus": "failed",
+  "rootError": "Missing required test: com.example.marketplace.dbtest.PostgresJdbcIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+  "preservation": "passed",
+  "unit": 183,
+  "db": 5,
+  "failures": 0,
+  "browser": {
+    "startTime": "2026-10-28T12:56:30.848Z",
+    "duration": 222480.34900000002,
+    "expected": 104,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "fullPass": false,
+  "reason": "selected DB coverage intentionally omits historical mandatory tests; all selected assertions passed"
+}

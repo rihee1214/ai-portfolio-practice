@@ -1,0 +1,16 @@
+{
+  "copies": 21,
+  "java": 360,
+  "browser": 68,
+  "frontend": 162,
+  "node": 72,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "missing": 0,
+  "sourceCount": 382,
+  "sourceMismatch": 0,
+  "previousFailureFiles": 14158,
+  "currentFailureFiles": 4721,
+  "failureMismatch": 0
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[3]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[4]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[5]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentExistingGuestRechecksMaximumAfterOrderWait(String)[1]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  },
+  {
+    "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+    "name": "paymentExistingGuestRechecksMaximumAfterOrderWait(String)[2]",
+    "status": "passed",
+    "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-review1-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+  }
+]

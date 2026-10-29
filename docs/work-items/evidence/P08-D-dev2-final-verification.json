@@ -1,0 +1,33 @@
+{
+  "emulator": {
+    "project": "demo-p06-a3803af687f1",
+    "ports": [
+      8784,
+      8785,
+      8786
+    ],
+    "exitCode": 0,
+    "evidence": ".local-tools/p08-d-dev2-20261028"
+  },
+  "media": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-d-dev2-20261028\\db\\media",
+  "branch": "codex/p05-d",
+  "database": "d2_it_7f66fb24e574440cb219ba0c40df9818",
+  "selection": "none",
+  "head": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "checkedAt": "2026-10-28T16:42:51.5856151+09:00",
+  "exitCode": 0,
+  "nodeTests": 73,
+  "result": {
+    "status": "passed",
+    "preservation": "passed",
+    "junit": 407,
+    "browser": 80,
+    "frontendUnit": 175,
+    "started": "2026-10-28T16:35:00.9104157+09:00",
+    "finished": "2026-10-28T16:41:43.752469+09:00"
+  },
+  "inputsSha256": "EBADA9D50642EFAB23E9F0A368B815A92D5E55678D0E702A34EEBCBD7170EE10",
+  "sourceMismatches": [],
+  "command": "./verify.ps1 -Offline -EvidenceDirectory .local-tools/p08-d-dev2-20261028",
+  "inputCount": 428
+}

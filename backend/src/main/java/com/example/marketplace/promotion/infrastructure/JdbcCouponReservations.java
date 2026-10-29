@@ -39,7 +39,7 @@ public final class JdbcCouponReservations implements CouponReservations {
   String requestHash=hash(requests.stream().map(r->r.reservationId()+"|"+r.checkoutId()+"|"+r.sellerOrderRef()+"|"+r.memberId()+"|"+r.storeId()+"|"+r.issuedCouponId()+"|"+deadline(r.expiresAt())+"|"+fingerprint).collect(java.util.stream.Collectors.joining("\n")));
   try{return tx.execute(status->{
    var batchParameters=Map.of("checkout",first.checkoutId(),"member",first.memberId(),"hash",requestHash);
-   jdbc.update("INSERT INTO marketplace.coupon_reservation_batch(checkout_id,member_id,request_hash) VALUES(:checkout,:member,:hash) ON CONFLICT(checkout_id) DO NOTHING",batchParameters);
+   jdbc.update("INSERT INTO marketplace.coupon_reservation_batch(checkout_id,member_id,request_hash) VALUES(:checkout,:member,:hash) ON CONFLICT DO NOTHING",batchParameters);
    var batch=jdbc.queryForMap("SELECT member_id,request_hash FROM marketplace.coupon_reservation_batch WHERE checkout_id=:checkout FOR UPDATE",batchParameters);
    if(!first.memberId().equals(batch.get("member_id"))||!requestHash.equals(batch.get("request_hash"))){throw new PromotionRejected(409);}
    var prior=prior(requests,requestHash);if(prior!=null){return prior;}
@@ -65,6 +65,7 @@ public final class JdbcCouponReservations implements CouponReservations {
  }
  private void lockCoupons(List<UUID> ids){for(UUID id:ids.stream().distinct().sorted(IDS).toList()){var rows=jdbc.queryForList("SELECT id FROM marketplace.issued_coupon WHERE id=:id FOR UPDATE",Map.of("id",id),UUID.class);if(rows.size()!=1){throw new PromotionRejected(404);}}}
  @Override public List<Reservation> commit(UUID checkout,List<UUID> ids){return transition(checkout,ids,"COMMITTED");}
+ @Override public List<Reservation> inspect(UUID checkout,List<UUID> ids){return tx.execute(status->{var rows=ids.stream().map(this::find).toList();if(rows.stream().anyMatch(r->!r.checkoutId().equals(checkout))){throw new PromotionRejected(409);}lockCoupons(rows.stream().map(Reservation::issuedCouponId).toList());return ids.stream().sorted(IDS).map(this::find).toList();});}
  @Override public List<Reservation> release(UUID checkout,List<UUID> ids){return transition(checkout,ids,"RELEASED");}
  @Override public List<Reservation> expire(UUID checkout,List<UUID> ids){return transition(checkout,ids,"EXPIRED");}
  private List<Reservation> transition(UUID checkout,List<UUID> ids,String target){

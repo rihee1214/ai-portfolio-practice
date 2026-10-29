@@ -21,6 +21,7 @@ public class CartController {
     public record Merge(UUID owner,UUID requestId,List<Item> items) { }
     public record Item(UUID skuId,BigDecimal quantity) { }
     public record Preview(List<Item> items) { }
+    public record Reconcile(UUID owner,UUID orderId,List<Carts.Submitted> items) { }
     private final Carts carts;
     public CartController(Carts carts) { this.carts=carts; }
     private UUID owner(Principal principal,UUID expected) {
@@ -41,6 +42,10 @@ public class CartController {
     @PostMapping("/api/cart/preview") public ResponseEntity<Carts.View> preview(@RequestBody Preview input) {
         if(input==null) { throw new CartException(400); }
         return response(carts.preview(items(input.items())));
+    }
+    @PostMapping("/api/cart/reconcile") public ResponseEntity<Carts.View> reconcile(Principal p,@RequestBody Reconcile input) {
+        if(input==null) { throw new CartException(400); }
+        return response(carts.reconcile(owner(p,input.owner()),input.orderId(),input.items()));
     }
     private List<Carts.Input> items(List<Item> values) {
         if(values==null||values.size()>100) { throw new CartException(400); }

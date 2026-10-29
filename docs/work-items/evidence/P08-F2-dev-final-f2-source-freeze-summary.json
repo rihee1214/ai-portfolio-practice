@@ -1,0 +1,13 @@
+{
+  "frozen": "2026-10-28T21:06:13.1632219+09:00",
+  "head": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "branch": "codex/p05-d",
+  "dirty": true,
+  "files": 469,
+  "manifest": ".local-tools/p08-execution/f2-source-freeze2.json",
+  "sha256": "B095D13D07F1E2D9C19CBA8218C91BCE78C137B8CCA500784AD1A2B250F450F2",
+  "comparedWith": "P08-F1 final developer inputs",
+  "added": 6,
+  "changed": 18,
+  "deleted": 0
+}

@@ -1,0 +1,741 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:marketplace-api >---------------------
+[INFO] Building marketplace-api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (check-java-style) @ marketplace-api ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ marketplace-api ---
+[INFO] Copying 4 resources from src\main\resources to ..\.local-tools\p08-c-dev2-20261027\db\build\classes
+[INFO] Copying 32 resources from src\main\resources to ..\.local-tools\p08-c-dev2-20261027\db\build\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 159 source files with javac [debug parameters release 21] to ..\.local-tools\p08-c-dev2-20261027\db\build\classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ marketplace-api ---
+[INFO] Copying 5 resources from src\test\resources to ..\.local-tools\p08-c-dev2-20261027\db\build\test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ marketplace-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 47 source files with javac [debug parameters release 21] to ..\.local-tools\p08-c-dev2-20261027\db\build\test-classes
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Some input files use or override a deprecated API.
+[INFO] /D:/Workspace/ai-portfolio-practice/backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.api.ActuatorPolicyHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:00.215+09:00  INFO [requestId=] 47328 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Starting ActuatorPolicyHttpTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:00.217+09:00  INFO [requestId=] 47328 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : The following 1 profile is active: "e5-test"
+2026-10-27T18:11:01.200+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-27T18:11:01.212+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-27T18:11:01.213+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-27T18:11:01.272+09:00  INFO [requestId=] 47328 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1037 ms
+2026-10-27T18:11:01.931+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:01.999+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 1540 (http) with context path '/'
+2026-10-27T18:11:02.005+09:00  INFO [requestId=] 47328 --- [           main] c.e.m.api.ActuatorPolicyHttpTest         : Started ActuatorPolicyHttpTest in 2.004 seconds (process running for 2.959)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-27T18:11:02.536+09:00  INFO [requestId=] 47328 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-27T18:11:02.536+09:00  INFO [requestId=] 47328 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-27T18:11:02.537+09:00  INFO [requestId=] 47328 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-27T18:11:02.560+09:00  WARN [requestId=f7ac3afc-d907-44cd-aaf0-93fa2a9d039e] 47328 --- [1-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-27T18:11:02.789+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-27T18:11:02.791+09:00  INFO [requestId=] 47328 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.124 s -- in com.example.marketplace.api.ActuatorPolicyHttpTest
+[INFO] Running com.example.marketplace.api.ApiErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:02.844+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Starting ApiErrorHttpTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:02.844+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : The following 1 profile is active: "e2-probe"
+2026-10-27T18:11:03.053+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-27T18:11:03.054+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-27T18:11:03.054+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-27T18:11:03.078+09:00  INFO [requestId=] 47328 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 233 ms
+2026-10-27T18:11:03.162+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:03.169+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 1559 (http) with context path '/'
+2026-10-27T18:11:03.172+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.ApiErrorHttpTest     : Started ApiErrorHttpTest in 0.343 seconds (process running for 4.125)
+2026-10-27T18:11:03.181+09:00  INFO [requestId=] 47328 --- [1-auto-2-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-27T18:11:03.181+09:00  INFO [requestId=] 47328 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-27T18:11:03.181+09:00  INFO [requestId=] 47328 --- [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-27T18:11:03.183+09:00  WARN [requestId=8d5dfa51-9647-4f31-a782-712bc8531216] 47328 --- [1-auto-2-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'text/plain' is not supported]
+2026-10-27T18:11:03.229+09:00  WARN [requestId=2c683ebc-0a2a-4f41-b196-7ef53d7c5322] 47328 --- [1-auto-2-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: No acceptable representation]
+2026-10-27T18:11:03.359+09:00 ERROR [requestId=] 47328 --- [1-auto-2-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 SQL secret] with root cause
+
+java.lang.IllegalStateException: private-e2 SQL secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.fail(ApiErrorHttpTest.java:179) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-27T18:11:03.375+09:00 ERROR [requestId=] 47328 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] threw exception
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-27T18:11:03.376+09:00 ERROR [requestId=] 47328 --- [1-auto-2-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: private-e2 async secret] with root cause
+
+java.lang.IllegalStateException: private-e2 async secret
+	at com.example.marketplace.api.ApiErrorHttpTest$ProbeController.lambda$async$0(ApiErrorHttpTest.java:184) ~[test-classes/:na]
+	at org.springframework.web.context.request.async.WebAsyncManager.lambda$startCallableProcessing$3(WebAsyncManager.java:365) ~[spring-web-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-27T18:11:03.383+09:00  WARN [requestId=af6e5c72-77f7-4fe3-9179-7ef495953aa1] 47328 --- [1-auto-2-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'value': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "private-e2"]
+2026-10-27T18:11:03.401+09:00  WARN [requestId=7cbea376-18c3-4938-ab50-12620dbc3293] 47328 --- [1-auto-2-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('p' (code 112)): was expecting double-quote to start property name]
+2026-10-27T18:11:03.437+09:00  WARN [requestId=f5619751-8829-4599-b4b7-bfc8eb8bfb2c] 47328 --- [1-auto-2-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.622 s -- in com.example.marketplace.api.ApiErrorHttpTest
+[INFO] Running com.example.marketplace.api.DatabaseSettingsTest
+2026-10-27T18:11:03.635+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-27T18:11:03.856+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-27T18:11:03.999+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-27T18:11:04.143+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-27T18:11:04.281+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-27T18:11:04.405+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-27T18:11:04.520+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-27T18:11:04.639+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-27T18:11:04.754+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-27T18:11:04.866+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-27T18:11:05.544+09:00  WARN [requestId=] 47328 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL), spring.datasource.username (DB_USERNAME), spring.datasource.password (DB_PASSWORD)
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.365 s -- in com.example.marketplace.api.DatabaseSettingsTest
+[INFO] Running com.example.marketplace.api.ErrorHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:05.823+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Starting ErrorHttpTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:05.823+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.ErrorHttpTest  : The following 1 profile is active: "d1"
+2026-10-27T18:11:05.953+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-27T18:11:05.954+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-27T18:11:05.954+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-27T18:11:05.976+09:00  INFO [requestId=] 47328 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 152 ms
+2026-10-27T18:11:06.031+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:06.036+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 1589 (http) with context path '/'
+2026-10-27T18:11:06.038+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.ErrorHttpTest  : Started ErrorHttpTest in 0.226 seconds (process running for 6.991)
+2026-10-27T18:11:06.043+09:00  INFO [requestId=] 47328 --- [1-auto-3-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-27T18:11:06.043+09:00  INFO [requestId=] 47328 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-27T18:11:06.043+09:00  INFO [requestId=] 47328 --- [1-auto-3-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-27T18:11:06.075+09:00  WARN [requestId=719a4ab3-86d6-4693-9869-b0f7935290b7] 47328 --- [1-auto-3-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.276 s -- in com.example.marketplace.api.ErrorHttpTest
+[INFO] Running com.example.marketplace.api.HealthMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:06.097+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.HealthMvcTest  : Starting HealthMvcTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:06.097+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.HealthMvcTest  : The following 1 profile is active: "d1"
+2026-10-27T18:11:06.311+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-27T18:11:06.311+09:00  INFO [requestId=] 47328 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-27T18:11:06.313+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:06.314+09:00  INFO [requestId=] 47328 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-27T18:11:06.325+09:00  INFO [requestId=] 47328 --- [           main] c.example.marketplace.api.HealthMvcTest  : Started HealthMvcTest in 0.234 seconds (process running for 7.278)
+2026-10-27T18:11:06.367+09:00  WARN [requestId=411f82ca-99d4-47cb-ba9d-684c465cd3ba] 47328 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.379 s -- in com.example.marketplace.api.HealthMvcTest
+[INFO] Running com.example.marketplace.api.RequestIdFilterTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.example.marketplace.api.RequestIdFilterTest
+[INFO] Running com.example.marketplace.api.RequestIdHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:06.486+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Starting RequestIdHttpTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:06.487+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : The following 1 profile is active: "e1-probe"
+2026-10-27T18:11:06.615+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-27T18:11:06.615+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-27T18:11:06.616+09:00  INFO [requestId=] 47328 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-27T18:11:06.634+09:00  INFO [requestId=] 47328 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 147 ms
+2026-10-27T18:11:06.681+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:06.690+09:00  INFO [requestId=] 47328 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 1598 (http) with context path '/'
+2026-10-27T18:11:06.691+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.RequestIdHttpTest    : Started RequestIdHttpTest in 0.213 seconds (process running for 7.644)
+2026-10-27T18:11:06.697+09:00  INFO [requestId=] 47328 --- [1-auto-4-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-27T18:11:06.697+09:00  INFO [requestId=] 47328 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-27T18:11:06.697+09:00  INFO [requestId=] 47328 --- [1-auto-4-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-27T18:11:06.726+09:00 ERROR [requestId=] 47328 --- [-auto-4-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: intentional-e1] with root cause
+
+java.lang.IllegalStateException: intentional-e1
+	at com.example.marketplace.api.RequestIdHttpTest$ProbeController.fail(RequestIdHttpTest.java:170) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at com.example.marketplace.platform.web.RequestIdFilter.doFilter(RequestIdFilter.java:32) ~[classes/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-10-27T18:11:06.730+09:00  INFO [requestId=d6e9e282-009f-43ea-b9f5-e13ba66965db] 47328 --- [1-auto-4-exec-1] .e.m.a.RequestIdHttpTest$ProbeController : E1 test-only log probe
+2026-10-27T18:11:06.750+09:00  WARN [requestId=049b6684-3c30-4f56-9942-e7679fe51c7d] 47328 --- [1-auto-4-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.277 s -- in com.example.marketplace.api.RequestIdHttpTest
+[INFO] Running com.example.marketplace.api.UnhealthyMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-27T18:11:06.764+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Starting UnhealthyMvcTest using Java 21.0.12.1 with PID 47328 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:06.764+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : The following 1 profile is active: "d1"
+2026-10-27T18:11:06.931+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-27T18:11:06.931+09:00  INFO [requestId=] 47328 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-27T18:11:06.931+09:00  INFO [requestId=] 47328 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:06.932+09:00  INFO [requestId=] 47328 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-27T18:11:06.935+09:00  INFO [requestId=] 47328 --- [           main] c.e.marketplace.api.UnhealthyMvcTest     : Started UnhealthyMvcTest in 0.177 seconds (process running for 7.888)
+2026-10-27T18:11:06.938+09:00  WARN [requestId=2cac4bfc-635f-499c-a5af-fb6d6ad917d4] 47328 --- [           main] o.s.b.h.a.DiskSpaceHealthIndicator       : Free disk space at path 'D:\Workspace\ai-portfolio-practice\backend\.' below threshold. Available: 677325955072 bytes (threshold: 9223372036854775807B)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 s -- in com.example.marketplace.api.UnhealthyMvcTest
+[INFO] Running com.example.marketplace.architecture.ModuleArchitectureTest
+2026-10-27T18:11:06.957+09:00  INFO [requestId=] 47328 --- [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.12.1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.164 s -- in com.example.marketplace.architecture.ModuleArchitectureTest
+[INFO] Running com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.06 s -- in com.example.marketplace.architecture.ModuleRulesTest
+[INFO] Running com.example.marketplace.cart.CartRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.cart.CartRulesTest
+[INFO] Running com.example.marketplace.guest.GuestInputTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.GuestInputTest
+[INFO] Running com.example.marketplace.guest.GuestLinkPolicyTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.GuestLinkPolicyTest
+[INFO] Running com.example.marketplace.guest.GuestLocalPolicyTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.GuestLocalPolicyTest
+[INFO] Running com.example.marketplace.guest.GuestPasswordTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.GuestPasswordTest
+[INFO] Running com.example.marketplace.guest.RecoverySecretsTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.marketplace.guest.RecoverySecretsTest
+[INFO] Running com.example.marketplace.identity.AccountRulesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.identity.AccountRulesTest
+[INFO] Running com.example.marketplace.identity.AttemptWindowTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.640 s -- in com.example.marketplace.identity.AttemptWindowTest
+[INFO] Running com.example.marketplace.identity.SignupRulesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.example.marketplace.identity.SignupRulesTest
+[INFO] Running com.example.marketplace.identity.SignupSecurityTest
+A1_ARGON_ENCODE_MS=89
+A1_ARGON_VERIFY_MS=25
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.214 s -- in com.example.marketplace.identity.SignupSecurityTest
+[INFO] Running com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest
+[INFO] Running com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest
+[INFO] Running com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.651 s -- in com.example.marketplace.media.infrastructure.ImageNormalizerTest
+[INFO] Running com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in com.example.marketplace.media.infrastructure.LocalImagesTest
+[INFO] Running com.example.marketplace.order.domain.OrderRequestHashTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.example.marketplace.order.domain.OrderRequestHashTest
+[INFO] Running com.example.marketplace.order.domain.OrderRulesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.example.marketplace.order.domain.OrderRulesTest
+[INFO] Running com.example.marketplace.phone.PhoneProviderTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in com.example.marketplace.phone.PhoneProviderTest
+[INFO] Running com.example.marketplace.platform.JobRulesTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.example.marketplace.platform.JobRulesTest
+[INFO] Running com.example.marketplace.promotion.CouponReservationRulesTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.marketplace.promotion.CouponReservationRulesTest
+[INFO] Running com.example.marketplace.promotion.CouponRulesTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.marketplace.promotion.CouponRulesTest
+[INFO] Running com.example.marketplace.promotion.PromotionRulesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.example.marketplace.promotion.PromotionRulesTest
+[INFO] Running com.example.marketplace.promotion.QuoteCalculatorTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.example.marketplace.promotion.QuoteCalculatorTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 171, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.1:jar (default-jar) @ marketplace-api ---
+[INFO] Building jar: D:\Workspace\ai-portfolio-practice\.local-tools\p08-c-dev2-20261027\db\build\marketplace-api-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ marketplace-api ---
+[INFO] Replacing main artifact D:\Workspace\ai-portfolio-practice\.local-tools\p08-c-dev2-20261027\db\build\marketplace-api-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Workspace\ai-portfolio-practice\.local-tools\p08-c-dev2-20261027\db\build\marketplace-api-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- failsafe:3.5.6:integration-test (default) @ marketplace-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.marketplace.dbtest.PostgresJdbcIT
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+D2_CREATED_DATABASE=d2_it_8b8ebb4d8b084a659d6885b35f64fcfe
+2026-10-27T18:11:28.611+09:00  INFO [requestId=] 29532 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Starting PostgresJdbcIT using Java 21.0.12.1 with PID 29532 (started by rihee in D:\Workspace\ai-portfolio-practice\backend)
+2026-10-27T18:11:28.613+09:00  INFO [requestId=] 29532 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : The following 4 profiles are active: "db", "c3-fixture", "local-mailbox", "local-http"
+2026-10-27T18:11:29.723+09:00  INFO [requestId=] 29532 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-10-27T18:11:29.732+09:00  INFO [requestId=] 29532 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-27T18:11:29.733+09:00  INFO [requestId=] 29532 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-27T18:11:29.777+09:00  INFO [requestId=] 29532 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1156 ms
+2026-10-27T18:11:29.949+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-27T18:11:29.982+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@75d7297d
+2026-10-27T18:11:29.984+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-27T18:11:30.485+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:11:30.537+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "marketplace" ...
+2026-10-27T18:11:30.543+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "marketplace"."flyway_schema_history" ...
+2026-10-27T18:11:30.581+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": null
+2026-10-27T18:11:30.585+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "1 - initialize schema"
+2026-10-27T18:11:30.600+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "2 - jdbc fixture"
+2026-10-27T18:11:30.619+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "3 - identity signup"
+2026-10-27T18:11:30.638+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "4 - jdbc sessions"
+2026-10-27T18:11:30.655+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "5 - account recovery profile addresses"
+2026-10-27T18:11:30.674+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "6 - operating permissions"
+2026-10-27T18:11:30.690+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "7 - account state audit"
+2026-10-27T18:11:30.705+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "8 - seller applications"
+2026-10-27T18:11:30.720+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "9 - stores"
+2026-10-27T18:11:30.734+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "10 - store operations"
+2026-10-27T18:11:30.749+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "11 - catalog categories"
+2026-10-27T18:11:30.761+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "12 - catalog products"
+2026-10-27T18:11:30.775+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "13 - category audit"
+2026-10-27T18:11:30.788+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "14 - store operation order"
+2026-10-27T18:11:30.802+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "15 - catalog skus"
+2026-10-27T18:11:30.816+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "16 - media assets"
+2026-10-27T18:11:30.833+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "17 - inventory balances"
+2026-10-27T18:11:30.849+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "18 - inventory reservations"
+2026-10-27T18:11:30.866+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "19 - product creation time"
+2026-10-27T18:11:30.878+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "20 - member carts"
+2026-10-27T18:11:30.893+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "21 - member wishlists"
+2026-10-27T18:11:30.905+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "22 - guest purchase verification"
+2026-10-27T18:11:30.922+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "23 - guest lookup credentials"
+2026-10-27T18:11:30.939+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "24 - guest recovery"
+2026-10-27T18:11:30.955+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "25 - guest purchase link"
+2026-10-27T18:11:30.969+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "26 - promotions"
+2026-10-27T18:11:30.987+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "27 - coupons"
+2026-10-27T18:11:31.007+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "28 - coupon reservations"
+2026-10-27T18:11:31.024+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "29 - coupon reservation batches"
+2026-10-27T18:11:31.039+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "30 - coupon batch lock order"
+2026-10-27T18:11:31.053+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "31 - orders"
+2026-10-27T18:11:31.079+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "32 - jobs outbox"
+2026-10-27T18:11:31.093+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "marketplace" to version "33 - order creation participants"
+2026-10-27T18:11:31.110+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 33 migrations to schema "marketplace", now at version v33 (execution time 00:00.211s)
+2026-10-27T18:11:31.614+09:00  INFO [requestId=] 29532 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginMembers
+2026-10-27T18:11:32.129+09:00  INFO [requestId=] 29532 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-27T18:11:32.210+09:00  INFO [requestId=] 29532 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 10627 (http) with context path '/'
+2026-10-27T18:11:32.217+09:00  INFO [requestId=] 29532 --- [           main] c.e.marketplace.dbtest.PostgresJdbcIT    : Started PostgresJdbcIT in 4.028 seconds (process running for 5.135)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Workspace\ai-portfolio-practice\backend\..\.local-tools\m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-27T18:11:32.716+09:00  INFO [requestId=] 29532 --- [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-27T18:11:32.716+09:00  INFO [requestId=] 29532 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-27T18:11:32.717+09:00  INFO [requestId=] 29532 --- [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+P07_CLOCK java=2026-10-27T09:11:46.235224100Z database=2026-10-27T09:11:44.957604Z
+2026-10-27T18:11:50.051+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:11:50.072+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 34 migrations (execution time 00:00.012s)
+2026-10-27T18:11:50.079+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "marketplace": 33
+2026-10-27T18:11:50.080+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "marketplace" is up to date. No migration necessary.
+2026-10-27T18:11:52.476+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-27T18:11:52.485+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-27T18:11:52.494+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-10-27T18:11:52.530+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-10-27T18:11:55.937+09:00  WARN [requestId=] 29532 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.url (DB_URL)
+2026-10-27T18:11:56.093+09:00  WARN [requestId=] 29532 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.username (DB_USERNAME)
+2026-10-27T18:11:56.229+09:00  WARN [requestId=] 29532 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalStateException: Required database settings are missing, blank or unresolved: spring.datasource.password (DB_PASSWORD)
+2026-10-27T18:14:27.659+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:27.677+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p07_d_upgrade" ...
+2026-10-27T18:14:27.679+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p07_d_upgrade"."flyway_schema_history" ...
+2026-10-27T18:14:27.695+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p07_d_upgrade": null
+2026-10-27T18:14:27.697+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "1 - initialize schema"
+2026-10-27T18:14:27.708+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "3 - identity signup"
+2026-10-27T18:14:27.725+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "4 - jdbc sessions"
+2026-10-27T18:14:27.740+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "5 - account recovery profile addresses"
+2026-10-27T18:14:27.756+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "6 - operating permissions"
+2026-10-27T18:14:27.770+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "7 - account state audit"
+2026-10-27T18:14:27.782+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "8 - seller applications"
+2026-10-27T18:14:27.797+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "9 - stores"
+2026-10-27T18:14:27.809+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "10 - store operations"
+2026-10-27T18:14:27.821+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "11 - catalog categories"
+2026-10-27T18:14:27.832+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "12 - catalog products"
+2026-10-27T18:14:27.845+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "13 - category audit"
+2026-10-27T18:14:27.857+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "14 - store operation order"
+2026-10-27T18:14:27.868+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "15 - catalog skus"
+2026-10-27T18:14:27.880+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "16 - media assets"
+2026-10-27T18:14:27.896+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "17 - inventory balances"
+2026-10-27T18:14:27.909+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "18 - inventory reservations"
+2026-10-27T18:14:27.925+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "19 - product creation time"
+2026-10-27T18:14:27.935+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "20 - member carts"
+2026-10-27T18:14:27.948+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "21 - member wishlists"
+2026-10-27T18:14:27.959+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "22 - guest purchase verification"
+2026-10-27T18:14:27.974+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "23 - guest lookup credentials"
+2026-10-27T18:14:27.989+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "24 - guest recovery"
+2026-10-27T18:14:28.003+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "25 - guest purchase link"
+2026-10-27T18:14:28.015+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "26 - promotions"
+2026-10-27T18:14:28.031+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "27 - coupons"
+2026-10-27T18:14:28.048+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "28 - coupon reservations"
+2026-10-27T18:14:28.063+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 27 migrations to schema "p07_d_upgrade", now at version v28 (execution time 00:00.145s)
+2026-10-27T18:14:28.087+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:28.103+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.010s)
+2026-10-27T18:14:28.109+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p07_d_upgrade": 28
+2026-10-27T18:14:28.111+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "29 - coupon reservation batches"
+2026-10-27T18:14:28.124+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "30 - coupon batch lock order"
+2026-10-27T18:14:28.138+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "31 - orders"
+2026-10-27T18:14:28.162+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "32 - jobs outbox"
+2026-10-27T18:14:28.175+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_upgrade" to version "33 - order creation participants"
+2026-10-27T18:14:28.188+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "p07_d_upgrade", now at version v33 (execution time 00:00.038s)
+2026-10-27T18:14:28.192+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:28.207+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.010s)
+2026-10-27T18:14:28.213+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p07_d_upgrade": 33
+2026-10-27T18:14:28.213+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p07_d_upgrade" is up to date. No migration necessary.
+2026-10-27T18:14:28.226+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:28.238+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p07_d_conflict" ...
+2026-10-27T18:14:28.240+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p07_d_conflict"."flyway_schema_history" ...
+2026-10-27T18:14:28.256+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p07_d_conflict": null
+2026-10-27T18:14:28.258+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "1 - initialize schema"
+2026-10-27T18:14:28.268+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "3 - identity signup"
+2026-10-27T18:14:28.285+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "4 - jdbc sessions"
+2026-10-27T18:14:28.299+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "5 - account recovery profile addresses"
+2026-10-27T18:14:28.314+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "6 - operating permissions"
+2026-10-27T18:14:28.328+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "7 - account state audit"
+2026-10-27T18:14:28.340+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "8 - seller applications"
+2026-10-27T18:14:28.354+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "9 - stores"
+2026-10-27T18:14:28.366+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "10 - store operations"
+2026-10-27T18:14:28.380+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "11 - catalog categories"
+2026-10-27T18:14:28.390+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "12 - catalog products"
+2026-10-27T18:14:28.403+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "13 - category audit"
+2026-10-27T18:14:28.414+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "14 - store operation order"
+2026-10-27T18:14:28.425+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "15 - catalog skus"
+2026-10-27T18:14:28.439+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "16 - media assets"
+2026-10-27T18:14:28.453+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "17 - inventory balances"
+2026-10-27T18:14:28.467+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "18 - inventory reservations"
+2026-10-27T18:14:28.483+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "19 - product creation time"
+2026-10-27T18:14:28.493+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "20 - member carts"
+2026-10-27T18:14:28.506+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "21 - member wishlists"
+2026-10-27T18:14:28.517+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "22 - guest purchase verification"
+2026-10-27T18:14:28.532+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "23 - guest lookup credentials"
+2026-10-27T18:14:28.548+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "24 - guest recovery"
+2026-10-27T18:14:28.562+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "25 - guest purchase link"
+2026-10-27T18:14:28.575+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "26 - promotions"
+2026-10-27T18:14:28.591+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "27 - coupons"
+2026-10-27T18:14:28.608+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "28 - coupon reservations"
+2026-10-27T18:14:28.623+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 27 migrations to schema "p07_d_conflict", now at version v28 (execution time 00:00.148s)
+2026-10-27T18:14:28.647+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:28.662+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.009s)
+2026-10-27T18:14:28.668+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p07_d_conflict": 28
+2026-10-27T18:14:28.671+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p07_d_conflict" to version "29 - coupon reservation batches"
+2026-10-27T18:14:28.679+09:00 ERROR [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migration of schema "p07_d_conflict" to version "29 - coupon reservation batches" failed! Changes successfully rolled back.
+2026-10-27T18:14:28.715+09:00  WARN [requestId=e6f90c02-af42-4741-a15d-5e06e42cde4b] 29532 --- [1-auto-1-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-10-27T18:14:32.577+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:32.593+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4e_upgrade" ...
+2026-10-27T18:14:32.595+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4e_upgrade"."flyway_schema_history" ...
+2026-10-27T18:14:32.610+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4e_upgrade": null
+2026-10-27T18:14:32.612+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "1 - initialize schema"
+2026-10-27T18:14:32.623+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "3 - identity signup"
+2026-10-27T18:14:32.640+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "4 - jdbc sessions"
+2026-10-27T18:14:32.654+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "5 - account recovery profile addresses"
+2026-10-27T18:14:32.670+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "6 - operating permissions"
+2026-10-27T18:14:32.684+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "7 - account state audit"
+2026-10-27T18:14:32.697+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "8 - seller applications"
+2026-10-27T18:14:32.711+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "9 - stores"
+2026-10-27T18:14:32.723+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "10 - store operations"
+2026-10-27T18:14:32.735+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "11 - catalog categories"
+2026-10-27T18:14:32.748+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "12 - catalog products"
+2026-10-27T18:14:32.761+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "13 - category audit"
+2026-10-27T18:14:32.773+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "14 - store operation order"
+2026-10-27T18:14:32.784+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "15 - catalog skus"
+2026-10-27T18:14:32.797+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "16 - media assets"
+2026-10-27T18:14:32.812+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "17 - inventory balances"
+2026-10-27T18:14:32.824+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 16 migrations to schema "p4e_upgrade", now at version v17 (execution time 00:00.082s)
+2026-10-27T18:14:32.842+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:32.856+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.009s)
+2026-10-27T18:14:32.863+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4e_upgrade": 17
+2026-10-27T18:14:32.865+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "18 - inventory reservations"
+2026-10-27T18:14:32.882+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "19 - product creation time"
+2026-10-27T18:14:32.892+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "20 - member carts"
+2026-10-27T18:14:32.906+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "21 - member wishlists"
+2026-10-27T18:14:32.917+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "22 - guest purchase verification"
+2026-10-27T18:14:32.932+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "23 - guest lookup credentials"
+2026-10-27T18:14:32.949+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "24 - guest recovery"
+2026-10-27T18:14:32.963+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "25 - guest purchase link"
+2026-10-27T18:14:32.976+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "26 - promotions"
+2026-10-27T18:14:32.992+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "27 - coupons"
+2026-10-27T18:14:33.009+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "28 - coupon reservations"
+2026-10-27T18:14:33.026+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "29 - coupon reservation batches"
+2026-10-27T18:14:33.039+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "30 - coupon batch lock order"
+2026-10-27T18:14:33.053+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "31 - orders"
+2026-10-27T18:14:33.077+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "32 - jobs outbox"
+2026-10-27T18:14:33.092+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4e_upgrade" to version "33 - order creation participants"
+2026-10-27T18:14:33.106+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 16 migrations to schema "p4e_upgrade", now at version v33 (execution time 00:00.108s)
+2026-10-27T18:14:33.109+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:33.125+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.010s)
+2026-10-27T18:14:33.131+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4e_upgrade": 33
+2026-10-27T18:14:33.131+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p4e_upgrade" is up to date. No migration necessary.
+2026-10-27T18:14:35.724+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:35.737+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4d_upgrade" ...
+2026-10-27T18:14:35.740+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4d_upgrade"."flyway_schema_history" ...
+2026-10-27T18:14:35.754+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": null
+2026-10-27T18:14:35.756+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "1 - initialize schema"
+2026-10-27T18:14:35.767+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "3 - identity signup"
+2026-10-27T18:14:35.783+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "4 - jdbc sessions"
+2026-10-27T18:14:35.798+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "5 - account recovery profile addresses"
+2026-10-27T18:14:35.813+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "6 - operating permissions"
+2026-10-27T18:14:35.827+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "7 - account state audit"
+2026-10-27T18:14:35.838+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "8 - seller applications"
+2026-10-27T18:14:35.852+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "9 - stores"
+2026-10-27T18:14:35.864+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "10 - store operations"
+2026-10-27T18:14:35.877+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "11 - catalog categories"
+2026-10-27T18:14:35.887+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "12 - catalog products"
+2026-10-27T18:14:35.900+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "13 - category audit"
+2026-10-27T18:14:35.912+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "14 - store operation order"
+2026-10-27T18:14:35.922+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "15 - catalog skus"
+2026-10-27T18:14:35.935+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "16 - media assets"
+2026-10-27T18:14:35.949+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 15 migrations to schema "p4d_upgrade", now at version v16 (execution time 00:00.074s)
+2026-10-27T18:14:35.963+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:35.977+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.009s)
+2026-10-27T18:14:35.983+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": 16
+2026-10-27T18:14:35.985+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "17 - inventory balances"
+2026-10-27T18:14:36.000+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "18 - inventory reservations"
+2026-10-27T18:14:36.015+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "19 - product creation time"
+2026-10-27T18:14:36.026+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "20 - member carts"
+2026-10-27T18:14:36.039+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "21 - member wishlists"
+2026-10-27T18:14:36.049+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "22 - guest purchase verification"
+2026-10-27T18:14:36.065+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "23 - guest lookup credentials"
+2026-10-27T18:14:36.081+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "24 - guest recovery"
+2026-10-27T18:14:36.095+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "25 - guest purchase link"
+2026-10-27T18:14:36.108+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "26 - promotions"
+2026-10-27T18:14:36.124+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "27 - coupons"
+2026-10-27T18:14:36.141+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "28 - coupon reservations"
+2026-10-27T18:14:36.158+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "29 - coupon reservation batches"
+2026-10-27T18:14:36.171+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "30 - coupon batch lock order"
+2026-10-27T18:14:36.184+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "31 - orders"
+2026-10-27T18:14:36.209+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "32 - jobs outbox"
+2026-10-27T18:14:36.223+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4d_upgrade" to version "33 - order creation participants"
+2026-10-27T18:14:36.236+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 17 migrations to schema "p4d_upgrade", now at version v33 (execution time 00:00.113s)
+2026-10-27T18:14:36.240+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:36.254+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.009s)
+2026-10-27T18:14:36.260+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4d_upgrade": 33
+2026-10-27T18:14:36.260+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p4d_upgrade" is up to date. No migration necessary.
+2026-10-27T18:14:42.335+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-10-27T18:14:42.343+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-10-27T18:14:42.352+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-10-27T18:14:42.392+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-10-27T18:14:45.788+09:00  INFO [requestId=] 29532 --- [ol-132-thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-10-27T18:14:45.796+09:00  INFO [requestId=] 29532 --- [ol-132-thread-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@2622ae3b
+2026-10-27T18:14:45.796+09:00  INFO [requestId=] 29532 --- [ol-132-thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-10-27T18:14:45.803+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-10-27T18:14:45.803+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-10-27T18:14:45.857+09:00  WARN [requestId=b1bb0282-85ab-43bd-aa5c-fa63c9ff3417] 29532 --- [-auto-1-exec-13] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'page': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "abc"]
+2026-10-27T18:14:45.862+09:00  WARN [requestId=7677baac-e0ee-42e2-9388-097625c40d68] 29532 --- [-auto-1-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'category': Failed to convert value of type 'java.lang.String' to required type 'java.util.UUID'; Invalid UUID string: no]
+2026-10-27T18:14:50.880+09:00  WARN [requestId=5d37ea96-0ad0-4201-9dda-f7edb6bc2cef] 29532 --- [1-auto-1-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot map `null` into type `boolean` (set `DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES` to 'false' to allow)]
+2026-10-27T18:14:52.745+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:52.758+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.database.base.Schema   : Creating schema "p4b_upgrade" ...
+2026-10-27T18:14:52.760+09:00  INFO [requestId=] 29532 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "p4b_upgrade"."flyway_schema_history" ...
+2026-10-27T18:14:52.776+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": null
+2026-10-27T18:14:52.778+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "1 - initialize schema"
+2026-10-27T18:14:52.788+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "3 - identity signup"
+2026-10-27T18:14:52.805+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "4 - jdbc sessions"
+2026-10-27T18:14:52.820+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "5 - account recovery profile addresses"
+2026-10-27T18:14:52.836+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "6 - operating permissions"
+2026-10-27T18:14:52.850+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "7 - account state audit"
+2026-10-27T18:14:52.862+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "8 - seller applications"
+2026-10-27T18:14:52.876+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "9 - stores"
+2026-10-27T18:14:52.888+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "10 - store operations"
+2026-10-27T18:14:52.902+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "11 - catalog categories"
+2026-10-27T18:14:52.913+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "12 - catalog products"
+2026-10-27T18:14:52.926+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "13 - category audit"
+2026-10-27T18:14:52.937+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "14 - store operation order"
+2026-10-27T18:14:52.946+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema "p4b_upgrade", now at version v14 (execution time 00:00.063s)
+2026-10-27T18:14:52.958+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:52.973+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.008s)
+2026-10-27T18:14:52.978+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": 14
+2026-10-27T18:14:52.981+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "15 - catalog skus"
+2026-10-27T18:14:52.994+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "16 - media assets"
+2026-10-27T18:14:53.010+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "17 - inventory balances"
+2026-10-27T18:14:53.024+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "18 - inventory reservations"
+2026-10-27T18:14:53.040+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "19 - product creation time"
+2026-10-27T18:14:53.050+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "20 - member carts"
+2026-10-27T18:14:53.063+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "21 - member wishlists"
+2026-10-27T18:14:53.074+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "22 - guest purchase verification"
+2026-10-27T18:14:53.089+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "23 - guest lookup credentials"
+2026-10-27T18:14:53.105+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "24 - guest recovery"
+2026-10-27T18:14:53.119+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "25 - guest purchase link"
+2026-10-27T18:14:53.131+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "26 - promotions"
+2026-10-27T18:14:53.148+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "27 - coupons"
+2026-10-27T18:14:53.165+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "28 - coupon reservations"
+2026-10-27T18:14:53.181+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "29 - coupon reservation batches"
+2026-10-27T18:14:53.193+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "30 - coupon batch lock order"
+2026-10-27T18:14:53.205+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "31 - orders"
+2026-10-27T18:14:53.230+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "32 - jobs outbox"
+2026-10-27T18:14:53.243+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "p4b_upgrade" to version "33 - order creation participants"
+2026-10-27T18:14:53.256+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 19 migrations to schema "p4b_upgrade", now at version v33 (execution time 00:00.120s)
+2026-10-27T18:14:53.260+09:00  INFO [requestId=] 29532 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:15433/d2_it_8b8ebb4d8b084a659d6885b35f64fcfe (PostgreSQL 18.6)
+2026-10-27T18:14:53.274+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 33 migrations (execution time 00:00.009s)
+2026-10-27T18:14:53.280+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "p4b_upgrade": 33
+2026-10-27T18:14:53.280+09:00  INFO [requestId=] 29532 --- [           main] o.f.core.internal.command.DbMigrate      : Schema "p4b_upgrade" is up to date. No migration necessary.
+2026-10-27T18:14:56.593+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2026-10-27T18:14:56.601+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection org.postgresql.jdbc.PgConnection@668f0ee
+2026-10-27T18:14:56.601+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2026-10-27T18:14:56.619+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2026-10-27T18:14:56.619+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2026-10-27T18:14:56.839+09:00  WARN [requestId=a2f230ef-4b47-4306-b07d-1c249a2dbba2] 29532 --- [-auto-1-exec-11] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.MaxUploadSizeExceededException: Maximum upload size exceeded]
+2026-10-27T18:14:56.893+09:00  INFO [requestId=] 29532 --- [           main] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-27T18:14:56.894+09:00  INFO [requestId=] 29532 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-27T18:14:56.899+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-27T18:14:56.900+09:00  INFO [requestId=] 29532 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[INFO] Tests run: 216, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 209.1 s -- in com.example.marketplace.dbtest.PostgresJdbcIT
+[INFO] Running com.example.marketplace.phone.PhoneProviderEmulatorIT
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.933 s -- in com.example.marketplace.phone.PhoneProviderEmulatorIT
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 217, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- failsafe:3.5.6:verify (default) @ marketplace-api ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  04:10 min
+[INFO] Finished at: 2026-10-27T18:14:58+09:00
+[INFO] ------------------------------------------------------------------------

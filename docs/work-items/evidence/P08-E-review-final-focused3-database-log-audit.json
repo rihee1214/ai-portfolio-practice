@@ -1,0 +1,14 @@
+{
+  "evidence": ".local-tools/p08-e-focused3-20261028",
+  "database": "d2_it_02022558e1d2440c8fe30a9bcf4f1364",
+  "container": "68d17431a4b1bae127f5ad4636502ded1fd9d1099735fe2c8d5dbba1e846626b",
+  "since": "2026-10-28T08:21:20.0000000+00:00",
+  "until": "2026-10-28T08:25:16.0000000+00:00",
+  "source": "docker logs --since --until for existing db-test container; raw lines inspected in memory only",
+  "syntheticCollisionKeyCount": 1,
+  "linesInspected": 8,
+  "rawFixtureKeyMatches": 0,
+  "fixtureSecretMatches": 0,
+  "valuesOrMatchingLinesRecorded": false,
+  "passed": true
+}

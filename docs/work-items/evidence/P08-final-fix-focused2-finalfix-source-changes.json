@@ -1,0 +1,42 @@
+[
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrders.java",
+    "sha256": "B2F5770BB907DA848FC6CE77422D5FCC5A22073FCBDF4E7A673922B46093FCD8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentCoordinator.java",
+    "sha256": "AF821BE2A9E40DE27C031E93F90E6807160D730A1477036BC8B15EC112BD8EFE"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "sha256": "BE6543BEC067D2F43908FBDF44C3897215A75ABD9E659CBEEE7F5340BB5593D1"
+  },
+  {
+    "path": "frontend/auth-e2e/payments-mock.spec.ts",
+    "sha256": "A076B6887D8834FF8F84F818968E59198F10244E06FA116BF22E76A68D3ED4E5"
+  },
+  {
+    "path": "frontend/src/payment/PaymentPage.tsx",
+    "sha256": "02026F44F6CDC683071C7D7DD5984F47F18276DE6FF3347586ADE10C7847448F"
+  },
+  {
+    "path": "frontend/src/payment/PaymentStore.ts",
+    "sha256": "C1F004563E6D93D49CA4E995EF70C8010F8541E747965D3588268535DF899804"
+  },
+  {
+    "path": "frontend/tests/unit/PaymentStore.test.tsx",
+    "sha256": "43AEC0D5EAFE9B3E4AB1C2CD6A6FA8A4CB2C2C5F8417EF198A21EB7B2B078ADB"
+  },
+  {
+    "path": "verification/required-browser.json",
+    "sha256": "A6E25C6061DD6C7FC98FDB90161E456841A66D0D060F6C517B3BA6FF51E39777"
+  },
+  {
+    "path": "verification/required-frontend.json",
+    "sha256": "7DC06F0CDCB2B731B6FCA392553A509AC5B61FEC3D3A4225872AB7BFCD102CB2"
+  },
+  {
+    "path": "verification/required-tests.json",
+    "sha256": "69FD7A69C0386CC0D3A0DA3883241DAD43650D3A31D96F420D32DC409B54BD7C"
+  }
+]

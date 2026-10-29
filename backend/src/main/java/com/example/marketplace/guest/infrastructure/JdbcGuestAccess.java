@@ -17,7 +17,39 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-public final class JdbcGuestAccess {
+public final class JdbcGuestAccess implements com.example.marketplace.guest.api.GuestOrders,com.example.marketplace.guest.api.GuestAccessSessions {
+    @Override public UUID requireCurrent(String token) {
+        available();
+        if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
+        return authorize(token);
+    }
+    @Override public Prepared lock(String browser,UUID attempt,int revision,String token) {
+        available();
+        if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
+        var verified=purchases.verified(browser,purchases.credential(browser),attempt);
+        jdbc.queryForObject("SELECT id FROM marketplace.guest_attempt WHERE id=:id FOR UPDATE",Map.of("id",attempt),UUID.class);
+        var row=linkRow(attempt);checkRevision(row,revision);
+        if("EXISTING".equals(row.get("link_mode"))) {
+            if(token==null||!JdbcGuestPurchases.hash(token).equals(row.get("link_session_hash"))) { throw new GuestRejected(401); }
+            samePhone(authorize(token),verified.phone());
+        } else if(row.get("prepared_password_hash")==null) { throw new GuestRejected(409); }
+        purchases.verified(browser,purchases.credential(browser),attempt);
+        return new Prepared(attempt,revision,verified.name(),verified.phone());
+    }
+    @Override public UUID consume(String browser,Prepared prepared,String token) {
+        lock(browser,prepared.attemptId(),prepared.revision(),token);
+        if("NEW".equals(linkRow(prepared.attemptId()).get("link_mode"))) { return createBuyer(browser,prepared.attemptId()); }
+        UUID buyer=authorize(token);
+        purchases.consume(browser,purchases.credential(browser),prepared.attemptId(),prepared.phone(),"PURCHASE");return buyer;
+    }
+    @Override public void reference(UUID buyer,String order) { registerOrder(buyer,order); }
+    @Override public void authorizeRetry(String browser,UUID attempt,UUID buyer,String token) {
+        // The durable browser binding survives local provider restart and a later current_attempt.
+        // A valid server HttpSession is required by the caller; client IDs never establish this binding.
+        var rows=jdbc.queryForList("SELECT a.link_mode,a.link_session_hash,a.consumed_at,c.state FROM marketplace.guest_attempt a JOIN marketplace.guest_checkout c ON c.id=a.checkout_id WHERE a.id=:id AND c.browser_hash=:browser FOR UPDATE OF c,a",Map.of("id",attempt,"browser",JdbcGuestPurchases.hash(browser)));
+        if(rows.size()!=1||rows.getFirst().get("consumed_at")==null||"REVOKED".equals(rows.getFirst().get("state"))) { throw new GuestRejected(401); }
+        if("EXISTING".equals(rows.getFirst().get("link_mode"))&&(!buyer.equals(authorize(token))||!JdbcGuestPurchases.hash(token).equals(rows.getFirst().get("link_session_hash")))) { throw new GuestRejected(401); }
+    }
     public record Order(String orderNumber) { }
     private final NamedParameterJdbcTemplate jdbc;
     private final TransactionTemplate tx;

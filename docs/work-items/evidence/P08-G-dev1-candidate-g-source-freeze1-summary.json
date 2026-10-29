@@ -1,0 +1,13 @@
+{
+  "frozen": "2026-10-28T22:00:54.1394683+09:00",
+  "head": "460aa8bb0bb22f5138849eb00c050abd18f6fb53",
+  "branch": "codex/p05-d",
+  "dirty": true,
+  "files": 472,
+  "manifest": ".local-tools/p08-execution/g-source-freeze.json",
+  "sha256": "690D1D23868242821F8C2554463A50C425D7CD49D11FD001B174ADDA8A3C2658",
+  "comparedWith": "P08-F2 final developer inputs",
+  "added": 3,
+  "changed": 6,
+  "deleted": 0
+}

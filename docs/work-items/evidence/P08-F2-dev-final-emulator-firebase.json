@@ -1,0 +1,20 @@
+{
+  "emulators": {
+    "auth": {
+      "host": "127.0.0.1",
+      "port": 1911
+    },
+    "ui": {
+      "enabled": false
+    },
+    "logging": {
+      "host": "127.0.0.1",
+      "port": 1913
+    },
+    "hub": {
+      "host": "127.0.0.1",
+      "port": 1912
+    },
+    "singleProjectMode": true
+  }
+}

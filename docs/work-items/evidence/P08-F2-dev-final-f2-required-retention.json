@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "tests",
+    "old": 382,
+    "current": 384,
+    "oldNamesOrMultiplicityMissing": [],
+    "passed": true
+  },
+  {
+    "kind": "frontend",
+    "old": 187,
+    "current": 206,
+    "oldNamesOrMultiplicityMissing": [],
+    "passed": true
+  },
+  {
+    "kind": "browser",
+    "old": 90,
+    "current": 96,
+    "oldNamesOrMultiplicityMissing": [],
+    "passed": true
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "manifest": "docs/work-items/evidence\\P06-A-review-failure-manifest.json",
+    "count": 2162,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P06-B-failure-manifest.json",
+    "count": 405,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P06-C-failure-manifest.json",
+    "count": 791,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P06-D-commit-failure-manifest.json",
+    "count": 5,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P06-D-failure-manifest.json",
+    "count": 882,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P08-B-review1-failure-manifest.json",
+    "count": 576,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P08-B-failure-manifest.json",
+    "count": 2894,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P08-A-failure-manifest.json",
+    "count": 4721,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P07-D-failure-manifest.json",
+    "count": 2102,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P07-C-failure-manifest.json",
+    "count": 1196,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P07-B-failure-manifest.json",
+    "count": 2663,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P07-A-failure-manifest.json",
+    "count": 2577,
+    "mismatches": 0
+  },
+  {
+    "manifest": "docs/work-items/evidence\\P06-E-failure-manifest.json",
+    "count": 1375,
+    "mismatches": 0
+  }
+]

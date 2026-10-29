@@ -3,7 +3,8 @@ import { GuestCart, uuid, GUEST_KEY, JOURNAL_KEY } from './GuestCart'
 import { detailValid, type Detail } from '../catalog/Browse'
 import { requestJson } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
-export type Line = { skuId: string; quantity: number; detail: Detail | null }
+export type Line = { skuId: string; quantity: number; detail: Detail | null; revision?: number }
+export type PurchaseCart = {owner:string|null;items:{skuId:string;quantity:number;revision:number|string}[]}
 export type View = { version: number; items: Line[] }
 type State = View & { busy: boolean; ready: boolean; member: boolean; error?: ApiErrorView; notice: string }
 function valid(v: unknown): v is View {
@@ -25,6 +26,19 @@ export class CartStore {
   private listeners = new Set<() => void>()
   constructor(private auth: AuthStore, private guest: GuestCart, private lock: <T>(work: () => Promise<T>) => Promise<T> = browserCartLock) { }
   getSnapshot = () => this.state
+  capturePurchase = ():PurchaseCart => ({owner:this.auth.getSnapshot().member?.id??null,items:this.state.member?this.state.items.map(i=>({skuId:i.skuId,quantity:i.quantity,revision:i.revision??-1})):this.guest.capture()})
+  reconcilePurchase = async (orderId:string,submitted:PurchaseCart) => {
+    if(!submitted.items.length)return
+    let succeeded=false
+    await this.run(async(send,owner)=>{
+      if(owner!==submitted.owner)throw new Error('구매 계정이 변경되었습니다.')
+      let view:View
+      if(owner)view=await send('/api/cart/reconcile','POST',{owner,orderId,items:submitted.items})
+      else{this.guest.reconcile(orderId,submitted.items.map(i=>({...i,revision:String(i.revision)})));const items=this.guest.read();view=items.length?await send('/api/cart/preview','POST',{items}):{version:0,items:[]}}
+      succeeded=true;return{view,notice:'주문한 항목을 장바구니에 반영했습니다. 이후 변경한 항목은 유지합니다.'}
+    })
+    if(!succeeded)throw new Error('장바구니 반영을 확인하지 못했습니다.')
+  }
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener) } }
   private emit(state: State) { this.state = state; this.listeners.forEach(fn => fn()) }
   private stop = () => { ++this.generation; this.controller.abort(); this.emit(empty()) }

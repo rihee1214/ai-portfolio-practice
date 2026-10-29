@@ -1,0 +1,29 @@
+{
+  "checked": "2026-10-28T20:47:29.5002242+09:00",
+  "evidence": ".local-tools/p08-f2-focused6-20261028",
+  "database": "d2_it_1624f508486e43a497ee4200e81d2b35",
+  "readOnly": true,
+  "productionQuotaChanged": false,
+  "counts": [
+    {
+      "source": "127.0.0.1",
+      "recordedAttempts": 20,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.2",
+      "recordedAttempts": 8,
+      "productionLimit": 20,
+      "withinLimit": true
+    },
+    {
+      "source": "127.0.0.3",
+      "recordedAttempts": 14,
+      "productionLimit": 20,
+      "withinLimit": true
+    }
+  ],
+  "browserOneSourceBudget": "Existing browser18 + F2 new-context UI2 =20; no original-purchase lookup logins",
+  "limitations": "Persisted counters do not count rejected over-limit attempts; combine with actual successful browser report and explicit status assertions."
+}

@@ -1,0 +1,463 @@
+{
+  "sourceInputs": ".local-tools\\p08-g-dev2-20261028\\inputs.json",
+  "rootResult": ".local-tools\\p08-g-dev2-20261028\\result.json",
+  "constraints": [
+    {
+      "constraint": "G01",
+      "scope": "DEMO local only",
+      "status": "developer verification passed; independent pending",
+      "assertionContract": "docs/work-items/P08-G.md constraint matrix",
+      "actualTests": [
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseTotalsAndReservationsConverge",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseTotalsAndReservationsConverge",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#orderRetryReturnsSameResult",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#orderRetryReturnsSameResult",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#orderLastStockHasOneWinnerAndNoPartialCoupon",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#orderLastStockHasOneWinnerAndNoPartialCoupon",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentResultRollbackAndDuplicateEvents",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentResultRollbackAndDuplicateEvents",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "test": "desktop#purchase-complete.spec.ts:memberMultiStorePurchase",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        },
+        {
+          "test": "mobile#purchase-complete.spec.ts:memberMultiStorePurchase",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        }
+      ]
+    },
+    {
+      "constraint": "G02",
+      "scope": "DEMO local only",
+      "status": "developer verification passed; independent pending",
+      "assertionContract": "docs/work-items/P08-G.md constraint matrix",
+      "actualTests": [
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#realGuestOrdersUseIndependentAccessSessions",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#realGuestOrdersUseIndependentAccessSessions",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderConsumesVerificationAtomically",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderConsumesVerificationAtomically",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderRejectsStaleQuoteAndCurrentCredentialChanges",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderRejectsStaleQuoteAndCurrentCredentialChanges(CapturedOutput)",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "test": "desktop#purchase-complete.spec.ts:guestPurchaseAndNewBrowserLookup",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        },
+        {
+          "test": "mobile#purchase-complete.spec.ts:guestPurchaseAndNewBrowserLookup",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        }
+      ]
+    },
+    {
+      "constraint": "G03",
+      "scope": "DEMO local only",
+      "status": "developer verification passed; independent pending",
+      "assertionContract": "docs/work-items/P08-G.md constraint matrix",
+      "actualTests": [
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownAndLateSuccessConverge",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownAndLateSuccessConverge",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownHoldsReservationsAndExhaustedJobsAreVisible",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownHoldsReservationsAndExhaustedJobsAreVisible",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroCrashRecoveryNeverCallsAnyProviderOperation",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroCrashRecoveryNeverCallsAnyProviderOperation",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#zeroPaymentCommitsAllOnce",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#zeroPaymentCommitsAllOnce",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentAtomicRollbackAndCancellationRace",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentAtomicRollbackAndCancellationRace",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "test": "desktop#purchase-complete.spec.ts:uncertainFailureAndZeroPayment",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        },
+        {
+          "test": "mobile#purchase-complete.spec.ts:uncertainFailureAndZeroPayment",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        }
+      ]
+    },
+    {
+      "constraint": "G04",
+      "scope": "DEMO local only",
+      "status": "developer verification passed; independent pending",
+      "assertionContract": "docs/work-items/P08-G.md constraint matrix",
+      "actualTests": [
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryPreservesSnapshotsAndPagination",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryPreservesSnapshotsAndPagination",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderProjectionIsScoped",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderProjectionIsScoped",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#basicShipmentRequiresPaidSellerOrder",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#basicShipmentRequiresPaidSellerOrder",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "requirement": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentEventsAreIdempotent",
+          "test": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentEventsAreIdempotent",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "test": "desktop#purchase-complete.spec.ts:historyAndSellerIsolation",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        },
+        {
+          "test": "mobile#purchase-complete.spec.ts:historyAndSellerIsolation",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        }
+      ]
+    },
+    {
+      "constraint": "G05",
+      "status": "NOT RUN / BLOCKED",
+      "actualTossCalls": 0,
+      "reason": "P08-E actual SANDBOX inputs/card webhook contract unavailable",
+      "scenario": "docs/work-items/P08-G-sandbox-NOT-RUN.md",
+      "localSandboxContractIsActualProviderEvidence": false
+    }
+  ],
+  "reviewRepairActualEvidence": [
+    {
+      "finding": "R-FINAL-02",
+      "method": "paymentPreparationRechecksExpiryAfterReservationWait",
+      "expectedParameterShapes": [
+        "demo-coupon",
+        "demo-inventory",
+        "zero",
+        "sandbox",
+        "confirm"
+      ],
+      "actualExpandedCases": [
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[1]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[2]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[3]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[4]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentPreparationRechecksExpiryAfterReservationWait(String)[5]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        }
+      ]
+    },
+    {
+      "finding": "R-FINAL-02",
+      "method": "paymentExistingGuestRechecksMaximumAfterOrderWait",
+      "expectedParameterShapes": [
+        "status",
+        "approve"
+      ],
+      "actualExpandedCases": [
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentExistingGuestRechecksMaximumAfterOrderWait(String)[1]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        },
+        {
+          "classname": "com.example.marketplace.dbtest.PostgresJdbcIT",
+          "name": "paymentExistingGuestRechecksMaximumAfterOrderWait(String)[2]",
+          "status": "passed",
+          "report": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p08-g-dev2-20261028\\db\\build\\failsafe-reports\\TEST-com.example.marketplace.dbtest.PostgresJdbcIT.xml"
+        }
+      ]
+    },
+    {
+      "finding": "R-FINAL-01",
+      "frontendNewMandatoryTests": [
+        "tests/unit/PaymentStore.test.tsx#clears private DEMO state if CSRF preparation reports expired authentication",
+        "tests/unit/PaymentStore.test.tsx#clears private SANDBOX state if CSRF preparation reports expired authentication",
+        "tests/unit/PaymentStore.test.tsx#clears the real payment panel immediately when authentication is invalidated in StrictMode",
+        "tests/unit/PaymentStore.test.tsx#discards a late SANDBOX setup error after authentication changes",
+        "tests/unit/PaymentStore.test.tsx#discards a late SANDBOX setup success after authentication changes",
+        "tests/unit/PaymentStore.test.tsx#drops late payment error after an authentication generation changes without replaying approval",
+        "tests/unit/PaymentStore.test.tsx#drops late payment same identity after an authentication generation changes without replaying approval",
+        "tests/unit/PaymentStore.test.tsx#drops late payment success after an authentication generation changes without replaying approval",
+        "tests/unit/PaymentStore.test.tsx#removes previously displayed payment information on 401 and blocks automatic retry",
+        "tests/unit/PaymentStore.test.tsx#resumes only a server read after routine auth refresh and requires a fresh explicit approval"
+      ],
+      "frontendCoverage": ".local-tools\\p08-g-dev2-20261028\\frontend-coverage.json",
+      "actualBrowsers": [
+        {
+          "test": "desktop#payments-mock.spec.ts:다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        },
+        {
+          "test": "mobile#payments-mock.spec.ts:다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다",
+          "status": "expected",
+          "results": [
+            "passed"
+          ],
+          "report": ".local-tools\\p08-g-dev2-20261028\\db\\browser-report.json"
+        }
+      ],
+      "rereview": "docs/work-items/P08-final-review.md single scoped rereview resolved; final independent full pending"
+    }
+  ],
+  "retainedStageRequiredCoverage": [
+    {
+      "id": "P08-A-order-model",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.order.domain.OrderRulesTest#snapshotAmountsConserve",
+        "com.example.marketplace.order.domain.OrderRulesTest#snapshotStructureAndUnitAmountsAreValidated",
+        "com.example.marketplace.order.domain.OrderRulesTest#forbiddenTransitionsAreRejected",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderOwnerAndAttemptConstraints",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderSnapshotsSurviveSourceChanges",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#checkoutAttemptsAndOrderNumbersAreDistinct",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderNumberCollisionsRetryWithoutOrphans",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderDeadlineAndMalformedSnapshotsLeaveNoRows",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderMultiStoreUnitsAndDatabaseBoundaries",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderGuestAttemptBindingSurvivesCheckoutRestart",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderConcurrentKeysHaveOneDurableResult",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchConcurrentIdenticalInsertsRespectAllUniqueKeys"
+      ]
+    },
+    {
+      "id": "P08-B-durable-jobs-outbox-worker",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.platform.JobRulesTest#retryAndLeaseBoundaries",
+        "com.example.marketplace.architecture.ModuleRulesTest#platformApiCanUseOwnContracts",
+        "com.example.marketplace.architecture.ModuleRulesTest#businessImplementationCanUsePlatformContracts",
+        "com.example.marketplace.architecture.ModuleRulesTest#platformApiCannotExposePlatformInternals",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#outboxJoinsBusinessTransaction",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#jobLeaseFencesStaleWorkers",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#jobRetryAndDueBoundaries",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#workerDispatchesOutsideTransactionsAndRejectsDuplicateTypes",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#workerRestartKeepsDurableEffects",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#jobWritesRecheckLeaseAfterRowLockWait",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#workerHeartbeatProtectsLongHandler",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#outboxConcurrentDedupeAndAtomicInsertFailure",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#workerFailureResultsAreDurableAndSanitized"
+      ]
+    },
+    {
+      "id": "P08-C-atomic-purchase-creation",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.order.domain.OrderRequestHashTest#canonicalInputsExcludeSecrets",
+        "com.example.marketplace.architecture.ModuleRulesTest#securityPrincipalCannotLeakIntoApi",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderCreationLockOrderAndAuthorityRaces",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderRetryReturnsSameResult",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderCreationRollsBackAllParticipants",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderConsumesVerificationAtomically",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderHttpCsrfAndCurrentSessionOwnership",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderCartReconciliationPreservesChangedAndAddedItems",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderAuthorityChangesAfterActualRowWait",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderAdministratorAuditLocksDoNotCycle",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderCrossSellerAndSameBuyerBatchesSerializeBeforeForeignKeys",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderLastStockHasOneWinnerAndNoPartialCoupon",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderRejectsStaleQuoteAndCurrentCredentialChanges",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseAccountLockAllowsAuditForeignKeysButExcludesMutations",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderManualStockAdjustmentSerializesAndRechecksAvailability",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderHttpRechecksSessionAfterActualAccountWait"
+      ]
+    },
+    {
+      "id": "P08-D-payment-reconciliation",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.payment.domain.PaymentRulesTest#uncertainIsNotFailure",
+        "com.example.marketplace.payment.domain.PaymentRulesTest#boundedQueriesRequireReviewAtExactBoundary",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalProcessRecoveryBeforeAndAfterProvider",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentRepeatedWorkerCrashExhaustionNeedsReviewWithoutRelease",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroCrashRecoveryNeverCallsAnyProviderOperation",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalExpiryContendOnTheSameOrderLock",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentRejectsMislinkedOrIncompleteReservationHandoffs",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentMockFixtureIsNotProductionApi",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentWorkerRestartKeepsEffects",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentReviewRequiresAuthorizedReconcile",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpWaitRechecksSessionAndWorkerSurvivesSuspension",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpRejectsOwnershipAmountModeAndMissingCsrf",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#zeroPaymentCommitsAllOnce",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalAndExpiryHaveOneOutcome",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownAndLateSuccessConverge",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentResultRollbackAndDuplicateEvents",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownHoldsReservationsAndExhaustedJobsAreVisible",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpOwnershipAndTampering",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroInitialDeadlineNeverSchedulesCompensation"
+      ]
+    },
+    {
+      "id": "P08-E-Toss-local-contract",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.payment.TossPaymentProviderTest#storedOrderAndAmountAreVerified",
+        "com.example.marketplace.payment.TossPaymentProviderTest#timeoutAndQueryFollowCoordinator",
+        "com.example.marketplace.payment.TossPaymentProviderTest#fullCancellationAndConfirmedFailureAreValidated",
+        "com.example.marketplace.payment.TossPaymentProviderTest#productionKeysAndUntrustedEndpointsAreRejected",
+        "com.example.marketplace.payment.TossPaymentProviderTest#responseBodyDeadlineBoundsUnknown",
+        "com.example.marketplace.payment.TossPaymentProviderTest#overflowingOrNegativeBalancesAreUnknownForEveryOperation",
+        "com.example.marketplace.payment.TossWebhookVerifierTest#signedRawPayloadAndRotationAreRequired",
+        "com.example.marketplace.payment.PaymentProviderConfigurationTest#missingKeysRemainUnavailableAndProductionEndpointIsFixed",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConfirmationBindsStoredOrderAndCurrentAuthority",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConcurrentConfirmationsAndReusedProviderKeyHaveOneEffect",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConfirmationWaitRechecksCurrentSession",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentWebhookRequiresProviderEvidence",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxLostResponseAndLateSuccessUseSameAttempt",
+        "com.example.marketplace.payment.PaymentProviderConfigurationTest#explicitCountingProviderCanOverrideDefaultRoutingWithoutAmbiguity"
+      ]
+    },
+    {
+      "id": "P08-F-real-order-history",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.dbtest.PostgresJdbcIT#realOrdersRequireCurrentOwner",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#realGuestOrdersUseIndependentAccessSessions",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderProjectionIsScoped",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryPreservesSnapshotsAndPagination",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHistoryShowsExhaustionWithoutMutation",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryRechecksAuthorityAfterActualWait",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#guestHistoryRechecksExpiryAfterOrderWait",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#memberAndSellerHistoryRecheckExpiryAfterOrderWait"
+      ]
+    },
+    {
+      "id": "P08-F1-basic-fulfillment",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.fulfillment.domain.ShipmentRulesTest#basicTransitionsAndEvents",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#basicShipmentRequiresPaidSellerOrder",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentWriteRechecksSellerAuthority",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentEventsAreIdempotent",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentExpiryRecheckedAfterOrderAndShipmentWaits",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentAtomicRollbackAndCancellationRace",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentConcurrentPurposeAndVersionHaveOneEffect",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentHistoryUsesCausalOrder",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentOutboxAndWorkerRecovery",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseItemScopeAndMalformedInput",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentBackfillResumesAndSharesLivePurpose",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseParentOwnershipIsLinked"
+      ]
+    },
+    {
+      "id": "P08-F2-shipment-views",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderListIsBoundedScopedAndCurrent",
+        "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentBrowserFixtureIsNotProductionApi"
+      ]
+    },
+    {
+      "id": "P08-G-purchase-integration",
+      "status": "passed",
+      "tests": [
+        "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseTotalsAndReservationsConverge"
+      ]
+    }
+  ],
+  "predecessorEvidenceInventory": ".local-tools/p08-execution/g-predecessor-inventory.json",
+  "overallP08": "NOT COMPLETE; G05 blocked"
+}

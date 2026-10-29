@@ -1,0 +1,19 @@
+{
+  "created": "2026-10-28T22:39:12.3558906+09:00",
+  "manifest": "docs/work-items/evidence/P08-final-fix-development-failure-manifest.json",
+  "sha256": "B73AD0841A11AFCBDD50629D0DEC3F6152C15868FADABAAF4E46D8E7F5E41103",
+  "files": 2458,
+  "failedDirectories": [
+    "p08-finalfix-backend-red1-20261028",
+    "p08-finalfix-backend-red2-20261028",
+    "p08-finalfix-focused1-20261028",
+    "p08-finalfix-focused2-20261028"
+  ],
+  "emulatorDirectories": [
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-3f9effb6aa8b4ea380de8005bd3c18c4",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-59f60db7cf844a748baf4ed05ed55707",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-661eae2db08a4accbc131bde9929b39a",
+    "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-74a6344978a34650aae3f1f03426de50"
+  ],
+  "sidecarCount": 8
+}

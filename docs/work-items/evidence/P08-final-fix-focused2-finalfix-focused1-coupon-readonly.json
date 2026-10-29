@@ -1,0 +1,1 @@
+[{"email": "reservation-member-desktop@example.com", "state": "AVAILABLE", "version": 5, "reservation_states": ["RESTORED", "RELEASED"]}, {"email": "reservation-member-mobile@example.com", "state": "AVAILABLE", "version": 5, "reservation_states": ["RESTORED", "RELEASED"]}]
