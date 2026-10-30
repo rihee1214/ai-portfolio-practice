@@ -17,7 +17,7 @@ if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { 
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
 $oldPath = $env:PATH
-$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='P08-G DEMO purchase integration; actual Toss SANDBOX and G05 remain blocked'; evidence=$output }
+$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='P09-B local MOCK purchase confirmation, unit holds, original-delivery legacy policy and closure; actual Toss SANDBOX remains blocked; P09-C onward excluded'; evidence=$output }
 function Get-Inputs {
     $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend verification verify.ps1)
     if ($LASTEXITCODE -ne 0) { throw 'Source inventory failed' }

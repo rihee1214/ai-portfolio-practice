@@ -106,6 +106,18 @@
     "mobile#purchase-complete.spec.ts:uncertainFailureAndZeroPayment",
     "mobile#purchase-complete.spec.ts:historyAndSellerIsolation",
     "desktop#payments-mock.spec.ts:다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다",
-    "mobile#payments-mock.spec.ts:다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다"
+    "mobile#payments-mock.spec.ts:다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다",
+    "desktop#shipments-split.spec.ts:splitShipmentQuantitiesTrackingAndExceptionsMatchSavedApiAndDatabase",
+    "mobile#shipments-split.spec.ts:splitShipmentQuantitiesTrackingAndExceptionsMatchSavedApiAndDatabase",
+    "desktop#shipments-split.spec.ts:splitConflictReadFailureAndTrackingAuthLossRequireExplicitRecovery",
+    "mobile#shipments-split.spec.ts:splitConflictReadFailureAndTrackingAuthLossRequireExplicitRecovery",
+    "desktop#order-confirmation.spec.ts:memberSelectedTwoUnitsReplayAndCompleteAllSellersMatchApiAndDatabase",
+    "desktop#order-confirmation.spec.ts:newGuestLookupConfirmsOnlyDeliveredTwoThenClosesWithPurchaseAuthoritySeparated",
+    "desktop#order-confirmation.spec.ts:confirmationConflictGetFailureAndLostAuthorityRequireExplicitRecovery",
+    "desktop#order-confirmation.spec.ts:lateConfirmationReadAfterLogoutNeverPublishesPrivateOrderOrCommands",
+    "mobile#order-confirmation.spec.ts:memberSelectedTwoUnitsReplayAndCompleteAllSellersMatchApiAndDatabase",
+    "mobile#order-confirmation.spec.ts:newGuestLookupConfirmsOnlyDeliveredTwoThenClosesWithPurchaseAuthoritySeparated",
+    "mobile#order-confirmation.spec.ts:confirmationConflictGetFailureAndLostAuthorityRequireExplicitRecovery",
+    "mobile#order-confirmation.spec.ts:lateConfirmationReadAfterLogoutNeverPublishesPrivateOrderOrCommands"
   ]
 }

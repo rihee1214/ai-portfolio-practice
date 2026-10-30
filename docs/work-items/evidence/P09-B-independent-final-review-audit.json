@@ -1,0 +1,91 @@
+{
+  "sourceCount": 496,
+  "sourceMismatch": [],
+  "inventoryDiff": [],
+  "inputSha": "238FDB81F428062815D49246B716536420304B9EAC95DDEF27F7F6F7340C5FD4",
+  "coverageGroups": 52,
+  "coverageFailed": [],
+  "constraintCases": [
+    {
+      "name": "confirmationJobsRecoverAndReevaluateReleasedHolds",
+      "passed": true
+    },
+    {
+      "name": "confirmationLeaseAndClockAreRecheckedAfterLastWait",
+      "passed": true
+    },
+    {
+      "name": "confirmationAuthorityAndReplay",
+      "passed": true
+    },
+    {
+      "name": "sandboxConcurrentConfirmationsAndReusedProviderKeyHaveOneEffect(CapturedOutput)",
+      "passed": true
+    },
+    {
+      "name": "confirmationAndClaimHoldHaveOneWinner",
+      "passed": true
+    },
+    {
+      "name": "confirmationUsesStoredMicrosecondBoundary",
+      "passed": true
+    },
+    {
+      "name": "confirmationActualWorkerCrashAndStaleLeaseCannotWrite",
+      "passed": true
+    },
+    {
+      "name": "claimHoldBlocksShipmentWithoutCyclicRead",
+      "passed": true
+    },
+    {
+      "name": "sandboxConfirmationWaitRechecksCurrentSession",
+      "passed": true
+    },
+    {
+      "name": "closedOrderRetriesDoNotTriggerPaymentCompensation",
+      "passed": true
+    },
+    {
+      "name": "confirmationAuthorityRechecksAfterActualOrderAndUnitWaits",
+      "passed": true
+    },
+    {
+      "name": "orderClosurePreservesHistoryAndPendingUnits",
+      "passed": true
+    },
+    {
+      "name": "confirmationWritesRollbackTogether",
+      "passed": true
+    },
+    {
+      "name": "refundReferenceBoundaryPersistsAndExcludesAutomaticConfirmation",
+      "passed": true
+    },
+    {
+      "name": "confirmationDatabaseLifecycleAndDispatchConstraints",
+      "passed": true
+    },
+    {
+      "name": "confirmationUsesPersistedPolicyVersion",
+      "passed": true
+    },
+    {
+      "name": "sandboxConfirmationBindsStoredOrderAndCurrentAuthority",
+      "passed": true
+    },
+    {
+      "name": "confirmationGuestAuthorityAndNaturalWaits",
+      "passed": true
+    },
+    {
+      "name": "closedSandboxNewWebhookDigestsNeverCompensateSettledAttempt",
+      "passed": true
+    },
+    {
+      "name": "dispatchFactsUpgradeAndReplay",
+      "passed": true
+    }
+  ],
+  "at": "2026-10-30T22:43:04.1720126+09:00"
+}

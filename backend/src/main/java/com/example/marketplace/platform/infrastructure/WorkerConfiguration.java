@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration(proxyBeanMethods=false) @Profile("db")
 public class WorkerConfiguration {
-    @Bean Jobs jobs(NamedParameterJdbcTemplate jdbc,PlatformTransactionManager manager) { return new JdbcJobs(jdbc,manager,Clock.systemUTC()); }
+    @Bean JdbcJobs jobs(NamedParameterJdbcTemplate jdbc,PlatformTransactionManager manager) { return new JdbcJobs(jdbc,manager,Clock.systemUTC()); }
     @Bean Outbox outbox(NamedParameterJdbcTemplate jdbc,PlatformTransactionManager manager,Jobs jobs) { return new JdbcOutbox(jdbc,manager,jobs); }
     @Bean(initMethod="start",destroyMethod="close") @ConditionalOnProperty(name="marketplace.worker.enabled",havingValue="true")
     WorkerEngine workerEngine(Jobs jobs,List<JobHandler> handlers) { return new WorkerEngine(jobs,handlers); }

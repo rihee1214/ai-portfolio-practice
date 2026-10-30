@@ -1,0 +1,81 @@
+{
+  "required-tests.json": {
+    "before": 402,
+    "after": 421,
+    "beforeUnique": 401,
+    "afterUnique": 420,
+    "removed": [],
+    "newDuplicates": [],
+    "originalDuplicates": [
+      {
+        "name": "com.example.marketplace.architecture.ModuleRulesTest#securityPrincipalCannotLeakIntoApi",
+        "count": 2
+      }
+    ],
+    "added": [
+      "com.example.marketplace.architecture.ModuleRulesTest#confirmationBoundaryFixturesRejectReverseDependencies",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#claimHoldBlocksShipmentWithoutCyclicRead",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#closedOrderRetriesDoNotTriggerPaymentCompensation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#closedSandboxNewWebhookDigestsNeverCompensateSettledAttempt",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationActualWorkerCrashAndStaleLeaseCannotWrite",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAndClaimHoldHaveOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityAndReplay",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityRechecksAfterActualOrderAndUnitWaits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationDatabaseLifecycleAndDispatchConstraints",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationGuestAuthorityAndNaturalWaits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationJobsRecoverAndReevaluateReleasedHolds",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationLeaseAndClockAreRecheckedAfterLastWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesPersistedPolicyVersion",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesStoredMicrosecondBoundary",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationWritesRollbackTogether",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#dispatchFactsUpgradeAndReplay",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#orderClosurePreservesHistoryAndPendingUnits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#refundReferenceBoundaryPersistsAndExcludesAutomaticConfirmation",
+      "com.example.marketplace.order.domain.ConfirmationRulesTest#sevenDayBoundaryUsesDeliveredUnits"
+    ]
+  },
+  "required-browser.json": {
+    "before": 110,
+    "after": 118,
+    "beforeUnique": 110,
+    "afterUnique": 118,
+    "removed": [],
+    "newDuplicates": [],
+    "originalDuplicates": [],
+    "added": [
+      "desktop#order-confirmation.spec.ts:confirmationConflictGetFailureAndLostAuthorityRequireExplicitRecovery",
+      "desktop#order-confirmation.spec.ts:lateConfirmationReadAfterLogoutNeverPublishesPrivateOrderOrCommands",
+      "desktop#order-confirmation.spec.ts:memberSelectedTwoUnitsReplayAndCompleteAllSellersMatchApiAndDatabase",
+      "desktop#order-confirmation.spec.ts:newGuestLookupConfirmsOnlyDeliveredTwoThenClosesWithPurchaseAuthoritySeparated",
+      "mobile#order-confirmation.spec.ts:confirmationConflictGetFailureAndLostAuthorityRequireExplicitRecovery",
+      "mobile#order-confirmation.spec.ts:lateConfirmationReadAfterLogoutNeverPublishesPrivateOrderOrCommands",
+      "mobile#order-confirmation.spec.ts:memberSelectedTwoUnitsReplayAndCompleteAllSellersMatchApiAndDatabase",
+      "mobile#order-confirmation.spec.ts:newGuestLookupConfirmsOnlyDeliveredTwoThenClosesWithPurchaseAuthoritySeparated"
+    ]
+  },
+  "required-frontend.json": {
+    "before": 225,
+    "after": 234,
+    "beforeUnique": 224,
+    "afterUnique": 233,
+    "removed": [],
+    "newDuplicates": [],
+    "originalDuplicates": [
+      {
+        "name": "tests/unit/WorkspaceAccess.test.tsx#라우터가 허용한 변형 경로 /admin/users도 개별 운영 권한으로 검사한다",
+        "count": 2
+      }
+    ],
+    "added": [
+      "tests/unit/OrderConfirmation.test.tsx#clears a definitive conflict then failed GET and permits explicit GET recovery without another POST",
+      "tests/unit/OrderConfirmation.test.tsx#discards all private data and pending commands on 401 or 403",
+      "tests/unit/OrderConfirmation.test.tsx#drops late reads and uncertain retries after authentication changes",
+      "tests/unit/OrderConfirmation.test.tsx#freezes the exact key revision and units on lost response and hides private data until explicit replay",
+      "tests/unit/OrderConfirmation.test.tsx#keeps guest lookup ready separate from membership and preserves closed units without new commands",
+      "tests/unit/OrderConfirmation.test.tsx#offers explicit original-unit purchase confirmation in the actual order detail",
+      "tests/unit/OrderConfirmation.test.tsx#posts only selected eligible original units and then reads current confirmation state",
+      "tests/unit/OrderConfirmation.test.tsx#rejects missing duplicate out-of-scope units and malformed eligibility after a valid private read",
+      "tests/unit/OrderConfirmation.test.tsx#removes the enclosing private order detail immediately after confirmation authority is lost"
+    ]
+  }
+}

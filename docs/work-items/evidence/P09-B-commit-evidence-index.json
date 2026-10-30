@@ -1,0 +1,557 @@
+[
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\result.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-result.json",
+    "sha256": "4C8CCD4B2F13B8B4C0299FF8669F025119B09B509214E202B4D9A260ECA42ECC"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\inputs.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-inputs.json",
+    "sha256": "052D974EA9F83B18667C84D496230C4C94E29FDDCEC14F655D2D88CD8D2FBC7A"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-coverage.json",
+    "sha256": "88B3E0B2B92C75D8855B43F83506E908EB5840A80EF9C1D6DE8CACDEE4484636"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\java-cases.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-java-cases.json",
+    "sha256": "7A7638929442608D6E9BD7EE825C8171916FA554DDFDD80D62676F97BF9EA81E"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\browser-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-browser-coverage.json",
+    "sha256": "5DFFB8C11992552BF2BDAA3E7F60AB8045BB05945293DB6CC7ACB783BB327514"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\frontend-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-frontend-coverage.json",
+    "sha256": "FF2870FA9F9EAFA8E8B585E821A6DBB0F96A97607BB6728620AC309544434D7B"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\before.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-before.json",
+    "sha256": "F18DB21F2A7994A323F4290EABAA761A293AEE56F82EFB185B491D56469ED76C"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\after.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-after.json",
+    "sha256": "B1A9A0E279B9523FA571FF4FF0AA9C9FCEBF1498B2FD8C967D7427F30831DC44"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\gate-tests.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\typecheck.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\lint.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\build.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-build.txt",
+    "sha256": "B150DABA4A82088BFE8D426EB498BA1C11B67F7E7F448D3CBB254ADC56294863"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\test.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-test.txt",
+    "sha256": "134FC8F612580A2187F984BD30BAD321F20B94BEF51BB222165D56F74DD363E1"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\test-unit.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-test-unit.txt",
+    "sha256": "078B4188217C53B4E26A70B92D5C20FB4A4EF9E28E3811F53218FD70313E4500"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\TEST-frontend.xml",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-TEST-frontend.xml",
+    "sha256": "A5BB2CEF2F82ECD85B911A479AC18F48BBB575F9A2693AA9DA5FAE73C144FFEF"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\db\\summary.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-db-summary.json",
+    "sha256": "11F43D8CCCA73EF5043AB3E7FF12839628847EDC12E0AD6F6D8080A5F69E7321"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\db\\target.txt",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-db-target.txt",
+    "sha256": "16196418343E59C8D7357B4591E0D2105B15295393FCC1A4ABE135CA3873C71B"
+  },
+  {
+    "source": ".local-tools\\p09-a-independent1-20261030\\db\\browser-report.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-independent-final-db-browser-report.json",
+    "sha256": "BCCEB867E319AE0A420DF34B82E90FB21D52A18BBB491AA362EAC041CCBB3450"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\result.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-result.json",
+    "sha256": "90BE5FE6FEAC24AF63402C755E07FBF1CF7D5B91EDC0FDFCC51A2CC199AD833D"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\inputs.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-inputs.json",
+    "sha256": "238FDB81F428062815D49246B716536420304B9EAC95DDEF27F7F6F7340C5FD4"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-coverage.json",
+    "sha256": "41394AAE0A2AAF3610AA8E89F0764181D53C95356DC89EA56BE3426C7458ED90"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\java-cases.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-java-cases.json",
+    "sha256": "3586D46872CC4039136A6151476C598C99A7E1AA0BFF19971273C3EC245B4773"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\browser-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-browser-coverage.json",
+    "sha256": "E941FBE3FA5802C29A3A82A501553EFA871BDDD6D6B8C4EEADF5FE18325F123B"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\frontend-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-frontend-coverage.json",
+    "sha256": "AC1DD8896F14623413E2346B90F3FF90DFE6C3E3065BB0A1B6F9FFE94FE5205C"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\before.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-before.json",
+    "sha256": "2CFB4BA0AD816A0B101EF9F80AD52426AFFC2BF79F95DC986312CBE8E92108AF"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\after.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-after.json",
+    "sha256": "2C7D77C0A13887755DD3B8624E2668C7F77055A7B4C50C8FAD2AE4DDC1FE6EFD"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\gate-tests.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\typecheck.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\lint.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\build.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-build.txt",
+    "sha256": "9FD8646382A3938465B9CD2616A5BDE4706563E197652D628E194582117F9032"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\test.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-test.txt",
+    "sha256": "C839913B6C1281D6D77BE34342BB30301005709ABB050C225AE499A90143E791"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\test-unit.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-test-unit.txt",
+    "sha256": "1A9E6562397FA7913D1DDBFEB5A69593BCB94ADF4B3CB9606DA44DFB6CAE6118"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\TEST-frontend.xml",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-TEST-frontend.xml",
+    "sha256": "7AB8FDFC1970AE8A98CE6508CD15DA7125FF197E4F3E90AE4E379B560DED840C"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\db\\summary.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-db-summary.json",
+    "sha256": "29C8FC2AF1A3B02A170F1B1D0EEBAE4637BD3DC530475287683595718CBE3627"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\db\\target.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-db-target.txt",
+    "sha256": "9ED031B12E405694D706A5FBD59F81DE47C556DCC8E6A00AA300DC6CE81B01C9"
+  },
+  {
+    "source": ".local-tools\\p09-b-dev2-20261030\\db\\browser-report.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-db-browser-report.json",
+    "sha256": "D15D9A79D3CE2D4641C0C3F9AF9004029D9037A917C2FADC479619213CDB1135"
+  },
+  {
+    "source": ".local-tools/p09-b-dev2-20261030/db/browser-child-timing.ndjson",
+    "copy": "docs\\work-items\\evidence\\P09-B-development-final-browser-child-timing.ndjson",
+    "sha256": "16CA8068DC9A8E243E294368F2CC56255E921F86CA56A71263C05E36C43F0BEF"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\result.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-result.json",
+    "sha256": "69D766FBDD19D26675C0C03A568AED1A4753B38AFBE3997341CFB3E8073171B3"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\inputs.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-inputs.json",
+    "sha256": "238FDB81F428062815D49246B716536420304B9EAC95DDEF27F7F6F7340C5FD4"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-coverage.json",
+    "sha256": "41394AAE0A2AAF3610AA8E89F0764181D53C95356DC89EA56BE3426C7458ED90"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\java-cases.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-java-cases.json",
+    "sha256": "BEF57DEAF29BF44B5FC3DB72E05A8CCE399F476CE0DA78BBDF24DC31BC393F1F"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\browser-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-browser-coverage.json",
+    "sha256": "E941FBE3FA5802C29A3A82A501553EFA871BDDD6D6B8C4EEADF5FE18325F123B"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\frontend-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-frontend-coverage.json",
+    "sha256": "AC1DD8896F14623413E2346B90F3FF90DFE6C3E3065BB0A1B6F9FFE94FE5205C"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\before.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-before.json",
+    "sha256": "D6A7685ADA4E226CEAF572483D3D2B81298D52744076702E0B783D6B085F3754"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\after.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-after.json",
+    "sha256": "E40893F708EE9980939E3EEEDD14F1B0CAC90E435F1F5E7735DD05AD2B2713EB"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\gate-tests.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\typecheck.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\lint.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\build.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-build.txt",
+    "sha256": "26A8B94CF9C4635191649599EC9388D2665711A9E2A9CEF694692D14086E4FBA"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\test.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-test.txt",
+    "sha256": "D517CF40FBCCB4A87D4BC1F06DF972879F8E20F5CDE57D1E58335EC671D4ADDD"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\test-unit.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-test-unit.txt",
+    "sha256": "7F50B9C52CC7A74B3F49984361BDD9013A58E257EE746BE21FBD40A0DA229C1F"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\TEST-frontend.xml",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-TEST-frontend.xml",
+    "sha256": "E983B745360750A1E34A8EDD55EBB587E3AC967383142E75B57184CDFB1C4DCD"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\db\\summary.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-db-summary.json",
+    "sha256": "29C8FC2AF1A3B02A170F1B1D0EEBAE4637BD3DC530475287683595718CBE3627"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\db\\target.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-db-target.txt",
+    "sha256": "4AA0A20A659FED6DC7C9EFF65E1BD16D0026DEF753BACF2E71FE9658A239F7B4"
+  },
+  {
+    "source": ".local-tools\\p09-b-independent1-20261030\\db\\browser-report.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-db-browser-report.json",
+    "sha256": "5610C44B5D50CD4DAE2CAD7A019D6F2C12C5A3D8F74E6D73B42FBB5094D2766F"
+  },
+  {
+    "source": ".local-tools/p09-b-independent1-20261030/db/browser-child-timing.ndjson",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-browser-child-timing.ndjson",
+    "sha256": "47C7B985180E0FACCDB9CA1AED86BAD8106104C9FC79DCF72BEF3B77DD5E8634"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\result.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-result.json",
+    "sha256": "E0E6A111C21FF1446AF74C7129B9360288CD5B4758BC9B1844F673FD3B7C037D"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\inputs.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-inputs.json",
+    "sha256": "238FDB81F428062815D49246B716536420304B9EAC95DDEF27F7F6F7340C5FD4"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-coverage.json",
+    "sha256": "41394AAE0A2AAF3610AA8E89F0764181D53C95356DC89EA56BE3426C7458ED90"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\java-cases.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-java-cases.json",
+    "sha256": "161019413F4D0B03110DDF0ECAC706A4F5B1B676C87940D824B50E2121B254F8"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\browser-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-browser-coverage.json",
+    "sha256": "E941FBE3FA5802C29A3A82A501553EFA871BDDD6D6B8C4EEADF5FE18325F123B"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\frontend-coverage.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-frontend-coverage.json",
+    "sha256": "AC1DD8896F14623413E2346B90F3FF90DFE6C3E3065BB0A1B6F9FFE94FE5205C"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\before.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-before.json",
+    "sha256": "FBD0C2FB9EE629A3D8133BFCDC179D0BF89DEA2C671A12D352BF84C5CED6E1FE"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\after.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-after.json",
+    "sha256": "BFF944571CDE2281890D1A962D8EFD3F085E6685AB69124B33DA449F0B9A7825"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\gate-tests.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\typecheck.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\lint.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\build.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-build.txt",
+    "sha256": "4137D2227EFC3A9B8905CEA6C2E84B9A5BA69B3B8A19E1C37D03B98204E59E87"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\test.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-test.txt",
+    "sha256": "94F41436B2B6E2559DE46D63D2F5A65620EE4FE826941580141CB0746F817CD9"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\test-unit.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-test-unit.txt",
+    "sha256": "4D3C8C988174C9CA03D64CBF5F55482583C45879874B77218E6A0B6DC2060913"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\TEST-frontend.xml",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-TEST-frontend.xml",
+    "sha256": "C00AA063B0D00A6FFCC9DDF9A4F95A1EEE4F983A6EB313AF3A30214C314CB7C4"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\db\\summary.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-db-summary.json",
+    "sha256": "29C8FC2AF1A3B02A170F1B1D0EEBAE4637BD3DC530475287683595718CBE3627"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\db\\target.txt",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-db-target.txt",
+    "sha256": "C7F535E8D2CA127B6580BB75AB5DCB6848CDFC05FCCEE62891F2831A0E8852A2"
+  },
+  {
+    "source": ".local-tools\\p09-b-commit1-20261030\\db\\browser-report.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-db-browser-report.json",
+    "sha256": "21102048665255A3B24B97BCDFEA14C6ACC31B6833B3D7185F8CA4E132B285FE"
+  },
+  {
+    "source": ".local-tools/p09-b-commit1-20261030/db/browser-child-timing.ndjson",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-browser-child-timing.ndjson",
+    "sha256": "EA3288D774CFF9A6B7F2EF8ECAAE17396917596C8BF6019C3994FF56EE9D9FF0"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-02.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-failure-manifest-02.json",
+    "sha256": "45227027A7F4242E64537E542BEC27112371D800BDE2240A6B83BC01F0D1EA1B"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-03.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-failure-manifest-03.json",
+    "sha256": "1B90642D627BFB42209A6004709C5910AFD3BDE21CC4C8EBD1B1874591E61AC7"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-04.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-failure-manifest-04.json",
+    "sha256": "BDE7C5E7E2E87EDA97A2B95DD6F548499C912D63DB96D70E681F7E559D8FDE62"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-05.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-failure-manifest-05.json",
+    "sha256": "B0C9D169017889D8791743CEA14A7E8A78F9261B6C1FA3033EA3ACBE1EFDBFEE"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\red-failure-manifest-01.json",
+    "copy": "docs\\work-items\\evidence\\P09-A-red-failure-manifest-01.json",
+    "sha256": "01E879F459CCEC03F6EEA7151F2A123A4CC19410FD5DF313379BE26EE8B72F94"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-01.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-01.json",
+    "sha256": "C63F30CC78575D6A9A73B1A16DADF1B572D608932BEA4068ADFF83DAA7C94725"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-02.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-02.json",
+    "sha256": "8A445E55C834348D17E5D798904952BB0D15305EC51CB4D90E871C0B77683CD1"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-03.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-03.json",
+    "sha256": "623C75E5D8635CB2EA102ECE3FB4F7300DF427BBF7B37FD573CB26AE2E56DEA1"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-04.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-04.json",
+    "sha256": "654A449D9C9913D01F3E65BA653EEC43288A26704E95507E5F4FE6385330FA89"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-05.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-05.json",
+    "sha256": "7E5A18256E9E006AF71298470D27F3135F0BDF25B8677827B04631B9E9780A3B"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-06.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-06.json",
+    "sha256": "42B0124E5B1E7A477DABBA62A543E1BFC5148A7927E22C291BD54461E0BF8432"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-07.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-07.json",
+    "sha256": "91FE73E71CF8486304C76107F81C785D3442B4458FB4BB5F7C2624CF226C671B"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-08.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-08.json",
+    "sha256": "804DE08FCACE33ABEBB055F31A67BB372E99069C216E437BB141CAFBB166B7D9"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-09.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-09.json",
+    "sha256": "7A26DD7EFEB420B228971B36F34DC0B9E423FD55722B5D3A8CEA9D63342332C9"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-10.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-10.json",
+    "sha256": "B469C80A37D66E0473700D4A1C8AA9CA8E7D7015BF32EC253D3CCD2F3DC4FC5F"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-11.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-11.json",
+    "sha256": "C55C09CC7CD1168F745855BF56EE8CA51D66C1D1795194E1259C92039E32FD2B"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-12.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-12.json",
+    "sha256": "C7360627858A224292B5D8165C86428EC4D043F778804BEFD0499468E840D323"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-13.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-13.json",
+    "sha256": "3DDC077AF2A6F3AE44B0C6A8EC139E7B2BC7357A3911FD819031D98893519F75"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-14.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-14.json",
+    "sha256": "49157C9C30BAD1C095C569D2FD153C7584D3105B91F63426975C25B99B3D1F9E"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-15.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-15.json",
+    "sha256": "405E88224FC10966FA89C8082B99F4662159031E0F0312A15717CEA57DDA1F3F"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-16.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-16.json",
+    "sha256": "1ED14AAB54F3DE42ED9B785D22027521E7D79622782BF2D9F8AE2F7924382DAC"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-17.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-17.json",
+    "sha256": "9D8330A1E78BE4F547F814DFCEF21A5954F91B3E9DD27CC7EBC2D6994C2F7636"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-18.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-18.json",
+    "sha256": "5AF87768F8083F120BABE8A7768ABC2CE31C083D62032FE4800FCB79C39F7899"
+  },
+  {
+    "source": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-19.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-failure-manifest-19.json",
+    "sha256": "74B5573D380895DBF5190076392AB0787FE56610080C4043C7A20A17F32067AF"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/required-preservation-freeze2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-required-preservation-freeze2.json",
+    "sha256": "FFB704AEBF3201A2EF03FE2047E3AE710CE30494B8345045B00C6E69FED86E04"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/supplemental-evidence-manifest-dev2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-supplemental-evidence-manifest-dev2.json",
+    "sha256": "49C7DBF384B7103975DD7B0445DAD9CAD9F7A096D6A35D03351744FAA458F55F"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/evidence-audit-prior-dev2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-evidence-audit-prior-dev2.json",
+    "sha256": "47EF46F5D983CE7D3EB6A82AF3C0741872C6A9AA538B5FC533454D2D60FDAAAF"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/evidence-audit-a-dev2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-evidence-audit-a-dev2.json",
+    "sha256": "907BF223852FC0C504AF746E6B2A9F0C03CB8A9042A698F00F929D416C34DA31"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/evidence-audit-recent-dev2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-evidence-audit-recent-dev2.json",
+    "sha256": "C7BEE8BFB7D8F70167AE31400F1A80423829A2230885009B7FC1938E8076B579"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/evidence-audit-b-dev2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-evidence-audit-b-dev2.json",
+    "sha256": "AF29ED5180DAC23BC5C89DA519DD7B1B654079D3F6C3475F8B8C5AAF3EE77C40"
+  },
+  {
+    "source": ".local-tools/p09-b-execution-20261030/source-delta-freeze2.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-source-delta-freeze2.json",
+    "sha256": "A5003C2A0F982F9DA51693AB2218C75990271929348955034D68F10D52DD262F"
+  },
+  {
+    "source": ".local-tools/p09-b-independent1-20261030/final-review-audit.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-final-review-audit.json",
+    "sha256": "0EE2FF47C9A05F0DDC55DA2B125D8B7F5702D7A68CAAB26CB2D10B4C77AE391F"
+  },
+  {
+    "source": ".local-tools/p09-b-independent1-20261030/prior-failures-final-audit.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-prior-failures-final-audit.json",
+    "sha256": "C7F9323ABEC901ADD6DD989FA60C5ABCE7B068C97208D25F935E753C9C6E02A0"
+  },
+  {
+    "source": ".local-tools/p09-b-independent1-20261030/independent-start-failure-manifest.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-independent-independent-start-failure-manifest.json",
+    "sha256": "2731EBEBB5ED3A164EEA29B6C7453FEB0F326FF8736DC63BF3522892CD3001DF"
+  },
+  {
+    "source": ".local-tools/p09-b-commit1-20261030/failure-preservation.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-failure-preservation.json",
+    "sha256": "853D828119CA439DA8D8C68AF16C77EC53CFFBBA47531B4C2BE90F9AB72AFF55"
+  },
+  {
+    "source": ".local-tools/p09-b-commit1-20261030/source-verification.json",
+    "copy": "docs\\work-items\\evidence\\P09-B-commit-final-source-verification.json",
+    "sha256": "CD4A0814320091435D2EFE3D28CA2DA0F78A9B5F0067D5335228C23AB34E162E"
+  }
+]

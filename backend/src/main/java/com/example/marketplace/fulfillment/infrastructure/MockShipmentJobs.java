@@ -15,7 +15,13 @@ import org.springframework.transaction.support.TransactionTemplate;
 public class MockShipmentJobs {
  private static Jobs.Command scan(String cursor) { return new Jobs.Command("FULFILLMENT_BACKFILL","fulfillment-backfill-v1:"+cursor,"fulfillment-backfill-v1",cursor,Instant.EPOCH); }
  @Bean @ConditionalOnProperty(name="marketplace.worker.enabled",havingValue="true")
- ApplicationRunner shipmentBackfillStartup(Jobs jobs) { return args->jobs.enqueue(scan("START")); }
+ ApplicationRunner shipmentBackfillStartup(Jobs jobs) { return args->{jobs.enqueue(scan("START"));jobs.enqueue(deliveryScan("START"));}; }
+ private static Jobs.Command deliveryScan(String cursor) { return new Jobs.Command("INITIAL_DELIVERY_SCAN","initial-delivery-v2:scan:"+cursor,"initial-delivery-v2",cursor,Instant.EPOCH); }
+ @Bean JobHandler initialDeliveryScan(Jobs jobs,JdbcShipments shipments,PlatformTransactionManager manager) { return new JobHandler() {
+  public String type() { return "INITIAL_DELIVERY_SCAN"; }
+  public Result handle(Jobs.Job job) { new TransactionTemplate(manager).executeWithoutResult(t->{String cursor=job.command().payload();var rows=shipments.legacyCandidates(cursor.equals("START")?null:UUID.fromString(cursor),50);for(var row:rows) { jobs.enqueue(new Jobs.Command("INITIAL_DELIVERY_MIGRATE","initial-delivery-v2:event:"+row.event(),row.event().toString(),row.shipment()+"|"+row.event(),Instant.EPOCH)); }if(rows.size()==50) { jobs.enqueue(deliveryScan(rows.getLast().shipment().toString())); } });return Result.COMPLETE; }
+ }; }
+ @Bean JobHandler initialDeliveryMigrate(JdbcShipments shipments) { return new JobHandler() { public String type() { return "INITIAL_DELIVERY_MIGRATE"; }public Result handle(Jobs.Job job) { var p=job.command().payload().split("\\|");shipments.migrateDelivery(UUID.fromString(p[0]),UUID.fromString(p[1]));return Result.COMPLETE; } }; }
  @Bean JobHandler fulfillmentBackfill(Jobs jobs,FulfillmentOrders orders,PlatformTransactionManager manager) { return new JobHandler() {
   public String type() { return "FULFILLMENT_BACKFILL"; }
   public Result handle(Jobs.Job job) {
@@ -34,6 +40,6 @@ public class MockShipmentJobs {
  @Bean JobHandler shipmentCreated() { return new JobHandler() { public String type() { return "SHIPMENT_CREATED"; }public Result handle(Jobs.Job job) { return Result.COMPLETE; } }; }
  @Bean JobHandler shipmentProgress(JdbcShipments shipments) { return new JobHandler() {
   public String type() { return "SHIPMENT_PROGRESS"; }
-  public Result handle(Jobs.Job job) { var p=job.command().payload().split("\\|");shipments.progress(UUID.fromString(p[0]),job.command().dedupeKey(),p[1],Long.parseLong(p[2]),job.command().nextRunAt());return Result.COMPLETE; }
+  public Result handle(Jobs.Job job) { var p=job.command().payload().split("\\|",-1);if(p.length==3) { shipments.progress(UUID.fromString(p[0]),job.command().dedupeKey(),p[1],Long.parseLong(p[2]),job.command().nextRunAt()); }else if(p.length==6&&p[0].equals("v2")) { shipments.progressV2(UUID.fromString(p[1]),job.command().dedupeKey(),Long.parseLong(p[2]),p[3],p[4],Instant.parse(p[5])); }else { throw new IllegalArgumentException("INVALID_SHIPMENT_PROGRESS_PAYLOAD"); }return Result.COMPLETE; }
  }; }
 }

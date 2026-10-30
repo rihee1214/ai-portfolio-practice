@@ -27,6 +27,8 @@ public final class JdbcOrders implements Orders {
     private final ObjectMapper mapper;
     private final TransactionTemplate tx;
     private final Supplier<UUID> numbers;
+    private java.util.function.Supplier<AftercarePolicySource.Policy> aftercarePolicy=()->new AftercarePolicySource().current();
+    public void policySource(java.util.function.Supplier<AftercarePolicySource.Policy> source) { this.aftercarePolicy=java.util.Objects.requireNonNull(source); }
     private com.example.marketplace.identity.api.SellerMembership members;
     private com.example.marketplace.identity.api.PurchaseSessions sessions;
     private com.example.marketplace.guest.api.GuestOrders guests;
@@ -68,6 +70,7 @@ public final class JdbcOrders implements Orders {
             }
             if(number==null) { throw new IllegalStateException("ORDER_NUMBER_EXHAUSTED"); }
             for(var store:d.quote().stores()) { saveStore(id,store); }
+            AftercareLifecycle.initialize(jdbc,id,aftercarePolicy.get(),Instant.now());
             var c=d.contact();
             p.addValue("buyerName",c.buyerName()).addValue("buyerPhone",c.buyerPhone()).addValue("recipientName",c.recipientName())
                     .addValue("recipientPhone",c.recipientPhone()).addValue("postal",c.postalCode()).addValue("address1",c.addressLine1()).addValue("address2",c.addressLine2());

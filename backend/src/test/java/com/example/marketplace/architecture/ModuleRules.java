@@ -31,6 +31,8 @@ final class ModuleRules {
                         violation |= layer(origin, "api") && (!targetApi || (targetPlatform && !origin[0].equals("platform")));
                         violation |= layer(origin, "domain")
                                 && (layer(destination, "web") || layer(destination, "infrastructure"));
+                        violation |= origin[0].equals("order")
+                                && List.of("fulfillment", "claim").contains(destination[0]);
                     }
                     if (layer(origin, "api") || layer(origin, "domain")) {
                         violation |= technical(target.getPackageName()) || target.getName().equals("java.security.Principal");

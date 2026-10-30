@@ -635,5 +635,49 @@
     "tests": [
       "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseTotalsAndReservationsConverge"
     ]
+  },
+  {
+    "id": "P09-A-split-tracking-initial-delivery",
+    "tests": [
+      "com.example.marketplace.fulfillment.domain.ShipmentRulesTest#splitQuantitiesStayWithinOriginal",
+      "com.example.marketplace.fulfillment.domain.ShipmentRulesTest#trackingAndExceptionContracts",
+      "com.example.marketplace.architecture.ModuleRulesTest#initialDeliveryDoesNotPermitReverseDependencies",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentsPreserveScopeAndQuantities",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentTrackingEventsNeverRegress",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentCompletionFactsReplayWithoutCycles",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#splitUnitsPreserveLegacyBasicAndReplay",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentProgressEpochSupportsLegacyJobs",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentCommandsRecheckAuthorityAfterWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentRollbackAndWorkerRecovery",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentV36MigrationPreservesLegacy",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentLegacyScannerResumesWithoutResettingV1",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentLegacyScannerRejectsMissingAppliedCompletion",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#splitMultiItemMovesWholeLineAndCanonicalReceiptsRejectChangedContent",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentV36UpgradeResumesProductPortsAndOriginalV1Jobs"
+    ]
+  },
+  {
+    "id": "P09-B purchase confirmations unit holds legacy policy and closure",
+    "tests": [
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityAndReplay",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesPersistedPolicyVersion",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#closedOrderRetriesDoNotTriggerPaymentCompensation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesStoredMicrosecondBoundary",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#claimHoldBlocksShipmentWithoutCyclicRead",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAndClaimHoldHaveOneWinner",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationWritesRollbackTogether",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationJobsRecoverAndReevaluateReleasedHolds",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#refundReferenceBoundaryPersistsAndExcludesAutomaticConfirmation",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#orderClosurePreservesHistoryAndPendingUnits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityRechecksAfterActualOrderAndUnitWaits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationActualWorkerCrashAndStaleLeaseCannotWrite",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#dispatchFactsUpgradeAndReplay",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationGuestAuthorityAndNaturalWaits",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationLeaseAndClockAreRecheckedAfterLastWait",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationDatabaseLifecycleAndDispatchConstraints",
+      "com.example.marketplace.dbtest.PostgresJdbcIT#closedSandboxNewWebhookDigestsNeverCompensateSettledAttempt",
+      "com.example.marketplace.order.domain.ConfirmationRulesTest#sevenDayBoundaryUsesDeliveredUnits",
+      "com.example.marketplace.architecture.ModuleRulesTest#confirmationBoundaryFixturesRejectReverseDependencies"
+    ]
   }
 ]

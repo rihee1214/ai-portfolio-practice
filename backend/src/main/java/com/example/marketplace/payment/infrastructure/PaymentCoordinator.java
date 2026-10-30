@@ -132,6 +132,7 @@ public final class PaymentCoordinator implements Payments {
  private void applyLocked(Orders.Snapshot order,Result result) {
   var a=attempt(order.orderNumber());if(a==null) { throw new OrderRejected(404); }
   if(result==Result.SUCCEEDED) {
+   if(order.state().equals("CLOSED")) { if(a.state().equals("SUCCEEDED")&&a.compensation().equals("NONE")) { return; }review(a,"CLOSED_PAYMENT_CONFLICT");return; }
    if(order.state().equals("PAID")||!a.compensation().equals("NONE")) { return; }
    if(!order.state().equals("PENDING_PAYMENT")||!clock.instant().isBefore(order.expiresAt())||a.state().equals("FAILED")) {
     if(a.amount()==0) { throw new OrderRejected(409); }

@@ -1,0 +1,15 @@
+PASS reject missing required test
+PASS reject skipped required test
+PASS reject unmapped failing test
+PASS reject empty reports
+PASS reject empty constraints
+PASS reject empty mapping
+PASS reject duplicate constraint
+PASS reject parameter case skipped
+PASS valid required test and 8 rejection cases
+PASS reject removed old database
+PASS reject modified old media
+PASS reject expected browser skip
+PASS reject XML skip with false suite totals
+PASS reject XML case count mismatch
+PASS report parsing, browser skip and preservation gates

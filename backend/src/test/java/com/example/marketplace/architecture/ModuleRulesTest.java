@@ -16,6 +16,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ModuleRulesTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"fulfillment.api", "claim.api", "payment.infrastructure"})
+    void confirmationBoundaryFixturesRejectReverseDependencies(String target) throws Exception {
+        assertTrue(violates(compile(Map.of("order.infrastructure.Confirmation", "e6fixture." + target + ".Facts value;",
+                target + ".Facts", ""))));
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"fulfillment", "claim"})
+    void initialDeliveryDoesNotPermitReverseDependencies(String module) throws Exception {
+        assertTrue(violates(compile(Map.of("order.infrastructure.Consumer", "e6fixture." + module + ".api.Facts value;",
+                module + ".api.Facts", ""))));
+    }
     private static final String ROOT = "e6fixture";
     @TempDir
     Path directory;

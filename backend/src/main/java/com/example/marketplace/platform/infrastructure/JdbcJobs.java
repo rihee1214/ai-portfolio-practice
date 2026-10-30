@@ -21,7 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 
-public final class JdbcJobs implements Jobs {
+public final class JdbcJobs implements Jobs,com.example.marketplace.platform.api.JobLeases {
     private final NamedParameterJdbcTemplate jdbc;
     private final Clock clock;
     private final TransactionTemplate tx;
@@ -55,6 +55,11 @@ public final class JdbcJobs implements Jobs {
             var claimed=jdbc.query("WITH candidate AS (SELECT id FROM marketplace.job WHERE type IN (:types) AND attempts<5 AND ((status='READY' AND next_run_at<=:now) OR (status='RUNNING' AND lease_until<=:now)) ORDER BY next_run_at,id LIMIT 1 FOR UPDATE SKIP LOCKED) UPDATE marketplace.job j SET status='RUNNING',attempts=j.attempts+1,owner_token=:token,lease_until=:lease FROM candidate c WHERE j.id=c.id RETURNING j.*",p,JdbcJobs::row);
             return claimed.stream().findFirst();
         });
+    }
+    @Override public void requireOwned(UUID id,UUID token) {
+        if(!org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
+        var rows=jdbc.query("SELECT * FROM marketplace.job WHERE id=:id FOR UPDATE",Map.of("id",id),JdbcJobs::row);var now=clock.instant();
+        if(rows.size()!=1||!rows.getFirst().status().equals("RUNNING")||!Objects.equals(token,rows.getFirst().ownerToken())||!now.isBefore(rows.getFirst().leaseUntil())) { throw new IllegalStateException("JOB_LEASE_LOST"); }
     }
     private boolean owned(UUID id,UUID token,BiFunction<Job,Instant,Boolean> action) {
         return independent.execute(status->{

@@ -1,0 +1,270 @@
+[
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\frontend__src__order__OrderConfirmationLoader.tsx",
+    "sha256": "2168C219FB3B2AF4043DB25F6F38A392B290CE10538ED3509D40F125F96C2407"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\frontend__src__pages__OrderDetailPage.tsx",
+    "sha256": "771498D38E9958A8935CF876C061DF121EC43A2C78E7D0155E883656CC348562"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\frontend__tests__unit__OrderConfirmationLoader.test.tsx",
+    "sha256": "902F02C8FA94652FE0AA5DF5048F5873ED0A4BD483747A42121A148744D0F1E3"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\restoration-audit.json",
+    "sha256": "0BA9DC5DA7F816976390C4C620EDD862CE893E3F0BF77AFA87F18C193523F848"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\source-manifest.json",
+    "sha256": "0B2A7FEACEC68B5B1722252AFECD1656C95F1D6E14BA380133060CE777AA306C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-loader-experiment1-20261030\\verification__required-frontend.json",
+    "sha256": "CD208A773AFE6F9092C645FEA6EC5FEEF5388A8795E84B7132A6587157044B83"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-red1-20261030\\owned-process.json",
+    "sha256": "1FA7647C5AAC52714BCA531C42D3EA38F1258EF4925CA47657EB609435454D32"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-red1-20261030\\result.json",
+    "sha256": "F93C39CB22753A918E1109E5C3BCB37C5E342482025D5A25EAE78569330D54F5"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-red1-20261030\\vite.txt",
+    "sha256": "4F26448C105980FF3D683C32CEB6D1EE9103466374E0BA7B627F3C4EC61B016D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-green1-20261030\\owned-process.json",
+    "sha256": "42A740A8A23CD15D7A1D1A4EA0685256A45B7C96CB0BFCAC99B9E300786E9C5C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-green1-20261030\\result.json",
+    "sha256": "744A6CDF39B205BB03206114188521F32F5D8FFFD4F6DC3E920D780B40AAB2E9"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-module-probe-green1-20261030\\vite.txt",
+    "sha256": "1358F42C756CF857A23FE7701C46B34D3E80C4ACE6FC91B56477931E0AF1970B"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\create-db.txt",
+    "sha256": "C4F0E6A1D4C0F5670985351933A6E3B37F82D0E083B70CD21E88D7D6258DD588"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\explain-initial.sql",
+    "sha256": "A5500B657CDA40EF104B96D9004EC095758240FC21D5A380A6E58E93DC6657B4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\explain-initial.txt",
+    "sha256": "4A9E217C52FE16266B07E09B6605E9EA53DBA22D29938145F0F5A8D78A83B7C1"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\explain-internal.json",
+    "sha256": "795D1A54088A6331B5D7B83FEAC7F490E8827A3391AB8FC4463BC45AFE2AE451"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\explain-internal.sql",
+    "sha256": "E4A8B4093FE102664B8AEEBDCB2818770520534C093E664ED7520863C58A4E79"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe-pid.txt",
+    "sha256": "23E8AA3E760C754BBC88CA8F8842FB8EEE5551214083A0093FF0E86FDB71308D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe.args",
+    "sha256": "901FACD6EBEC4B754437A7B47A5184EB836EF67A219B5FACD8AC8078AA03ADCE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe.args.attempt2",
+    "sha256": "901FACD6EBEC4B754437A7B47A5184EB836EF67A219B5FACD8AC8078AA03ADCE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe.txt",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe3-pid.txt",
+    "sha256": "A82941A6823BFD3324EA78301955C83782278507ED5D28B5EA61CF8442414D5A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\probe3.args",
+    "sha256": "F27369E5B9C0E83292BD9999E0FE77E99EFFAE49F94373A9A83AC73C6005B6EE"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\result.json",
+    "sha256": "13B61EF668069F4D56C744C05CFD3DC547FB0CB6F3D9A73179517F92BC901087"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stderr.txt",
+    "sha256": "F5E2E793C33123E7166DF5BF3872BC084579832B82B8EE03694DC8E7CBCE1C2D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stderr.txt.attempt2",
+    "sha256": "F5E2E793C33123E7166DF5BF3872BC084579832B82B8EE03694DC8E7CBCE1C2D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stderr3.txt",
+    "sha256": "7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stdout.txt",
+    "sha256": "7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stdout.txt.attempt2",
+    "sha256": "7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\stdout3.txt",
+    "sha256": "1EEE64AC6B8C631C5A48D89082166764199BF01AF53A96DCFAC425B948143206"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\target.json",
+    "sha256": "D8A22C2A5A3F53E7654941CF27B710931D2B1041DD09AEE09B8349971B66E521"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\media\\.database",
+    "sha256": "2C2AFDC4F444150B020B3A7724EF048F64629F91D09350A0BCF03492EA86059D"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-db-cost1-20261030\\media\\.lock",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\browser-diagnostic-reporter.cjs",
+    "sha256": "7004A5386E369EB0C628CB5B0891EA5513D31EDC77AB06ED3C77B68215DB74F4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile1.log",
+    "sha256": "F89F57ED3BF894F3EE881FBD1DEA6032B512601CB591C400A6EED867EF3D7AA4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile2.log",
+    "sha256": "49A60C4080F9CCECEDD1B4B87C19D10744E30EABD9FCC775218C7187D99E3495"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile3.log",
+    "sha256": "3433D043A7DB2C50D8C5319F21E77589E8DACEC3A13639E6CDAA97E4E48ED045"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile4.log",
+    "sha256": "2004A5D91914485982A547F70B0DD89F6FAF09C7DF4F4D0251D9BD53A904E34F"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile5.log",
+    "sha256": "794D9B2ACDD11A60D767797440FF6D6F8A3CC47F2EBED6619F04D4F2799D60D4"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\compile6.log",
+    "sha256": "FD409347E3D6D58B6409D4F934CDD76C5A8B165293A2C8B28AC7EB4D0D5A49AB"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\D2CostProbe.java",
+    "sha256": "2C35CC994C09ED1E5005510BD49E223A819A4A8991E4A332B2D647F543817912"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\module-probe.cjs",
+    "sha256": "0ED52E4F7C26AE039F016892DDC3D0B4E3AF4EAE65D1E91242032E74A9C2F059"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-auth-red1.log",
+    "sha256": "9599C2487BB43B5F994E2868073EA365FD03823BF6884DE76308701305BA0384"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-green1.log",
+    "sha256": "2154A61F12C7592F98EF1AB225705F6938E014248F9FA398DD2F45C8ADE7F179"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-green2.log",
+    "sha256": "D46D4187F723DC776273C11817062C8B358F92AA1BBF6FE9C594BD48955FD50C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-green3.log",
+    "sha256": "992B0E81EA865992BCC5E1227CD2CB63628182CEC4B064DF62B8D94FB44C0132"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-green4.log",
+    "sha256": "209A353631F61005D91D1CED20A87FE88F9A96E709990CAF1BA18F8FE15A4050"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-green5.log",
+    "sha256": "8069685F46FD17B06933DD92121CFD92ED327F8B144CD70327E53CF8F1661A0A"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-hidden-auth-red1.log",
+    "sha256": "B05C9095621912689A9DB130BC58D72263BA7B6A5194062BE13A9ACD5BA5A67C"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-key-red1.log",
+    "sha256": "D7FBAFD7A93B37AEEC2098714204028F23B42C6AAFE15C68F8E062AEF646B8AD"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint1.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint2.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint3.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint4.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint5.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-lint7.log",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-loader1.log",
+    "sha256": "787F12B0C426E9EBE063DDD09FEA882553BF31428271101A59397A51EAFE7BB7"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-loader2.log",
+    "sha256": "8A39D6951B4A18ED252B32A22C2368F26790FBB20B902CFBF0ED29C3FD124D34"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-red1.log",
+    "sha256": "B58E265C61C1CB7ACA6AE31BFB59042FCD325C91A57EC41BF788A1773BD48445"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type1.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type2.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type3.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type4.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type5.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type6.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type7.log",
+    "sha256": "EA89338ED9A2B47D166038B1AD7DA1EE1633F8F4D86D99C0C7CC7CD2A7F242F0"
+  },
+  {
+    "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\ui-type8.log",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  }
+]

@@ -4,3 +4,7 @@
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
 *.png binary
+docs/work-items/evidence/P09-*.json -text
+docs/work-items/evidence/P09-*.txt -text
+docs/work-items/evidence/P09-*.xml -text
+docs/work-items/evidence/P09-*.ndjson -text

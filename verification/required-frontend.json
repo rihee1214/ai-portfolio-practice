@@ -216,6 +216,24 @@
     "tests/unit/PaymentStore.test.tsx#clears private DEMO state if CSRF preparation reports expired authentication",
     "tests/unit/PaymentStore.test.tsx#clears private SANDBOX state if CSRF preparation reports expired authentication",
     "tests/unit/PaymentStore.test.tsx#discards a late SANDBOX setup success after authentication changes",
-    "tests/unit/PaymentStore.test.tsx#discards a late SANDBOX setup error after authentication changes"
+    "tests/unit/PaymentStore.test.tsx#discards a late SANDBOX setup error after authentication changes",
+    "tests/unit/ShipmentStore.test.tsx#accepts server split quantities two and three against the original five without hiding saved delivery",
+    "tests/unit/ShipmentStore.test.tsx#rejects inflated totals duplicate original units and missing allocations in split server results",
+    "tests/unit/ShipmentStore.test.tsx#replays the exact split command after a lost response and obtains current two and three quantities from GET",
+    "tests/unit/ShipmentStore.test.tsx#discards pending split and tracking after auth changes and never publishes or posts a late private edit",
+    "tests/unit/ShipmentStore.test.tsx#stops split on 409 and hides private state when its authoritative GET fails until explicit reload",
+    "tests/unit/ShipmentPanels.test.tsx#shows unregistered tracking and a reason field without exposing a direct completion control",
+    "tests/unit/ShipmentStore.test.tsx#treats invalid edit input as a definitive rejection and permits correction with a new command",
+    "tests/unit/ShipmentPanels.test.tsx#native tracking input rejects URLs and accepts valid MOCK numbers",
+    "tests/unit/ShipmentStore.test.tsx#seller and buyer reject missing null malformed duplicate and mismatched units without private state or new commands",
+    "tests/unit/OrderConfirmation.test.tsx#offers explicit original-unit purchase confirmation in the actual order detail",
+    "tests/unit/OrderConfirmation.test.tsx#posts only selected eligible original units and then reads current confirmation state",
+    "tests/unit/OrderConfirmation.test.tsx#freezes the exact key revision and units on lost response and hides private data until explicit replay",
+    "tests/unit/OrderConfirmation.test.tsx#clears a definitive conflict then failed GET and permits explicit GET recovery without another POST",
+    "tests/unit/OrderConfirmation.test.tsx#discards all private data and pending commands on 401 or 403",
+    "tests/unit/OrderConfirmation.test.tsx#rejects missing duplicate out-of-scope units and malformed eligibility after a valid private read",
+    "tests/unit/OrderConfirmation.test.tsx#drops late reads and uncertain retries after authentication changes",
+    "tests/unit/OrderConfirmation.test.tsx#removes the enclosing private order detail immediately after confirmation authority is lost",
+    "tests/unit/OrderConfirmation.test.tsx#keeps guest lookup ready separate from membership and preserves closed units without new commands"
   ]
 }

@@ -28,6 +28,7 @@ public final class JdbcOrderQueries implements OrderQueries,com.example.marketpl
     private final HistorySessions sessions;
     private final Stores stores;
     private final TransactionTemplate tx;
+    @org.springframework.beans.factory.annotation.Autowired private AftercareLifecycle aftercare;
     public JdbcOrderQueries(NamedParameterJdbcTemplate jdbc,Orders orders,GuestAccessSessions guests,HistorySessions sessions,Stores stores,PlatformTransactionManager manager) {
         this.jdbc=jdbc;this.orders=orders;this.guests=guests;this.sessions=sessions;this.stores=stores;this.tx=new TransactionTemplate(manager);
     }
@@ -35,16 +36,21 @@ public final class JdbcOrderQueries implements OrderQueries,com.example.marketpl
         if(a==null||!sessions.lockReadable(a.browser(),a.member(),a.version())) { throw new OrderRejected(404); }
         return a.member();
     }
+    @Override public void recordInitialDelivery(com.example.marketplace.order.api.FulfillmentOrders.InitialDelivery fact) { boolean added=InitialDeliveryWriter.record(jdbc,fact);if(added) { aftercare.delivered(fact); } }
+    @Override public void recordDispatch(com.example.marketplace.order.api.FulfillmentOrders.Dispatch fact) { aftercare.dispatch(fact); }
+    @Override public void lockUnits(UUID seller) { aftercare.lockSellerUnits(seller); }
     private UUID guest(String token,boolean hidden) {
         try { return guests.requireCurrent(token); }
         catch(GuestRejected rejected) { if(hidden&&rejected.status()!=503) { throw new OrderRejected(404); }throw rejected; }
     }
-    @Override public Owned requireOwned(String number,Authority a) {
+    @Override public Owned requireOwned(String number,Authority a) { return owned(number,a,false); }
+    @Override public Owned lockOwned(String number,Authority a) { return owned(number,a,true); }
+    private Owned owned(String number,Authority a,boolean write) {
         if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
         if(a==null) { throw new OrderRejected(404); }
         UUID owner=a.member()!=null?member(a):guest(a.guestToken(),true);
         String ownerColumn=a.member()!=null?"member_id":"guest_buyer_id";
-        var ids=jdbc.queryForList("SELECT id FROM marketplace.purchase_order WHERE order_number=:n AND "+ownerColumn+"=:owner FOR SHARE",Map.of("n",number,"owner",owner),UUID.class);
+        var ids=jdbc.queryForList("SELECT id FROM marketplace.purchase_order WHERE order_number=:n AND "+ownerColumn+"=:owner "+(write?"FOR UPDATE":"FOR SHARE"),Map.of("n",number,"owner",owner),UUID.class);
         if(ids.size()!=1) { throw new OrderRejected(404); }
         // Row-lock waits can cross natural session deadlines even while account/session rows stay locked.
         if(a.member()!=null) { member(a); }else if(!owner.equals(guest(a.guestToken(),true))) { throw new OrderRejected(404); }
@@ -74,7 +80,7 @@ public final class JdbcOrderQueries implements OrderQueries,com.example.marketpl
     @Override public Detail detail(String number,Authority a) { return tx.execute(s->{requireOwned(number,a);var saved=orders.find(number);return new Detail(number,saved.state(),money(saved.quote().total()),saved.mode(),saved.createdAt(),saved.quote().policyVersion(),saved.contact(),saved.quote().stores().stream().map(store->project(saved,store)).toList());}); }
     private Store project(Orders.Snapshot order,com.example.marketplace.promotion.api.Quotes.Store q) {
         var seller=order.sellers().stream().filter(s->s.storeId().equals(q.storeId())).findFirst().orElseThrow();
-        var items=q.lines().stream().map(line->{UUID id=seller.items().stream().filter(i->i.skuId().equals(line.skuId())).findFirst().orElseThrow().id();return new Item(id,line.skuId(),line.title(),line.options(),line.quantity(),money(line.unitPrice()),money(line.gross()),line.promotion()==null?"":line.promotion().title(),money(line.promotionDiscount()),money(line.couponDiscount()),money(line.net()),line.units().stream().map(u->new Unit(u.ordinal(),money(u.gross()),money(u.promotionDiscount()),money(u.couponDiscount()),money(u.net()))).toList());}).toList();
+        var items=q.lines().stream().map(line->{UUID id=seller.items().stream().filter(i->i.skuId().equals(line.skuId())).findFirst().orElseThrow().id();return new Item(id,line.skuId(),line.title(),line.options(),line.quantity(),money(line.unitPrice()),money(line.gross()),line.promotion()==null?"":line.promotion().title(),money(line.promotionDiscount()),money(line.couponDiscount()),money(line.net()),line.units().stream().map(u->new OrderQueries.Unit(u.ordinal(),money(u.gross()),money(u.promotionDiscount()),money(u.couponDiscount()),money(u.net()))).toList());}).toList();
         return new Store(seller.id(),q.storeId(),q.name(),money(q.subtotal()),money(q.productDiscount()),q.coupon()==null?"":q.coupon().title(),money(q.couponDiscount()),money(q.shippingBase()),q.shippingPromotion()==null?"":q.shippingPromotion().title(),money(q.shippingDiscount()),money(q.total()),items);
     }
     @Override public SellerOrder sellerOrder(UUID id,Authority a) { return tx.execute(s->seller(id,a,false,false)); }
@@ -90,13 +96,19 @@ public final class JdbcOrderQueries implements OrderQueries,com.example.marketpl
         });
     }
     @Override public SellerOrder paidSellerOrder(UUID id,Authority a) { return tx.execute(s->seller(id,a,true,false)); }
+    @Override public SellerOrder lockSellerOrder(UUID id,Authority a) {
+        if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }return seller(id,a,false,true);
+    }
     @Override public SellerOrder writePaidSellerOrder(UUID id,Authority a) {
         if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
         return seller(id,a,true,true);
     }
     @Override public com.example.marketplace.order.api.FulfillmentOrders.Paid lockPaid(String number) {
+        var result=lockExisting(number);return orders.find(number).state().equals("PAID")?result:null;
+    }
+    @Override public com.example.marketplace.order.api.FulfillmentOrders.Paid lockExisting(String number) {
         if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
-        var saved=orders.lock(number);if(!saved.state().equals("PAID")) { return null; }
+        var saved=orders.lock(number);
         return new com.example.marketplace.order.api.FulfillmentOrders.Paid(saved.id(),saved.quote().stores().stream().map(q->{var p=project(saved,q);var c=saved.contact();return new SellerOrder(p.sellerOrderId(),number,saved.state(),p.total(),new Recipient(c.recipientName(),c.recipientPhone(),c.postalCode(),c.addressLine1(),c.addressLine2()),p.items());}).toList());
     }
     @Override public java.util.List<com.example.marketplace.order.api.FulfillmentOrders.Candidate> paidCandidates(UUID after,int size) {

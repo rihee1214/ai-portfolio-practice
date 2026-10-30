@@ -1,0 +1,197 @@
+{
+  "added": [
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/api/OrderConfirmations.java",
+      "after": "6C78ADC1A3C704C4AA06BAEAAE11C3BB448AC0ED895542D3872AC7F9EAE09354"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/api/OrderUnitHolds.java",
+      "after": "1B03EC52F03CFA3BB8E2A28C6F76CB7194C94A57DCF0C3690EC10E52C12DA592"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/domain/ConfirmationRules.java",
+      "after": "6807CD7FBCE406981A059F63125E3630B60A79A0100015B7925E22FDA77FC92A"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/AftercareLifecycle.java",
+      "after": "DB9656E39FD8A0E9BD48C5D35A0715BB87D46E1612C0E449B1221911BF73EE6A"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/AftercarePolicySource.java",
+      "after": "EE8B2E276DA100D7B13753A577EF7260898C8DFD7D5382347C17C7C924E86CEF"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/ConfirmationJobs.java",
+      "after": "528583FDD9703F7C29E960D909CFDB2DCF7B4767E3E7B0D8082ABFC211745FC3"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderConfirmations.java",
+      "after": "652C9081D46815DD2EF8A00C94CE391D1E1B37E564C98AAFEEC189F24424041B"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/web/OrderConfirmationController.java",
+      "after": "60274A9A3DF2D1FA7E4DA7CAE60B3E34D33E751C8A25C71AD58F82C95B8CDAEF"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/platform/api/JobLeases.java",
+      "after": "A25EC8EC0BFAA51468FA5917E2E553F885415B1BB5476E7EB74C32530632DACB"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V38__order_confirmations_and_holds.sql",
+      "after": "F8D6D16B0224685A7D287D29BEE821174EA6355DFEE5E7AB32687D4834BF3EF8"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V39__order_lifecycle_integrity.sql",
+      "after": "ACF57631498FF789CCAC3ACD2CC04453514FBF18C769AF298EF755082B88EA8C"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V40__refund_reference_capacity.sql",
+      "after": "7443C476DE45E33B857CD55EDEC611333979813A379803007806938B264123E4"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/ConfirmationWorkerProbe.java",
+      "after": "F22F71800A1AD96083E6D35C0948F94990A468AACE975B726EFCCC96ABA27309"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/LegacyConfirmationMigrationProbe.java",
+      "after": "CE7D5B1B8D0547E867A7F70C100351B38412DD772F1064E549E042CDE885EB2E"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/order/domain/ConfirmationRulesTest.java",
+      "after": "0AE23BC72D466AE8C99A7A37900B5150F0F8151E221B1ABA0FE7EB096698774D"
+    },
+    {
+      "path": "frontend/auth-e2e/diagnostics.ts",
+      "after": "985B6F81F59F9920E0B9F1E2D4CE7F3D2633B7053EFBFB838BA5DCE39C0D3797"
+    },
+    {
+      "path": "frontend/auth-e2e/order-confirmation.spec.ts",
+      "after": "0E0C703DF83682C429246B8696E402A66A211BD68CDB04FAC8FF165ABF3C5EC7"
+    },
+    {
+      "path": "frontend/src/order/OrderConfirmationPanel.tsx",
+      "after": "91F7310F9E34C1D6EDC5ED51D58DEA346C77718BF2B455B1842420A8989179F4"
+    },
+    {
+      "path": "frontend/src/order/OrderConfirmationStore.ts",
+      "after": "8A8D04E5DFEE4BF00805644AB17F2EADF85F8A89FD8AD8A1B016726D66FC8990"
+    },
+    {
+      "path": "frontend/tests/unit/OrderConfirmation.test.tsx",
+      "after": "9FAAAF2AF9204CDFCAD45C736DD8BD7ADF2E43A3B787D08B4F4D5C552737B63B"
+    }
+  ],
+  "changed": [
+    {
+      "path": "backend/src/main/java/com/example/marketplace/fulfillment/infrastructure/JdbcShipments.java",
+      "before": "974125464F57A3753E470CA34FAC1E9BDD648FE4BA734BF8683499490FB8CF83",
+      "after": "A0A51E0EAE9646ECDAAF533BAE896F9681CE2C7031F53A5AE869775B7F7301FA"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+      "before": "658B15A210E266C09F6CCEACF0CFD8D7BB2A490D1E16F3000C8EDFEBFE60405E",
+      "after": "D8CC09E05E278951F289FA5572EB0C7FE9AED8BE290F8660F3E35F09BEE5C8FE"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/api/FulfillmentOrders.java",
+      "before": "92CD84FECCD26084B92ADB26472705C3A7947D1239BED2A4AF2383E659DFFD4D",
+      "after": "2439D91E3B6DF72462102786B2F62432DCDC82DC91522A60469C4ECD3998AF70"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/api/OrderQueries.java",
+      "before": "EFB17C272AE9EE11F62C4909546513B862BE23E85EB9563E1390130D82241182",
+      "after": "4CBEE2C6341E687B557E5F9FF1BA0185C948171447B46F91EA2998EA2FDDF471"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/InitialDeliveryWriter.java",
+      "before": "2B3F4F145387FF2179C99D10E8A68E908D4A6664503B657378896587F8412B32",
+      "after": "DC0C581A5A7A9EA8AE49C5F9D79EBCEB013CD465DEF462379A2A56A40DEAB176"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderQueries.java",
+      "before": "038B1B38DA9564E04803504CAD3F0F41A75EC5DCF4632612533059CCB1C27024",
+      "after": "D902646F075828CF68CAAA51773E6FD256EEB5835B2F3EE85D1758B0D7408BA7"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrders.java",
+      "before": "B2F5770BB907DA848FC6CE77422D5FCC5A22073FCBDF4E7A673922B46093FCD8",
+      "after": "568FE9FA42114EFAC82FA4D03343A9AA8C163A23A66058DBE515E14EEA3A49F6"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentCoordinator.java",
+      "before": "AF821BE2A9E40DE27C031E93F90E6807160D730A1477036BC8B15EC112BD8EFE",
+      "after": "28CD9F82FEDDA04BAC83B882F6BB6E467896C4BF5BF62663B7ED4533AFB737AE"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/JdbcJobs.java",
+      "before": "42AD1E665C94EE53DAEA2C9C2F0416B05A2E8C1671047550CD8A4FD1653CB793",
+      "after": "3664D317B0718C2FAC6F7F87C4653B5B016ED6AE7A7FAD66E63574C81EFDB28B"
+    },
+    {
+      "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/WorkerConfiguration.java",
+      "before": "9444D7F82D3AC843CCB71373359C45C713B39DAC7C91314C23F2AA5C6575CF29",
+      "after": "E111EC7E26F96F91B308340F533D8695697E0A4A7324C36459A2AEB6C3A8FBE4"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/architecture/ModuleRulesTest.java",
+      "before": "D98D4CFB9A16BABF9C01755CD4C9A38BA1D4D9B9B2C635D9FF39A640F0067F9F",
+      "after": "5DEC008E0978C5CC77D22A4646A1EFF99BA2A38F9A7D499FE7CCF73046430805"
+    },
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+      "before": "2B8FD34ECFFC416A8E9AC295337E76164718F2A0595585922B792AEF21A4EB30",
+      "after": "8852CB3BF727A4F527F0CDD7E7895BB79D0B6C4C4694212CF3DF9F2B1C9431E2"
+    },
+    {
+      "path": "frontend/auth-e2e/playwright.config.ts",
+      "before": "92436F310A0FF6BA82A88F77122E6EF745C6A21C2D016136F19F20DFABF733B9",
+      "after": "5A217076229491C4EB21A184A294BC7BA92B946D626CAB34EB6952A79BD2CE46"
+    },
+    {
+      "path": "frontend/auth-e2e/purchase-helpers.ts",
+      "before": "D39B4D0607DA7F378ABA9DCB016AD0A11D2E4D9253DB2D874AB6EF93AE46AF3D",
+      "after": "EE7CD9CE21B49D04252BCE0DE9F31F933AFA2F1724197308BAC4A9A71D87D897"
+    },
+    {
+      "path": "frontend/auth-e2e/shipments-split.spec.ts",
+      "before": "65B2470A243EF3DAF4DFD3A390628423E01DF6CBA8962F85FE005A48E3568F07",
+      "after": "1B9A8CCFC90461115BA2CC76101FFDFD9A21DF7076F0A45309536F0F767B1C97"
+    },
+    {
+      "path": "frontend/auth-e2e/shipments.spec.ts",
+      "before": "D90A6363837FFB3BEF312301485F9F44A725151F936722E994C29ED97477562A",
+      "after": "E257362E7DBE89B05818A3E5F72B65366451454FDEDC585A8553DD7B97F0534C"
+    },
+    {
+      "path": "frontend/auth-e2e/vite.config.ts",
+      "before": "39112DD99B5E4CD54F5948DF073D79ADA0BE1AE12D192B4E016F83F57D8E820E",
+      "after": "26B2986EAE15F50E70DEFB8CBB5C077293BB427D3890069889CE8CFF35147FD9"
+    },
+    {
+      "path": "frontend/src/pages/OrderDetailPage.tsx",
+      "before": "05F2E4AE07EFB3B3AE929BC60FB6FCAAAB23C418B5852D8344AE29015216D7EB",
+      "after": "6D9DACBD736CD4902CB6126055AEB22B1598788A73A254FBA4F9F80D48937F2C"
+    },
+    {
+      "path": "verification/required-browser.json",
+      "before": "54EFD83ED5287657327E136112E90BE61EEC86BD3438FC1EED98AEE1F00349BE",
+      "after": "7A780D862EA8CDE035EB7236334CC2566B147D75F5C9666C0F60C794F1A98257"
+    },
+    {
+      "path": "verification/required-frontend.json",
+      "before": "E8FB7AF95ADF812CBF952373B8EAD4FFAEBEBDC6FBDDFC0E31273E99F4F04894",
+      "after": "6E39D17CD65FB5ABB076BE47DDD2AC7A38F9D040EF054AAA5C7F22C7FD4809E9"
+    },
+    {
+      "path": "verification/required-tests.json",
+      "before": "A1F64362AD088395D09B4E62D60D6EEF642C0B119EC82F209F0C8C0F6AB06C44",
+      "after": "CC2960119FB6EE943F67FA9568A90440845E8CF9F3EE5728C894DF9264FD7606"
+    },
+    {
+      "path": "verify.ps1",
+      "before": "A06B888DC0E2E887FDE29EE37EA9430514ED3B34F476770F5452158D420C1580",
+      "after": "31BDC9108C524F80744F55E3A0452CB48ED686D0459DC0BD9F0926FC9855F878"
+    }
+  ],
+  "removed": []
+}

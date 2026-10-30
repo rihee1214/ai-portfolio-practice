@@ -21,9 +21,13 @@ public interface OrderQueries {
     Detail detail(String number,Authority authority);
     /** Caller transaction must hold returned order lock while reading its payment projection. */
     Owned requireOwned(String number,Authority authority);
+    /** Current history authority, exclusive parent lock from the start; no share-to-update upgrade. */
+    Owned lockOwned(String number,Authority authority);
     SellerOrder sellerOrder(UUID id,Authority authority);
     /** Later fulfillment may consume only a PAID own-store projection; no shipment is created here. */
     SellerOrder paidSellerOrder(UUID id,Authority authority);
     /** Seller command authority; caller transaction retains exclusive order lock through shipment writes. */
     SellerOrder writePaidSellerOrder(UUID id,Authority authority);
+    /** Authority and exclusive existing-trade lock, including CLOSED for prior receipt lookup only. */
+    SellerOrder lockSellerOrder(UUID id,Authority authority);
 }
