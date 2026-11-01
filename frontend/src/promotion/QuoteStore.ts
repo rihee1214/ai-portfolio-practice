@@ -1,3 +1,4 @@
+import {returnPolicyValid,type ReturnPolicy} from '../catalog/ReturnPolicy'
 import { requestJson } from '../api/http'
 import { apiErrorView } from '../api/apiError'
 import type { AuthStore } from '../auth/AuthStore'
@@ -5,7 +6,7 @@ import { uuid } from '../cart/GuestCart'
 export type LineRequest={skuId:string;quantity:number}
 type Benefit={id:string;version:number;title:string;selectionReason:string}
 type Unit={ordinal:number;gross:string;promotionDiscount:string;couponDiscount:string;net:string}
-type Line={skuId:string;productId:string;productVersion:number;skuVersion:number;title:string;options:string[];quantity:number;unitPrice:string;gross:string;promotion:Benefit|null;promotionDiscount:string;couponDiscount:string;net:string;units:Unit[]}
+type Line={skuId:string;productId:string;productVersion:number;skuVersion:number;title:string;options:string[];quantity:number;unitPrice:string;gross:string;promotion:Benefit|null;promotionDiscount:string;couponDiscount:string;net:string;units:Unit[];returnPolicy:ReturnPolicy}
 type Store={storeId:string;slug:string;name:string;version:number;lines:Line[];subtotal:string;productDiscount:string;afterPromotion:string;coupon:{id:string;version:number;templateVersion:number;title:string}|null;couponDiscount:string;shippingBase:string;shippingPromotion:Benefit|null;shippingDiscount:string;total:string}
 export type Quote={policyVersion:string;evaluatedAt:string;fingerprint:string;total:string;stores:Store[]}
 const object=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v)
@@ -22,7 +23,7 @@ export function quoteValid(value:unknown):value is Quote {
   if(s.coupon!==null){const c=s.coupon;if(!object(c)||!uuid(c.id)||coupons.has(c.id)||!version(c.version)||!version(c.templateVersion)||typeof c.title!=='string')return false;coupons.add(c.id)}
   let gross=0n,promo=0n,coupon=0n
   for(const l of s.lines){
-   if(!object(l)||!uuid(l.skuId)||skus.has(l.skuId)||!uuid(l.productId)||!version(l.productVersion)||!version(l.skuVersion)||typeof l.title!=='string'||!Array.isArray(l.options)||!l.options.every(x=>typeof x==='string')||!Number.isInteger(l.quantity)||Number(l.quantity)<1||Number(l.quantity)>99||!moneyFields(l,['unitPrice','gross','promotionDiscount','couponDiscount','net'])||!benefit(l.promotion)||!Array.isArray(l.units)||l.units.length!==l.quantity)return false
+   if(!object(l)||!returnPolicyValid(l.returnPolicy,String(l.productId))||!uuid(l.skuId)||skus.has(l.skuId)||!uuid(l.productId)||!version(l.productVersion)||!version(l.skuVersion)||typeof l.title!=='string'||!Array.isArray(l.options)||!l.options.every(x=>typeof x==='string')||!Number.isInteger(l.quantity)||Number(l.quantity)<1||Number(l.quantity)>99||!moneyFields(l,['unitPrice','gross','promotionDiscount','couponDiscount','net'])||!benefit(l.promotion)||!Array.isArray(l.units)||l.units.length!==l.quantity)return false
    skus.add(l.skuId);const line=l as unknown as Line;let ug=0n,up=0n,uc=0n,un=0n
    for(const [index,u] of l.units.entries()){
     if(!object(u)||u.ordinal!==index||!moneyFields(u,['gross','promotionDiscount','couponDiscount','net']))return false

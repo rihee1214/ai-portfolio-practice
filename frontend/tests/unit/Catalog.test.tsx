@@ -1,3 +1,4 @@
+import {policyFixture} from './returnPolicyFixture'
 import { test, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
@@ -19,7 +20,7 @@ test('카테고리 입력은 서버와 같은 문자 기준으로 emoji 80자를
   expect(input).toHaveValue('😀'.repeat(80))
 })
 test('저장된 여러 줄 설명과 선택창의 레이블 이름은 내용에 따라 바뀌지 않는다', async () => {
-  const item = { id, slug: 'test-product', title: '상품', description: '첫 줄\n둘째 줄', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  const item = { id, slug: 'test-product', title: '상품', description: '첫 줄\n둘째 줄', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false,returnPolicy:policyFixture(id) }
   vi.stubGlobal('fetch', vi.fn(async (path: string) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     return json({ items: path.startsWith('/api/categories') ? [{ id, name: '카테고리 항목', active: true, version: 0 }] : [item], page: 0, hasMore: false })
@@ -45,7 +46,7 @@ test('운영 가능한 판매자의 상품 공간에 등록 폼을 표시한다'
 })
 
 test('상품 수정은 버전과 CSRF를 보내고 409를 자동 재시도하지 않는다', async () => {
-  const item = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'ACTIVE', version: 7, hiddenByAdmin: true }
+  const item = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'ACTIVE', version: 7, hiddenByAdmin: true,returnPolicy:policyFixture(id) }
   const fetcher = vi.fn(async (path: string, init: RequestInit) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     if (path === '/api/auth/csrf') return json({ token: 'csrf', headerName: 'X-CSRF-TOKEN' })
@@ -86,7 +87,7 @@ test('카테고리 저장 중 로그아웃하면 늦은 성공 응답을 폐기�
 })
 
 test('상품을 선택하면 기본 SKU 가격과 판매 여부를 관리할 수 있다', async () => {
-  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false,returnPolicy:policyFixture(id) }
   vi.stubGlobal('fetch', vi.fn(async (path: string) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     if (path.includes('/skus')) return json({ items: [{ id, code: 'sku-' + id, options: [], price: 0, active: false, version: 0 }], page: 0, hasMore: false })
@@ -101,7 +102,7 @@ test('상품을 선택하면 기본 SKU 가격과 판매 여부를 관리할 수
 })
 
 test('선택한 상품에 이미지 업로드와 대체 텍스트 입력이 있다', async () => {
-  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  const product = { id, slug: 'test-product', title: '상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false,returnPolicy:policyFixture(id) }
   vi.stubGlobal('fetch', vi.fn(async (path: string) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     if (path.startsWith('/api/media/')) return json(Array.from({ length: 5 }, (_, slot) => ({ slot, assetId: null, alt: '', version: 0, width: 0, height: 0 })))
@@ -115,7 +116,7 @@ test('선택한 상품에 이미지 업로드와 대체 텍스트 입력이 있�
 })
 
 test('상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있다', async () => {
-  const product = { id, slug: 'stock-product', title: '재고 상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }
+  const product = { id, slug: 'stock-product', title: '재고 상품', description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false,returnPolicy:policyFixture(id) }
   vi.stubGlobal('fetch', vi.fn(async (path: string) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     if (path.includes('/inventory')) return json({ items: [{ id, code: 'sku-test', onHand: 0, reserved: 0, available: 0, version: 0 }], page: 0, hasMore: false })
@@ -128,4 +129,9 @@ test('상품 선택 후 SKU 재고 수량과 조정 사유를 입력할 수 있�
   await userEvent.setup().click(await screen.findByRole('button', { name: /sku-test · 보유/ }))
   expect(screen.getByLabelText('보유 수량')).toHaveValue(0)
   expect(screen.getByLabelText('재고 조정 사유')).toBeVisible()
+})
+test('P09C seller form shows the saved zero return fee before changing it', async () => {
+  const item={id,slug:'zero-fee-product',title:'회수비 상품',description:'',categoryId:id,state:'DRAFT',version:0,hiddenByAdmin:false,returnPolicy:{productId:id,revision:1,source:'SELLER_PRODUCT',amount:'0',version:'P09-RETURN-PRODUCT-MAX-1',basis:'ORIGINAL_SHIPMENT',aggregation:'RETURNED_TARGET_CUMULATIVE_MAX',repeat:'DELTA_ONLY'}}
+  vi.stubGlobal('fetch',vi.fn(async(path:string)=>path==='/api/auth/me'?json({id,roles:['SELLER']}):json({items:path.startsWith('/api/categories')?[{id,name:'분류',active:true,version:0}]:[item],page:0,hasMore:false})))
+  const auth=new AuthStore();await auth.refresh();render(<AuthContext value={auth}><ProductPage/></AuthContext>);await userEvent.setup().click(await screen.findByRole('button',{name:'회수비 상품 · 초안'}));expect(screen.getByLabelText('변심 반품 회수비')).toHaveValue('0')
 })

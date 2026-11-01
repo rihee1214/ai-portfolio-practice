@@ -1,6 +1,7 @@
+import {returnPolicyValid,type ReturnPolicy} from './ReturnPolicy'
 import type { JsonResult } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
-export type Item = { slug: string; title: string; description: string; categoryId: string; categoryName: string; storeSlug: string; storeName: string; minPrice: number | null; soldOut: boolean }
+export type Item = { slug: string; title: string; description: string; categoryId: string; categoryName: string; storeSlug: string; storeName: string; minPrice: number | null; soldOut: boolean; returnPolicy: ReturnPolicy }
 export type Page = { items: Item[]; page: number; hasMore: boolean }
 export type Detail = { product: Item; offers: { id: string; options: { name: string; value: string }[]; price: number; available: number }[] }
 export type Query = { q: string; category: string; store: string; minPrice: string; maxPrice: string; inStock: boolean; sort: string; page: number }
@@ -27,7 +28,7 @@ export function queryString(query: Query): string {
 }
 function itemValid(v: unknown): v is Item {
   return record(v) && slugValid(v.slug) && text(v.title, 120) && v.title.trim() !== '' && text(v.description, 4000) && typeof v.categoryId === 'string' && uuid.test(v.categoryId)
-    && text(v.categoryName, 80) && slugValid(v.storeSlug) && text(v.storeName, 80) && (v.minPrice === null || number(v.minPrice)) && typeof v.soldOut === 'boolean'
+    && text(v.categoryName, 80) && slugValid(v.storeSlug) && text(v.storeName, 80) && (v.minPrice === null || number(v.minPrice)) && typeof v.soldOut === 'boolean' && returnPolicyValid(v.returnPolicy)
 }
 export function pageValid(v: unknown): v is Page { return record(v) && Array.isArray(v.items) && v.items.length <= 20 && v.items.every(itemValid) && number(v.page, 10000) && typeof v.hasMore === 'boolean' }
 export function detailValid(v: unknown): v is Detail {

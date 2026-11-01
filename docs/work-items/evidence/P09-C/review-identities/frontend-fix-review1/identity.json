@@ -1,0 +1,15 @@
+{
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "sourceCount": 131,
+  "changed": [
+    "frontend/src/claim/ClaimPanel.tsx",
+    "frontend/src/claim/ClaimStore.ts",
+    "frontend/tests/unit/ClaimReview.test.tsx",
+    "verification/required-frontend.json"
+  ],
+  "sourceManifestSha256": "5DEC70E8F9E0BC3414C7D5FAA41EFDFFF19F96208655DF60121B1F90B9723AFF",
+  "currentMismatch": 0,
+  "greenPath": ".local-tools/p09-c-frontend-review-focused1-20261101",
+  "inputs": "post-execution snapshot only; full Offline NOT RUN",
+  "createdAt": "2026-11-01T10:15:36.8896033+09:00"
+}

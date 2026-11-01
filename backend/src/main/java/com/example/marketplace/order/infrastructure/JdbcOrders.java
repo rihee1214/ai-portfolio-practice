@@ -84,10 +84,12 @@ public final class JdbcOrders implements Orders {
                 .addValue("shipping",store.shippingBase()).addValue("shippingDiscount",store.shippingDiscount()).addValue("total",store.total());
         jdbc.update("INSERT INTO marketplace.seller_order(id,order_id,store_id,subtotal,product_discount,coupon_discount,shipping_base,shipping_discount,total) VALUES(:id,:order,:store,:gross,:promotion,:coupon,:shipping,:shippingDiscount,:total)",p);
         for(var line:store.lines()) {
+            if(line.returnPolicy()==null||!line.productId().equals(line.returnPolicy().productId())) { throw new OrderRejected(409); }line.returnPolicy().checkedAmount();
             UUID item=UUID.randomUUID();p.addValue("item",item).addValue("sku",line.skuId()).addValue("quantity",line.quantity())
                     .addValue("price",line.unitPrice()).addValue("gross",line.gross()).addValue("promotion",line.promotionDiscount())
                     .addValue("coupon",line.couponDiscount()).addValue("net",line.net()).addValue("snapshot",mapper.writeValueAsString(line));
             jdbc.update("INSERT INTO marketplace.order_item(id,order_id,seller_order_id,sku_id,quantity,unit_price,gross,promotion_discount,coupon_discount,net,line_snapshot) VALUES(:item,:order,:id,:sku,:quantity,:price,:gross,:promotion,:coupon,:net,CAST(:snapshot AS jsonb))",p);
+            jdbc.update("INSERT INTO marketplace.order_item_return_policy(item_id,status,source,policy_snapshot) VALUES(:item,'ACTIVE',:source,CAST(:policySnapshot AS jsonb))",new MapSqlParameterSource("item",item).addValue("source",line.returnPolicy().source()).addValue("policySnapshot",mapper.writeValueAsString(line.returnPolicy())));
             for(var unit:line.units()) {
                 p.addValue("ordinal",unit.ordinal()).addValue("gross",unit.gross()).addValue("promotion",unit.promotionDiscount()).addValue("coupon",unit.couponDiscount()).addValue("net",unit.net());
                 jdbc.update("INSERT INTO marketplace.order_unit(item_id,ordinal,gross,promotion_discount,coupon_discount,net) VALUES(:item,:ordinal,:gross,:promotion,:coupon,:net)",p);

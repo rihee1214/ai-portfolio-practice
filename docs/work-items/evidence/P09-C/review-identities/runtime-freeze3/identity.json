@@ -1,0 +1,30 @@
+{
+  "capturedAt": "2026-11-01T13:09:51.4821864+09:00",
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "branch": "codex/p05-d",
+  "source": 552,
+  "inputSha256": "2BCE564B1EE31166FCCD5F0AB9B22F7E455FEB98CB66A4BE05D92CE6BEE6425C",
+  "delta": [
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+      "previous": "E2D30A443412F4A8B22FCD7E6EE1CD3DE705515F605164CB18224E056B833AFA",
+      "current": "6DE6206BB9150166AD457BEB43E1C6E2A1E5540B9B2C36638F208B36C180C107"
+    },
+    {
+      "path": "frontend/auth-e2e/guest-lookup.spec.ts",
+      "previous": "15EB55D67BACF01D0B1052AFB7635C29A02D86CA912A5A407931483871C50986",
+      "current": "08A298B7C5426836434722581D8B665FC723BE545AB0B47E84CCBD21DFFCEBF8"
+    },
+    {
+      "path": "frontend/auth-e2e/order-cancellation.spec.ts",
+      "previous": "D9511399646FB293641083DFE6216DFCF98EAD77B26629218B71E10DEB61113D",
+      "current": "1904A02A6FA21FCC2BBDAB294F33AE5345A18289732E41B90EF190FF38254F90"
+    }
+  ],
+  "productDelta": 0,
+  "migrationDelta": 0,
+  "requiredDelta": 0,
+  "requiredPreservation": "runtime-freeze2/required-preserved.json remains current; Java486/frontend256/browser130; baseline missing0",
+  "freshEvidence": true,
+  "dev3": "NOT RUN; designatedreviewpending"
+}

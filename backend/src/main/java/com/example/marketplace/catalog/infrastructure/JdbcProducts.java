@@ -31,6 +31,7 @@ public final class JdbcProducts implements Products {
     private final AccessPolicy access;
     private final Stores stores;
     private final TransactionTemplate tx;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.marketplace.identity.api.PurchaseSessions sessions;
     public JdbcProducts(NamedParameterJdbcTemplate jdbc,AccessPolicy access,Stores stores,PlatformTransactionManager manager) { this.jdbc=jdbc; this.access=access; this.stores=stores; tx=new TransactionTemplate(manager); }
     @Override public Product own(UUID owner,UUID id) {
         access.require(owner,AccessArea.SELLER);
@@ -50,10 +51,17 @@ public final class JdbcProducts implements Products {
         return new Page<>(rows.stream().limit(20).toList(),page,rows.size()>20);
     }
     @Override public Product save(UUID owner,UUID id,Input input) {
+        return save(owner,id,input,()->{ });
+    }
+    @Override public Product saveForSession(UUID owner,String browser,Long authVersion,UUID id,Input input) {
+        return save(owner,id,input,()->{if(!sessions.lockCurrent(browser,owner,authVersion)) { throw new CatalogException(401); }});
+    }
+    private Product save(UUID owner,UUID id,Input input,Runnable currentAuthority) {
         access.require(owner,AccessArea.SELLER);
         if(input==null||input.categoryId()==null||input.state()==null||!java.util.Set.of("DRAFT","ACTIVE","STOPPED","ARCHIVED").contains(input.state())
                 ||input.slug()==null||!input.slug().matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { throw new CatalogException(400); }
         CatalogValues.version(input.version());
+        Long fee=null;if(input.returnFee()!=null) { try { if(!input.returnFee().matches("0|[1-9][0-9]*")) { throw new NumberFormatException(); }fee=Long.parseLong(input.returnFee()); }catch(NumberFormatException invalid) { throw new CatalogException(400); } }Long suppliedFee=fee;
         var p=new MapSqlParameterSource().addValue("owner",owner).addValue("id",id==null?UUID.randomUUID():id)
                 .addValue("category",input.categoryId()).addValue("slug",input.slug()).addValue("title",CatalogValues.text(input.title(),120,true))
                 .addValue("description",CatalogValues.description(input.description())).addValue("state",input.state());
@@ -61,6 +69,7 @@ public final class JdbcProducts implements Products {
             return tx.execute(status->{
                 stores.requireCapability(owner,Stores.Capability.MANAGE_CATALOG);
                 access.require(owner,AccessArea.SELLER);
+                currentAuthority.run();
                 // Resolve ownership before category/state errors; never disclose a foreign product.
                 Product current=id==null?null:own(owner,id);
                 var categories=jdbc.queryForList("SELECT active FROM marketplace.catalog_category WHERE id=:category FOR UPDATE",p,Boolean.class);
@@ -69,14 +78,19 @@ public final class JdbcProducts implements Products {
                 if(current==null) {
                     if(input.version()!=0||!"DRAFT".equals(input.state())) { throw new CatalogException(400); }
                     p.addValue("store",stores.own(owner).id());
-                    jdbc.update("INSERT INTO marketplace.catalog_product(id,store_id,category_id,slug,title,description,state) VALUES(:id,:store,:category,:slug,:title,:description,:state)",p);
+                    p.addValue("returnFee",suppliedFee==null?3000L:suppliedFee).addValue("policySource",suppliedFee==null?"PRODUCT_DEFAULT_3000":"SELLER_PRODUCT");currentAuthority.run();stores.requireCapability(owner,Stores.Capability.MANAGE_CATALOG);
+                    jdbc.update("INSERT INTO marketplace.catalog_product(id,store_id,category_id,slug,title,description,state,return_fee,return_policy_source) VALUES(:id,:store,:category,:slug,:title,:description,:state,:returnFee,:policySource)",p);
                     jdbc.update("INSERT INTO marketplace.catalog_sku(id,product_id,code) VALUES(:id,:id,'sku-'||CAST(:id AS text))",p);
                 } else {
                     current=jdbc.queryForObject("SELECT * FROM marketplace.catalog_product WHERE id=:id FOR UPDATE",p,this::map);
                     if(current.version()!=input.version()||!current.slug().equals(input.slug())||"ARCHIVED".equals(current.state())
                             ||!"DRAFT".equals(current.state())&&"DRAFT".equals(input.state())) { throw new CatalogException(409); }
-                    jdbc.update("UPDATE marketplace.catalog_product SET category_id=:category,title=:title,description=:description,state=:state,version=version+1 WHERE id=:id",p);
+                    p.addValue("returnFee",suppliedFee==null?current.returnPolicy().checkedAmount():suppliedFee).addValue("policySource",suppliedFee==null?current.returnPolicy().source():"SELLER_PRODUCT").addValue("policyRevision",suppliedFee==null?current.returnPolicy().revision():Math.incrementExact(current.returnPolicy().revision()));currentAuthority.run();stores.requireCapability(owner,Stores.Capability.MANAGE_CATALOG);
+                    jdbc.update("UPDATE marketplace.catalog_product SET category_id=:category,title=:title,description=:description,state=:state,version=version+1,return_fee=:returnFee,return_policy_source=:policySource,return_policy_revision=:policyRevision WHERE id=:id",p);
                 }
+                // Account/store locks precede session locks; include any INSERT/unique-key wait in expiry checking.
+                stores.requireCapability(owner,Stores.Capability.MANAGE_CATALOG);
+                currentAuthority.run();
                 return own(owner,(UUID)p.getValue("id"));
             });
         } catch(DuplicateKeyException conflict) { throw new CatalogException(409); }
@@ -92,6 +106,7 @@ public final class JdbcProducts implements Products {
         var rows=jdbc.query(PUBLIC+" ORDER BY p.id LIMIT 21 OFFSET :offset",Map.of("offset",page*20),this::publicMap);
         return new Page<>(rows.stream().limit(20).toList(),page,rows.size()>20);
     }
-    private Product map(java.sql.ResultSet row,int index) throws java.sql.SQLException { return new Product(row.getObject("id",UUID.class),row.getObject("category_id",UUID.class),row.getString("slug"),row.getString("title"),row.getString("description"),row.getString("state"),row.getLong("version"),row.getBoolean("is_hidden_by_admin")); }
-    private PublicProduct publicMap(java.sql.ResultSet row,int index) throws java.sql.SQLException { return new PublicProduct(row.getString("slug"),row.getString("title"),row.getString("description"),row.getObject("category_id",UUID.class),row.getString("store_slug")); }
+    static com.example.marketplace.catalog.api.ReturnPolicy policy(java.sql.ResultSet row) throws java.sql.SQLException { return com.example.marketplace.catalog.api.ReturnPolicy.product(row.getObject("id",UUID.class),row.getLong("return_policy_revision"),row.getString("return_policy_source"),row.getLong("return_fee")); }
+    private Product map(java.sql.ResultSet row,int index) throws java.sql.SQLException { return new Product(row.getObject("id",UUID.class),row.getObject("category_id",UUID.class),row.getString("slug"),row.getString("title"),row.getString("description"),row.getString("state"),row.getLong("version"),row.getBoolean("is_hidden_by_admin"),policy(row)); }
+    private PublicProduct publicMap(java.sql.ResultSet row,int index) throws java.sql.SQLException { return new PublicProduct(row.getString("slug"),row.getString("title"),row.getString("description"),row.getObject("category_id",UUID.class),row.getString("store_slug"),policy(row)); }
 }

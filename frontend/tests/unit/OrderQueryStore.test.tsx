@@ -47,3 +47,5 @@ it('discards detail when both reads resolve before an auth change at the combine
  const scheduler=vi.spyOn(Promise,'all').mockImplementationOnce(values=>all(values).then(result=>{a.store.stop();return result}))
  await store.open(number);scheduler.mockRestore();expect(store.getSnapshot().detail).toBeNull();expect(store.getSnapshot().history).toBeNull()
 })
+
+it('P09C private order rejects decimal amounts above signed long without publishing details',async()=>{const a=await auth(),total='9223372036854775808';const store=new OrderQueryStore(a.store,'member',vi.fn(async p=>String(p).endsWith('/history')?json({...history,amount:total}):json({...detail,total})));await store.open(number);expect(store.getSnapshot().detail).toBeNull();expect(store.getSnapshot().history).toBeNull()})

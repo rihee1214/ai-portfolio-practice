@@ -1,0 +1,43 @@
+{
+  "capturedAt": "2026-11-01T12:44:00.9304109+09:00",
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "branch": "codex/p05-d",
+  "source": 552,
+  "inputSha256": "6A153776910635B0DD5436C21ABF6D4396D739BE28B0E49934A0FAC8782ABD21",
+  "delta": [
+    {
+      "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+      "previous": "B81BB9F5A29D7B899B905D2E289D622A18DDC2AFD89E0FC1A45757444BF4C9D2",
+      "current": "E2D30A443412F4A8B22FCD7E6EE1CD3DE705515F605164CB18224E056B833AFA"
+    },
+    {
+      "path": "verification/required-tests.json",
+      "previous": "0834DC5FB437695FD426AFFD1775CF86E02599C6FAC3292C1799E7C40DADA2F6",
+      "current": "95B3628C7275F713D268E59EC3C108251EF4057DA4E1697C14D11E0B3CD5F637"
+    }
+  ],
+  "productDelta": 0,
+  "migrationDelta": 0,
+  "required": [
+    {
+      "kind": "java",
+      "baseline": 421,
+      "current": 486,
+      "missing": []
+    },
+    {
+      "kind": "frontend",
+      "baseline": 234,
+      "current": 256,
+      "missing": []
+    },
+    {
+      "kind": "browser",
+      "baseline": 118,
+      "current": 130,
+      "missing": []
+    }
+  ],
+  "dev2": "NOT RUN; designatedreviewpending",
+  "evidenceFresh": true
+}

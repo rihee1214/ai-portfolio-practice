@@ -1,0 +1,15 @@
+{
+  "files": [
+    {
+      "path": ".local-tools/p09-c-prepurchase-red1-20261101/TEST-frontend.xml",
+      "length": 2020,
+      "sha256": "7469A859A35A36467883F841DFA002696363E2B7D14A472DE9AC249ADDCDC83D"
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-red1-20261101/unit.txt",
+      "length": 1428,
+      "sha256": "C93D31AD343EBFB3DC614EF42131842E18B0BB400C84B0FBE7D4A1B83486C41C"
+    }
+  ],
+  "count": 2
+}

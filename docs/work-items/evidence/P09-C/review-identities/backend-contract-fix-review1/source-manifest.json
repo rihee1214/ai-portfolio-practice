@@ -1,0 +1,1502 @@
+[
+  {
+    "path": "backend/pom.xml",
+    "sha256": "52B2FDE9E1B1CC4921B5A0444BD6664FDE9AC95452F79522329487E2B9C56D9F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/api/CartException.java",
+    "sha256": "EE3DB2248485F4DA1261ABB7F999440ACAFEDC118CEFAE092ECC41A819A98C6C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/api/Carts.java",
+    "sha256": "172DA1C766EB7713ED7F91C2FB94B4253059BF866D89308D738E2E200A91B02D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/api/Wishlists.java",
+    "sha256": "9C6C8595E8171A96B091629B98635F057BF5C613DB8832060564B3AF1C6BFD46"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/domain/CartRules.java",
+    "sha256": "9CEEC8858B70219BCEAE0743D2DEC4DDD8745ECCE210599F0668B1679D458A19"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/infrastructure/JdbcCarts.java",
+    "sha256": "84306B6322F51069EA0B8D8BF5D6D768EF6A21DDE47712DED24D298C2849D9EC"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/infrastructure/JdbcWishlists.java",
+    "sha256": "20436AA6A10EDDD11A3C968647507A4EB52FC708C64E148DCA6B68A9A06EB946"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/web/CartController.java",
+    "sha256": "DB4A71A86AB6B91F3B38B5EA092D78546DE22D2B28665C2500F54A5F1D13276D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/web/CartErrors.java",
+    "sha256": "D09C99E3A3CB3446FAC8257A5BF24546BC2BD290AD502FAB74B423D4C473E1E0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/cart/web/WishlistController.java",
+    "sha256": "9F28AC294BF67188C023256C5D3633A82555375729D3D2438902946084876F2D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Browse.java",
+    "sha256": "536EEE2B9CCD1A6780C3F81B2557A3A537BF39DD74A21B8EFA8A0F0F963736C1"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/CatalogException.java",
+    "sha256": "FC48D9091D5E5961802FF05AD87B0C15D031896C34BEF3B0748BB52183A75FB9"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Categories.java",
+    "sha256": "DF219EBBD9E7F0003EBFD5D1A18680A5F14B8A5D499D0BDB5DAD65FEFB7C4A77"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Products.java",
+    "sha256": "71BD05147703B1A90DACCAE57BCD722F15C56CBA6C7C623EADF295BC28660231"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/PurchaseOffers.java",
+    "sha256": "2D757062940487DA4060D95D91828EF2CF1730D39B6B35C7C563ED16F02D2715"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/ReturnPolicy.java",
+    "sha256": "8E2D4A3A01CBD94F845E66CF7CF136D0DBC86A3232FAF6FD808BA187A4549C53"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/api/Skus.java",
+    "sha256": "42903900D269A87B5C6D26E0737DD0D8BF908244C9EA029957EFF94EC36A1D68"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/CatalogValues.java",
+    "sha256": "F585DFF871C948B4092941D2E7B8423E34744632B042B2439CE93DB77FAA1836"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcBrowse.java",
+    "sha256": "24F820B3E296CD7564F1EE21A9A3840460B984A7465D062B55F9BCB88C08EDB6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcCategories.java",
+    "sha256": "FA609C66FA487EBE670AEC6FF83DA69733F8CEEB810A64191BBAD9A0BB975F60"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcProducts.java",
+    "sha256": "C02CAACAD29BD80C219DACE0CE28F5BAC92DA373C30ED51A130E40DF3F3D0B35"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcPurchaseOffers.java",
+    "sha256": "8FA50C4FD682267B0D6E085D237EFB68E26B43DEB1462F544320AD9A934FFC76"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/infrastructure/JdbcSkus.java",
+    "sha256": "19CD9B3654A2C7AEFA0A4C2327810381EF5E5F1A714F7264A43E35A127A42AF5"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/web/BrowseController.java",
+    "sha256": "FF0C7DC8454F3C8F1B8E36BE73C10003D484CBCC60041C954ADBC562E472F9B6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/web/CatalogErrors.java",
+    "sha256": "56AD7B688638AC5ACAACAE113077536D850D2570B5D96E405736D595080E7468"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/web/CategoryController.java",
+    "sha256": "03C8078F7A45685F32AC5B31202DE74F200E55F448AB6894F5192BC1E77CD345"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/web/ProductController.java",
+    "sha256": "AB14540A23EC3CD10F2263C75F2CCBB4EDF499A75E42CA5D1B0D095B4FD75718"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/catalog/web/SkuController.java",
+    "sha256": "C118D72CC63ED576D93897319F9BA798547FB19965AD2EE2F8C8C6568909B7E6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/api/Claims.java",
+    "sha256": "7E30A0E600121EF49B48B8F4713EC0F1A951AE60E966863CA2E3B07BA654314E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/api/ClaimSupport.java",
+    "sha256": "82D756419889CE2B5F0276A113CEF22F56825E9BD8E9A05EDD49503CB0797DCA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/api/FinancialIntents.java",
+    "sha256": "FDDC427D401EC2B5F2BF42514867D5748F1050E03CC03AC1FDE98ED166D26A80"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/api/ReturnFees.java",
+    "sha256": "27A0CA454EDBD11833DB5FF3490BE5AACF3C7C5C0BD544EE87B2946C91FCAF10"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/domain/ClaimRules.java",
+    "sha256": "73423D24932614A96117F540E6ECC56F5E3F7AEB03501F18C8B27FD02A04B868"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/ClaimJobs.java",
+    "sha256": "4AB090107E0B5BBAFA839C40A5A7B3528C97E18757EAF7BF171C3443D6227446"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/CurrentSupport.java",
+    "sha256": "2C41D0C84CE7E1A3A230067DE6BCE2DBCD89DD92EE294921D386B9729F2DDA0E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcClaims.java",
+    "sha256": "C29CEB288C84FE4B5A2CB97FE982803C7A46DC269873281B83AD3EC6BB912FA3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcClaimSupport.java",
+    "sha256": "799ABA25D0DE6C36B59728B870E3C98A9EBDBC3A279AB02ECE5EF2FF5CCEDA51"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcFinancialIntents.java",
+    "sha256": "B940BC630FC21BF48974D0792ED417BB4A2A929F43D7C5DEF8A9AC74AF33544F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcFinancialResults.java",
+    "sha256": "E063482099AF64DF8F13D14095FF7EF705CBDD7632872EEB8AB3E00096938686"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcReturnFees.java",
+    "sha256": "F992A595EE509E888F9014390DB79BA32E914C5AE8125C9B35892ACDD1B4A3B9"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/web/ClaimController.java",
+    "sha256": "A455C65C62C5BCD856CF19C1C8DEAFFD463EA50F8C8C11BF6C0605C94A8778B9"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/web/ClaimErrors.java",
+    "sha256": "1A41257878A7897B63739CE36B07C1CFE8734FD83A31A7E2E8B833C468DC0EEA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/claim/web/ClaimSupportController.java",
+    "sha256": "7130A06CDF6FFB53A5E07DE2C3DD546ECCAB3795A4BFB6F54B35AA7C55159AD3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/fulfillment/api/Shipments.java",
+    "sha256": "EDBFA9854E339391B93A059FCAA03F197ACD186186471B53F3C80364FCF9D3FC"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/fulfillment/domain/ShipmentRules.java",
+    "sha256": "CADD173783DFC831017C493F79070C5A190AC425D0254327AE81780249972908"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/fulfillment/infrastructure/JdbcShipments.java",
+    "sha256": "A0A51E0EAE9646ECDAAF533BAE896F9681CE2C7031F53A5AE869775B7F7301FA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/fulfillment/infrastructure/MockShipmentJobs.java",
+    "sha256": "FC30F8BAB4E5F923A0F811A204DC6129D2A215C84183656EE9A9C160E5AE68D6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/fulfillment/web/ShipmentController.java",
+    "sha256": "799314FD9C03F596DA5E7B948CAC04B0D0BC08D729589B125B765C9ED87B8197"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestAccessSessions.java",
+    "sha256": "9478775342DE79405FB8CFE718B23220A41E1211EF1CEA4311D643194489A59A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestInput.java",
+    "sha256": "2ABE93473CC4E79D18F4673D684B7120FE1F78CDDD86A737A0BC138F7EDBB427"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestLinkPolicy.java",
+    "sha256": "ABF3D67ECC38D15548EF98792E226626296C745B7E28B55F041BA2FB7E2C0F1C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestOrders.java",
+    "sha256": "B7A0B0D01990D4AE32FE66C2939D20EF02FAE27839CE5B62973CB05C4331F1FD"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestPassword.java",
+    "sha256": "568B07221282702DE94800B499C05552DB9BE2E66E477DDB4AF6D8E852CBF847"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/GuestRejected.java",
+    "sha256": "09300BF967FF6463DB0229036B9FD1D9458D624F1855BC88B387F6B0D1A340D7"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/api/RecoverySecrets.java",
+    "sha256": "39F9AB48E9E3DA87481A27ED1B320D7341507FE530C9BC47C3D0A77F2F30D053"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/infrastructure/GuestConfiguration.java",
+    "sha256": "8223139D5650DFA2FB13F057A137DBAEF48D09F69D7BE0D631366B71D69C3AFB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/infrastructure/JdbcGuestAccess.java",
+    "sha256": "FB9638A93C5628F7FF5379582B59E2B07B73402EE809730CDFE5EA7870E1CC3A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/infrastructure/JdbcGuestPurchases.java",
+    "sha256": "7D77880600B76F5B8020D27EF336F7F37EBBE25E60359261F4D44E5005403E8D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/infrastructure/JdbcGuestRecovery.java",
+    "sha256": "D781B1459103BAE91168A77F8E8C793C04E79BB2AE866024EA5864C1A6548147"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/web/GuestAccessController.java",
+    "sha256": "494E11423B13697ECB7A8F2A94F35D27AE7763335085E15F004ED7B471359CB3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/web/GuestController.java",
+    "sha256": "3FC02B2BF588FF4D1574D2B0A04ADBE09775636EB0ACD7AE394E6364F0A96213"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/web/GuestErrors.java",
+    "sha256": "5952E76E8DFCE937110691A881ADE82353C467B203EABAE94E844F43818E6902"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/guest/web/GuestRecoveryController.java",
+    "sha256": "E832E5FE8497378C8870683AEA26A69C535010AFF00012BCAEA69A615637AA7F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccessArea.java",
+    "sha256": "2FF05D0312B1EF01A8BFD2B21E5899B7DAFD7124C9B6A159D65A2A842E3C3FF0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccessPolicy.java",
+    "sha256": "453A30A8D2AB6FF84C2CA5A3FEE061BA581DA00375F9501F42A32786C6AEF6AB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccessRejected.java",
+    "sha256": "395F36F31E5F34D3524754D6A1AAC92302DC73E56A658591F8C024659CEFE787"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccountException.java",
+    "sha256": "81A715F769C82BB7151420B620D8F9F6A5A2E9DCE28C77EF31473407B65CA43B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccountOperations.java",
+    "sha256": "7A7F8592F426E8A4F753649877167849BC4610823E599BDA59C7F3EF8C95F2D5"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/AccountStateOperations.java",
+    "sha256": "0C8E1C8E7968E6811EA03F8C79ADB8BC5EA47267C2C225722FF77CE1DACA2933"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/HistorySessions.java",
+    "sha256": "3BE359677FCCA38DB1E52045ECAB32B5649C13046B696901ED70F8BA3DD9772D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/PasswordHashes.java",
+    "sha256": "4760DBD886CE63B0AF7536F8E94F8F282C51AF56F59FAB3773AAB917E2426241"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/PasswordRecoveryOperations.java",
+    "sha256": "AE495A63BF7944181D150E0333163FB1F514B88F5F6F4AF86DE02258494A7452"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/PurchaseSessions.java",
+    "sha256": "F6D0A81458899154308C9217A0D5F075EA4CDA8A9223990B5AECC519B37CDF2D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/SellerMembership.java",
+    "sha256": "637CF33CC6CBA024B406487862D8340495493960C2EE7D3DE898CD6DFCDFB119"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/SignupException.java",
+    "sha256": "A22A90A97D4D58F24D098B4E829943A4954EAC1B400199ABC05727A305287FC5"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/api/SignupOperations.java",
+    "sha256": "2EAEE0436FB817927A27018B5CD50431E6C4C7C7E7F4078E591E36DC15569E4F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/application/PasswordRecoveryService.java",
+    "sha256": "209F4910B40A5FD69410A74C2DFF4F5B584C704C51C5DC4827387EC8701FBC5D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/application/SignupService.java",
+    "sha256": "F0C669C21CCF5148161DD96A1C836FB5646662C9C32CB5FDAE8187A4454A9A52"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/application/TokenSecrets.java",
+    "sha256": "8C27282CBC3EEEDEB77BAAED55F42F789B8EFB311CA5EC8616FD9CF99B79FB70"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/AccountRules.java",
+    "sha256": "14F215CF94EBA3E3E0C95403366B34211968BF0F375782FD1AA60C704EA848A6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/IdentityStore.java",
+    "sha256": "2906960D42AC6C27C6A3900C39179B9B525A2B58E74D31F8E2B49BD00671C216"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/PasswordHasher.java",
+    "sha256": "47BB591EF5927BB0266250FC3689615509B0F6C188D837A67C264990D47311CF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/PasswordRecoveryStore.java",
+    "sha256": "CED217EF6CE8E74A05415871EF87A852BF0A5DB355070B341994E07681C86F96"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/SignupRules.java",
+    "sha256": "0A9CE6F47143ED0C054364C5B101F10ED8C225C30DEAE0F462C3625F320C4B45"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/domain/VerificationMailbox.java",
+    "sha256": "AEA6D215017C7B5311ADBDA9DC8165F31CF70C9BB96FC60FA6F1055DAF991123"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/AccountConfiguration.java",
+    "sha256": "EE8C2DBAA205EB9E3DC90CD73ADCF69FA1A0D6E1884C4DEFB8DCBBEE9F0F2825"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/ArgonPasswordHasher.java",
+    "sha256": "77B3FBB944A06C4D72C10BD3421CFE70AF1E0C67DD73E7CD2CE3123884AD2675"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/IdentityLocalConfiguration.java",
+    "sha256": "C493D8FCB69334567EE699129939B2A5E39B238CE47D3871B062D8F31D40607E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/InitialAdmin.java",
+    "sha256": "D147E3F99D2147F1DCE0AD36F1629DB036B2519F06E3A992D8B235EDC09B6946"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/InitialAdminCommand.java",
+    "sha256": "EB1FC64563440C9A4CAB82A6E5E0B28F7C1DC74C9BB16D6D76150FBA315F52EE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcAccessPolicy.java",
+    "sha256": "BA29940E61847F5E133D27F5CA391270456F1DA5BCDB4AA970789799BFB54193"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcAccountOperations.java",
+    "sha256": "B1BDDED72B91C645E0F8FD0CFE03E4AA63286CB449F2717FD8F6D7F6EBC53218"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcAccountStateOperations.java",
+    "sha256": "2F628F54140A45BDB15B363C978F78D3E5F860A849B2C420E59B2373E727186B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcIdentityStore.java",
+    "sha256": "66DA836F59E5494E5A5287028B0A8F5FDA81BB1760E2EF7EE3BEE04F1985CF9A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcPasswordRecoveryStore.java",
+    "sha256": "3C6D7B741CF23969FBC82574FD69C1DCE2362A2EC53E389094254DF943EE74AC"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcPurchaseSessions.java",
+    "sha256": "AC34B11D49BF4B032AE558B204124950CEFA5E6BB7309E3FCBE20BD8DE7D20FA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/JdbcSellerMembership.java",
+    "sha256": "51E0FBA48FE97819846B0B5D0E26A9D31376F832DA830A5841FB0B7AB572B221"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/LocalPasswordResetMailbox.java",
+    "sha256": "A9B651BBEC2B9E1289A61E95FD629D4D855BE8A8E7FE02223FF99ADD0B19D5EA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/LocalTestMailbox.java",
+    "sha256": "5FDEA7AB33C9C1B913D8D2819D2399CEAFDFC9CC477348C60FE3BC49241E82D8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/LoginMembers.java",
+    "sha256": "9FD3D72B83E783FAECBE12120E6439CFC917D0A7C506F0311C6EB027E6D64EB1"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/PasswordHashConfiguration.java",
+    "sha256": "F240B9429E68E6D8EA5901B965CD0A0FCA89E9F37CE7993EC71802861D5BB58A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/SessionMember.java",
+    "sha256": "0C3C350EA26881063F1AC8F23ABE691CBED039B5C107E8FB374A1335E43AD7FE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/infrastructure/SharedPasswordHashes.java",
+    "sha256": "9EC6A98019D1DED48C036D1CCC1FFCF14A6771DD419A769835325275F49CEFDA"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AccessController.java",
+    "sha256": "F246F1B0218F3B1EB85ECC6A4AFCA59BBE15770A08AAFB7066EC8BC4DB8009E7"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AccountController.java",
+    "sha256": "52DEEC1AAE84262BB30E9751A62B2552C7EBFE65AB85548EEDCD7CBAA4BFDA70"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AccountStateController.java",
+    "sha256": "B4D1CAF021C963ADE8D0B9177651B996F002B9743673BC9164F67A80506B58A2"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AttemptLimitFilter.java",
+    "sha256": "228D7156C104F302D6DCC693BAF49E5CE487C2D490927E7378DF882587B2CF1C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AttemptWindow.java",
+    "sha256": "5573899A666610D8968EC9354DF6C72E8D6CFCD53E0A34C88EEA5FDBD7BD8819"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AuthConfiguration.java",
+    "sha256": "D8CC09E05E278951F289FA5572EB0C7FE9AED8BE290F8660F3E35F09BEE5C8FE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AuthController.java",
+    "sha256": "F3EB9D27BDC1D1B4E67A93577D3B25308B37837BD9D7DF05B56FB0D7E3A2445F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/AuthJson.java",
+    "sha256": "83C455988E8A4DD51878BCE1252821EDB357FB54747A6A79913163EEFE447C64"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/CurrentMemberFilter.java",
+    "sha256": "6108ECF6CDB85AEEA9F9BBF252D968F2CE2B3997CA28436D47101D829898A438"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/PasswordRecoveryController.java",
+    "sha256": "979FFAC124DA1F38BA9CA612C59595AB57C388B1D161885DE9F3BC7C976AE81E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/identity/web/SignupController.java",
+    "sha256": "D17DA2FB772831A6F4E07371B8FEE9CE06061CB4838CDD0AC925B4BF01BA403E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/Inventory.java",
+    "sha256": "E91221B73B77BCAD395588CAAB11BAC7CA167D3AC03A3B9956A092E9C85DCFF6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/InventoryException.java",
+    "sha256": "EF8F4801E532F6A0EEBE4EF7A5111812BD4D7902BF827DCB97AAC3FA1692C4BF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/Reservations.java",
+    "sha256": "B3B23AF11542DCFB12A8D99FACB7AC92E5F586188647DC3E5ED7447BC2AA33E6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/api/Restitutions.java",
+    "sha256": "84F35CEA0F8A68AFAA726AB0D1E1583D422F632C1B446EE71204A2E87A9AFA9D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/infrastructure/JdbcInventory.java",
+    "sha256": "C4F4CE3D04F4FA5DC80BCE812E9F8F8C90CB389269A7A8401F5B1AEC4935251A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/infrastructure/JdbcReservations.java",
+    "sha256": "1D632B882419CF145971A448561FE315064FAADABEB11FAF225FCD6BF379F30B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/infrastructure/JdbcRestitutions.java",
+    "sha256": "98E58FEAFCD2EC14F094BB19DCD9F07CA94AA173088DB8061E4DB770361FC495"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/web/InventoryController.java",
+    "sha256": "9D850FC9226105D78217D8C205ECAA15912D9B27D4299A03BFACFB426909A73B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/inventory/web/InventoryErrors.java",
+    "sha256": "7D015B870E13D0ED1B12217CD6B424C3BA57413080C2C7E00108AF0D290AE1A7"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/MarketplaceApplication.java",
+    "sha256": "A6BCF909AD2FCF13BAD3CF82A8C3F1DC83037284486276ABCC997274C3557852"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/api/Media.java",
+    "sha256": "D333618109F04D3D05428650B504D46C2B042D6EA00711253EC43C80885984E4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/api/MediaException.java",
+    "sha256": "C4A6F733B9521AE27938008275C676DD54A9B9B777D7A2FDFC5E471374DF15A1"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/ImageNormalizer.java",
+    "sha256": "DAA09F09B704C069647B7308E2E51A54E78AA60FB7CD752FE935CE16CDF6BD9F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/JdbcMedia.java",
+    "sha256": "51D8EB84B160827F7E6C044B45E24EB472F6FD0D3F8927E15225E99B2983334A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/LocalImages.java",
+    "sha256": "58E3822CD8AFE765D4E4ED5A1D2E958961F0BF534C341899A162BFEA606CBDEB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/infrastructure/MediaConfiguration.java",
+    "sha256": "B2E66F775FD28CE044F4ECA4D695D156885C25D498FBFC74A2D2C14254CDF0D8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/web/MediaController.java",
+    "sha256": "C9A11DCC484E054107329A9D5272D60F007D9402F7F7D1B240B3F9574475CDB4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/media/web/MediaErrors.java",
+    "sha256": "DE550F646A7889DBC36AC8422198EB454549EDECE023D5227EED20F45A1E1E1C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/AftercareSettlements.java",
+    "sha256": "2ADAF07FB2C5AFC003B6F66A3202DCB7D4086DF6C3DE79CA58D54B9AD9E5232D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/CancellationOrders.java",
+    "sha256": "E4CE4626332E1023AA74E977B2B354F55CFD77B9E4AEFF162FA8684BD81BDF2C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/FulfillmentOrders.java",
+    "sha256": "2439D91E3B6DF72462102786B2F62432DCDC82DC91522A60469C4ECD3998AF70"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/OrderConfirmations.java",
+    "sha256": "6C78ADC1A3C704C4AA06BAEAAE11C3BB448AC0ED895542D3872AC7F9EAE09354"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/OrderQueries.java",
+    "sha256": "7D3CE686200EC9DE94E141CDFB4DB557A6D631E7501CBEEEC92E140375E1A058"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/OrderRejected.java",
+    "sha256": "875545763ED100E21BFE1C4509B45C5FEF08422185B85215EE053D896E7FF7D1"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/Orders.java",
+    "sha256": "84E774084E575E7A38BC3E97DBED2929D6A3B2F494C651583DD3C6C9EBD163B4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/OrderUnitHolds.java",
+    "sha256": "6125774C6FF92C20B1506C69C4FDE82A8DADF56EA0E213313E1B753B05A9FB60"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/api/ReturnSources.java",
+    "sha256": "466268B8E042B40A8C67CAA6578642E36A9B3698D2DB35160EC980AE069B3041"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/domain/ConfirmationRules.java",
+    "sha256": "6807CD7FBCE406981A059F63125E3630B60A79A0100015B7925E22FDA77FC92A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/domain/OrderRequestHash.java",
+    "sha256": "69DF63B91A069C6709618A9286A0C17FDAE2477E05B0C3997B53DAFC908EDF99"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/domain/OrderRules.java",
+    "sha256": "D84258E4F0E8A4EA4168352C74C97EDF43A8EB007666334E9525CAEB339FEE17"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/AftercareLifecycle.java",
+    "sha256": "DB9656E39FD8A0E9BD48C5D35A0715BB87D46E1612C0E449B1221911BF73EE6A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/AftercarePolicySource.java",
+    "sha256": "EE8B2E276DA100D7B13753A577EF7260898C8DFD7D5382347C17C7C924E86CEF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/ConfirmationJobs.java",
+    "sha256": "528583FDD9703F7C29E960D909CFDB2DCF7B4767E3E7B0D8082ABFC211745FC3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/InitialDeliveryWriter.java",
+    "sha256": "DC0C581A5A7A9EA8AE49C5F9D79EBCEB013CD465DEF462379A2A56A40DEAB176"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcAftercareSettlements.java",
+    "sha256": "D211582449D5C02B7CEC318B0388110627194BF5CE96CC0E5577EBBBB7446128"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcCancellationOrders.java",
+    "sha256": "277572FD1AF52489819E01C60329FE5C00A379E5CD7C404D9A5DFF83C23DE0C8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderConfirmations.java",
+    "sha256": "2DE0B570A81449F2121014BFF0CF1FAF884D9A01AFB44D91FF7713705A7A7C08"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrderQueries.java",
+    "sha256": "23670A001171E7D6534482BCBAA52B061CB919CF6E4B04FCE61AE04A3F50081B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcOrders.java",
+    "sha256": "2AF8399FC354C1246FC8477A4613A2F681FA2863CD3D61A16657F95D9AD37093"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcReturnSources.java",
+    "sha256": "7C17EC0CFB301E1B36771C0E49D4CB40E7D45A3A6E6D14896069A4171852EA14"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/infrastructure/OrderCreationService.java",
+    "sha256": "37942EA9EB4154432F3E42B2AF183B0EB9ED711932F2DFE59256C70C95EB7D44"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/web/OrderConfirmationController.java",
+    "sha256": "60274A9A3DF2D1FA7E4DA7CAE60B3E34D33E751C8A25C71AD58F82C95B8CDAEF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/web/OrderController.java",
+    "sha256": "1B5C565D6889F5DE5D9014F79EB1A0DF79A4F3BB0D2F935C1BD6403FD14911B0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/web/OrderErrors.java",
+    "sha256": "FB4789B0B6EB1EFB6B7144C7A672F55D66FC17AEACE67EB9573B533FFAAA21C4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/order/web/OrderQueryController.java",
+    "sha256": "7787C9E62A5EF0246C1EE563C7C1C635BD2CD14A61904F33779A58F2D6E1BFAE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/api/PaymentProvider.java",
+    "sha256": "788E5B45EA9255710B52C9DFD960501844A7DDC545B157CB31DD891E82F40322"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/api/PaymentQueries.java",
+    "sha256": "0F86C8949E9C52714EBAF5B01E2AD67C1FFD7910C76BDC48AB80423CD44FA572"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/api/Payments.java",
+    "sha256": "1C53844CE20355C493676B95D1F43A5D73B1233EE7E34B3109270E1FD7FB3EB7"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/api/RefundProvider.java",
+    "sha256": "CAB515548E01512C7A6E8693C52801FF9D2B3C5E39B92E8C608C293E0FCAC250"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/api/Refunds.java",
+    "sha256": "EE922058F988F80136B7B1D4751B94A4F5FEF9BDD7645E46EF56ACCC345075C6"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/domain/PaymentRules.java",
+    "sha256": "A5262A2863DBE62AD0B6ABD6AD37DF81CDF1BBAB35754AFCE2747F56D60BFBC0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/JdbcPaymentQueries.java",
+    "sha256": "64A06B7F1DCB62859010356F2EC1B1E1253A4B16EA5AFD903E041A69A1821AD0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/JdbcRefunds.java",
+    "sha256": "B20226FB8CE600E5DFE237E1583D80E004CD8E21C6B051C5BB34A14387192EE5"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/MockPaymentProvider.java",
+    "sha256": "44942CEA7B9B6F5CA7929767C4A2EACB85F3C2E0A6B96E062BBB00B50B08F376"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/MockRefundProvider.java",
+    "sha256": "547B6CD54640C9752919F385B4F3E45772F22637A1E9E8A520B69FC41493FA8A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentCoordinator.java",
+    "sha256": "D63756E334D06E985E649D8B2DC383BD4B18C2B4BB5843B2B85E68349CE50DEC"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentJobs.java",
+    "sha256": "9175550A00EC8C74BC02E1E83EBE395C7E73BF94011C4A08F4D4F657C5BF8551"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/PaymentProviderConfiguration.java",
+    "sha256": "0BAAAD1F00071E543928B7CDF26FA19B4CA03BD9DE8B0A1D5C605442C088B6AE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/RefundJobs.java",
+    "sha256": "D3F0971B796A9453D98BCD6DE4D9FB3942F6BA0EA00D3618F5631E1144841C6F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/TossPaymentProvider.java",
+    "sha256": "8DC3EDC75DDD207932ECAD2F05EED2EF2995291B168B3AB3FA24723312F6D405"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/infrastructure/TossWebhookVerifier.java",
+    "sha256": "2FE7D625EBAC663D97DC3001746AA6E2B0CEBCC8E320225D038EA285DD1383FB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/web/PaymentController.java",
+    "sha256": "7EC7474FFB61EB3D19F857AA7F3028292A55E097F12A550A352039AA58DE84C3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/web/PaymentQueryController.java",
+    "sha256": "0E0C7083C78D5D535E0DCE45A01CEC8965BD4614B69D2DE3E7ED84CE6FB5CA02"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/payment/web/PaymentWebhookController.java",
+    "sha256": "F49C11BA9FB721D1AD2757DD4655E022730F735058C5B241E4C1A922C0E5A55F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/phone/api/PhoneVerifications.java",
+    "sha256": "01B3D4561306C9B6D6052BB2145E7E7DA969591342118206C3162846495AEB51"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/phone/application/PhoneProvider.java",
+    "sha256": "3A9E918D515D2432BE3C2C6D6947E4BFE94565337A3F15E567265B366B9A5272"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/phone/infrastructure/FirebasePhoneGateway.java",
+    "sha256": "6B64499DBCD92E12353E70CE3DE5AC34D7535AB7C58C5916C44366572CDEE04A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/phone/infrastructure/LocalPhonePolicy.java",
+    "sha256": "E3A2D0E6CC85EE6BF80417ED80ACD5C465B939C25E5707BF9E8A4E9FB74C8643"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/phone/infrastructure/PhoneConfiguration.java",
+    "sha256": "7EAB570B2AC98C7B4B85EADCD26456F47F3CEEBFC9B24D316E950B7B04E27528"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/api/JobHandler.java",
+    "sha256": "7B5BF86117C81D03EC6BC932BBB7B5CE6946A1663647E1FD9D54FA53BED221E0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/api/JobLeases.java",
+    "sha256": "A25EC8EC0BFAA51468FA5917E2E553F885415B1BB5476E7EB74C32530632DACB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/api/Jobs.java",
+    "sha256": "048FAB1AFDF6F5D4FF7B158F4A30F89A2186D0637FD5EE54A7A4C3F12A0A8765"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/api/Outbox.java",
+    "sha256": "26A47339DD2FDD4F26E09B8033BDC5FA55DF8AAAE58BC14DBF030EFAE1A9D914"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/config/DatabaseSettingsConfiguration.java",
+    "sha256": "F71C97A8B3B074E7DFD590495E491A03265AD6ED8536DCB8FD75598FEEBE167F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/domain/JobRules.java",
+    "sha256": "8666B87A1B1F62534E54AB32783108B3A93FE4E28FE8A322A47B805545453B18"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/JdbcJobs.java",
+    "sha256": "3664D317B0718C2FAC6F7F87C4653B5B016ED6AE7A7FAD66E63574C81EFDB28B"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/JdbcOutbox.java",
+    "sha256": "5D86EEC7717CF73476A9F758D48F527D0DE2E047BBD526B1E17517F19A5B9FFE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/WorkerConfiguration.java",
+    "sha256": "E111EC7E26F96F91B308340F533D8695697E0A4A7324C36459A2AEB6C3A8FBE4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/infrastructure/WorkerEngine.java",
+    "sha256": "42BAD7C68E3401FB1E829C348E9B251CC95640F16AB57C7C1BC996CD63C5BD05"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/web/ApiErrorConfiguration.java",
+    "sha256": "120E7C42F06930B338CCCC0D8C24CA888F174AC73264CB928871005A20A7B891"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/web/ApiErrorFilter.java",
+    "sha256": "C246AB3FE3DA9326AA3C36B7E5CD6CB3294AE6F8CB7E4D7BA75AD7A752F4A6DE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/web/ApiErrorResponse.java",
+    "sha256": "C560C7FC6029530CEDDD7414C8BE23C19BF2B53FA7583A461039D1448C3B65C2"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/web/RequestIdConfiguration.java",
+    "sha256": "55A3F4368C52A076B7443883888A2B39CE5AE0681EEF99AB973705EEB8B43FF0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/platform/web/RequestIdFilter.java",
+    "sha256": "2DBC71129A5E250E5189E8EA6FF67235052060F48BB9A07C338B9452F2FBAAC8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/api/CouponReservations.java",
+    "sha256": "64263B5828041C9C14368CF9650ED7551F79E15D82B45F13CEA67593097BAAED"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/api/Coupons.java",
+    "sha256": "C5BFCCCBBBB82ED152ABC27C957711313926E7362BC359E5FC2175C6F0B3C517"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/api/PromotionRejected.java",
+    "sha256": "23FC3289F5853633F63F0BFC133CF64185D2862B458F3B939373B9E39A97051C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/api/Promotions.java",
+    "sha256": "4948C284513A79E6FF37E45B949CF1636A22E94C5D05C81662575C5F0173AAF4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/api/Quotes.java",
+    "sha256": "1774C0257352D38AFDA0708E9A260EC9F11B04B13EE688738C5D6F01C772A68C"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/domain/CouponReservationRules.java",
+    "sha256": "3759B39DCA691C22CDAED88AF054E5213888E622EF7A99EF61B95E0AAB9E7E27"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/domain/CouponRules.java",
+    "sha256": "39596083A8581B25D1E3C2C7CB2B38D6DCBE7CC91406FF58C16C7D40BA584A7E"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/domain/PromotionRules.java",
+    "sha256": "4233AF7574D991BA2FB64DBE330FB87B92058AAF456230E70F5EC970E05F429A"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/domain/QuoteCalculator.java",
+    "sha256": "523EF4DB4BBEAC029EC0933973A60735994D1C5A85DB3F7175047EE4A7405D38"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcCouponReservations.java",
+    "sha256": "67310E8420BF53FF1287746F2E397BFFC2489130D9AC9917550F5D705CBBD8D0"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcCoupons.java",
+    "sha256": "2AC7C22C30645859C5CDFACE4DB05A1A7F7D8520E1BCCD93EB0C45D89ADA04D4"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcPromotions.java",
+    "sha256": "00B04FE89214357E79851BC11B5DE100F587C52CFAFC7364AE378D8DF3D5E8DB"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcQuotes.java",
+    "sha256": "57516448FC0BD31902A6DF2A929559E585D754F6ED37425BFC7D48090F54E200"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/web/CouponController.java",
+    "sha256": "B751890F00054B6C22D06F17CEC6E00046262BCE723B302D4BC997408848AA86"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/web/PromotionController.java",
+    "sha256": "4D0BE4E3193E9A8BA27304690BD51FD537F21AFA160F040D668F5B9511D838D8"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/web/PromotionErrors.java",
+    "sha256": "E2180B1970F9640E1F3E0895023874D60113A3D41DBAC4A4D7744CDD783F3917"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/promotion/web/QuoteController.java",
+    "sha256": "CE8FEFE3F6AC389EB687DF590443D542C15BAB0F16ADDBB2768707F16BE4CE0F"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/api/SellerApplicationException.java",
+    "sha256": "673E8928F96302CEB9D193F13372DE672893C24AEA620B38BB2C6E46C7B689F3"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/api/SellerApplications.java",
+    "sha256": "1E9D72A3A84EC8F44A85F69ECF9A032DE298C919EE66D49A051CE96611FF4BF9"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/api/StoreException.java",
+    "sha256": "BC7FD36F6919AC5E6E3C49C0401B73BBE92D20A5634CFC5F733BC23FCBC7E534"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/api/Stores.java",
+    "sha256": "A961BEC7D2A2BA63D4D106F6515772F7F184763368ED06BB20C8A59FDB450940"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/infrastructure/JdbcSellerApplications.java",
+    "sha256": "FE0A8182D4AA363BE71C1EE080FB3E5B03FC266B4AC0D719DF92DE4CB0A2A4DF"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/infrastructure/JdbcStores.java",
+    "sha256": "4D14764E01A8098532D81BE20BEE5EFB9597D73ACC66C5C59BEBC530496B9E8D"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/infrastructure/SellerConfiguration.java",
+    "sha256": "2CED06F08969229DD9F10E2F80CF03521A0EFFA931789E8A50A436408888EDCE"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/web/SellerApplicationController.java",
+    "sha256": "ECF93519E62871BD5894B224D20C78DFF2CD5CD29CCD5ED5284423809FDAF4F9"
+  },
+  {
+    "path": "backend/src/main/java/com/example/marketplace/seller/web/StoreController.java",
+    "sha256": "305CD314DB954CEE03DC3284CB2B26A16F380ADA760F6E4852D79A6CE60B8993"
+  },
+  {
+    "path": "backend/src/main/resources/application-db.properties",
+    "sha256": "84261FDFA840BDE7CD378C0633EF6D7F649125747D9A3C35863A54CA789BEEE7"
+  },
+  {
+    "path": "backend/src/main/resources/application-local-http.properties",
+    "sha256": "6EB9AE8544041D18671293BC539AEDD857CF39ED0C83647BAA7112D21ABC9944"
+  },
+  {
+    "path": "backend/src/main/resources/application-worker.properties",
+    "sha256": "9E7EF0B7525851B5831D25F1873E5C915E3DCA2D41D6EF1803484027EF855DDE"
+  },
+  {
+    "path": "backend/src/main/resources/application.properties",
+    "sha256": "FF3A6911B1979E68D498767C88BEB71EE65AB103E750CD53585E31B76AB6D2D4"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V1__initialize_schema.sql",
+    "sha256": "A5DE2548C22903A177ACB65B37C3CE61CDB0D0039F3C8C423FDE773F4FEF55D5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V10__store_operations.sql",
+    "sha256": "22B77BE4CE3482A5781259CD95B8267A62D87A3465D7DE214D5D735377D59D22"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V11__catalog_categories.sql",
+    "sha256": "52EF384A9CBD70167108945426F4EFA2A7560B9F53874588637DD5D315BB5E15"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V12__catalog_products.sql",
+    "sha256": "8BB90EB3D7402A94AB7F9E96311759C7555E17AB028A2566692CFD3C450CAC06"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V13__category_audit.sql",
+    "sha256": "23BA07D1CE52078E8F93272A4E760BFA846BB918A110FF513BC6E2E65046C2E2"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V14__store_operation_order.sql",
+    "sha256": "47934158FA56C213CB46F711A8FF2656B7EF69DA022DCA66910C2C8380740038"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V15__catalog_skus.sql",
+    "sha256": "4B560F35E01AB6CA207442003DF714CCF470F304FAD2F2C51D19C6954AC4E7DE"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V16__media_assets.sql",
+    "sha256": "EC23B1A5425A48290EF556D58BD892EBCA1D1EAE5A1D864D9774E3BEE9D22295"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V17__inventory_balances.sql",
+    "sha256": "0954274DB57D24C4EA748182061EEC79AB06CFA79507B3601C8C324F6A39792F"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V18__inventory_reservations.sql",
+    "sha256": "0B86097F097A9E6533EF1C992BD85C54784CB0FB3113466E9DB2C1BC698F0AFD"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V19__product_creation_time.sql",
+    "sha256": "3E339CBC2846D08F61ACD2B5615F315D94F13444B9210631F16A54E8358448EB"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V20__member_carts.sql",
+    "sha256": "BD30AE587813E3D30F858AFADCDE70E52A63F074825AB91FC5CCB2BB760A4B5C"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V21__member_wishlists.sql",
+    "sha256": "C24B0BD6FF365DECB684F5F63935788EF9206373FB695903F6F150FAC89F23C5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V22__guest_purchase_verification.sql",
+    "sha256": "D6453F465AD2B17A0760DC38BA84F2E4A3C4D27B45BA3280EF1F188A9BA29815"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V23__guest_lookup_credentials.sql",
+    "sha256": "D3B086E12E6BA0ED2B143E682501D87E4A8C195954370F651FBEBC638D36B934"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V24__guest_recovery.sql",
+    "sha256": "A43449EC63A731392E8702966333A197F8366110015BDD7BE164113DCEDEFE5A"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V25__guest_purchase_link.sql",
+    "sha256": "76B4CB7FAFD71C7216A07E0D37309A28944BCFF604D7C95630379E930DEA9997"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V26__promotions.sql",
+    "sha256": "0D62650AE302E111364DEC939F3F4CC6426ED535B04C5546FB521C11D5EA0CC3"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V27__coupons.sql",
+    "sha256": "4D6832D46D46441E88C3A07668537B8BC77E0653AEF15FD8A28E7932A11E027A"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V28__coupon_reservations.sql",
+    "sha256": "AC6A6038C44DDBA094ED61B17198DAACDC444921472F1C2688A87A89A00F41F4"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V29__coupon_reservation_batches.sql",
+    "sha256": "D8FD512CE00B900398BB75022022A70E0D52080349B60AFF97B63779E657131F"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V3__identity_signup.sql",
+    "sha256": "50521620502BDF42D99AD873CEAFF1A1427A3992C4D0FBE965F4E1B7840951AE"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V30__coupon_batch_lock_order.sql",
+    "sha256": "B4C61A3C23623C57015F200B8A8EEB9DBC69A540605BED67379683FC09778FB2"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V31__orders.sql",
+    "sha256": "3A67C3C27C79110698A18909B92075B64F731891A8C0DC1A30FAC770B4E2D218"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V32__jobs_outbox.sql",
+    "sha256": "5FE2368915BE39C5483B2FA029BAA2C894300FB9C925EE49FA1B6FC434AC3D48"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V33__order_creation_participants.sql",
+    "sha256": "E38F106BF78AEBC1120918804EE1E5045AA86102DE75BE0E008177E0C8369219"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V34__payment_reconciliation.sql",
+    "sha256": "264785E645E300F157F43E179852607268847F93C24DA5C86B7F393691FC55B5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V35__toss_payment_bindings.sql",
+    "sha256": "6E011373E6ABF3AFD03FA7EB7CAA65D570C415AEE9DE771EE688BB2EADA6A90B"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V36__basic_shipments.sql",
+    "sha256": "9E197CF0730AD45B064E283AD05DBF2D5685B2C21799E38101EAB4C7C615DEB4"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V37__split_shipments_and_initial_delivery.sql",
+    "sha256": "17938A688832442EB6216A4E6DD10F5C4168D7F1E9507C3DA72A028FD215D1F5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V38__order_confirmations_and_holds.sql",
+    "sha256": "F8D6D16B0224685A7D287D29BEE821174EA6355DFEE5E7AB32687D4834BF3EF8"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V39__order_lifecycle_integrity.sql",
+    "sha256": "ACF57631498FF789CCAC3ACD2CC04453514FBF18C769AF298EF755082B88EA8C"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V4__jdbc_sessions.sql",
+    "sha256": "F61F14B6F5A2DA1ED0DADBFF543745449881542B173C507AB1D50079F29352E7"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V40__refund_reference_capacity.sql",
+    "sha256": "7443C476DE45E33B857CD55EDEC611333979813A379803007806938B264123E4"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V41__cancellation_inventory_restitutions.sql",
+    "sha256": "F44C97CCCD9CCBC9E1B521A509470ED3CBDA9157A47A7A581BF3C2E1508BEA83"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V42__customer_refund_attempts.sql",
+    "sha256": "A7657187B22D8A354541D733A28EBB81CA82B1B6EBAA5BECC94F32CDBE8CAFE5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V43__unshipped_cancellation_claims.sql",
+    "sha256": "F9C103D3B821D9C943E495C4522C5ED3501376F6B0BCC8278DECAB1DD00766B1"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V44__cancellation_shipping_and_order_settlement.sql",
+    "sha256": "56D8EBA2B06EF304253B000182CC5A45314B22BFFBD9DFA402719636BACF97F6"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V45__product_return_policy_and_order_snapshot.sql",
+    "sha256": "D705F150FAF9F06D59429E0D0C55B695FE56AB8A1DD90363BA3A1F82C1C0A251"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V46__claim_refund_result_receipts.sql",
+    "sha256": "AC273CC291C8F4244DD2A8F44333454FC3C956929511E00EEED4FB941CDF2583"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V47__attributed_refund_financial_intents.sql",
+    "sha256": "208D75FCACF58EDAA2B6407DF3D5AF06D6025BC55E9971C7C78985483B04D3C2"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V48__original_shipment_fee_quotes.sql",
+    "sha256": "2867CCEC50D0D26BF9372C52091ED1A1373EC0A654A82AFE1B0BC41CEB90837A"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V49__return_fee_acceptance_and_bindings.sql",
+    "sha256": "C34C2CBBFBA2359E5DAAACD10C81FEEEAB4BFCB4924DD701C78297A22F6569A9"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V5__account_recovery_profile_addresses.sql",
+    "sha256": "84BF4B1CF4E2CB8548C6306570ED7E45EAED85E56A620E9134A903773A49B004"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V50__qualify_fee_guard_parameters.sql",
+    "sha256": "0A512B139F8DFED2473F3940D554EA4BBF90E49DD9EC2DCF0E0994CA866A6EA7"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V51__durable_return_financial_results.sql",
+    "sha256": "3B23020F7E695A2BC7DEB2FE90FD8F6622DD87922921FE02931E99FC273AA134"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V52__fee_application_and_withdrawal_receipts.sql",
+    "sha256": "E01758E38BCBEF4BE590AB596F38EF7AA3E1EAFA641EF459F5E51BB26AF2213D"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V53__cancellation_withdrawal_receipts.sql",
+    "sha256": "CCCC0C188284CF184CF95EA224AF75CA35653F7E29EAA600DEC9CD34AB59E647"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V54__fee_receipt_bidirectional_terminal_consistency.sql",
+    "sha256": "EFD173EB52195ED1DE081B47402A872B4FD972A80F293A603577453637E497C2"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V55__explicit_support_same_refund_query.sql",
+    "sha256": "FDFE331942A0BF0872C7E62C2CB90676BF33B0A726DB17EDE6B8D94E575975A6"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V56__explicit_failed_refund_retries.sql",
+    "sha256": "BE2C2741B67324AE59A1CDEC0CECB5AA272BA304D468F1AC59C3915A2F7060F8"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V57__cancellation_withdrawal_terminal_proofs.sql",
+    "sha256": "C8A9C9ED24AABDAA132BE6E2ABE07D3DF91DC3C0C37157F2E57941F4D18218B5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V6__operating_permissions.sql",
+    "sha256": "9F5D2E346E536A6EEA2E71980D0ECC94F739A427D2DC69C7D3A608F5A4CAC44D"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V7__account_state_audit.sql",
+    "sha256": "5D33D9405253451A07D5569E79BDFD12037076CB26B86ADBFA30B003FFA805D5"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V8__seller_applications.sql",
+    "sha256": "05119173219E3A4A08236938CD9DF363487E5C62E5D424A3BCD795846B007C23"
+  },
+  {
+    "path": "backend/src/main/resources/db/migration/V9__stores.sql",
+    "sha256": "CC1A002CACB00F717727D3D8115BAF7F1E7621CC84F1B16E8F9F4217DFCEDA13"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/ActuatorPolicyHttpTest.java",
+    "sha256": "6C24A67449197FEFFDE12C48752DD78BF18F970BD6FC56BF2F73783553A7E815"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/ApiErrorHttpTest.java",
+    "sha256": "4290470C6DDBBB42B7CADE57728D408E097F8362DADD703A8271827611E90466"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/DatabaseSettingsTest.java",
+    "sha256": "0BE85427A43C780018B44D17487473DB066E844325FA0D43831D645CD47FF3AF"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/ErrorHttpTest.java",
+    "sha256": "BA0EA477DE652532E96859866E1021A0B01EC55BF354D61BD85D0C7C2D72D5A1"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/HealthMvcTest.java",
+    "sha256": "062FCFEBF0211A89D0B7A37D2131C60B3D818C6B3064A7F19CD3498D1BD4E153"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/RequestIdFilterTest.java",
+    "sha256": "C725DF779578DE4784FC296556F2A6EF53F8B849D1380A3A227E4DE98A8314D2"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/RequestIdHttpTest.java",
+    "sha256": "1D6C8D862DB6F09FAD06ADD107951676465D48226ECF2A64BEA745545825CD65"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/api/UnhealthyMvcTest.java",
+    "sha256": "C7FBFDB8F8D83757A2BD7E98DC49B79CDF13F96A6F4D1C1FDF686C7276775945"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/architecture/ModuleArchitectureTest.java",
+    "sha256": "E53A6CBB70EABAAC8683C40483AD7EFDB3DF9284CDBDF89937A4466B56DB3B61"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/architecture/ModuleRules.java",
+    "sha256": "AD65DE79D63FB3C2321880F25DDEE1DDDCABCB93AF6F3D887455EF5F1AEF8970"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/architecture/ModuleRulesTest.java",
+    "sha256": "5DEC008E0978C5CC77D22A4646A1EFF99BA2A38F9A7D499FE7CCF73046430805"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/cart/CartRulesTest.java",
+    "sha256": "8215BCDD1E9C40E2E74FECDDAEE215A9CDFD1B33CA4C366C880FB6B6130BA07C"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/claim/domain/ClaimRulesTest.java",
+    "sha256": "A7B1AD214A908E63034AB274F7FB52936A7CAFF39E1A85F73D0E3ACDD3B29BDC"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/ConfirmationWorkerProbe.java",
+    "sha256": "F22F71800A1AD96083E6D35C0948F94990A468AACE975B726EFCCC96ABA27309"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/DedicatedPostgresInitializer.java",
+    "sha256": "78547F963C33801A6ABFAB6F2B13BB90CC795DB3A3BFEA687E6AC715ECA2F64B"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/LegacyConfirmationMigrationProbe.java",
+    "sha256": "A4EB8F80FE9443C8E7FF7F12D8AAAB1BE41D1A05C31438661B3A6F3EFFE954A9"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/LegacyReturnPolicyMigrationProbe.java",
+    "sha256": "D38DB69A3788741B4C9665E7BFCE882DA403A88B2FE1BC6C7DBB3CBFFC79669E"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/LegacyShipmentMigrationProbe.java",
+    "sha256": "C4414AEBA5C8F2CB38805749FE46891F4D7439B0ACBDA8955CF4B3F53E232CB8"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/OneJobJdbc.java",
+    "sha256": "6BBD93222A660D1228FE246997AE6A7ABABDD88D2B44539BB90F3DCFACA2E0B9"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PaymentApprovalProbe.java",
+    "sha256": "8175591C9642B1A9C8F24092A93DD63C6575D827E1AD940D2E633539204662E4"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PaymentWorkerProbe.java",
+    "sha256": "B3FA5EB1BFDEE69AF24EFBB079BEDD87DBCFEF5C0F0733DB84A820A1C6DDD770"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "sha256": "B9E9927048F7EFDDE7C454AA526CB319884171B41450903A799B11AD401E2E75"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/RefundWorkerProbe.java",
+    "sha256": "ACF79104963196A19EDE6C58E8DCF0B565E14CECAD7C82C0B1D7DAB137E90921"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/ScopedJobs.java",
+    "sha256": "BA8FC18F7891D01367DD89D48478C803EAC0106869C972628EAA46327FB7A08C"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/ShipmentWorkerProbe.java",
+    "sha256": "4F0DB45BF5040602846CF44008CD87AF3D0684F21A8E3D75CBED04198C3B6E77"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/dbtest/WorkerProcessProbe.java",
+    "sha256": "B7583FA7697DEDDB9725DEE3579DBF7B9647E22749134C15BF38D2B72184A201"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/fulfillment/domain/ShipmentRulesTest.java",
+    "sha256": "93D6A26E82A0D27142689DA1931D62478E6F18913560F1CA56CACDF867BAA993"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/guest/GuestInputTest.java",
+    "sha256": "50D924C8632831C478A8391F5B557AD01C8C20F796BD4AEC133F5798A2940F64"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/guest/GuestLinkPolicyTest.java",
+    "sha256": "E3E949E3FA50510E743F7BFFFC78608A82BD997495BE2B43E26C18995319013D"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/guest/GuestLocalPolicyTest.java",
+    "sha256": "5E0256520FE03D947E67FF798E5265C6DCA3C686BD0F1DC0EAEBA01AC49FAEFE"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/guest/GuestPasswordTest.java",
+    "sha256": "3D77DC226CE113AE1D464B1261812A55671FE090646A224938E76CE177650C53"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/guest/RecoverySecretsTest.java",
+    "sha256": "4ED529D6AA1BAB0DCA1AF4486DFA4FF974F8B354789335C541B0A3A17BD79824"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/identity/AccountRulesTest.java",
+    "sha256": "F57E2C7994BCD786CDB3899C9DC9FD1F6FBF2894708EC194924FAD72375775D8"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/identity/AttemptWindowTest.java",
+    "sha256": "D5CAB73C217E1EB03A0D2FEC921C61CCAD9595481BBB4749F882A09DF9581F54"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/identity/PasswordRecoveryRateLimitTest.java",
+    "sha256": "0FEDEE82C38BD8DCF3A46E9F0325E760C0ECA84232FF958490000100870FEC93"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/identity/SignupRulesTest.java",
+    "sha256": "3DD6EB884CAA38C43FB05D578BB79C210586E1031803BAE1B051BA8487655A84"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/identity/SignupSecurityTest.java",
+    "sha256": "020EC8BF8349C078F28065CDDE922DBCAC4B54ABE2C7F9C49E4DF417073AC3C5"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/Account.java",
+    "sha256": "B046A16E5BB99A3D28F231C368BB8F66245AB4D7586C1AEE0D48899672B29F34"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/AccountRepository.java",
+    "sha256": "B3063F805ABC41A8222536828863D3C901C0B3070C85008F533661A120265EF3"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/BatchService.java",
+    "sha256": "D6D060955BC923E99D0D889F298A519F43ABCFCCD276A11AFEE94C7F68B1D3E6"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/DedicatedDatabaseTarget.java",
+    "sha256": "C9B3F72273EB66395172A71266498BB589C3A36236E3B4598BDE0A5E3028797E"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/DedicatedDatabaseTargetTest.java",
+    "sha256": "F9E4E81E43F6AD03207439EDA7EAE88FDD1D3090E99B0055DD9EFF393B72C408"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/FixtureConfiguration.java",
+    "sha256": "9137F94D3DDBB99D35688C596A1F4A9C8BB7D10104883B214AB8E9A15368BA30"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/JdbcContract.java",
+    "sha256": "816E94EBE34775BA4D414526ECE95D660CA0106380DE83893C4ACA6E1FFE0700"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/TargetContract.java",
+    "sha256": "700F342E811F8054F47A333EB91C464F4DC7C8BE9DABFD9838C65D53CFA558A9"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/TransferRejectedException.java",
+    "sha256": "F084610CA37D9909BF4651FB8800F1CE84F093F7986B2BE00E14D869474F068C"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/jdbcfixture/TransferService.java",
+    "sha256": "1406B3B1D606EE77211BF76B37E53663E2E3225FC25FE400F0D10F57EA5746BA"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/media/infrastructure/ImageNormalizerTest.java",
+    "sha256": "C726EBB0290F562BBEBA868FF40A509E01011AB83562B104AE1C4A139B875E19"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/media/infrastructure/LocalImagesTest.java",
+    "sha256": "7A54B6EAC9E4BF58AB106C9C4B5875B91EFD35AC2F3EA0C3769A5F99064C4858"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/order/domain/ConfirmationRulesTest.java",
+    "sha256": "0AE23BC72D466AE8C99A7A37900B5150F0F8151E221B1ABA0FE7EB096698774D"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/order/domain/OrderRequestHashTest.java",
+    "sha256": "FEA25D7B2031DCD2C5AC0A9DA8F872E5825914CD72F9D63D5B1C1346EFF4EF70"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/order/domain/OrderRulesTest.java",
+    "sha256": "27168865F90BF0FFCEA503B60AABF889364F45D7EF2BCD5DCD52DB8FEB0D3D12"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/payment/domain/PaymentRulesTest.java",
+    "sha256": "61B409C5BE440AD5331D43F8F9DB1227168B586E6A6924074027B97938476F94"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/payment/PaymentProviderConfigurationTest.java",
+    "sha256": "E325EDAB31C3396365F425ABC3A8D8CF40A299D47234345E7D575401FA3BFB2A"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/payment/TossPaymentProviderTest.java",
+    "sha256": "2F5076239F865B1E3A39F937564C7994CAC4A1D9FB12F4764EEFDFDEEBA254E6"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/payment/TossWebhookVerifierTest.java",
+    "sha256": "94141D57BD9424E37722DB681C074E081D04871DBDE5E5749DE4D0439B3D6E03"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/phone/PhoneProviderEmulatorIT.java",
+    "sha256": "8B6C519CCDBDE305C0D3CA3165ED9AD799C7E7BA513D3E4B29A0D8F66B8234C4"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/phone/PhoneProviderTest.java",
+    "sha256": "E3D7221C998AF746DE42C0F9DF0013D6209AE8F702B89330FCCB56B7EA3B0B89"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/platform/JobRulesTest.java",
+    "sha256": "91B2B432D536F2BBB2D9398A58BCB1D1103E07BCF953438370CAE36E0D6808C4"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/promotion/CouponReservationRulesTest.java",
+    "sha256": "A9A09AA522035BED535A9E7B1042AECBB0AB4C60DF5F3A0AE219F96CD504D1CA"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/promotion/CouponRulesTest.java",
+    "sha256": "C24DA435A36EC9FBBC25C1A7C5F690BC75427CC6389B542ADABCCB575D667E24"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/promotion/PromotionRulesTest.java",
+    "sha256": "C7DB47DF96461942730EB29E894D7FF4C17876F72283A6CD1DCDFA4FCB379D9B"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/promotion/QuoteCalculatorTest.java",
+    "sha256": "EE5794918B467B422637AA3238B23277DDA1035EDE8F79EF33EC6E9CEAE88CE3"
+  },
+  {
+    "path": "backend/src/test/java/com/example/marketplace/testing/DbFreeBootTest.java",
+    "sha256": "7983F226FAB4DFA8FAB4FC7C3ACEEA9C97B65983F13429F74E54D08BCB383284"
+  },
+  {
+    "path": "backend/src/test/resources/db/c3fixture/V2__jdbc_fixture.sql",
+    "sha256": "5A84FADBAB7703298B8703A1876E2555E6E64F743EBEA02A0754D725089098D2"
+  },
+  {
+    "path": "backend/src/test/resources/media/alpha.webp",
+    "sha256": "5BC8FB7AA321287DAFA8EC7B8D181722A32E765F3FCE7BE17A58E1FEF4B6280C"
+  },
+  {
+    "path": "backend/src/test/resources/media/animated.webp",
+    "sha256": "5E839D206BDCBFCA041228EE259C0EC31609C7DB488D3CB78FE960393AD57FA6"
+  },
+  {
+    "path": "backend/src/test/resources/media/lossy.webp",
+    "sha256": "EFC838C0B30EADFC28D25BE20D2490443D35CBC38AE3C7B201FF3AD71257EB16"
+  },
+  {
+    "path": "backend/src/test/resources/media/README.md",
+    "sha256": "50129BC58C811AD2B68F08ADC2D34EADA71B10EAF453BE41562A381CAED3D48D"
+  },
+  {
+    "path": "backend/verify-db.ps1",
+    "sha256": "27EEF369842D35817AAB97ED57F922871CF5F4AE3E5022A10E02DF0598F5D76B"
+  },
+  {
+    "path": "docs/development-workflow.md",
+    "sha256": "C13ADF87DFEFF3678BCBD28A2F2E87ED8BE92DCD7E7E09BF9E4F5CEA8D96CD2F"
+  },
+  {
+    "path": "docs/model-routing.md",
+    "sha256": "9E28A662179C2AE5D4847A2B9BE99720F4A22CDE2D462EE7B40B2ACACDBA4A2C"
+  },
+  {
+    "path": "docs/requirements.md",
+    "sha256": "B9C60328A06C2A3ED5C795623002F164A7F24C036686BC3481796D034FC72C0D"
+  },
+  {
+    "path": "docs/verification-harness.md",
+    "sha256": "45E92905C425832BEE84E1515D35B3D836AD75B1D6BB6223FBF0C64F9488CDAA"
+  },
+  {
+    "path": "docs/work-items/P09-A.md",
+    "sha256": "E1C42F5DAB01F94F10F1E56015E6767276E8A6FA0908EE5789C1D725950001FA"
+  },
+  {
+    "path": "docs/work-items/P09-B.md",
+    "sha256": "113591850B4301C8A154548EB5201F27CDC091A345540FF7FB4ED30502326186"
+  },
+  {
+    "path": "docs/work-items/P09-C-design-review.md",
+    "sha256": "1A6D24895422D705E49756588E460D0F0F674C7C21B97A97B8BD12420F890980"
+  },
+  {
+    "path": "docs/work-items/P09-C-review.md",
+    "sha256": "76FF727CC85911B06EFA0C85AC0AAAA740BF23BA22D21CF888B032AEA3D91232"
+  },
+  {
+    "path": "docs/work-items/P09-C.md",
+    "sha256": "C0CFF2ABDFFC4F866EB3524F8415540E9FF6EE9443CDEEBD983926A43766D65B"
+  },
+  {
+    "path": "docs/work-items/P09.md",
+    "sha256": "8BFFA31270BC5C8CFA666084FAADBB273732298D694401E34BA7F54CCC0FC779"
+  },
+  {
+    "path": "README.md",
+    "sha256": "586D384517109A0AA63257C13535A7E59317EEB54BAC9328CC390E502D7CBA95"
+  },
+  {
+    "path": "verification/Gate.ps1",
+    "sha256": "6169491074903845321770392E29FDFB54F475F2A19FB9291CAAC4A2AE2FD669"
+  },
+  {
+    "path": "verification/phone-browser.mjs",
+    "sha256": "8305E6849AA409F60DC3FF31245478AA033CB85DF6346180D5D5D16D5B2107F7"
+  },
+  {
+    "path": "verification/phone-resources.mjs",
+    "sha256": "5A3BD1E2F75FE75D7F40F00F207D16F4A80C15002BA6A547643A5ECA91263672"
+  },
+  {
+    "path": "verification/Preservation.ps1",
+    "sha256": "D8ADD0AA99B9959693BD1C74A8475D81A5ED017CCF1DD986F899A1BB50765C84"
+  },
+  {
+    "path": "verification/required-browser.json",
+    "sha256": "61D97BFE4BDA9444BC033EDB4971F2C9D6F774958C96726E6321FCB56631F8AE"
+  },
+  {
+    "path": "verification/required-frontend.json",
+    "sha256": "D9D9EA16AA4029A389D1F3F63C0BC0642385CD992ED46BC1AD7D50E8C5A3C00A"
+  },
+  {
+    "path": "verification/required-tests.json",
+    "sha256": "596E393B499B6E42EBE2D47CF8024EE64339DE693DE36FF169283FCE324256EE"
+  },
+  {
+    "path": "verification/Run-PhoneEmulator.ps1",
+    "sha256": "DC6D370A21A1283A46CDD12A5F23D9D7A6B6B8F5ECA94585902B027632637931"
+  },
+  {
+    "path": "verification/Test-Gate.ps1",
+    "sha256": "766BE25AAEE3C69EDDCBA4124CC6232119FA1E8F809C30750DF81B6C7091D01F"
+  },
+  {
+    "path": "verify.ps1",
+    "sha256": "289FE8088301832CE87381D3F07D06BB1ACD14A8670B00FA50722E2C44CB0D54"
+  }
+]

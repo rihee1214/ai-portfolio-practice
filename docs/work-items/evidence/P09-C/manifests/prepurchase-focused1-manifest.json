@@ -1,0 +1,37 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice/.local-tools/p09-c-prepurchase-focused1-20261101",
+  "capturedAt": "2026-11-01T11:24:32.3829890+09:00",
+  "files": [
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/build.txt",
+      "sha256": "86B4FC79A293A694305AEF7B62CE918C602495A9B0A2CCA40C5F7D2E03328F60",
+      "length": 797
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/frontend-coverage.json",
+      "sha256": "BFCAA089EFC15D8B50153B8BD98F6BAEE2E66D17F351FD30D7EB507F4193A64E",
+      "length": 33248
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/lint.txt",
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05",
+      "length": 68
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/TEST-frontend.xml",
+      "sha256": "3016DBC140ED7BB78C92D10E18FAD3DB7F246BC01566D29F7D75D4852E0C971C",
+      "length": 58316
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/typecheck.txt",
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8",
+      "length": 60
+    },
+    {
+      "path": ".local-tools/p09-c-prepurchase-focused1-20261101/unit.txt",
+      "sha256": "4C492A723B19046BA86511D86A0E1A24B1A1F7BC12873A91C7E8E8C6C6CB5F5F",
+      "length": 4767
+    }
+  ],
+  "count": 6
+}

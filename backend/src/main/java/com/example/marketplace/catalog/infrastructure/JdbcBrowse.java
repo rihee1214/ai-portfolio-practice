@@ -73,8 +73,8 @@ public final class JdbcBrowse implements Browse {
     }
     @Override public QuoteOffer quoteOffer(UUID sku) {
         if(sku==null) { return null; }
-        var rows=jdbc.query("SELECT v.id product_id,v.store_id,v.store_slug,v.title,v.version product_version,k.id sku_id,k.options,k.price,k.version sku_version,coalesce(b.on_hand-b.reserved,0) available,s.name store_name,s.version store_version FROM ("+JdbcProducts.PUBLIC+") v JOIN marketplace.catalog_sku k ON k.product_id=v.id AND k.active JOIN marketplace.seller_store s ON s.id=v.store_id LEFT JOIN marketplace.inventory_balance b ON b.sku_id=k.id WHERE k.id=:id",Map.of("id",sku),(r,n)-> {
-            try { return new QuoteOffer(r.getObject("sku_id",UUID.class),r.getObject("product_id",UUID.class),r.getObject("store_id",UUID.class),r.getString("store_slug"),r.getString("store_name"),r.getString("title"),mapper.readValue(r.getString("options"),new tools.jackson.core.type.TypeReference<List<Skus.Option>>() {}),r.getLong("price"),r.getLong("available"),r.getLong("product_version"),r.getLong("sku_version"),r.getLong("store_version")); }
+        var rows=jdbc.query("SELECT v.id product_id,v.store_id,v.store_slug,v.title,v.version product_version,v.return_fee,v.return_policy_revision,v.return_policy_source,k.id sku_id,k.options,k.price,k.version sku_version,coalesce(b.on_hand-b.reserved,0) available,s.name store_name,s.version store_version FROM ("+JdbcProducts.PUBLIC+") v JOIN marketplace.catalog_sku k ON k.product_id=v.id AND k.active JOIN marketplace.seller_store s ON s.id=v.store_id LEFT JOIN marketplace.inventory_balance b ON b.sku_id=k.id WHERE k.id=:id",Map.of("id",sku),(r,n)-> {
+            try { return new QuoteOffer(r.getObject("sku_id",UUID.class),r.getObject("product_id",UUID.class),r.getObject("store_id",UUID.class),r.getString("store_slug"),r.getString("store_name"),r.getString("title"),mapper.readValue(r.getString("options"),new tools.jackson.core.type.TypeReference<List<Skus.Option>>() {}),r.getLong("price"),r.getLong("available"),r.getLong("product_version"),r.getLong("sku_version"),r.getLong("store_version"),com.example.marketplace.catalog.api.ReturnPolicy.product(r.getObject("product_id",UUID.class),r.getLong("return_policy_revision"),r.getString("return_policy_source"),r.getLong("return_fee"))); }
             catch(tools.jackson.core.JacksonException ex) { throw new java.sql.SQLException("Invalid persisted options",ex); }
         });return rows.isEmpty()?null:rows.getFirst();
     }
@@ -101,6 +101,6 @@ public final class JdbcBrowse implements Browse {
         return ids.isEmpty()?null:ids.getFirst();
     }
     private Item item(java.sql.ResultSet r) throws java.sql.SQLException {
-        return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"));
+        return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"),JdbcProducts.policy(r));
     }
 }

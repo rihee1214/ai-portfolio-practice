@@ -51,14 +51,14 @@ public final class JdbcQuotes implements Quotes {
                 var o=item.offer();var promotion=PromotionRules.best(candidates.stream().filter(p->p.scope().equals("PRODUCT")&&p.productIds().contains(o.productId())).toList(),o.price());
                 long unitDiscount=promotion==null?0:PromotionRules.discount(o.price(),promotion.kind(),promotion.value(),promotion.cap());long gross=Math.multiplyExact(o.price(),item.quantity()),discount=Math.multiplyExact(unitDiscount,item.quantity());
                 subtotal=Math.addExact(subtotal,gross);productDiscount=Math.addExact(productDiscount,discount);
-                lines.add(new Line(o.skuId(),o.productId(),o.productVersion(),o.skuVersion(),o.title(),o.options().stream().map(x->x.name()+": "+x.value()).toList(),item.quantity(),o.price(),gross,benefit(promotion),discount,0,gross-discount,List.of()));
+                lines.add(new Line(o.skuId(),o.productId(),o.productVersion(),o.skuVersion(),o.title(),o.options().stream().map(x->x.name()+": "+x.value()).toList(),item.quantity(),o.price(),gross,benefit(promotion),discount,0,gross-discount,List.of(),o.returnPolicy()));
             }
             long after=subtotal-productDiscount,couponDiscount=0;CouponUse use=null;
             if(chosen.containsKey(storeId)) {
                 var eligible=coupons.eligible(member,chosen.get(storeId),storeId,after,at);if(!eligible.eligible()) { throw new PromotionRejected(409); }couponDiscount=eligible.discount();var c=eligible.coupon();use=new CouponUse(c.id(),c.version(),c.templateVersion(),c.title(),c.terms());
             }
             var shares=QuoteCalculator.allocate(couponDiscount,lines.stream().map(l->new QuoteCalculator.Weight(l.skuId(),l.net())).toList());var finalLines=new java.util.ArrayList<Line>();
-            for(var l:lines) { long share=shares.get(l.skuId());finalLines.add(new Line(l.skuId(),l.productId(),l.productVersion(),l.skuVersion(),l.title(),l.options(),l.quantity(),l.unitPrice(),l.gross(),l.promotion(),l.promotionDiscount(),share,l.net()-share,QuoteCalculator.units(l.unitPrice(),l.promotionDiscount()/l.quantity(),share,l.quantity()))); }
+            for(var l:lines) { long share=shares.get(l.skuId());finalLines.add(new Line(l.skuId(),l.productId(),l.productVersion(),l.skuVersion(),l.title(),l.options(),l.quantity(),l.unitPrice(),l.gross(),l.promotion(),l.promotionDiscount(),share,l.net()-share,QuoteCalculator.units(l.unitPrice(),l.promotionDiscount()/l.quantity(),share,l.quantity()),l.returnPolicy())); }
             long shipping=QuoteCalculator.shipping(after);var shippingPromotion=PromotionRules.best(candidates.stream().filter(p->p.scope().equals("SHIPPING")).toList(),shipping);long shippingDiscount=shippingPromotion==null?0:PromotionRules.discount(shipping,shippingPromotion.kind(),shippingPromotion.value(),shippingPromotion.cap());long storeTotal=QuoteCalculator.storeTotal(after,couponDiscount,shippingDiscount);total=Math.addExact(total,storeTotal);
             stores.add(new Store(storeId,display.storeSlug(),display.storeName(),display.storeVersion(),finalLines,subtotal,productDiscount,after,use,couponDiscount,shipping,benefit(shippingPromotion),shippingDiscount,storeTotal));
         }

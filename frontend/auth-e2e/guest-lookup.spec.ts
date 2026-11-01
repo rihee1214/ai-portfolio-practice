@@ -51,10 +51,17 @@ test('직접 정한 비밀번호로 다른 브라우저에서 해당 주문 묶�
     expect(cookie).toMatchObject({ httpOnly: true, sameSite: 'Lax', secure: false })
     const stored = await lookup.evaluate(() => JSON.stringify([Object.entries(localStorage), Object.entries(sessionStorage)]))
     expect(stored).not.toContain(password); expect(stored).not.toContain(cookie.value); expect(lookup.url()).not.toContain(password)
-    await lookup.route('**/api/guest/access/logout', route => route.abort('failed'))
+    let failedLogoutRequests = 0
+    await lookup.route('**/api/guest/access/logout', async route => {
+      await route.abort('failed')
+      failedLogoutRequests++
+    })
     await lookup.getByRole('button', { name: '비회원 조회 로그아웃', exact: true }).click()
     await expect(lookup.getByRole('button', { name: '비회원 조회 로그아웃 다시 시도' })).toBeVisible()
+    await expect.poll(() => failedLogoutRequests).toBe(1)
+    await expect(lookup.getByRole('button', { name: '비회원 조회 로그아웃 다시 시도' })).toBeEnabled()
     await expect(lookup.getByText(orderNumber, { exact: true })).toHaveCount(0)
+    expect((await other.request.get('/api/guest/access/references')).status()).toBe(200)
     await lookup.unroute('**/api/guest/access/logout')
     await lookup.route('**/api/guest/access/logout', async route => { expect((await route.fetch()).status()).toBe(200); await route.abort('failed') })
     await lookup.getByRole('button', { name: '비회원 조회 로그아웃 다시 시도' }).click()

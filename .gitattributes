@@ -8,3 +8,4 @@ docs/work-items/evidence/P09-*.json -text
 docs/work-items/evidence/P09-*.txt -text
 docs/work-items/evidence/P09-*.xml -text
 docs/work-items/evidence/P09-*.ndjson -text
+docs/work-items/evidence/P09-C/** -text

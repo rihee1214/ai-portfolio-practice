@@ -1,0 +1,1372 @@
+[
+  {
+    "source": ".local-tools/p09-c-execution-20261030/auth-closure-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/auth-closure-focused1-emulator-manifest.json",
+    "sha256": "0D4FB9CBAE2E5A921DB5B3CA519543937AF400F4151C86D3B8E7BF0F37816CAE"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/auth-closure-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/auth-closure-focused1-manifest.json",
+    "sha256": "CED68D891727301279F7370B662B2D98BE9F5014413F14AC8A1D75C9E9266539"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/auth-closure-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/auth-closure-focused2-emulator-manifest.json",
+    "sha256": "464CC5351409532DD94D3C6EB2E18E0B0278AB8CCC987CD0F56BB28AF266146B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/auth-closure-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/auth-closure-focused2-manifest.json",
+    "sha256": "CA0C2D00CA784A324FF1E9F8C52B439185E7067C3C9D7805331C989FF79376F5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused1-emulator-manifest.json",
+    "sha256": "9EEC6BD6FD6274C461C8FD34E122B19DAD207AEBF8DD536D5831F65986C689CD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused1-manifest.json",
+    "sha256": "8AC18C50B0D40665C678BD15CB29C31952734377CF6D8F942023F1954FDD1B38"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused2-emulator-manifest.json",
+    "sha256": "635856F92B4AF7BC53BF0B258FDB72AF106FE687C7BF47005388EFA4BD775AA5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused2-manifest.json",
+    "sha256": "ECA3E8BF9F4D159EC5E64E3674051267C5D982E392218EC281952EF3D6628785"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused3-emulator-manifest.json",
+    "sha256": "BC16D98D9EB4B40BBCF1410A699898A840AF9442FE826EC87A8E583717F6D80A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-focused3-manifest.json",
+    "sha256": "2E83DDBF71FBEB0A9E132364325DB9F8B0C5E2635D171B2B36F0DBD773A311F5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-focused1-emulator-manifest.json",
+    "sha256": "14CDC3F2045760C01F15F28EA2A94321D41F1AD894CBF2BCB223DF32F1442579"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-focused1-manifest.json",
+    "sha256": "FFE6EECBB4B0891854D08C1DBA6CE52D3427D8188444DEDD5D39FCDEFFAC3C20"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-focused2-emulator-manifest.json",
+    "sha256": "0691D67EA5852F6BB404E7D29ADA326D0D91E9F2ADD13C3B02E52FF24EA400F6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-focused2-manifest.json",
+    "sha256": "5F01B9ABF3FA8FCEE80A4000D87E4D1BF10BE0166FAA0CFA59C0EA57DEE8EEC6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-prepare1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-prepare1-manifest.json",
+    "sha256": "18EA4FA2C853CF62E96C8656F4914E61E0BD86E28BFDB1890776A9397F043AC6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-prepare2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-prepare2-manifest.json",
+    "sha256": "B0AD631DB38336FC49FB734894114DE31477C791BD17CE5940A016228705C28E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-prepare3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-prepare3-manifest.json",
+    "sha256": "B70C1C11C8A03E107E454B9110C2DCC52B06C61A704C910626F9314E011EDD99"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-retry-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-retry-focused1-emulator-manifest.json",
+    "sha256": "E857961EDD7A27588557E3DE7FD7F7C275826D7014AAAB341661F457CAB7DD3E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-retry-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-retry-focused1-manifest.json",
+    "sha256": "8F75A9C2342247595D6043231C97A745AF5DBED2943B395C2A1527DD60BB82F2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-command-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-command-red1-emulator-manifest.json",
+    "sha256": "90E34369B783F2A08924E7617150A762310B8E6AF36D63408732A01B703A07A7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-command-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-command-red1-manifest.json",
+    "sha256": "F243D85EAE5A47555BDAAF53914DD9ADF20D6B78EA709E26BC8ECADF66D2CDE8"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-focused1-emulator-manifest.json",
+    "sha256": "D63696CC96676E52DD452E3140A4EC93CEA5E2E6FD745B26428150D2019074B7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-focused1-manifest.json",
+    "sha256": "2B65501FEE5E22C7598AD214ADFD62C40C93455AA12BC1DDC5EE6A3EE180A5A1"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-red1-emulator-manifest.json",
+    "sha256": "7EEA3654D17146C7E81EBC24892FC1B2F3F896D247280D7FB9B6D1C5819129B0"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/cancellation-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/cancellation-red1-manifest.json",
+    "sha256": "B6CC89928A7D636992916D8A49678768BF3844E74797DB771567DD53E3AF78D4"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/claim-store-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/claim-store-red1-manifest.json",
+    "sha256": "7372AAD1812F96A65102A83D879D4CC99C8E3F1DB123899D3703BD7043D75E07"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/claim-store-red2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/claim-store-red2-manifest.json",
+    "sha256": "88CE1C236C085DFF1BC5CA29E9E19943E01A29D73E8C6F091D8AA6D45E0EDDF2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-focused1-emulator-manifest.json",
+    "sha256": "6549D42DDC19B22B1DB673DC8C65E110BBE347198C4A5E60C6980E0C7DB7D44E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-focused1-manifest.json",
+    "sha256": "D023034C1F10BC0E11547E5CECD99CFC2D92621885D571DD1A3FCA6D6CED32DE"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-focused2-emulator-manifest.json",
+    "sha256": "1E71B368695FA25B61D3091057DB0F3E5786F11B8C6E5FC80E85CD7A8E6BF65B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-focused2-manifest.json",
+    "sha256": "1BD49F64BC41014253B822B6C778ACD4D2A92FEC0A42CE622C4A89299946C09D"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-red1-emulator-manifest.json",
+    "sha256": "9475C08F5E5D0A6598A6C71962DF905BA1702AFFA3DF72AB209976B432E0A14C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review-red1-manifest.json",
+    "sha256": "2DCDF0421A7DBDE0FD501C2755FC6DBE5F190DFB5D27E73B1BD827E0D0AAC477"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green1-emulator-manifest.json",
+    "sha256": "35C638E6972B2F072E2FD16635CE42A026C33035794EE4DE65EA385F2C8546DD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green1-manifest.json",
+    "sha256": "E3308B92D178C9D76D3226D69B02297720DC7F69C2ABCED31CE2AAE8C781797E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green2-emulator-manifest.json",
+    "sha256": "EA22D852C71063B6E8B7AE5B4DFFDB80F4338781BE3596BF66192792FEB80AC7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green2-manifest.json",
+    "sha256": "99BFE80D97A2D5E35FBE831620869CDD883D698C7FC4BF5B317A5D0B6EFA8C89"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green3-emulator-manifest.json",
+    "sha256": "A01645F89408322FCE1F631E56785D3AF1949A729535FA03B70DF71E5EC4299C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-green3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-green3-manifest.json",
+    "sha256": "D3A13B0376F8BE439E6D6EE645F2D90892295D73964BEF8EC5236D441A90FA6A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-red1-emulator-manifest.json",
+    "sha256": "5427FCE6DE6F350349E58E081EC3F008798478AF7DA625A9A1E005BC61FF985C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/contract-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/contract-red1-manifest.json",
+    "sha256": "745910D42911F7C8A16C3B9C8DCF9B3F7F4B092814098D3232C8B89EA8639A2B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-emulator-manifest.json",
+    "sha256": "0E75691E14910C8A9C8881BB800AD5070D0B1F3802BA1CDFDFADE47F73F21F85"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused1-emulator-manifest.json",
+    "sha256": "71BE815DFF80FFA97BAFE4F888B8A0102574638F8C1AA79EBEEA9F888F80CFEF"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused1-manifest.json",
+    "sha256": "D45EA5563D07ACE31A1EC8CF5DF7E0D57206098F778C73D9F6F9BFDB80050609"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused2-emulator-manifest.json",
+    "sha256": "C23057D9A5475FC37939C0236F622C293668DD135CD1928F64AD81C5AEB99DFA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused2-manifest.json",
+    "sha256": "458067A446A20233ED881D812CE823BD28CAAD46F382BF7190ECB36E2457BAE6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused3-emulator-manifest.json",
+    "sha256": "DB29D12AC3A2022ED0C8D777E1E45962E10FAD4D6608662CF606274C04B07CF3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-focused3-manifest.json",
+    "sha256": "A2A8530930CFDE174F5FC0975E04CECD513F56849679B31FB0FAB4D7399BB1DE"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-manifest.json",
+    "sha256": "33C50B9EF9FA805E78B6374107C0ABF64A6D11C4A2CD9F94B4807C667D253B2C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev2-emulator-manifest.json",
+    "sha256": "6FC1EDA1797F081F53A62BD1781FA5350470136333F3F137E2C3EDF9B8D1E916"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev2-manifest.json",
+    "sha256": "98EBC4AFEC914BA8A2548C635A5E50D60CC4ED6A38816BBAEBDC4092F6FB6782"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev3-emulator-manifest.json",
+    "sha256": "B2CB3AB9B1F3B8FC24A33ACD584612058D41C40EA0E1B41273D5212EE911AEBA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev3-manifest.json",
+    "sha256": "D14FF46A93B450A1F23E469E34493E9E65452A3B6CC80DBDCC67C45BC58AD705"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused1-emulator-manifest.json",
+    "sha256": "CD14124E85F1B41FD9CA7B4368A7E240C877C38200303FC1A637455E89C6D697"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused1-manifest.json",
+    "sha256": "155DC75C33A85AB52C6BE865EB0590E566C4258A1A08FCC9E7DFC06C691C9260"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused2-emulator-manifest.json",
+    "sha256": "8917B20656A40AFE07DB6F007DD911D802FE5EA03754FBE4814A1AD3F54B0203"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused2-manifest.json",
+    "sha256": "4B0B7AFBE2BB07C33543B44CC25D111875423B06636379E07427E37FE45C3971"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused3-emulator-manifest.json",
+    "sha256": "1624E854E5BB3FAA607C24AD1AFFB735A62C5778A5C71057B266025D0AD97DA0"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-focused3-manifest.json",
+    "sha256": "2400089FBAD91BAB88650651A0997A4B4723777B4CE6BA2ADD2D9C528496F096"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-red1-emulator-manifest.json",
+    "sha256": "5F7C246894F64654114BEE110AF6CCD7BE6AE5AE6B30166A84B8CF1BBB5EBA87"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-accept-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-accept-red1-manifest.json",
+    "sha256": "6E056AC1C0073059FC4576FF8C2D95EC663C422BEAA6C4667A39D4A0EA3D5298"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-effect-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-effect-focused1-emulator-manifest.json",
+    "sha256": "C477A5E68A709FF808F86C123F73AF6993C633ADE072FB215B97D3A055349C47"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-effect-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-effect-focused1-manifest.json",
+    "sha256": "5C3EB4A8DB5C279732D92596C1A0C7B233444B57B27967C552F97BE805F2375F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-effect-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-effect-red1-emulator-manifest.json",
+    "sha256": "154F17AE74B95521F35012660B256404306C64CFFA99B83A9B9267F31A6DAA80"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-effect-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-effect-red1-manifest.json",
+    "sha256": "D680BA6B484919C0AAC2D8192023D6597CD01241B1B4D31C2F10215FF60FD948"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused1-emulator-manifest.json",
+    "sha256": "5D2E00B4DECC84C21A06CBEA17842FBE80D577418C4ACD94931FFDEFC18D002D"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused1-manifest.json",
+    "sha256": "345C4ED5D2CAEACE998E63D29B8688BF58B152D4008E10E13243B7404447E339"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused2-emulator-manifest.json",
+    "sha256": "E5C3473CF26EA78CC0352E44D3E40E96868795484FA95FAC8554A1DA0A31C6BB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused2-manifest.json",
+    "sha256": "530888F4ED3B8E306D175121E82E2182CA722B2077EBF81F8715DC11981D3C22"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused3-emulator-manifest.json",
+    "sha256": "9974C6BD46333B2FE71F6886BB1A0C8E82FBA8759EC2DBF893B2420A2FE76C73"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-policy-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-policy-focused3-manifest.json",
+    "sha256": "49F64AC33F688BE9E68D4CF7A306F3F0850D3A886C69028893028B026D79C300"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-quote-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-quote-focused1-emulator-manifest.json",
+    "sha256": "25340037017154AA68D38EB4FD45F7E4ED0328E689E4494DB2D87036A2FAC7BA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-quote-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-quote-focused1-manifest.json",
+    "sha256": "D8C7FA81B90CF41227B9E4BDB9608EF245D4B8614D3158C7C0E12815445B50EB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-quote-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-quote-red1-emulator-manifest.json",
+    "sha256": "098061F3DBCACFEC66FA88979725C47070529D3E501F4109893B45AAE0D8201A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-quote-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-quote-red1-manifest.json",
+    "sha256": "FDA2E658ED30FADBC46A7668926B7DE06DDF98A85A25E912753B91342BCBF28E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-focused1-emulator-manifest.json",
+    "sha256": "A9A4CF97CDCA4F38A29B1D6903872C80FDEE70F2027F4AEAA222F24EC1E70DAA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-focused1-manifest.json",
+    "sha256": "FE41EA23D4228A6C2476AE07A570E45601DCCFFABFB049F7478C05E3EFD4AC09"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-focused2-emulator-manifest.json",
+    "sha256": "3C78D9853F35ABF7404B9576961EA88A3FE16147AA75805D158045B8140F3834"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-focused2-manifest.json",
+    "sha256": "86C1496D399777189292AE90E6C3FE3989CBE3288FD56B0E1F2E7A26CEF06547"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-red1-emulator-manifest.json",
+    "sha256": "E5FF885D4F567DE0E76EA9BDE0365F4203BD2066D59E4614EC8757E8F3881CFD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-review-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-review-red1-manifest.json",
+    "sha256": "83908B3FF1A6A030ABAF26488A326666FACAD3C7024312212ED04F34467D1892"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/fee-rules-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/fee-rules-red1-manifest.json",
+    "sha256": "C7A8C3F09FDD2C4E93C6C6A362B227E4E93288C2D5A158E304D62E0128F0959F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-focused1-manifest.json",
+    "sha256": "32BDE3973FEB709337E19DFD9396F868CAA9E056B9107DAB9364E320B52042F6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-focused2-manifest.json",
+    "sha256": "686573F8DF91CDEBC4AC1F009DBA72F14AB70BD2ACEF16FB601002F7A7D2ADF4"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-focused3-manifest.json",
+    "sha256": "60BB7237A3471170F914EDD5B1956336A120EA8D27904017ADC78191BE5A77A8"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-focused4-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-focused4-manifest.json",
+    "sha256": "144DBA55FA1F5996DE244853DD4266DFBE6DACADBB0FA2A84E8D0A021C9EE064"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-focused5-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-focused5-manifest.json",
+    "sha256": "787FA151B8E016168A4E2929A9B3EAD3245E6DE572E81D24A32735CB3D49B581"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-proof-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-proof-red1-manifest.json",
+    "sha256": "BF603EC4219210F0092EEA91CBDDA0FC11D02C02EDD8C691991F9484921906E2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-red1-manifest.json",
+    "sha256": "75494F447D5904D63061762992378C72E233F5450564614DA6F65875043DA630"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-review-focused1-manifest.json",
+    "sha256": "23106DC36418B3FA3C3DFD5DBBF050A6B00C56215381F2C14702820217BE76DB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-review-red1-manifest.json",
+    "sha256": "2135FDA9BA0A156FD51221CB7181EFA678F5419BE618401428D4E7E675E97EC9"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-focused1-emulator-manifest.json",
+    "sha256": "1CA15B9D66164BD79882186FB1CA4BC1066F9A42FA9EFFB26356A401C36636AD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-focused1-manifest.json",
+    "sha256": "762FB4A3A5799BF30A9BCF40EF5DFCE60D59CA124991F3C908EBF703A079B035"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-focused2-emulator-manifest.json",
+    "sha256": "7472B0ACFF7D31BC2AAD45D2879128D2AD2A5B5E98A9199FB14BD4974C8D952E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-focused2-manifest.json",
+    "sha256": "A5D4051783F954C6C65E0A60DF43B6E5B270A0ECDD592817241803388E1C7569"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-red1-emulator-manifest.json",
+    "sha256": "AA719AA0AD61B76D6B714910E20FD6671D2BCD2FD508E623AD4E9CA4CF5CB00E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/gas-http-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/gas-http-red1-manifest.json",
+    "sha256": "A213FDCE24D37497DB4FFCF1D03133DAE3192D1AD1B0343542AFC7405FD45A54"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/independent1-emulator-manifest.json",
+    "sha256": "6FBE861EB2A29DFD1C6731254957BB7E6F287BAE4545D62042C580527F48640C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/independent1-manifest.json",
+    "sha256": "A39FD64C00F0CC79BC2EF87135E5EAD1EB4C6F242C82F8807A215AB6E0863EC7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/intent-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/intent-focused1-emulator-manifest.json",
+    "sha256": "69C63CC391F11CD15F85978CEF91A1A6A2337681281626466A263E974ACCE1FB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/intent-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/intent-focused1-manifest.json",
+    "sha256": "F0BE6AE574E8C530429E8ABC273C58A00062E018C309793E9A25C566647EE4A7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/intent-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/intent-red1-emulator-manifest.json",
+    "sha256": "409D0478FD24145C8EFF4AB66C5C8594C030F5D5E552621DA3BFCBFF27F264F7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/intent-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/intent-red1-manifest.json",
+    "sha256": "8FA05BF1941232AE3A9C9BC375A81280627F90CCFD2B00ABD38A10AC5167D3F4"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/legacy-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/legacy-focused1-emulator-manifest.json",
+    "sha256": "6CF528D49EE9AB549B50C344E0AB768C314803DAF420633630BF9E86EF242634"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/legacy-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/legacy-focused1-manifest.json",
+    "sha256": "80726D03A3457DD5C11811A9C8AA14E6007B87C5083715702D6D522F5106E54A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/legacy-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/legacy-focused2-emulator-manifest.json",
+    "sha256": "BE91F903591CF2F69967A700675AE6047A8842BD9008B7457976BF9BF27D81AB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/legacy-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/legacy-focused2-manifest.json",
+    "sha256": "0814AD4AE9ED111298A0101A6FF87E75C48023A1648AB29CF768E58EF3BD4F67"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/mailbox-isolation-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/mailbox-isolation-red1-emulator-manifest.json",
+    "sha256": "AB010575258F11368173FA1DBA49C98338F609976A8F4659677D6FB05BAFA426"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/mailbox-isolation-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/mailbox-isolation-red1-manifest.json",
+    "sha256": "0B2401B2F790EAFC5730B4B6678C9C2710F03B83645D07D7CB47241A7E8726C3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/money-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/money-focused1-emulator-manifest.json",
+    "sha256": "710BE2901E9F380403BC75216932CBB3920B47D51939F0545CAF3B10BAD41804"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/money-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/money-focused1-manifest.json",
+    "sha256": "D21626773C4830C2217031B68729AE8DAFCC14CA9B30950BC71B031FE2C1853E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/money-race-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/money-race-focused2-emulator-manifest.json",
+    "sha256": "6567CF1B74FCF4BC7FA75035F941A390470F883AD7FCDBA8968EEA7591F35F0E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/money-race-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/money-race-focused2-manifest.json",
+    "sha256": "0CD871FF83C284089F5831BE430A0D7D5364657821C30014DC06CA93438D4FF8"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/prepurchase-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/prepurchase-focused1-manifest.json",
+    "sha256": "D6DC9F5544B6B9E66D9517ED572DBAB35D29EE5238FE51CEE5DC1A9C6934F4AD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/prepurchase-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/prepurchase-red1-manifest.json",
+    "sha256": "10D80CF7914F16DEF4ADD5EC537B8D0DA3C9E8C223F972243DDE2AB295289F00"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/product-fee-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/product-fee-focused1-emulator-manifest.json",
+    "sha256": "2682D1E9CB15A989A67508D9EEEA85E81C4BE6958962E94EF6C56F9ABF9BDFE0"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/product-fee-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/product-fee-focused1-manifest.json",
+    "sha256": "C2211E95949420BA2D17B8ADE0FA542ECA441EC73D3F43902947AD97B898D12C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/product-fee-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/product-fee-red1-emulator-manifest.json",
+    "sha256": "DF2E3A8272CBC642A8451547EFD588C9E75DFD27DCB145750323B9441993CEF2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/product-fee-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/product-fee-red1-manifest.json",
+    "sha256": "0B3A7ED6D47F4B2760A3F3A1A8872D7FB08731DE067355A5CA314F98F23B088A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-intent-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-intent-focused1-emulator-manifest.json",
+    "sha256": "B9F8641678B4A95A146C92602480D33E8058B7BE72CB7F00CCFC9002E43B7E4F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-intent-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-intent-focused1-manifest.json",
+    "sha256": "692AA7142B9C2F989E501D0A280F9A06C8218A5C25A46DA17A6D73BF6B3A3ABD"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-intent-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-intent-red1-emulator-manifest.json",
+    "sha256": "063B7CAE61886E369917A0BEB79D4F13287A97B3502467DA0634B15A0AF3EF5D"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-intent-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-intent-red1-manifest.json",
+    "sha256": "397BFC3C87195357CAAAAD38EF5453CE7C5704F0CB2A1DAEC65A9883A635D5E1"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-focused1-emulator-manifest.json",
+    "sha256": "D4CC964F3A1F0C459CF8C1EEE0F8E299797958AFE14D3433B857FFC8BCEA4B76"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-focused1-manifest.json",
+    "sha256": "2B76522D3E3CF6C8F8FAB8D9072390C04F3E812B1C26C4950D1C1741B42EE14A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-focused2-emulator-manifest.json",
+    "sha256": "B1BF410685E7DB21AC9E706FFE452C4A83E577881B018FD0C189E27403D08A90"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-focused2-manifest.json",
+    "sha256": "FEEECF76AD3646C7F947672A5509231740CC6A56241F8423DF475CB4E5EE13D2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-red1-emulator-manifest.json",
+    "sha256": "95CD48F7A2E65B843BDFE5459F77C400E6B0E9F19893384203FAC7A226F95954"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/return-result-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/return-result-red1-manifest.json",
+    "sha256": "742148D2250D0F09C136AE4CA5D8A54A56C84567B99C9A47DCF0ABF48733B68E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused1-emulator-manifest.json",
+    "sha256": "C48ED9DACD27BFBAC32C84AD41D51CB14CB3DC8D0972928C3B0D1B62A571C073"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused1-manifest.json",
+    "sha256": "FD56BBC50E595108229EA8A5E14D741D89211B318F3A3B67B26682163FFCEFA3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused2-emulator-manifest.json",
+    "sha256": "5043135B13E574AABC80172A7EFF08BB13B0BD948C44429949D947387B409650"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused2-manifest.json",
+    "sha256": "E2771A84679E7338A4039B5C10901CB70E4E5963B6A68E023772AF00C01D4E69"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused3-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused3-emulator-manifest.json",
+    "sha256": "EFBBCE71DA65B3651494EFFFC44EEA9CCD3845CF511950751B44115C95D8B001"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-focused3-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-focused3-manifest.json",
+    "sha256": "3D5F582CE8184ABBC77CB6A8E8543144B6E630BBECA8C3CC879E79B9886EE7F1"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-red1-emulator-manifest.json",
+    "sha256": "669E2F678EB72AF81B6DE5CC99A12083506DCBF00EE875D96C11D14DC6E987E8"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-red1-manifest.json",
+    "sha256": "80580FA55515C846EEA75B9E8D1F271CFCF20F8E0F04F083BB9E8F7F947A532F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-red2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-red2-emulator-manifest.json",
+    "sha256": "65DB93549A7C78AD6772828B55848CDFD4032D59BCEF1BE6B45A2BA77C834DB9"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/review-red2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/review-red2-manifest.json",
+    "sha256": "364ADF4B8455E26F88470A157B3006A7D1E69B2997945D654F5DFB7226F3855B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-focused1-emulator-manifest.json",
+    "sha256": "43E5FF689B63758BBD90415260F8E254667EACBD8637111B66389F08CE17A0D1"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-focused1-manifest.json",
+    "sha256": "229A40E6634E73EF7E6D5458195B1969607D3C5F9EC20445FCD50190E47C18A2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-proof-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-proof-red1-emulator-manifest.json",
+    "sha256": "60B57F0EE17FCB24485148B22C9A7593F1B3B75529197FDA78046762B1AD4232"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-proof-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-proof-red1-manifest.json",
+    "sha256": "78DEDCAE524E650FD5EF99A314B1488AF587D62189F9C12EB5CFB27944F51959"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-red1-emulator-manifest.json",
+    "sha256": "9B74CB58CF55F11B9CFC8F5972CE12BF98F73D20B56F09901A4D712B08F30770"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/shipping-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/shipping-red1-manifest.json",
+    "sha256": "9E737F80B0587DFD83B6FD5B8B74E2DA11EC1A9389699C433E3E79649D33B109"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/success-ack-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/success-ack-focused1-emulator-manifest.json",
+    "sha256": "2DB064AEF0660ACE1F6B077671A6139A804BB241A53897517B616D314D21E945"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/success-ack-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/success-ack-focused1-manifest.json",
+    "sha256": "CBD24A77892425A96882E6F172F5024139912769C980871248FFA22514C95B51"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/success-effect-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/success-effect-focused1-emulator-manifest.json",
+    "sha256": "405400FB6B508FC58974E382A4B561BCB3F138E5216D167A9CF6FE976636F243"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/success-effect-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/success-effect-focused1-manifest.json",
+    "sha256": "A600C4CB270FC4D4B5F10B3D359F70347091E3BF2AE2ABD945D2D9701F0F61EF"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-query-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-query-focused1-emulator-manifest.json",
+    "sha256": "9222719E09D6BD967B25B96299D39DE160C7357117DDF9214815F2750E92294D"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-query-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-query-focused1-manifest.json",
+    "sha256": "27A0D1FFF3070390BEE6A811E05F801383D0590F6332D10F111624484DBF01ED"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-query-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-query-red1-emulator-manifest.json",
+    "sha256": "CAA6E8663A273CE22FC56C4ACFD8735123C6413D1B08C94C654391181A7D999E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-query-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-query-red1-manifest.json",
+    "sha256": "E36F9F517878BE634A5F36FE2105DF25DA852601C89D6936571898C83368E2BA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-retry-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-retry-focused1-emulator-manifest.json",
+    "sha256": "1A385A5ABC5D3BEA53142CA9AC019A128E35E1A6E1D9D818F6F628FFB4A5B964"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-retry-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-retry-focused1-manifest.json",
+    "sha256": "BD41F9AFBCEEA2837BF587F0932AD22E3C735EE49C4E883118488CCC80070299"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-retry-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-retry-red1-emulator-manifest.json",
+    "sha256": "7066BF9501C1EC99D262DF96334EC9697AA5BD0E5232E3DAE1007A5AB28C62E3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/support-retry-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/support-retry-red1-manifest.json",
+    "sha256": "FDD9249B67D3FC107A253DE33FD4CE31F4A6466EDF5717252C1AB090960E8C4F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/transition-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/transition-focused1-emulator-manifest.json",
+    "sha256": "F302E19018E4BACFE1EAD9A593F3DEF8615E7C2865FCD9CA55F95587537C7C2A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/transition-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/transition-focused1-manifest.json",
+    "sha256": "2A7E1B657A75A29C63E2106C99476C1A9CC199FB1763116631A1A922402E38DC"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/transition-focused2-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/transition-focused2-emulator-manifest.json",
+    "sha256": "A585D21EA33BF99AFD5600FBD88411AFA70F567FA6A10878B55B607AF9730584"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/transition-focused2-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/transition-focused2-manifest.json",
+    "sha256": "405593CF4D0ED5A855C2C3C1CC4CF14C2BF52ED01339FB008737B0C8BE939477"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/worker-registry-focused1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/worker-registry-focused1-emulator-manifest.json",
+    "sha256": "9F5468A0BB9AEFA5EB1DA2B8AC9D5C759F3E765AF09E7F408FF76784AAF8CF4B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/worker-registry-focused1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/worker-registry-focused1-manifest.json",
+    "sha256": "82A0D851FCC802312E376E9C1BFF2D2DDF8DEFCDD516B78DBF5D4607EE90AF11"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/worker-registry-red1-emulator-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/worker-registry-red1-emulator-manifest.json",
+    "sha256": "B5292CEC16C8194E4E346C23CD6A543110887E1317CC0919A85B8B700301B877"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/worker-registry-red1-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/worker-registry-red1-manifest.json",
+    "sha256": "2DD5F3C61C9B07E77919B9564D5589E1D2AB38192232284DA98C1DD43300785A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-fix-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-fix-review1/artifact-manifest.json",
+    "sha256": "F33762B4BB40EEE68BDC9DAAE3CE611E73D15C0F89AACCEAA517A55B8C6017C2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/backend-contract-review1/artifact-manifest.json",
+    "sha256": "F44DCF7F612274570BDF9064BAD45FAEE73C7EF9748BEFF7687DC6D9468EE4C6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/browser-review1/artifact-manifest.json",
+    "sha256": "93EDA5DB943AB304FE17A71156B637DF80C36E783F2EFC307B76CBD3B6A6B26C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/c08-config-supplement1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/c08-config-supplement1/artifact-manifest.json",
+    "sha256": "23ADE93A4F6D1E5A8014FAD6BB3F8999EAC7096DA9684338E75E2E8E13AA2028"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/c08-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/c08-review1/artifact-manifest.json",
+    "sha256": "A03D1C6709C79AF9BD80D61EE29A745259425B35071C55C033646C76700FBE6B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-fix-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-fix-review1/artifact-manifest.json",
+    "sha256": "37541659B8B9A8FD1B7E1FE373873F7670A8DD0C39E8CD6BD4B77EC26F881390"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/command-review1/artifact-manifest.json",
+    "sha256": "F1CE35436B1883EAE512418BE1E0CBD2D8EFBD6BF470E2D784FCC8BF00380A00"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-fix-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/common-fee-fix-review1/artifact-manifest.json",
+    "sha256": "AAA381EFC1D356DD15992B83AD32EAB0B2208978861A8632F4841352DA90AD8A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/common-fee-review1/artifact-manifest.json",
+    "sha256": "07FAB0753C0BF33E907BB0897E70870488C48F432131B12085C3C4C4D56127C5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev1-fixture-review1/artifact-manifest.json",
+    "sha256": "81A4947816D144DD1DF15304D486C1FA9688BD7D307685D9C417A46DF156B4A3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-browser-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/dev2-browser-review1/artifact-manifest.json",
+    "sha256": "052D06C1AE793E3A261423DC3ABA1EA6987C9C903BA1049844ABABC247808422"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-fix-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-fix-review1/artifact-manifest.json",
+    "sha256": "44670F843584519226CF04915A41D1E21ABA1FBBEA950E2120A29B3AD7AA9A51"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review1/artifact-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/manifests/frontend-review1/artifact-manifest.json",
+    "sha256": "D26A638B2C550B8B28FCB9A37A69B36302C2D70335CE3A1B4220D5ED2537F5A9"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-fix-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-fix-review1/identity.json",
+    "sha256": "3727FC217DBD2B978A354F01E1339A88BB9A601AA724E7AF8EC8AD87C46C1C1B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-fix-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-fix-review1/review-report.md",
+    "sha256": "EEB42BF378DA49AB24FDE8F4D3D80A1E7D267710838859A14F9904D19BEC7F63"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-fix-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-fix-review1/source-manifest.json",
+    "sha256": "41C501F184D473319BDE209CB7FA1057F54331E8C8F91D8A6007B914C7FC2930"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-review1/identity.json",
+    "sha256": "5FCFFA4F66715D63E4B4BF5CB1F86C41E3D86AC05FCE9B898164A731B3763128"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-review1/review-report.md",
+    "sha256": "E47ABCCA10FF750D5D1ACC6A06B92F653BF8EDF2C0AFA7DAAB0DFF5EA9ADD17F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/backend-contract-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/backend-contract-review1/source-manifest.json",
+    "sha256": "2E0F71B5BB1DD12599E63A2DEFCDFE747B0F80FFA1EC6BE1A7CCE9E44A3871F7"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/browser-review1/identity.json",
+    "sha256": "114DFBDBC5C96768CE5839C0514D09058DA95EC344DC726E2BF46C891DCA096A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/browser-review1/review-report.md",
+    "sha256": "7FB7EB60EB47897F406B74B691F4C7E91A2C40FFB2A0CED79811F1FEC8513BF6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/browser-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/browser-review1/source-manifest.json",
+    "sha256": "6DD660A3453726ED5B3243EEC50B30C34C238D2F513522D8E8DA4F15CFA40B27"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/c08-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/c08-review1/identity.json",
+    "sha256": "D77DD09BF91FC57DA413503B9D5AB372C2D8D0FCB80876A5F3A241B54845FF10"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/c08-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/c08-review1/review-report.md",
+    "sha256": "8CD8C04630B8ED0141F3A53EE06F4CEEBA60FC9F27E089D16E7110C9492FDEB6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/c08-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/c08-review1/source-manifest.json",
+    "sha256": "855B29D1EE115D6C50CB98526ECA684921EC0B54280EE80AC7A564504CF463A6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-fix-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-fix-review1/identity.json",
+    "sha256": "65D5386631B37CA2DE6BA45C65526D2962CE68177E83EAE89E4A557EC867E13C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-fix-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-fix-review1/review-report.md",
+    "sha256": "C2398F421BF8541F27012A942C3799AEA3DFE13EA8BFDDB66AA680D20691B008"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-fix-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-fix-review1/source-manifest.json",
+    "sha256": "17E3DE04CC4562C27C0C24B472A49EFD992012CE47CB9C09EAF5213D2515D20F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-review1/identity.json",
+    "sha256": "0C026BD6AAE7918092FB6D8BBF06A0437E4F8DE449465ACC8ED52242279DC90F"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-review1/review-report.md",
+    "sha256": "D2A86D838600CEB6B22D196EE123AD498C6FBF1779484CF4ABC50738F9008F2B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/command-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/command-review1/source-manifest.json",
+    "sha256": "81C01F65347F2058F2D482474954D0D9D1A459F6F60B5A8BB9B22492538C7D12"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-fix-review1/fix-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-fix-review1/fix-report.md",
+    "sha256": "8CDCF099FC44453A80756D23736BCE8DC51CBBA4B87D8A9BD09E6373248CF9EB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-fix-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-fix-review1/identity.json",
+    "sha256": "8668273F866D09E8F8576C1D1DDCE17FBB88E0525C0A9527CC48AED74AB25B93"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-fix-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-fix-review1/source-manifest.json",
+    "sha256": "BFAEC6E784979E846B6F9CA8F3DA6C8050960E2FC61A27A93E895F7C4181A55A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-review1/identity.json",
+    "sha256": "7BB44F0AACFC92F4039E57FB85C34105A3435140FD6AFBCF48B822488038D3BC"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-review1/review-report.md",
+    "sha256": "32236B03D98C157989809B3655E90C2CD5C2E1F791A22129C9CF0A32776A33FA"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/common-fee-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/common-fee-review1/source-manifest.json",
+    "sha256": "F70AFB1937C6C3998FBF4E8BACC5C9DDA89010F1B41B08514F2E9A59E22EFD52"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/core-fix-review1/fix-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/core-fix-review1/fix-report.md",
+    "sha256": "289A0D01892D3E327B251E2D269B7F5FD50CB06A8FE042EBAEE1917521652A33"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/core-fix-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/core-fix-review1/identity.json",
+    "sha256": "6BA9A86D69529D933CA10D93E4F0FC154AFF3E9501456935715FBBC4EC2404F2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev1-fixture-review1/identity.json",
+    "sha256": "496DB7A406EF4F3AD3511AD1513FCBCB0910E29773492F90304EB5D446B36BCB"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev1-fixture-review1/review-report.md",
+    "sha256": "E66A1B68A113FA17CF8EFA79E145B9389466EEBA2CD536405F958A03C9E30D4E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-fixture-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev1-fixture-review1/source-manifest.json",
+    "sha256": "D994092EDA68EDFB23F7D783A8B851E111B45DE3260E0FB6E60C903D0D906035"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-browser-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev2-browser-review1/identity.json",
+    "sha256": "77A0A43E4E696E0535686E93CCE654853E1AD6B290CAB2AB31D16F0F5F768223"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-browser-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev2-browser-review1/review-report.md",
+    "sha256": "F148CB539B7915C281290012E6BA54E383D6C4B26FA1FA412679EFA5AF096571"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-browser-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/dev2-browser-review1/source-manifest.json",
+    "sha256": "EB3B60AB97F9FCD5B42A499FD566DB4C79177A1738DF6E569A4C31FB993FEB34"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-fix-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-fix-review1/identity.json",
+    "sha256": "1ADE7B5F63AF9A7A25FF7017C90D57A1CF700117D6C495D4D664C67333952871"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-fix-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-fix-review1/review-report.md",
+    "sha256": "4D0EA3D8259D327DAD5FA314ABF66AD8ACF7C42C7A3AAF3BED4C3D20392FF372"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-fix-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-fix-review1/source-manifest.json",
+    "sha256": "5DEC70E8F9E0BC3414C7D5FAA41EFDFFF19F96208655DF60121B1F90B9723AFF"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-review1/identity.json",
+    "sha256": "62F95904812D5A74078BE5DA906C4257EF9BD859DE9C1BCEA4191F6FA1C07A9C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review1/review-report.md",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-review1/review-report.md",
+    "sha256": "337ACD3D93D09ADCB24373A944710663B39F28731EE99A331503B62D2704D1BE"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/frontend-review1/source-manifest.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/frontend-review1/source-manifest.json",
+    "sha256": "308D699B3D246461AA736107EBA9340DDC74B05AD4CEE8D68072945E4D2F1005"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/runtime-freeze1/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/runtime-freeze1/identity.json",
+    "sha256": "329EF97C201B02A8367B5D19F1240D19AABD45C6D56727AABA6542414123E9E5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/runtime-freeze2/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/runtime-freeze2/identity.json",
+    "sha256": "FCC61085D680E5CE14F1E11C2BA1772054E822B6B5CBA79C9BB7007B6D9D2EE3"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/runtime-freeze3/identity.json",
+    "copy": "docs/work-items/evidence/P09-C/review-identities/runtime-freeze3/identity.json",
+    "sha256": "3B2974777112774E0AECCD59FCF6C1775F4DD0979CF44E2960334E7521C1AE73"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/Audit-PreservedEvidence.ps1",
+    "copy": "docs/work-items/evidence/P09-C/ledger/Audit-PreservedEvidence.ps1",
+    "sha256": "976EEA392616568B2EA7433BE3340E759602E2C31A845131D18A61BB6221B09C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-1.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-1.json",
+    "sha256": "191BDA24BC078A2A41400CBBA61193CB2615099C0BE12FFC1F09343B0E245F6E"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-1.log",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-1.log",
+    "sha256": "CE061756D94AF22FD988392F23AD55F6DFB86EDE785424CE73D7C168A93C508B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-final.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-final.json",
+    "sha256": "1CA6E262275D3A62652BCCC92D650770641AFB2FDB514C02B1F19BB3672E8DE9"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-final.log",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-final.log",
+    "sha256": "080C91E99A0ADA41E36742AF0001CA0D306648E09EC8EB0CD1699A252EF901BE"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-final2.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-final2.json",
+    "sha256": "B5436A14E6F63DEBE2E8B1E785FB8E24F048A0635DC0B7153927B0CE3B502AF6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-final2.log",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-final2.log",
+    "sha256": "40FD5659039FD363D83A9A490C40622B9007107CEB8D207A8EDA85C66D1FDE96"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-commit.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-commit.json",
+    "sha256": "D33807D9058CB87AAE2238904B9A41F27BEB4853DB56F227DB5A1C2D45FC99B2"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/preservation-audit-20261101-commit.log",
+    "copy": "docs/work-items/evidence/P09-C/ledger/preservation-audit-20261101-commit.log",
+    "sha256": "4F834B49BF3C758A6A5EA5DEA5448DC168F491D5805C4635E958375C23D80E0B"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev1-final-classification.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/dev1-final-classification.json",
+    "sha256": "6CEBA827DD16D90EC6B8D3FFAEE4DCC81BC6AF0A46DD74428711E7CC8850AFA8"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev2-final-classification.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/dev2-final-classification.json",
+    "sha256": "096E23BC2CCC80209B96033E905ECFC4814262FF48E2286C3C3FE865FA8AA32A"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/dev3-final-classification.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/dev3-final-classification.json",
+    "sha256": "C09631A4344CF4719BCBE10544E8FFD334D2C0A88DC585EF79090B8C1C5D629C"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-final-audit.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/independent1-final-audit.json",
+    "sha256": "F34D4BCBEB10D269AD79A3D51728D584919DE6FC259193F0DCAB31C970EBC8A6"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-constraint-methods.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/independent1-constraint-methods.json",
+    "sha256": "0071D7476C37E739DD0B89698AFB7A4CC2BC252784A9E5B1E979BA148ADC0126"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-outer-exit.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/independent1-outer-exit.json",
+    "sha256": "734C1B94D8197DDF1FE02629E7BBAE2464F8FAD9A86B416BE83F548E135FAC45"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent1-outer.log",
+    "copy": "docs/work-items/evidence/P09-C/ledger/independent1-outer.log",
+    "sha256": "2200C7510BC9B143749E888E7B6E4F2F6846C6DDB54F241E35C7B71477ABB563"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/implementation-progress.md",
+    "copy": "docs/work-items/evidence/P09-C/ledger/implementation-progress.md",
+    "sha256": "E6528DF141EA4FC078CA4B8FAEA7F60635364DD150B0550A6ADF21C565A6C348"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/independent-run-preparation.md",
+    "copy": "docs/work-items/evidence/P09-C/ledger/independent-run-preparation.md",
+    "sha256": "C21246F0EDCD06A26001D10ED388E716C525DB99E892A653F8AF7145A2278ED2"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/result.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/result.json",
+    "sha256": "6E4DB58D2C23D2FCFF8022B91F458A4FAA5B359B99640F236C019A0500E44E5F"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/inputs.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/inputs.json",
+    "sha256": "2BCE564B1EE31166FCCD5F0AB9B22F7E455FEB98CB66A4BE05D92CE6BEE6425C"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/coverage.json",
+    "sha256": "F1CA4B8C1457E17D01162B658CEB21273BB3903B843CD633B1DBD275EF0F9EB4"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/browser-coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/browser-coverage.json",
+    "sha256": "4FCDB0E0D481089688D054958F0596B3D83BD5816C678A7356FCEDAF3D7CD7FE"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/frontend-coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/frontend-coverage.json",
+    "sha256": "BFCAA089EFC15D8B50153B8BD98F6BAEE2E66D17F351FD30D7EB507F4193A64E"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/java-cases.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/java-cases.json",
+    "sha256": "D9B08537B28F2CAEDBE0DAA226933634EF189DBD8F39BD5D298A45C085780559"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/before.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/before.json",
+    "sha256": "5217B5D63D4020067DD0A04772E3E3050218EB57CE5987EC1BFFC702AC4929AA"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/after.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/after.json",
+    "sha256": "F07C04D02EEA2D647F6C590FB8E5817AB130C79CDA775F424894E6B8E300C0D6"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/TEST-frontend.xml",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/TEST-frontend.xml",
+    "sha256": "4AA4BECE7E8B7FCFAB75A0EE7D76A847ADE99F3E8F56519F32D8EBEE2EEC91D7"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/gate-tests.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/typecheck.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/lint.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/test-unit.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/test-unit.txt",
+    "sha256": "FF5C7E893A1037E5CEF37BA284DF9FD2B214160B6F2063C2EA49F6F92E79F2BB"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/build.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/build.txt",
+    "sha256": "570E7D327BE2788C559F6A6C8048FBBC102878660BC4449F0A771739C2E5B030"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/test.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/test.txt",
+    "sha256": "9D8A7FE5FB48355E30B4FEDC9C22FEEE5D9FA52587559508263FF6882351D8AC"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/db/summary.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/db/summary.json",
+    "sha256": "974318F2FD11983A44F67774E35C35450587CAB5F9711EBF6E2B114C86E3C870"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/db/browser-report.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/db/browser-report.json",
+    "sha256": "9E16DD61F9C952A2472DCB2CF8B905AC695DAF2466A2F46899DE0390D314CA13"
+  },
+  {
+    "source": ".local-tools/p09-c-dev3-20261101/db/browser-child-timing.ndjson",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-dev3-20261101/db/browser-child-timing.ndjson",
+    "sha256": "0433B765D947D30F9D64A9A2640E6D829F74190895EE2763760C9F01D2D91265"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/result.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/result.json",
+    "sha256": "EFA3CAC1ACEF0F5277D59669B5AABA1DF706FAC1F907F3D68BFC7FD8612F644B"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/inputs.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/inputs.json",
+    "sha256": "2BCE564B1EE31166FCCD5F0AB9B22F7E455FEB98CB66A4BE05D92CE6BEE6425C"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/coverage.json",
+    "sha256": "F1CA4B8C1457E17D01162B658CEB21273BB3903B843CD633B1DBD275EF0F9EB4"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/browser-coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/browser-coverage.json",
+    "sha256": "4FCDB0E0D481089688D054958F0596B3D83BD5816C678A7356FCEDAF3D7CD7FE"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/frontend-coverage.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/frontend-coverage.json",
+    "sha256": "BFCAA089EFC15D8B50153B8BD98F6BAEE2E66D17F351FD30D7EB507F4193A64E"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/java-cases.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/java-cases.json",
+    "sha256": "4AF4EDB9AF948ED913B5A176A295E1820B36789FBE6C7F73C7E6903EF9402DCA"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/before.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/before.json",
+    "sha256": "38531C03AE98C62366E1C5E923E20A842CF7AE673847520304586532DEC9ADA1"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/after.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/after.json",
+    "sha256": "09E779297A0B307DA93DB62C5EB7CDFEF0A75516BBCAECCD776C55869DF29484"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/TEST-frontend.xml",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/TEST-frontend.xml",
+    "sha256": "51A54ADC4382C9DC411C3C924B89A97C31F4237A89D5ADD6194F591C05057E13"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/gate-tests.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/gate-tests.txt",
+    "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/typecheck.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/typecheck.txt",
+    "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/lint.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/lint.txt",
+    "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/test-unit.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/test-unit.txt",
+    "sha256": "8EB8882C7F9EB64AD86594A7F8778F970313CE7B33FD8BEDF8317B9ED051DEDB"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/build.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/build.txt",
+    "sha256": "82B57457A44BF72CC94F0064794DEB62D1D3536E969BEDBC397A8427B995D6B0"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/test.txt",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/test.txt",
+    "sha256": "583A97B0E25F71F7CC6C2108597E1B39F11048F9F2F4D2684AC0EB97B9175377"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/db/summary.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/db/summary.json",
+    "sha256": "974318F2FD11983A44F67774E35C35450587CAB5F9711EBF6E2B114C86E3C870"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/db/browser-report.json",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/db/browser-report.json",
+    "sha256": "37413DFAE57DB28BB4C0614244AD219274E1BF3AF689FB1A8E6EBB51697AB617"
+  },
+  {
+    "source": ".local-tools/p09-c-independent1-20261101/db/browser-child-timing.ndjson",
+    "copy": "docs/work-items/evidence/P09-C/runs/p09-c-independent1-20261101/db/browser-child-timing.ndjson",
+    "sha256": "4C0949BF370A0EF0766AE1D75D2E2548425A9B093E55E4607DDC587451054CF5"
+  },
+  {
+    "source": ".local-tools/p09-c-execution-20261030/commit-source-verification.json",
+    "copy": "docs/work-items/evidence/P09-C/ledger/commit-source-verification.json",
+    "sha256": "C22D79296DBB4C8A67453404E3AE525E8719A6CC1E9BE60B107B1622B195545B"
+  }
+]

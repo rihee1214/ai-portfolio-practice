@@ -1,0 +1,15 @@
+{
+  "count": 414,
+  "sha256": "EB3B60AB97F9FCD5B42A499FD566DB4C79177A1738DF6E569A4C31FB993FEB34",
+  "changed": [
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "docs/work-items/P09-C-review.md",
+    "docs/work-items/P09-C.md",
+    "frontend/auth-e2e/guest-lookup.spec.ts",
+    "frontend/auth-e2e/order-cancellation.spec.ts"
+  ],
+  "currentCopyMismatch": 0,
+  "greenInputSha256": "2BCE564B1EE31166FCCD5F0AB9B22F7E455FEB98CB66A4BE05D92CE6BEE6425C",
+  "dev2": "FAILED",
+  "dev3": "NOT RUN"
+}

@@ -1,0 +1,23 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-a8021ea3389d4cb998a12943aa41d38c",
+  "count": 3,
+  "files": [
+    {
+      "path": "emulator.txt",
+      "sha256": "71CFAD1713E91C2252B20E086A4CD368161686C7FE61FCCE00567B4818F64564",
+      "length": 5588
+    },
+    {
+      "path": "firebase.json",
+      "sha256": "1EC16EA9227C84A281DD17D5ACFA23CE62195FD6C053AA551CCDCBA2BFBF3879",
+      "length": 320
+    },
+    {
+      "path": "result.json",
+      "sha256": "B4CCA19CC13D143692EDCE7BA8C6A467E1000ABCE1DC05693E11987DEDB1CDCF",
+      "length": 174
+    }
+  ],
+  "createdAt": "2026-10-31T00:45:29.2589384+09:00",
+  "note": "Recovered original first-RED emulator identity after context compaction; first delayed manifest, no retroactive prior hash claim"
+}

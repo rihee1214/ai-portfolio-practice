@@ -1,0 +1,14 @@
+[
+  {
+    "path": "source/frontend/auth-e2e/playwright.config.ts",
+    "sha256": "5A217076229491C4EB21A184A294BC7BA92B946D626CAB34EB6952A79BD2CE46"
+  },
+  {
+    "path": "source/frontend/package.json",
+    "sha256": "27970E091111C9E74B4D6DF6D617DA362647F54A2FDCF5227F514A52589BE1B6"
+  },
+  {
+    "path": "source/backend/verify-db.ps1",
+    "sha256": "27EEF369842D35817AAB97ED57F922871CF5F4AE3E5022A10E02DF0598F5D76B"
+  }
+]

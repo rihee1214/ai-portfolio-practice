@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "path": "TEST-frontend.xml",
+      "length": 4461,
+      "sha256": "BDE7B9E907C5ACC4BF4CD7A700AAF6009EE136DC8426A26F99EBE435787A9B61"
+    },
+    {
+      "path": "vitest.txt",
+      "length": 4464,
+      "sha256": "DEF7830A80C1BDF1BDE870333A06D646C65F380A5300976CEA9048F47B987719"
+    }
+  ],
+  "count": 2,
+  "capturedAt": "2026-11-01T10:04:36.8664608+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-claim-store-red1-20261101"
+}

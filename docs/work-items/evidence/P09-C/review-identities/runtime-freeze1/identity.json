@@ -1,0 +1,23 @@
+{
+  "plannedFullEvidence": ".local-tools/p09-c-dev1-20261101",
+  "catalogCaseSeconds": 60,
+  "requiredJavaNames": 485,
+  "requiredBrowser": 130,
+  "task": "P09-C",
+  "sourceCount": 552,
+  "branch": "codex/p05-d",
+  "inputSha256": "F7DF70BAE3588B1617F97B875A5B043D04EBAF63CC1A9C30A23C92FB1FCDCB4F",
+  "retries": 0,
+  "noCommitPushDeployOrD": true,
+  "requiredFrontend": 256,
+  "createdAt": "2026-11-01T12:03:29.5492812+09:00",
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "perCaseSeconds": 30,
+  "workers": 1,
+  "priorBrowserInputSha256": "EDB50F959E1E78A2B7F5F0A5EFF697657C4A7BFF8928035CDC6F45D01D6C2AA0",
+  "approvedAggregateSeconds": 287,
+  "executedMigrationHashMismatch": 0,
+  "deltaPaths": [
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java"
+  ]
+}

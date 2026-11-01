@@ -1,0 +1,17 @@
+{
+  "capturedAt": "2026-11-01T10:13:49.5273933+09:00",
+  "count": 2,
+  "files": [
+    {
+      "sha256": "C23A0940CD078C2B79590C1847BA764A38A59174DE1679F98D68A7590749EADF",
+      "path": "TEST-frontend.xml",
+      "length": 5739
+    },
+    {
+      "sha256": "73B1D2BC530B7987DEF0851522093E3892E7364553AC98D657E91A985BCC3447",
+      "path": "vitest.txt",
+      "length": 4893
+    }
+  ],
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-review-red1-20261101"
+}

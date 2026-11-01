@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-01T14:15:37.2171373+09:00",
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "sourceCount": 552,
+  "inputSha256": "2BCE564B1EE31166FCCD5F0AB9B22F7E455FEB98CB66A4BE05D92CE6BEE6425C",
+  "mismatch": 0,
+  "inventoryDelta": 0,
+  "fullEvidence": ".local-tools/p09-c-independent1-20261101",
+  "runtimeChangedSinceFull": false
+}

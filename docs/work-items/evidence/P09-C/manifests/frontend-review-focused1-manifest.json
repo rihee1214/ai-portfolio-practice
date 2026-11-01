@@ -1,0 +1,42 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-review-focused1-20261101",
+  "files": [
+    {
+      "sha256": "46518DEFF6A08C9396D5C289289F5CC6EEF41CB738A6BF42F8B82EF183009276",
+      "length": 797,
+      "path": "build.txt"
+    },
+    {
+      "sha256": "0C9E757FC8713FC16538D3D2FCF0DC1892C1D297DFB0089BD52F1F0A0661C38D",
+      "length": 33122,
+      "path": "frontend-coverage.json"
+    },
+    {
+      "sha256": "C488424832DF5074FFACCB507CD03EA3FBF1ABFFB702DDD9670397D7FA109F84",
+      "length": 274,
+      "path": "frontend-result.json"
+    },
+    {
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05",
+      "length": 68,
+      "path": "lint.txt"
+    },
+    {
+      "sha256": "A9F34DEA5C8FFCFEE54560445CCA14722DEAE04CD012A66792AD22C41C9FF93A",
+      "length": 58129,
+      "path": "TEST-frontend.xml"
+    },
+    {
+      "sha256": "429E29143981CD07485C7DB9F7130040F2AEE7B88BEFF00E2B7C88391AA3B36E",
+      "length": 5204,
+      "path": "test-unit.txt"
+    },
+    {
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8",
+      "length": 60,
+      "path": "typecheck.txt"
+    }
+  ],
+  "capturedAt": "2026-11-01T10:15:16.0160481+09:00",
+  "count": 7
+}

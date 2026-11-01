@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "path": "build.txt",
+      "length": 797,
+      "sha256": "F7F07047C930F442819B8DDC82A9A06542857C8C26079A82A35314504FA008A8"
+    },
+    {
+      "path": "frontend-coverage.json",
+      "length": 32246,
+      "sha256": "32C4672E443E770FED402BA9E601E9136BAAF409FB3331901252C1A814109324"
+    },
+    {
+      "path": "frontend-result.json",
+      "length": 288,
+      "sha256": "62F98A5EA1DED21B77878CCF15C58025667934177D9CA79BC09C71173BC0386C"
+    },
+    {
+      "path": "lint.txt",
+      "length": 68,
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+    },
+    {
+      "path": "TEST-frontend.xml",
+      "length": 56582,
+      "sha256": "5FCF442ED87F556531FC643900B3A0C99C7C2EABD45FA2EB838675D74DCBB810"
+    },
+    {
+      "path": "test-unit.txt",
+      "length": 4978,
+      "sha256": "5B7CB69EF5A61214D116993630695D037AFC9BF5A02205C48CCAF78462FCA61F"
+    },
+    {
+      "path": "typecheck.txt",
+      "length": 60,
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+    }
+  ],
+  "count": 7,
+  "capturedAt": "2026-11-01T10:04:36.9103177+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-focused5-20261101"
+}

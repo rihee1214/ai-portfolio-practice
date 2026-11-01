@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-11-01T12:42:52.8249266+09:00",
+  "count": 3,
+  "files": [
+    {
+      "path": ".local-tools/phone-emulator-f3b7b27e8d2c4009ad9d5a194815eae3/emulator.txt",
+      "length": 5828,
+      "sha256": "5D12259826BB74DC793BF0F25BB1188D0F3BB15FBAD9311F500F166CBB0EAA16"
+    },
+    {
+      "path": ".local-tools/phone-emulator-f3b7b27e8d2c4009ad9d5a194815eae3/firebase.json",
+      "length": 323,
+      "sha256": "69D891E1143B64B2574DE5EFF6D7A0298516213D760C18EF7771F51EC79C9799"
+    },
+    {
+      "path": ".local-tools/phone-emulator-f3b7b27e8d2c4009ad9d5a194815eae3/result.json",
+      "length": 185,
+      "sha256": "F04186BA62A570204B49C4CA1DC2C89362285D6C9A30108799249479319B2A12"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "path": "lint.txt",
+      "length": 278,
+      "sha256": "AD54E35E32408A2418515BABB54A76D017280097DFAD07211028A41AFE521AE8"
+    },
+    {
+      "path": "typecheck.txt",
+      "length": 60,
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+    }
+  ],
+  "count": 2,
+  "capturedAt": "2026-11-01T10:04:36.8960557+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-focused4-20261101"
+}

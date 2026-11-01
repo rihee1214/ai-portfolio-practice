@@ -1,0 +1,13 @@
+{
+  "scope": "R-C03/R-C04 only; concurrent owner GET/withdraw separately excluded from fix approval",
+  "full": "NOT RUN",
+  "currentAppliedMigration": 54,
+  "currentMismatch": 0,
+  "sourceSha256": "D724DD39D5676E8DC100DE6F59D8ECB22B0985DF9A2B6187E1B265173A9F5A48",
+  "inputFileSha256": "323B33CAFC8637F73597CC831A521BED1A0B35A6E95EABDDD4357121E37B5CAB",
+  "deltaCount": 9,
+  "appliedV41to52BaselineMismatch": 0,
+  "sourceCount": 65,
+  "createdAt": "2026-10-31T03:03:34.6943366+09:00",
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593"
+}

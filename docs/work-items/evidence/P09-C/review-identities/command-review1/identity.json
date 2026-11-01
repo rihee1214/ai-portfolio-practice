@@ -1,0 +1,12 @@
+{
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "sourceCount": 71,
+  "changedCount": 13,
+  "sourceManifestSha256": "81C01F65347F2058F2D482474954D0D9D1A459F6F60B5A8BB9B22492538C7D12",
+  "currentMismatch": 0,
+  "greenInputsCount": 543,
+  "greenMismatch": 0,
+  "greenPath": ".local-tools/p09-c-support-retry-focused1-20261031",
+  "createdAt": "2026-10-31T03:33:42.9152686+09:00",
+  "full": "NOT RUN"
+}

@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "path": "lint.txt",
+      "length": 68,
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05"
+    },
+    {
+      "path": "TEST-frontend.xml",
+      "length": 59566,
+      "sha256": "636D004D3ED0C710CBFD2B2E1175970CB69AC4A5EB838D7247B351C234AE21D5"
+    },
+    {
+      "path": "test-unit.txt",
+      "length": 8488,
+      "sha256": "6B6C429BDC37642D4EDBE69A22330018374BA564D8967CDE75F94374E021EBBF"
+    },
+    {
+      "path": "typecheck.txt",
+      "length": 60,
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8"
+    }
+  ],
+  "count": 4,
+  "capturedAt": "2026-11-01T10:04:36.8898877+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-focused3-20261101"
+}

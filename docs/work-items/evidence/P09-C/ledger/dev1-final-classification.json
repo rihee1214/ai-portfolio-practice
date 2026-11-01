@@ -1,0 +1,16 @@
+{
+  "db": 355,
+  "dbFailures": 2,
+  "root": "failed",
+  "count": 552,
+  "phone": 1,
+  "preservation": "passed",
+  "dbErrors": 49,
+  "inputSha256": "F7DF70BAE3588B1617F97B875A5B043D04EBAF63CC1A9C30A23C92FB1FCDCB4F",
+  "frontend": "NOT RUN",
+  "browser": 130,
+  "mismatch": 0,
+  "browserChildMillis": 276090,
+  "unit": 196,
+  "node": "NOT RUN"
+}

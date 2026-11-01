@@ -1,0 +1,57 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-contract-green1-20261031",
+  "files": [
+    {
+      "path": "after.json",
+      "sha256": "4FCC5C4B70CAD67964E1A5032E59402E50C29293A5E624874A55878010F7A0B4",
+      "length": 559472
+    },
+    {
+      "path": "before.json",
+      "sha256": "4FCC5C4B70CAD67964E1A5032E59402E50C29293A5E624874A55878010F7A0B4",
+      "length": 559472
+    },
+    {
+      "path": "db\\build\\checkstyle-cachefile",
+      "sha256": "694147C8F253795C6CD1032F1FCA357F713373E34641AFE6B20607D6356A806D",
+      "length": 38192
+    },
+    {
+      "path": "db\\build\\checkstyle-checker.xml",
+      "sha256": "11D69D89D87480796F40A7C9D55A413C05360EC49B55873F8E1BA0E4F35985A7",
+      "length": 505
+    },
+    {
+      "path": "db\\build\\checkstyle-result.xml",
+      "sha256": "DEE895FC3A9FB72080984A2FAF054EE84A6FACE8810B8936DFA2F94313A6BE61",
+      "length": 37585
+    },
+    {
+      "path": "db\\maven.txt",
+      "sha256": "C508226B895F38BBED5016B60AC77F0B5EC64497EB1F10AA8C4C843C79F36F36",
+      "length": 1830
+    },
+    {
+      "path": "db\\target.txt",
+      "sha256": "922C2C470BE8110747FFC9D14BA917087CEE074B91267FBA1FF6A7F3361DF940",
+      "length": 59
+    },
+    {
+      "path": "gate-tests.txt",
+      "sha256": "DE8D09FD61859E242969554D1FB0FA39A0A628E66F0B905FBC189D198B30EE94",
+      "length": 550
+    },
+    {
+      "path": "inputs.json",
+      "sha256": "CAF907E9FADA135744462D2259BA2119B07531249999CFFE3A21F3BF23CA9FBA",
+      "length": 86081
+    },
+    {
+      "path": "result.json",
+      "sha256": "D2DD7F214EE21A9087A4E5C4845E44510A2AA935DDA8A43511D9DC0B144BC568",
+      "length": 1240
+    }
+  ],
+  "count": 10,
+  "createdAt": "2026-10-31T00:09:53.2593047+09:00"
+}

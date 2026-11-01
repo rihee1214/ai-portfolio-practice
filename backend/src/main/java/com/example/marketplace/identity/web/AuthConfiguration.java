@@ -74,7 +74,8 @@ public class AuthConfiguration {
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()).ignoringRequestMatchers(request->request.getMethod().equals("POST")&&request.getRequestURI().equals("/api/payments/webhooks/toss")))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/quotes", "/api/orders").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/payments/{number}", "/api/payments/{number}/history", "/api/orders/{number}", "/api/orders/{number}/shipments", "/api/orders/{number}/confirmations").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/payments/{number}", "/api/payments/{number}/history", "/api/orders/{number}", "/api/orders/{number}/shipments", "/api/orders/{number}/confirmations", "/api/orders/{number}/cancellations").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/orders/{number}/cancellations", "/api/orders/{number}/cancellations/quote", "/api/orders/{number}/cancellations/{id}/withdraw").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/orders/{number}/confirm").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/payments/{number}/approve").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/payments/{number}/sandbox", "/api/payments/{number}/confirm").permitAll()

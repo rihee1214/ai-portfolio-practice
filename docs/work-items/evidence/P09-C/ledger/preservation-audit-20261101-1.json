@@ -1,0 +1,897 @@
+{
+  "started": "2026-11-01T10:42:09.9448254+09:00",
+  "finished": "2026-11-01T10:44:57.2504754+09:00",
+  "baselineReference": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\implementation-preflight-20261030\\B-commit-failure-preservation.json",
+  "baselineUnique": 85643,
+  "files": 122518,
+  "manifests": [
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-A-commit-failure-manifest.json",
+      "sha256": "1E0F539E1C1165F6D3D69382E0FC15D935EFB98E5B4A35840DFC362C377A36E6",
+      "entries": 22
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-B-commit-failure-manifest.json",
+      "sha256": "00D4E8E5176634E101368691E6E05DF1E634FAF0AF7096630F0512EF4826136A",
+      "entries": 253
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-B-failure-manifest.json",
+      "sha256": "C79BB344FF795FC2A69BC2734EAC9C82F7E306C861A5820F15C0E14D9355F17C",
+      "entries": 180
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-C-failure-manifest.json",
+      "sha256": "D04B51D96E687C44ECE22F2373FD96C41740660A55611DC344CB39BF901BB9B2",
+      "entries": 306
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-D-commit-failure-manifest.json",
+      "sha256": "335EF003821E3E699D2DAACDD5E4DA959955BA10AC848C8A58850FF34801984C",
+      "entries": 503
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P05-D-failure-manifest.json",
+      "sha256": "2016C3BEB1176B1DDB9C3E691C8600B0154A937EA18A44D9A051565417A69C21",
+      "entries": 402
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-A-review-failure-manifest.json",
+      "sha256": "B5F03AC34504869CE3688BB32D4CB762194A234CEBE3D5FFE87AC1449CADDEDA",
+      "entries": 2162
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-B-failure-manifest.json",
+      "sha256": "15EBA6BD3409D324253DFEC38116CA3891F5DC2E859575BCBA9D4EE3F2E38652",
+      "entries": 405
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-C-failure-manifest.json",
+      "sha256": "D36C5187B2EDB452F15B6048C61C09C3F36CD58D7CB89CF7F1797A65D7253508",
+      "entries": 791
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-D-commit-failure-manifest.json",
+      "sha256": "53F34FD738D0D6B968820DD28B51A7CC6867700C5EBB9DC70B5C3D3AB99156B8",
+      "entries": 5
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-D-failure-manifest.json",
+      "sha256": "8A83B6445F8E9300597B95E3398051015990A98542DF1F5FEBF76479D8A9E24C",
+      "entries": 882
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P06-E-failure-manifest.json",
+      "sha256": "BA39F097CB71B5D18F6766DF21CA38746347BE6BF4D2149171B8B6FD2B54ECA9",
+      "entries": 1375
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-A-failure-manifest.json",
+      "sha256": "F997BA02AC0A2555A0F82A42B1D71E5E86C9AB3969223AD34B25F7455B3E80DC",
+      "entries": 2577
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-B-failure-manifest.json",
+      "sha256": "30EBD1F3F7003883646E32EBFA5FED7FFAF8D5DE68951E828C660C825E544B94",
+      "entries": 2663
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-C-failure-manifest.json",
+      "sha256": "078CA4EEB27A23F198BF089B28DA448C63DA8D15BCE6F3DE50195B481764785A",
+      "entries": 1196
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P07-D-failure-manifest.json",
+      "sha256": "D4177E2EF38918B52F129CECA6020AB5D59595C4132BD3C0259DFE62E95D6292",
+      "entries": 2102
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-A-failure-manifest.json",
+      "sha256": "720A0F59B01D8B68DAD385EA6576B566D86612F62B86E0491225CC5F6CD5025E",
+      "entries": 4721
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-cache-fix-failure-manifest.json",
+      "sha256": "63742FBA0BDFB1573906B36BE2AE485E0EF86B54F0A9DFEF16624D52F6F1E993",
+      "entries": 1
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-failure-manifest.json",
+      "sha256": "D5BD3CC22C7C85B8AFB23F3351AD7C3D77CAE93F33246BD7BBEF0795623C5CD2",
+      "entries": 2894
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-B-review1-failure-manifest.json",
+      "sha256": "AD2F090E43F55736919F62CE7FE75B2AB4420E4E9F042EFC55311F00040F6C25",
+      "entries": 576
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-C-development-failure-manifest.json",
+      "sha256": "81B597E3F5D94032F823CA8044CEF66AFE7FEB061845E7A6C7E21C411DB7D091",
+      "entries": 5388
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-C-development-followup-failure-manifest.json",
+      "sha256": "DD3D428F57CEBFFD7CDE02D811E2AD31B060208091B4341C37DD16C45A476BA6",
+      "entries": 1109
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-D-development-failure-manifest.json",
+      "sha256": "993DDAB4C92C4384F4CFFC7917ADF6DA2687D215828D88648B0CBF797E900B50",
+      "entries": 6489
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-D-development-followup-failure-manifest.json",
+      "sha256": "EBC575B7DCD31F39AA5BA2BDC89FA5CA800004128F21E78A0BA7403F0BFE08EF",
+      "entries": 713
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-E-development-failure-manifest.json",
+      "sha256": "677016DDF17FE9533DDA41CF70228ADBD5E361A19F9E36F912AB449A9F5F0F87",
+      "entries": 3964
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-E-development-followup-failure-manifest.json",
+      "sha256": "DCB6ECDDFB1E8C11BD7A322D9FF3524BE493AEC70E693237C96A7BB62973700F",
+      "entries": 1786
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-F-development-failure-manifest.json",
+      "sha256": "F5D901F323E43594E9709DC74434CBAC1ED8639D1E4BFBE2FC52BA17462A36FD",
+      "entries": 7129
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-F1-development-failure-manifest.json",
+      "sha256": "3B90C1B12ED63F6B5AC640F7B4394F11DE13FFE5CCA40464D87BA6B9FD7FFE03",
+      "entries": 5518
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-F2-development-failure-manifest.json",
+      "sha256": "1ECE2EA859A1DA48BDB0DC6D8F7F30AFC307C6DF017BF651C0B71B65E7760415",
+      "entries": 4415
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-F2-followup-failure-manifest.json",
+      "sha256": "F98C434157C9F5434445426279CD348DC9B0F6468AC94EC08893EFE115F72828",
+      "entries": 1431
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-final-fix-development-failure-manifest.json",
+      "sha256": "B73AD0841A11AFCBDD50629D0DEC3F6152C15868FADABAAF4E46D8E7F5E41103",
+      "entries": 2458
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\docs\\work-items\\evidence\\P08-G-development-failure-manifest.json",
+      "sha256": "1DE2409043B7C1A2E991218BDDE8E96A9212A9A0653247F2BEEF185F790C779E",
+      "entries": 2567
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-02.json",
+      "sha256": "45227027A7F4242E64537E542BEC27112371D800BDE2240A6B83BC01F0D1EA1B",
+      "entries": 1595
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-03.json",
+      "sha256": "1B90642D627BFB42209A6004709C5910AFD3BDE21CC4C8EBD1B1874591E61AC7",
+      "entries": 691
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-04.json",
+      "sha256": "BDE7C5E7E2E87EDA97A2B95DD6F548499C912D63DB96D70E681F7E559D8FDE62",
+      "entries": 854
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\failure-manifest-05.json",
+      "sha256": "B0C9D169017889D8791743CEA14A7E8A78F9261B6C1FA3033EA3ACBE1EFDBFEE",
+      "entries": 1917
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-a-execution-20261030\\red-failure-manifest-01.json",
+      "sha256": "01E879F459CCEC03F6EEA7151F2A123A4CC19410FD5DF313379BE26EE8B72F94",
+      "entries": 1162
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-01.json",
+      "sha256": "C63F30CC78575D6A9A73B1A16DADF1B572D608932BEA4068ADFF83DAA7C94725",
+      "entries": 633
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-02.json",
+      "sha256": "8A445E55C834348D17E5D798904952BB0D15305EC51CB4D90E871C0B77683CD1",
+      "entries": 655
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-03.json",
+      "sha256": "623C75E5D8635CB2EA102ECE3FB4F7300DF427BBF7B37FD573CB26AE2E56DEA1",
+      "entries": 659
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-04.json",
+      "sha256": "654A449D9C9913D01F3E65BA653EEC43288A26704E95507E5F4FE6385330FA89",
+      "entries": 659
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-05.json",
+      "sha256": "7E5A18256E9E006AF71298470D27F3135F0BDF25B8677827B04631B9E9780A3B",
+      "entries": 668
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-06.json",
+      "sha256": "42B0124E5B1E7A477DABBA62A543E1BFC5148A7927E22C291BD54461E0BF8432",
+      "entries": 682
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-07.json",
+      "sha256": "91FE73E71CF8486304C76107F81C785D3442B4458FB4BB5F7C2624CF226C671B",
+      "entries": 692
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-08.json",
+      "sha256": "804DE08FCACE33ABEBB055F31A67BB372E99069C216E437BB141CAFBB166B7D9",
+      "entries": 676
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-09.json",
+      "sha256": "7A26DD7EFEB420B228971B36F34DC0B9E423FD55722B5D3A8CEA9D63342332C9",
+      "entries": 686
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-10.json",
+      "sha256": "B469C80A37D66E0473700D4A1C8AA9CA8E7D7015BF32EC253D3CCD2F3DC4FC5F",
+      "entries": 666
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-11.json",
+      "sha256": "C55C09CC7CD1168F745855BF56EE8CA51D66C1D1795194E1259C92039E32FD2B",
+      "entries": 803
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-12.json",
+      "sha256": "C7360627858A224292B5D8165C86428EC4D043F778804BEFD0499468E840D323",
+      "entries": 730
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-13.json",
+      "sha256": "3DDC077AF2A6F3AE44B0C6A8EC139E7B2BC7357A3911FD819031D98893519F75",
+      "entries": 747
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-14.json",
+      "sha256": "49157C9C30BAD1C095C569D2FD153C7584D3105B91F63426975C25B99B3D1F9E",
+      "entries": 992
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-15.json",
+      "sha256": "405E88224FC10966FA89C8082B99F4662159031E0F0312A15717CEA57DDA1F3F",
+      "entries": 491
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-16.json",
+      "sha256": "1ED14AAB54F3DE42ED9B785D22027521E7D79622782BF2D9F8AE2F7924382DAC",
+      "entries": 667
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-17.json",
+      "sha256": "9D8330A1E78BE4F547F814DFCEF21A5954F91B3E9DD27CC7EBC2D6994C2F7636",
+      "entries": 839
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-18.json",
+      "sha256": "5AF87768F8083F120BABE8A7768ABC2CE31C083D62032FE4800FCB79C39F7899",
+      "entries": 805
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\failure-manifest-19.json",
+      "sha256": "74B5573D380895DBF5190076392AB0787FE56610080C4043C7A20A17F32067AF",
+      "entries": 780
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\firebase-startup-diagnostic-20261029-01\\prior-evidence-before.json",
+      "sha256": "42AA3D8D9E47295CCCA25C253CE8EE14D133F1ADFEBE6485B2894B3D6C108098",
+      "entries": 4
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-execution-20261030\\supplemental-evidence-manifest-dev2.json",
+      "sha256": "49C7DBF384B7103975DD7B0445DAD9CAD9F7A096D6A35D03351744FAA458F55F",
+      "entries": 67
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-b-independent1-20261030\\independent-start-failure-manifest.json",
+      "sha256": "2731EBEBB5ED3A164EEA29B6C7453FEB0F326FF8736DC63BF3522892CD3001DF",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\auth-closure-focused1-emulator-manifest.json",
+      "sha256": "0D4FB9CBAE2E5A921DB5B3CA519543937AF400F4151C86D3B8E7BF0F37816CAE",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\auth-closure-focused1-manifest.json",
+      "sha256": "CED68D891727301279F7370B662B2D98BE9F5014413F14AC8A1D75C9E9266539",
+      "entries": 772
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\auth-closure-focused2-emulator-manifest.json",
+      "sha256": "464CC5351409532DD94D3C6EB2E18E0B0278AB8CCC987CD0F56BB28AF266146B",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\auth-closure-focused2-manifest.json",
+      "sha256": "CA0C2D00CA784A324FF1E9F8C52B439185E7067C3C9D7805331C989FF79376F5",
+      "entries": 772
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-command-red1-emulator-manifest.json",
+      "sha256": "90E34369B783F2A08924E7617150A762310B8E6AF36D63408732A01B703A07A7",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-command-red1-manifest.json",
+      "sha256": "F243D85EAE5A47555BDAAF53914DD9ADF20D6B78EA709E26BC8ECADF66D2CDE8",
+      "entries": 680
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-focused1-emulator-manifest.json",
+      "sha256": "D63696CC96676E52DD452E3140A4EC93CEA5E2E6FD745B26428150D2019074B7",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-focused1-manifest.json",
+      "sha256": "2B65501FEE5E22C7598AD214ADFD62C40C93455AA12BC1DDC5EE6A3EE180A5A1",
+      "entries": 703
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-red1-emulator-manifest.json",
+      "sha256": "7EEA3654D17146C7E81EBC24892FC1B2F3F896D247280D7FB9B6D1C5819129B0",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\cancellation-red1-manifest.json",
+      "sha256": "B6CC89928A7D636992916D8A49678768BF3844E74797DB771567DD53E3AF78D4",
+      "entries": 676
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\claim-store-red1-manifest.json",
+      "sha256": "7372AAD1812F96A65102A83D879D4CC99C8E3F1DB123899D3703BD7043D75E07",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\claim-store-red2-manifest.json",
+      "sha256": "88CE1C236C085DFF1BC5CA29E9E19943E01A29D73E8C6F091D8AA6D45E0EDDF2",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-focused1-emulator-manifest.json",
+      "sha256": "6549D42DDC19B22B1DB673DC8C65E110BBE347198C4A5E60C6980E0C7DB7D44E",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-focused1-manifest.json",
+      "sha256": "D023034C1F10BC0E11547E5CECD99CFC2D92621885D571DD1A3FCA6D6CED32DE",
+      "entries": 776
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-focused2-emulator-manifest.json",
+      "sha256": "1E71B368695FA25B61D3091057DB0F3E5786F11B8C6E5FC80E85CD7A8E6BF65B",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-focused2-manifest.json",
+      "sha256": "1BD49F64BC41014253B822B6C778ACD4D2A92FEC0A42CE622C4A89299946C09D",
+      "entries": 776
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-red1-emulator-manifest.json",
+      "sha256": "9475C08F5E5D0A6598A6C71962DF905BA1702AFFA3DF72AB209976B432E0A14C",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review-red1-manifest.json",
+      "sha256": "2DCDF0421A7DBDE0FD501C2755FC6DBE5F190DFB5D27E73B1BD827E0D0AAC477",
+      "entries": 701
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green1-emulator-manifest.json",
+      "sha256": "35C638E6972B2F072E2FD16635CE42A026C33035794EE4DE65EA385F2C8546DD",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green1-manifest.json",
+      "sha256": "E3308B92D178C9D76D3226D69B02297720DC7F69C2ABCED31CE2AAE8C781797E",
+      "entries": 10
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green2-emulator-manifest.json",
+      "sha256": "EA22D852C71063B6E8B7AE5B4DFFDB80F4338781BE3596BF66192792FEB80AC7",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green2-manifest.json",
+      "sha256": "99BFE80D97A2D5E35FBE831620869CDD883D698C7FC4BF5B317A5D0B6EFA8C89",
+      "entries": 675
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green3-emulator-manifest.json",
+      "sha256": "A01645F89408322FCE1F631E56785D3AF1949A729535FA03B70DF71E5EC4299C",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-green3-manifest.json",
+      "sha256": "D3A13B0376F8BE439E6D6EE645F2D90892295D73964BEF8EC5236D441A90FA6A",
+      "entries": 676
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-red1-emulator-manifest.json",
+      "sha256": "5427FCE6DE6F350349E58E081EC3F008798478AF7DA625A9A1E005BC61FF985C",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\contract-red1-manifest.json",
+      "sha256": "745910D42911F7C8A16C3B9C8DCF9B3F7F4B092814098D3232C8B89EA8639A2B",
+      "entries": 665
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused1-emulator-manifest.json",
+      "sha256": "CD14124E85F1B41FD9CA7B4368A7E240C877C38200303FC1A637455E89C6D697",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused1-manifest.json",
+      "sha256": "155DC75C33A85AB52C6BE865EB0590E566C4258A1A08FCC9E7DFC06C691C9260",
+      "entries": 668
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused2-emulator-manifest.json",
+      "sha256": "8917B20656A40AFE07DB6F007DD911D802FE5EA03754FBE4814A1AD3F54B0203",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused2-manifest.json",
+      "sha256": "4B0B7AFBE2BB07C33543B44CC25D111875423B06636379E07427E37FE45C3971",
+      "entries": 716
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused3-emulator-manifest.json",
+      "sha256": "1624E854E5BB3FAA607C24AD1AFFB735A62C5778A5C71057B266025D0AD97DA0",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-focused3-manifest.json",
+      "sha256": "2400089FBAD91BAB88650651A0997A4B4723777B4CE6BA2ADD2D9C528496F096",
+      "entries": 671
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-red1-emulator-manifest.json",
+      "sha256": "5F7C246894F64654114BEE110AF6CCD7BE6AE5AE6B30166A84B8CF1BBB5EBA87",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-accept-red1-manifest.json",
+      "sha256": "6E056AC1C0073059FC4576FF8C2D95EC663C422BEAA6C4667A39D4A0EA3D5298",
+      "entries": 668
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-effect-focused1-emulator-manifest.json",
+      "sha256": "C477A5E68A709FF808F86C123F73AF6993C633ADE072FB215B97D3A055349C47",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-effect-focused1-manifest.json",
+      "sha256": "5C3EB4A8DB5C279732D92596C1A0C7B233444B57B27967C552F97BE805F2375F",
+      "entries": 680
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-effect-red1-emulator-manifest.json",
+      "sha256": "154F17AE74B95521F35012660B256404306C64CFFA99B83A9B9267F31A6DAA80",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-effect-red1-manifest.json",
+      "sha256": "D680BA6B484919C0AAC2D8192023D6597CD01241B1B4D31C2F10215FF60FD948",
+      "entries": 678
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused1-emulator-manifest.json",
+      "sha256": "5D2E00B4DECC84C21A06CBEA17842FBE80D577418C4ACD94931FFDEFC18D002D",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused1-manifest.json",
+      "sha256": "345C4ED5D2CAEACE998E63D29B8688BF58B152D4008E10E13243B7404447E339",
+      "entries": 772
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused2-emulator-manifest.json",
+      "sha256": "E5C3473CF26EA78CC0352E44D3E40E96868795484FA95FAC8554A1DA0A31C6BB",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused2-manifest.json",
+      "sha256": "530888F4ED3B8E306D175121E82E2182CA722B2077EBF81F8715DC11981D3C22",
+      "entries": 586
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused3-emulator-manifest.json",
+      "sha256": "9974C6BD46333B2FE71F6886BB1A0C8E82FBA8759EC2DBF893B2420A2FE76C73",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-policy-focused3-manifest.json",
+      "sha256": "49F64AC33F688BE9E68D4CF7A306F3F0850D3A886C69028893028B026D79C300",
+      "entries": 774
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-quote-focused1-emulator-manifest.json",
+      "sha256": "25340037017154AA68D38EB4FD45F7E4ED0328E689E4494DB2D87036A2FAC7BA",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-quote-focused1-manifest.json",
+      "sha256": "D8C7FA81B90CF41227B9E4BDB9608EF245D4B8614D3158C7C0E12815445B50EB",
+      "entries": 785
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-quote-red1-emulator-manifest.json",
+      "sha256": "098061F3DBCACFEC66FA88979725C47070529D3E501F4109893B45AAE0D8201A",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-quote-red1-manifest.json",
+      "sha256": "FDA2E658ED30FADBC46A7668926B7DE06DDF98A85A25E912753B91342BCBF28E",
+      "entries": 738
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-focused1-emulator-manifest.json",
+      "sha256": "A9A4CF97CDCA4F38A29B1D6903872C80FDEE70F2027F4AEAA222F24EC1E70DAA",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-focused1-manifest.json",
+      "sha256": "FE41EA23D4228A6C2476AE07A570E45601DCCFFABFB049F7478C05E3EFD4AC09",
+      "entries": 761
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-focused2-emulator-manifest.json",
+      "sha256": "3C78D9853F35ABF7404B9576961EA88A3FE16147AA75805D158045B8140F3834",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-focused2-manifest.json",
+      "sha256": "86C1496D399777189292AE90E6C3FE3989CBE3288FD56B0E1F2E7A26CEF06547",
+      "entries": 762
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-red1-emulator-manifest.json",
+      "sha256": "E5FF885D4F567DE0E76EA9BDE0365F4203BD2066D59E4614EC8757E8F3881CFD",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-review-red1-manifest.json",
+      "sha256": "83908B3FF1A6A030ABAF26488A326666FACAD3C7024312212ED04F34467D1892",
+      "entries": 689
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\fee-rules-red1-manifest.json",
+      "sha256": "C7A8C3F09FDD2C4E93C6C6A362B227E4E93288C2D5A158E304D62E0128F0959F",
+      "entries": 639
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-focused1-manifest.json",
+      "sha256": "32BDE3973FEB709337E19DFD9396F868CAA9E056B9107DAB9364E320B52042F6",
+      "entries": 1
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-focused2-manifest.json",
+      "sha256": "686573F8DF91CDEBC4AC1F009DBA72F14AB70BD2ACEF16FB601002F7A7D2ADF4",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-focused3-manifest.json",
+      "sha256": "60BB7237A3471170F914EDD5B1956336A120EA8D27904017ADC78191BE5A77A8",
+      "entries": 4
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-focused4-manifest.json",
+      "sha256": "144DBA55FA1F5996DE244853DD4266DFBE6DACADBB0FA2A84E8D0A021C9EE064",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-focused5-manifest.json",
+      "sha256": "787FA151B8E016168A4E2929A9B3EAD3245E6DE572E81D24A32735CB3D49B581",
+      "entries": 7
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-proof-red1-manifest.json",
+      "sha256": "BF603EC4219210F0092EEA91CBDDA0FC11D02C02EDD8C691991F9484921906E2",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-red1-manifest.json",
+      "sha256": "75494F447D5904D63061762992378C72E233F5450564614DA6F65875043DA630",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-review-focused1-manifest.json",
+      "sha256": "23106DC36418B3FA3C3DFD5DBBF050A6B00C56215381F2C14702820217BE76DB",
+      "entries": 7
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-review-red1-manifest.json",
+      "sha256": "2135FDA9BA0A156FD51221CB7181EFA678F5419BE618401428D4E7E675E97EC9",
+      "entries": 2
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\intent-focused1-emulator-manifest.json",
+      "sha256": "69C63CC391F11CD15F85978CEF91A1A6A2337681281626466A263E974ACCE1FB",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\intent-focused1-manifest.json",
+      "sha256": "F0BE6AE574E8C530429E8ABC273C58A00062E018C309793E9A25C566647EE4A7",
+      "entries": 765
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\intent-red1-emulator-manifest.json",
+      "sha256": "409D0478FD24145C8EFF4AB66C5C8594C030F5D5E552621DA3BFCBFF27F264F7",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\intent-red1-manifest.json",
+      "sha256": "8FA05BF1941232AE3A9C9BC375A81280627F90CCFD2B00ABD38A10AC5167D3F4",
+      "entries": 715
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\legacy-focused1-emulator-manifest.json",
+      "sha256": "6CF528D49EE9AB549B50C344E0AB768C314803DAF420633630BF9E86EF242634",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\legacy-focused1-manifest.json",
+      "sha256": "80726D03A3457DD5C11811A9C8AA14E6007B87C5083715702D6D522F5106E54A",
+      "entries": 799
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\money-focused1-emulator-manifest.json",
+      "sha256": "710BE2901E9F380403BC75216932CBB3920B47D51939F0545CAF3B10BAD41804",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\money-focused1-manifest.json",
+      "sha256": "D21626773C4830C2217031B68729AE8DAFCC14CA9B30950BC71B031FE2C1853E",
+      "entries": 776
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\money-race-focused2-emulator-manifest.json",
+      "sha256": "6567CF1B74FCF4BC7FA75035F941A390470F883AD7FCDBA8968EEA7591F35F0E",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\money-race-focused2-manifest.json",
+      "sha256": "0CD871FF83C284089F5831BE430A0D7D5364657821C30014DC06CA93438D4FF8",
+      "entries": 776
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\product-fee-focused1-emulator-manifest.json",
+      "sha256": "2682D1E9CB15A989A67508D9EEEA85E81C4BE6958962E94EF6C56F9ABF9BDFE0",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\product-fee-focused1-manifest.json",
+      "sha256": "C2211E95949420BA2D17B8ADE0FA542ECA441EC73D3F43902947AD97B898D12C",
+      "entries": 710
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\product-fee-red1-emulator-manifest.json",
+      "sha256": "DF2E3A8272CBC642A8451547EFD588C9E75DFD27DCB145750323B9441993CEF2",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\product-fee-red1-manifest.json",
+      "sha256": "0B3A7ED6D47F4B2760A3F3A1A8872D7FB08731DE067355A5CA314F98F23B088A",
+      "entries": 708
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-intent-focused1-emulator-manifest.json",
+      "sha256": "B9F8641678B4A95A146C92602480D33E8058B7BE72CB7F00CCFC9002E43B7E4F",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-intent-focused1-manifest.json",
+      "sha256": "692AA7142B9C2F989E501D0A280F9A06C8218A5C25A46DA17A6D73BF6B3A3ABD",
+      "entries": 769
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-intent-red1-emulator-manifest.json",
+      "sha256": "063B7CAE61886E369917A0BEB79D4F13287A97B3502467DA0634B15A0AF3EF5D",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-intent-red1-manifest.json",
+      "sha256": "397BFC3C87195357CAAAAD38EF5453CE7C5704F0CB2A1DAEC65A9883A635D5E1",
+      "entries": 719
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-focused1-emulator-manifest.json",
+      "sha256": "D4CC964F3A1F0C459CF8C1EEE0F8E299797958AFE14D3433B857FFC8BCEA4B76",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-focused1-manifest.json",
+      "sha256": "2B76522D3E3CF6C8F8FAB8D9072390C04F3E812B1C26C4950D1C1741B42EE14A",
+      "entries": 675
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-focused2-emulator-manifest.json",
+      "sha256": "B1BF410685E7DB21AC9E706FFE452C4A83E577881B018FD0C189E27403D08A90",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-focused2-manifest.json",
+      "sha256": "FEEECF76AD3646C7F947672A5509231740CC6A56241F8423DF475CB4E5EE13D2",
+      "entries": 675
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-red1-emulator-manifest.json",
+      "sha256": "95CD48F7A2E65B843BDFE5459F77C400E6B0E9F19893384203FAC7A226F95954",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\return-result-red1-manifest.json",
+      "sha256": "742148D2250D0F09C136AE4CA5D8A54A56C84567B99C9A47DCF0ABF48733B68E",
+      "entries": 672
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused1-emulator-manifest.json",
+      "sha256": "C48ED9DACD27BFBAC32C84AD41D51CB14CB3DC8D0972928C3B0D1B62A571C073",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused1-manifest.json",
+      "sha256": "FD56BBC50E595108229EA8A5E14D741D89211B318F3A3B67B26682163FFCEFA3",
+      "entries": 732
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused2-emulator-manifest.json",
+      "sha256": "5043135B13E574AABC80172A7EFF08BB13B0BD948C44429949D947387B409650",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused2-manifest.json",
+      "sha256": "E2771A84679E7338A4039B5C10901CB70E4E5963B6A68E023772AF00C01D4E69",
+      "entries": 761
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused3-emulator-manifest.json",
+      "sha256": "EFBBCE71DA65B3651494EFFFC44EEA9CCD3845CF511950751B44115C95D8B001",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-focused3-manifest.json",
+      "sha256": "3D5F582CE8184ABBC77CB6A8E8543144B6E630BBECA8C3CC879E79B9886EE7F1",
+      "entries": 733
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-red1-emulator-manifest.json",
+      "sha256": "669E2F678EB72AF81B6DE5CC99A12083506DCBF00EE875D96C11D14DC6E987E8",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-red1-manifest.json",
+      "sha256": "80580FA55515C846EEA75B9E8D1F271CFCF20F8E0F04F083BB9E8F7F947A532F",
+      "entries": 718
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-red2-emulator-manifest.json",
+      "sha256": "65DB93549A7C78AD6772828B55848CDFD4032D59BCEF1BE6B45A2BA77C834DB9",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\review-red2-manifest.json",
+      "sha256": "364ADF4B8455E26F88470A157B3006A7D1E69B2997945D654F5DFB7226F3855B",
+      "entries": 731
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-focused1-emulator-manifest.json",
+      "sha256": "43E5FF689B63758BBD90415260F8E254667EACBD8637111B66389F08CE17A0D1",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-focused1-manifest.json",
+      "sha256": "229A40E6634E73EF7E6D5458195B1969607D3C5F9EC20445FCD50190E47C18A2",
+      "entries": 708
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-proof-red1-emulator-manifest.json",
+      "sha256": "60B57F0EE17FCB24485148B22C9A7593F1B3B75529197FDA78046762B1AD4232",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-proof-red1-manifest.json",
+      "sha256": "78DEDCAE524E650FD5EF99A314B1488AF587D62189F9C12EB5CFB27944F51959",
+      "entries": 698
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-red1-emulator-manifest.json",
+      "sha256": "9B74CB58CF55F11B9CFC8F5972CE12BF98F73D20B56F09901A4D712B08F30770",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\shipping-red1-manifest.json",
+      "sha256": "9E737F80B0587DFD83B6FD5B8B74E2DA11EC1A9389699C433E3E79649D33B109",
+      "entries": 703
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-query-focused1-emulator-manifest.json",
+      "sha256": "9222719E09D6BD967B25B96299D39DE160C7357117DDF9214815F2750E92294D",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-query-focused1-manifest.json",
+      "sha256": "27A0D1FFF3070390BEE6A811E05F801383D0590F6332D10F111624484DBF01ED",
+      "entries": 785
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-query-red1-emulator-manifest.json",
+      "sha256": "CAA6E8663A273CE22FC56C4ACFD8735123C6413D1B08C94C654391181A7D999E",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-query-red1-manifest.json",
+      "sha256": "E36F9F517878BE634A5F36FE2105DF25DA852601C89D6936571898C83368E2BA",
+      "entries": 688
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-retry-focused1-emulator-manifest.json",
+      "sha256": "1A385A5ABC5D3BEA53142CA9AC019A128E35E1A6E1D9D818F6F628FFB4A5B964",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-retry-focused1-manifest.json",
+      "sha256": "BD41F9AFBCEEA2837BF587F0932AD22E3C735EE49C4E883118488CCC80070299",
+      "entries": 797
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-retry-red1-emulator-manifest.json",
+      "sha256": "7066BF9501C1EC99D262DF96334EC9697AA5BD0E5232E3DAE1007A5AB28C62E3",
+      "entries": 3
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\support-retry-red1-manifest.json",
+      "sha256": "FDD9249B67D3FC107A253DE33FD4CE31F4A6466EDF5717252C1AB090960E8C4F",
+      "entries": 696
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-fix-review1\\artifact-manifest.json",
+      "sha256": "37541659B8B9A8FD1B7E1FE373873F7670A8DD0C39E8CD6BD4B77EC26F881390",
+      "entries": 79
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\command-review1\\artifact-manifest.json",
+      "sha256": "F1CE35436B1883EAE512418BE1E0CBD2D8EFBD6BF470E2D784FCC8BF00380A00",
+      "entries": 78
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\common-fee-fix-review1\\artifact-manifest.json",
+      "sha256": "AAA381EFC1D356DD15992B83AD32EAB0B2208978861A8632F4841352DA90AD8A",
+      "entries": 127
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\common-fee-review1\\artifact-manifest.json",
+      "sha256": "07FAB0753C0BF33E907BB0897E70870488C48F432131B12085C3C4C4D56127C5",
+      "entries": 148
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-fix-review1\\artifact-manifest.json",
+      "sha256": "44670F843584519226CF04915A41D1E21ABA1FBBEA950E2120A29B3AD7AA9A51",
+      "entries": 141
+    },
+    {
+      "path": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\frontend-review1\\artifact-manifest.json",
+      "sha256": "D26A638B2C550B8B28FCB9A37A69B36302C2D70335CE3A1B4220D5ED2537F5A9",
+      "entries": 141
+    }
+  ],
+  "conflicts": [],
+  "mismatch": [],
+  "scope": "Read-only preserved evidence hashes; not runtime or full requirement verification"
+}

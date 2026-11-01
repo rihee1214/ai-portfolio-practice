@@ -119,5 +119,18 @@
     "mobile#order-confirmation.spec.ts:newGuestLookupConfirmsOnlyDeliveredTwoThenClosesWithPurchaseAuthoritySeparated",
     "mobile#order-confirmation.spec.ts:confirmationConflictGetFailureAndLostAuthorityRequireExplicitRecovery",
     "mobile#order-confirmation.spec.ts:lateConfirmationReadAfterLogoutNeverPublishesPrivateOrderOrCommands"
+,
+    "desktop#order-cancellation.spec.ts:memberOriginalUnitLostResponseReplaysOneHoldRefundAndRestitutionAgainstApiAndDatabase",
+    "desktop#order-cancellation.spec.ts:freshGuestCurrentGasOwnsQuoteAndReservedWithdrawalWithoutPurchaseOrForeignAuthority",
+    "desktop#order-cancellation.spec.ts:cancelConflictFailedRefreshAndActualLogoutNeverRetainPrivateCommandsOrChangeDatabase",
+    "desktop#order-cancellation.spec.ts:lateCancellationReadAfterLogoutDiscardsPrivateProgressAndCommands",
+    "desktop#order-cancellation.spec.ts:sellerFeeZeroAndFiveThousandAreVisibleBeforePurchaseStaleQuoteAndImmutableOrderSnapshot",
+    "desktop#order-cancellation.spec.ts:latestUnknownAfterDefinitiveFailureBlocksWithdrawalAndContradictoryCompletionIsRejected",
+    "mobile#order-cancellation.spec.ts:memberOriginalUnitLostResponseReplaysOneHoldRefundAndRestitutionAgainstApiAndDatabase",
+    "mobile#order-cancellation.spec.ts:freshGuestCurrentGasOwnsQuoteAndReservedWithdrawalWithoutPurchaseOrForeignAuthority",
+    "mobile#order-cancellation.spec.ts:cancelConflictFailedRefreshAndActualLogoutNeverRetainPrivateCommandsOrChangeDatabase",
+    "mobile#order-cancellation.spec.ts:lateCancellationReadAfterLogoutDiscardsPrivateProgressAndCommands",
+    "mobile#order-cancellation.spec.ts:sellerFeeZeroAndFiveThousandAreVisibleBeforePurchaseStaleQuoteAndImmutableOrderSnapshot",
+    "mobile#order-cancellation.spec.ts:latestUnknownAfterDefinitiveFailureBlocksWithdrawalAndContradictoryCompletionIsRejected"
   ]
 }

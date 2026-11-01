@@ -1,3 +1,4 @@
+import {returnPolicyText} from '../catalog/ReturnPolicy'
 import { SaveWish } from './WishlistPages'
 import { AddToCart } from './CartPages'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
@@ -103,7 +104,7 @@ export function ProductDetailPage() {
     {state.error && <p role="alert">{state.error.message} <button onClick={state.retry}>상품 다시 불러오기</button></p>}
     {data && <><h2>{data.product.title}</h2><SaveWish slug={data.product.slug} /><Link to={'/stores/' + data.product.storeSlug}>{data.product.storeName}</Link><p>{data.product.categoryName}</p>
       <PublicMedia key={slug} kind="products" slug={slug!} />
-      <p className="product-description">{data.product.description}</p>
+      <p className="product-description">{data.product.description}</p><p data-testid="product-return-policy">{returnPolicyText(data.product.returnPolicy)}</p>
       {offer ? <><label htmlFor="browse-option">상품 옵션</label><select id="browse-option" value={offer.id} onChange={e => select(e.target.value)}>
         {data.offers.map(o => <option key={o.id} value={o.id}>{o.options.length ? o.options.map(x => x.name + ': ' + x.value).join(' / ') : '기본 상품'} · {price(o.price)}{o.available === 0 ? ' · 품절' : ''}</option>)}
       </select><p>선택 가격: {price(offer.price)}</p><p>{offer.available === 0 ? '품절' : '가용 수량: ' + offer.available}</p><p>재고는 조회 시점의 수량입니다.</p><AddToCart sku={offer.id} available={offer.available} /></> : <p>판매 준비 중</p>}

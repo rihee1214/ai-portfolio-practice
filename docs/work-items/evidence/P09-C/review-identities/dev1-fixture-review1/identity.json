@@ -1,0 +1,14 @@
+{
+  "count": 414,
+  "sha256": "D994092EDA68EDFB23F7D783A8B851E111B45DE3260E0FB6E60C903D0D906035",
+  "changed": [
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "docs/work-items/P09-C-review.md",
+    "docs/work-items/P09-C.md",
+    "verification/required-tests.json"
+  ],
+  "greenInputsSha256": "6A153776910635B0DD5436C21ABF6D4396D739BE28B0E49934A0FAC8782ABD21",
+  "currentCopyMismatch": 0,
+  "fullDev1": "FAILED",
+  "fullDev2": "NOT RUN"
+}

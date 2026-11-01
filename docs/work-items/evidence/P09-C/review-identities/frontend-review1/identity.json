@@ -1,0 +1,11 @@
+{
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "sourceCount": 130,
+  "sourceManifestSha256": "308D699B3D246461AA736107EBA9340DDC74B05AD4CEE8D68072945E4D2F1005",
+  "currentMismatch": 0,
+  "greenPath": ".local-tools/p09-c-frontend-focused5-20261101",
+  "workerConfirmsNoChangesSinceGreen": true,
+  "browser": "NOT RUN",
+  "full": "NOT RUN",
+  "createdAt": "2026-11-01T10:05:35.8842059+09:00"
+}

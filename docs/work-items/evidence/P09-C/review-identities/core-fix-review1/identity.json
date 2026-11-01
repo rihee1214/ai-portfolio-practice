@@ -1,0 +1,17 @@
+{
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "createdAt": "2026-10-31T00:58:53.6119473+09:00",
+  "scope": "R-C01/R-C02 fixes and introduced regressions only; source includes context, fee expansion is not judged complete",
+  "basePatchSha256": "503A8088865BDF2ABC3DB878CF35BC5D223D81D7C5813CBF575995A3B28E3D20",
+  "patchSha256": "701C5C6D4DDA73CC1B2E31D3666F106188ABA2155FA60B3147FECAE6ADE1EE9E",
+  "sourceCount": 27,
+  "changed": [
+    "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcClaims.java",
+    "backend/src/main/java/com/example/marketplace/payment/infrastructure/MockRefundProvider.java",
+    "backend/src/main/resources/db/migration/V46__claim_refund_result_receipts.sql",
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "backend/src/test/java/com/example/marketplace/dbtest/RefundWorkerProbe.java",
+    "verification/required-tests.json"
+  ],
+  "executionInputSha256": "6EEF259AD3E32DA651F8062F4BAD8CE0B6BD7D3678AE4682B97D681FFBE12AB2"
+}

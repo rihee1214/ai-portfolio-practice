@@ -1,3 +1,4 @@
+import {policyFixture} from './returnPolicyFixture'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
@@ -15,7 +16,7 @@ test('장바구니 화면은 최신 금액·재고 부족·비판매를 안내�
     if (path === '/api/auth/me') return new Response('{}', { status: 401, headers: { 'Content-Type': 'application/json' } })
     if (path === '/api/auth/csrf') return json({ headerName: 'X-CSRF-TOKEN', token: 'test' })
     const items = JSON.parse(String(init?.body)).items
-    return json({ version: 0, items: items.map((i: { skuId: string; quantity: number }) => ({ ...i, detail: i.skuId === sku ? { product: { slug: 'cart-product', title: '실제 상품', description: '', categoryId: sku, categoryName: '생활', storeSlug: 'cart-store', storeName: '매대', minPrice: 1700, soldOut: false }, offers: [{ id: sku, options: [], price: 1700, available: 1 }] } : null })) })
+    return json({ version: 0, items: items.map((i: { skuId: string; quantity: number }) => ({ ...i, detail: i.skuId === sku ? { product: { slug: 'cart-product', title: '실제 상품', description: '', categoryId: sku, categoryName: '생활', storeSlug: 'cart-store', storeName: '매대', minPrice: 1700, soldOut: false,returnPolicy:policyFixture() }, offers: [{ id: sku, options: [], price: 1700, available: 1 }] } : null })) })
   }))
   const guest = new GuestCart(localStorage); guest.set(sku, 2); guest.set('00000000-0000-4000-8000-000000000002', 1)
   const auth = new AuthStore(); await auth.refresh(); const store = new CartStore(auth, guest, work => work()); await store.refresh()

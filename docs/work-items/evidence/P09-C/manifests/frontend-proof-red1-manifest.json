@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "path": "TEST-frontend.xml",
+      "length": 8434,
+      "sha256": "8F103F16B1C6DA66D51B4DE722C78CD10B9BDE642EAEA759DF34079C8563929C"
+    },
+    {
+      "path": "vitest.txt",
+      "length": 5772,
+      "sha256": "EFAFBF1F24E3C8699DFB7BE4829D35C68D232A225A82A5C573175832A05EC15C"
+    }
+  ],
+  "count": 2,
+  "capturedAt": "2026-11-01T10:04:36.9014164+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-frontend-proof-red1-20261101"
+}

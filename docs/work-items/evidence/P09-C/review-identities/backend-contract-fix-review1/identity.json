@@ -1,0 +1,18 @@
+{
+  "sourceCount": 375,
+  "sourceManifestSha256": "41C501F184D473319BDE209CB7FA1057F54331E8C8F91D8A6007B914C7FC2930",
+  "changed": [
+    "backend/src/test/java/com/example/marketplace/dbtest/LegacyReturnPolicyMigrationProbe.java",
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "docs/work-items/P09-C-review.md",
+    "docs/work-items/P09-C.md",
+    "verification/required-browser.json",
+    "verification/required-frontend.json",
+    "verification/required-tests.json"
+  ],
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "green": "backend-contract-focused3-20261101",
+  "greenInputsSha256": "2AA933E130756F771F7746EB9BFE94276E489B4305B09F02E372842EFF1B7F10",
+  "currentCopyMismatch": 0,
+  "full": "NOT RUN"
+}

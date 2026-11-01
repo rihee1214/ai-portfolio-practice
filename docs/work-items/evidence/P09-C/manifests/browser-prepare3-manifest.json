@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-11-01T11:55:13.5394251+09:00",
+  "root": "D:\\Workspace\\ai-portfolio-practice/.local-tools/p09-c-browser-prepare3-20261101",
+  "count": 4,
+  "files": [
+    {
+      "path": ".local-tools/p09-c-browser-prepare3-20261101/browser-report.json",
+      "sha256": "84D1C8ACF98CB367F2FD13445AF94CFBF93A046C6290CAFC8744440F3C01E0C2",
+      "length": 91478
+    },
+    {
+      "path": ".local-tools/p09-c-browser-prepare3-20261101/collection.txt",
+      "sha256": "4244A60E3B4C99EC51A4D038631A5231A4678B382ABDF086A2D0EA23369B5085",
+      "length": 17539
+    },
+    {
+      "path": ".local-tools/p09-c-browser-prepare3-20261101/lint.txt",
+      "sha256": "4EDBC286F0F03913F034C381130BA3D97249ABDE766398E6A51D10E6BE27BE05",
+      "length": 68
+    },
+    {
+      "path": ".local-tools/p09-c-browser-prepare3-20261101/typecheck.txt",
+      "sha256": "A4347E8EDB71E430BE7E8D55D9E0161AFDAF5A31D23DF4B66A2D9957C10944C8",
+      "length": 60
+    }
+  ]
+}

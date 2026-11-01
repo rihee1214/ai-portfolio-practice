@@ -1,3 +1,4 @@
+import {decimalAmount} from '../catalog/ReturnPolicy'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { useAuthStore } from '../auth/AuthContext'
 import { CatalogStore, categoryValid, productValid, productStates, type Category, type Product } from '../catalog/CatalogStore'
@@ -81,12 +82,15 @@ function ProductForm({ item, categories, busy, save }: { item: Product | null; c
     const data = new FormData(event.currentTarget)
     const title = String(data.get('title')).trim(); const description = String(data.get('description')).replace(/\r\n?/g, '\n').trim()
     if (!title || [...title].length > 120 || [...description].length > 4000) { setInvalid('상품명은 1~120자, 설명은 4000자 이내로 입력해 주세요.'); return }
-    setInvalid(''); save({ slug: item?.slug ?? String(data.get('slug')), title, description, categoryId, state })
+    const returnFee=String(data.get('returnFee')).trim()
+    if(!decimalAmount(returnFee)){setInvalid('회수비는 0원 이상의 정수로 입력해 주세요.');return}
+    setInvalid(''); save({ returnFee, slug: item?.slug ?? String(data.get('slug')), title, description, categoryId, state })
   }
   return <form onSubmit={submit}><fieldset disabled={busy || item?.state === 'ARCHIVED'}><legend>{item ? '상품 수정' : '상품 등록'}</legend>
     <label>상품 주소<input name="slug" required pattern="[a-z0-9][a-z0-9-]{1,61}[a-z0-9]" defaultValue={item?.slug ?? ''} readOnly={!!item} /><small>영문 소문자·숫자·하이픈 3~63자, 등록 후 변경 불가</small></label>
     <label>상품명<input name="title" required aria-describedby="product-title-hint" defaultValue={item?.title ?? ''} /></label><small id="product-title-hint">1~120자</small>
     <label htmlFor="product-description">설명</label><textarea id="product-description" name="description" aria-describedby="product-description-hint" defaultValue={item?.description ?? ''} /><small id="product-description-hint">줄바꿈 가능, 4000자 이내</small>
+    <label>변심 반품 회수비<input name="returnFee" inputMode="numeric" pattern="0|[1-9][0-9]{0,18}" required defaultValue={item?.returnPolicy.amount??'3000'} /></label><p>0원도 설정할 수 있습니다. 같은 원 배송의 반품 대상 중 가장 큰 금액을 적용하고, 추가 반품은 늘어난 차액만 부과합니다. 변경은 이후 새 주문에 적용됩니다.</p>
     <label htmlFor="product-category">카테고리</label><select id="product-category" required value={categoryId} onChange={event => setCategoryId(event.target.value)}><option value="">선택해 주세요</option>
       {categoryId && !categories.some(row => row.id === categoryId) && <option value={categoryId}>선택한 카테고리 (목록 밖 또는 비활성)</option>}
       {categories.map(row => <option key={row.id} value={row.id}>{row.name}</option>)}

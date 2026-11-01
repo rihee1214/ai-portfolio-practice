@@ -35,6 +35,7 @@ public final class PaymentCoordinator implements Payments {
  private final PaymentProvider provider;private final Jobs jobs;private final Outbox outbox;private final TransactionTemplate tx;private final Clock clock;private final Checkpoint checkpoint;
  private final AccessPolicy access;private final SellerMembership members;private final PurchaseSessions sessions;
  private PaymentProviderConfiguration.Settings sandboxSettings=new PaymentProviderConfiguration.Settings("","","","","","");
+ @Autowired private com.example.marketplace.order.api.AftercareSettlements aftercareSettlements;
  @Autowired void sandboxSettings(PaymentProviderConfiguration.Settings settings) { this.sandboxSettings=settings; }
  public record SandboxCheckout(String clientKey,String orderId,String amount,String customerKey) { }
  public record Confirmation(String paymentKey,String orderId,String amount) {
@@ -132,6 +133,7 @@ public final class PaymentCoordinator implements Payments {
  private void applyLocked(Orders.Snapshot order,Result result) {
   var a=attempt(order.orderNumber());if(a==null) { throw new OrderRejected(404); }
   if(result==Result.SUCCEEDED) {
+   if(order.state().equals("CANCELED")&&a.state().equals("SUCCEEDED")&&a.compensation().equals("NONE")&&aftercareSettlements!=null&&aftercareSettlements.customerCancellationSettled(order.id(),a.id())) { return; }
    if(order.state().equals("CLOSED")) { if(a.state().equals("SUCCEEDED")&&a.compensation().equals("NONE")) { return; }review(a,"CLOSED_PAYMENT_CONFLICT");return; }
    if(order.state().equals("PAID")||!a.compensation().equals("NONE")) { return; }
    if(!order.state().equals("PENDING_PAYMENT")||!clock.instant().isBefore(order.expiresAt())||a.state().equals("FAILED")) {

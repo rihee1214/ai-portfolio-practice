@@ -1,0 +1,20 @@
+{
+  "head": "c9f924123b42e8d413f3ff70a095ffec06fd9593",
+  "sourceCount": 72,
+  "changed": [
+    "backend/src/main/java/com/example/marketplace/claim/api/ReturnFees.java",
+    "backend/src/main/java/com/example/marketplace/claim/infrastructure/JdbcClaims.java",
+    "backend/src/main/java/com/example/marketplace/order/infrastructure/JdbcCancellationOrders.java",
+    "backend/src/main/resources/db/migration/V57__cancellation_withdrawal_terminal_proofs.sql",
+    "backend/src/test/java/com/example/marketplace/dbtest/PostgresJdbcIT.java",
+    "verification/required-tests.json"
+  ],
+  "sourceManifestSha256": "17E3DE04CC4562C27C0C24B472A49EFD992012CE47CB9C09EAF5213D2515D20F",
+  "currentMismatch": 0,
+  "greenInputsCount": 544,
+  "greenMismatch": 0,
+  "greenPath": ".local-tools/p09-c-command-review-focused2-20261101",
+  "createdAt": "2026-11-01T09:35:56.8200729+09:00",
+  "userDate": "2026-11-01",
+  "full": "NOT RUN"
+}

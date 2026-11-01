@@ -1,3 +1,4 @@
+import {returnPolicyText} from '../catalog/ReturnPolicy'
 import {useEffect,useState,useSyncExternalStore} from 'react'
 import type {AuthStore} from '../auth/AuthStore'
 import {QuoteStore,formatMoney,type LineRequest} from './QuoteStore'
@@ -19,7 +20,7 @@ export function QuotePanel({auth,lines,cart}:{auth:AuthStore;lines:LineRequest[]
  {state.quote?.stores.map(s=><section key={s.storeId} aria-label={s.name+' 견적'}><h3>{s.name}</h3><p>매대 주소: {s.slug}</p>
  {member.member&&<><label htmlFor={'quote-coupon-'+s.storeId}>적용 쿠폰 — {s.slug}</label><select id={'quote-coupon-'+s.storeId} disabled={state.busy||owned.busy} value={state.selected[s.storeId]??''} onChange={e=>quotes.selectCoupon(s.storeId,e.target.value)}><option value="">쿠폰 사용 안 함</option>{s.coupon&&!owned.owned.some(c=>c.id===s.coupon!.id)&&<option value={s.coupon.id}>{s.coupon.title} (선택됨)</option>}{owned.owned.filter(c=>c.storeId===s.storeId&&couponStatus(c)==='사용 가능').map(c=><option key={c.id} value={c.id}>{c.title}</option>)}</select></>}
  <p>상품 정가: {formatMoney(s.subtotal)}</p><p>상품 행사 할인: {formatMoney(s.productDiscount)}</p><p>쿠폰 할인: {formatMoney(s.couponDiscount)}</p><p>기본 배송비: {formatMoney(s.shippingBase)}</p><p>배송 행사 할인: {formatMoney(s.shippingDiscount)}</p><p>매대 견적: {formatMoney(s.total)}</p>
- {s.lines.map(l=><details key={l.skuId}><summary>{l.title} · {l.quantity}개 · 할인 후 {formatMoney(l.net)}</summary>{l.promotion&&<p>상품 행사: {l.promotion.title} (가장 큰 할인, 동률은 행사 ID 순)</p>}{l.units.map(u=><p key={u.ordinal}>{u.ordinal+1}번째 상품: {formatMoney(u.net)} · 행사 {formatMoney(u.promotionDiscount)} · 쿠폰 {formatMoney(u.couponDiscount)}</p>)}</details>)}{s.shippingPromotion&&<p>배송 행사: {s.shippingPromotion.title}</p>}
+ {s.lines.map(l=><div key={l.skuId}><p data-testid="quote-return-policy">{l.title} · {returnPolicyText(l.returnPolicy)}</p><details><summary>{l.title} · {l.quantity}개 · 할인 후 {formatMoney(l.net)}</summary>{l.promotion&&<p>상품 행사: {l.promotion.title} (가장 큰 할인, 동률은 행사 ID 순)</p>}{l.units.map(u=><p key={u.ordinal}>{u.ordinal+1}번째 상품: {formatMoney(u.net)} · 행사 {formatMoney(u.promotionDiscount)} · 쿠폰 {formatMoney(u.couponDiscount)}</p>)}</details></div>)}{s.shippingPromotion&&<p>배송 행사: {s.shippingPromotion.title}</p>}
  </section>)}{state.quote&&<p data-testid="quote-total">현재 견적 합계: {formatMoney(state.quote.total)}</p>}
  {cart&&<OrderCreationPanel auth={auth} cart={cart} quote={state.quote} refresh={quotes.refresh}/>}
  </section>

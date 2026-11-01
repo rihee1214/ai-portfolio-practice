@@ -1,7 +1,8 @@
+import {policyFixture} from './returnPolicyFixture'
 import { expect, test } from 'vitest'
 import { BrowseResource, detailValid, pageValid, parseQuery, queryString, type Page } from '../../src/catalog/Browse'
 import type { JsonResult } from '../../src/api/http'
-const item = { slug: 'sample-item', title: '상품', description: '소개', categoryId: '00000000-0000-4000-8000-000000000003', categoryName: '생활', storeSlug: 'sample-store', storeName: '매대', minPrice: 1000, soldOut: false }
+const item = { slug: 'sample-item', title: '상품', description: '소개', categoryId: '00000000-0000-4000-8000-000000000003', categoryName: '생활', storeSlug: 'sample-store', storeName: '매대', minPrice: 1000, soldOut: false,returnPolicy:policyFixture() }
 test('탐색 URL은 조건과 페이지를 복원하고 잘못된 값은 거부한다', () => {
   const query = parseQuery('?q=머그&minPrice=0&maxPrice=2000&inStock=true&sort=price_asc&page=2')!
   expect(query.q).toBe('머그'); expect(query.page).toBe(2); expect(query.inStock).toBe(true)

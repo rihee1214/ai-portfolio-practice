@@ -1,0 +1,20 @@
+[
+  "cancellationAndShippingHaveOneWinner",
+  "cancellationGuestAuthorityAndFinalWaits",
+  "cancellationOriginal33001PartialAndRemainingConserveSnapshot",
+  "fullCancellationRestoresExpiredCouponsOnceWithoutReusability",
+  "legacyReturnPolicyUsesTrueMissingJsonExplicitConsentAndCurrentRefundPorts",
+  "originalShipmentUsesReturnedTargetMaximumAndSubsequentDifference",
+  "partialCancellationDoesNotCloseUnfinishedOrder",
+  "productReturnPolicyChangeAndOrderCreationKeepSnapshotOnBothLockOrders",
+  "refundDiscountsAndPolicySnapshotsRemainStable",
+  "refundPreparedChildTakeoverNeverReleasesBudgetBeforeLateSubmit",
+  "refundReservationsShareParentPaymentCeiling",
+  "returnFeeApplicationUsesCumulativeDebtAndNeverCompletesPhysicalReturn",
+  "returnFeeFailedAndUnknownActualResultCannotApplyFinancialAssessment",
+  "returnFeeOwnerCommandsRecheckMemberAndGasAfterLastActualLockWait",
+  "shippingRefundFailedRetryAndUnknownQueryKeepOriginalObligation",
+  "succeededCancellationBusinessEffectsRollBackAndResumeWithoutAnotherRefund",
+  "succeededCancellationChildCommitBeforeAckReplaysWithoutAnotherEffect",
+  "zeroCancellationUsesNoProviderAndClosesFromTrustedFinancialEvidence"
+]

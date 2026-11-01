@@ -1,0 +1,22 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\phone-emulator-34828d7446dd493289bcb3ea0e1b04ce",
+  "count": 3,
+  "files": [
+    {
+      "path": "emulator.txt",
+      "sha256": "4745DF64A49F84A795C4915A23426C475A031630C91BA8875D53BF04F5BBEB86",
+      "length": 5724
+    },
+    {
+      "path": "firebase.json",
+      "sha256": "13E2D4C5D6FBEFDDBEFAB8E4AC65B9FE5A20406828F572D615741B76F6F4CB62",
+      "length": 323
+    },
+    {
+      "path": "result.json",
+      "sha256": "0552A4A0A674E85FC4E5F89D3254A68E11775420D0F9F08AF9A26495E437055E",
+      "length": 186
+    }
+  ],
+  "createdAt": "2026-10-31T01:38:22.9618447+09:00"
+}

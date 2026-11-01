@@ -1,0 +1,312 @@
+{
+  "root": "failed",
+  "preservation": "passed",
+  "started": "2026-11-01T12:46:35.9236318+09:00",
+  "finished": "2026-11-01T13:03:53.0973015+09:00",
+  "source": 552,
+  "inputSha256": "6A153776910635B0DD5436C21ABF6D4396D739BE28B0E49934A0FAC8782ABD21",
+  "sourceMismatch": 0,
+  "java": 553.0,
+  "reports": [
+    {
+      "suite": "com.example.marketplace.api.ActuatorPolicyHttpTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.ApiErrorHttpTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.DatabaseSettingsTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.ErrorHttpTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.HealthMvcTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.RequestIdFilterTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.RequestIdHttpTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.api.UnhealthyMvcTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.architecture.ModuleArchitectureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.architecture.ModuleRulesTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.cart.CartRulesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.claim.domain.ClaimRulesTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.fulfillment.domain.ShipmentRulesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.guest.GuestInputTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.guest.GuestLinkPolicyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.guest.GuestLocalPolicyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.guest.GuestPasswordTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.guest.RecoverySecretsTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.identity.AccountRulesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.identity.AttemptWindowTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.identity.SignupRulesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.identity.SignupSecurityTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.identity.web.PasswordRecoveryRateLimitTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.jdbcfixture.DedicatedDatabaseTargetTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.media.infrastructure.ImageNormalizerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.media.infrastructure.LocalImagesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.order.domain.ConfirmationRulesTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.order.domain.OrderRequestHashTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.order.domain.OrderRulesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.payment.domain.PaymentRulesTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.payment.PaymentProviderConfigurationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.payment.TossPaymentProviderTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.payment.TossWebhookVerifierTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.phone.PhoneProviderTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.platform.JobRulesTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.promotion.CouponReservationRulesTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.promotion.CouponRulesTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.promotion.PromotionRulesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.promotion.QuoteCalculatorTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.dbtest.PostgresJdbcIT",
+      "tests": 356,
+      "failures": 1,
+      "errors": 0,
+      "skip": 0
+    },
+    {
+      "suite": "com.example.marketplace.phone.PhoneProviderEmulatorIT",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skip": 0
+    }
+  ],
+  "bad": [
+    {
+      "name": "signupHttpRequiresCsrfAndReturnsNoSecrets",
+      "failure": "Auth browser verification timed out",
+      "error": null
+    }
+  ],
+  "browserPassed": 127,
+  "browserFailed": 2,
+  "browserUnfinished": 1,
+  "browserChildMs": 287021,
+  "frontend": "NOT RUN",
+  "node": "NOT RUN"
+}

@@ -8,7 +8,7 @@ public interface OrderQueries {
     record Summary(String orderNumber,String state,String total,String mode,Instant createdAt) { }
     record Page(List<Summary> orders,String nextCursor) { public Page { orders=List.copyOf(orders); } }
     record Unit(int ordinal,String gross,String promotionDiscount,String couponDiscount,String net) { }
-    record Item(UUID id,UUID skuId,String title,List<String> options,int quantity,String unitPrice,String gross,String promotionTitle,String promotionDiscount,String couponDiscount,String net,List<Unit> units) { public Item { options=List.copyOf(options);units=List.copyOf(units); } }
+    record Item(UUID id,UUID skuId,String title,List<String> options,int quantity,String unitPrice,String gross,String promotionTitle,String promotionDiscount,String couponDiscount,String net,List<Unit> units,com.example.marketplace.catalog.api.ReturnPolicy returnPolicy) { public Item { options=List.copyOf(options);units=List.copyOf(units); } }
     record Store(UUID sellerOrderId,UUID storeId,String name,String subtotal,String productDiscount,String couponTitle,String couponDiscount,String shippingBase,String shippingPromotionTitle,String shippingDiscount,String total,List<Item> items) { public Store { items=List.copyOf(items); } }
     record Detail(String orderNumber,String state,String total,String mode,Instant createdAt,String policyVersion,Orders.Contact contact,List<Store> stores) { public Detail { stores=List.copyOf(stores); } }
     record Recipient(String name,String phone,String postalCode,String addressLine1,String addressLine2) { }

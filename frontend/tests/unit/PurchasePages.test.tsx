@@ -1,3 +1,4 @@
+import {policyFixture} from './returnPolicyFixture'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
@@ -15,7 +16,7 @@ beforeEach(()=>localStorage.clear())
 test('주문 준비는 재조회 대기·오류·계정 전환과 늦은 응답에서 이전 금액을 숨긴다',async()=>{
   let owner=one,hold=false,fail=false,available=5
   let release: ((r:Response)=>void)|undefined
-  const view=(name:string)=>({version:0,items:[{skuId:one,quantity:2,detail:{product:{slug:'product-one',title:name,description:'',categoryId:one,categoryName:'생활',storeSlug:'store-one',storeName:name,minPrice:100,soldOut:available===0},offers:[{id:one,price:100,available,options:[]}]}}]})
+  const view=(name:string)=>({version:0,items:[{skuId:one,quantity:2,detail:{product:{slug:'product-one',title:name,description:'',categoryId:one,categoryName:'생활',storeSlug:'store-one',storeName:name,minPrice:100,soldOut:available===0,returnPolicy:policyFixture()},offers:[{id:one,price:100,available,options:[]}]}}]})
   vi.stubGlobal('fetch',vi.fn(async(path:string)=>{
     if(path==='/api/auth/me')return json({id:owner,roles:['BUYER']})
     if(hold)return new Promise<Response>(resolve=>{release=resolve})
@@ -53,7 +54,7 @@ test('주문서 직접 진입은 새 장바구니를 읽어 두 매대 금액을
     if(path==='/api/auth/me')return json({},401)
     if(path==='/api/auth/csrf')return json({headerName:'X-CSRF-TOKEN',token:'test'})
     reads++
-    return json({version:0,items:JSON.parse(String(init?.body)).items.map((row:{skuId:string;quantity:number})=>({...row,detail:unavailable?null:{product:{slug:'product-'+row.skuId,title:'상품',description:'',categoryId:one,categoryName:'생활',storeSlug:row.skuId===one?'store-one':'store-two',storeName:row.skuId===one?'첫 매대':'둘째 매대',minPrice:100,soldOut:false},offers:[{id:row.skuId,price:100,available:5,options:[]}]}}))})
+    return json({version:0,items:JSON.parse(String(init?.body)).items.map((row:{skuId:string;quantity:number})=>({...row,detail:unavailable?null:{product:{slug:'product-'+row.skuId,title:'상품',description:'',categoryId:one,categoryName:'생활',storeSlug:row.skuId===one?'store-one':'store-two',storeName:row.skuId===one?'첫 매대':'둘째 매대',minPrice:100,soldOut:false,returnPolicy:policyFixture()},offers:[{id:row.skuId,price:100,available:5,options:[]}]}}))})
   }))
   const auth=new AuthStore();await auth.refresh();const guest=new GuestCart(localStorage);guest.set(one,2);guest.set(two,3)
   const store=new CartStore(auth,guest,work=>work());await store.refresh()

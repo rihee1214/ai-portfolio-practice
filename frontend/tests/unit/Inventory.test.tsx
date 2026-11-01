@@ -1,3 +1,4 @@
+import {policyFixture} from './returnPolicyFixture'
 import { test, expect, vi } from 'vitest'
 import { render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -67,7 +68,7 @@ test('다른 상품을 선택한 뒤 도착한 이전 재고 응답을 표시하
   const second = '00000000-0000-4000-8000-000000000004'
   let release!: (response: Response) => void
   const old = new Promise<Response>(resolve => { release = resolve })
-  const products = [id, second].map((key, index) => ({ id: key, slug: 'stock-' + index, title: '상품' + index, description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false }))
+  const products = [id, second].map((key, index) => ({ id: key, slug: 'stock-' + index, title: '상품' + index, description: '', categoryId: id, state: 'DRAFT', version: 0, hiddenByAdmin: false,returnPolicy:policyFixture(key) }))
   const fetcher = vi.fn(async (path: string) => {
     if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
     if (path === '/api/seller/products?page=0') return json({ items: products, page: 0, hasMore: false })

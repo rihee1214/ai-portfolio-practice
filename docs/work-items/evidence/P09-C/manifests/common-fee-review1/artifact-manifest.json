@@ -1,0 +1,747 @@
+{
+  "root": "D:\\Workspace\\ai-portfolio-practice\\.local-tools\\p09-c-execution-20261030\\common-fee-review1",
+  "count": 148,
+  "capturedAt": "2026-10-31T02:39:58.7714838+09:00",
+  "files": [
+    {
+      "sha256": "2C7A201E101F117B70E5D85B50875A1EE8BD6876B8EF3624BD9D10B9B5658190",
+      "path": "compile20-maven.txt",
+      "length": 2562
+    },
+    {
+      "sha256": "34FEF2E7127ED12646A57B327EF8E561EF2534CED099BF1E4115405B75E79580",
+      "path": "diff-check-stderr.txt",
+      "length": 2624
+    },
+    {
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "path": "diff-check.txt",
+      "length": 0
+    },
+    {
+      "sha256": "19F7062D857678C627AAEF34675162A0BC76A16867C7326595D4B7ACB5B33034",
+      "path": "diff-stderr.txt",
+      "length": 1934
+    },
+    {
+      "sha256": "1A6D24895422D705E49756588E460D0F0F674C7C21B97A97B8BD12420F890980",
+      "path": "docs\\P09-C-design-review.md",
+      "length": 83434
+    },
+    {
+      "sha256": "F021A38984EDFB2595EC9EB62ECA6D41984AA8C5CAB1347FB69A0377246A3C38",
+      "path": "docs\\P09-C-review.md",
+      "length": 19356
+    },
+    {
+      "sha256": "067975933FFD0DDEA24E8530C33169FCCE583A55C572208ABC8914550D0740A2",
+      "path": "docs\\P09-C.md",
+      "length": 25771
+    },
+    {
+      "sha256": "4B994D0EDF7ED16003297D75673BF7ACAB3A99E948C8266620612AF020D38E62",
+      "path": "docs\\P09-D.md",
+      "length": 7052
+    },
+    {
+      "sha256": "CD14124E85F1B41FD9CA7B4368A7E240C877C38200303FC1A637455E89C6D697",
+      "path": "evidence\\fee-accept-focused1-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "155DC75C33A85AB52C6BE865EB0590E566C4258A1A08FCC9E7DFC06C691C9260",
+      "path": "evidence\\fee-accept-focused1-manifest.json",
+      "length": 150916
+    },
+    {
+      "sha256": "8917B20656A40AFE07DB6F007DD911D802FE5EA03754FBE4814A1AD3F54B0203",
+      "path": "evidence\\fee-accept-focused2-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "4B0B7AFBE2BB07C33543B44CC25D111875423B06636379E07427E37FE45C3971",
+      "path": "evidence\\fee-accept-focused2-manifest.json",
+      "length": 161332
+    },
+    {
+      "sha256": "1624E854E5BB3FAA607C24AD1AFFB735A62C5778A5C71057B266025D0AD97DA0",
+      "path": "evidence\\fee-accept-focused3-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "2400089FBAD91BAB88650651A0997A4B4723777B4CE6BA2ADD2D9C528496F096",
+      "path": "evidence\\fee-accept-focused3-manifest.json",
+      "length": 151438
+    },
+    {
+      "sha256": "5F7C246894F64654114BEE110AF6CCD7BE6AE5AE6B30166A84B8CF1BBB5EBA87",
+      "path": "evidence\\fee-accept-red1-emulator-manifest.json",
+      "length": 663
+    },
+    {
+      "sha256": "6E056AC1C0073059FC4576FF8C2D95EC663C422BEAA6C4667A39D4A0EA3D5298",
+      "path": "evidence\\fee-accept-red1-manifest.json",
+      "length": 150760
+    },
+    {
+      "sha256": "C477A5E68A709FF808F86C123F73AF6993C633ADE072FB215B97D3A055349C47",
+      "path": "evidence\\fee-effect-focused1-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "5C3EB4A8DB5C279732D92596C1A0C7B233444B57B27967C552F97BE805F2375F",
+      "path": "evidence\\fee-effect-focused1-manifest.json",
+      "length": 153505
+    },
+    {
+      "sha256": "154F17AE74B95521F35012660B256404306C64CFFA99B83A9B9267F31A6DAA80",
+      "path": "evidence\\fee-effect-red1-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "D680BA6B484919C0AAC2D8192023D6597CD01241B1B4D31C2F10215FF60FD948",
+      "path": "evidence\\fee-effect-red1-manifest.json",
+      "length": 153030
+    },
+    {
+      "sha256": "25340037017154AA68D38EB4FD45F7E4ED0328E689E4494DB2D87036A2FAC7BA",
+      "path": "evidence\\fee-quote-focused1-emulator-manifest.json",
+      "length": 663
+    },
+    {
+      "sha256": "D8C7FA81B90CF41227B9E4BDB9608EF245D4B8614D3158C7C0E12815445B50EB",
+      "path": "evidence\\fee-quote-focused1-manifest.json",
+      "length": 177058
+    },
+    {
+      "sha256": "098061F3DBCACFEC66FA88979725C47070529D3E501F4109893B45AAE0D8201A",
+      "path": "evidence\\fee-quote-red1-emulator-manifest.json",
+      "length": 663
+    },
+    {
+      "sha256": "FDA2E658ED30FADBC46A7668926B7DE06DDF98A85A25E912753B91342BCBF28E",
+      "path": "evidence\\fee-quote-red1-manifest.json",
+      "length": 166735
+    },
+    {
+      "sha256": "C7A8C3F09FDD2C4E93C6C6A362B227E4E93288C2D5A158E304D62E0128F0959F",
+      "path": "evidence\\fee-rules-red1-manifest.json",
+      "length": 142467
+    },
+    {
+      "sha256": "D6EA94F94B9548698C643E713553D0FF8B71D06293096A6D8AD5E1B923C41190",
+      "path": "evidence\\p09-c-fee-accept-focused1-20261031\\db\\summary.json",
+      "length": 723
+    },
+    {
+      "sha256": "139C8157D81DEFF4CECDDE984E9B0DB3D23CAA1DC0D9CCF7BB8FFCBCD0FB1596",
+      "path": "evidence\\p09-c-fee-accept-focused1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "39E1C0F3F3E1849A4965F0033C15AEBFB7B8E47A7F4BDCB60188CB8801F33020",
+      "path": "evidence\\p09-c-fee-accept-focused1-20261031\\inputs.json",
+      "length": 91815
+    },
+    {
+      "sha256": "DD8FAC3A8E4FA8DECAAA7BD127C3B9841A2EBB6140522C731852158518706FFF",
+      "path": "evidence\\p09-c-fee-accept-focused1-20261031\\result.json",
+      "length": 4955
+    },
+    {
+      "sha256": "7A625AB484866938A9A1691CEA93174997DED39148AF7F59D38C37930B1F5578",
+      "path": "evidence\\p09-c-fee-accept-focused2-20261031\\db\\summary.json",
+      "length": 722
+    },
+    {
+      "sha256": "BD106452EAC61C684BF386DE68823B0CF58949ED5B7D6D4255CA2A117DE94DE6",
+      "path": "evidence\\p09-c-fee-accept-focused2-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "51B49220D943A734F31387CDF03B646EC39DB985956E9BB1FDE37D829727172C",
+      "path": "evidence\\p09-c-fee-accept-focused2-20261031\\inputs.json",
+      "length": 91815
+    },
+    {
+      "sha256": "424FE68A2569019A9501327AE96A0B34A7A9383F1645B2F6FB20C5F15239BD82",
+      "path": "evidence\\p09-c-fee-accept-focused2-20261031\\result.json",
+      "length": 4955
+    },
+    {
+      "sha256": "5354B3FFE8B62CD757AA8A7DDB3E9F57E567946AF8553157DE6A4AA521550C46",
+      "path": "evidence\\p09-c-fee-accept-focused3-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "A2C2CEFE941E5CF8E36D830677527A0230B0E47396F7D1FD04B0082F4DA15F2D",
+      "path": "evidence\\p09-c-fee-accept-focused3-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "EF72FEA093267D9ED193845379821630E51EB9BFAA31618E93E3F733E985F6C2",
+      "path": "evidence\\p09-c-fee-accept-focused3-20261031\\inputs.json",
+      "length": 92002
+    },
+    {
+      "sha256": "E2BE22EEB571E72EFD7F85BDE3B2A1A4BEB1DFD5FA3EE8BFBEA8DC26C0C757F7",
+      "path": "evidence\\p09-c-fee-accept-focused3-20261031\\result.json",
+      "length": 4989
+    },
+    {
+      "sha256": "31BA86614B7CB4E8660B2A910A89B06D56D3998E60F822CFB260AB13E3586FDD",
+      "path": "evidence\\p09-c-fee-accept-red1-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "3F2CA7CE5C06126AF7DF201E69491FE1BEAE259938984E468C096C37A2C640FC",
+      "path": "evidence\\p09-c-fee-accept-red1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "CB23B1A48078EBD1C8AE629FA0EC6281D122AAC4F600D09EA7BC2A27A5064ABA",
+      "path": "evidence\\p09-c-fee-accept-red1-20261031\\inputs.json",
+      "length": 91622
+    },
+    {
+      "sha256": "A2D4A41CEE477FE73A7E39A530AB816D7E397323696EC25CF4D1D46351EB119D",
+      "path": "evidence\\p09-c-fee-accept-red1-20261031\\result.json",
+      "length": 4784
+    },
+    {
+      "sha256": "F867F8C60E93A8E26040C11EB6149C740CEB35D0F5C3B6237FFB15C26210D55E",
+      "path": "evidence\\p09-c-fee-effect-focused1-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "27AEF75DF468C61BF76F1E62AFA7441DE91E4660737F4DE7FF8FD42EA512D3D1",
+      "path": "evidence\\p09-c-fee-effect-focused1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "E76B826EDDE3ED893590DA97D65970F62BFEAC3FF02B50F5F39B67E1A6B6D570",
+      "path": "evidence\\p09-c-fee-effect-focused1-20261031\\inputs.json",
+      "length": 92593
+    },
+    {
+      "sha256": "B0393F7C22FBF9A2FFA86A513F3EC401A01F8A3292A0CD6A5CE12E21FB39F211",
+      "path": "evidence\\p09-c-fee-effect-focused1-20261031\\result.json",
+      "length": 5182
+    },
+    {
+      "sha256": "D4690B262D0BF9A69987B777930951BA50A318507DF85D553706C32E5B7DD23A",
+      "path": "evidence\\p09-c-fee-effect-red1-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "57121F554AC2DFCD6A27C0DD1C6442D591957C53FA0EB72B1C685D2E7095D1C9",
+      "path": "evidence\\p09-c-fee-effect-red1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "73CB944361891B7CB7B0DE2C179BCDAFEDB427B367EA37341E9153DBFAC4EC1F",
+      "path": "evidence\\p09-c-fee-effect-red1-20261031\\inputs.json",
+      "length": 92395
+    },
+    {
+      "sha256": "06C3728D06735FA06C98883FF0CBC5714FA5AA10583553D6A450E6EC33498A6E",
+      "path": "evidence\\p09-c-fee-effect-red1-20261031\\result.json",
+      "length": 5129
+    },
+    {
+      "sha256": "92EA35F4C052E02A6A14502E6604D10B247B4DA6EE8FFF3C94F4918A95D81BDE",
+      "path": "evidence\\p09-c-fee-quote-focused1-20261031\\db\\summary.json",
+      "length": 7153
+    },
+    {
+      "sha256": "3A7129E782325C648D42A6F4C37E2E6B7E909F6D974FF7F0D0898220A95FC4B0",
+      "path": "evidence\\p09-c-fee-quote-focused1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "3E138BC1F4DCCF1652DB82419E9F4CB04D91A3254B4C2965A40F46EE6B902680",
+      "path": "evidence\\p09-c-fee-quote-focused1-20261031\\inputs.json",
+      "length": 91622
+    },
+    {
+      "sha256": "CE6EB4DD7A55B3BD0E66C39720636A1AA61ADADF354C21943618EC060BD65A98",
+      "path": "evidence\\p09-c-fee-quote-focused1-20261031\\result.json",
+      "length": 4762
+    },
+    {
+      "sha256": "793EF3B57EA93D694BB2D6C499088B440850350029F9C49325225804A4E82219",
+      "path": "evidence\\p09-c-return-result-focused1-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "10EBF6F37CA359B0CC166E7993F31A0D1C8C97D3B4C22AD64168B91F5103DE58",
+      "path": "evidence\\p09-c-return-result-focused1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "30913C983091DED9BE3256984062C1FEC1892CFF930DDD71AAEA63634C1AC2AD",
+      "path": "evidence\\p09-c-return-result-focused1-20261031\\inputs.json",
+      "length": 92395
+    },
+    {
+      "sha256": "6F39D2BD2AC8F4476F460F0879CBEE292C19696ACC0A2F8DD62ECBDAE926AA19",
+      "path": "evidence\\p09-c-return-result-focused1-20261031\\result.json",
+      "length": 5143
+    },
+    {
+      "sha256": "49604922C2198A2F604092C9FD919916287BD2EE3B9E0318855768C5C98AEB24",
+      "path": "evidence\\p09-c-return-result-focused2-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "398039DBD68679E9D415A9062E6C558ADABD6374A7BB3896F0E42E99580BFE79",
+      "path": "evidence\\p09-c-return-result-focused2-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "5B7F5958B325D9DCCE257D44F1940D06B474D218D572E52D69A3BCD1EA95746A",
+      "path": "evidence\\p09-c-return-result-focused2-20261031\\inputs.json",
+      "length": 92395
+    },
+    {
+      "sha256": "04A88ADD42F0CAE580A03671983EB1B692A6B3C61EF15669BFC39DD4D4B6B7D7",
+      "path": "evidence\\p09-c-return-result-focused2-20261031\\result.json",
+      "length": 5085
+    },
+    {
+      "sha256": "31BA86614B7CB4E8660B2A910A89B06D56D3998E60F822CFB260AB13E3586FDD",
+      "path": "evidence\\p09-c-return-result-red1-20261031\\db\\summary.json",
+      "length": 721
+    },
+    {
+      "sha256": "EDFE1337CCAB1C98A76D51B4D2AF6966395F6A5B5AC6C79B6864718BFD97E1FC",
+      "path": "evidence\\p09-c-return-result-red1-20261031\\db\\target.txt",
+      "length": 119
+    },
+    {
+      "sha256": "5A2136DCA94B6F5CD82568B8EABE1C077BAE909446F88666AAC916E15AEB8A8E",
+      "path": "evidence\\p09-c-return-result-red1-20261031\\inputs.json",
+      "length": 92002
+    },
+    {
+      "sha256": "37A2168FCBECCDEFB9899A2AFAD59D1308F7D19191BC780E7438A8F0522BEB15",
+      "path": "evidence\\p09-c-return-result-red1-20261031\\result.json",
+      "length": 5042
+    },
+    {
+      "sha256": "2682D1E9CB15A989A67508D9EEEA85E81C4BE6958962E94EF6C56F9ABF9BDFE0",
+      "path": "evidence\\product-fee-focused1-emulator-manifest.json",
+      "length": 663
+    },
+    {
+      "sha256": "C2211E95949420BA2D17B8ADE0FA542ECA441EC73D3F43902947AD97B898D12C",
+      "path": "evidence\\product-fee-focused1-manifest.json",
+      "length": 160410
+    },
+    {
+      "sha256": "DF2E3A8272CBC642A8451547EFD588C9E75DFD27DCB145750323B9441993CEF2",
+      "path": "evidence\\product-fee-red1-emulator-manifest.json",
+      "length": 663
+    },
+    {
+      "sha256": "0B3A7ED6D47F4B2760A3F3A1A8872D7FB08731DE067355A5CA314F98F23B088A",
+      "path": "evidence\\product-fee-red1-manifest.json",
+      "length": 159962
+    },
+    {
+      "sha256": "D4CC964F3A1F0C459CF8C1EEE0F8E299797958AFE14D3433B857FFC8BCEA4B76",
+      "path": "evidence\\return-result-focused1-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "2B76522D3E3CF6C8F8FAB8D9072390C04F3E812B1C26C4950D1C1741B42EE14A",
+      "path": "evidence\\return-result-focused1-manifest.json",
+      "length": 152365
+    },
+    {
+      "sha256": "B1BF410685E7DB21AC9E706FFE452C4A83E577881B018FD0C189E27403D08A90",
+      "path": "evidence\\return-result-focused2-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "FEEECF76AD3646C7F947672A5509231740CC6A56241F8423DF475CB4E5EE13D2",
+      "path": "evidence\\return-result-focused2-manifest.json",
+      "length": 152364
+    },
+    {
+      "sha256": "95CD48F7A2E65B843BDFE5459F77C400E6B0E9F19893384203FAC7A226F95954",
+      "path": "evidence\\return-result-red1-emulator-manifest.json",
+      "length": 664
+    },
+    {
+      "sha256": "742148D2250D0F09C136AE4CA5D8A54A56C84567B99C9A47DCF0ABF48733B68E",
+      "path": "evidence\\return-result-red1-manifest.json",
+      "length": 151677
+    },
+    {
+      "sha256": "67D349266676EB9E63EF747DAFDCAED857343DC4EA12387DDAB66BB8B5382B93",
+      "path": "git-status.txt",
+      "length": 4124
+    },
+    {
+      "sha256": "D25B720EF8795225BCE3C06FBE072724C4F1E44E349A0416E103124ED3DBB57A",
+      "path": "head.txt",
+      "length": 42
+    },
+    {
+      "sha256": "7BB44F0AACFC92F4039E57FB85C34105A3435140FD6AFBCF48B822488038D3BC",
+      "path": "identity.json",
+      "length": 538
+    },
+    {
+      "sha256": "1E78BC1476AB61690186389111FF0F55B34940A41D64B13730F808DC14B71ED0",
+      "path": "migration-history41-52.txt",
+      "length": 217
+    },
+    {
+      "sha256": "076999BE1463DEFCA7D31469AEEE41EA94C99C6BC040D0FB430606E9E992B33C",
+      "path": "new-files-full-source.txt",
+      "length": 3248
+    },
+    {
+      "sha256": "632E7414047B242BD306412F459D2AD4335B1579B420849877E3DA7F64B04004",
+      "path": "required-preservation.json",
+      "length": 2615
+    },
+    {
+      "sha256": "32236B03D98C157989809B3655E90C2CD5C2E1F791A22129C9CF0A32776A33FA",
+      "path": "review-report.md",
+      "length": 9196
+    },
+    {
+      "sha256": "F70AFB1937C6C3998FBF4E8BACC5C9DDA89010F1B41B08514F2E9A59E22EFD52",
+      "path": "source-manifest.json",
+      "length": 15330
+    },
+    {
+      "sha256": "14219678BC44B489B53813A4EC7D0F6193B3C2276630F536ED1F4384081A57BE",
+      "path": "source-paths.txt",
+      "length": 5065
+    },
+    {
+      "sha256": "536EEE2B9CCD1A6780C3F81B2557A3A537BF39DD74A21B8EFA8A0F0F963736C1",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\api\\Browse.java",
+      "length": 1097
+    },
+    {
+      "sha256": "71BD05147703B1A90DACCAE57BCD722F15C56CBA6C7C623EADF295BC28660231",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\api\\Products.java",
+      "length": 1218
+    },
+    {
+      "sha256": "8E2D4A3A01CBD94F845E66CF7CF136D0DBC86A3232FAF6FD808BA187A4549C53",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\api\\ReturnPolicy.java",
+      "length": 1203
+    },
+    {
+      "sha256": "24F820B3E296CD7564F1EE21A9A3840460B984A7465D062B55F9BCB88C08EDB6",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\infrastructure\\JdbcBrowse.java",
+      "length": 8415
+    },
+    {
+      "sha256": "AA89D22788207FC1C007A5F2DD06FA4A54B4669840AB08E2711C890103B6D61E",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\infrastructure\\JdbcProducts.java",
+      "length": 9358
+    },
+    {
+      "sha256": "AB14540A23EC3CD10F2263C75F2CCBB4EDF499A75E42CA5D1B0D095B4FD75718",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\catalog\\web\\ProductController.java",
+      "length": 4052
+    },
+    {
+      "sha256": "261E20C6E96C17AAC799EFED0525494D129C54293FC23A21C6935E383CBED90D",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\api\\Claims.java",
+      "length": 1129
+    },
+    {
+      "sha256": "FDDC427D401EC2B5F2BF42514867D5748F1050E03CC03AC1FDE98ED166D26A80",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\api\\FinancialIntents.java",
+      "length": 1235
+    },
+    {
+      "sha256": "B76EEE9579EDBE753E08E4BF86DF68AAF9478D5248D8319E397E904565230CA9",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\api\\ReturnFees.java",
+      "length": 2043
+    },
+    {
+      "sha256": "73423D24932614A96117F540E6ECC56F5E3F7AEB03501F18C8B27FD02A04B868",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\domain\\ClaimRules.java",
+      "length": 2939
+    },
+    {
+      "sha256": "4AB090107E0B5BBAFA839C40A5A7B3528C97E18757EAF7BF171C3443D6227446",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\infrastructure\\ClaimJobs.java",
+      "length": 989
+    },
+    {
+      "sha256": "06B2DE061FC31782AA9EE610716166A59DF3DC3AA3942F0289CB7E7F05471449",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\infrastructure\\JdbcClaims.java",
+      "length": 18589
+    },
+    {
+      "sha256": "B940BC630FC21BF48974D0792ED417BB4A2A929F43D7C5DEF8A9AC74AF33544F",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\infrastructure\\JdbcFinancialIntents.java",
+      "length": 8825
+    },
+    {
+      "sha256": "E063482099AF64DF8F13D14095FF7EF705CBDD7632872EEB8AB3E00096938686",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\infrastructure\\JdbcFinancialResults.java",
+      "length": 5364
+    },
+    {
+      "sha256": "BEE5B9DA8ADE330E9097DBED2785F43B7A2F87EF5503A8A54B2DBB41DB12C614",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\infrastructure\\JdbcReturnFees.java",
+      "length": 31150
+    },
+    {
+      "sha256": "1E140365A6B5D46D245AC16D5011868D138A92A10B34169EE509AA53109535E9",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\web\\ClaimController.java",
+      "length": 4228
+    },
+    {
+      "sha256": "1A41257878A7897B63739CE36B07C1CFE8734FD83A31A7E2E8B833C468DC0EEA",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\claim\\web\\ClaimErrors.java",
+      "length": 1044
+    },
+    {
+      "sha256": "F6D0A81458899154308C9217A0D5F075EA4CDA8A9223990B5AECC519B37CDF2D",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\identity\\api\\PurchaseSessions.java",
+      "length": 364
+    },
+    {
+      "sha256": "84F35CEA0F8A68AFAA726AB0D1E1583D422F632C1B446EE71204A2E87A9AFA9D",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\inventory\\api\\Restitutions.java",
+      "length": 540
+    },
+    {
+      "sha256": "98E58FEAFCD2EC14F094BB19DCD9F07CA94AA173088DB8061E4DB770361FC495",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\inventory\\infrastructure\\JdbcRestitutions.java",
+      "length": 5174
+    },
+    {
+      "sha256": "2ADAF07FB2C5AFC003B6F66A3202DCB7D4086DF6C3DE79CA58D54B9AD9E5232D",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\AftercareSettlements.java",
+      "length": 691
+    },
+    {
+      "sha256": "E4CE4626332E1023AA74E977B2B354F55CFD77B9E4AEFF162FA8684BD81BDF2C",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\CancellationOrders.java",
+      "length": 902
+    },
+    {
+      "sha256": "7D3CE686200EC9DE94E141CDFB4DB557A6D631E7501CBEEEC92E140375E1A058",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\OrderQueries.java",
+      "length": 3157
+    },
+    {
+      "sha256": "84E774084E575E7A38BC3E97DBED2929D6A3B2F494C651583DD3C6C9EBD163B4",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\Orders.java",
+      "length": 1763
+    },
+    {
+      "sha256": "6125774C6FF92C20B1506C69C4FDE82A8DADF56EA0E213313E1B753B05A9FB60",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\OrderUnitHolds.java",
+      "length": 689
+    },
+    {
+      "sha256": "466268B8E042B40A8C67CAA6578642E36A9B3698D2DB35160EC980AE069B3041",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\api\\ReturnSources.java",
+      "length": 876
+    },
+    {
+      "sha256": "D211582449D5C02B7CEC318B0388110627194BF5CE96CC0E5577EBBBB7446128",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcAftercareSettlements.java",
+      "length": 7462
+    },
+    {
+      "sha256": "2BA5AEE3FBB3E7401521753EB00B75F29CB0C98A480D11F0796A7B90EE32D1C2",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcCancellationOrders.java",
+      "length": 5042
+    },
+    {
+      "sha256": "2DE0B570A81449F2121014BFF0CF1FAF884D9A01AFB44D91FF7713705A7A7C08",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcOrderConfirmations.java",
+      "length": 15183
+    },
+    {
+      "sha256": "23670A001171E7D6534482BCBAA52B061CB919CF6E4B04FCE61AE04A3F50081B",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcOrderQueries.java",
+      "length": 13144
+    },
+    {
+      "sha256": "2AF8399FC354C1246FC8477A4613A2F681FA2863CD3D61A16657F95D9AD37093",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcOrders.java",
+      "length": 14474
+    },
+    {
+      "sha256": "7C17EC0CFB301E1B36771C0E49D4CB40E7D45A3A6E6D14896069A4171852EA14",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\order\\infrastructure\\JdbcReturnSources.java",
+      "length": 5078
+    },
+    {
+      "sha256": "CAB515548E01512C7A6E8693C52801FF9D2B3C5E39B92E8C608C293E0FCAC250",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\api\\RefundProvider.java",
+      "length": 466
+    },
+    {
+      "sha256": "BEF503309E1F62FF56B1016753693C01D5830A2F7550C3402CB706097E64F14C",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\api\\Refunds.java",
+      "length": 959
+    },
+    {
+      "sha256": "A0CA8FE309F7661AE2204E80DB8399237C94A3D80003BB6907DCF2704549CD6B",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\infrastructure\\JdbcRefunds.java",
+      "length": 12148
+    },
+    {
+      "sha256": "547B6CD54640C9752919F385B4F3E45772F22637A1E9E8A520B69FC41493FA8A",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\infrastructure\\MockRefundProvider.java",
+      "length": 3788
+    },
+    {
+      "sha256": "D63756E334D06E985E649D8B2DC383BD4B18C2B4BB5843B2B85E68349CE50DEC",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\infrastructure\\PaymentCoordinator.java",
+      "length": 24439
+    },
+    {
+      "sha256": "D3F0971B796A9453D98BCD6DE4D9FB3942F6BA0EA00D3618F5631E1144841C6F",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\payment\\infrastructure\\RefundJobs.java",
+      "length": 624
+    },
+    {
+      "sha256": "A25EC8EC0BFAA51468FA5917E2E553F885415B1BB5476E7EB74C32530632DACB",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\platform\\api\\JobLeases.java",
+      "length": 248
+    },
+    {
+      "sha256": "048FAB1AFDF6F5D4FF7B158F4A30F89A2186D0637FD5EE54A7A4C3F12A0A8765",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\platform\\api\\Jobs.java",
+      "length": 886
+    },
+    {
+      "sha256": "26A47339DD2FDD4F26E09B8033BDC5FA55DF8AAAE58BC14DBF030EFAE1A9D914",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\platform\\api\\Outbox.java",
+      "length": 281
+    },
+    {
+      "sha256": "64263B5828041C9C14368CF9650ED7551F79E15D82B45F13CEA67593097BAAED",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\promotion\\api\\CouponReservations.java",
+      "length": 1318
+    },
+    {
+      "sha256": "1774C0257352D38AFDA0708E9A260EC9F11B04B13EE688738C5D6F01C772A68C",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\promotion\\api\\Quotes.java",
+      "length": 1897
+    },
+    {
+      "sha256": "523EF4DB4BBEAC029EC0933973A60735994D1C5A85DB3F7175047EE4A7405D38",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\promotion\\domain\\QuoteCalculator.java",
+      "length": 5041
+    },
+    {
+      "sha256": "57516448FC0BD31902A6DF2A929559E585D754F6ED37425BFC7D48090F54E200",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\promotion\\infrastructure\\JdbcQuotes.java",
+      "length": 6885
+    },
+    {
+      "sha256": "CE8FEFE3F6AC389EB687DF590443D542C15BAB0F16ADDBB2768707F16BE4CE0F",
+      "path": "source\\backend\\src\\main\\java\\com\\example\\marketplace\\promotion\\web\\QuoteController.java",
+      "length": 3195
+    },
+    {
+      "sha256": "F44C97CCCD9CCBC9E1B521A509470ED3CBDA9157A47A7A581BF3C2E1508BEA83",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V41__cancellation_inventory_restitutions.sql",
+      "length": 2220
+    },
+    {
+      "sha256": "A7657187B22D8A354541D733A28EBB81CA82B1B6EBAA5BECC94F32CDBE8CAFE5",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V42__customer_refund_attempts.sql",
+      "length": 5023
+    },
+    {
+      "sha256": "F9C103D3B821D9C943E495C4522C5ED3501376F6B0BCC8278DECAB1DD00766B1",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V43__unshipped_cancellation_claims.sql",
+      "length": 2339
+    },
+    {
+      "sha256": "56D8EBA2B06EF304253B000182CC5A45314B22BFFBD9DFA402719636BACF97F6",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V44__cancellation_shipping_and_order_settlement.sql",
+      "length": 2658
+    },
+    {
+      "sha256": "D705F150FAF9F06D59429E0D0C55B695FE56AB8A1DD90363BA3A1F82C1C0A251",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V45__product_return_policy_and_order_snapshot.sql",
+      "length": 2437
+    },
+    {
+      "sha256": "AC273CC291C8F4244DD2A8F44333454FC3C956929511E00EEED4FB941CDF2583",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V46__claim_refund_result_receipts.sql",
+      "length": 801
+    },
+    {
+      "sha256": "208D75FCACF58EDAA2B6407DF3D5AF06D6025BC55E9971C7C78985483B04D3C2",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V47__attributed_refund_financial_intents.sql",
+      "length": 7087
+    },
+    {
+      "sha256": "2867CCEC50D0D26BF9372C52091ED1A1373EC0A654A82AFE1B0BC41CEB90837A",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V48__original_shipment_fee_quotes.sql",
+      "length": 2590
+    },
+    {
+      "sha256": "C34C2CBBFBA2359E5DAAACD10C81FEEEAB4BFCB4924DD701C78297A22F6569A9",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V49__return_fee_acceptance_and_bindings.sql",
+      "length": 17555
+    },
+    {
+      "sha256": "0A512B139F8DFED2473F3940D554EA4BBF90E49DD9EC2DCF0E0994CA866A6EA7",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V50__qualify_fee_guard_parameters.sql",
+      "length": 4881
+    },
+    {
+      "sha256": "3B23020F7E695A2BC7DEB2FE90FD8F6622DD87922921FE02931E99FC273AA134",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V51__durable_return_financial_results.sql",
+      "length": 2747
+    },
+    {
+      "sha256": "E01758E38BCBEF4BE590AB596F38EF7AA3E1EAFA641EF459F5E51BB26AF2213D",
+      "path": "source\\backend\\src\\main\\resources\\db\\migration\\V52__fee_application_and_withdrawal_receipts.sql",
+      "length": 4214
+    },
+    {
+      "sha256": "A7B1AD214A908E63034AB274F7FB52936A7CAFF39E1A85F73D0E3ACDD3B29BDC",
+      "path": "source\\backend\\src\\test\\java\\com\\example\\marketplace\\claim\\domain\\ClaimRulesTest.java",
+      "length": 4186
+    },
+    {
+      "sha256": "DE82871C975F4138C65AA84B1D52B739F1B4393A98F5F6F3231A96E6ADA303A2",
+      "path": "source\\backend\\src\\test\\java\\com\\example\\marketplace\\dbtest\\PostgresJdbcIT.java",
+      "length": 867092
+    },
+    {
+      "sha256": "ACF79104963196A19EDE6C58E8DCF0B565E14CECAD7C82C0B1D7DAB137E90921",
+      "path": "source\\backend\\src\\test\\java\\com\\example\\marketplace\\dbtest\\RefundWorkerProbe.java",
+      "length": 5591
+    },
+    {
+      "sha256": "2A66BF20354BE981B837EDE30738254A84A492E87FFF17A95334DDFCF12E517E",
+      "path": "source\\verification\\required-tests.json",
+      "length": 50583
+    },
+    {
+      "sha256": "289FE8088301832CE87381D3F07D06BB1ACD14A8670B00FA50722E2C44CB0D54",
+      "path": "source\\verify.ps1",
+      "length": 5641
+    },
+    {
+      "sha256": "B3AE46C088A598DAA381FA3A0F13BB5F458B20D511F6E98D64B367AD56C7293F",
+      "path": "tracked-diff.patch",
+      "length": 110573
+    }
+  ]
+}

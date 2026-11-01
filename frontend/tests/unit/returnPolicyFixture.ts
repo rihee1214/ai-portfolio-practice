@@ -1,0 +1,1 @@
+export const policyFixture=(productId='00000000-0000-4000-8000-000000000003',amount='3000')=>({productId,revision:0,source:'PRODUCT_DEFAULT_3000',amount,version:'P09-RETURN-PRODUCT-MAX-1',basis:'ORIGINAL_SHIPMENT',aggregation:'RETURNED_TARGET_CUMULATIVE_MAX',repeat:'DELTA_ONLY'})

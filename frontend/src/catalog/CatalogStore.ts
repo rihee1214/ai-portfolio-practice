@@ -1,9 +1,10 @@
+import {returnPolicyValid,type ReturnPolicy} from './ReturnPolicy'
 import { requestJson, type JsonResult } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import type { AuthStore } from '../auth/AuthStore'
 
 export type Category = { id: string; name: string; active: boolean; version: number }
-export type Product = { id: string; slug: string; title: string; description: string; categoryId: string; state: 'DRAFT' | 'ACTIVE' | 'STOPPED' | 'ARCHIVED'; version: number; hiddenByAdmin: boolean }
+export type Product = { id: string; slug: string; title: string; description: string; categoryId: string; state: 'DRAFT' | 'ACTIVE' | 'STOPPED' | 'ARCHIVED'; version: number; hiddenByAdmin: boolean; returnPolicy: ReturnPolicy }
 export const productStates = { DRAFT: '초안', ACTIVE: '공개 등록', STOPPED: '판매 중지', ARCHIVED: '보관' }
 const object = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
 const uuid = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(v)
@@ -11,7 +12,7 @@ const text = (v: unknown, max: number, required = false) => typeof v === 'string
 const base = (v: unknown): v is Record<string, unknown> => object(v) && uuid(v.id) && Number.isSafeInteger(v.version) && Number(v.version) >= 0
 export const categoryValid = (v: unknown): v is Category => base(v) && text(v.name, 80, true) && typeof v.active === 'boolean'
 export const productValid = (v: unknown): v is Product => base(v) && uuid(v.categoryId) && typeof v.slug === 'string' && /^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$/.test(v.slug)
-  && text(v.title, 120, true) && text(v.description, 4000) && Object.keys(productStates).includes(String(v.state)) && typeof v.hiddenByAdmin === 'boolean'
+  && text(v.title, 120, true) && text(v.description, 4000) && Object.keys(productStates).includes(String(v.state)) && typeof v.hiddenByAdmin === 'boolean' && returnPolicyValid(v.returnPolicy,String(v.id))
 type State<T> = { items: T[] | undefined; page: number; hasMore: boolean; busy: boolean; error: ApiErrorView | null; notice: string }
 export class CatalogStore<T extends { id: string; version: number }> {
   private state: State<T> = this.empty()
