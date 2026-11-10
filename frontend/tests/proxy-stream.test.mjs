@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { createServer } from 'node:http'
+import { Agent, createServer } from 'node:http'
 import { setTimeout as delay } from 'node:timers/promises'
 import { setInterval, clearInterval } from 'node:timers'
 import { performance } from 'node:perf_hooks'
@@ -9,6 +9,44 @@ import { createServer as createViteServer, preview } from 'vite'
 import { resolve } from 'node:path'
 import { proxyViteConfig } from './proxyViteConfig.mjs'
 import { requestJson } from '../src/api/http.ts'
+
+test('pooled preview reuses the upstream socket but forwards only each request’s own credentials',async()=>{
+  let connections=0
+  const upstream=createServer(async(req,res)=>{
+    if(req.url==='/api/interrupted'){
+      res.writeHead(200,{'Content-Type':'application/json'})
+      res.write('{"partial":');await delay(25);res.destroy();return
+    }
+    res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store'})
+    res.end(JSON.stringify({cookie:req.headers.cookie??null,csrf:req.headers['x-csrf-token']??null}))
+  })
+  upstream.on('connection',()=>connections++)
+  await new Promise(resolve=>upstream.listen(0,'127.0.0.1',resolve))
+  const agent=new Agent({keepAlive:true})
+  let server
+  try{
+    const config=await proxyViteConfig('http://127.0.0.1:'+upstream.address().port,agent)
+    server=await preview({...config,preview:{host:'127.0.0.1',port:0}})
+    const url='http://127.0.0.1:'+server.httpServer.address().port+'/api/whoami'
+    for(const id of ['first','second',null]){
+      const headers=id?{Cookie:'member='+id,'X-CSRF-TOKEN':id}:{}
+      const r=await fetch(url,{headers})
+      assert.equal(r.status,200)
+      assert.equal(r.headers.get('Cache-Control'),'no-store')
+      assert.deepEqual(await r.json(),{cookie:id?'member='+id:null,csrf:id})
+    }
+    assert.equal(connections,1)
+    const interrupted=await requestJson(url.replace('whoami','interrupted'))
+    assert.equal(interrupted.kind,'network')
+    const renewed=await fetch(url,{headers:{Cookie:'member=fresh'}})
+    assert.deepEqual(await renewed.json(),{cookie:'member=fresh',csrf:null})
+    assert.equal(connections,2)
+  }finally{
+    if(server)await server.close()
+    agent.destroy()
+    await new Promise(resolve=>upstream.close(resolve))
+  }
+})
 
 for (const mode of ['dev', 'preview']) {
   test(`${mode}: real partial responses terminate on upstream failure`, { concurrency: true }, async t => {

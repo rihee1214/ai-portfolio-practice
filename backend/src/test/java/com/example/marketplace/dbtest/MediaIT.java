@@ -39,7 +39,7 @@ class MediaIT extends PostgresContractFixture {
         assertTrue(media.content(null,asset.assetId()).length>0);
         jdbc.update("UPDATE marketplace.catalog_category SET active=false WHERE id=:id",Map.of("id",product.categoryId())); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(null,asset.assetId()));
         jdbc.update("UPDATE marketplace.catalog_category SET active=true WHERE id=:id",Map.of("id",product.categoryId()));
-        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",product.id())); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(null,asset.assetId())); assertTrue(media.content(owner,asset.assetId()).length>0);
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",product.id())); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(null,asset.assetId())); assertTrue(media.ownerPreview(owner,asset.assetId()).length>0);
         jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=false WHERE id=:id",Map.of("id",product.id()));
         var store=context.getBean(com.example.marketplace.seller.api.Stores.class).own(owner);
         var storeAsset=media.upload(owner,"stores",store.id(),0,0,"매대","x.png",png); assertEquals(1,media.published("stores",store.slug()).size());
@@ -49,7 +49,7 @@ class MediaIT extends PostgresContractFixture {
         assertTrue(media.content(owner,storeAsset.assetId()).length>0);
         assertThrows(com.example.marketplace.seller.api.StoreException.class,()->media.delete(owner,"stores",store.id(),0,1));
         jdbc.update("UPDATE marketplace.seller_store SET visible=true,state='OPEN' WHERE id=:id",Map.of("id",store.id()));
-        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",owner)); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(owner,asset.assetId()));
+        jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",Map.of("id",owner)); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.ownerPreview(owner,asset.assetId()));
         jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",Map.of("id",owner));
         jdbc.update("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",Map.of("id",owner)); assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(owner,storeAsset.assetId()));
     }
@@ -139,7 +139,7 @@ class MediaIT extends PostgresContractFixture {
             var media=new com.example.marketplace.media.infrastructure.JdbcMedia(new NamedParameterJdbcTemplate(pool),context.getBean(com.example.marketplace.catalog.api.Products.class),context.getBean(com.example.marketplace.seller.api.Stores.class),files,new com.example.marketplace.media.infrastructure.ImageNormalizer(),manager);
             var pending=new java.util.concurrent.atomic.AtomicReference<java.util.concurrent.Future<byte[]>>();
             new TransactionTemplate(manager).executeWithoutResult(status->{
-                pending.set(executor.submit(()->media.content(owner,asset.assetId())));
+                pending.set(executor.submit(()->media.ownerPreview(owner,asset.assetId())));
                 long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(1);
                 while(pool.getHikariPoolMXBean().getThreadsAwaitingConnection()==0&&System.nanoTime()<deadline) {
                     try { Thread.sleep(10); } catch(InterruptedException e) { throw new IllegalStateException(e); }
@@ -201,11 +201,19 @@ class MediaIT extends PostgresContractFixture {
         var out=new java.io.ByteArrayOutputStream(); javax.imageio.ImageIO.write(new java.awt.image.BufferedImage(4,3,java.awt.image.BufferedImage.TYPE_INT_RGB),"png",out);
         var uploaded=mediaUpload(client,path+"/0",out.toByteArray(),"picture.png",0,"상품 사진",true); assertEquals(200,uploaded.statusCode(),uploaded.body());
         var asset=authMapper.readTree(uploaded.body()).get("assetId").asText(); String binary="/api/media/"+asset+"/content";
-        assertEquals(200,accountRequest(client,"GET",binary,null,null).statusCode()); assertEquals(404,accountRequest(authBrowser(),"GET",binary,null,null).statusCode());
+        String preview="/api/media/owner/"+asset+"/preview";
+        assertEquals(200,accountRequest(client,"GET",preview,null,null).statusCode());
+        assertEquals(404,accountRequest(client,"GET",binary,null,null).statusCode()); assertEquals(404,accountRequest(authBrowser(),"GET",binary,null,null).statusCode());
         context.getBean(com.example.marketplace.catalog.api.Products.class).save(owner,product.id(),new com.example.marketplace.catalog.api.Products.Input(product.categoryId(),product.slug(),product.title(),"","ACTIVE",0L));
         var publicRead=accountRequest(authBrowser(),"GET",binary,null,null); assertEquals(200,publicRead.statusCode()); assertEquals("no-store",publicRead.headers().firstValue("Cache-Control").orElseThrow()); assertEquals("image/png",publicRead.headers().firstValue("Content-Type").orElseThrow());
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",product.id()));
+        assertEquals(404,accountRequest(client,"GET",binary,null,null).statusCode());
+        assertEquals(200,accountRequest(client,"GET",preview,null,null).statusCode());
+        var outsider=supportFixture("d-media-outsider","CONTENT").browser();
+        assertEquals(404,accountRequest(outsider,"GET",preview,null,null).statusCode());
         assertEquals(409,mediaUpload(client,path+"/0",out.toByteArray(),"picture.png",0,"낡은 수정",true).statusCode());
         assertEquals(200,mediaUpload(client,path+"/0",out.toByteArray(),"picture.png",1,"교체 사진",true).statusCode()); assertEquals(404,accountRequest(client,"GET",binary,null,null).statusCode());
+        assertEquals(404,accountRequest(client,"GET",preview,null,null).statusCode());
         assertEquals(200,accountRequest(client,"DELETE",path+"/0?version=2",null,csrfToken(client)).statusCode());
         var deleted=authMapper.readTree(accountRequest(client,"GET",path,null,null).body()).get(0); assertTrue(deleted.get("assetId").isNull()); assertEquals(3,deleted.get("version").asLong());
         assertEquals(409,mediaUpload(client,path+"/0",out.toByteArray(),"picture.png",0,"재생성 충돌",true).statusCode());

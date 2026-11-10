@@ -14,11 +14,11 @@ export function MediaPanel({ kind, target, disabled = false }: { kind: 'products
     <p>JPEG·PNG·WebP 파일, 5MB 이하, 가로·세로 4096px 이하 및 총 1600만 픽셀 이하를 지원합니다. 애니메이션은 지원하지 않습니다. PNG로 변환한 결과가 5MB를 넘으면 저장할 수 없습니다.</p>
     <p>교체·삭제하면 이전 이미지 주소는 사용할 수 없습니다. 사진 방향은 올바르게 맞춘 뒤 올려 주세요.</p>
     {state.busy && <p role="status">이미지를 처리하고 있습니다.</p>}{state.error && <ApiErrorNotice error={state.error} />}{state.notice && <p role="status">{state.notice}</p>}
-    {state.items?.map(slot => <MediaForm key={slot.slot + ':' + slot.version} item={slot} disabled={disabled || state.busy} save={(file, alt) => store.save(slot, file, alt)} />)}
+    {state.items?.map(slot => <MediaForm key={slot.slot + ':' + slot.version} kind={kind} item={slot} disabled={disabled || state.busy} save={(file, alt) => store.save(slot, file, alt)} />)}
     <button disabled={state.busy} onClick={() => void store.load()}>이미지 다시 확인</button>
   </section>
 }
-function MediaForm({ item, disabled, save }: { item: MediaSlot; disabled: boolean; save: (file: File | null, alt: string) => void }) {
+function MediaForm({ kind, item, disabled, save }: { kind: 'products' | 'stores'; item: MediaSlot; disabled: boolean; save: (file: File | null, alt: string) => void }) {
   const [error, setError] = useState(''); const [confirmed, confirm] = useState(false)
   function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault(); const data = new FormData(event.currentTarget); const file = data.get('file'); const alt = String(data.get('alt') ?? '').trim()
@@ -26,7 +26,7 @@ function MediaForm({ item, disabled, save }: { item: MediaSlot; disabled: boolea
     setError(''); save(file, alt)
   }
   return <form onSubmit={submit}><fieldset disabled={disabled}><legend>이미지 {item.slot + 1}</legend>
-    {item.assetId ? <img className="managed-image" src={'/api/media/' + item.assetId + '/content'} alt={item.alt} /> : <p>등록된 이미지가 없습니다.</p>}
+    {item.assetId ? <img className="managed-image" src={kind === 'products' ? '/api/media/owner/' + item.assetId + '/preview' : '/api/media/' + item.assetId + '/content'} alt={item.alt} /> : <p>등록된 이미지가 없습니다.</p>}
     <label>이미지 파일 {item.slot + 1}<input name="file" type="file" accept=".jpg,.jpeg,.png,.webp" /></label>
     <label>이미지 설명 {item.slot + 1}<input name="alt" defaultValue={item.alt} /></label>
     <button type="submit">이미지 {item.slot + 1} {item.assetId ? '교체' : '업로드'}</button>

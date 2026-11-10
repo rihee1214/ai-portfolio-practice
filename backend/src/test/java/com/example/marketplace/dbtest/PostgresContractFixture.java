@@ -300,7 +300,7 @@ class PostgresContractFixture {
     protected String browserSession(HttpClient browser) {return new String(java.util.Base64.getDecoder().decode(cookieValue(browser)),java.nio.charset.StandardCharsets.UTF_8);}
     /** Actual current application ports seed only duplicate checkout/shipping setup; browser still owns confirmation HTTP/UI assertions. */
     protected void seedConfirmationBrowserOrders(String project) throws Exception {
-        for(String scenario:List.of("confirmationmember","confirmationguest","confirmationfailure","confirmationlate")) {boolean guest=scenario.equals("confirmationguest");var client=authBrowser();csrfToken(client);UUID member=guest?null:jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE email=:email",Map.of("email","order-"+scenario+"-"+project+"@example.com"),UUID.class);Long version=null;if(member!=null) {assertEquals(200,authRequest(client,"/api/auth/login",loginForm("order-"+scenario+"-"+project+"@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());version=jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",Map.of("id",member),Long.class);}String browser=browserSession(client);UUID attempt=null;com.example.marketplace.guest.api.GuestOrders guestPort=null;if(guest) {var f=new GuestFixture(browser,Instant.now());attempt=guestVerified(f);var access=guestAccess(f);access.prepare(browser,attempt,new com.example.marketplace.guest.api.GuestPassword("f2 actual guest password","f2 actual guest password"));guestPort=access;}
+        for(String scenario:List.of("confirmationmember","confirmationguest","confirmationfailure","confirmationlate","reviewmember","questionmember")) {boolean guest=scenario.equals("confirmationguest");var client=authBrowser();csrfToken(client);UUID member=guest?null:jdbc.queryForObject("SELECT id FROM marketplace.identity_user WHERE email=:email",Map.of("email","order-"+scenario+"-"+project+"@example.com"),UUID.class);Long version=null;if(member!=null) {assertEquals(200,authRequest(client,"/api/auth/login",loginForm("order-"+scenario+"-"+project+"@example.com",SIGNUP_PASSWORD),csrfToken(client)).statusCode());version=jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",Map.of("id",member),Long.class);}String browser=browserSession(client);UUID attempt=null;com.example.marketplace.guest.api.GuestOrders guestPort=null;if(guest) {var f=new GuestFixture(browser,Instant.now());attempt=guestVerified(f);var access=guestAccess(f);access.prepare(browser,attempt,new com.example.marketplace.guest.api.GuestPassword("f2 actual guest password","f2 actual guest password"));guestPort=access;}
             var lines=new java.util.ArrayList<com.example.marketplace.promotion.api.Quotes.LineRequest>();for(String side:List.of("a","b")) {UUID sku=jdbc.queryForObject("SELECT k.id FROM marketplace.catalog_sku k JOIN marketplace.catalog_product p ON p.id=k.product_id WHERE p.slug=:slug",Map.of("slug","p4b-browse-order-"+scenario+"-"+project+"-"+side),UUID.class);lines.add(quoteLine(sku,side.equals("a")?5:1));}var q=quotes().calculate(member,lines,List.of());var contact=new com.example.marketplace.order.api.Orders.Contact("F2 구매자","01012345678","F2 수령인","01087654321","01234","서울시 B 배송 검증 주소","101호");var input=new com.example.marketplace.order.infrastructure.OrderCreationService.Input("p09-b-browser-"+scenario+"-"+project,lines,List.of(),q.fingerprint(),contact,attempt,guest?0:null);var saved=guest?creationWith(guestPort,stage->{ }).create(browser,null,null,input):creation().createForSession(browser,member,version,null,input);var authority=new com.example.marketplace.payment.api.Payments.Authority(browser,member,version,null);assertEquals("PAID",payments().approve(saved.orderNumber(),authority).orderState());var fixture=new PaymentFixture(saved,client,authority);shipmentJob(settlementJob(fixture),Instant.now());
             UUID seller=jdbc.queryForObject("SELECT so.id FROM marketplace.seller_order so JOIN marketplace.seller_store s ON s.id=so.store_id JOIN marketplace.identity_user u ON u.id=s.owner_id WHERE so.order_id=:id AND u.email=:email",Map.of("id",saved.id(),"email","p4b-browse-order-"+scenario+"-"+project+"-a@example.com"),UUID.class);var actor=asSeller(fixture,seller);var source=shipments().seller(seller,shipmentAuthority(actor)).getFirst();var split=shipments().split(source.id(),shipmentAuthority(actor),splitCommand(source,"browser-two",2));var target=shipments().seller(seller,shipmentAuthority(actor)).stream().filter(s->s.id().equals(split.target().id())).findFirst().orElseThrow();shipments().ship(target.id(),shipmentAuthority(actor),shipCommand(target,"browser-target"));for(String stage:List.of("IN_TRANSIT","DELIVERED")) {UUID job=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key","progress:"+target.id()+":"+stage),UUID.class);Instant at=context.getBean(com.example.marketplace.platform.api.Jobs.class).find(job).orElseThrow().command().nextRunAt();shipmentJob(job,at);}assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_initial_delivery_unit WHERE order_id=:id",Map.of("id",saved.id()),Integer.class));assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_confirmation WHERE order_id=:id",Map.of("id",saved.id()),Integer.class));
         }
@@ -1912,7 +1912,7 @@ class PostgresContractFixture {
     }
 
     protected void assertPlannedCurrentUpgrade(Flyway migration,int oldVersion) {
-        final int plannedCurrent=107;var expectedVersions=java.util.stream.IntStream.rangeClosed(oldVersion+1,plannedCurrent).mapToObj(Integer::toString).toList();var pending=java.util.Arrays.stream(migration.info().pending()).toList();assertEquals(expectedVersions,pending.stream().map(i->i.getVersion().toString()).toList(),"fixed source planned versions, never actual result as expectation");var expectedChecksums=new java.util.LinkedHashMap<String,Integer>();for(var info:pending){assertNotNull(info.getChecksum());expectedChecksums.put(info.getVersion().toString(),info.getChecksum());}
+        final int plannedCurrent=116;var expectedVersions=java.util.stream.IntStream.rangeClosed(oldVersion+1,plannedCurrent).mapToObj(Integer::toString).toList();var pending=java.util.Arrays.stream(migration.info().pending()).toList();assertEquals(expectedVersions,pending.stream().map(i->i.getVersion().toString()).toList(),"fixed source planned versions, never actual result as expectation");var expectedChecksums=new java.util.LinkedHashMap<String,Integer>();for(var info:pending){assertNotNull(info.getChecksum());expectedChecksums.put(info.getVersion().toString(),info.getChecksum());}
         try{java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"planned-upgrade-"+oldVersion+"-"+UUID.randomUUID()+".json"),authMapper.writeValueAsString(Map.of("from",oldVersion,"plannedCurrent",plannedCurrent,"expectedVersions",expectedVersions,"sourceChecksumsBeforeApply",expectedChecksums)));}catch(java.io.IOException failure){throw new IllegalStateException(failure);}
         assertEquals(plannedCurrent-oldVersion,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);migration.validate();var target=new NamedParameterJdbcTemplate(migration.getConfiguration().getDataSource());var actualChecksums=new java.util.LinkedHashMap<String,Integer>();target.query("SELECT version,checksum FROM marketplace.flyway_schema_history WHERE success AND version IS NOT NULL AND version::integer>:old ORDER BY version::integer",Map.of("old",oldVersion),(r,n)->{actualChecksums.put(r.getString("version"),r.getInt("checksum"));return 0;});assertEquals(expectedChecksums,actualChecksums);assertEquals(0,target.queryForObject("SELECT count(*) FROM marketplace.job WHERE claim_checked_at IS NOT NULL",Map.of(),Integer.class),"legacy observed decisions remain absent");assertEquals(0,target.queryForObject("SELECT count(*) FROM marketplace.job_claim_fact",Map.of(),Integer.class),"historical due facts are never invented");
     }
@@ -2157,6 +2157,20 @@ class PostgresContractFixture {
                 .reduce((first, second) -> second).orElseThrow().token();
     }
 
+    protected java.net.http.HttpResponse<String> upload(java.net.http.HttpClient client,String path,String filename,
+            byte[] bytes,String csrf) throws Exception {
+        String boundary="review"+UUID.randomUUID().toString().replace("-","");
+        var body=new java.io.ByteArrayOutputStream();
+        body.write(("--"+boundary+"\r\nContent-Disposition: form-data; name=\"file\"; filename=\""+filename+
+                "\"\r\nContent-Type: application/octet-stream\r\n\r\n").getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+        body.write(bytes);
+        body.write(("\r\n--"+boundary+"--\r\n").getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+        var request=java.net.http.HttpRequest.newBuilder(java.net.URI.create("http://127.0.0.1:"+port+path))
+                .header("Content-Type","multipart/form-data; boundary="+boundary);
+        if (csrf!=null) {request.header("X-CSRF-TOKEN",csrf);}
+        return client.send(request.POST(java.net.http.HttpRequest.BodyPublishers.ofByteArray(body.toByteArray())).build(),
+                java.net.http.HttpResponse.BodyHandlers.ofString());
+    }
     protected HttpResponse<String> accountRequest(HttpClient browser, String method, String path, Object body, String csrf) throws Exception {
         var request = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path))
                 .header("Content-Type", "application/json")
@@ -2256,7 +2270,7 @@ class PostgresContractFixture {
             jdbc.update("INSERT INTO marketplace.inventory_balance(sku_id,on_hand) VALUES(:id,10)",Map.of("id",inputOption.id()));
         }
         for(String project:List.of("desktop","mobile")) {
-            for(String scenario:List.of("create","guest","conflict","historyguest","shipmentmember","shipmentguest","shipmentkeyboard","shipmentsplit","shipmenteditfailure","confirmationmember","confirmationguest","confirmationfailure","confirmationlate","gmember","gguest","ghistory","gpost","gpostguest")) {
+            for(String scenario:List.of("create","guest","conflict","historyguest","shipmentmember","shipmentguest","shipmentkeyboard","shipmentsplit","shipmenteditfailure","confirmationmember","confirmationguest","confirmationfailure","confirmationlate","reviewmember","questionmember","gmember","gguest","ghistory","gpost","gpostguest")) {
                 UUID buyer=(scenario.equals("guest")||scenario.equals("historyguest")||scenario.equals("shipmentguest")||scenario.equals("confirmationguest")||scenario.equals("gguest")||scenario.equals("gpostguest"))?null:activeMember("order-"+scenario+"-"+project+"@example.com");
                 for(String side:List.of("a","b","c")) {
                     var fixture=browseFixture("order-"+scenario+"-"+project+"-"+side,side.equals("a")?10000:20000,10);
@@ -2265,6 +2279,7 @@ class PostgresContractFixture {
                 }
             }
             seedConfirmationBrowserOrders(project);
+            supportFixture("b-ui-"+project,"SUPPORT");
             seedPendingShipmentBrowserOrders(project);
             seedCancellationBrowserOrders(project);
             seedReturnBrowserOrders(project);
@@ -2322,6 +2337,8 @@ class PostgresContractFixture {
         var builder = new ProcessBuilder(node.toString(), "node_modules/@playwright/test/cli.js", "test",
                 "--config=auth-e2e/playwright.config.ts").directory(root.resolve("frontend").toFile());
         if("1".equals(System.getenv("P09_F_BROWSER_ONLY"))) { builder.command().add("refund-reconciliation.spec.ts"); }
+        if("1".equals(System.getenv("P10_B_BROWSER_ONLY"))) { builder.command().add("questions-support.spec.ts"); }
+        if("1".equals(System.getenv("P10_A_BROWSER_ONLY"))) { builder.command().add("content.spec.ts"); }
         String gSelection=System.getenv("P09_G_BROWSER_ONLY");
         if(gSelection!=null&&!gSelection.isBlank()) { if(!List.of("1","member-guest","member").contains(gSelection)) { throw new IllegalStateException("Unknown G browser diagnostic selection"); }builder.command().add("post-purchase-complete.spec.ts");if(gSelection.equals("member-guest")) { builder.command().add("--grep=G (member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects|fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries)$"); }if(gSelection.equals("member")) { builder.command().add("--grep=G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects$"); } }
         if("1".equals(System.getenv("P09_C_BROWSER_ONLY"))) { builder.command().add("order-cancellation.spec.ts"); }

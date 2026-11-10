@@ -38,7 +38,7 @@ if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
 $oldPath = $env:PATH
 $wholeClock = [Diagnostics.Stopwatch]::StartNew()
-$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='P09-G local role-based post-purchase UI, SYSTEM query-only refund operations and integrated acceptance; prior P09-A through F contracts preserved; actual Toss merchant SANDBOX F07 and G08 blocked; P10/P11 implementation, commit, push and deploy excluded'; evidence=$output }
+$result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Local marketplace verification. See selection.json for the selected and excluded contracts and the case reports for the executed assertions.'; evidence=$output }
 $result.testPostgres = $endpoint
 $result.resourceOnlyDiagnostic = [bool]$ResourceOnlyDiagnostic
 $result.certificationEligible = -not $ResourceOnlyDiagnostic -and $selection.certificationEligible

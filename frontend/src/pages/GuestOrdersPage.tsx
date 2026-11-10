@@ -7,7 +7,7 @@ export function GuestOrdersPage() {
   const view = useSyncExternalStore(store.subscribe, store.getSnapshot)
   const [number, setNumber] = useState(''), [phone, setPhone] = useState(''), [password, setPassword] = useState('')
   useEffect(() => { void store.load(); const focus = () => { void store.load() }; window.addEventListener('focus', focus); return () => { window.removeEventListener('focus', focus); store.dispose() } }, [store])
-  return <section><h1>비회원 주문 조회</h1><p>주문번호·등록한 전화번호·직접 정한 조회 비밀번호로 인증합니다. 같은 번호만으로 다른 주문 묶음이 연결되지 않습니다.</p>
+  return <section><h1>비회원 주문 조회</h1><Link to="/support/lost-access">조회 자격 상실 지원</Link><p>주문번호·등록한 전화번호·직접 정한 조회 비밀번호로 인증합니다. 같은 번호만으로 다른 주문 묶음이 연결되지 않습니다.</p>
     <p>인증한 묶음의 실제 주문·결제 이력과 매대별 모의 배송 진행을 확인합니다. 조회 자격 참조에는 이전 로컬 검증용 참조가 별도로 남을 수 있습니다.</p>
     {view.busy && <p role="status">조회 정보를 확인하고 있습니다.</p>}{view.error && <p role="alert">{view.error}</p>}
     {view.logoutPending && <><p>서버의 조회 세션 폐기를 확인하지 못했습니다. 로그아웃을 다시 시도해 주세요.</p><button disabled={view.busy} onClick={() => { void store.logout() }}>비회원 조회 로그아웃 다시 시도</button></>}

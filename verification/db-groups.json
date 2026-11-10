@@ -322,6 +322,8 @@
         "browser.wire"
       ],
       "consumes": [
+        "operations.trade-support",
+        "operations.moderation",
         "authority.current",
         "db.transaction",
         "schema.upgrade",
@@ -347,7 +349,11 @@
         "job.current-lease",
         "phone.proof",
         "money.provider-refund-receipt",
-        "money.refund-reconciliation"
+        "money.refund-reconciliation",
+        "content.review",
+        "content.questions",
+        "operations.report",
+        "operations.support"
       ],
       "expectedDatabaseCount": 1
     },
@@ -3678,6 +3684,7 @@
         "com.example.marketplace.dbtest.IdentityIT"
       ],
       "tests": [
+        {"old":"com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget","new":"com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget","invocations":1},
         {
           "old": "com.example.marketplace.dbtest.PostgresJdbcIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
           "new": "com.example.marketplace.dbtest.IdentityIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
@@ -4015,9 +4022,306 @@
       ],
       "consumes": [],
       "expectedDatabaseCount": 0
+    },
+    {
+      "classes": [
+        "com.example.marketplace.dbtest.ContentIT"
+      ],
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "catalog.offer",
+        "catalog.return-policy",
+        "seller.capability",
+        "stock.reservation",
+        "promotion.quote",
+        "promotion.coupon",
+        "order.snapshot",
+        "order.hold",
+        "payment.outcome",
+        "order.current-view",
+        "delivery.actual-source",
+        "order.confirmation",
+        "money.refund",
+        "money.fee",
+        "return.physical",
+        "return.financial",
+        "exchange.physical",
+        "exchange.financial",
+        "guest.current-proof",
+        "job.current-lease",
+        "media.visibility"
+      ],
+      "id": "content",
+      "provides": [
+        "content.review"
+      ],
+      "expectedDatabaseCount": 1,
+      "kind": "domain",
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.ContentIT#partialRefundAndReplacementConfirmationKeepOriginalItemRights",
+          "new": "com.example.marketplace.dbtest.ContentIT#partialRefundAndReplacementConfirmationKeepOriginalItemRights",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ContentIT#concurrentCreationAndRewriteKeepOneReviewAndReplaysDoNotUndoDeletion",
+          "new": "com.example.marketplace.dbtest.ContentIT#concurrentCreationAndRewriteKeepOneReviewAndReplaysDoNotUndoDeletion",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ContentIT#reviewAndImageWritesRecheckSessionAfterContendedReviewLock",
+          "new": "com.example.marketplace.dbtest.ContentIT#reviewAndImageWritesRecheckSessionAfterContendedReviewLock",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ContentIT#ownerConfirmationCreationReplayAndRewriteUseOneReview",
+          "new": "com.example.marketplace.dbtest.ContentIT#ownerConfirmationCreationReplayAndRewriteUseOneReview",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.QuestionsIT#publicAndPrivateQuestionBodiesAndAnswersRespectCurrentReaders",
+          "invocations": 1,
+          "new": "com.example.marketplace.dbtest.QuestionsIT#publicAndPrivateQuestionBodiesAndAnswersRespectCurrentReaders"
+        }
+      ],
+      "expectedDatabaseCount": 1,
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "catalog.offer",
+        "seller.capability",
+        "order.current-view",
+        "guest.current-proof",
+        "media.visibility",
+        "catalog.return-policy",
+        "order.snapshot",
+        "order.hold",
+        "payment.outcome",
+        "promotion.quote",
+        "stock.reservation",
+        "delivery.actual-source",
+        "job.current-lease",
+        "phone.proof",
+        "operations.support"
+      ],
+      "provides": [
+        "content.questions"
+      ],
+      "id": "questions",
+      "classes": [
+        "com.example.marketplace.dbtest.QuestionsIT"
+      ],
+      "kind": "domain"
+    },
+    {
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.SupportIT#lostIntakeAndReassignmentNeverDiscloseAnUnassignedBody",
+          "new": "com.example.marketplace.dbtest.SupportIT#lostIntakeAndReassignmentNeverDiscloseAnUnassignedBody",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SupportIT#orderCasesRequireCurrentMemberOrGasAndMatchingSellerOrder",
+          "new": "com.example.marketplace.dbtest.SupportIT#orderCasesRequireCurrentMemberOrGasAndMatchingSellerOrder",
+          "invocations": 1
+        }
+      ],
+      "expectedDatabaseCount": 1,
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "seller.capability",
+        "order.current-view",
+        "guest.current-proof",
+        "media.visibility",
+        "catalog.offer",
+        "catalog.return-policy",
+        "order.snapshot",
+        "order.hold",
+        "payment.outcome",
+        "promotion.quote",
+        "stock.reservation",
+        "delivery.actual-source",
+        "job.current-lease",
+        "phone.proof",
+        "promotion.coupon"
+      ],
+      "provides": [
+        "operations.support"
+      ],
+      "id": "support",
+      "classes": [
+        "com.example.marketplace.dbtest.SupportIT"
+      ],
+      "kind": "domain"
+    },
+    {
+      "id": "reports",
+      "kind": "domain",
+      "classes": [
+        "com.example.marketplace.dbtest.ReportsIT"
+      ],
+        "expectedDatabaseCount": 2,
+      "provides": [
+        "operations.report"
+      ],
+      "consumes": [
+        "money.refund",
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "catalog.offer",
+        "catalog.return-policy",
+        "seller.capability",
+        "stock.reservation",
+        "media.visibility",
+        "content.review",
+        "content.questions",
+        "operations.support",
+        "order.snapshot",
+        "order.hold",
+        "promotion.quote",
+        "promotion.coupon",
+        "payment.outcome",
+        "order.current-view"
+      ],
+      "tests": [
+        {"old":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","new":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","invocations":1},
+        {"old":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","new":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","invocations":1},
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#productReportsSerializeReplaysSeparateMembersAndKeepQueueMinimal",
+          "new": "com.example.marketplace.dbtest.ReportsIT#productReportsSerializeReplaysSeparateMembersAndKeepQueueMinimal",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#rollingQuotaCountsOnlyNewCasesAndReleasesExpiredEntries",
+          "new": "com.example.marketplace.dbtest.ReportsIT#rollingQuotaCountsOnlyNewCasesAndReleasesExpiredEntries",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#privateAnswerRequiresBothAssignmentsAndNeverSubstitutesAReplacedAttachment",
+          "new": "com.example.marketplace.dbtest.ReportsIT#privateAnswerRequiresBothAssignmentsAndNeverSubstitutesAReplacedAttachment",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#investigationTransitionsReplayAndRollbackWithoutHidingTheTarget",
+          "new": "com.example.marketplace.dbtest.ReportsIT#investigationTransitionsReplayAndRollbackWithoutHidingTheTarget",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#reviewGenerationAndChildKindMustMatchTheCurrentlyVisibleContent",
+          "new": "com.example.marketplace.dbtest.ReportsIT#reviewGenerationAndChildKindMustMatchTheCurrentlyVisibleContent",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "moderation",
+      "kind": "domain",
+      "classes": [
+        "com.example.marketplace.dbtest.ModerationIT"
+      ],
+      "expectedDatabaseCount": 2,
+      "provides": [
+        "operations.moderation"
+      ],
+      "consumes": [
+        "money.refund",
+        "order.hold",
+        "promotion.coupon",
+        "operations.report",
+        "order.confirmation",
+        "delivery.actual-source",
+        "order.snapshot",
+        "order.current-view",
+        "promotion.quote",
+        "payment.outcome",
+        "stock.reservation",
+        "operations.support",
+        "seller.capability",
+        "content.review",
+        "catalog.offer",
+        "media.visibility",
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade"
+      ],
+      "tests": [
+        {"old": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "new": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "invocations": 1},
+        {"old": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "new": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "invocations": 1},
+        {"old": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit", "new": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit", "invocations": 1},
+
+        {
+          "old": "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit",
+          "new": "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "kind": "domain",
+      "classes": [
+        "com.example.marketplace.dbtest.OperationsIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "operations.trade-support"
+      ],
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "operations.support",
+        "operations.report",
+        "operations.moderation",
+        "seller.capability",
+        "order.snapshot",
+        "order.hold",
+        "order.current-view",
+        "delivery.actual-source",
+        "order.confirmation",
+        "money.refund",
+        "money.fee",
+        "money.refund-reconciliation",
+        "return.physical",
+        "return.financial",
+        "payment.outcome",
+        "catalog.offer",
+        "media.visibility",
+        "promotion.quote",
+        "promotion.coupon",
+        "stock.reservation",
+        "job.current-lease",
+        "guest.current-proof",
+        "content.review",
+        "content.questions"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.OperationsIT#restrictedSellerShipsAndHandlesOnlyItsExistingReturnAndOrderInquiry",
+          "new": "com.example.marketplace.dbtest.OperationsIT#restrictedSellerShipsAndHandlesOnlyItsExistingReturnAndOrderInquiry",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.OperationsIT#supportHandoffCannotReleaseUnknownMoneyOrInvokeSystemReconciliation",
+          "new": "com.example.marketplace.dbtest.OperationsIT#supportHandoffCannotReleaseUnknownMoneyOrInvokeSystemReconciliation",
+          "invocations": 1
+        }
+      ]
     }
   ],
   "impact": {
+    "operations": {"select":["operations","support","identity","seller-store","fulfillment","refund","return-physical","return-finance","order-history","guest","content","questions","moderation","reports","browser-api"],"reason":"운영 지원과 계정·판매·기존 주문·환불 권한의 소비 경로"},
+    "moderation": {"select":["moderation","exchange","reports","catalog","content","media","shopping","checkout","order-history","questions","support","confirmation","fulfillment","promotion","refund","legacy","browser-api", "operations"],"reason":"조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"},
     "exchange": {
       "select": [
         "exchange",
@@ -4037,7 +4341,8 @@
         "fulfillment",
         "checkout",
         "payment",
-        "promotion"
+        "promotion",
+        "content"
       ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
@@ -4060,8 +4365,8 @@
         "promotion",
         "exchange",
         "exchange-finance",
-        "exchange-recovery"
-      ],
+        "exchange-recovery",
+        "content", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "return-finance": {
@@ -4082,8 +4387,8 @@
         "promotion",
         "exchange",
         "exchange-recovery",
-        "legacy"
-      ],
+        "legacy",
+        "content", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "exchange-finance": {
@@ -4105,7 +4410,8 @@
         "promotion",
         "exchange",
         "legacy",
-        "inventory"
+        "inventory",
+        "content"
       ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
@@ -4128,8 +4434,9 @@
         "promotion",
         "exchange",
         "exchange-recovery",
-        "catalog"
-      ],
+        "catalog",
+        "content"
+      , "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "inventory": {
@@ -4153,8 +4460,11 @@
         "exchange-recovery",
         "legacy",
         "catalog",
-        "shopping"
-      ],
+        "shopping",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "confirmation": {
@@ -4175,8 +4485,8 @@
         "promotion",
         "exchange-finance",
         "exchange-recovery",
-        "legacy"
-      ],
+        "legacy",
+        "content", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "fulfillment": {
@@ -4197,8 +4507,10 @@
         "payment",
         "promotion",
         "exchange-finance",
-        "exchange-recovery"
-      ],
+        "exchange-recovery",
+        "content",
+        "questions",
+        "support", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "catalog": {
@@ -4224,8 +4536,11 @@
         "exchange-recovery",
         "process-recovery",
         "media",
-        "seller-store"
-      ],
+        "seller-store",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "seller-store": {
@@ -4251,8 +4566,11 @@
         "legacy",
         "inventory",
         "media",
-        "shopping"
-      ],
+        "shopping",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "promotion": {
@@ -4274,8 +4592,10 @@
         "exchange",
         "exchange-recovery",
         "process-recovery",
-        "shopping"
-      ],
+        "shopping",
+        "content",
+        "questions",
+        "support", "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "checkout": {
@@ -4296,8 +4616,10 @@
         "exchange",
         "exchange-finance",
         "exchange-recovery",
-        "legacy"
-      ],
+        "legacy",
+        "content",
+        "questions",
+        "support", "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "payment": {
@@ -4318,8 +4640,10 @@
         "promotion",
         "exchange",
         "exchange-recovery",
-        "legacy"
-      ],
+        "legacy",
+        "content",
+        "questions",
+        "support", "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "guest": {
@@ -4342,16 +4666,21 @@
         "exchange-recovery",
         "process-recovery",
         "legacy",
-        "identity"
-      ],
+        "identity",
+        "content",
+        "questions",
+        "support", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "media": {
       "select": [
         "media",
         "catalog",
-        "browser-api"
-      ],
+        "browser-api",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "shopping": {
@@ -4380,8 +4709,10 @@
         "exchange-finance",
         "exchange-recovery",
         "process-recovery",
-        "legacy"
-      ],
+        "legacy",
+        "content",
+        "questions",
+        "support", "reports", "moderation", "operations"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "identity": {
@@ -4412,8 +4743,11 @@
         "media",
         "seller-store",
         "database-runtime",
-        "phone-provider"
-      ],
+        "phone-provider",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "job-contracts": {
@@ -4444,11 +4778,14 @@
         "seller-store",
         "identity",
         "database-runtime",
-        "phone-provider"
-      ],
-      "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
-    },
-    "database-runtime": {
+        "phone-provider",
+        "content",
+        "questions",
+          "support",
+          "reports", "moderation", "operations"],
+        "reason": "공통 작업 실행기 변경은 등록된 모든 계약 묶음을 검증"
+      },
+      "database-runtime": {
       "select": [
         "database-runtime",
         "payment",
@@ -4476,8 +4813,11 @@
         "media",
         "seller-store",
         "identity",
-        "phone-provider"
-      ],
+        "phone-provider",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "legacy": {
@@ -4508,8 +4848,11 @@
         "seller-store",
         "identity",
         "database-runtime",
-        "phone-provider"
-      ],
+        "phone-provider",
+        "content",
+        "questions",
+        "support",
+        "reports", "moderation", "operations"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "money.refund-reconciliation": {
@@ -4563,6 +4906,21 @@
         "job-contracts"
       ],
       "reason": "F exact provider receipt is consumed by payment, cancellation, return/exchange financial outcomes, recovery, owner views and worker contracts; final common-schema scope is unselected whole."
+    },
+    "content": {
+      "select": [
+        "content",
+        "browser-api", "reports", "moderation", "operations"],
+      "reason": "후기 작성·공개 조회와 구매 브라우저 흐름"
+    },
+    "support": {"select":["support","questions","browser-api", "reports", "moderation", "operations"],"reason":"지원 담당·주문 당사자와 비밀 문의 소비 계약"},
+    "reports": {"select":["reports","content","catalog","media","shopping","checkout","order-history","questions","support","browser-api", "moderation", "operations"],"reason":"신고·콘텐츠 조치의 접근과 공개·구매·기존 거래 소비 계약"},
+    "questions": {
+      "select": [
+        "questions",
+        "support",
+        "browser-api", "reports", "operations"],
+      "reason": "상품 문의와 구매자/판매자 브라우저"
     }
   },
   "aliases": {
@@ -4593,8 +4951,11 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ],
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"],
     "job-runner": [
       "payment",
       "process-recovery",
@@ -4622,8 +4983,11 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ],
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"],
     "financial-common": [
       "payment",
       "process-recovery",
@@ -4651,8 +5015,11 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ],
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"],
     "schema": [
       "payment",
       "process-recovery",
@@ -4680,8 +5047,11 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ],
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"],
     "unknown": [
       "payment",
       "process-recovery",
@@ -4709,8 +5079,11 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ],
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"],
     "test-tools": [
       "payment",
       "process-recovery",
@@ -4738,7 +5111,10 @@
       "seller-store",
       "identity",
       "database-runtime",
-      "phone-provider"
-    ]
+      "phone-provider",
+      "content",
+      "questions",
+      "support",
+      "reports", "moderation", "operations"]
   }
 }

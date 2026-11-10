@@ -32,7 +32,7 @@ export function SiteLayout() {
         </nav>
       </header>
       <main id="main-content" ref={mainRef} tabIndex={-1}><Outlet /></main>
-      <footer>
+      <footer><Link to="/support">고객지원</Link>
         <Link className="brand" to="/">모아마켓.</Link>
         <p>포트폴리오 개발용 화면 · 실제 구매·판매·운영 기능 준비 중</p>
       </footer>

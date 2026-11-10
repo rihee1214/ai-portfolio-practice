@@ -13,7 +13,7 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'node node_modules/vite/bin/vite.js --config auth-e2e/vite.config.ts --host 127.0.0.1 --port 24176 --strictPort',
+    command: 'node auth-e2e/serve-current-bundle.mjs',
     cwd: resolve('.'), url: 'http://127.0.0.1:24176', reuseExistingServer: false, timeout: 30000,
   },
 })

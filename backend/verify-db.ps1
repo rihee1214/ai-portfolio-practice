@@ -103,6 +103,7 @@ try {
                 if ($actualCases.Count -ne $test.invocations) { throw "Missing or duplicate parameter invocation: $($test.new)" }
             }
             if ($id -ceq 'browser-api') {
+                $group.browserApplication = Read-VerifiedBrowserBundle -Folder $folder
                 $browserReport = Get-Content "$folder/browser-report.json" -Raw | ConvertFrom-Json
                 if ($browserReport.errors.Count -or $browserReport.stats.skipped -or $browserReport.stats.unexpected -or $browserReport.stats.flaky) { throw 'Browser group failed or retried' }
                 $browserCases = @(Read-BrowserCases $browserReport.suites)

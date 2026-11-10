@@ -1,0 +1,75 @@
+import { expect, test } from '@playwright/test'
+import { headers } from './purchase-helpers'
+import { geometry } from './post-purchase-helpers'
+
+test('members receive private product and order answers from the seller and assigned support', async ({page,context,browser},info) => {
+  const suffix='questionmember-'+info.project.name
+  const slug='p4b-browse-order-'+suffix+'-a'
+  const password=' A1-private-passphrase-가나다 '
+  const buyerLogin=await context.request.post('/api/auth/login',{headers:await headers(context),
+    form:{email:'order-'+suffix+'@example.com',password}})
+  expect(buyerLogin.status()).toBe(200)
+  await page.goto('/products/'+slug)
+  const product=page.getByRole('region',{name:'상품 문의',exact:true})
+  await product.getByRole('button',{name:'상품 문의 열기'}).click()
+  const text='비밀문의'.repeat(50)
+  await product.getByLabel('문의 본문').fill(text)
+  await product.getByRole('button',{name:'문의 등록'}).click()
+  await expect(product.getByText(text,{exact:true})).toBeVisible()
+  await product.getByRole('button',{name:'첨부 이미지 관리'}).click()
+  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEElEQVR4XmNgYGD4D8UQBgAd9AP95BvM/wAAAABJRU5ErkJggg==','base64')
+  await product.getByLabel(/JPEG·PNG·WebP 파일/).setInputFiles({name:'question.png',mimeType:'image/png',buffer:png})
+  await product.getByRole('button',{name:'첨부 저장'}).click()
+  const photo=product.getByAltText('첨부 이미지 1')
+  await expect(photo).toBeVisible()
+  const file=await photo.getAttribute('src')
+  expect(file).toBeTruthy()
+  const visitor=await browser.newContext({baseURL:'http://127.0.0.1:24176'})
+  const seller=await browser.newContext({baseURL:'http://127.0.0.1:24176'})
+  const operator=await browser.newContext({baseURL:'http://127.0.0.1:24176'})
+  try {
+    const publicList=await visitor.request.get('/api/products/'+slug+'/questions')
+    expect(publicList.status()).toBe(200)
+    expect(await publicList.text()).not.toContain(text)
+    expect((await visitor.request.get(file!)).status()).toBe(404)
+    expect((await seller.request.post('/api/auth/login',{headers:await headers(seller),form:{email:slug+'@example.com',password}})).status()).toBe(200)
+    const shop=await seller.newPage()
+    await shop.goto('/seller/questions')
+    await shop.locator('li button').first().click()
+    await shop.getByRole('button',{name:'첨부 이미지 보기'}).click()
+    await expect(shop.getByAltText('첨부 이미지 1')).toBeVisible()
+    await shop.getByLabel('답변 본문').fill('판매자의 비밀 답변')
+    await shop.getByRole('button',{name:'답변 등록'}).click()
+    await expect(shop.getByText(/판매자의 비밀 답변/)).toBeVisible()
+    await page.reload()
+    await product.getByRole('button',{name:'상품 문의 열기'}).click()
+    await expect(product.getByText(/판매자의 비밀 답변/)).toBeVisible()
+    await geometry(page,info,'private-product-answer')
+    const orders=await (await context.request.get('/api/account/orders')).json()
+    const number=orders.orders[0].orderNumber
+    await page.goto('/account/orders/'+number)
+    const desk=page.getByRole('region',{name:'주문 문의'}).first()
+    await desk.getByRole('button',{name:'주문 문의 열기'}).click()
+    await desk.getByLabel('메시지 본문').fill('배송 내용을 확인하고 싶습니다.')
+    const response=page.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname==='/api/support/cases')
+    await desk.getByRole('button',{name:'문의 접수하기'}).click()
+    const created=await response
+    expect(created.status()).toBe(200)
+    const {id}=await created.json()
+    expect((await operator.request.post('/api/auth/login',{headers:await headers(operator),
+      form:{email:'c-support-b-ui-'+info.project.name+'@example.com',password}})).status()).toBe(200)
+    const admin=await operator.newPage()
+    await admin.goto('/admin/support')
+    await admin.getByRole('button',{name:'지원 접수함 열기'}).click()
+    const row=admin.locator('article').filter({hasText:id.slice(-8)})
+    await row.getByRole('button',{name:'내가 담당'}).click()
+    await row.getByRole('button',{name:'본문 열기'}).click()
+    await expect(admin.getByText('배송 내용을 확인하고 싶습니다.',{exact:true})).toBeVisible()
+    await admin.getByLabel('메시지 본문').fill('담당자가 배송을 확인했습니다.')
+    await admin.getByRole('button',{name:'답변 보내기'}).click()
+    await expect(admin.getByText('담당자가 배송을 확인했습니다.',{exact:true})).toBeVisible()
+    await geometry(admin,info,'assigned-order-case')
+    await desk.getByRole('button',{name:'주문 문의 '+id.slice(-8)}).click()
+    await expect(desk.getByText('담당자가 배송을 확인했습니다.',{exact:true})).toBeVisible()
+  } finally { await Promise.all([visitor.close(),seller.close(),operator.close()]) }
+})

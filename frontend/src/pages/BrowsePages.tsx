@@ -6,6 +6,9 @@ import { Link, useParams, useSearchParams } from 'react-router'
 import { BrowseResource, detailValid, pageValid, parseQuery, queryString, slugValid, type Item, type Query } from '../catalog/Browse'
 import { requestJson } from '../api/http'
 import { PublicMedia } from './MediaPanel'
+import { PublicReviews } from '../content/PublicReviews'
+import { ProductReport } from '../reports/ProductReport'
+import { ProductQuestions } from '../content/ProductQuestions'
 
 function useResource<T>(path: string, validate: (value: unknown) => value is T) {
   const [resource] = useState(() => new BrowseResource<T>(validate, requestJson))
@@ -104,6 +107,8 @@ export function ProductDetailPage() {
     {state.error && <p role="alert">{state.error.message} <button onClick={state.retry}>상품 다시 불러오기</button></p>}
     {data && <><h2>{data.product.title}</h2><SaveWish slug={data.product.slug} /><Link to={'/stores/' + data.product.storeSlug}>{data.product.storeName}</Link><p>{data.product.categoryName}</p>
       <PublicMedia key={slug} kind="products" slug={slug!} />
+      <PublicReviews key={'reviews-'+data.product.slug} slug={data.product.slug}/>
+      <ProductQuestions slug={data.product.slug}/><ProductReport slug={data.product.slug}/>
       <p className="product-description">{data.product.description}</p><p data-testid="product-return-policy">{returnPolicyText(data.product.returnPolicy)}</p>
       {offer ? <><label htmlFor="browse-option">상품 옵션</label><select id="browse-option" value={offer.id} onChange={e => select(e.target.value)}>
         {data.offers.map(o => <option key={o.id} value={o.id}>{o.options.length ? o.options.map(x => x.name + ': ' + x.value).join(' / ') : '기본 상품'} · {price(o.price)}{o.available === 0 ? ' · 품절' : ''}</option>)}

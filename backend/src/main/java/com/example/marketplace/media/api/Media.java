@@ -10,4 +10,5 @@ public interface Media {
     Slot upload(UUID owner,String kind,UUID target,int slot,long version,String alt,String filename,byte[] bytes);
     Slot delete(UUID owner,String kind,UUID target,int slot,long version);
     byte[] content(UUID viewer,UUID asset);
+    byte[] ownerPreview(UUID owner,UUID asset);
 }

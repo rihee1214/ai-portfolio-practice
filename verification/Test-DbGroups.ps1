@@ -32,9 +32,9 @@ $exchange = Resolve-DbGroups -Registry $registry -ChangedContracts 'exchange'
 foreach ($expected in @('exchange-recovery','aftercare-contracts','inventory','confirmation','refund')) {
     if ($expected -cnotin $exchange.selected) { throw "Exchange impact omitted $expected" }
 }
-foreach ($shared in @('authentication','job-runner','financial-common','schema','unknown','test-tools')) {
+foreach ($shared in @('authentication','job-runner','job-contracts','financial-common','schema','unknown','test-tools')) {
     $wide = Resolve-DbGroups -Registry $registry -ChangedContracts $shared
-    if ($wide.selected.Count -ne $registry.groups.Count) { throw "Shared impact did not widen: $shared" }
+    if (Compare-Object $registry.groups.id $wide.selected -CaseSensitive) { throw "Shared impact did not widen: $shared" }
 }
 $unmapped = Resolve-DbGroups -Registry $registry -ChangedContracts 'phone-provider'
 if ($unmapped.selected.Count -ne $registry.groups.Count) { throw 'Incomplete impact row must conservatively widen' }

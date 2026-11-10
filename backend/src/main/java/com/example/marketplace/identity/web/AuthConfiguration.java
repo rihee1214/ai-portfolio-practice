@@ -95,6 +95,10 @@ public class AuthConfiguration {
                                 "/api/guest/verifications/{id}/exchange", "/api/guest/verifications/{id}/verify").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/categories").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/{slug}/questions", "/api/questions/{id}").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/questions/{id}/messages/{msg}/images", "/api/questions/{id}/messages/{msg}/images/{asset}").permitAll()
+                        .requestMatchers("/api/support/cases", "/api/support/cases/**", "/api/support/lost-access").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/{slug}/reviews", "/api/reviews/{id}", "/api/reviews/{id}/images/{asset}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products", "/api/products/{slug}", "/api/products/{slug}/skus", "/api/browse/products", "/api/browse/products/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/media/{asset}/content", "/api/media/public/{kind}/{slug}").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login",

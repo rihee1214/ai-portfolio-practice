@@ -49,3 +49,30 @@ function Read-JUnitCases([string]$Directory) {
         }
     }
 }
+
+function Read-VerifiedBrowserBundle([string]$Folder) {
+    $base = Join-Path $Folder 'browser-app'
+    $record = Get-Content -LiteralPath (Join-Path $Folder 'browser-app-build.json') -Raw | ConvertFrom-Json
+    $manifest = Get-Content -LiteralPath (Join-Path $base '.vite/manifest.json') -Raw | ConvertFrom-Json
+    if ($record.mode -cne 'development' -or $record.nodeEnv -cne 'development' -or $record.buildMs -le 0 -or
+        $manifest.'index.html'.isEntry -ne $true -or $manifest.'index.html'.file -cne $record.entry) {
+        throw 'Current development browser build evidence is missing or inconsistent'
+    }
+    $expected = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::Ordinal)
+    foreach ($file in $record.files) {
+        if (-not $expected.TryAdd([string]$file.file,$file)) { throw 'Duplicate browser build asset' }
+    }
+    $actual = @(Get-ChildItem -LiteralPath $base -File -Recurse -Force)
+    if ($actual.Count -ne $expected.Count -or -not $expected.ContainsKey('index.html') -or -not $expected.ContainsKey($record.entry)) {
+        throw 'Browser build file set differs from manifest'
+    }
+    foreach ($file in $actual) {
+        $relative = [IO.Path]::GetRelativePath($base,$file.FullName).Replace('\','/')
+        if (-not $expected.ContainsKey($relative) -or $expected[$relative].bytes -ne $file.Length -or
+            $expected[$relative].sha256 -ine (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash) {
+            throw "Browser build asset changed: $relative"
+        }
+    }
+    @{mode=$record.mode;entry=$record.entry;assets=$actual.Count;buildMs=$record.buildMs;
+      manifestSha256=(Get-FileHash -LiteralPath (Join-Path $Folder 'browser-app-build.json')).Hash}
+}

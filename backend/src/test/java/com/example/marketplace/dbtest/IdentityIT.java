@@ -32,6 +32,88 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class IdentityIT extends PostgresContractFixture {
+    @Test void accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget() throws Exception {
+        var reader=supportFixture("e-account-reader","ACCOUNTS");
+        var writer=supportFixture("e-account-writer","ACCOUNTS");
+        try{
+            verifyProtectedPeers(reader,writer);
+            verifyAccountExpiry(reader,writer);
+        }finally{
+            var operators=Map.of("ids",List.of(reader.authority().member(),writer.authority().member()));
+            jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id IN (:ids)",operators);
+            jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id IN (:ids) AND role='ADMIN'",operators);
+        }
+    }
+    private void verifyProtectedPeers(SupportFixture one,SupportFixture two)throws Exception{
+        var ids=List.of(one.authority().member(),two.authority().member());
+        String tokenOne=csrfToken(one.browser()),tokenTwo=csrfToken(two.browser());
+        var reason=Map.of("reason","운영자 간 정지 거부","expectedVersion",0);
+        try(var pool=java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor();var blocker=context.getBean(javax.sql.DataSource.class).getConnection()){
+            blocker.setAutoCommit(false);
+            try(var lock=blocker.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id IN (?,?) ORDER BY id FOR SHARE")){
+                lock.setObject(1,ids.get(0));lock.setObject(2,ids.get(1));lock.executeQuery().close();
+            }
+            var start=new java.util.concurrent.CountDownLatch(1);
+            var left=pool.submit(()->{start.await();return accountRequest(one.browser(),"POST","/api/admin/accounts/"+ids.get(1)+"/suspend",reason,tokenOne);});
+            var right=pool.submit(()->{start.await();return accountRequest(two.browser(),"POST","/api/admin/accounts/"+ids.get(0)+"/suspend",reason,tokenTwo);});
+            try{
+                start.countDown();
+                assertEquals(409,left.get(10,java.util.concurrent.TimeUnit.SECONDS).statusCode());
+                assertEquals(409,right.get(10,java.util.concurrent.TimeUnit.SECONDS).statusCode());
+            }finally{blocker.rollback();}
+        }
+        assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.identity_user WHERE id IN (:ids) AND state='ACTIVE' AND auth_version=0",Map.of("ids",ids),Integer.class));
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.account_state_audit WHERE target_id IN (:ids)",Map.of("ids",ids),Integer.class));
+        for(var operator:List.of(one,two)){
+            assertEquals(200,authRequest(operator.browser(),"/api/auth/me",null,null).statusCode());
+            assertEquals(1,jdbc.queryForObject("SELECT count(*) FROM marketplace.spring_session WHERE session_id=:id",Map.of("id",operator.authority().browser()),Integer.class));
+        }
+    }
+    private void verifyAccountExpiry(SupportFixture reader,SupportFixture writer)throws Exception{
+        String email="e-account-target@example.com";
+        UUID target=activeMember(email);
+        var path="/api/admin/accounts/"+target;
+        var beforeReason=Map.of("reason","이전 민감한 감사 사유");
+        assertEquals(200,accountRequest(writer.browser(),"POST",path+"/suspend",beforeReason,csrfToken(writer.browser())).statusCode());
+        assertEquals(200,accountRequest(writer.browser(),"POST",path+"/restore",beforeReason,csrfToken(writer.browser())).statusCode());
+        var targetBrowser=authBrowser();
+        assertEquals(200,authRequest(targetBrowser,"/api/auth/login",loginForm(email,SIGNUP_PASSWORD),csrfToken(targetBrowser)).statusCode());
+        var token=csrfToken(writer.browser());
+        var params=Map.of("id",target);
+        var sessionIds="SELECT session_id FROM marketplace.spring_session WHERE principal_name=:id ORDER BY session_id";
+        var targetSessions=jdbc.queryForList(sessionIds,Map.of("id",target.toString()),String.class);
+        assertFalse(targetSessions.isEmpty());
+        try(var pool=java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor();var blocker=context.getBean(javax.sql.DataSource.class).getConnection()){
+            blocker.setAutoCommit(false);
+            try(var lock=blocker.prepareStatement("SELECT id FROM marketplace.identity_user WHERE id=? FOR UPDATE")){
+                lock.setObject(1,target);lock.executeQuery().close();
+            }
+            long started=System.currentTimeMillis(),expires=started+6000;
+            assertEquals(2,jdbc.update("""
+                    UPDATE marketplace.spring_session SET last_access_time=:start,max_inactive_interval=6,expiry_time=:end
+                    WHERE session_id IN (:sessions)
+                    """,Map.of("sessions",List.of(reader.authority().browser(),writer.authority().browser()),"start",started,"end",expires)));
+            var read=pool.submit(()->accountRequest(reader.browser(),"GET","/api/admin/accounts/members/"+target,null,null));
+            var write=pool.submit(()->accountRequest(writer.browser(),"POST",path+"/suspend",Map.of("reason","만료된 요청","expectedVersion",2),token));
+            try{
+                awaitJobCondition(()->jdbc.queryForObject("""
+                        SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock'
+                        AND query LIKE '%marketplace.identity_user%' AND (query LIKE '%FOR SHARE OF u%' OR query LIKE '%WHERE id=%FOR UPDATE%')
+                        """,Map.of(),Integer.class)>=2,"both account requests wait on the target row before expiry");
+                assertTrue(System.currentTimeMillis()<expires);
+                awaitJobCondition(()->System.currentTimeMillis()>=expires,"both operator sessions reach their stored expiry");
+                blocker.commit();
+                var rejected=read.get(10,java.util.concurrent.TimeUnit.SECONDS);
+                assertEquals(403,rejected.statusCode(),rejected.body());assertFalse(rejected.body().contains("이전 민감한 감사 사유"));
+                assertEquals(403,write.get(10,java.util.concurrent.TimeUnit.SECONDS).statusCode());
+            }finally{blocker.rollback();}
+        }
+        assertEquals("ACTIVE",jdbc.queryForObject("SELECT state FROM marketplace.identity_user WHERE id=:id",params,String.class));
+        assertEquals(2L,jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",params,Long.class));
+        assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.account_state_audit WHERE target_id=:id",params,Integer.class));
+        assertEquals(targetSessions,jdbc.queryForList(sessionIds,Map.of("id",target.toString()),String.class));
+        assertEquals(200,authRequest(targetBrowser,"/api/auth/me",null,null).statusCode());
+    }
     @Test
     void accountStateLifecycleRevokesSessionsAndPreservesIdentityReference() throws Exception {
         UUID admin = activeMember("d-admin@example.com");
@@ -44,10 +126,25 @@ class IdentityIT extends PostgresContractFixture {
         assertEquals(200, authRequest(second, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(second)).statusCode());
         String path = "/api/admin/accounts/" + target;
         var reason = Map.of("reason", "테스트 운영 조치");
+        String search="/api/admin/accounts/search";
+        var exact=Map.of("term"," D-Target@example.COM ","state","ACTIVE");
+        assertEquals(403,accountRequest(operator,"POST",search,exact,csrfToken(operator)).statusCode());
+        assertEquals(403,accountRequest(operator,"GET","/api/admin/accounts/members/"+target,null,null).statusCode());
         assertEquals(403, accountRequest(operator, "POST", path + "/suspend", reason, csrfToken(operator)).statusCode());
         jdbc.update("INSERT INTO marketplace.role_assignment VALUES(:id,'ADMIN')", Map.of("id", admin));
         jdbc.update("INSERT INTO marketplace.admin_permission VALUES(:id,'ACCOUNTS')", Map.of("id", admin));
         try {
+            assertEquals(403,accountRequest(operator,"POST",search,exact,null).statusCode());
+            var found=accountRequest(operator,"POST",search,exact,csrfToken(operator));
+            assertEquals(200,found.statusCode());assertEquals("no-store",found.headers().firstValue("Cache-Control").orElseThrow());
+            assertFalse(found.body().toLowerCase(java.util.Locale.ROOT).contains("email"));
+            var members=authMapper.readTree(found.body()).get("members");
+            assertEquals(1,members.size());assertEquals(target.toString(),members.get(0).path("id").asText());
+            assertEquals(java.util.Set.of("id","state"),new java.util.HashSet<>(members.get(0).propertyNames()));
+            var observed=authMapper.readTree(accountRequest(operator,"GET","/api/admin/accounts/members/"+target,null,null).body()).get("member");
+            assertEquals(0,authMapper.readTree(accountRequest(operator,"POST",search,Map.of("term","d-targ@example.com"),csrfToken(operator)).body()).get("members").size());
+            assertEquals(0,authMapper.readTree(accountRequest(operator,"POST",search,Map.of("term",target,"state","SUSPENDED"),csrfToken(operator)).body()).get("members").size());
+            assertEquals(400,accountRequest(operator,"POST",search,Map.of("term","d-target@"),csrfToken(operator)).statusCode());
             assertEquals(403, accountRequest(operator, "POST", path + "/suspend", reason, null).statusCode());
             assertEquals(200, accountRequest(operator, "POST", path + "/suspend", reason, csrfToken(operator)).statusCode());
             assertEquals(401, authRequest(buyer, "/api/auth/me", null, null).statusCode());
@@ -57,6 +154,15 @@ class IdentityIT extends PostgresContractFixture {
             assertEquals(200, accountRequest(operator, "POST", path + "/restore", reason, csrfToken(operator)).statusCode());
             assertEquals(401, authRequest(second, "/api/auth/me", null, null).statusCode());
             assertEquals(200, authRequest(buyer, "/api/auth/login", loginForm("d-target@example.com", SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
+            // The intervening suspend/restore returned to ACTIVE, but invalidated the originally observed version.
+            var stale=Map.of("reason","오래된 조치","expectedVersion",observed.get("version").asLong());
+            assertEquals(409,accountRequest(operator,"POST",path+"/suspend",stale,csrfToken(operator)).statusCode());
+            var observation=accountRequest(operator,"GET","/api/admin/accounts/members/"+target,null,null);
+            assertEquals(200,observation.statusCode());assertFalse(observation.body().contains("d-target@example.com"));
+            var current=authMapper.readTree(observation.body());
+            assertEquals("ACTIVE",current.get("member").get("state").asText());assertEquals(2,current.get("member").get("version").asLong());
+            assertEquals(2,current.get("events").size());assertEquals("테스트 운영 조치",current.get("events").get(0).get("reason").asText());
+            assertEquals(200,authRequest(buyer,"/api/auth/me",null,null).statusCode());
             accountOperations.saveAddress(target, null, addressInput(true));
             accountOperations.updateProfile(target, "탈퇴자", "01012345678");
             recovery.request("d-target@example.com");
@@ -87,6 +193,8 @@ class IdentityIT extends PostgresContractFixture {
             assertEquals(target, jdbc.queryForObject("SELECT member_id FROM marketplace.d_trade_reference", Map.of(), UUID.class));
         } finally {
             jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id", Map.of("id", admin));
+            assertEquals(403,accountRequest(operator,"GET","/api/admin/accounts/members/"+target,null,null).statusCode());
+            assertEquals(403,accountRequest(operator,"POST",search,exact,csrfToken(operator)).statusCode());
             jdbc.update("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN'", Map.of("id", admin));
         }
     }

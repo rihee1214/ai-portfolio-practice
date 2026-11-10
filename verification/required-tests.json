@@ -184,6 +184,7 @@
     "id": "com.example.marketplace.dbtest.PostgresJdbcIT",
     "tests": [
       "com.example.marketplace.dbtest.IdentityIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+      "com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget",
       "com.example.marketplace.dbtest.IdentityIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
       "com.example.marketplace.dbtest.IdentityIT#activationFailureRollsBackTokenConsumption",
       "com.example.marketplace.dbtest.IdentityIT#addressConcurrentFirstDefaultAndCapacityPreserveInvariants",
@@ -962,5 +963,37 @@
       "com.example.marketplace.dbtest.LegacyIT#legacyUnknownRefundKeepsOriginalPreparationAndMoneyWhileMigratingBoundedQueries",
       "com.example.marketplace.dbtest.RefundIT#refundSystemProviderResponseCannotCommitAfterOperatorRevocationAndValidAuthorityResumesWithoutAnotherPost"
     ]
-  }
+  },
+  {
+    "tests": [
+      "com.example.marketplace.dbtest.ContentIT#partialRefundAndReplacementConfirmationKeepOriginalItemRights",
+      "com.example.marketplace.dbtest.ContentIT#concurrentCreationAndRewriteKeepOneReviewAndReplaysDoNotUndoDeletion",
+      "com.example.marketplace.dbtest.ContentIT#reviewAndImageWritesRecheckSessionAfterContendedReviewLock",
+      "com.example.marketplace.dbtest.ContentIT#ownerConfirmationCreationReplayAndRewriteUseOneReview"
+    ],
+    "id": "com.example.marketplace.dbtest.ContentIT"
+  },
+  {
+    "tests": [
+      "com.example.marketplace.content.domain.ReviewEligibilityTest#confirmationAndRefundMustReferToTheSameOriginalUnit"
+    ],
+    "id": "com.example.marketplace.content.domain.ReviewEligibilityTest"
+  },
+  {
+    "tests": [
+      "com.example.marketplace.dbtest.QuestionsIT#publicAndPrivateQuestionBodiesAndAnswersRespectCurrentReaders"
+    ],
+    "id": "com.example.marketplace.dbtest.QuestionsIT"
+  },
+  {
+    "tests": [
+      "com.example.marketplace.content.domain.InquiryTextTest#requiresOneToTwoThousandCharactersForQuestionAndAnswer"
+    ],
+    "id": "com.example.marketplace.content.domain.InquiryTextTest"
+  },
+  {"tests": ["com.example.marketplace.dbtest.SupportIT#lostIntakeAndReassignmentNeverDiscloseAnUnassignedBody", "com.example.marketplace.dbtest.SupportIT#orderCasesRequireCurrentMemberOrGasAndMatchingSellerOrder"], "id": "com.example.marketplace.dbtest.SupportIT"},
+  {"id": "com.example.marketplace.dbtest.OperationsIT", "tests": ["com.example.marketplace.dbtest.OperationsIT#restrictedSellerShipsAndHandlesOnlyItsExistingReturnAndOrderInquiry", "com.example.marketplace.dbtest.OperationsIT#supportHandoffCannotReleaseUnknownMoneyOrInvokeSystemReconciliation"]},
+  {"tests":["com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit", "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit"],"id":"com.example.marketplace.dbtest.ModerationIT"},
+  {"tests":["com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota", "com.example.marketplace.dbtest.ReportsIT#productReportsSerializeReplaysSeparateMembersAndKeepQueueMinimal","com.example.marketplace.dbtest.ReportsIT#rollingQuotaCountsOnlyNewCasesAndReleasesExpiredEntries", "com.example.marketplace.dbtest.ReportsIT#privateAnswerRequiresBothAssignmentsAndNeverSubstitutesAReplacedAttachment", "com.example.marketplace.dbtest.ReportsIT#investigationTransitionsReplayAndRollbackWithoutHidingTheTarget", "com.example.marketplace.dbtest.ReportsIT#reviewGenerationAndChildKindMustMatchTheCurrentlyVisibleContent"],"id":"com.example.marketplace.dbtest.ReportsIT"},
+  {"id":"com.example.marketplace.operations.domain.ReportTransitionTest","tests":["com.example.marketplace.operations.domain.ReportTransitionTest#everyStateAcceptsOnlyItsNextInvestigationTransition"]}
 ]

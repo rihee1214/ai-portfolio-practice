@@ -164,6 +164,16 @@
     "desktop#post-purchase-complete.spec.ts:G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated",
     "mobile#post-purchase-complete.spec.ts:G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects",
     "mobile#post-purchase-complete.spec.ts:G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries",
-    "mobile#post-purchase-complete.spec.ts:G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated"
+    "mobile#post-purchase-complete.spec.ts:G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated",
+    "desktop#content.spec.ts:confirmed member publishes edits comments and deletes one original item review",
+    "mobile#content.spec.ts:confirmed member publishes edits comments and deletes one original item review",
+    "desktop#questions-support.spec.ts:members receive private product and order answers from the seller and assigned support",
+    "mobile#questions-support.spec.ts:members receive private product and order answers from the seller and assigned support",
+    "desktop#operations-complete.spec.ts:accounts operator finds an exact email and verifies suspension and restoration through the selected history",
+    "mobile#operations-complete.spec.ts:accounts operator finds an exact email and verifies suspension and restoration through the selected history",
+    "desktop#moderation.spec.ts:closed product report hides public detail and restores it through the recorded action",
+    "mobile#moderation.spec.ts:closed product report hides public detail and restores it through the recorded action",
+    "desktop#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case",
+    "mobile#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case"
   ]
 }

@@ -17,9 +17,9 @@ public final class JdbcAccountStateOperations implements AccountStateOperations 
     public JdbcAccountStateOperations(NamedParameterJdbcTemplate jdbc, PlatformTransactionManager manager, AccessPolicy access) {
         this.jdbc = jdbc; this.transaction = new TransactionTemplate(manager); this.access = access;
     }
-    @Override public void suspend(UUID actor, UUID target, String reason) { change(actor, target, reason, "ACTIVE", "SUSPENDED"); }
-    @Override public void restore(UUID actor, UUID target, String reason) { change(actor, target, reason, "SUSPENDED", "ACTIVE"); }
-    private void change(UUID actor, UUID target, String reason, String before, String after) {
+    @Override public void suspend(UUID actor,UUID target,String reason,Long version){change(actor,target,reason,"ACTIVE","SUSPENDED",version);}
+    @Override public void restore(UUID actor,UUID target,String reason,Long version){change(actor,target,reason,"SUSPENDED","ACTIVE",version);}
+    private void change(UUID actor, UUID target, String reason, String before, String after,Long version) {
         transaction.executeWithoutResult(status -> {
             access.require(actor, AccessArea.ACCOUNTS);
             if (reason == null || reason.isBlank() || reason.codePointCount(0, reason.length()) > 300
@@ -27,7 +27,12 @@ public final class JdbcAccountStateOperations implements AccountStateOperations 
                 throw new AccountException("INVALID_REASON");
             }
             // Lock the member before credentials/tokens, matching recovery/profile mutation order.
+            // Operators already hold shared locks on their own rows. Reject protected peers before trying to upgrade either row.
+            if(isAdministrator(target)){throw new AccountException("STATE_CONFLICT");}
             lockTarget(target, before);
+            if(version!=null && !version.equals(jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id",Map.of("id",target),Long.class))){
+                throw new AccountException("STATE_CONFLICT");
+            }
             access.require(actor, AccessArea.ACCOUNTS);
             transition(actor, target, reason.strip(), before, after);
         });
@@ -54,10 +59,13 @@ public final class JdbcAccountStateOperations implements AccountStateOperations 
     private void lockTarget(UUID target, String expected) {
         var states = jdbc.queryForList("SELECT state FROM marketplace.identity_user WHERE id=:id FOR UPDATE", Map.of("id", target), String.class);
         if (states.isEmpty()) { throw new AccountException("ACCOUNT_NOT_FOUND"); }
-        if (!expected.equals(states.getFirst()) || Boolean.TRUE.equals(jdbc.queryForObject(
-                "SELECT EXISTS(SELECT 1 FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN')", Map.of("id", target), Boolean.class))) {
+        if (!expected.equals(states.getFirst()) || isAdministrator(target)) {
             throw new AccountException("STATE_CONFLICT");
         }
+    }
+    private boolean isAdministrator(UUID target){
+        return Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM marketplace.role_assignment WHERE user_id=:id AND role='ADMIN')",
+                Map.of("id",target),Boolean.class));
     }
     private void transition(UUID actor, UUID target, String reason, String before, String after) {
         jdbc.update("UPDATE marketplace.identity_user SET state=:state,auth_version=auth_version+1 WHERE id=:id", Map.of("id", target, "state", after));

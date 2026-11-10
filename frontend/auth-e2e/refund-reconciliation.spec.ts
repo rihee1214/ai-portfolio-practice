@@ -1,5 +1,7 @@
 import {test,expect,type BrowserContext,type Page} from '@playwright/test'
 import {request as rawRequest} from 'node:http'
+import {readFileSync} from 'node:fs'
+import {resolve} from 'node:path'
 import {headers} from './purchase-helpers'
 
 type Seed={orderNumber:string;attemptId:string;buyerEmail:string;phone:string;guest:boolean;amount:string}
@@ -30,5 +32,9 @@ test('F actual GAS lifetime logout discards an old refund response and parent or
  await page.route('**/api/orders/'+s.orderNumber+'/refunds',async route=>{const response=await route.fetch();expect(response.status()).toBe(200);expect((await response.json()).some((r:{attemptId:string})=>r.attemptId===s.attemptId)).toBe(true);arrived();await pending;await route.fulfill({response});finished()});await panel(page).getByRole('button',{name:'환불 상태 다시 조회'}).click();await ready;let failedLogout=0;await page.route('**/api/guest/access/logout',async route=>{await route.abort('failed');failedLogout++})
  // Use the real application store and singleton lifetime bus in the loaded component tree.
  // The existing lookup-page logout button is covered by the preserved original browser suite.
- const result=await page.evaluate(async()=>{const path='/src/guest/GuestAccessStore.ts';const {GuestAccessStore}=await import(path);const store=new GuestAccessStore();await store.logout();const result=store.getSnapshot();store.dispose();return {authenticated:result.authenticated,logoutPending:result.logoutPending}});expect(result).toEqual({authenticated:false,logoutPending:true});expect(failedLogout).toBe(1);await expect(page.getByTestId('order-number')).toHaveCount(0);await expect(panel(page)).toHaveCount(0);release();await delivered;await expect(page.getByTestId('order-number')).toHaveCount(0);await expect(panel(page)).toHaveCount(0);expect((await context.request.get('/api/guest/access/references')).status()).toBe(200);expect((await context.request.get('/api/auth/me')).status()).toBe(401);expect(await database(context,s)).toEqual(before)
+ const manifest=JSON.parse(readFileSync(resolve(process.env.A3_EVIDENCE!,'browser-app','.vite','manifest.json'),'utf8'))
+ const entry=manifest['src/guest/GuestAccessStore.ts']
+ expect(entry?.isEntry).toBe(true)
+ expect(entry.file).toMatch(/^assets\/[\w.-]+\.js$/)
+ const result=await page.evaluate(async(path:string)=>{const {GuestAccessStore}=await import(path);const store=new GuestAccessStore();await store.logout();const result=store.getSnapshot();store.dispose();return {authenticated:result.authenticated,logoutPending:result.logoutPending}},'/'+entry.file);expect(result).toEqual({authenticated:false,logoutPending:true});expect(failedLogout).toBe(1);await expect(page.getByTestId('order-number')).toHaveCount(0);await expect(panel(page)).toHaveCount(0);release();await delivered;await expect(page.getByTestId('order-number')).toHaveCount(0);await expect(panel(page)).toHaveCount(0);expect((await context.request.get('/api/guest/access/references')).status()).toBe(200);expect((await context.request.get('/api/auth/me')).status()).toBe(401);expect(await database(context,s)).toEqual(before)
 })

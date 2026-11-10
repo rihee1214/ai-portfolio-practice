@@ -5,7 +5,7 @@ import { apiProxy } from '../vite/apiProxy.ts'
 
 // Vite can remove its dependency cache on startup. Each owned test server gets its
 // own directory; retain it for diagnostics instead of touching a running dev server.
-export async function proxyViteConfig(target) {
+export async function proxyViteConfig(target,agent) {
   const evidence = fileURLToPath(new URL('../../.local-tools/', import.meta.url))
   await mkdir(evidence, { recursive: true })
   const cacheDir = await mkdtemp(join(evidence, 'vite-proxy-test-'))
@@ -13,7 +13,7 @@ export async function proxyViteConfig(target) {
     root: fileURLToPath(new URL('..', import.meta.url)),
     cacheDir,
     configFile: false,
-    plugins: [apiProxy(target)],
+    plugins: [apiProxy(target,agent)],
     logLevel: 'silent',
   }
 }

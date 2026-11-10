@@ -1,4 +1,5 @@
 import type { Plugin, ProxyOptions, ViteDevServer } from 'vite'
+import type { Agent } from 'node:http'
 
 // Runs before Vite's proxy and SPA fallback, including local build preview.
 function requestPathGuard(server: Pick<ViteDevServer, 'middlewares'>) {
@@ -31,9 +32,10 @@ function requestPathGuard(server: Pick<ViteDevServer, 'middlewares'>) {
   })
 }
 
-export function apiProxy(target = 'http://127.0.0.1:8080'): Plugin {
+export function apiProxy(target = 'http://127.0.0.1:8080', agent?: Agent): Plugin {
   const options: ProxyOptions = {
     target,
+    agent,
     proxyTimeout: 10_000,
     configure(proxy) {
       proxy.on('proxyRes', (upstream, _req, downstream) => {
@@ -64,6 +66,9 @@ export function apiProxy(target = 'http://127.0.0.1:8080'): Plugin {
     name: 'marketplace-api-proxy',
     config: () => ({ server: { proxy }, preview: { proxy } }),
     configureServer: requestPathGuard,
-    configurePreviewServer: requestPathGuard,
+    configurePreviewServer(server) {
+      requestPathGuard(server)
+      if (agent) server.httpServer.once('close', () => agent.destroy())
+    },
   }
 }

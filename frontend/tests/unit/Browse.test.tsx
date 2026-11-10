@@ -1,4 +1,6 @@
 import {policyFixture} from './returnPolicyFixture'
+import {AuthContext} from '../../src/auth/AuthContext'
+import {AuthStore} from '../../src/auth/AuthStore'
 import { expect, test } from 'vitest'
 import { BrowseResource, detailValid, pageValid, parseQuery, queryString, type Page } from '../../src/catalog/Browse'
 import type { JsonResult } from '../../src/api/http'
@@ -48,6 +50,7 @@ test('상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제
   const response = (data: unknown) => new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } })
   let missing!: (r: Response) => void
   vi.stubGlobal('fetch', vi.fn((path: string) => {
+    if (path.endsWith('/reviews')) return Promise.resolve(response({reviews:[],ratingSum:0,count:0}))
     if (path.includes('/api/media/')) return Promise.resolve(response([]))
     if (path.endsWith('/second-item')) return new Promise<Response>(done => { missing = done })
     return Promise.resolve(response({ product: item, offers: [
@@ -55,7 +58,7 @@ test('상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제
       { id: '00000000-0000-4000-8000-000000000004', options: [{ name: '색', value: '빨강' }], price: 2000, available: 0 },
     ] }))
   }))
-  render(<MemoryRouter initialEntries={['/products/sample-item']}><Link to="/products/second-item">다른 상품</Link><Routes><Route path="/products/:slug" element={<ProductDetailPage />} /></Routes></MemoryRouter>)
+  render(<AuthContext.Provider value={new AuthStore()}><MemoryRouter initialEntries={['/products/sample-item']}><Link to="/products/second-item">다른 상품</Link><Routes><Route path="/products/:slug" element={<ProductDetailPage />} /></Routes></MemoryRouter></AuthContext.Provider>)
   expect(await screen.findByText('가용 수량: 2')).toBeVisible()
   const user = userEvent.setup()
   await user.selectOptions(screen.getByLabelText('상품 옵션'), '00000000-0000-4000-8000-000000000004')
