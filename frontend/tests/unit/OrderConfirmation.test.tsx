@@ -1,3 +1,5 @@
+// E panel has separate required native-page/store assertions; preserve this file's earlier independent contract.
+vi.mock('../../src/exchanges/ExchangePanel',()=>({ExchangePanel:()=>null}))
 import {it,expect,vi} from 'vitest'
 import {render,screen,fireEvent,waitFor} from '@testing-library/react'
 import {MemoryRouter,Routes,Route} from 'react-router'

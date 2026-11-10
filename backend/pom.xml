@@ -17,6 +17,7 @@
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <marketplace.build.directory>${project.basedir}/target</marketplace.build.directory>
+        <marketplace.failsafe.reports>${project.build.directory}/failsafe-reports</marketplace.failsafe.reports>
     </properties>
     <dependencies>
         <dependency>
@@ -145,6 +146,8 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
                             <includes><include>**/*IT.java</include></includes>
+                            <reportsDirectory>${marketplace.failsafe.reports}</reportsDirectory>
+                            <summaryFile>${marketplace.failsafe.reports}/failsafe-summary.xml</summaryFile>
                             <failIfNoTests>true</failIfNoTests>
                         </configuration>
                         <executions>

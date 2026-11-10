@@ -16,10 +16,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Configuration(proxyBeanMethods=false) @Profile("db")
 public class ConfirmationJobs {
+ @Bean JobHandler physicalConfirmationDue(JdbcOrderConfirmations api) { return new JobHandler() { public String type() { return "ORDER_PHYSICAL_CONFIRM_DUE.v1"; }public Result handle(Jobs.Job job) { return api.automaticPhysical(job); } }; }
  @Bean JobHandler confirmationDue(JdbcOrderConfirmations api) { return handler("ORDER_CONFIRM_DUE",api); }
  @Bean JobHandler confirmationReevaluate(JdbcOrderConfirmations api) { return handler("ORDER_CONFIRM_REEVALUATE",api); }
  private JobHandler handler(String type,JdbcOrderConfirmations api) { return new JobHandler() { public String type() { return type; }public Result handle(Jobs.Job job) { return api.automatic(job); } }; }
- @Bean JobHandler confirmationRecorded() { return new JobHandler() { public String type() { return "ORDER_CONFIRMATION_RECORDED"; }public Result handle(Jobs.Job job) { return Result.COMPLETE; } }; }
  @Bean JobHandler unitLifecycleRecorded() { return new JobHandler() { public String type() { return "ORDER_UNIT_LIFECYCLE_RECORDED"; }public Result handle(Jobs.Job job) { return Result.COMPLETE; } }; }
  @Bean @ConditionalOnProperty(name="marketplace.worker.enabled",havingValue="true")
  ApplicationRunner confirmationScanStartup(NamedParameterJdbcTemplate jdbc,Outbox outbox,PlatformTransactionManager manager) { return args->new TransactionTemplate(manager).executeWithoutResult(t->start(jdbc,outbox,"P09-B-H03-20261030-OPTION2")); }

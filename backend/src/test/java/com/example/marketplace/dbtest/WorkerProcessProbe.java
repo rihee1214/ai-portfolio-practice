@@ -30,6 +30,7 @@ public final class WorkerProcessProbe {
     private static boolean block;
     public static void main(String[] args) throws Exception {
         now=Instant.parse(args[0]);type=args[1];marker=Path.of(args[2]);block=Boolean.parseBoolean(args[3]);UUID job=UUID.fromString(args[4]);
+        com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget.verifyBeforeMigration(System.getenv("D2_DB_URL"),System.getenv("D2_DB_USERNAME"),System.getenv("D2_DB_PASSWORD"),System.getenv("D2_DB_NAME"));
         try(var context=new SpringApplicationBuilder(MarketplaceApplication.class,ProbeConfiguration.class)
                 .profiles("db","worker","local-mailbox","local-http","worker-probe")
                 .run("--spring.config.location=classpath:/","--spring.datasource.url="+System.getenv("D2_DB_URL"),

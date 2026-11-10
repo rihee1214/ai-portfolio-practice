@@ -25,14 +25,14 @@ public final class TargetContract {
         };
         for (int i = 0; i < rejected.length; i++) {
             try {
-                DedicatedDatabaseTarget.validate(rejected[i][0], rejected[i][1], rejected[i][2]);
+                DedicatedDatabaseTarget.validate(rejected[i][0], rejected[i][1], rejected[i][2], new DedicatedDatabaseTarget.Endpoint(15433,"default"));
                 System.out.println("FAIL target rejection " + i);
                 failures++;
             } catch (IllegalArgumentException expected) {
                 System.out.println("PASS target rejection " + i);
             }
         }
-        DedicatedDatabaseTarget.validate(URL, "marketplace_test", DATABASE);
+        DedicatedDatabaseTarget.validate(URL, "marketplace_test", DATABASE, new DedicatedDatabaseTarget.Endpoint(15433,"default"));
         System.out.println("PASS dedicated target accepted");
         if (failures != 0) {
             throw new AssertionError("Target guard failures: " + failures);

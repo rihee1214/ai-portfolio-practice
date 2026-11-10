@@ -63,6 +63,16 @@ public final class JdbcStores implements Stores {
         return jdbc.query("SELECT * FROM marketplace.store_operation_event WHERE store_id=:id ORDER BY store_version DESC NULLS LAST,occurred_at DESC,id DESC LIMIT 20",Map.of("id",id),
                 (row,index)->new Event(row.getObject("actor_id",UUID.class),row.getString("action"),row.getString("before_state"),row.getString("after_state"),row.getString("reason"),row.getTimestamp("occurred_at").toInstant()));
     }
+    @Override public Store existingTrade(UUID id) {
+        record Existing(UUID owner,Store value) { }
+        var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),(r,n)->new Existing(r.getObject("owner_id",UUID.class),map(r,n)));
+        if(rows.size()!=1||!access.allowed(rows.getFirst().owner(),AccessArea.SELLER)){throw new StoreException(404);}return rows.getFirst().value();
+    }
+    @Override public Store lockExistingTrade(UUID id) {
+        if(!org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
+        var owners=jdbc.queryForList("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),UUID.class);if(owners.size()!=1) { throw new StoreException(404); }UUID owner=owners.getFirst();members.lockSeller(owner);
+        var rows=jdbc.queryForList("SELECT owner_id FROM marketplace.seller_store WHERE id=:id FOR UPDATE",Map.of("id",id),UUID.class);if(rows.size()!=1||!rows.getFirst().equals(owner)) { throw new StoreException(409); }access.require(owner,AccessArea.SELLER);return jdbc.queryForObject("SELECT * FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),this::map);
+    }
     private Capabilities allowed(Store store) {
         boolean open=store!=null&&"OPEN".equals(store.state());
         return new Capabilities(open,open&&store.visible(),store!=null);

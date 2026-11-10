@@ -1,3 +1,5 @@
+import {ExchangePanel} from '../exchanges/ExchangePanel'
+import {ReturnPanel} from '../returns/ReturnPanel'
 import {useEffect,useId,useRef,useState,useSyncExternalStore} from 'react'
 import {Link,useParams} from 'react-router'
 import {useAuthStore} from '../auth/AuthContext'
@@ -25,5 +27,6 @@ export function SellerShipmentsPanel({id}:{id?:string}){
  {['CANCELED','EXPIRED'].includes(order.orderState)&&<p>취소·만료된 주문은 새로 발송할 수 없습니다. 저장된 배송 이력만 확인합니다.</p>}{view.shipments.length===0?<p role="status">{order.orderState==='PAID'?'배송 생성 대기: 결제된 주문의 배송을 준비하고 있습니다.':order.orderState==='PENDING_PAYMENT'?'미결제: 결제 확인 후 배송을 준비합니다.':'진행 중인 배송이 없습니다.'}</p>:view.shipments.map(s=><section key={s.id} aria-label={'배송 '+s.id}><ShipmentRows shipments={[s]} items={order.items}/>{((s.state==='PREPARING'&&order.orderState==='PAID')||view.uncertain===s.id||view.confirmed[s.id])&&<form onSubmit={e=>{e.preventDefault();void store.ship(s.id)}}><label><input type="checkbox" checked={!!view.confirmed[s.id]} disabled={view.shipping||view.uncertain===s.id} onChange={e=>store.confirm(s.id,e.target.checked)} aria-describedby={view.error?errorId:undefined}/>원 항목과 수량을 확인했습니다</label><button disabled={view.shipping||view.blocked||!view.confirmed[s.id]||(!view.uncertain&&(s.state!=='PREPARING'||order.orderState!=='PAID'))} aria-describedby={view.error?errorId:undefined}>{view.shipping?'발송 결과 확인 중':view.uncertain===s.id?'같은 요청으로 발송 결과 확인':'발송 처리'}</button></form>}</section>)}</>}
  {order?.orderState==='PAID'&&view.shipments.map(s=><section key={'commands-'+s.id} aria-label={'배송 변경 '+s.id}><ShipmentCommands row={s} store={store} disabled={view.shipping||view.blocked||!!view.uncertain||!!view.editUncertain}/></section>)}
  <button disabled={view.busy||view.shipping||!!view.uncertain||!!view.editUncertain} onClick={()=>{if(id)void store.openSeller(id);else void store.list()}}>판매 주문 다시 조회</button>{id&&<p><Link to="/seller/orders">판매 주문 목록으로</Link></p>}
- </section>
+ {order&&<ExchangePanel actor="seller" number={order.orderNumber} sellerOrderId={order.sellerOrderId} items={order.items.map(i=>({...i,sellerOrderId:order.sellerOrderId}))}/> }
+ {order&&<ReturnPanel actor="seller" number={order.orderNumber} sellerOrderId={order.sellerOrderId} items={order.items.map(i=>({...i,sellerOrderId:order.sellerOrderId}))}/> }</section>
 }

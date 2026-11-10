@@ -1,3 +1,4 @@
+import {notifyGuestAccessChange} from '../../src/guest/GuestAccessLifecycle'
 import {it,expect,vi} from 'vitest'
 import {OrderQueryStore} from '../../src/order/OrderQueryStore'
 import {AuthStore} from '../../src/auth/AuthStore'
@@ -49,3 +50,5 @@ it('discards detail when both reads resolve before an auth change at the combine
 })
 
 it('P09C private order rejects decimal amounts above signed long without publishing details',async()=>{const a=await auth(),total='9223372036854775808';const store=new OrderQueryStore(a.store,'member',vi.fn(async p=>String(p).endsWith('/history')?json({...history,amount:total}):json({...detail,total})));await store.open(number);expect(store.getSnapshot().detail).toBeNull();expect(store.getSnapshot().history).toBeNull()})
+
+it('GAS lifetime changes clear the parent order snapshot and discard both late detail and history without AuthStore changes',async()=>{const a=await auth();let pending=false;const releases:((r:Response)=>void)[]=[];const store=new OrderQueryStore(a.store,'guest',vi.fn(async path=>pending?new Promise<Response>(r=>{releases.push(r)}):json(String(path).endsWith('/history')?history:detail)));await store.open(number);expect(store.getSnapshot().detail).toEqual(detail);notifyGuestAccessChange();expect(store.getSnapshot().detail).toBeNull();expect(store.getSnapshot().history).toBeNull();pending=true;const loading=store.open(number);expect(releases).toHaveLength(2);notifyGuestAccessChange();releases[0](json(detail));releases[1](json(history));await loading;expect(store.getSnapshot().detail).toBeNull();expect(store.getSnapshot().history).toBeNull();store.dispose()})

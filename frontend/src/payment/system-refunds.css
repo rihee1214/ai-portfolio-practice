@@ -1,0 +1,4 @@
+.system-refunds { min-inline-size: 0; overflow-wrap: anywhere; }
+.system-refunds fieldset { min-inline-size: 0; max-inline-size: 100%; margin-block: 1rem; }
+.system-refunds input { min-inline-size: 0; max-inline-size: 100%; }
+.system-refunds button { max-inline-size: 100%; margin: .25rem; white-space: normal; }

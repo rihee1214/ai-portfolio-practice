@@ -52,7 +52,7 @@ public final class JdbcJobs implements Jobs,com.example.marketplace.platform.api
             // Exhausted crashes become visible failures; unknown types remain untouched for their owning worker.
             jdbc.update("WITH exhausted AS (SELECT id FROM marketplace.job WHERE type IN (:types) AND status='RUNNING' AND attempts=5 AND lease_until<=:now FOR UPDATE SKIP LOCKED) UPDATE marketplace.job j SET status='FAILED',owner_token=NULL,lease_until=NULL,last_error='LEASE_EXPIRED' FROM exhausted e WHERE j.id=e.id",p);
             p.addValue("token",UUID.randomUUID()).addValue("lease",Timestamp.from(now.plusSeconds(30)));
-            var claimed=jdbc.query("WITH candidate AS (SELECT id FROM marketplace.job WHERE type IN (:types) AND attempts<5 AND ((status='READY' AND next_run_at<=:now) OR (status='RUNNING' AND lease_until<=:now)) ORDER BY next_run_at,id LIMIT 1 FOR UPDATE SKIP LOCKED) UPDATE marketplace.job j SET status='RUNNING',attempts=j.attempts+1,owner_token=:token,lease_until=:lease FROM candidate c WHERE j.id=c.id RETURNING j.*",p,JdbcJobs::row);
+            var claimed=jdbc.query("WITH candidate AS (SELECT id FROM marketplace.job WHERE type IN (:types) AND attempts<5 AND ((status='READY' AND next_run_at<=:now AND scheduled_at<=:now) OR (status='RUNNING' AND lease_until<=:now AND (scheduled_at<=:now OR EXISTS(SELECT 1 FROM marketplace.job_claim_fact proof WHERE proof.job_id=job.id AND proof.attempt=job.attempts AND proof.owner_token=job.owner_token)))) ORDER BY next_run_at,id LIMIT 1 FOR UPDATE SKIP LOCKED) UPDATE marketplace.job j SET status='RUNNING',attempts=j.attempts+1,owner_token=:token,lease_until=:lease,claim_checked_at=:now FROM candidate c WHERE j.id=c.id RETURNING j.*",p,JdbcJobs::row);
             return claimed.stream().findFirst();
         });
     }
@@ -60,6 +60,12 @@ public final class JdbcJobs implements Jobs,com.example.marketplace.platform.api
         if(!org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
         var rows=jdbc.query("SELECT * FROM marketplace.job WHERE id=:id FOR UPDATE",Map.of("id",id),JdbcJobs::row);var now=clock.instant();
         if(rows.size()!=1||!rows.getFirst().status().equals("RUNNING")||!Objects.equals(token,rows.getFirst().ownerToken())||!now.isBefore(rows.getFirst().leaseUntil())) { throw new IllegalStateException("JOB_LEASE_LOST"); }
+    }
+    @Override public DueClaim requireDueClaim(UUID id,UUID token) {
+        requireOwned(id,token);
+        var facts=jdbc.query("SELECT f.* FROM marketplace.job_claim_fact f JOIN marketplace.job j ON j.id=f.job_id AND j.attempts=f.attempt AND j.owner_token=f.owner_token WHERE j.id=:id AND j.owner_token=:token AND j.status='RUNNING' AND f.scheduled_at_snapshot=j.scheduled_at",Map.of("id",id,"token",token),(r,n)->new DueClaim(id,r.getInt("attempt"),token,r.getTimestamp("claimed_at").toInstant(),r.getTimestamp("scheduled_at_snapshot").toInstant()));
+        if(facts.size()!=1) { throw new IllegalStateException("DURABLE_DUE_CLAIM_REQUIRED"); }
+        return facts.getFirst();
     }
     private boolean owned(UUID id,UUID token,BiFunction<Job,Instant,Boolean> action) {
         return independent.execute(status->{

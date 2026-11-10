@@ -1,0 +1,3 @@
+.exchange-flow { min-inline-size: 0; overflow-wrap: anywhere; }
+.exchange-flow fieldset { min-inline-size: 0; max-inline-size: 100%; }
+.exchange-flow select, .exchange-flow input:not([type="checkbox"]) { min-inline-size: 0; max-inline-size: 100%; box-sizing: border-box; }

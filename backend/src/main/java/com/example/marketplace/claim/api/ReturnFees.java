@@ -9,14 +9,31 @@ import java.util.UUID;
 public interface ReturnFees {
  enum Responsibility { BUYER, SELLER }
  record Target(UUID itemId,int ordinal,Responsibility responsibility) { }
- record UnitQuote(UUID itemId,int ordinal,UUID originalShipmentId,String net,String policyFee,String policySource,String policyVersion,long policyRevision,Responsibility responsibility,String deducted) { }
- record BucketQuote(UUID originalShipmentId,long revision,String assessedTotal,String selectedMaximum,String target,String increment,String deducted,String additionalDue) { }
+ record UnitQuote(UUID itemId,int ordinal,UUID originalShipmentId,String net,String policyFee,String policySource,String policyVersion,long policyRevision,Responsibility responsibility,String deducted,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) UUID physicalId,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) UUID actualSkuId,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) UUID deliveryBucketId,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) com.example.marketplace.order.api.PhysicalOrders.BucketKind sourceKind) {
+  public UnitQuote(UUID itemId,int ordinal,UUID originalShipmentId,String net,String policyFee,String policySource,String policyVersion,long policyRevision,Responsibility responsibility,String deducted) { this(itemId,ordinal,originalShipmentId,net,policyFee,policySource,policyVersion,policyRevision,responsibility,deducted,null,null,null,null); }
+ }
+ record BucketQuote(UUID originalShipmentId,long revision,String assessedTotal,String selectedMaximum,String target,String increment,String deducted,String additionalDue,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) UUID deliveryBucketId,
+   @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) com.example.marketplace.order.api.PhysicalOrders.BucketKind sourceKind) {
+  public BucketQuote(UUID originalShipmentId,long revision,String assessedTotal,String selectedMaximum,String target,String increment,String deducted,String additionalDue) { this(originalShipmentId,revision,assessedTotal,selectedMaximum,target,increment,deducted,additionalDue,null,null); }
+ }
  record Quote(UUID id,String fingerprint,String orderNumber,UUID sellerOrderId,long orderRevision,Instant quotedAt,List<UnitQuote> units,List<BucketQuote> buckets,String net,String increment,String refund,String additionalDue,boolean legacyConsentRequired) {
   public Quote { units=List.copyOf(units);buckets=List.copyOf(buckets); }
  }
  Quote quote(String number,OrderQueries.Authority authority,List<Target> targets);
+ /** Held, genuinely inspected return; current buyer authority, no new application window or reservation. */
+ Quote quoteForReturn(String number,OrderQueries.Authority authority,UUID returnId,long expectedRevision);
+ /** Explicit exchange conversion consumes its actual held/inspected physical source; no RETURN application. */
+ Quote quoteForExchangeRefund(String number,OrderQueries.Authority authority,UUID exchangeId,long expectedRevision);
  record Accepted(UUID id,UUID quoteId,UUID intentId,String refund,String additionalDue,Instant acceptedAt) { }
  Accepted accept(String number,OrderQueries.Authority authority,UUID quoteId,String fingerprint,String key,UUID intentId,boolean legacyConsent);
+ /** Current buyer accepts the already inspected, held return; never an OPEN source. */
+ Accepted acceptForReturn(String number,OrderQueries.Authority authority,UUID returnId,long expectedRevision,UUID quoteId,String fingerprint,String key,boolean legacyConsent);
+ Accepted acceptForExchangeRefund(String number,OrderQueries.Authority authority,UUID exchangeId,long expectedRevision,UUID quoteId,String fingerprint,String key,boolean legacyConsent);
  void bindRefund(String number,OrderQueries.Authority authority,UUID assessmentId,UUID attemptId);
  record Apply(UUID assessmentId,UUID attemptId,long resultVersion,UUID jobId,UUID ownerToken) { }
  record Applied(UUID assessmentId,UUID attemptId,long resultVersion,String reference,String increment,String deducted,String additionalDue,Instant appliedAt) { }

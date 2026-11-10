@@ -105,12 +105,13 @@ public final class JdbcContract {
 
     private static void run(Path output) throws Exception {
         String database = "c3_verify_" + UUID.randomUUID().toString().replace("-", "");
-        String url = "jdbc:postgresql://127.0.0.1:15433/" + database;
+        String url = DedicatedDatabaseTarget.databaseUrl(database);
         DedicatedDatabaseTarget.validate(url, "marketplace_test", database);
         // Creation is additive only. A collision fails; existing databases are never reused/reset.
-        try (var admin = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:15433/postgres",
+        try (var admin = DriverManager.getConnection(DedicatedDatabaseTarget.maintenanceUrl(),
                 "postgres", required("C3_TEST_ADMIN_PASSWORD")); var sql = admin.createStatement()) {
-            sql.executeUpdate("CREATE DATABASE \"" + database + "\" OWNER marketplace_test");
+            DedicatedDatabaseTarget.verifyAdminConnection(admin);
+                sql.executeUpdate("CREATE DATABASE \"" + database + "\" OWNER marketplace_test");
         }
         Files.writeString(output.resolve("target.txt"), database + "\n");
         var source = new DriverManagerDataSource(url, "marketplace_test", required("C3_TEST_DB_PASSWORD"));

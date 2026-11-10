@@ -1,0 +1,2046 @@
+{
+  "source": "P09-E dev2 705 inputs SHA42E593BE85B73166C098F262B6B8340CB6EC72814F7231552C416098B27C7F28",
+  "methods": [
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConcurrentConfirmationsAndReusedProviderKeyHaveOneEffect",
+      "sha256": "4fae279eb022ffe6aba4b0b0a978da0a58709025289b1900619b0ab7ac842c42"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConfirmationWaitRechecksCurrentSession",
+      "sha256": "4ac7faf941d16db10b4324c38001ec399f5ac621c3f95d3ea87bc9293d505c32"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxConfirmationBindsStoredOrderAndCurrentAuthority",
+      "sha256": "0ac55ad640125deb1437241dd954cb8f169aa8890369ad3ac60efd1b60158c8e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentWebhookRequiresProviderEvidence",
+      "sha256": "e8222ca8a5a3d6a7e0382362c9b8750a538d44e57b1a38468a42546dd120f03a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sandboxLostResponseAndLateSuccessUseSameAttempt",
+      "sha256": "9e213c9a32ea5a2b27769558f33adef0a94beebbff8fc34d69d5aeb51f03d0aa"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroInitialDeadlineNeverSchedulesCompensation",
+      "sha256": "4f35bbdfa396d75a17a28cb6b6def637fc4d1aa09dad93d770d563eac2f2dcad"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalProcessRecoveryBeforeAndAfterProvider",
+      "sha256": "7244d90f66e6351bb89c0b7a0b2dc8d2cffbd7ae1e6024fc0a0a732f2c79b5e2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentRepeatedWorkerCrashExhaustionNeedsReviewWithoutRelease",
+      "sha256": "37955aec88644c34ee883f7fa7fb0423046f484e79d34b8ebd6d554125e50c6e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentZeroCrashRecoveryNeverCallsAnyProviderOperation",
+      "sha256": "5ba5e847f86059a46201e58fc1af95e94104b1b4c37b38e253ee97b894e674c1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalExpiryContendOnTheSameOrderLock",
+      "sha256": "a9b3b87b71717a898b07ffc46f62ff28033299e998fa2315e6a343be6908bb0a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentRejectsMislinkedOrIncompleteReservationHandoffs",
+      "sha256": "073d99d48f6c2b04935b1100a0dee250eba4872556e7138207de935fde85abe6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentMockFixtureIsNotProductionApi",
+      "sha256": "25eba12755d3d9ac78133ef1e6b17eca5cc8637c9c6bfd5549c6240b61fb69a9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentWorkerRestartKeepsEffects",
+      "sha256": "1e951e96ce59159e37287e585c7fe0887cd4ff457473c717e0f9fb0401205875"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentReviewRequiresAuthorizedReconcile",
+      "sha256": "f3c081d8abf37b0b017b8b87f1a3777a1412f2cb58ca4088019f65f126b9d4de"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentPreparationRechecksExpiryAfterReservationWait",
+      "sha256": "5dac86cdc815da1a843ce0babc5c89fd3eee668dfbd23d0535b4e7d14399d652"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentExistingGuestRechecksMaximumAfterOrderWait",
+      "sha256": "ea6379c52e6c569fcce6dbe0fef38e55c86f64848baafe1c35b31c9df7f6c887"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpWaitRechecksSessionAndWorkerSurvivesSuspension",
+      "sha256": "1ef86a8e6363efd60cbb5202c3dfbedc60e5ff95c4076434053d1a69a6ecd140"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpRejectsOwnershipAmountModeAndMissingCsrf",
+      "sha256": "3110fd6479c0aba265e2ef4efd53a8bb45c42f37df072b32f5f90e168cc149f9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#realOrdersRequireCurrentOwner",
+      "sha256": "a4b979b9432aca52a722314aca7ed0a43e355ea99e111d02682930d5227e7d1c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#realGuestOrdersUseIndependentAccessSessions",
+      "sha256": "04cc436261a874abc9dd5640b8e7ce0a4173a984a9f5a28b35ac5c6b656acf3a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentBrowserFixtureIsNotProductionApi",
+      "sha256": "99b223f55b76b63392d97bb7070a291b0e3df7b0492dcc318483061079f1fe6f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnBrowserFixtureUsesActualPortsAndScopedObservations",
+      "sha256": "a2e095e05005030d148e1e30f9df873a896b3a218a381ba41d6ef9fd5a88102d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderListIsBoundedScopedAndCurrent",
+      "sha256": "3bf9d21039131d317bc7d5aef7dba06992b8a047284df6825deacc05766bb75c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerOrderProjectionIsScoped",
+      "sha256": "57dde16df6f0c592d44e6e0ba20077c633c080434d995c4394df9ecaaaf229d8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryPreservesSnapshotsAndPagination",
+      "sha256": "34964a6886b7d763ed5a80138d0bae77ff02720eea8681d3e3e2e5242d9506b6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHistoryShowsExhaustionWithoutMutation",
+      "sha256": "9bb0626a006225512053f5021af81e37010f80ed24a1649731c42fde2c688d41"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHistoryRechecksAuthorityAfterActualWait",
+      "sha256": "45c09f302861840e61a43a4d82b49a8dbec7c001272b6005c998fa32d230a258"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestHistoryRechecksExpiryAfterOrderWait",
+      "sha256": "66fddddd8c23517d4e84988178164756ed61535ee7dc265ace082c6ed2eaba4b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#memberAndSellerHistoryRecheckExpiryAfterOrderWait",
+      "sha256": "217fec185395e79004318cf38144fe661c07e43fac72193abf5a6952908efc8a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityAndReplay",
+      "sha256": "0212f4a1bbf813683a92a285e4bb92ec04439faa930d2a89a59afd3ec80b5e45"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationQuoteUsesOriginalUnitsAndShipping",
+      "sha256": "b5097620f345aef41c7fc27daee8fd0132385aa8f69e0d783f8bc22fa5e21759"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationReservesBeforeRefundAndRestoresOriginalUnitOnce",
+      "sha256": "d16f0613b5dab77fdf160cb41206c8068941e4558bced654bc05ef970e7e770b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#fullCancellationRefundsOriginalShippingAndClosesOnlyAfterEverySeller",
+      "sha256": "f3539d87e96a0b2e1276c61fff56cd6d984794936db2b20c83fb9fa8773c03e6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationOriginal33001PartialAndRemainingConserveSnapshot",
+      "sha256": "0c40cac73d070d8c5bc0561e6d38a7e37ddafa7d02f35a27aabbe3b80b647576"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundDiscountsAndPolicySnapshotsRemainStable",
+      "sha256": "98818edbfe4e537d0bab63e3ca6ece1aff6c976eceb5fd68e5d4537ec7175aae"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationFreeOriginalShippingNeverRepricesRemainingUnits",
+      "sha256": "b3d926a3814046c00880cead8b5c489c4a3817894e3f0e401881d9d59ef2e4eb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationAndShippingHaveOneWinner",
+      "sha256": "60674a0fb0bd66a36facb6a6e4ffce1e07d998c7ab0f7c03f79dbbd668fcec97"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationAcceptanceRollbackRestoresEveryParticipant",
+      "sha256": "7599dd2dfc8224abeef9fe4edeab1783993daa4d829fcd836700e8ef249a54d2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundReservationsShareParentPaymentCeiling",
+      "sha256": "191250dc63fee1ed3bc6b4ea802918258734b264deb1023bedf9de436d81638f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationAuthorityAfterLockWait",
+      "sha256": "22e65bf4cda77d5697e89d6cf9b5dc3801e9d7d7c32e89341b9b99e0e2e51d83"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationGuestAuthorityAndFinalWaits",
+      "sha256": "25ed45d888f15915e0676d1c9666abbd83c7794d55926a7c75866bbcefc5039b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#supportRefundCommandExpiryAfterAttemptWaitRollsBack",
+      "sha256": "dc6de087a4343d0ea196d6f98218ced8e40cf7d9390a725bd0c236b172c53509"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#partialCancellationDoesNotCloseUnfinishedOrder",
+      "sha256": "13f7d4dfb223c1dfe73967bb81aba45d23c120677183a36ed2deff484b0ec11d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeSameOriginalShipmentAcceptanceRaceHasOneReservation",
+      "sha256": "7c80fab2c768914994a2ef76f1e1f943a4957e856f99015828b92c543575f6c5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeDifferentOriginalShipmentsReserveAndRollBackAllBuckets",
+      "sha256": "547ca4cea27ff3162cf534ec00afcc343d574f95152919526271138e8ae5a2cb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productReturnPolicyHttpLongDefaultsAndDatabaseGuards",
+      "sha256": "fdf004ae6bc1e3f96f87936f265d6ddc30710f920ea4306477efac6c3442c8a0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productReturnPolicyChangeAndOrderCreationKeepSnapshotOnBothLockOrders",
+      "sha256": "4823f61457a8683159a852b78a4c09d872fc7efcd7c3b46cb66489aee0e04620"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationHttpGuestUsesCurrentGasWithoutAccountLogin",
+      "sha256": "fefd9446b135cfed0044fe5c5f65e913226f7300f940b35b48bc7a98fb65bed3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeOwnerCommandsRecheckMemberAndGasAfterLastActualLockWait",
+      "sha256": "9093b6bbd8c90fa4297f284ba14c4f3b2acb7f2a86edf1508798651dd237ac31"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeSupportRetryRechecksActualSupportSessionAfterRefundWait",
+      "sha256": "0bf149e0e165c1473639d574baaf627693517028b629556cf2815db759f0128f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeFailedAndUnknownActualResultCannotApplyFinancialAssessment",
+      "sha256": "055e593d148d1494633bc3643db6569ec62ffe1b0893b0ba05c13d417753a52b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeCrossOrderBindingsAndWrongMoneyOrReferenceRollBackEveryParticipant",
+      "sha256": "35ebeedbd5fcc859c417eb0dc5066da44d2be95ea78d469b3459bff8245ac7d7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#succeededCancellationChildCommitBeforeAckReplaysWithoutAnotherEffect",
+      "sha256": "d3672bd7600fde4e9354130d59060f7104338d12365c2cf262c6bcb0537dc0ed"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#succeededCancellationBusinessEffectsRollBackAndResumeWithoutAnotherRefund",
+      "sha256": "ec1ee3cb9646a54d2fd9ea10a17117594c58b11f8b43f5ef73c914b0073cacbb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shippingRefundFailedRetryAndUnknownQueryKeepOriginalObligation",
+      "sha256": "cbb0375d9c605ec11033561bc2dbad1d67a04e40f18eabff775435a250500d5c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#fullCancellationRestoresExpiredCouponsOnceWithoutReusability",
+      "sha256": "0b5b20d0cd2891603173ee6d8616c1956b3a4c42820ebb7ad1af1d13906b6d9c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#zeroCancellationUsesNoProviderAndClosesFromTrustedFinancialEvidence",
+      "sha256": "a162625ae353c639c26f9f45b8a85f975600e39a26fa70b7dda14be3a0ff85b0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeApplyKeepsGenuineCommittedCouponsAndInventoryUnchanged",
+      "sha256": "a1d42e68edc2998324dba7d4b656ddb8016b6ff784450759ae1ac2e6c3e4937d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productReturnFeeDefaultsZeroAndOrderSnapshotAreStable",
+      "sha256": "75a61a77f8e59fb6e2a2662ef924cee1eb27ab053d30c8f127e6387f6621f803"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundPreparedChildTakeoverNeverReleasesBudgetBeforeLateSubmit",
+      "sha256": "163ace4d628f8029419c2703dce6182da939a2fcb8453eeae4b9e5b420377dcc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundFailedResultRecordsOneTransitionAndReplayIsNoOp",
+      "sha256": "94f67336b758ef909c491f993131e5df1ced758a7bf44e52fcc66544497fe65e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundUnknownResultRecordsOneTransitionAndReplayIsNoOp",
+      "sha256": "197d9d7afb28f8158d05020980f6afd1caa4e6dfbbbac7f5bd319c7e42dbee06"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundReviewAckCrashAndOlderUnknownCannotRewindSuccess",
+      "sha256": "69600ebe64755a407fc7a8d6c15a7b30aabaff5b7007ab6da1ac1b08f94cff4e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundReviewHistoryOutboxAndFinalLeaseRollbackAtomically",
+      "sha256": "9752555b9c720c0f58b8be03194009f205b9c62813d6e069b3d351bfde68eef0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationRegistersCommonFinancialIntentFromActualHold",
+      "sha256": "2bb88091fb6fe7e9655c14efb7205a242d12a30f4f3d9c89a78b194734b65e37"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orphanRefundAttemptCannotInventAnUnattributedClaim",
+      "sha256": "f4244250ee7bab4bdab90f2a3298d3ed61cc31dcb826d8f6573276fc6960eb75"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinancialIntentRequiresCurrentOwnerAndActualDeliveredHold",
+      "sha256": "9abe51db94d46bb7406dfdc57c43bf6bf8215c5244e6722cb61abae90f161e86"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeQuoteUsesGenuineProductSnapshotAndOriginalShipmentMaximum",
+      "sha256": "715ce282f79e19c702a4ad66a20c1c2bd8b759479d3f81d1690a499845eebe3e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeAcceptBindsActualRefundAndReservesOneOriginalShipment",
+      "sha256": "42f2d8bece518bf113ea027129c5bc060bd6b831d4643e09a9defad57e62653b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnRefundResultIsRetainedWithoutCancellationEffects",
+      "sha256": "a4009482524bbcf470f0254d38212f72fa365747cc7b57763129f39a7c0697c1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeApplicationUsesCumulativeDebtAndNeverCompletesPhysicalReturn",
+      "sha256": "96cab4383cd0192ab8b5a778bc2ccc5f861d30054da4bb9f18062ec7abed1d2d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeWithdrawalUsesActualRefundStateAndReleasesOnlyOwnHold",
+      "sha256": "dc659c5cd2f833f808d886bdc330da1b68e870cd1ad209851cc7d6c83f7d4fa4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSellerApprovalPreservesAcceptedReceiptAndUsesCurrentOwnSeller",
+      "sha256": "d97e8446743c745bf597e7f87fa4aeb49fa0878bada0f707eeaee8945c8abe9a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSellerRejectionReleasesHoldAndKeepsOriginalApplication",
+      "sha256": "c75b71a0339ae208def7782b8634421fa4d078192233c46d2cee6c36952f3a06"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnOwnerWithdrawsOnlyAnUnapprovedRequest",
+      "sha256": "fb275a677098a5e4c0bfdbf068b031d7ae1ae0f4e23e78cc5e510e4d57635597"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnCommandGetConflictsAndApprovedWithdrawalRemainPrivate",
+      "sha256": "7dc75d7819b96d0d800b0c51b4c07ca2f5c74bd4f353263d74a4b2d3da613b7b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnActorCommandsRollBackEverySqlStageAndResumeExactlyOnce",
+      "sha256": "f65ad25fdfd02f80f4200ac1a626c0d89fa48602b835d06e6d2f7f51c482dbc9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnReleasedReceiptWithoutTerminalStateCannotCommit",
+      "sha256": "a0abd520bf012065644a8154674d9e95995094dcfef27387c3f260f0135b86df"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnAcceptedBeforeDueContinuesAfterDueWhileNewRequestIsRejected",
+      "sha256": "41faeee3503935b839dc63ca8e95d1eea7bd0e37ab249aec15d38672a12b3d1e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnActorAuthorityExpiresAfterFinalClaimLockWithoutEffects",
+      "sha256": "198d219e6cd9f44c13d212a8522624123313bc86255d0aec1d236379d38040f2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnApprovalAndRejectionRaceHasOneRevisionAndOneOutcome",
+      "sha256": "707b9975f2eef653fbed73f3f8d4e61b70b7e411a2b0ad50755db576e9963152"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnCollectionRecordsOriginalUnitsWithoutFinancialOrInventoryEffects",
+      "sha256": "d70675719f62e1893b23e2f84c513305a4373b8d3f48cd3c6616a3fa3ff9e7d4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInspectionRejectsUnreceivedUnitsAndClientQuantityOverrides",
+      "sha256": "0e84bd12f9a588227816a79f2f74e73a2f2c3eacc6b801c0dda9887b5b014640"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#acceptedReturnOrderJdbcNeverReadsClaimStorage",
+      "sha256": "9fcdd67606e09d6355e3b5d178202cbdaff6a8ee36b85f533245a1407dc3e27f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnCollectionRejectsForgedUnitsAndTracksLostThenActualRecovery",
+      "sha256": "cddad01e1f69d9e5c4d7ce411bc0a90080f434e3df020e5554e7e10f1c243188"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnCollectionEverySqlCheckpointRollsBackAndResumesOnce",
+      "sha256": "37c2555d8d09ec20deac7376897ee954aeb40d0d710b4414028b84ed6410d303"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInspectionRestoresOnlySaleableOriginalUnitsAndKeepsCommittedEvidence",
+      "sha256": "07ef178de2f3cf52df7177e7c33e022b7a4e9891c49b1be1c298b61cb2a0a584"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInboundWithFictionalInspectionCannotCommit",
+      "sha256": "72bb86633bf526845112e23c834190a60db34f67ddaed0844822dbd7168ef87f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSaleableInspectionWithoutActualInboundReceiptCannotCommit",
+      "sha256": "b3a57c2145f9030fbcbe439ef390ffb23e49b17dd96ab7ba78dbc2f6da703a2f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInspectionEverySqlAndStockCheckpointRollsBackAndResumes",
+      "sha256": "99390fe7507bb78fbb69bdffac29d44406dac7472ad49b7c9ab591afdb6ee868"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnPartialAndDefectiveInspectionsPreserveHistoryAndNeverAutoRefund",
+      "sha256": "a547b93e9c0af0f4c53f63af205b9efd52d7dda7fa084db783a40b3f2ef8c770"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnPhysicalAuthorityExpiresAfterFinalIntentOrStockWaitWithoutEffects",
+      "sha256": "370d90c70ac85a0157a508e58f3c3995c361390b5f202d5565e0464128244cf3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInboundReceiptWithoutActualStockEffectRollsBackTheInspection",
+      "sha256": "acbc2405b33d89cfffd8ecb350ec7f76fbf28df6da3d580d019f3e108ef74482"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnInboundJdbcUsesOnlyInventoryOwnedStorage",
+      "sha256": "94a8ed0d80543fd008a9d185ba83fc24fcbac3002bcf32e82292efad5415d741"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinalQuoteUsesActualInspectionWithoutFinancialReservation",
+      "sha256": "8457a0b3cbdc07d7f4d1899f108c8c5bc490e6ca17e37e1200cd18b7a542a231"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnBuyerConsentAtomicallyReservesBoundItemRefundAndReplays",
+      "sha256": "8cd5701d792928ec2440db106b150a56421ffa49935b763373681c27a76f5bc3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinalConsentRejectsStaleTermsNonOwnersAndTrustedOverrides",
+      "sha256": "d3e20cd50ff8072c75b1381d30e4d9e0a7346ef13737237fb79e2de5df475b68"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinalConsentRollsBackAllFinancialAndHistorySqlStages",
+      "sha256": "3c85c1766610111caba7a075b3db05d351d0820a62a95512042bef4ca025eacd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinalQuoteAndConsentRecheckOwnerAfterActualFeeBucketWait",
+      "sha256": "8dbe6a54d0a69cb7cac959701e1fc36f4bae87e4a1b4b81eb97a056598907f86"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinalConsentRequiresActualReceiptAndCannotBeMutated",
+      "sha256": "6829d57dc40d1152213d25920e4b9dd4087899bc29904d317ac58e0e46662c68"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recordedReturnPortKeepsActiveAndReleasedOrderEvidence",
+      "sha256": "4e7c962c6500aac6372fc3d88950340e76c02139920646dc80e356522cc60b76"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinancialWorkerAppliesOnlyRecordedConsentAndActualResultsOnce",
+      "sha256": "63de940bdb8f0fab32c536914016d7ffdb819275b9678272886ba972d9d73f27"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinancialEffectCannotCommitWithoutItsOutcomeReceipt",
+      "sha256": "8ef9dc68ebeab5835a00fdf66624d1de6aad84c9a87d854e984b89720b69e978"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnWorkerRequiresTheActualStoredJobAndNonNullOwnedLease",
+      "sha256": "9c5a154451644d1d25c50a43f3ad4b820f7b994cce09e7195d83426d94328791"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnWorkerLosesLeaseAfterActualFeeWaitAndOnlyTakeoverOwnerWrites",
+      "sha256": "b3894a569d90f40c0d1f16efe9fcf8624c43f270cf8a792efb951dcbfd7d47ed"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportRetriesOnlyDefinitiveFailedInspectedRefundWithCurrentAuthority",
+      "sha256": "0aebf602b37ecd075d8261ffec0e2e29e11d10dc70a8af2105b4383cae983386"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportQueriesUnknownSameAttemptWithoutReleasingReservations",
+      "sha256": "c1394d8e8a57bdad5a9fbda554f8b689eaea5411a3a0212016a6cd6dc271666d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportHttpRejectsOrdinaryAndGuestAuthoritiesAndTrustedFlags",
+      "sha256": "c17224b7d12b2a43323b16f029f30fe5d5a5d9696b3f90d70535376a5cb7b937"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportRechecksSessionAndPermissionAfterActualFinalPaymentWait",
+      "sha256": "07b26d1a2aa8d913e86cebf057451a3f798bd2c3eab8742932f857776b297acd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnOldOwnedResultsCannotReverseSupportedRecoveryInEitherArrivalOrder",
+      "sha256": "9995c554a92a88d278758303cd534c3400d95d9dc7154f906471790565cca717"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#oldRecoveryManifestsCannotReverseSupportedSuccessInEitherArrivalOrder",
+      "sha256": "b71f9ee21c5296cb00321bf32bdfae76d8017b39adc335043d235bb3dfca5795"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinancialWorkerEverySqlStageRollsBackAndResumesOnce",
+      "sha256": "0c62cde85ad02b5cd9b6416e104e1f96399def0b35dd71246725ecac6b60e95e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportEverySqlStageRollsBackAndResumesOnce",
+      "sha256": "41723d645d1ac461e688af5f771ee450e3310cf9da9a7e768a3c86400fd12aaa"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnSupportPrimitiveAndReceiptCannotCommitIndependently",
+      "sha256": "00f6990e007c5f82cdf57467d8531d9f24dd592a38c91bdb258c6fa17001dbf7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnRefundPreparedChildRestartQueriesSameAttemptAndKeepsUnknownHold",
+      "sha256": "1a0bef50b8d535fc8cbddbfbae06ed28d45c9b2c837080a1980f694ff90d5a3a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFinancialCommittedChildRestartBeforeAckHasExactlyOneEffect",
+      "sha256": "20cd778cfa7b2098bc08e0dd1a05e866324c3fe7e4c6e6e511bdb82356017b6b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryStartupResumesAckedItemEffectWithANewRealDelivery",
+      "sha256": "e1e1ccd9d983752029d50c506466df81e4e3f7c41ba79024c8538e6a3308fbdc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryStartupResumesAckedShippingAndSellerFactsWithoutChangingOldJobs",
+      "sha256": "3d478d18fd099e1c1359c4b76ad19fd66b953a0a3c98f887a76276888989d126"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryItemPagesBoundZeroOneFiftyAndFiftyOneWithoutResettingAcknowledgedJobs",
+      "sha256": "2987b58c86f637a36016359513f1191dea50f356e77c0d29fccc12471105ff73"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryFixedUpperExcludesLaterHigherFinancialFactUntilTheNextRun",
+      "sha256": "5e13cb85c88af73a1c9685c63f0d834e85a4e62dc958b525243d4d39ee3556b2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryDeliveryCannotCommitWithoutItsCandidateProof",
+      "sha256": "a1c942198de69a5da7187783f1a02d83f7e59400f218c91eada4a80402995f32"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryManifestForgeriesAndEveryDeliveryWriteFailAtomicallyAndResume",
+      "sha256": "f7462ce1192672611f94cb38437b2f37946049a97a388103b09bbabeb4ea76c8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryActualChildResumesCandidateCursorAndCommitBeforeAckWithoutDuplicateDelivery",
+      "sha256": "d6c881e7e2c673a98388c6f63def92c3e247f23ef2373a6670d4b1d23afafe37"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryScanAndDeliveryLoseLeaseAfterActualBusinessWaitAndOnlyTakeoverWrites",
+      "sha256": "8e5605bb3bd6c165524ece02fee02d11c5729476b24dcac233e6654b695b5a97"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryAndPrimaryOrTwoRunsHaveOneFinancialEffectUnderActualConcurrentLocks",
+      "sha256": "11f1a84e454438f1697aef0c7932a7673fe30a11dc8460021af0afc1d9cca2fe"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnReadyShippingAndCompletionSqlStagesRollBackAndResumeWithoutRepeatingMoneyOrStock",
+      "sha256": "de63b097ee0322700a92715e0089de94e7a0246863ade315757595d0773660a0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnShippingReservationResultAndCompletionActualChildrenReplayCommittedEffectsOnce",
+      "sha256": "88ebedca214344113604800e9d04c194517c4d257e78d04f6296bb6147ea4874"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mixedCancellationAndSellerReturnShareShippingInBothLastFactOrders",
+      "sha256": "60a29b9a2d6f5f5d79d47a084910b814d5eb3487f9a1d53e3a1925a9e925c68e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#directAndAutomaticConfirmationFactsCloseMixedReturnsInBothOrders",
+      "sha256": "def8e7bfbdc6c809c586d4416bf1fd8e41549a4083f4a28f5e3632b0806396cb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryReadyAnchorClosesAckedDirectAndAutomaticConfirmationFactsInBothOrders",
+      "sha256": "fae59ad9b4e91c199945f91399f13e533be83e3ff7b3d147fd9b7416277aed27"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnShippingSupportUsesActualOriginFromAnotherReturnView",
+      "sha256": "c2ca52ec0ae80227379bcadb5ef77eda2225b7d846e4c052b5be6d6f2746e79e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shippingSupportRechecksCurrentPermissionAndSessionAfterActualBudgetWait",
+      "sha256": "38e825c23922cc74714f848216666c619ead25d00baba2fc1ea19c3ecd11c7bf"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#ackedOldReturnJobCannotAuthorizeAnotherCompletionReceipt",
+      "sha256": "3d0a0ba6d0c21e4db8bf38000d44176fd1a27644214c142300a2884be802c2fd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shippingResultAndCompletionLostLeaseAfterActualBusinessWaitRollBackAndTakeOver",
+      "sha256": "429a5bced6b25a7405c7fb1f840793cfea2b4cae95e30630290b0d699c9a0107"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#claimShippingCoordinatorsUseOnlyClaimOwnedJdbcStorage",
+      "sha256": "1103f980d16e5e4b4f4d0e42756b3083afa3cfa04d742bb250d50f418090b016"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shippingFailedSupportRetriesAndUnknownQueriesPreserveIndependentOriginalObligation",
+      "sha256": "0aa2124265e30f91e2bfa8227ff4635d4aa5b320116063ff62ed7259433686cf"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerShippingReservationRequiresSettledPhysicalItemAndPreservesActiveHold",
+      "sha256": "b906b294933b1a7529eae79de7e8e3ead89db8e064f54086e57f0986286ae87c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerReturnReadySchedulesAndSettlesOriginalShippingExactlyOnce",
+      "sha256": "11666a8f955b6346f9da688e120e5078889bec6ed73497782be5ced5d4b25d9a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderAftercareProjectionReadsCanonicalOriginalFactsWithoutClaimOrPaymentSql",
+      "sha256": "0f3164caf653ef9c74c16d42c4473f568efec83822ca0a8ab21a05d73892c6f3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#actualReturnRequestContendsWithDirectAutomaticAndOtherClaimsAndRejectReevaluatesDue",
+      "sha256": "6c840bd4ee05aefeabd3c4303731908c7414a803505016615c5767ee8b636e5f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#actualPhysicalReturnsPreserveOrdinalRemaindersAndSavedFeesAfterProductChanges",
+      "sha256": "65270dc87f99609728fc7826a90b557802ccda5d8d768f8d9a2183f191fa0740"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#physicalReturnOutstandingFeesAccumulateMaximumWithoutNettingEarlierDebtOrClosing",
+      "sha256": "dcd93fb701da30728f74952a1c77cc79a4919f7161e116bf7b28d7ce97312896"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#differentSellerPhysicalReturnsKeepParentOpenThroughUnknownThenCloseOnlyAfterBothShippingObligations",
+      "sha256": "77fdea701fee0728256d2889af9362e404806e15bdfae0bf80877ecc10ba7f5f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mixedInspectedResponsibilitiesRetainOriginalShippingAndRestoreExpiredCouponWithoutReusability",
+      "sha256": "ab06f145281158330a8b9f6808f6ca73915f6bee4b96c975324c6a8853968879"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#fullSellerPhysicalReturnRecordsZeroShippingWithoutCallingExternalProvider",
+      "sha256": "cbb34988cb3586bddeb971391eb6ad6fbeb8d85d58f8fe243eb86caebd00ace9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#genuineV57FinancialReturnGraphMigratesWithoutPhysicalCompletionAndCurrentPortsResume",
+      "sha256": "f5f2dbf9e5cb1ab3cc1d8150b567bf50f235fd77acb7fcd20ab5f08b6742ad6d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnReadListsExposeCurrentEligibilityAndAcceptedHistoryWithoutFinancialEffects",
+      "sha256": "7fbc483ec2672806b310e96b0fd86a642b5f8a60dac72439854f31f19f25d44a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnReadListsIncludeTerminalHistoryAndBindStableCursorsToCurrentActorAndOrder",
+      "sha256": "b8cc3f0597f3cfee5cd32822ac7a92f9747e041f2dafe844e8b2287e8efc5df5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnReadFinalAuthorityAfterActualClaimWaitDeniesExpiredMemberGasSellerAndSupport",
+      "sha256": "e6bf0c7b33779d59d84041ea37df1176e815a2f6c5dd94e20f1a7ee2e01041e3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#actualGasReturnReadHttpUsesCurrentCookieOwnershipCsrfAndNoPrivateCache",
+      "sha256": "c5a81cb67ba74cf7e0c3358eccc1a2e3aef29231a239818014ee5bde8b3f6381"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnApplicationReplayCanonicalizesUnitsAndRejectsChangedContent",
+      "sha256": "a3afcc9c3b02d79c18a860e0a69c94eeee186d0852a2385145f89b61c3033d51"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnApplicationHttpRejectsForeignAnonymousCsrfAndTrustedFlags",
+      "sha256": "9e7df77cba81a33a923d9e2a0955fc75c67dd417834b7deb6f08b1b62fcf6ff7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnApplicationEverySqlStageRollsBackAndResumesOnce",
+      "sha256": "06a684b03edf674f0630cda1fe6112cbd8c2e8bc451693b67e42e2aa2d5326c2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#acceptedGuestReturnAfterDeadlineUsesFreshCurrentGasThroughInspectionConsentAndSettlement",
+      "sha256": "b7c229505cb28e184c8f42f9fe9766ffb1a9dc7a9031f4b92c115438d5e38404"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnApplicationReadsOriginalWindowAfterActualOrderLockWait",
+      "sha256": "961943de9e2478ff54f3e8e297446e6213e4036e16521d4704bc2a28d222499f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnEligibilityReceiptOnlyCannotCommitWithoutApplicationGraph",
+      "sha256": "a60f9ec2acdd2f8f1f69f1752dc4c36ca5211063ca9be732e637fc7bed54b920"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnRequestAcquiresOriginalUnitsWithoutFinancialReservation",
+      "sha256": "d6f0af1a36425fd5f7e999a2df45cc99c18da96f3f6df998bb2ed8d48c8a2d6d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#feeApplicationReceiptOnlyCannotCommitOrPretendApplied",
+      "sha256": "3445eef3c8281c57294dd0b0019936c9d1e1c03ba7e785ee447b64bf1b3a3970"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#feeWithdrawalReceiptOnlyRollsBackActualRefundAndHoldRelease",
+      "sha256": "a4f352ecc5abb033b82aa29563fdb21459ed5194881ce00f6530c91737a88a41"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#catalogSessionSaveAndAccountRevocationKeepCanonicalLockOrder",
+      "sha256": "7afa723586de9214a0f7d8bf67a4d57eabc03e9351d39013ad7ade73b5a175e4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#catalogSessionExpiryAfterCategoryWaitAndStaleVersionLeaveNoPolicyWrite",
+      "sha256": "f016568cd712c80316fe9c555b0dfbe5496651f2179d8aa8c2e021cafe311050"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#feeTerminalHistoryOutboxAndLostLeaseRollBackEveryParticipant",
+      "sha256": "fdfae0157ad83ba6f81cea024b369997dc3a8e6034a8e0a5db4f79cf1a330b14"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationGetSeparatesAcceptedReceiptFromCurrentPrivateProgress",
+      "sha256": "2e3e3334fbd90ea763e8be54aa65191b9e6691d467930c85d4faccf3501ac049"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationWithdrawalUsesCurrentOwnerAndActualRefundNoEffect",
+      "sha256": "949aec6ed8d9e735a331665d90e90f92ad465fb9c3f08ba7e380edc34f3af665"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#supportQueryKeepsSameUnknownRefundAttemptAndRequiresSupport",
+      "sha256": "04fce0c56f50bd233ae373009d28a8a46b691b2d3d09b79f1be47a5e72481b7f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#supportFailedRetryPreservesOldAttemptAndLateResultCannotRewindSuccess",
+      "sha256": "ba74ed0587f758b1a88a3f9b54213ea6e28bed7c91d31e8f9c32970299debb8b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#returnFeeFailedRetryPreservesAssessmentAndReservedIncrement",
+      "sha256": "668ea4137d8b8aa22de3223d90ce50de7bf580d640f69ed28f092076d0815008"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationShippingRequiresEveryOriginalUnitFinancialSettlement",
+      "sha256": "9298e188a74f758f1ffc70d29c65ff39557aa50fcb1be706af7ef8d040477a3b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#withdrawnFailedRefundResultAcknowledgesWithoutReopeningCancellation",
+      "sha256": "74e13b8068a0927bc4f554dd28f3b19c8eda862e099b143f927f4d9c418b1dd8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationReservedWithdrawalReceiptOnlyRollsBackEveryParticipant",
+      "sha256": "9c95c51f1b100a8181e1e0a43245ddae7224a704852c7d15ff679973ef1b1637"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cancellationFailedWithdrawalReceiptOnlyRollsBackEveryParticipant",
+      "sha256": "41a3eab5690d153556e5789d009ebc1eea7ee26e786c8d0e360d0812203672a9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#alreadyRecordedFailedResultAfterWithdrawalIsNoOp",
+      "sha256": "5ae4c20c6ca64881e3a54d597552e977afe40b505c649651ef0413c90e8786c3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#withdrawnFailedResultHistoryOutboxAndLostLeaseRollBackAtomically",
+      "sha256": "a0d9e966cdfb6cbbbf4cb159e883cc2d3745afa949969240c62ffbfc85625e0b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesStoredMicrosecondBoundary",
+      "sha256": "f9b62dd1e97b83f96783d13f7f87c0cd0aaac2b8986422005b6ac7e6aeabbd6b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#claimHoldBlocksShipmentWithoutCyclicRead",
+      "sha256": "501ed6c5a43cbb85231c140b573e989202ea6c97696f3fd5992e093c5a676738"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationUsesPersistedPolicyVersion",
+      "sha256": "b2465435fa2830fc5c23c8da7629d5621976ba08bd9ee72088b806351d016ac1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAndClaimHoldHaveOneWinner",
+      "sha256": "2d5eb955b1a975f60c3eea98a6d7f63655edb489792ab21cf7d96199f5c6cc6c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationWritesRollbackTogether",
+      "sha256": "2a791c609dc988f8252740030ee60004497304a89331d0d0e75754207c1e8660"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#closedOrderRetriesDoNotTriggerPaymentCompensation",
+      "sha256": "ceef28238c8d55d298d250d04a095fad91d8d5e47643ff131761f3872ad9edc3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#closedSandboxNewWebhookDigestsNeverCompensateSettledAttempt",
+      "sha256": "26d1ad4f3dc0ee1cde0064bb3a24bda2e822d2a8aaada436cd94a954d6ca4324"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationJobsRecoverAndReevaluateReleasedHolds",
+      "sha256": "757acc2f365bc748984ed9eb96507ac5e8d193ef8043b18b7d4b272e8ed82e42"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#refundReferenceBoundaryPersistsAndExcludesAutomaticConfirmation",
+      "sha256": "e0c40466ab3422101e3cdd26a3808df25c4e0dc4e9b1b07d07bace13ea8ef430"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderClosurePreservesHistoryAndPendingUnits",
+      "sha256": "18b9b94ea32f85eb5e784a9076760862c869fd1bfdc23144a5c97acfbdbf9a9e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationAuthorityRechecksAfterActualOrderAndUnitWaits",
+      "sha256": "741f8e09f6ab0fc0d479a9e8e37c4e33769216778655ba0659ce59624541422a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationGuestAuthorityAndNaturalWaits",
+      "sha256": "2af483cbe042f79532d23cf28f2752f7602d0eb21af25cfca251b9d5d18fb404"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationLeaseAndClockAreRecheckedAfterLastWait",
+      "sha256": "c57d0dc980eb39f5f080a412d3c0880f38376f2f7df4f3696e01bfa65bdf0abe"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationDatabaseLifecycleAndDispatchConstraints",
+      "sha256": "c5553e4039b44d509f8a8a556729d443c495b1511b22c40507f9569ad2e5ae51"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#confirmationActualWorkerCrashAndStaleLeaseCannotWrite",
+      "sha256": "97f0a132322ba83f00c739709898cb022cbc5ef1cb502d2dd7e901418660a36e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#dispatchFactsUpgradeAndReplay",
+      "sha256": "d75c01020b496416bd8eb7ac5f08457075f73e0f4829420b219d5595f6f3d97f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#basicShipmentRequiresPaidSellerOrder",
+      "sha256": "b21e23bf867172c2c8627a00fb0a130351773d665ee1ee84054d7f9833598c97"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentWriteRechecksSellerAuthority",
+      "sha256": "432309e7cf2729a2742ee4f3a1bb52566fd94152e5d34123b2b1d011bfd24255"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentEventsAreIdempotent",
+      "sha256": "4b5999f7d53f869a4a36ba34ca19020cf9daa2df0482e858d36fbbb2708cea3f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentExpiryRecheckedAfterOrderAndShipmentWaits",
+      "sha256": "4cc104a6014795e79d7871be55b8de52aa269f137bebefeb00afe9321f7a53ec"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentAtomicRollbackAndCancellationRace",
+      "sha256": "e3c9b45df1dc3b0ab0b08f58985da0033e716150b223cfd447b053028d5ac7fc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentConcurrentPurposeAndVersionHaveOneEffect",
+      "sha256": "617605bd2e4ce82598304849208103aaa7f0f68d63b0c37bc1a552c82bf0367f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentHistoryUsesCausalOrder",
+      "sha256": "14f531070964bcc1a8c151ed50abf2bd67516f4373155feddffca623ac0e0a01"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentOutboxAndWorkerRecovery",
+      "sha256": "2c0cf9471773b207221b163dd5419812a6e97fd668a7ff61d711c333debac4e7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseItemScopeAndMalformedInput",
+      "sha256": "409910ab1f8506de6b34dc69f113929a6492e09f390f5be5eb8bb3fa2b7a7b36"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentBackfillResumesAndSharesLivePurpose",
+      "sha256": "ba9f8d69188bec663bd82e0c76ff0f7ff4f5baaf2ca6df400081c5a2ff1f7781"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentDatabaseParentOwnershipIsLinked",
+      "sha256": "250e4aefdeb7be672b34da3076c054e3d8bb8971a1131b68d22ce9ac13eed176"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentsPreserveScopeAndQuantities",
+      "sha256": "2f0b6b441f0f0cdd88bf6d63bb71a7c9d3ebcd3e4d0b4abdd3eb3e252d050eee"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentTrackingEventsNeverRegress",
+      "sha256": "f0168a5bb5d5ff65f0785597d23927b08c8dc2b42be6d211409256c0de6abd19"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#splitMultiItemMovesWholeLineAndCanonicalReceiptsRejectChangedContent",
+      "sha256": "73b3fe3664c3b8231b7d5dc4dbf33ccc25059040364f4b98d9c30450e87e8fa3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#splitUnitsPreserveLegacyBasicAndReplay",
+      "sha256": "3b3816a1f2beab0ec2e885cd42c6a148b23e4effe399bb65c7d2bb513495bf01"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentProgressEpochSupportsLegacyJobs",
+      "sha256": "b5c101aa33e40ebb33e9ff60370db726bb03411ac1f40c6b60bdc37d312ca25a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentCommandsRecheckAuthorityAfterWait",
+      "sha256": "ee655b4248e4ada470d1e80d3c97b791e9cd64559e2ad5f1c10a59d77736c479"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#splitShipmentRollbackAndWorkerRecovery",
+      "sha256": "54cc42a171d0eddeec9c913e380bf45845e755cb7c44b79f47a6666bd31526d4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentCompletionFactsReplayWithoutCycles",
+      "sha256": "13e6e85cf25a8fd9c6ae7013d5a9c2faf150ba4739321d15fd75f3e2acec3dca"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentV36MigrationPreservesLegacy",
+      "sha256": "9f0c9fee4bffb146ae20e52c46f8f1833a79aad6b89cb2878fd1e1c17dbc23bb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentLegacyScannerResumesWithoutResettingV1",
+      "sha256": "fd3a1b8c60abc97f5be5c584ee1e86bc3c2218697d4892bcda779df7121d8ba8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentLegacyScannerRejectsMissingAppliedCompletion",
+      "sha256": "feb7e753b1bbc31144d6b1c4bb1232046c2c43f8c03bbe155f12d0c0524d21ac"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#legacyReturnPolicyUsesTrueMissingJsonExplicitConsentAndCurrentRefundPorts",
+      "sha256": "88bff32e7a7088dc34a8877d4b7f01691b609d172ed28c0a20fad6a2557d04ac"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#shipmentV36UpgradeResumesProductPortsAndOriginalV1Jobs",
+      "sha256": "f51faa10d916ad17a503663a0960375e0f9b3ef5c47ae995bc2c0cf3b5795b40"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseTotalsAndReservationsConverge",
+      "sha256": "30fa5884565d5014abd5764e8ad52a0dd38408c3c8e3a6b3469b21a5e43df271"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#zeroPaymentCommitsAllOnce",
+      "sha256": "f1cba30eee97a482db05efe312ad1a1c0b35531e4f7759b01263d1c4be443112"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentApprovalAndExpiryHaveOneOutcome",
+      "sha256": "fa605f73de4442f70020476d7ad06d9e37170410915c43acb209a55fda0a2c12"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownAndLateSuccessConverge",
+      "sha256": "d0cd3749449a31da10d41fde67d73432e4a970144d086af8de567941c2c9c6a4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentResultRollbackAndDuplicateEvents",
+      "sha256": "18e745ac61e74a3a6b37ece406918ea59f333393e8b8a08ec5e30aa3ca683ed1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentUnknownHoldsReservationsAndExhaustedJobsAreVisible",
+      "sha256": "26423799c9b585cf8c5a152d95edfd7297de607fff5c084027b8eaf26ac12e2a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#paymentHttpOwnershipAndTampering",
+      "sha256": "a2322d789e147eedc85a0ed1096e4c135326e43bbdca2ab9b0cef2d60f388cba"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderCreationLockOrderAndAuthorityRaces",
+      "sha256": "1de1b9ce8c975695223c114265eba56022638c430e0384dc3f5a0066f103a2e8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderRetryReturnsSameResult",
+      "sha256": "b236cd3a8c6c54869fd9ecff588322e179499b0cb454c263d699d00a1e8451f6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderCreationRollsBackAllParticipants",
+      "sha256": "681b4c6b3c78b7267f8b8eafb40c73d6f5da1beedb536570a50bb6c9184b079e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderConsumesVerificationAtomically",
+      "sha256": "2f34c94f435afed3a83c775735e6a578c5dd2d9740c405d5edf22ba9216bdeec"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHttpCsrfAndCurrentSessionOwnership",
+      "sha256": "8e9dde16595ab3e36ea8786c0f052e3de8738ea787aaca0440837b1294b8b403"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderCartReconciliationPreservesChangedAndAddedItems",
+      "sha256": "78ab99c733ef678a0676e0960d62b9db4b62ead17a6160ccb7f9aaa4c998f85a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderAuthorityChangesAfterActualRowWait",
+      "sha256": "c766b61b9f9d5385c97165a763186c98a304ab4aac684b1724dcb8d2df539f48"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderAdministratorAuditLocksDoNotCycle",
+      "sha256": "02cd00d6cae1dfd2d96b36c70480b16a3b6708638c1ebbe100d8c98ea9b7815b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderCrossSellerAndSameBuyerBatchesSerializeBeforeForeignKeys",
+      "sha256": "61adccadecf35f2c5e5dfba822648a6bf8e450f3223a62ec1f3824f2168d40d5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderLastStockHasOneWinnerAndNoPartialCoupon",
+      "sha256": "6d4e18f4c12087b0873308ed6ae4b10db0f036ec531242b392d1295067b3ef81"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestOrderRejectsStaleQuoteAndCurrentCredentialChanges",
+      "sha256": "b3409b6725b085d5237723d959c39e602f03e9f87757c192a492a5b663450011"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#purchaseAccountLockAllowsAuditForeignKeysButExcludesMutations",
+      "sha256": "6f005963de29067dabab4971924195b30bac72d04ddfce867f131641b7ddd131"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderManualStockAdjustmentSerializesAndRechecksAvailability",
+      "sha256": "3e306a58ed9b5bbf387f308ee38031de372c66e1cb3066ac811d54e5d385333e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderHttpRechecksSessionAfterActualAccountWait",
+      "sha256": "1b34c1aa9841a0fb81a07b5cf9b289d6fc34fa26771e6c3c1aff1d258062237b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#jobWritesRecheckLeaseAfterRowLockWait",
+      "sha256": "41c74904c79302b0c65823af6952c88e5b41396840cfbf87c1ff8a7769cff23d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#workerHeartbeatProtectsLongHandler",
+      "sha256": "bc4f4b9996a44722564e507b15ba4842e2ca29990bbc05324e4a275775882f73"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#outboxConcurrentDedupeAndAtomicInsertFailure",
+      "sha256": "16f8a6dd08a92eb9b14081db7162fc2b51efa514c45becb624b565ac9cc7e9ce"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#workerFailureResultsAreDurableAndSanitized",
+      "sha256": "abdbbe78cd25ec0a090f042130467796e5203748a15698830835e3c6dec2ff85"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#workerRestartKeepsDurableEffects",
+      "sha256": "407a6221b8a07c1f973a223537820084e6f47a23f1fffea4bd9f89f4b215cf67"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#workerDispatchesOutsideTransactionsAndRejectsDuplicateTypes",
+      "sha256": "6b9879ca7dc8fee028ddd1a5d33c508d1f0eccb9cf56ff621ba40c886a1ab701"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#outboxJoinsBusinessTransaction",
+      "sha256": "e7a04699108ba8a838ee55d98ff15b81593a6f903447e5e73aa7f2d41a1f3197"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#jobLeaseFencesStaleWorkers",
+      "sha256": "5d612abb6368e59768b0ad38da3d1d4aee253efd928847210c4543b612870065"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#jobRetryAndDueBoundaries",
+      "sha256": "253393d08fa107ea0a71246a66c6d088b02e56aa4b6d3620f29ba0c9d8afdf30"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchConcurrentIdenticalInsertsRespectAllUniqueKeys",
+      "sha256": "02fd7f67908b149f6975cc3ac66e0c070a67b1f7cb03c11169214081a061a610"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderSnapshotsSurviveSourceChanges",
+      "sha256": "d4dc92d65d0d37df9e1b71fa1436992603aa5a883e498d4e86b77e8848417530"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#checkoutAttemptsAndOrderNumbersAreDistinct",
+      "sha256": "d66cfe240812fa70732256be3aea0e19aeb89a3f0c91dbf937ac7bebc9be5326"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderNumberCollisionsRetryWithoutOrphans",
+      "sha256": "d620e423334167bffb313f5bfe544190f31759cc77d4794be2fc393667aeb688"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderDeadlineAndMalformedSnapshotsLeaveNoRows",
+      "sha256": "cca79e66a8b5463607eec577f99ede1a12cc9c5c8dcd7f1f7346e8e3e9dafba9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderMultiStoreUnitsAndDatabaseBoundaries",
+      "sha256": "b7af719e528694bf69e9bed754ec0339930308facf208f52a894555664f8f50e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderConcurrentKeysHaveOneDurableResult",
+      "sha256": "32be67dc48241dcc3e9680fed1bb6c82d2d0a6eaf21bacaf868dd66d3af8a7f4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderGuestAttemptBindingSurvivesCheckoutRestart",
+      "sha256": "4677bdc2c0254b398df1e05cd83af516d34c5358b75149e585d59dc92a1bce98"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#orderOwnerAndAttemptConstraints",
+      "sha256": "cea514f15b6a2a89e3f264cfb2b70ead3edc96e065ef2aed1a57f0f25a6d102e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchInsertPreservesCrossSellerLockOrder",
+      "sha256": "86aa0b800a76cf84a40c9986b582e2106896dc24b88297e88c1695b987cb9be6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchInsertPreservesSameBuyerLockOrder",
+      "sha256": "bdc9068ef5f1b5497919e054cb0676fc815617ab4119e44da1721f116ccfe920"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchMigrationPreservesPriorDataAndRejectsConflicts",
+      "sha256": "8e3af34e6a4c834ddc27a2ea4bbc7df9488d03f33fe6dbe15926ceee7d87145e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationRechecksDistinctBuyerSellerChanges",
+      "sha256": "880ea5959a3cabfbbc5a45715e24820cc1d5890c400e725faefea2898fd6a595"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponTransitionsAndRestoreAuditFailuresRollback",
+      "sha256": "45747eeb6351cc335fc20b583928c68df92c471b2d4647dc272e5f53d4b03ebc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponDifferentRestoreCausesCannotAffectNextUse",
+      "sha256": "d0a270eb39b74fa9af486d5c86d502f1bc567f7d577ca4d6efa2e88264d8882c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationDeadlineBoundariesAndRetry",
+      "sha256": "958779dda799fff7f99a78f7b750c1a91a8258de92a63649147dbf201ab96fd3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponCheckoutCannotAcceptAnotherBatch",
+      "sha256": "db725c59ba6f27e7da62f2b8b7c6802f6af15473c734c8e0ec4cabc9b13ec245"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponBatchRetryHasOneReadSnapshot",
+      "sha256": "300bd4922e1ba8859cd8a2d48106f0525b31209505e8c9224d94d8a28120b208"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponFullRestoreRejectsUnusedStates",
+      "sha256": "75ae8b597fa1172e921170d8d2f67c52ef7c2615b43d6df20631e5b1b7b16714"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponFixtureIsDisabledOutsideTests",
+      "sha256": "97facc4bc2982a671a3420c9ee49c8c18cb9d9bb461e2afc2aeaef8e7071da39"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationCrossSellerAndConcurrentRetries",
+      "sha256": "d86fbeaf30fedfa667c6559cc7d9b826ba3403d6a5b67a21ce8ce02d52867339"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponCommitReleaseAndExpiryRace",
+      "sha256": "af2c0b266aa0af0d9c12c947e8212459a17299062c3c8365f55a5c0a63c66208"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationRechecksWaitsAndQuoteContent",
+      "sha256": "6185791ab0e52bb535a9ef977bc09320c38668258d6cf8a65fa6dda9007cea26"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationBatchAndAuditRollback",
+      "sha256": "026e397d5ea3e5dcdaa68668e56e1809bf0c45c5a2564fa720e0c2329f2663ee"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponRestorationPreservesExpiryAndCause",
+      "sha256": "a9d3d795c5ca18c4f2d921c9cda55468520e05fd62e84c3db5e519a8fa6e3055"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponReservationIsAtomicAndIdempotent",
+      "sha256": "51c42128ea212139f5159ddcb5ca05589b16b31a1d7c4540658042b73a21f271"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponRestoreCannotAffectNewReservation",
+      "sha256": "f01e96331e6c0818b6cc9797b091e353fc17cc8032c24d43356603354ae2cd01"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quoteMultipleLinesFingerprintAndHttpContract",
+      "sha256": "c983bcc360045885e3d2525201afa9bb03e4009eec7b43e010c5dcdf851669eb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quoteRejectsEveryUnavailableProjection",
+      "sha256": "4718125cc59b8d28cd6f7a2415377f57f45e911dbe86c4afafb2eb256894aebc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quoteReadSnapshotSurvivesConcurrentPrices",
+      "sha256": "14c9b65b1ecd070547cb8640b6f0fd6fcff9c39e120e23d3422eb62a8179b94f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quoteShippingAndZeroTotalsUsePromotionOrder",
+      "sha256": "f9ab5f2cab76b2b4d6e4eea4fe097bccf51af302795e567fb5ba7ff811576740"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quotesUseCurrentAuthorizedInputs",
+      "sha256": "bdc2143a07caab8cff47964d447e3828aacdce8647cab12bad98ecd1508775f4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#quoteSnapshotsRemainStable",
+      "sha256": "c8f84d49b7d26ae6ab1b4302f9d442adf0cf2074a6bcde0992052bdefc09a98f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponCrossClaimsAndManagementTransactions",
+      "sha256": "bac420f341d3bf0b042df08664576a7afa65d0eb5238e5d883e98dc3414c51dd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponAvailabilityRetryAndPagingBoundaries",
+      "sha256": "97fcb9ef53ba3d42c4bec1f53dd65819893acae8d41e3095d8b0cad57c0399d5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponHttpAmountsAndStoreIdentity",
+      "sha256": "d819a82511a85a5ec73c9eb95b3d2fbcb758a6afc5e3f77aee2bfb557bc80010"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponIssuanceIsBoundedAndIdempotent",
+      "sha256": "73fce4c8142d147abd733b22912c73f70f277a65696f4ecc6285dae8057cc4fb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponOwnershipAndTemplateSnapshot",
+      "sha256": "8fe39c9c4e3c62da95d5100951a9c654241bd7e91ad23c57ca4e48f1c6107a41"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#couponIssuanceRechecksAuthority",
+      "sha256": "5a8987347b20b125e6815d2a3e9cb82429e794bc957950fb22598d7cf1076ec7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#promotionArchivedTargetsCanBeRetiredWithoutBypassingOwnership",
+      "sha256": "77b47499113fd6123acadd54e0ecb7cba4a0800db48f91c56449a8250ec9c53d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#promotionPublicationMatrixAndNumericContract",
+      "sha256": "64af55ae0e571b48d8613e3161ddf106a041e5d5881bf677732c7d71891e1aa5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#promotionOwnershipVersionAndAudit",
+      "sha256": "b8a0afbac1fbb34e9cf3dcc3e028f1ca8612d8c81a00e0ff60b7c795efbb45d6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#promotionPublicationAndTime",
+      "sha256": "2ba2b71c8391c20619dee8a514025e68f99e68b916810e9108a9dee7f07804ca"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#promotionAccessAfterLockWait",
+      "sha256": "89e8b3f0dbe5d886e6c12cb3fa5783f3d7b443aa82d0ee8ff6db6af827761a26"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRequiresBothCredentials",
+      "sha256": "37618fb8b9c376b2b57517617688632064188112091219a8302397b16ffeb907"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestNewPurchaseNeverMergesByPhone",
+      "sha256": "256ca346feebd0ce6037e95319359f7f6e791a55dd344a0f8e1cdfa2984f9d4f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseCannotOverwriteCredentials",
+      "sha256": "95f9d39e150181bc0b683281a556bca460087e78eade0e47e651f7c1681f97b3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkPreparationIsBoundToCurrentAttempt",
+      "sha256": "2be05cef5e2822b175d2ca4262a3056ad46967d4d88da39f92b19cd9e5e64e24"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseConsumptionIsAtomic",
+      "sha256": "e3f2c1784a7e6a5cbcee7a6eebe8a2912919e544f4d1a33f43675c0af66f0433"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkRevisionAndSlowPasswordCannotRestoreOldChoice",
+      "sha256": "4af1d6617f4e70d113b67e74fc45dd4ea8d818b57238fe2076d182f7c364d1b0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRechecksAccessAfterLockWait",
+      "sha256": "587e1d7e6d2df5ca9c68653dcc8eabe473b25da3562e85bd22a0467118405c11"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRechecksPurchaseAfterLockWait",
+      "sha256": "5bdc526b871ff3e6eb33bdf977f17833c4ac3adc9b59a95ced50b3fbd15e8ff8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRepurchaseRacesPasswordChangeWithoutDeadlock",
+      "sha256": "2d70757a950e28d2b981a27207dece1c664d16f483441296f86c0e72708d7b61"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkHttpCsrfAndDisabledBoundaries",
+      "sha256": "0bd4ec289deec4b5ee56e1ac17a3770f823d75fde61d174ec2a8f48e94d36b7b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestNewLinkFailureRollsBackBuyerAndConsumption",
+      "sha256": "27be0a5442cfedd39d60ed075a646ae222b2605e1862b70f725166c3d0f6dece"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLinkRejectsOtherBuyerAndRecoveryProofs",
+      "sha256": "8374920e10d31e011823f38e49f140ce0afa3575a2ad6d739e93f18c1a69aa54"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryInitialLimitAndCredentialRacesAreSerialized",
+      "sha256": "6b349ba044b34bc1b7524445247aecfe46756e4eea525cbfacf7f65d9c810775"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCrossBuyerLoginAndVersionChangesCannotRestoreRevokedState",
+      "sha256": "e0380be22a580953cf41b289c6b81fc8839aa00bc49acf052633726e9c8f342d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryFinalWriteRollbackAndDifferentGrantsHaveOneWinner",
+      "sha256": "0814709b0d685326f89590911e33697aa6e8d525dd17c85c7833443712d2025e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRechecksGrantAfterBuyerLockAndHashSideEffects",
+      "sha256": "835824690b145a53b155cc12767e4f5a36e4ebe5849460db865857a614c5092d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLostGrantRestartsWithoutReusingPurchaseProof",
+      "sha256": "394b31cdbb3421f64a49188da063fa449f0c7d06900eb9e08da4fea100a62e5d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryHttpRejectsCsrfAndReturnsUniformPrivateErrors",
+      "sha256": "db7c18f916750ef343edc1d61e55107628d81c2a8da4fed898b6593f378d3399"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLimitsSurviveFailuresAndExpireAtWindowBoundary",
+      "sha256": "cd93f0e893bda30e362fb27f4dc66b5b8af0f4565cddc11b3f2f862deb184007"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRechecksExternalWorkExpiryVersionAndDisabledMode",
+      "sha256": "cf77339e14d59891c10f6e5ddff2f53436f531d23031fa2fb2773dd00e0c7b5e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryLateFailureRollsBackAndSerializesWithLookup",
+      "sha256": "f19126a98677816671cbbe26ed3fbd7ccd27fa1de511eca99893692f4231b275"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryCodesChangePasswordsAndRevokeAllSessions",
+      "sha256": "5f62c16affe20127ed47b06fb8ccc098d924341c0026aff38d419c0823265d1d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryRequiresEveryFactorAndConsumesGrantOnce",
+      "sha256": "a0731bf02321426336acb1dc45b8dd5d26c1d174eb462d23ec1f821e1295c8ab"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestRecoveryResetRollbackExpiryAndRotationKeepBoundaries",
+      "sha256": "63f29242004e8d517f11e8de413dbf2c34f497c8371bb62caa2f4f7ecd5b2531"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestSessionRotationFailureRollsBackAndLookupSerializesWithLogout",
+      "sha256": "c7406e095e90b532f9ea27d41572b7802090bc36c143054788f31d671b655d41"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordPreparationReplacementsCannotChangeConsumedBuyer",
+      "sha256": "ef4a08707d987113b79f2bb6c87653093c760877faffe1c7298f36850651faf5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupRechecksVersionAfterHashAndEnforcesLocalAndSecureBoundaries",
+      "sha256": "2799bc11b75f3237d3df4a09fdd7c343f5d3690fa4ed33feaa01a59bb7d2f256"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordHashPreparationAndCreationAreBoundAtomicAndNeverMerge",
+      "sha256": "3351eebe8921408a734eddf9dab3d4dcedd6f2116b3c898dc1443513efc50417"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestPasswordHashingRechecksExpiryOutsideTransactions",
+      "sha256": "eb3003f15c31427d6af1887aa7295eefbefc70d27c46fb16039162d2022d6622"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupSessionsEnforceIdleMaximumVersionRotationAndLogout",
+      "sha256": "83ceb21b4d55ce8c265f6823ffb814aca0533e2e70d88bba93d641d84593ab86"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupLimitsAndCredentialFailuresAreUniformAndDurable",
+      "sha256": "4de105f1edcb59bb420d4eb1cac6ac1e1e54e055fc4bf82b2391366db519b334"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupLockWaitRechecksExpiryAndRevocation",
+      "sha256": "3751a2d2828e4a0ddf47cb8df494a580efda36199daa95a040710c2d69496635"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestLookupHttpChecksCsrfCookieUniformErrorsAndMemberSeparation",
+      "sha256": "0cd0bf898807cf4300e4a02ca552337d3cc8685dacfacc9f4473108c451a7175"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestProviderStagesWindowsAndRestartFailClosed",
+      "sha256": "d315610729d23971e478d76415bab6f82ae63177ff6ad8e2787d93524d371625"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestBindingReuseAndOneTimeConsumption",
+      "sha256": "de51d242c4ef1bf99f0b12e7e55dfdd3c04978fbc322d12409385a3e8e68a8d2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestConcurrentVerificationHasOneWinnerAndNoExternalTransaction",
+      "sha256": "cc591d0d61bb7639cab47cad6d1c6012fa83fcf5f07cc705257a1374a0c78263"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestDatabaseFailureLateProviderAndLostResponseRecoverWithoutFalseSuccess",
+      "sha256": "5280cf82944fe09857a3b4ffea7da68fc0d43c734fd1a067d12152484fc36747"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestBusinessExpiryBeforeAndAfterProviderAndSessionExpiry",
+      "sha256": "5ddc2532097acfa1c800fda546eef7b2abc6e18dcb02580e30f749c4009d22ae"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestExpiryIsRecheckedAfterDatabaseLockWait",
+      "sha256": "9835a36453e0fc04bf8afbde2dcf445b72067224015ca57edff78824a256757a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestResendFailureAndSourceLimitsPersistAcrossSessions",
+      "sha256": "11aa13847d60145612d84159ae6ef7192060e8a2bade6b917168eebbdec4e4b0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#guestHttpRequiresCsrfAndBrowserBindingWithoutGrantingAccountAccess",
+      "sha256": "c1127d205a3cf6a92435f86b59d7596862639791e7fd0f90769632b8b7d65870"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistOwnershipVisibilityAndIdempotency",
+      "sha256": "82292c8cf52515a54e048a784aa512e259d0dbee706fa59c56b22770499eeffc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#wishlistCapacityConcurrencyAndSuspension",
+      "sha256": "1c9c62223efac4eb94c04c7dd7602410140402828790a3ec968975b251b30fd0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cartOwnershipCrudAndPublicAvailability",
+      "sha256": "2572d64a48e7d89e6aba3655aeafd0437cb1074d65f7e5d1b48189ead2930fed"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cartMergeReplayAndConcurrentUpdates",
+      "sha256": "86a50331f48934942826a79ede10fa114065621a6f8a3b4b4791605fe2089e6d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#cartCapacityRollbackAndSuspension",
+      "sha256": "6bad2271be4a4b41750c31bb1176f2432e4a6dedd15c82387c7621353d34336f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeOpenRequestApprovalReservesDedicatedStockAndProjectsCurrentResult",
+      "sha256": "e0861768cf03ef5726babe461b3031939161f3ca3ced11a900b7bd0e3c971a9e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCanonicalReplayPriceStockAuthorityAndApprovalFailuresAreAtomic",
+      "sha256": "a7fc7be15f940c3f080f7cae4cdb0053e69f9bfb4ae26b6dd3f76c95cfda0b9b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeDedicatedAndOrdinaryReservationsSerializeOnTheSameLastStock",
+      "sha256": "51f3399648bd2dc3d86c44f6de1aae41cd611e21449a4596b612580d539147c7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeAcceptedAndApprovalReceiptOnlyGraphsRollBackWithoutStockOrHoldLeak",
+      "sha256": "92110c8e2b582a9300b76471ee5c333aad7c336803583b4678c218dfe7e3aecf"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangePhysicalCollectionRequiresActualReceiptAndKeepsCommittedOrigins",
+      "sha256": "03fd6b152679a343c0a71dd6205e145a85453b5e7c0b6e1838c5671196ca902e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeSaleableInspectionRestoresActualCommittedSourcesAndRejectsLegacyDuplicate",
+      "sha256": "ee99355872efd13c61a283497b4493f6d9666a2b0bbcdd5592fd75524d76e4e9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeInspectionAndStockReceiptOmissionRollBackAndResumeWithOneInbound",
+      "sha256": "b08406b575c7b695bb7634874a61292d19606e5ebbd2ade1bbfae24eae7fd362"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualReshipAndReplacementDeliveryAdvancePhysicalSourceAndNewConfirmationWindow",
+      "sha256": "bb8c9491c31e8c0a2a2ac36f5fa3c1ead8785f2eca377ce956468bbb98fd3e99"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeSecondRoundRestocksActualExchangeCommittedSkuAndRetainsHistoricalAcceptedSource",
+      "sha256": "d7b7de6ad87268e85235ade1fc391a420704b73734ea39f4e992e1d150ec78ff"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualNewPhysicalConfirmationScheduleClosesAndOriginalGenerationCannotConfirmReplacement",
+      "sha256": "a0e4ad4c09d8102b005546a7f3d7889ddcb6a0989d1ac340df34bf82c6140cee"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCommittedReshipReplaysAfterDownstreamCompletionAndClosedBeforeOriginalAck",
+      "sha256": "936354e8b187a33f9dd68dbdf327de4d82ec38d9f6263345b21d0850e952ef75"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCommittedReshipReplaysAfterCatalogWithdrawalAndStoreCloseBeforeOriginalAck",
+      "sha256": "782b22dfe21d80ded74978fc86b0a5802d8ba1d00e146e059b3c38ae155bbbbe"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualShippingEventOnlyCommitIsRejectedBeforeProgressCanAcknowledgeIt",
+      "sha256": "1479acb8a2ff88a09dbe795b0de56624185a2b2cc48ac9df1f0713ee4a804d33"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualShippingWrongScheduledJobCannotAuthorizeAnotherProgressVersion",
+      "sha256": "1c6e71e378ee3e8dc64300752a417531c9068f22b6839afe495d1b4df39e5996"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualShippingVersionStateMismatchRollsBackTheWholeDeliveryGraph",
+      "sha256": "9aeffb5d33eb97558d3e38f5b4f1592a514009e80307c84a913e58b8cdc5defd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualShippingEffectCannotPointToTheOriginalDispatchEvent",
+      "sha256": "8db1e7668d22f436c6f21a819f4dec34c79e235f4a8dd1e7341c1bb68f519c10"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeNewReshipSerializesOrRejectsStoreCloseDuringFinalInventoryWait",
+      "sha256": "16fc1bcc73480041884d866887418072c970884d8153efe4f4a6aeae4d75765d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeNewReshipSerializesOrRejectsStoreSuspensionDuringFinalInventoryWait",
+      "sha256": "e085f8752aa36395fc4fa118fcadc5ac6bfd60ef7c511d57399f7924d6d39685"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeNewReshipSerializesOrRejectsSellerAccountSuspensionDuringFinalInventoryWait",
+      "sha256": "60d8be275a5901537bd23e419875e0b85a5a171b1db95b8738828f58ef73518d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeActualProgressReverseOrderAndCommitBeforeAckReplayConvergeAfterClosure",
+      "sha256": "264513815f60b02eecdadd6d8ce9d01df12328dbcdf7de5b3e12308467b2efcc"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReplacementReturnRestocksActualSourceAndQuotesItsActualDeliveryBucket",
+      "sha256": "590bd26770777c657dc919a05f0cca3e82ac8d8936f9d67706d5a08b55b86d95"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeExplicitBuyerRefundConversionPreservesActualInspectionAndReleasesOnlyUncommittedStock",
+      "sha256": "dbfc9afb2c8d6d9dab8dff07fd5239071fd9cdfa9e42b04f840188b7e6791c1b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeSellerInspectedRefundConversionSettlesOriginalShippingOnceBeforeClosing",
+      "sha256": "8d2bc7c1fb923a81f863e1604ddffc24d8857981382bfb5903bc3d1c391b03b9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundDefinitiveFailureRequiresExplicitCurrentSupportAndPreservesFirstConsent",
+      "sha256": "c7a3b6672c01e692ba0b9982f14f27bd45e32321c5ea980662496e05398959b8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundUnknownQueriesSameAttemptAndCannotCreateAnotherFinancialReservation",
+      "sha256": "ac048db65606962fe3bfd4b8132fe7d04caab17776cc2b11fc71db128723e9d2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundConversionAndActualDispatchSerializeBothCanonicalParentWaitOrders",
+      "sha256": "87e0376e48fdb288d499c87799fddd0170d642ec965edd17984415d24ccf495a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundConsentReadyAndCompletionSqlFailuresRollBackEveryFinancialParticipant",
+      "sha256": "1c074885f106a1249a88d950c42a9e9e7f87bc3af70e079b89ab3528fae7de6e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundConcreteFinancialGraphRejectsRealForeignSourceBindingsBeforeAnyEffectCommits",
+      "sha256": "43e325563671099ff3d91fb422943393aa734cca32af2d3b97913fd0f1180ddb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundReceiptOnlyAndEffectOnlyWritesCannotCommitConcreteResultReadinessOrPersonalCompletion",
+      "sha256": "08542aa02aefb2a10e9485f8b6251ed5cede9e7e0e288970323f0348ff690173"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeOriginalShippingRejectsForeignConcreteBindingsResultsAndOneSidedSettlementWithoutRepeatingItem",
+      "sha256": "a9b306f622e35243fbc4652fcfddf17e825f4011f4adc81925db09f82a8e336f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundReadyLostActualLeaseRollsBackThenReclaimsAndReplaysBeforeAck",
+      "sha256": "4b986deb74ee4cfc7c460d0c67794f6207302cf66be8d23601c858a2e9d502ca"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeOriginalShippingDefinitiveFailureHasIndependentSupportRevisionAndCurrentRetry",
+      "sha256": "6dcaee49616171a55eb58969268a011b0bd3d0960f057274c0a6fa10cec0daa2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeOriginalShippingUnknownKeepsSameAttemptAndNeverReopensItemOrStock",
+      "sha256": "92ba311fdb657d48a311bcc9af2e056fe8786a9b3c1b586f34e18274d6879160"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#partialExchangeRefundAndUnsentCancellationConvergeBothLastOrdersWithHistoricalCompletionUnchanged",
+      "sha256": "b65e4557acef547d7fb911e0fa97c2a7eb37fbcd4efba4c098024d8aedeb6535"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundAndConfirmedUnitsCloseBothFactOrdersAndDirectAutomaticModesWithoutOriginalShippingRefund",
+      "sha256": "f28cf20c1d58cc6289466ce54fc05233316353f077bfadeee176e47faea254a1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundReadyAndPersonalCompletionCommitBeforeAckSurviveActualChildKillAndStoredLeaseRestart",
+      "sha256": "e7c9055d547dc625d3bc62eeb7734c4c652b9f61797fabfa1ca57ab4135a840b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundRecoveryReissuesAckedRetainedItemShippingAndSellerWorkWithoutMoneyOrStockDuplication",
+      "sha256": "aa22295cb01b02b679389c0ffe8a28418170ffd5728e85cd5a18f3b476900bed"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundRecoveryPagesBoundZeroOneFiftyAndFiftyOneWithFixedUpperAndDurableCursorResume",
+      "sha256": "dc2438ad7fd060caafeab8068e8491c6ec4b191e6153c5b3f04a671f34aa2ac0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundRecoveryRejectsReceiptOmissionAndRealForeignManifestAcrossEveryStageBeforeNormalResume",
+      "sha256": "9df3f2c6102dce021934161838bc0b8d73f3c6dd8d7866e7776a375a2e45f214"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundRecoveryScanAndDeliveryLoseTheirRealStoredLeaseAfterParentWaitThenOnlyTakeoverCanWrite",
+      "sha256": "2ce1b89d52d247fe6571f271e0bc532077dc66b62caaac238666b340d9b4622b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundRecoveryActualChildCandidateCursorAndAckResumeAfterStoredLeaseWithoutDuplicateManifestOrEffect",
+      "sha256": "41fbd31444d38f0d79cf8b14d536e89488bec711ab6ee1584606746b9a7ab6d9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeAndActualReturnBothLastFactOrdersConserveOriginalResidualDiscountZeroShippingAndExpiredCouponOnce",
+      "sha256": "9fd00abfafe7555dce73f9c00c9effab61ad5c75056963ae4e0a8bac653be4a8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeAndOtherSellerReturnKeepParentOpenThroughActualUnknownAndBothIndependentShippingSettlements",
+      "sha256": "a43abb556f814756776bc12deef9966cf6ac10a3ac9aa438edb5b81129a275c5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeApprovalBeforeObservedRequestUsesActualRevisionAndPreservesRawTimesThenReshipsOnce",
+      "sha256": "0d2ccfc2e087d3a794e05eedcb749d65853b6b960302c88eaf6f1855e49eefb5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundReleaseBeforeObservedApprovalUsesRealConsentAndCurrentAllocationThenSettlesOnce",
+      "sha256": "5de5be1e72df51cc441658e4730ebaf4d08d135c68314a01b36e71bc0ac2bb41"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerInspectedSuspendedAndClosedStoreExchangePreservesPublicSkuRulesAndActuallyDeliversReplacement",
+      "sha256": "a6d525b0ea184b9b6f3ada16511606ce16f38e31609516edc919f649fab62369"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerVerifiedExceptionWithoutSuitableStockReservesNothingAndOnlyExplicitBuyerRefundConverts",
+      "sha256": "08afd907781b4c03f8bb28636c885b295abb0c5dd58381e0446d4e24257c091d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCurrentWorkflowViewSeparatesItemFeePersonalCompletionAndIndependentOriginalShipping",
+      "sha256": "7ba2db86f28b616c3003dafea05d036ae33ede949b08fb77b77680c671c8dd49"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeAdditionalDueListsAndViewsRemainPaidWithoutReadinessCompletionShippingOrCoupon",
+      "sha256": "d90511b2256f1e58a7bfb61b19a49e463a24b18610faa35fe9e74730141bfeff"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#oneActualReturnAssessmentCombinesBasicAndReplacementBucketsUsingOriginalPolicyAndRestocksEachRealSourceOnce",
+      "sha256": "80ea7ef3aec98dc80af0c5b28dc1950015f1cb3664443ec3a5357c324872545c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundQuoteAndConsentRecheckActualMemberAndGasDeadlineAfterFinalFeeWait",
+      "sha256": "e21ef6ede8eca98ad9319d3b5df867ae4e49b64642bbcb3137bfd27e58dcfd8b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundItemAndOriginalShippingSupportRecheckSessionAndPermissionAfterActualBudgetWait",
+      "sha256": "4db2cb91958cc68a41d7e685b2a9b27bfed32c9643fd8fa0856b48bc9a064daa"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeRefundConversionHttpUsesActualGasCsrfAndCurrentOrderOwnerWithoutAccountLogin",
+      "sha256": "9625517eda7cfc2bb4a93271f8b43fa1bc0bc713881a4acde6df2165497d1cb0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReservationExtensionKeepsOriginalSevenDaysAndAllowsOneReasonedAdditionalWeek",
+      "sha256": "7305a41ac8f4f679afcfefae69f0b9706acb4601ddd22b6ae8dfa37ff40d54db"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangePendingReshipSurvivesItsExactExtensionAndExpiredCommitBoundaryIsRejected",
+      "sha256": "f2d4232ecac490fc2102fa56f46d8cb3b38b6e1c0d4da83072abadb377cd6376"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReservationDeadlineJobsReleaseOnceAndExplicitReapprovalKeepsHistoricalAllocations",
+      "sha256": "3fd10e6a9c90180e81d576597b12077afc20f1a6390b94072580b2e3339591cb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#actualScheduledExchangeProgressAllowsBackwardRawEventsOnlyAfterRealDueClaim",
+      "sha256": "bd8fbe983d61810a402a21889b23fbb5094e1d48b15859d9069b463ce9a51844"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#platformDueClaimFactsAreAtomicImmutableAndNeverReplaceCurrentLeaseOrRetryDeadline",
+      "sha256": "b0fca04e40a53ca7d0c6638fabfaec62ed9be477cdc9eb07b25c9f26d50e2bac"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#backwardObservedExtensionAndReapprovalRetainExactPriorExpiryGenerationsAndRawReceipts",
+      "sha256": "143c03865d48aec23f3b33c3423bb47ec17ba87f6ae198325ec05c26672a99af"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#actualDeliveredSourcesAllowEarlierObservedReturnRequestsButRejectMissingDeliveryAndExpiredWindows",
+      "sha256": "b53cc5e1a98739edb3a84a03656d125998d43df993c6f641f71d5793b00c28ad"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#causalApprovalAndProgressRejectForeignRealReceiptsDueFactsAndMissingEffectsBeforeNormalResume",
+      "sha256": "1a38d430e66dfc3107ec61202ecba995a48c236ec7b38e6ef3046c06d37caa99"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#deliveredReplacementCausalRequestsAndDirectConfirmationAllowBackwardObservationWhileAutoKeepsItsExactDue",
+      "sha256": "a2d9569b09305853fe968faa67d6ab5081f874162ed966a0f6bd7bd64ac80f8d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#explicitReapprovalAfterActualExpiryReshipsOnlyItsNewAllocationAndDeliveredRoundStartsANewWindow",
+      "sha256": "bcf22cd8cbeb84eac50640eb40f1639e8e7a349f44fbe5657b1e1a0408104b5b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReturnActualGroupMaximumDeltaPreservesOriginalBasicBaselineAndDue",
+      "sha256": "622485b2460e890d9a9b89fba1d626f1a1ac15d36cd0e1097ec6ea19c9bdc165"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReturnSameActualBucketAcceptRaceKeepsFailedAndUnknownReservations",
+      "sha256": "03e7ef1de6e0381b9d8618a33fe62e792028517b62fb7b201c062a072086b3b3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeReturnDifferentActualBucketsSumAndRollbackConsentAndApplicationAtomically",
+      "sha256": "5c34511b877b63f6e1946b153f724a233de5ded25182148646acf1496b3dc015"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCompletedInboundRejectsLaterUninspectedSkuMovement",
+      "sha256": "1e8c9c14b6d4bf09c9194e2c3b7c447292d38d2471d202f4c2e1d8a5c06ca695"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCollectionRejectsAnotherValidPhysicalInTheSameAcceptedExchange",
+      "sha256": "8f3a8bd9f229c28cd7a326a9c78a6d30c322ac006f25eeb59e85ada955e13b00"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeCollectionAndInspectionPairCannotJointlySubstituteAnotherValidPhysical",
+      "sha256": "4ca99396b898c12d7deddac8aaf207f2574fa0215073e2a81593dc74797971f1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeInspectionUnitRejectsAnotherValidExchangeInspectionHeader",
+      "sha256": "bb2b57d7a2b53e3195975505ca9aa06ea2a9dc12f77b951e2d9348a0bdb2c021"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangePhysicalCommandsRecheckCurrentSellerAndStoredDeadlineAfterFinalWaitAndReplay",
+      "sha256": "321aa9bff17765d7d37fbc77ac86d29d2838fb14c6e3e7cf138162673dce1e22"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangeTypedInboundRejectsARealSourceAlreadyConsumedByLegacyReturn",
+      "sha256": "102435642ad9de637da5f933ef345b1b3b4b6e1bfc165bdc7a12510c7c260951"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#exchangePhysicalEvidenceRejectsUpdateAndDeleteAcrossEveryOwnedRelation",
+      "sha256": "eeaddab734ac43d3f86d39efb865c3edfbefdb5f91938cf8318687ccd7e9856e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#browseSearchFiltersSortAndPages",
+      "sha256": "e8eaaeab376ba36c4d4fac482f89aa13879b750ab052d072712609e4b3a22980"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#browseVisibilityAndDetailAvailability",
+      "sha256": "74992cc6d0bf8682b8c3043fd14cb0380a2e97888c84a2af966ba672f16424bf"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#browseRejectsInvalidQueriesAndIsReadOnly",
+      "sha256": "f8adc624506ac1bade197fbb5f5387ce202bc2e6618e55389ec740f40b3cdded"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#browseDistinctFiltersSortAndOptionPrices",
+      "sha256": "2ba7b4411fb7dd7622bfb1ce17dab62ad267c812846ae1651e825e53c4681f92"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseReservationKeysAreSerialized",
+      "sha256": "d0c05b7d26bd8a9387c750e0c7a60dad434b50750cb078976d1f8f90f44b4bcd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationCrossSkuReverseOrderItemKeysAreSerialized",
+      "sha256": "2d2406b2ee2802a197997bffc8711ce8e101ac6ebcecf26d720c06f64b8d7a12"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationTerminalAndExpiryRaces",
+      "sha256": "28dc52631166b1e66424b9c740bdf06f72d6b0498e763315090a2e52da3e8ec2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationExpiryIsCheckedAfterBalanceLock",
+      "sha256": "4db3fdaa0feb44d56b480fb98f46ec857a77c59774c303de37801dac3dd37a39"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationBatchesAndOuterTransactionRollBack",
+      "sha256": "1958b884f8d604304fd21587065c1abbe2e5328d6b872408b002d30c5219f160"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationReverseBatchesAndManualAdjustmentSerialize",
+      "sha256": "182201d079c94e5c81b5fab1c41d905a2093731fa6f4cf1cfba4280c19f98d4b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationValidationAndDatabaseConstraints",
+      "sha256": "3a1625a6455e2112dacfddbf2a055e077d626c5e3f4c971b8f98902bfc4cf1bd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLifecycleHasOneEffectAndCompleteAudit",
+      "sha256": "0cb5657395f308b38152fbd17cacd6f1f87a265a31f72963ad695d1583afc4ae"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#reservationLastUnitRaceAndKeyCollisions",
+      "sha256": "cd7e2a569dff00436f41b442f53bbb2ec594349cb3a96cf0094ca177e2d41520"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryAdjustmentIsVersionedAuditedAndIdempotent",
+      "sha256": "7637f793a173ab187de9729b7f4c2558d1edb642230476337ed7ef0fb24e0daa"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryBoundariesOwnershipAndReservedFloorAreEnforced",
+      "sha256": "a165ec6e86238709a7002d5571fddfb3593411f8c0080cc9ea998f78ccd8611b"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryConcurrentKeysHaveOneEffectAndAuditFailureRollsBack",
+      "sha256": "fa8610c4ec498c5403b5ace7061d824b25dc3a37b05ed4350e652d5b5067fc22"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryHistoryPagesAndUpgradePreserveSkuData",
+      "sha256": "48e57426b28f961feca741e9b6358a5f5356625440e9a5edc04b866d40740aa0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryAdministratorPermissionIsRecheckedAfterProductLockWait",
+      "sha256": "d494e5029f679e71bf00b73a8a46a44ade56c12c57ccf6e42262f43ad602f9d9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryGlobalRequestKeyCollisionRollsBackOtherOwnersBalance",
+      "sha256": "a38b2db57564dee417380bbc7f3dc1ff525f92bab8d338f991f467dce22e723c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaStoreOwnershipCsrfAndPublicProjectionAreEnforced",
+      "sha256": "f4f02b93b0315cab4bc0db596476746168c3b18f2a655d1285b729f2fe6f238e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaConcurrentCreateReplaceDeleteHasOneWinner",
+      "sha256": "01bd131fe9d74d58417fcc59a8de49b4aa846fc6f7628a8a689639eaafd33747"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaRollbackAndCleanupKeepCurrentReferencesAndRetryPartialFailure",
+      "sha256": "ebe1d47694eb17b88dc143ac71bd7fbe732a7e2dac8ff52e77b897d3cdcbf59c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaOuterTransactionAndAgedInFlightFileDoNotDeadlockOrGetCollected",
+      "sha256": "cef32d03aafd48c205befbcd032f577f94ca4e3842fcbc2c96378c736f941439"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaReaderWaitingForSingleConnectionDoesNotHoldFileMonitor",
+      "sha256": "e1a67604e9c071a9506d5a948cc47c75e9ed43bf8e4e1d29648bb832a0182578"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaOrphanScanWaitingForSingleConnectionDoesNotHoldFileMonitor",
+      "sha256": "f1d781202d597f869c0ba5ede937bc63200875274296a9c59b456e0a998828b6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaUploadReplaceDeleteAndDirectUrlRespectVisibility",
+      "sha256": "2d71e04cd4e6e08fa17e13b9fcea673cd79387ee3d73c50557c31669c379f612"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuDefaultTransitionIsAtomicAndSerializedWithActivation",
+      "sha256": "a055db7e70d3b1483c172ccafa5303217f00c08ca09811463957c3a678402d1e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#inventoryWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "sha256": "cdb27caa1803e2074e107a09ab68054f34f867c0ea990d7f4d43c3f3a0ab0be4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "sha256": "85e470ffacdf8b675c77aaa2ee4e9432eafe431b80273bacc87c4b351f27b3c5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "sha256": "8ede3b84a4cee4d952e473fecf454cf25546d789d77a53ed616b347382232db2"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuMigrationBackfillsExistingProductsAndCreationRollsBackAtomically",
+      "sha256": "0227602b553fe570b740cc6751d01c9c7164765ce3b1470ae0a93a8696ebe6c6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuConcurrentChangesDuplicatesAndCapacityHaveOneWinner",
+      "sha256": "1b23339f40c2616fc8a8b3926169dfd7eb82ff532155fba0f2d536ed073ec93f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuHttpTypesAndPublicFiltersRemainStrict",
+      "sha256": "c86902896709384d52ce1381808091c4394f434788a34ed61e8bd5bc453bb038"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#skuOptionsPricesOwnershipAndVersionsAreEnforcedOverHttp",
+      "sha256": "99b9cd8d8ac013a71b758bffc76ab8062f30d6eebe5c96cb55fe2073c2c9a6a7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productCreatesOneInactiveDefaultSkuWithPublicEligibility",
+      "sha256": "5ec94f7760e25271955b9eed54b02d4fee67c1adac9c7c6150adfcfead381124"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeHistoryKeepsCausalOrderWhenRecordedClockMovesBackwardOrTies",
+      "sha256": "279cf7aeadde05ba64e8ee72dfa688c54e2a9c0f72719eda84b56c4384376d9e"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productSaveWaitingForSuspendedMemberReturnsConflictWithoutWrite",
+      "sha256": "512278d9be402f8b6cd42ab64b63971bf0da0c77fc089d5f7d8cd056fe875c31"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#memberReadsNeedOnlyOneDatabaseConnection",
+      "sha256": "8ba29c1d317382680f403d21246b1fadf7782bb1d908ee457a0e0b3e3d8d3341"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#publicStoreReadNeedsOnlyOneDatabaseConnection",
+      "sha256": "f45854b88180f5b0d47bea5345937e94becad3889f9b9d7a6fa424be0bfb0791"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#categoryWaiterRechecksRevokedPermissionAndWritesNoAudit",
+      "sha256": "ff7cd1bb73c35160f24d6b94057c79bf47e433da7ed1e49e8d7d26fd00ea6614"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#productDescriptionAcceptsMultilineButTitleRemainsSingleLine",
+      "sha256": "4fae8260b8f43f3c1f74cbc8810874815746595a3e349a7f0cd373e8003c4546"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#catalogValidationPublicEligibilityAndConcurrentUpdates",
+      "sha256": "ababea2b4b3b524bc8f95ab87210a87ef26b4ab96f5032f5c1b32986ba867b01"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#categoryAuditIsAtomicAndOwnedByOperator",
+      "sha256": "6f073cf584c710d2285cc0ff2475861ff37bc2617d34030386850f2b2d825982"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#catalogProductHttpOwnershipLifecycleAndPublicFilters",
+      "sha256": "88e1d36aa7aa52875e8c2a80cc15641155337843ab6080bfebf75d9b45c26b72"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#catalogCategoryHttpContract",
+      "sha256": "da84b79ceeb6bc1a7a598158c0181e07f476ae246534a5e7a2532bf48ceb1c85"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeOperatorPermissionsAndConcurrentEditSuspendKeepRestriction",
+      "sha256": "2d482d2c841e8956c2d228b28e49a9079186b3a9880efe134a4b76ab3a2c9ea6"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeCloseIsAtomicConcurrentAndKeepsCapabilityBoundary",
+      "sha256": "a8ff45558ccfb384a066f052619f595210df5f4d956fde287e0501a4b59aefa4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeLifecycleHttpKeepsBuyingAndRestrictsNewSales",
+      "sha256": "01d86973c1ae0cc41dbfc1d88bcec850cb8b81049b8668598609599fca407df8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeInputLimitsAndInvalidUpdatesLeaveSavedValuesUnchanged",
+      "sha256": "0d8779f9b9daaa9e3b1da0f70e704895dcfca96da8dd18ad5610bc335b5707d5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeConcurrentCreateAndUpdateAndValidation",
+      "sha256": "fb1b391f20748e3107cd055f822f459b1643acdea53b77974a2ce03c7bd44cb4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#storeHttpOwnershipVisibilityAndVersion",
+      "sha256": "7dc5b8b177216d8f9856d0adc71e86f0a5265ab8eb4fad36d13e70f7d091f302"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerDecisionsRejectInvalidTransitionsAndRollbackRoleAndHistory",
+      "sha256": "ba2344fe52cdb49998751462fc82480bc8204e35d0e47aa7255a777473fd7357"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerConcurrentApplicationsAndDecisionsHaveOneWinner",
+      "sha256": "bdd0f974fc6ff7b7cb0044191cba6d6a68f4ad3ed9728539a549fb7ece52ff7f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerApplicationOwnershipPaginationAndNarrowSecurityException",
+      "sha256": "f5b7f040734dd93f2b6cc509cac8ae0eba495b4648b007cafcbab11bfc1188fd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sellerApplicationHttpSubmissionReviewAndBuyerRolePreserved",
+      "sha256": "91aba81936a26113225b05b899f25c712fd666a7b58276ce7343de9beb3b2fdd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
+      "sha256": "fec820766b7cfb4403dff97a9d59de4dda868c73963fd9beca2baa9da0ed0063"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#stateChangesRollbackAndSerializeAndCannotBypassServicePermission",
+      "sha256": "50097a41e0f50c3128889fa6d47e55de5b397734a9e50574c6f95245471fc6b9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#initialAdminIsExplicitAtomicAndOnlyOneConcurrentWinner",
+      "sha256": "d929d0188ec1657c081261909e88e535299191a8b082e685a3eb98a030243023"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#adminPermissionsAreSeparateAndRevocationAppliesToExistingSession",
+      "sha256": "922860fc037365fd2d724aab8769b23e097159da51e9a6023d9342c245d1d1f0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#roleSpacesDenyAnonymousAndBuyerEvenWithForgedSignupFields",
+      "sha256": "b62538da123c663f33fa2392effa722ac9653021cec0bf3c055d861bd07ed0a5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#accountHttpOwnerCsrfValidationAndPrivacyBoundaries",
+      "sha256": "f50f8d118052616a664ce52759cd9cb0d8ec61f8bc81b47c63fed296ec486845"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryFailureAfterSessionDeleteRollsBackAllState",
+      "sha256": "04151819501b50761fd8c8584a7bd8abddc40108e96e5e9077814413fd522064"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryConcurrentIssueAndConsumeLeavesOnlyReplacementValid",
+      "sha256": "4dbcb0d2bd3a4dfcebde9093e2d34344c8fca18dcad57dd2afe80fbd2ef85d1c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryRechecksExpiryAfterWaitingForMemberLock",
+      "sha256": "e6780d569eefa9f2936b28d1d62b96528ef7646ac565e711924d4d7763c78435"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryLatestOnlyOneUseRevokesSessionsAndChangesPassword",
+      "sha256": "3b41b05b19a22c94db7410c14bd98271b1667941819d0019056def366be76582"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryConcurrentConsumptionAndLatestRequestSerialize",
+      "sha256": "25ec1df418ca305db060b33736ad1c1f13e0337263722fc8dcd0b0f19c7d4bc9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryExpiryRollbackAndIneligibleMembersLeaveStateUntouched",
+      "sha256": "27cc947f0c4825899430747bd071f911d3b45ea5ac8eb71b9bec97986a8615d1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#recoveryHttpRequiresCsrfAndDoesNotRevealEligibility",
+      "sha256": "ffbd626332df6a050b4e180ef831dbb1ea2dda955d4f8f70abd456cbf8b3577d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#profileAndAddressOwnershipDefaultAndRollback",
+      "sha256": "15853409e3e989e8842c2dee0f9e46ffad85585af791c5ed31266fb58f9b703f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#addressConcurrentFirstDefaultAndCapacityPreserveInvariants",
+      "sha256": "03ed81f404fe36559826250bf96b08520edb35e36eac2d08946b010d73db8905"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#signupAndVerificationHttpRejectCsrfAndBadInputWithoutChanges",
+      "sha256": "70d79dcc676836bf58b0e2a6e97823ef963d9d80ad8453fad06000a5cdb999dd"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#authMutationLimitReturns429WithoutChangingAccount",
+      "sha256": "0ca72844dacb931989b12cafed9ec493f9b5160bc1426a0777f6c395bf68fe71"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#signupHttpRequiresCsrfAndReturnsNoSecrets",
+      "sha256": "544798eba4d68cdfe85afc29a947f1d4c3a90c70caaae32736cad2d3ea0e36b4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#fixtureAccountSignupIsolatesMailboxesAndKeepsRealVerificationAndSingleUse",
+      "sha256": "d9ea89b156a8b85112dc3362bc1d60eedb520320f776140670ab08a447a7f40c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#loginRotatesSessionPersistsInJdbcAndLogoutRevokesCookie",
+      "sha256": "da80375975ed429379b4277f9890465f729e546a7bf07c337b571dcba612ff5c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#invalidCredentialsAndUnverifiedAccountsHaveSameJsonFailure",
+      "sha256": "dab74597b06f7b98935844a7153cfc9ebc3dc3dccd9dab7075340d44d9ae0ddb"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#csrfCannotBeOmittedOrCopiedBetweenSessions",
+      "sha256": "ef0b79169d90fd5ba0a67969e91d4ae24987e1b9f97c6821a5381e23b47918fa"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#currentRolesAndAccountVersionAreCheckedEveryRequest",
+      "sha256": "2242f249728f2cc671eb875d9e2c3f88621216f43de2dde522b614fb7ad87a72"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#suspendedAndWithdrawnAccountsLoseExistingSessions",
+      "sha256": "7eb7ec39e3f92ae5828bb96617a52b5f6911bed0aef8faf60f9dc973c1f1cb8c"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#expiredJdbcSessionCannotAuthenticateOrReuseCsrf",
+      "sha256": "ee39a2500dd0f66fd6ad5f10e098ffdad54aa684ee9ecddf474f594614d11a78"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#anonymousAuthenticationContract",
+      "sha256": "ee0fe0324223a424c3613165f6d1dd4afa13f2ec09352a084b11cac53b49a745"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#signupPersistsOnlyHashesAndBuyerThenVerificationActivates",
+      "sha256": "21f279f215449592a6fde73df17add12ea6a76b4331e8377c08c3547d8d7eaae"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#normalizedDuplicateIsRejectedWithoutExtraCredentialOrMail",
+      "sha256": "6e50cec20aa8d3f00b61811f7866c67001972d5c4043673d2dbeb9d2f54016a4"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#concurrentDuplicateHasExactlyOneCommitAndOneMail",
+      "sha256": "ddd15f296777eaf3f3ee6bd1d33890da65a3f8ad908871dbd4e932b78e1ef057"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#concurrentTokenConsumptionHasExactlyOneSuccess",
+      "sha256": "671f0616643fd5f2b07ae311d33f7477d749d1056fe514a766017be0d0feb6e9"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#expiryBoundaryIsExclusiveAndExpiredTokenRemainsUnconsumed",
+      "sha256": "2df59e85ea526612b61938a7f6de402d1eea68c71cdfd3c336f5218f08d9c281"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterTokenLockWait",
+      "sha256": "da1dbb451364aa4d48076adf79b92521aa1fedb191ce32f15f04205e7ee1a903"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#verificationRechecksExpiryAfterMemberLockWait",
+      "sha256": "3565eb11714a62e9fec5653e72cfa23741ff79b21cee0339ee46189d34d98124"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#mailboxPreparationFailureRollsBackAllSignupRows",
+      "sha256": "51c7dbdb4271d8e13eee3749615bc63d62b35dca83843e7299027656bc436a93"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#callerRollbackAlsoRollsBackSignupAndDiscardsUnpublishedMail",
+      "sha256": "fd79b320ec539a553f7da2205e0fc677a605e08251ebc8eb93c828ac4e9f33d5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#invalidInputDoesNotWriteOrDeliver",
+      "sha256": "c3ab632bf020e982c06c190949aa27571e182e5335b529c1ea354e987efef18a"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#activationFailureRollsBackTokenConsumption",
+      "sha256": "d0e9b524c3a5ea5867dbcf940f57eb24758e485f656bdd691e73e0e0ce9fb88d"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#databaseSettingsValidatorAndActualDataSourceCoexist",
+      "sha256": "536bc98c96c817ee5e7d39ba6629fb9d14ac3882a8ce095623f340984dd326ca"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#invalidSettingsFailBeforeSingletonsWithRealDatabaseAutoConfigurationEnabled",
+      "sha256": "08a8153b140157084b613dcdac5ce010fc58e8bc6ba89f724f8f999b61d813a8"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#realDatabaseHealthPreservesStatusOnlyAndRequestId",
+      "sha256": "5c375dda294c815bf169acaafc1ed364628878171f5d3741534be92b62b6c6f3"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#databaseProfileDoesNotExposeManagementDetailsOrJmx",
+      "sha256": "b8f36edf5785999ec141901b3f216af7fd6a5d80b84e0f474fe229e4900d5ef5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#bootUsesVerifiedPostgresAndUnprivilegedRole",
+      "sha256": "e1fb3837bb9da4dd25c1fa1da7470afe6278e8b10e3fe67fab4bbd40f2f358b5"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#sameProductionV1AndFixtureV2MigrateOnce",
+      "sha256": "322f0dc61cc04f0899d96c09d0fc65e6b503bde1170f0fee25c7953e73b4959f"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#parametersAndMappingHandleQuotesUnicodeDecimalAndNull",
+      "sha256": "0c8776a040ebc232493395eabd4bcb6b3355be9d3b4fe6300e2d33f68f5b5ca0"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#successCommitsBothBalancesAndEntry",
+      "sha256": "c293d7e7695beeb55b11472833e949533fbaf0ce96e47fb4cce2f54e47577cb1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#duplicateReferenceRollsBackUpdatesAlreadyMade",
+      "sha256": "8c5e9a76b9135e36e841de61e2c2f36cc47a2bb47a9f62365c1a1a6585d25df1"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#checkedFailureAfterDebitRollsBack",
+      "sha256": "e95ba31e60ef4a06b7d83a900946a37e1d3dcb64b9e0979c0260ab0ac9ba30d7"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#databaseConstraintsPreventNegativeBalanceAndOrphanEntry",
+      "sha256": "a4c8a797fbe15945c6db838fa35ff75f59fa497569742730be601d573e67f364"
+    },
+    {
+      "id": "com.example.marketplace.dbtest.PostgresJdbcIT#caughtRequiredFailureRollsBackEarlierSuccessfulTransfer",
+      "sha256": "1ca406045191fabb16bc6e54a3517458be742d9544faf2833a894592b24ec34a"
+    }
+  ],
+  "phone": "com.example.marketplace.phone.PhoneProviderEmulatorIT#browserSdkAndJavaVerifierEnforceProviderContract"
+}

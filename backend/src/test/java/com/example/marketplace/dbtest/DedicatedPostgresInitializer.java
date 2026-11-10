@@ -19,6 +19,11 @@ public class DedicatedPostgresInitializer implements ApplicationContextInitializ
 
     @Override
     public void initialize(ConfigurableApplicationContext context) {
+        long initializationStarted = System.nanoTime();
+        context.addApplicationListener(event -> {
+            if (event instanceof org.springframework.context.event.ContextRefreshedEvent refreshed
+                    && refreshed.getApplicationContext() == context) { ContractTiming.initialization(initializationStarted); }
+        });
         String database = required("D2_DB_NAME");
         String url = required("D2_DB_URL");
         String username = required("D2_DB_USERNAME");
@@ -35,12 +40,17 @@ public class DedicatedPostgresInitializer implements ApplicationContextInitializ
         String adminPassword = required("D2_ADMIN_PASSWORD");
         try {
             // Authenticate the application role before creating any database.
-            try (var connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:15433/postgres",
+            try (var connection = DriverManager.getConnection(DedicatedDatabaseTarget.maintenanceUrl(),
                     username, password)) {
                 DedicatedDatabaseTarget.verifyConnection(connection, "postgres");
             }
-            try (var admin = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:15433/postgres",
+            try (var admin = DriverManager.getConnection(DedicatedDatabaseTarget.maintenanceUrl(),
                     "postgres", adminPassword); var sql = admin.createStatement()) {
+                DedicatedDatabaseTarget.verifyAdminConnection(admin);
+                try (var identity = sql.executeQuery("SELECT system_identifier::text FROM pg_control_system()")) {
+                    if (!identity.next()) { throw new IllegalStateException("Test system identity missing"); }
+                    System.out.println("D2_POSTGRES_SYSTEM_IDENTIFIER=" + identity.getString(1));
+                }
                 // The strict allowlist above makes this identifier safe; collision is an error, never reset.
                 sql.executeUpdate("CREATE DATABASE \"" + database + "\" OWNER marketplace_test");
                 System.out.println("D2_CREATED_DATABASE=" + database);

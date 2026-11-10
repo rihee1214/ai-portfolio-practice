@@ -1,3 +1,4 @@
+import { notifyGuestAccessChange } from './GuestAccessLifecycle'
 import { requestJson } from '../api/http'
 type View = { busy: boolean; authenticated: boolean; orders: string[]; error: string; logoutPending: boolean }
 const initial = (): View => ({ busy: false, authenticated: false, orders: [], error: '', logoutPending: false })
@@ -43,12 +44,14 @@ export class GuestAccessStore {
   load = () => this.view.logoutPending ? Promise.resolve() : this.run(() => this.read(), true)
   login = (orderNumber: string, phone: string, password: string) => this.run(async () => {
     if (!orderNumber || !phone || !password || password.length > 256) throw new Error('input')
+    notifyGuestAccessChange()
     const result = await this.call('/api/guest/access/login', { orderNumber, phone, password })
     if (result.status !== 'AUTHENTICATED') throw new Error('schema')
     await this.read()
   })
   logout = () => this.run(async () => {
     this.set({ logoutPending: true })
+    notifyGuestAccessChange()
     const result = await this.call('/api/guest/access/logout', {})
     if (result.status !== 'LOGGED_OUT') throw new Error('schema')
     this.set({ logoutPending: false })

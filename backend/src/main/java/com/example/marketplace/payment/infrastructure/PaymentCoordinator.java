@@ -36,6 +36,7 @@ public final class PaymentCoordinator implements Payments {
  private final AccessPolicy access;private final SellerMembership members;private final PurchaseSessions sessions;
  private PaymentProviderConfiguration.Settings sandboxSettings=new PaymentProviderConfiguration.Settings("","","","","","");
  @Autowired private com.example.marketplace.order.api.AftercareSettlements aftercareSettlements;
+ @Autowired private JdbcRefunds customerRefunds;
  @Autowired void sandboxSettings(PaymentProviderConfiguration.Settings settings) { this.sandboxSettings=settings; }
  public record SandboxCheckout(String clientKey,String orderId,String amount,String customerKey) { }
  public record Confirmation(String paymentKey,String orderId,String amount) {
@@ -94,14 +95,17 @@ public final class PaymentCoordinator implements Payments {
  }
  public void webhook(byte[] payload,String time,String signature,String transmissionId) {
   outside();if(sandboxSettings.webhookSecurityKey().isBlank()) { throw new OrderRejected(503); }
-  if(!new TossWebhookVerifier(sandboxSettings.webhookSecurityKey(),clock).authentic(payload,time,signature)||transmissionId==null||!transmissionId.matches("[A-Za-z0-9_-]{1,200}")) { throw new OrderRejected(403); }
+  // Transmission IDs are opaque delivery metadata, not authentication or payload-deduplication keys.
+  if(!new TossWebhookVerifier(sandboxSettings.webhookSecurityKey(),clock).authentic(payload,time,signature)||transmissionId==null) { throw new OrderRejected(403); }
   try {
    var root=new tools.jackson.databind.ObjectMapper().readTree(payload);var data=root.path("data");
    if(!root.path("eventType").asText().equals("PAYMENT_STATUS_CHANGED")||!root.path("createdAt").isString()||!sandboxSettings.mid().equals(data.path("mId").asText())||!sandboxSettings.apiVersion().equals(data.path("version").asText())||!data.path("totalAmount").isIntegralNumber()||!data.path("totalAmount").canConvertToLong()||data.path("totalAmount").asLong()<=0) { throw new OrderRejected(409); }
    var rows=jdbc.queryForList("SELECT a.order_number FROM marketplace.payment_toss_binding b JOIN marketplace.payment_attempt a ON a.id=b.attempt_id WHERE b.provider_order_id=:order AND b.provider_payment_key=:key AND a.mode='SANDBOX' AND a.amount=b.amount AND b.amount=:amount",Map.of("order",data.path("orderId").asText(),"key",data.path("paymentKey").asText(),"amount",data.path("totalAmount").asLong()));
    if(rows.size()!=1) { throw new OrderRejected(409); }String number=(String)rows.getFirst().get("order_number");var a=attempt(number);String digest=java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(payload));
+   String status=data.path("status").asText();
+   if(List.of("DONE","PARTIAL_CANCELED","CANCELED").contains(status)&&customerRefunds!=null&&Boolean.TRUE.equals(tx.execute(t->{orders.lock(number);return customerRefunds.signal(a.id(),digest,status);}))) { return; }
    if(jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_webhook_receipt WHERE attempt_id=:id AND payload_sha256=:digest",Map.of("id",a.id(),"digest",digest),Integer.class)>0) { return; }
-   String status=data.path("status").asText();Result hint=status.equals("DONE")?Result.SUCCEEDED:List.of("ABORTED","EXPIRED","CANCELED").contains(status)?Result.FAILED:Result.UNKNOWN;
+   Result hint=status.equals("DONE")?Result.SUCCEEDED:List.of("ABORTED","EXPIRED","CANCELED").contains(status)?Result.FAILED:Result.UNKNOWN;
    if(hint==Result.UNKNOWN||provider.query(a.request())!=hint) { throw new OrderRejected(409); }
    applyWebhook(number,a.id(),digest,hint);
   }catch(OrderRejected rejected) { throw rejected; }catch(Exception invalid) { throw new OrderRejected(409); }

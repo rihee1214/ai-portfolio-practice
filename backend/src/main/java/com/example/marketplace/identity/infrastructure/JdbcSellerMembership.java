@@ -26,4 +26,7 @@ public final class JdbcSellerMembership implements SellerMembership {
         if (lockActiveBuyer(member)) { throw new AccountException("STATE_CONFLICT"); }
         jdbc.update("INSERT INTO marketplace.role_assignment(user_id,role) VALUES(:id,'SELLER')", Map.of("id", member));
     }
+    @Override public void lockSeller(UUID member) {
+        if (!lockActiveBuyer(member) || jdbc.queryForList("SELECT role FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER' FOR SHARE", Map.of("id",member),String.class).size()!=1) { throw new AccountException("STATE_CONFLICT"); }
+    }
 }

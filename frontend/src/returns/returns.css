@@ -1,0 +1,6 @@
+.return-flow { margin-block: 1.5rem; padding: 1rem; border: 1px solid currentColor; border-radius: .5rem; overflow-wrap: anywhere; }
+.return-flow fieldset { min-inline-size: 0; margin-block: .75rem; }
+.return-flow label { display: block; margin-block: .5rem; }
+.return-flow input:not([type="checkbox"]), .return-flow select { max-inline-size: 100%; box-sizing: border-box; }
+.return-unit { padding-block: .5rem; border-block-end: 1px solid #d4d4d4; }
+.return-flow button { margin: .25rem .5rem .25rem 0; }

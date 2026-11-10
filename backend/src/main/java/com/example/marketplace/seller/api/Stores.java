@@ -18,6 +18,10 @@ public interface Stores {
     Capabilities capabilities(UUID owner);
     /** For future writes: caller transaction must contain this check and its business mutation. */
     void requireCapability(UUID owner, Capability capability);
+    /** Trusted same-transaction store fact; locks its actual owner/membership before the store. */
+    Store lockExistingTrade(UUID storeId);
+    /** Trusted existing-order read; never grants new-sale eligibility and does not acquire later business locks. */
+    Store existingTrade(UUID storeId);
     record PublicStore(String slug, String name, String introduction, String address, String notice,
             String imageKey, String imageAlt) { }
     Store own(UUID owner);

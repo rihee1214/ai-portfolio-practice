@@ -26,21 +26,37 @@ public final class RefundWorkerProbe {
  private static UUID id;private static Instant now;private static Path marker;private static String mode;private static JdbcJobs delegate;
  public static void main(String[] args) throws Exception {
   now=Instant.parse(args[0]);id=UUID.fromString(args[1]);marker=Path.of(args[2]);mode=args[3];String database=System.getenv("D2_DB_NAME");com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget.validate(System.getenv("D2_DB_URL"),System.getenv("D2_DB_USERNAME"),database);
-  try(var context=new SpringApplicationBuilder(MarketplaceApplication.class,Config.class).profiles("db","worker","local-mailbox","local-http","refund-probe").run("--spring.config.location=classpath:/","--spring.datasource.url="+System.getenv("D2_DB_URL"),"--spring.datasource.username="+System.getenv("D2_DB_USERNAME"),"--spring.datasource.password="+System.getenv("D2_DB_PASSWORD"),"--marketplace.media.root="+marker.getParent().resolve(marker.getFileName()+"-media"),"--marketplace.worker.enabled=false","--spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture")) {
+  com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget.verifyBeforeMigration(System.getenv("D2_DB_URL"),System.getenv("D2_DB_USERNAME"),System.getenv("D2_DB_PASSWORD"),System.getenv("D2_DB_NAME"));
+        try(var context=new SpringApplicationBuilder(MarketplaceApplication.class,Config.class).profiles("db","worker","local-mailbox","local-http","refund-probe").run("--spring.config.location=classpath:/","--spring.datasource.url="+System.getenv("D2_DB_URL"),"--spring.datasource.username="+System.getenv("D2_DB_USERNAME"),"--spring.datasource.password="+System.getenv("D2_DB_PASSWORD"),"--marketplace.media.root="+marker.getParent().resolve(marker.getFileName()+"-media"),"--marketplace.worker.enabled=false","--spring.flyway.locations=classpath:db/migration,classpath:db/c3fixture")) {
    try(var connection=context.getBean(DataSource.class).getConnection()) { com.example.marketplace.jdbcfixture.DedicatedDatabaseTarget.verifyConnection(connection,database); }
    var jobs=context.getBean(Jobs.class);var handlers=List.copyOf(context.getBeansOfType(JobHandler.class).values());Files.writeString(marker.resolveSibling(marker.getFileName()+"-schedule"),"clock="+now+";job="+jobs.find(id).orElseThrow()+";types="+handlers.stream().map(JobHandler::type).sorted().toList());try(var engine=new WorkerEngine(jobs,handlers)) { if(!engine.runOnce()) { throw new IllegalStateException("REFUND_TARGET_NOT_CLAIMED"); } }
    if(!jobs.find(id).orElseThrow().status().equals("SUCCEEDED")) { throw new IllegalStateException("REFUND_JOB_INCOMPLETE"); }Files.writeString(marker.resolveSibling(marker.getFileName()+"-completed"),"nonweb=true;pid="+ProcessHandle.current().pid());
   }
  }
  private static void pause(String stage) {
-  try { Files.writeString(marker,stage+";pid="+ProcessHandle.current().pid());if(mode.equals("ACK")) { new java.util.concurrent.CountDownLatch(1).await(); }else { long until=System.nanoTime()+java.time.Duration.ofSeconds(30).toNanos();while(!Files.exists(marker.resolveSibling(marker.getFileName()+"-release"))&&System.nanoTime()<until) { Thread.sleep(20); }if(!Files.exists(marker.resolveSibling(marker.getFileName()+"-release"))) { throw new IllegalStateException("REFUND_RELEASE_NOT_RECEIVED"); } } }catch(Exception failure) { throw new IllegalStateException(failure); }
+  try { Files.writeString(marker,stage+";pid="+ProcessHandle.current().pid());if(mode.equals("ACK")||mode.startsWith("RECOVERY_")) { new java.util.concurrent.CountDownLatch(1).await(); }else { long until=System.nanoTime()+java.time.Duration.ofSeconds(30).toNanos();while(!Files.exists(marker.resolveSibling(marker.getFileName()+"-release"))&&System.nanoTime()<until) { Thread.sleep(20); }if(!Files.exists(marker.resolveSibling(marker.getFileName()+"-release"))) { throw new IllegalStateException("REFUND_RELEASE_NOT_RECEIVED"); } } }catch(Exception failure) { throw new IllegalStateException(failure); }
  }
  @TestConfiguration(proxyBeanMethods=false) @org.springframework.context.annotation.Profile("refund-probe")
  static class Config {
+  @Bean @Primary org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate recoveryProbeJdbc(DataSource source) {
+   return new org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate(source) {
+    private final java.util.concurrent.atomic.AtomicBoolean stopped=new java.util.concurrent.atomic.AtomicBoolean();
+    @Override public int update(String sql,org.springframework.jdbc.core.namedparam.SqlParameterSource parameters) {
+     if(mode.equals("RECOVERY_CURSOR")&&(sql.startsWith("UPDATE marketplace.claim_return_recovery_stage SET")||sql.startsWith("UPDATE marketplace.claim_exchange_refund_recovery_stage SET"))&&stopped.compareAndSet(false,true)) { pause("candidate committed; page receipt/cursor transaction still uncommitted"); }
+     int changed=super.update(sql,parameters);
+     if(mode.equals("RECOVERY_CANDIDATE")&&changed>0&&(sql.startsWith("INSERT INTO marketplace.claim_return_recovery_candidate")||sql.startsWith("INSERT INTO marketplace.claim_exchange_refund_recovery_candidate"))&&stopped.compareAndSet(false,true)) {
+      org.springframework.transaction.support.TransactionSynchronizationManager.registerSynchronization(new org.springframework.transaction.support.TransactionSynchronization() {
+       @Override public void afterCommit() { pause("candidate manifest/outbox/job committed; cursor not advanced"); }
+      });
+     }
+     return changed;
+    }
+   };
+  }
   @Bean @Primary Jobs refundProbeJobs(DataSource source,PlatformTransactionManager manager) {
    delegate=new JdbcJobs(new OneJobJdbc(source,id),manager,Clock.fixed(now,ZoneOffset.UTC));return new Jobs() {
     public UUID enqueue(Command c) { return delegate.enqueue(c); }
-    public java.util.Optional<Job> claim(java.util.Set<String> types) { return delegate.claim(types); }
+    public java.util.Optional<Job> claim(java.util.Set<String> types) { var result=delegate.claim(types);if(result.isPresent()){try{Files.writeString(marker.resolveSibling(marker.getFileName()+"-claim"),result.get().toString());}catch(java.io.IOException failure){throw new IllegalStateException(failure);}}return result; }
     public boolean heartbeat(UUID job,UUID owner) { return mode.equals("NORMAL")&&delegate.heartbeat(job,owner); }
     public boolean complete(UUID job,UUID owner) { if(mode.equals("ACK")&&job.equals(id)) { pause("refund effect committed before ack"); }return delegate.complete(job,owner); }
     public boolean fail(UUID job,UUID owner,boolean terminal,String error) { boolean accepted=delegate.fail(job,owner,terminal,error);if(!accepted) { try { Files.writeString(marker.resolveSibling(marker.getFileName()+"-stale-rejected"),"stale refund write/ack rejected"); }catch(Exception failure) { throw new IllegalStateException(failure); } }return accepted; }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration(proxyBeanMethods=false) @Profile("db")
 public class RefundJobs {
+ @Bean JobHandler refundAutomaticQuery(JdbcRefunds refunds) { return new JobHandler() { public String type(){return RefundQuerySchedule.TYPE;}public Result handle(Jobs.Job job){return refunds.process(job);} }; }
  @Bean JobHandler refundSubmit(JdbcRefunds refunds) { return new JobHandler() {
   public String type() { return "REFUND_SUBMIT.v1"; }
   public Result handle(Jobs.Job job) { return refunds.process(job); }

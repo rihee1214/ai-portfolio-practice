@@ -1,3 +1,4 @@
+import { notifyGuestAccessChange } from './GuestAccessLifecycle'
 import { requestJson } from '../api/http'
 import { confirmPhoneCode } from '../phone/FirebasePhoneClient'
 type View = { busy: boolean; step: 'INPUT' | 'SENT' | 'READY' | 'COMPLETE'; recoveryCode: string; error: string }
@@ -57,10 +58,12 @@ export class GuestRecoveryStore {
   }
   reset = (password: string, confirmation: string) => this.run(async () => {
     this.password(password, confirmation); if (this.view.step !== 'READY' || !this.grant) throw new Error('grant')
+    notifyGuestAccessChange()
     this.completed(await this.call('/api/guest/recovery/reset', { grant: this.grant, password, confirmation }), 'PASSWORD_RESET')
   })
   manage = (currentPassword: string, password: string, confirmation: string, change: boolean) => this.run(async () => {
     if (change) this.password(password, confirmation)
+    notifyGuestAccessChange()
     this.completed(await this.call('/api/guest/access/' + (change ? 'password' : 'recovery-code'), { currentPassword, ...(change ? { password, confirmation } : {}) }), change ? 'PASSWORD_CHANGED' : 'CODE_REPLACED')
   })
 }
