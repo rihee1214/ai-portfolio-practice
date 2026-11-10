@@ -50,6 +50,7 @@ export const workspaces: Workspace[] = [
       { path: 'reports', title: '신고 접수', description: '신고 접수 상태를 확인합니다.', planned: '신고 조사' },
       { path: 'support', title: '고객지원', description: '지원 접수를 배정하고 답변합니다.', planned: '담당 접수 처리' },
       { path: 'refunds', title: '환불 대사', description: 'SYSTEM 권한으로 환불 관측과 조회 전용 운영 근거를 확인합니다.', planned: '현재 환불 조회와 감사되는 운영 대사' },
+      { path: 'settlements', title: '주간 모의 정산', description: '원장 명세를 검토하고 주간 모의 지급을 처리합니다.', planned: '수수료·정산 명세와 지급 이력' },
       { path: 'orders', title: '거래 관리', description: '주문과 거래 지원 내역을 확인합니다.', planned: '업무별 운영 권한과 거래 감사 이력을 연결할 예정입니다.' },
     ],
   },

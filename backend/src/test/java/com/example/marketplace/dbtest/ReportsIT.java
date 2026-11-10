@@ -157,7 +157,7 @@ class ReportsIT extends PostgresContractFixture {
         var originalAudit=target.queryForList(auditSql,p);
         assertEquals(List.of(4L,5L),target.queryForList("SELECT case_version FROM marketplace.operations_report_evidence ORDER BY received_at",p,Long.class));
         var upgrade=org.flywaydb.core.Flyway.configure().dataSource(ds).schemas(schema).defaultSchema(schema).locations("classpath:db/migration").load();
-        assertEquals(2,upgrade.migrate().migrationsExecuted);
+        assertEquals(3,upgrade.migrate().migrationsExecuted);
         upgrade.validate();
         assertEquals(originalEvidence,target.queryForList(evidenceSql,p));
         assertEquals(originalAudit,target.queryForList(auditSql,p));

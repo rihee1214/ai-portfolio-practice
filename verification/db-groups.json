@@ -322,6 +322,7 @@
         "browser.wire"
       ],
       "consumes": [
+        "settlement.ledger",
         "operations.trade-support",
         "operations.moderation",
         "authority.current",
@@ -4317,9 +4318,58 @@
           "invocations": 1
         }
       ]
+    },
+    {
+      "id": "settlement",
+      "kind": "cross-domain-contract",
+      "classes": [
+        "com.example.marketplace.dbtest.SettlementIT"
+      ],
+      "expectedDatabaseCount": 2,
+      "provides": [
+        "settlement.ledger"
+      ],
+      "consumes": [
+        "db.transaction",
+        "authority.current",
+        "schema.upgrade",
+        "order.snapshot",
+        "order.confirmation",
+        "order.hold",
+        "payment.outcome",
+        "money.refund",
+        "money.fee",
+        "return.financial",
+        "exchange.financial",
+        "aftercare.closure",
+        "delivery.actual-source"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.SettlementIT#verifiedWeeklyBatchReconcilesTwoSellersAndPaysOnlyOnce",
+          "new": "com.example.marketplace.dbtest.SettlementIT#verifiedWeeklyBatchReconcilesTwoSellersAndPaysOnlyOnce",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SettlementIT#upgradeLeavesEarlierOrdersUnversionedEvenWhenRetriedAfterActivation",
+          "new": "com.example.marketplace.dbtest.SettlementIT#upgradeLeavesEarlierOrdersUnversionedEvenWhenRetriedAfterActivation",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SettlementIT#lateWeeklyPayoutUsesTheExclusiveMondayCutoffAndNeverPaysTheSameQuantityTwice",
+          "new": "com.example.marketplace.dbtest.SettlementIT#lateWeeklyPayoutUsesTheExclusiveMondayCutoffAndNeverPaysTheSameQuantityTwice",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SettlementIT#unpaidPriorDraftMustReleaseItsLedgerBeforeTheFollowingWeekCanPay",
+          "new": "com.example.marketplace.dbtest.SettlementIT#unpaidPriorDraftMustReleaseItsLedgerBeforeTheFollowingWeekCanPay",
+          "invocations": 1
+        }
+      ]
     }
   ],
   "impact": {
+    "settlement": {"select": ["settlement", "browser-api", "payment", "confirmation", "refund", "return-finance", "aftercare-contracts", "legacy", "fulfillment", "checkout", "exchange-finance", "identity", "database-runtime"], "reason": "주문·구매확정·실제 결제/환불·미결·주간 모의 지급과 운영 화면"},
     "operations": {"select":["operations","support","identity","seller-store","fulfillment","refund","return-physical","return-finance","order-history","guest","content","questions","moderation","reports","browser-api"],"reason":"운영 지원과 계정·판매·기존 주문·환불 권한의 소비 경로"},
     "moderation": {"select":["moderation","exchange","reports","catalog","content","media","shopping","checkout","order-history","questions","support","confirmation","fulfillment","promotion","refund","legacy","browser-api", "operations"],"reason":"조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"},
     "exchange": {
@@ -4388,7 +4438,7 @@
         "exchange",
         "exchange-recovery",
         "legacy",
-        "content", "operations"],
+        "content", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "exchange-finance": {
@@ -4411,8 +4461,7 @@
         "exchange",
         "legacy",
         "inventory",
-        "content"
-      ],
+        "content", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "refund": {
@@ -4436,7 +4485,7 @@
         "exchange-recovery",
         "catalog",
         "content"
-      , "reports", "moderation", "operations"],
+      , "reports", "moderation", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "inventory": {
@@ -4486,7 +4535,7 @@
         "exchange-finance",
         "exchange-recovery",
         "legacy",
-        "content", "moderation", "operations"],
+        "content", "moderation", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "fulfillment": {
@@ -4510,7 +4559,7 @@
         "exchange-recovery",
         "content",
         "questions",
-        "support", "moderation", "operations"],
+        "support", "moderation", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "catalog": {
@@ -4619,7 +4668,7 @@
         "legacy",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations"],
+        "support", "reports", "moderation", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "payment": {
@@ -4643,7 +4692,7 @@
         "legacy",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations"],
+        "support", "reports", "moderation", "operations", "settlement"],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "guest": {
@@ -4747,11 +4796,12 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports", "moderation", "operations", "settlement"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "job-contracts": {
       "select": [
+        "settlement",
         "job-contracts",
         "payment",
         "process-recovery",
@@ -4817,7 +4867,7 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports", "moderation", "operations", "settlement"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "legacy": {
@@ -4852,7 +4902,7 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports", "moderation", "operations", "settlement"],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "money.refund-reconciliation": {
@@ -4877,8 +4927,7 @@
         "catalog",
         "identity",
         "guest",
-        "job-contracts"
-      ],
+        "job-contracts", "settlement"],
       "reason": "F durable query slots and SYSTEM operations are consumed by payment, owner views, jobs, and claim financial/recovery contracts; common-schema milestone still uses unselected whole."
     },
     "money.provider-refund-receipt": {
@@ -4903,8 +4952,7 @@
         "catalog",
         "identity",
         "guest",
-        "job-contracts"
-      ],
+        "job-contracts", "settlement"],
       "reason": "F exact provider receipt is consumed by payment, cancellation, return/exchange financial outcomes, recovery, owner views and worker contracts; final common-schema scope is unselected whole."
     },
     "content": {
@@ -4955,7 +5003,7 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"],
+      "reports", "moderation", "operations", "settlement"],
     "job-runner": [
       "payment",
       "process-recovery",
@@ -4987,7 +5035,7 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"],
+      "reports", "moderation", "operations", "settlement"],
     "financial-common": [
       "payment",
       "process-recovery",
@@ -5019,7 +5067,7 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"],
+      "reports", "moderation", "operations", "settlement"],
     "schema": [
       "payment",
       "process-recovery",
@@ -5051,7 +5099,7 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"],
+      "reports", "moderation", "operations", "settlement"],
     "unknown": [
       "payment",
       "process-recovery",
@@ -5083,7 +5131,7 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"],
+      "reports", "moderation", "operations", "settlement"],
     "test-tools": [
       "payment",
       "process-recovery",
@@ -5115,6 +5163,6 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations"]
+      "reports", "moderation", "operations", "settlement"]
   }
 }

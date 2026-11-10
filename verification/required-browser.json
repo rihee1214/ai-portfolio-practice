@@ -174,6 +174,8 @@
     "desktop#moderation.spec.ts:closed product report hides public detail and restores it through the recorded action",
     "mobile#moderation.spec.ts:closed product report hides public detail and restores it through the recorded action",
     "desktop#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case",
-    "mobile#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case"
+    "mobile#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case",
+    "desktop#settlement.spec.ts:settlement operator traces three confirmed units through review and mock payout of a closed week",
+    "mobile#settlement.spec.ts:settlement operator traces three confirmed units through review and mock payout of a closed week"
   ]
 }

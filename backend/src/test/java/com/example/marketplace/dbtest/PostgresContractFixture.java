@@ -746,7 +746,7 @@ class PostgresContractFixture {
 
     /** Only newly added F fixtures use the existing stored-due driver; authority/business clocks stay native. */
     protected OwnedReturnJob claimFRefundJob(UUID id) {
-        var saved=context.getBean(com.example.marketplace.platform.api.Jobs.class).find(id).orElseThrow();assertEquals("READY",saved.status());assertEquals("REFUND_SUBMIT.v1",saved.command().type());Instant host=Instant.now();var raw=jdbc.queryForMap("WITH sample AS(SELECT clock_timestamp() AS at) SELECT at,at::text AS raw,extract(epoch FROM at)::text AS epoch,pg_backend_pid() AS backend,current_setting('marketplace.verification_instance') AS instance FROM sample",Map.of());
+        var saved=context.getBean(com.example.marketplace.platform.api.Jobs.class).find(id).orElseThrow();assertEquals("READY",saved.status());assertEquals("REFUND_SUBMIT.v1",saved.command().type());Instant host=Instant.now();var raw=jdbc.queryForMap("WITH sample AS(SELECT clock_timestamp() AS at) SELECT at,at::text AS raw,extract(epoch FROM at)::text AS epoch,pg_backend_pid() AS backend,current_setting('marketplace.verification_instance',true) AS instance FROM sample",Map.of());
         var owned=claimActualReturnJob(id);var proof=new TransactionTemplate(transactionManager).execute(t->context.getBean(com.example.marketplace.platform.api.JobLeases.class).requireDueClaim(id,owned.job().ownerToken()));assertEquals(id,proof.jobId());assertEquals(owned.job().ownerToken(),proof.ownerToken());assertEquals(owned.job().attempts(),proof.attempt());assertEquals(saved.command().nextRunAt(),proof.scheduledAt());assertFalse(proof.claimedAt().isBefore(proof.scheduledAt()));assertEquals(proof.claimedAt().plusSeconds(30),owned.job().leaseUntil());
         try{java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"f-stored-due-claim-"+id+"-"+proof.attempt()+".json"),authMapper.writeValueAsString(Map.of("stored",saved,"nativeObservationBefore",raw,"hostBefore",host,"hostAfter",Instant.now(),"actualJob",owned.job(),"actualDueFact",proof,"testOnlyStoredDueDriver",true,"businessAndAuthorityClockChanged",false)),java.nio.file.StandardOpenOption.CREATE_NEW);}catch(java.io.IOException error){throw new IllegalStateException(error);}return owned;
     }
@@ -1015,7 +1015,24 @@ class PostgresContractFixture {
     }
 
     protected void runCancellationJob(String type,UUID cause) {
-        UUID id=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE type=:type AND cause_key=:cause AND status IN ('READY','RUNNING') ORDER BY scheduled_at DESC,id LIMIT 1",Map.of("type",type,"cause",cause.toString()),UUID.class);var selected=context.getBean(com.example.marketplace.platform.api.Jobs.class).find(id).orElseThrow();Instant due=selected.status().equals("RUNNING")?selected.leaseUntil():selected.nextRunAt();var jobs=new com.example.marketplace.platform.infrastructure.JdbcJobs(new OneJobJdbc(context.getBean(DataSource.class),id),transactionManager,Clock.fixed(due.plusSeconds(1),ZoneOffset.UTC));var handlers=context.getBeansOfType(com.example.marketplace.platform.api.JobHandler.class).values().stream().filter(h->h.type().equals(type)).toList();assertEquals(1,handlers.size());try(var worker=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,handlers)) { assertTrue(worker.runOnce()); }assertEquals("SUCCEEDED",jobs.find(id).orElseThrow().status());
+        UUID id=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE type=:type AND cause_key=:cause AND status IN ('READY','RUNNING') ORDER BY scheduled_at DESC,id LIMIT 1",Map.of("type",type,"cause",cause.toString()),UUID.class);
+        runStoredJob(type, id);
+    }
+
+    protected com.example.marketplace.platform.api.Jobs.Job runStoredJob(String type, UUID id) {
+        var selected = context.getBean(com.example.marketplace.platform.api.Jobs.class).find(id).orElseThrow();
+        Instant due = selected.status().equals("RUNNING") ? selected.leaseUntil() : selected.nextRunAt();
+        var jobs = new com.example.marketplace.platform.infrastructure.JdbcJobs(
+            new OneJobJdbc(context.getBean(DataSource.class), id), transactionManager, Clock.fixed(due.plusSeconds(1), ZoneOffset.UTC));
+        var handlers = context.getBeansOfType(com.example.marketplace.platform.api.JobHandler.class)
+            .values().stream().filter(handler -> handler.type().equals(type)).toList();
+        assertEquals(1, handlers.size());
+        try (var worker = new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs, handlers)) {
+            assertTrue(worker.runOnce());
+        }
+        var processed = jobs.find(id).orElseThrow();
+        assertEquals("SUCCEEDED", processed.status());
+        return processed;
     }
 
 
@@ -1912,7 +1929,7 @@ class PostgresContractFixture {
     }
 
     protected void assertPlannedCurrentUpgrade(Flyway migration,int oldVersion) {
-        final int plannedCurrent=116;var expectedVersions=java.util.stream.IntStream.rangeClosed(oldVersion+1,plannedCurrent).mapToObj(Integer::toString).toList();var pending=java.util.Arrays.stream(migration.info().pending()).toList();assertEquals(expectedVersions,pending.stream().map(i->i.getVersion().toString()).toList(),"fixed source planned versions, never actual result as expectation");var expectedChecksums=new java.util.LinkedHashMap<String,Integer>();for(var info:pending){assertNotNull(info.getChecksum());expectedChecksums.put(info.getVersion().toString(),info.getChecksum());}
+        final int plannedCurrent=117;var expectedVersions=java.util.stream.IntStream.rangeClosed(oldVersion+1,plannedCurrent).mapToObj(Integer::toString).toList();var pending=java.util.Arrays.stream(migration.info().pending()).toList();assertEquals(expectedVersions,pending.stream().map(i->i.getVersion().toString()).toList(),"fixed source planned versions, never actual result as expectation");var expectedChecksums=new java.util.LinkedHashMap<String,Integer>();for(var info:pending){assertNotNull(info.getChecksum());expectedChecksums.put(info.getVersion().toString(),info.getChecksum());}
         try{java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"planned-upgrade-"+oldVersion+"-"+UUID.randomUUID()+".json"),authMapper.writeValueAsString(Map.of("from",oldVersion,"plannedCurrent",plannedCurrent,"expectedVersions",expectedVersions,"sourceChecksumsBeforeApply",expectedChecksums)));}catch(java.io.IOException failure){throw new IllegalStateException(failure);}
         assertEquals(plannedCurrent-oldVersion,migration.migrate().migrationsExecuted);assertEquals(0,migration.migrate().migrationsExecuted);migration.validate();var target=new NamedParameterJdbcTemplate(migration.getConfiguration().getDataSource());var actualChecksums=new java.util.LinkedHashMap<String,Integer>();target.query("SELECT version,checksum FROM marketplace.flyway_schema_history WHERE success AND version IS NOT NULL AND version::integer>:old ORDER BY version::integer",Map.of("old",oldVersion),(r,n)->{actualChecksums.put(r.getString("version"),r.getInt("checksum"));return 0;});assertEquals(expectedChecksums,actualChecksums);assertEquals(0,target.queryForObject("SELECT count(*) FROM marketplace.job WHERE claim_checked_at IS NOT NULL",Map.of(),Integer.class),"legacy observed decisions remain absent");assertEquals(0,target.queryForObject("SELECT count(*) FROM marketplace.job_claim_fact",Map.of(),Integer.class),"historical due facts are never invented");
     }

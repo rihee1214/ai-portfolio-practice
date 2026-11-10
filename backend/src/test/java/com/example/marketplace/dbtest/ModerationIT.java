@@ -239,7 +239,7 @@ class ModerationIT extends PostgresContractFixture {
         copyLegacyRows(named,"catalog_product","SELECT * FROM marketplace.catalog_product WHERE id=:id",p);
         named.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",p);
         var upgrade=org.flywaydb.core.Flyway.configure().dataSource(ds).schemas("marketplace").defaultSchema("marketplace").locations("classpath:db/migration").load();
-        assertEquals(1,upgrade.migrate().migrationsExecuted);upgrade.validate();
+        assertEquals(2,upgrade.migrate().migrationsExecuted);upgrade.validate();
         var session=org.mockito.Mockito.mock(com.example.marketplace.identity.api.HistorySessions.class);
         var access=org.mockito.Mockito.mock(com.example.marketplace.identity.api.AccessPolicy.class);
         var authority=operator.authority();

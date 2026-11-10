@@ -1,0 +1,59 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { expect, test, type Page } from '@playwright/test'
+import { geometry } from './post-purchase-helpers'
+import { headers } from './purchase-helpers'
+
+type Seed = { storeId: string; sellerOrderId: string; causeId: string; weekStart: string }
+type Item = { sellerOrderId: string; kind: string; causeId: string; itemId: string | null; ordinal: number | null; amount: string; net: string }
+type Batch = { id: string; weekStart: string; closed: boolean; state: string; version: number; net: string; items: Item[] }
+
+async function clickForBatch(page: Page, button: string, path: string): Promise<Batch> {
+  const [response] = await Promise.all([
+    page.waitForResponse(r => new URL(r.url()).pathname === path && r.request().method() === 'POST'),
+    page.getByRole('button', { name: button, exact: true }).click(),
+  ])
+  expect(response.status()).toBe(200)
+  return response.json()
+}
+
+test('settlement operator traces three confirmed units through review and mock payout of a closed week', async ({ page, context }, info) => {
+  const seeds = JSON.parse(readFileSync(resolve(process.env.A3_EVIDENCE!, 'settlement-browser-order.json'), 'utf8')) as Record<string, Seed>
+  expect(seeds.desktop.weekStart).not.toBe(seeds.mobile.weekStart)
+  const source = seeds[info.project.name]
+  const login = await context.request.post('/api/auth/login', { headers: await headers(context),
+    form: { email: 'c-support-p11-browser@example.com', password: ' A1-private-passphrase-가나다 ' } })
+  expect(login.status()).toBe(200)
+  await page.goto('/admin/settlements')
+  await page.getByLabel('정산 주 시작일').fill(source.weekStart)
+  const batches = '/api/admin/settlements/batches'
+  const draft = await clickForBatch(page, '초안 생성', batches)
+  expect(draft).toMatchObject({ id: expect.any(String), weekStart: source.weekStart, closed: true, state: 'DRAFT', net: '31501' })
+  const items = draft.items.filter(i => i.sellerOrderId === source.sellerOrderId)
+  const products = items.filter(i => i.kind === 'PRODUCT')
+  expect(products.map(i => i.amount)).toEqual(['10000', '10000', '10001'])
+  expect(new Set(products.map(i => i.itemId + '/' + i.ordinal)).size).toBe(3)
+  expect(products.every(i => i.causeId === source.causeId)).toBe(true)
+  expect(items.reduce((sum, i) => sum + BigInt(i.net), 0n)).toBe(31501n)
+  const detail = page.getByRole('region', { name: '배치 상세', exact: true })
+  const store = detail.getByRole('region', { name: '매대 ' + source.storeId, exact: true })
+  await expect(store.getByText('매대 지급액 31,501원')).toBeVisible()
+  await expect(store.getByText(source.causeId, { exact: false }).first()).toBeVisible()
+
+  const batchPath = batches + '/' + draft.id
+  const reviewed = await clickForBatch(page, '검토 확정', batchPath + '/review')
+  expect(reviewed).toMatchObject({ id: draft.id, weekStart: source.weekStart, state: 'REVIEWED', net: '31501' })
+  await expect(detail.getByRole('heading', { name: source.weekStart + ' · 검토 완료', exact: true })).toBeVisible()
+  const paid = await clickForBatch(page, '모의 지급', batchPath + '/simulate-pay')
+  expect(paid).toMatchObject({ id: draft.id, weekStart: source.weekStart, state: 'PAID_MOCK', net: '31501' })
+  const status = detail.getByRole('heading', { name: source.weekStart + ' · 모의 지급 완료', exact: true })
+  const payout = store.getByText('매대 지급액 31,501원', { exact: true })
+  await expect(status).toBeVisible()
+  await expect(payout).toBeVisible()
+  await info.attach('weekly-mock-payout', { contentType: 'application/json', body: JSON.stringify({
+    platform: info.project.name, ...source, products: products.map(({ itemId, ordinal, amount, causeId }) => ({ itemId, ordinal, amount, causeId })),
+    transitions: [draft, reviewed, paid].map(({ id, state, version, net }) => ({ id, state, version, net })),
+    heading: await status.innerText(), storePayout: await payout.innerText(),
+  }) })
+  await geometry(page, info, 'settlement-original-ledger')
+})

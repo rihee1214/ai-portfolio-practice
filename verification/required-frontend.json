@@ -342,6 +342,11 @@
     "tests/unit/ManagedAccounts.test.tsx#clears the entire directory on detail permission loss and ignores the outstanding list response",
     "tests/unit/ManagedAccounts.test.tsx#discards a late private account detail when the operator logs out",
     "tests/unit/ModerationPage.test.tsx#retries a lost moderation receipt with the same closure, target version and request key",
-    "tests/unit/ReportInvestigation.test.tsx#hands off from the queue when private case detail is no longer accessible"
+    "tests/unit/ReportInvestigation.test.tsx#hands off from the queue when private case detail is no longer accessible",
+    "tests/unit/SettlementPage.test.tsx#shows the server week and posts only the batch identity and version through mock payout",
+    "tests/unit/SettlementPage.test.tsx#clears the ledger on permission loss and prevents review of an open week",
+    "tests/unit/SettlementPage.test.tsx#reuses the creation key after response loss and separates signed amounts by store",
+    "tests/unit/SettlementPage.test.tsx#reopens the selected reviewed week after a stale payout instead of paying the changed amount",
+    "tests/unit/SettlementPage.test.tsx#identifies the unpaid week to rebuild before another week can pay"
   ]
 }

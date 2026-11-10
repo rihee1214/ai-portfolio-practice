@@ -6,6 +6,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -14,6 +22,64 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BrowserApiIT extends PostgresContractFixture {
+    private static final ZoneId SETTLEMENT_ZONE = ZoneId.of("Asia/Seoul");
+    // Keep monetary browser causes away from the current-time shared browser journeys.
+    private static final LocalDate SETTLEMENT_FIRST_WEEK = LocalDate.now(SETTLEMENT_ZONE)
+            .with(TemporalAdjusters.next(DayOfWeek.MONDAY)).plusWeeks(16);
+    @org.springframework.test.context.bean.override.convention.TestBean(name="settlementClock", methodName="browserSettlementClock")
+    private Clock settlementClock;
+    static Clock browserSettlementClock() {
+        return Clock.fixed(SETTLEMENT_FIRST_WEEK.plusWeeks(2).atStartOfDay(SETTLEMENT_ZONE).toInstant(), ZoneOffset.UTC);
+    }
+
+    private Map<String,Object> settlementBrowserOrder(String project, LocalDate week) throws Exception {
+        var purchase = cancellationMoneyFixture("p11-browser-" + project, false, false);
+        assertEquals(33001L, purchase.order().quote().total());
+        assertEquals(1, purchase.order().sellers().size());
+        var policyAt = jdbc.queryForObject("""
+                SELECT p.effective_at FROM marketplace.order_settlement_policy snapshot
+                JOIN marketplace.settlement_policy p ON p.version=snapshot.version
+                WHERE snapshot.order_id=:id AND snapshot.version='SETTLEMENT_V1'
+                """, Map.of("id", purchase.order().id()), java.sql.Timestamp.class).toInstant();
+        assertFalse(purchase.order().createdAt().isBefore(policyAt));
+        Instant confirmedAt = week.plusDays(2).atTime(12, 0).atZone(SETTLEMENT_ZONE).toInstant();
+        Instant deliveredAt = confirmedAt.minusSeconds(60);
+        var shipment = paidShipment(purchase);
+        completeShipment(purchase, shipment, deliveredAt);
+        var dispatchAt = jdbc.queryForObject("SELECT occurred_at FROM marketplace.order_dispatch WHERE seller_order_id=:id",
+                Map.of("id", shipment.sellerOrderId()), java.sql.Timestamp.class).toInstant();
+        assertFalse(dispatchAt.isBefore(purchase.order().createdAt()));
+        assertTrue(deliveredAt.isAfter(dispatchAt));
+        assertEquals(deliveredAt, jdbc.queryForObject("SELECT occurred_at FROM marketplace.order_initial_delivery WHERE seller_order_id=:id",
+                Map.of("id", shipment.sellerOrderId()), java.sql.Timestamp.class).toInstant());
+        var money = jdbc.queryForList("""
+                SELECT u.net FROM marketplace.order_unit u JOIN marketplace.order_item i ON i.id=u.item_id
+                WHERE i.seller_order_id=:id ORDER BY u.ordinal
+                """, Map.of("id", shipment.sellerOrderId()), Long.class);
+        assertEquals(List.of(10000L, 10000L, 10001L), money);
+        assertEquals(3000L, purchase.order().quote().total() - money.stream().mapToLong(Long::longValue).sum());
+        var api = confirmationsWith(Clock.fixed(confirmedAt, ZoneOffset.UTC), stage -> { });
+        var number = purchase.order().orderNumber();
+        var authority = shipmentAuthority(purchase);
+        var view = api.get(number, authority);
+        var units = view.units().stream().filter(com.example.marketplace.order.api.OrderConfirmations.Eligibility::eligible)
+                .map(com.example.marketplace.order.api.OrderConfirmations.Eligibility::unit).toList();
+        assertEquals(3, units.size());
+        var receipt = api.confirm(number, authority,
+                new com.example.marketplace.order.api.OrderConfirmations.Command("p11-browser-" + project, view.revision(), units));
+        assertEquals(confirmedAt, receipt.confirmedAt());
+        assertTrue(receipt.confirmedAt().isAfter(deliveredAt));
+        assertEquals("CLOSED", orders().find(number).state());
+        assertEquals(week, com.example.marketplace.settlement.domain.SettlementRules.week(receipt.confirmedAt()));
+        assertFalse(settlementClock.instant().isBefore(week.plusWeeks(1).atStartOfDay(SETTLEMENT_ZONE).toInstant()));
+        assertEquals(1, jdbc.queryForObject("""
+                SELECT count(*) FROM marketplace.order_confirmation
+                WHERE confirmed_at>=:start AND confirmed_at<:end
+                """, Map.of("start", java.sql.Timestamp.from(week.atStartOfDay(SETTLEMENT_ZONE).toInstant()),
+                        "end", java.sql.Timestamp.from(week.plusWeeks(1).atStartOfDay(SETTLEMENT_ZONE).toInstant())), Integer.class));
+        return Map.of("storeId", purchase.order().sellers().getFirst().storeId(), "sellerOrderId", shipment.sellerOrderId(),
+                "causeId", receipt.receiptId(), "weekStart", week);
+    }
     @Test void paymentMockFixtureIsNotProductionApi() {
         try(var isolated=new org.springframework.context.annotation.AnnotationConfigApplicationContext()) { isolated.register(PaymentFixtureEndpoint.class);isolated.refresh();assertTrue(isolated.getBeansOfType(PaymentFixtureEndpoint.class).isEmpty()); }
         assertTrue(PaymentFixtureEndpoint.class.getProtectionDomain().getCodeSource().getLocation().toString().contains("test-classes"));
@@ -51,6 +117,16 @@ class BrowserApiIT extends PostgresContractFixture {
                 .POST(HttpRequest.BodyPublishers.ofString(authMapper.writeValueAsString(Map.of("token", mail("http-a3@example.com").token()))))
                 .build(), HttpResponse.BodyHandlers.ofString());
         assertEquals(200, verify.statusCode());
+        if ("true".equals(System.getenv("A3_RUN_BROWSER"))) {
+            supportFixture("p11-browser", "SETTLEMENTS");
+            var desktop = settlementBrowserOrder("desktop", SETTLEMENT_FIRST_WEEK);
+            var mobile = settlementBrowserOrder("mobile", SETTLEMENT_FIRST_WEEK.plusWeeks(1));
+            for (String field : List.of("storeId", "sellerOrderId", "causeId", "weekStart")) {
+                assertFalse(desktop.get(field).equals(mobile.get(field)), field);
+            }
+            var evidence = java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "settlement-browser-order.json");
+            java.nio.file.Files.writeString(evidence, authMapper.writeValueAsString(Map.of("desktop", desktop, "mobile", mobile)));
+        }
         runAuthBrowsersIfRequested();
     }
 }

@@ -1,3 +1,4 @@
+import { SettlementPage } from './settlement/SettlementPage'
 import { ManagedAccountsPage } from './pages/ManagedAccountsPage'
 import { ModerationPage } from './moderation/ModerationPage'
 import { MyReports } from './reports/ProductReport'
@@ -43,7 +44,7 @@ import { CategoryPage } from './pages/CatalogPages'
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
   const feature = workspace.features.find(item => matchPath({ path: workspace.path + '/' + item.path, end: true }, location.pathname))
-  const areas: Record<string, AccessArea> = { users: 'ACCOUNTS', sellers: 'ACCOUNTS', stores: 'ACCOUNTS', catalog: 'CONTENT', moderation: 'CONTENT', orders: 'SUPPORT', refunds: 'SYSTEM', support: 'SUPPORT', reports: 'CONTENT' }
+  const areas: Record<string, AccessArea> = { users: 'ACCOUNTS', sellers: 'ACCOUNTS', stores: 'ACCOUNTS', catalog: 'CONTENT', moderation: 'CONTENT', orders: 'SUPPORT', refunds: 'SYSTEM', settlements: 'SETTLEMENTS', support: 'SUPPORT', reports: 'CONTENT' }
   const area: AccessArea = workspace.path === '/seller' ? 'SELLER' : feature ? areas[feature.path] : 'ADMIN'
   return <WorkspaceAccess key={location.pathname} area={area} title={feature?.title ?? workspace.title}>
     <WorkspaceLayout workspace={workspace} />
@@ -84,7 +85,7 @@ export default function App() {
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.path === '/seller' && <Route path="orders/:id" element={<SellerShipmentsPage />} />}
               {workspace.features.map((feature) => (
-                <Route key={feature.path} path={feature.path} element={workspace.path === '/seller' ? feature.path === 'questions' ? <SellerQuestions /> : feature.path === 'orders' ? <SellerShipmentsPage /> : feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'users' ? <ManagedAccountsPage /> : feature.path === 'moderation' ? <ModerationPage /> : feature.path === 'reports' ? <ReportQueue /> : feature.path === 'support' ? <SupportDesk reader="OPERATOR" /> : feature.path === 'refunds' ? <SystemRefundsPage /> : feature.path === 'orders' ? <ReturnSupportPage /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
+                <Route key={feature.path} path={feature.path} element={workspace.path === '/seller' ? feature.path === 'questions' ? <SellerQuestions /> : feature.path === 'orders' ? <SellerShipmentsPage /> : feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'settlements' ? <SettlementPage /> : feature.path === 'users' ? <ManagedAccountsPage /> : feature.path === 'moderation' ? <ModerationPage /> : feature.path === 'reports' ? <ReportQueue /> : feature.path === 'support' ? <SupportDesk reader="OPERATOR" /> : feature.path === 'refunds' ? <SystemRefundsPage /> : feature.path === 'orders' ? <ReturnSupportPage /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}
