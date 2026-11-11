@@ -77,8 +77,21 @@ class BrowserApiIT extends PostgresContractFixture {
                 WHERE confirmed_at>=:start AND confirmed_at<:end
                 """, Map.of("start", java.sql.Timestamp.from(week.atStartOfDay(SETTLEMENT_ZONE).toInstant()),
                         "end", java.sql.Timestamp.from(week.plusWeeks(1).atStartOfDay(SETTLEMENT_ZONE).toInstant())), Integer.class));
+        var op=supportFixture("p11b-web-"+project,"SUPPORT");
+        var opened=accountRequest(purchase.browser(),"POST","/api/support/cases",Map.of("key",UUID.randomUUID(),
+                "orderNumber",number,"sellerOrderId",shipment.sellerOrderId(),"body","구매확정 후 판매자 책임 하자 검수 요청"),csrfToken(purchase.browser()));
+        assertEquals(200,opened.statusCode(),opened.body());
+        UUID inquiry=UUID.fromString(authMapper.readTree(opened.body()).path("id").asText());
+        var apiAssignments=context.getBean(com.example.marketplace.operations.api.SupportAssignments.class);
+        var actor=new com.example.marketplace.operations.api.SupportAssignments.Actor(op.authority().member(),op.authority().browser(),op.authority().version());
+        var entry=apiAssignments.queue(actor).stream().filter(v->v.targetId().equals(inquiry)).findFirst().orElseThrow();
+        apiAssignments.assign(inquiry,actor,new com.example.marketplace.operations.api.SupportAssignments.Change(UUID.randomUUID(),entry.version(),actor.member()));
+        String sellerEmail=jdbc.queryForObject("SELECT u.email FROM marketplace.seller_store s JOIN marketplace.identity_user u ON u.id=s.owner_id WHERE s.id=:store",
+                Map.of("store",purchase.order().sellers().getFirst().storeId()),String.class);
+        String supportEmail=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",Map.of("id",actor.member()),String.class);
         return Map.of("storeId", purchase.order().sellers().getFirst().storeId(), "sellerOrderId", shipment.sellerOrderId(),
-                "causeId", receipt.receiptId(), "weekStart", week);
+                "causeId", receipt.receiptId(), "weekStart", week,"sellerEmail",sellerEmail,"supportEmail",supportEmail,"inquiry",inquiry,
+                "item",units.getFirst().itemId(),"ordinal",units.getFirst().ordinal());
     }
     @Test void paymentMockFixtureIsNotProductionApi() {
         try(var isolated=new org.springframework.context.annotation.AnnotationConfigApplicationContext()) { isolated.register(PaymentFixtureEndpoint.class);isolated.refresh();assertTrue(isolated.getBeansOfType(PaymentFixtureEndpoint.class).isEmpty()); }

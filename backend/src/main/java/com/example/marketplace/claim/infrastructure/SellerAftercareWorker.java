@@ -32,9 +32,9 @@ public final class SellerAftercareWorker {
  public SellerAftercareWorker(NamedParameterJdbcTemplate jdbc,AftercareSettlements orders,FinancialIntents intents,Refunds refunds,Jobs jobs,JobLeases leases,com.example.marketplace.order.api.ReturnApplications applications,com.example.marketplace.order.api.OrderUnitHolds holds,ReturnCommands commands,com.example.marketplace.order.api.Orders snapshots,com.example.marketplace.promotion.api.CouponReservations coupons,com.example.marketplace.platform.api.Outbox outbox,PlatformTransactionManager manager,ExchangeRefundCompleter exchangeRefunds) {
   this.jdbc=jdbc;this.orders=orders;this.intents=intents;this.refunds=refunds;this.jobs=jobs;this.leases=leases;this.applications=applications;this.holds=holds;this.commands=commands;this.snapshots=snapshots;this.coupons=coupons;this.outbox=outbox;tx=new TransactionTemplate(manager);this.exchangeRefunds=exchangeRefunds;
  }
- private record Route(UUID seller,String kind,UUID source,long version) { String payload() { return kind+"|"+source+(kind.equals("SHIPPING_RESULT")?"|"+version:""); }String key() { return "seller-aftercare:"+seller+":"+switch(kind) { case "SHIPPING_RESULT"->"shipping-result:"+source+":"+version;case "CANCEL_ITEM"->"cancel-item:"+source;case "CONFIRMATION"->"confirmation:"+source;case "RETURN_READY"->"return-ready:"+source;case "EXCHANGE_REFUND_READY"->"exchange-refund-ready:"+source;default->throw new OrderRejected(409); }; } }
+ private record Route(UUID seller,String kind,UUID source,long version) { String payload() { return kind+"|"+source+(List.of("SHIPPING_RESULT","SUPPORT_RESULT").contains(kind)?"|"+version:""); }String key() { return "seller-aftercare:"+seller+":"+switch(kind) { case "SUPPORT_RESULT"->"support-result:"+source+":"+version;case "SHIPPING_RESULT"->"shipping-result:"+source+":"+version;case "CANCEL_ITEM"->"cancel-item:"+source;case "CONFIRMATION"->"confirmation:"+source;case "RETURN_READY"->"return-ready:"+source;case "EXCHANGE_REFUND_READY"->"exchange-refund-ready:"+source;default->throw new OrderRejected(409); }; } }
  private Route route(Jobs.Job job) {
-  try { if(job==null||job.ownerToken()==null||!TYPE.equals(job.command().type())) { throw new IllegalArgumentException(); }String[] parts=job.command().payload().split("\\|",-1);if(!(parts.length==2&&List.of("RETURN_READY","EXCHANGE_REFUND_READY","CANCEL_ITEM","CONFIRMATION").contains(parts[0])||parts.length==3&&parts[0].equals("SHIPPING_RESULT"))) { throw new IllegalArgumentException(); }var route=new Route(UUID.fromString(job.command().causeKey()),parts[0],UUID.fromString(parts[1]),parts.length==3?Long.parseLong(parts[2]):0);if(route.kind().equals("SHIPPING_RESULT")&&route.version()<1||!route.payload().equals(job.command().payload())) { throw new IllegalArgumentException(); }return route; }
+  try { if(job==null||job.ownerToken()==null||!TYPE.equals(job.command().type())) { throw new IllegalArgumentException(); }String[] parts=job.command().payload().split("\\|",-1);if(!(parts.length==2&&List.of("RETURN_READY","EXCHANGE_REFUND_READY","CANCEL_ITEM","CONFIRMATION").contains(parts[0])||parts.length==3&&List.of("SHIPPING_RESULT","SUPPORT_RESULT").contains(parts[0]))) { throw new IllegalArgumentException(); }var route=new Route(UUID.fromString(job.command().causeKey()),parts[0],UUID.fromString(parts[1]),parts.length==3?Long.parseLong(parts[2]):0);if(List.of("SHIPPING_RESULT","SUPPORT_RESULT").contains(route.kind())&&route.version()<1||!route.payload().equals(job.command().payload())) { throw new IllegalArgumentException(); }return route; }
   catch(IllegalArgumentException invalid) { throw new OrderRejected(400); }
  }
  private void storedJob(Jobs.Job job,Route route) {
@@ -53,6 +53,7 @@ public final class SellerAftercareWorker {
    var view=orders.lockAftercare(route.seller());
    if(route.kind().equals("RETURN_READY")) { if(jdbc.queryForObject("SELECT count(*) FROM marketplace.claim_return_item_ready WHERE return_id=:source AND seller_order_id=:seller AND order_id=:order",Map.of("source",route.source(),"seller",route.seller(),"order",view.orderId()),Integer.class)!=1) { throw new OrderRejected(409); } }
    else if(route.kind().equals("EXCHANGE_REFUND_READY")) { if(jdbc.queryForObject("SELECT count(*) FROM marketplace.claim_exchange_refund_item_ready WHERE exchange_id=:source AND seller_order_id=:seller AND order_id=:order",Map.of("source",route.source(),"seller",route.seller(),"order",view.orderId()),Integer.class)!=1) { throw new OrderRejected(409); } }
+   else if(route.kind().equals("SUPPORT_RESULT")) { if(jdbc.queryForObject("SELECT count(*) FROM marketplace.claim_support_refund_result r JOIN marketplace.claim_support_refund_approval a ON a.id=r.approval_id WHERE a.seller_order_id=:seller AND a.order_id=:order AND r.attempt_id=:attempt AND r.result_version=:version AND r.state='SUCCEEDED'",Map.of("seller",view.sellerOrderId(),"order",view.orderId(),"attempt",route.source(),"version",route.version()),Integer.class)!=1) { throw new OrderRejected(409); } }
    else if(route.kind().equals("SHIPPING_RESULT")) { if(jdbc.queryForObject("SELECT count(*) FROM marketplace.claim_shipping_result WHERE attempt_id=:source AND seller_order_id=:seller AND result_version=:version",Map.of("source",route.source(),"seller",route.seller(),"version",route.version()),Integer.class)!=1) { throw new OrderRejected(409); } }
    else if(route.kind().equals("CANCEL_ITEM")) { if(jdbc.queryForObject("SELECT count(*) FROM marketplace.claim c JOIN marketplace.claim_refund_effect e ON e.claim_id=c.id AND e.purpose='ITEM' WHERE c.id=:id AND c.seller_order_id=:seller AND c.order_id=:order",Map.of("id",route.source(),"seller",route.seller(),"order",view.orderId()),Integer.class)!=1) { throw new OrderRejected(409); } }
    else { var fact=orders.lockConfirmation(route.source());if(!fact.orderId().equals(view.orderId())||fact.units().stream().noneMatch(u->u.sellerOrderId().equals(view.sellerOrderId()))) { throw new OrderRejected(409); } }
@@ -70,7 +71,12 @@ public final class SellerAftercareWorker {
    jdbc.update("INSERT INTO marketplace.claim_seller_shipping_current(seller_order_id,decision_id) VALUES(:seller,:decision) ON CONFLICT(seller_order_id) DO UPDATE SET decision_id=EXCLUDED.decision_id",p.addValue("decision",decision));
    long decisionRevision=jdbc.queryForObject("SELECT revision FROM marketplace.claim_seller_shipping_decision WHERE id=:id",Map.of("id",decision),Long.class);
    orders.recordShippingDecision(new AftercareSettlements.ShippingDecision(decision,view.orderId(),view.sellerOrderId(),decisionRevision,evaluation.state().name(),evaluation.reason().name(),view.originalShipping(),fingerprint,view.units().stream().map(u->new com.example.marketplace.order.api.OrderConfirmations.Unit(u.itemId(),u.ordinal())).toList()));
-   if(evaluation.state()==AftercareShippingRules.State.REFUND_REQUIRED) { SellerShippingReservations.reserve(jdbc,intents,refunds,view,evidence,null); }
+   if(evaluation.state()==AftercareShippingRules.State.REFUND_REQUIRED) {
+    SellerShippingReservations.reserve(jdbc,intents,refunds,view,evidence,null);
+    if(evidence.stream().anyMatch(u->u.kind()==AftercareShippingRules.Kind.SELLER_RETURN_READY||u.kind()==AftercareShippingRules.Kind.SELLER_EXCHANGE_REFUND_READY)) {
+     recordMixedSupportShipping(view);
+    }
+   }
    completeReady(view,decision,evaluation,job);
    exchangeRefunds.completeReady(view,decision,evaluation,job);
    restoreCouponIfWhole(view,evaluation);
@@ -79,6 +85,22 @@ public final class SellerAftercareWorker {
   });
  }
  private static UUID named(String text) { return UUID.nameUUIDFromBytes(text.getBytes(StandardCharsets.UTF_8)); }
+ private void recordMixedSupportShipping(AftercareSettlements.AftercareView view) {
+  var settled=jdbc.queryForList("""
+          SELECT o.claim_id,o.refund_attempt_id,r.result_version FROM marketplace.claim_shipping_obligation o
+          JOIN marketplace.claim_support_refund_result r ON r.approval_id=o.claim_id AND r.attempt_id=o.refund_attempt_id
+          WHERE o.order_id=:order AND o.seller_order_id=:seller AND o.amount=:amount AND o.state='SUCCEEDED'
+          AND r.state='SUCCEEDED' AND r.purpose='SHIPPING' AND r.amount=o.amount
+          """,Map.of("order",view.orderId(),"seller",view.sellerOrderId(),"amount",view.originalShipping()));
+  if(settled.isEmpty()) { return; }
+  if(settled.size()!=1) { throw new OrderRejected(409); }
+  var row=settled.getFirst();
+  var actual=refunds.get((UUID)row.get("refund_attempt_id"));
+  if(!actual.claimId().equals(row.get("claim_id"))||!actual.orderId().equals(view.orderId())||!actual.sellerOrderId().equals(view.sellerOrderId())
+          ||!actual.purpose().equals("SHIPPING")||!actual.state().equals("SUCCEEDED")||actual.amount()!=view.originalShipping()
+          ||actual.version()!=((Number)row.get("result_version")).longValue()||!refunds.originalReference(actual.id()).equals(view.quoteFingerprint())) { throw new OrderRejected(409); }
+  orders.recordShippingSettlement(new AftercareSettlements.Shipping(actual.orderId(),actual.sellerOrderId(),actual.claimId(),actual.paymentId(),actual.id(),actual.amount(),actual.resultReference()));
+ }
  private void completeReady(AftercareSettlements.AftercareView view,UUID decision,AftercareShippingRules.Evaluation evaluation,Jobs.Job job) {
   if(evaluation.state()==AftercareShippingRules.State.REFUND_REQUIRED&&jdbc.queryForObject("SELECT count(*) FROM marketplace.claim_shipping_obligation WHERE seller_order_id=:id AND state='SUCCEEDED'",Map.of("id",view.sellerOrderId()),Integer.class)!=1) { return; }
   var pending=jdbc.queryForList("SELECT x.return_id FROM marketplace.claim_return_item_ready x LEFT JOIN marketplace.claim_return_completion c ON c.return_id=x.return_id WHERE x.seller_order_id=:seller AND c.return_id IS NULL ORDER BY x.return_id::text",Map.of("seller",view.sellerOrderId()),UUID.class);

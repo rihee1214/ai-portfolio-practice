@@ -21,7 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController @Profile("db")
 public class SettlementController {
     private final Settlements service;
-    public SettlementController(Settlements service) { this.service=service; }
+    private final com.example.marketplace.settlement.infrastructure.SellerSettlementRead sellerRead;
+    public SettlementController(Settlements service,com.example.marketplace.settlement.infrastructure.SellerSettlementRead sellerRead) {
+        this.service=service;this.sellerRead=sellerRead;
+    }
+    @GetMapping("/api/seller/settlements")
+    public List<com.example.marketplace.settlement.infrastructure.SellerSettlementRead.Week> own(HttpServletRequest request) {
+        return sellerRead.read(actor(request));
+    }
     @ModelAttribute void privateResponse(HttpServletResponse response) { response.setHeader("Cache-Control","no-store"); }
     private Settlements.Actor actor(HttpServletRequest request) {
         var principal=request.getUserPrincipal();var session=request.getSession(false);

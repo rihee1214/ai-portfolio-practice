@@ -120,3 +120,44 @@ it('drops late private case details when the authenticated order scope changes',
   await act(async()=>{deliver(json({id:'ticket',messages:[{id:'x',sender:'CUSTOMER',body:'이전 주문 비밀'}]}))})
   expect(screen.queryByText('이전 주문 비밀')).toBeNull()
 })
+
+it('clears assigned order details and drafts on refund history read denial and discards a late attachment',async()=>{
+  for(const status of [404,403,401]){
+    let assigned=true
+    let deliver!:(response:Response)=>void
+    let imageSignal:AbortSignal|null=null
+    vi.stubGlobal('fetch',vi.fn(async(path:string,options:RequestInit)=>{
+      if(path.endsWith('/auth/me'))return json(member)
+      if(path.endsWith('/queue'))return json(assigned?[{targetId:'ticket',kind:'ORDER',assigned:true,version:3}]:[])
+      if(path.endsWith('/confirmed-refunds'))return assigned?json([]):new Response('{}',{status,headers:{'Content-Type':'application/json'}})
+      if(path.includes('/images?')){
+        imageSignal=options.signal as AbortSignal
+        return new Promise<Response>(resolve=>{deliver=resolve})
+      }
+      if(path==='/api/support/cases/ticket?reader=OPERATOR')return json({id:'ticket',kind:'ORDER',orderNumber:'O-private',sellerOrderId:'private-seller-order',version:3,messages:[{id:'m',body:'재배정 전 비밀 본문',sender:'CUSTOMER',mine:false}]})
+      throw new Error(path)
+    }))
+    const auth=new AuthStore();await auth.refresh()
+    const mounted=render(<AuthContext.Provider value={auth}><SupportDesk reader="OPERATOR"/></AuthContext.Provider>)
+    fireEvent.click(screen.getByRole('button',{name:'지원 접수함 열기'}))
+    fireEvent.click(await screen.findByRole('button',{name:'본문 열기'}))
+    expect(await screen.findByText('재배정 전 비밀 본문')).toBeVisible()
+    expect(screen.getByText('O-private')).toBeVisible()
+    expect(screen.getByText('private-seller-order')).toBeVisible()
+    fireEvent.click(screen.getByRole('button',{name:'회수·검수 기록 열기'}))
+    fireEvent.change(await screen.findByLabelText('원 주문 상품 ID'),{target:{value:'private-item'}})
+    fireEvent.change(screen.getByLabelText('메시지 본문'),{target:{value:'담당자 답변 초안'}})
+    fireEvent.click(screen.getByRole('button',{name:'첨부 이미지 보기'}))
+    await waitFor(()=>expect(deliver).toBeTypeOf('function'))
+    assigned=false
+    fireEvent.click(screen.getByRole('button',{name:'결과 조회'}))
+    await waitFor(()=>expect(screen.queryByText('재배정 전 비밀 본문')).toBeNull())
+    expect(imageSignal!.aborted).toBe(true)
+    await act(async()=>deliver(json({version:3,images:[{slot:0,asset:'prior-private-image'}]})))
+    for(const value of ['O-private','private-seller-order','재배정 전 비밀 본문'])expect(screen.queryByText(value)).toBeNull()
+    for(const value of ['private-item','담당자 답변 초안'])expect(screen.queryByDisplayValue(value)).toBeNull()
+    expect(screen.queryByRole('img',{name:'첨부 이미지 1'})).toBeNull()
+    expect(screen.queryByRole('region',{name:'구매확정 후 하자 환불'})).toBeNull()
+    mounted.unmount()
+  }
+})

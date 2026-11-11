@@ -19,7 +19,8 @@ type Entry = { id: string; storeId: string; sellerOrderId: string; causeId: stri
   itemId: string | null; ordinal: number | null; net: string; occurredAt: string; eligibleAt: string;
   eligibilityHolds: { id: string; releasedAt: string }[];
   eligibilityReservations?: { id: string; kind: string; acquiredAt: string; releasedAt: string }[] }
-type Batch = Summary & { items: Entry[]; held: { sellerOrderId: string; reason: string }[] }
+type Batch = Summary & { items: Entry[]; held: { sellerOrderId: string; reason: string }[]; payout?:string;
+  balances?:{storeId:string;net:string;opening:string;payout:string;closing:string}[] }
 const record = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null
 const money = (v: unknown): v is string => typeof v === 'string' && /^-?\d+$/.test(v)
 const day = (v: unknown): v is string => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)
@@ -40,10 +41,13 @@ function detail(v: unknown): v is Batch {
       && i.eligibilityReservations.every(r => record(r) && typeof r.id === 'string' && typeof r.kind === 'string'
         && instant(r.acquiredAt) && instant(r.releasedAt))))
     && ((i.itemId === null && i.ordinal === null) || (typeof i.itemId === 'string' && Number.isSafeInteger(i.ordinal))))
+    && (!('payout' in v)||money(v.payout))
+    && (!('balances' in v)||Array.isArray(v.balances)&&v.balances.every(s=>record(s)&&typeof s.storeId==='string'&&
+      [s.net,s.opening,s.payout,s.closing].every(money)))
     && 'held' in v && Array.isArray(v.held) && v.held.every(h => record(h)
       && typeof h.sellerOrderId === 'string' && typeof h.reason === 'string')
 }
-function StoreEntries({ items }: { items: Entry[] }) {
+function StoreEntries({ items,balances }: { items: Entry[]; balances:Batch['balances'] }) {
   const stores = new Map<string, Entry[]>()
   for (const entry of items) {
     const group = stores.get(entry.storeId)
@@ -53,7 +57,7 @@ function StoreEntries({ items }: { items: Entry[] }) {
   return <>{Array.from(stores, ([storeId, entries]) =>
     <section key={storeId} aria-label={'매대 ' + storeId}>
       <h4>매대 {storeId}</h4>
-      <p>매대 지급액 {won(entries.reduce((sum, i) => sum + BigInt(i.net), 0n).toString())}</p>
+      <p>매대 지급액 {won(balances?.find(b=>b.storeId===storeId)?.payout??entries.reduce((sum, i) => sum + BigInt(i.net), 0n).toString())}</p>
       <ul>{entries.map(i => <li key={i.id}>{kinds[i.kind] ?? i.kind} · <strong>{won(i.net)}</strong>
         <br />하위 주문 {i.sellerOrderId}{i.itemId && i.ordinal !== null && <> · 항목 {i.itemId} · {i.ordinal + 1}번째 수량</>}
         <br />원인 {i.causeId} · 발생 <time dateTime={i.occurredAt}>{dateTime.format(new Date(i.occurredAt))}</time>
@@ -157,9 +161,11 @@ export function SettlementPage() {
       {selectedId && <button disabled={busy} onClick={() => read(selectedId)}>상세 다시 조회</button>}
       {selected && <section aria-label="배치 상세"><h2>{selected.weekStart} · {states[selected.state]}</h2>
         <dl><dt>수수료 차감 전 금액</dt><dd>{won(selected.gross)}</dd>
-          <dt>수수료</dt><dd>{won(selected.fee)}</dd><dt>모의 지급액</dt><dd>{won(selected.net)}</dd></dl>
+          <dt>수수료</dt><dd>{won(selected.fee)}</dd><dt>주간 순액</dt><dd>{won(selected.net)}</dd>
+          <dt>모의 지급액</dt><dd>{won(selected.payout??selected.net)}</dd></dl>
+        {selected.balances?.map(s=><p key={s.storeId}>매대 {s.storeId} · 전주 미회수 조정 잔액 {won(s.opening)} · 이번 지급 {won(s.payout)} · 미회수 조정 잔액 (다음 주 이월) {won(s.closing)}</p>)}
         <h3>원장 명세</h3>
-        <StoreEntries items={selected.items} />
+        <StoreEntries items={selected.items} balances={selected.balances} />
         {selected.held.length > 0 && <><h3>보류 거래</h3><ul>{selected.held.map(h =>
           <li key={h.sellerOrderId + h.reason}>{h.sellerOrderId} · {reasons[h.reason] ?? h.reason}</li>)}</ul></>}
         {!selected.closed && <p>주간 마감 후 검토와 모의 지급이 가능합니다.</p>}

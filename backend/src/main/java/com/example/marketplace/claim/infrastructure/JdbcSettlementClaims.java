@@ -32,6 +32,27 @@ public class JdbcSettlementClaims implements SettlementClaims {
                 LEFT JOIN marketplace.claim_fee_withdrawal w ON w.assessment_id=a.id
                 WHERE a.seller_order_id=:seller ORDER BY a.accepted_at,a.id
                 """,p,(r,n)->new Reservation(r.getObject(1,UUID.class),r.getTimestamp(2).toInstant(),r.getTimestamp(3)==null?null:r.getTimestamp(3).toInstant()));
-        return new View(pending,recoveries,completed==null?null:completed.toInstant(),reservations);
+        var attributed=new java.util.HashMap<UUID,java.util.List<com.example.marketplace.order.api.OrderConfirmations.Unit>>();
+        jdbc.query("""
+                SELECT assessment_id,item_id,ordinal FROM marketplace.claim_all_fee_assessment_unit WHERE seller_order_id=:seller
+                UNION ALL
+                SELECT b.attempt_id,u.item_id,u.ordinal FROM marketplace.claim_financial_refund_binding b
+                JOIN marketplace.claim_financial_intent_unit u ON u.intent_id=b.intent_id AND u.seller_order_id=b.seller_order_id
+                WHERE b.seller_order_id=:seller AND b.purpose='ITEM'
+                """,p,(org.springframework.jdbc.core.RowCallbackHandler) row ->
+                attributed.computeIfAbsent(row.getObject(1,UUID.class),key->new java.util.ArrayList<>())
+                        .add(new com.example.marketplace.order.api.OrderConfirmations.Unit(row.getObject(2,UUID.class),row.getInt(3))));
+        var adjustments=jdbc.query("""
+                SELECT a.id,a.confirmation_id,a.item_id,a.ordinal,r.attempt_id,r.purpose,r.amount,r.result_at
+                FROM marketplace.claim_support_refund_approval a JOIN marketplace.claim_support_refund_result r ON r.approval_id=a.id
+                WHERE a.seller_order_id=:seller AND r.state='SUCCEEDED' ORDER BY r.attempt_id
+                """,p,(r,n)->new SupportRefund(r.getObject(1,UUID.class),r.getObject(2,UUID.class),
+                        new com.example.marketplace.order.api.OrderConfirmations.Unit(r.getObject(3,UUID.class),r.getInt(4)),
+                        r.getObject(5,UUID.class),r.getString(6),r.getLong(7),r.getTimestamp(8).toInstant()));
+        var retained=jdbc.queryForObject("""
+                SELECT min(occurred_at) FROM marketplace.claim_seller_shipping_decision
+                WHERE seller_order_id=:seller AND state='RETAINED' AND reason='CONFIRMED_UNITS_REMAIN'
+                """,p,java.sql.Timestamp.class);
+        return new View(pending,recoveries,completed==null?null:completed.toInstant(),reservations,attributed,adjustments,retained==null?null:retained.toInstant());
     }
 }

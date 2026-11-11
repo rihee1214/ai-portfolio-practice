@@ -48,6 +48,33 @@ public final class JdbcFinancialIntents implements FinancialIntents {
   var units=jdbc.query("SELECT item_id,ordinal FROM marketplace.claim_exchange_unit WHERE exchange_id=:id ORDER BY item_id::text,ordinal",Map.of("id",id),(r,n)->new OrderConfirmations.Unit(r.getObject(1,UUID.class),r.getInt(2)));
   var result=register(id,own.id(),(UUID)row.get("seller_order_id"),(UUID)row.get("hold_id"),(UUID)row.get("cause_id"),units,"EXCHANGE_REFUND");queries.lockOwned(number,authority);return result;
  }
+ @Override public Reference registerSupport(UUID id) {
+  transaction();
+  var p=Map.of("id",id);
+  var row=jdbc.queryForMap("SELECT order_id,seller_order_id,item_id,ordinal,confirmation_id FROM marketplace.claim_support_refund_approval WHERE id=:id",p);
+  UUID order=(UUID)row.get("order_id"),seller=(UUID)row.get("seller_order_id");
+  var unit=new OrderConfirmations.Unit((UUID)row.get("item_id"),(Integer)row.get("ordinal"));
+  orders.requireSellerUnits(order,seller,List.of(unit));
+  jdbc.update("""
+          INSERT INTO marketplace.claim_financial_intent(id,order_id,seller_order_id,hold_id,cause_id,kind,fingerprint)
+          VALUES(:id,:order,:seller,NULL,:id,'SUPPORT',:fingerprint) ON CONFLICT(id) DO NOTHING
+          """,Map.of("id",id,"order",order,"seller",seller,"fingerprint",hash(id+"|SUPPORT|"+row.get("confirmation_id")+"|"+unit)));
+  jdbc.update("""
+          INSERT INTO marketplace.claim_financial_intent_unit(intent_id,hold_id,order_id,seller_order_id,item_id,ordinal)
+          VALUES(:id,NULL,:order,:seller,:item,:ordinal) ON CONFLICT(intent_id,item_id,ordinal) DO NOTHING
+          """,Map.of("id",id,"order",order,"seller",seller,"item",unit.itemId(),"ordinal",unit.ordinal()));
+  var actual=lock(id);
+  if(!"SUPPORT".equals(actual.kind())||!actual.orderId().equals(order)||!actual.units().equals(List.of(unit))) { throw new OrderRejected(409); }
+  return actual;
+ }
+ @Override public void bindSupportShipping(UUID id,UUID attempt) {
+  if(!"SUPPORT".equals(lock(id).kind())||!"SHIPPING".equals(refunds.get(attempt).purpose())) { throw new OrderRejected(409); }
+  bind(id,attempt,null);
+ }
+ @Override public void bindSupportItem(UUID id,UUID attempt) {
+  if(!"SUPPORT".equals(lock(id).kind())||!"ITEM".equals(refunds.get(attempt).purpose())) { throw new OrderRejected(409); }
+  bind(id,attempt,null);
+ }
  @Override public Reference lock(UUID id) {
   transaction();if(id==null) { throw new OrderRejected(400); }var rows=jdbc.queryForList("SELECT order_id FROM marketplace.claim_financial_intent WHERE id=:id",Map.of("id",id),UUID.class);if(rows.size()!=1) { throw new OrderRejected(409); }var units=jdbc.query("SELECT item_id,ordinal FROM marketplace.claim_financial_intent_unit WHERE intent_id=:id ORDER BY item_id::text,ordinal",Map.of("id",id),(r,n)->new OrderConfirmations.Unit(r.getObject(1,UUID.class),r.getInt(2)));orders.lockUnits(rows.getFirst(),units);var row=jdbc.queryForMap("SELECT * FROM marketplace.claim_financial_intent WHERE id=:id FOR UPDATE",Map.of("id",id));return new Reference(id,(UUID)row.get("order_id"),(UUID)row.get("seller_order_id"),(UUID)row.get("hold_id"),(UUID)row.get("cause_id"),row.get("kind").toString(),units);
  }

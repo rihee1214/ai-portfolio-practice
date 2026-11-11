@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Profile("db")
-public class SupportCases {
+public class SupportCases implements com.example.marketplace.operations.api.SupportOrderCases {
     public enum Kind { SUPPORT, ORDER, LOST_ACCESS }
     public enum Reader { CUSTOMER, SELLER, OPERATOR }
     public record Open(UUID key,String body,String orderNumber,UUID sellerOrderId) { }
@@ -99,6 +99,22 @@ public class SupportCases {
                 Kind.valueOf(r.getString(2)),r.getObject(3,UUID.class),r.getObject(4,UUID.class),r.getString(5),r.getObject(6,UUID.class),r.getLong(7)));
         if(rows.isEmpty()) { throw new OrderRejected(404); }
         return rows.getFirst();
+    }
+    @Override @Transactional(propagation=org.springframework.transaction.annotation.Propagation.MANDATORY)
+    public OrderCase locateAssigned(UUID caseId,SupportAssignments.Actor actor) {
+        if(actor.member()==null||!sessions.lockReadable(actor.session(),actor.member(),actor.version())) { throw new OrderRejected(404); }
+        var rows=jdbc.query("""
+                SELECT c.order_number,c.seller_order_id,c.version FROM marketplace.operations_support_case c
+                JOIN marketplace.operations_support_assignment a ON a.target_id=c.id
+                WHERE c.id=:id AND c.kind='ORDER' AND a.operator_id=:member
+                """,Map.of("id",caseId,"member",actor.member()),(r,n)->new OrderCase(r.getString(1),r.getObject(2,UUID.class),r.getLong(3)));
+        if(rows.size()!=1) { throw new OrderRejected(404); }return rows.getFirst();
+    }
+    @Override @Transactional(propagation=org.springframework.transaction.annotation.Propagation.MANDATORY)
+    public OrderCase lockAssigned(UUID caseId,SupportAssignments.Actor actor) {
+        var ticket=ticket(caseId,false);
+        if(ticket.kind()!=Kind.ORDER||!assignments.assigned(caseId,actor)) { throw new OrderRejected(404); }
+        return new OrderCase(ticket.number(),ticket.seller(),ticket.version());
     }
     private Owner authorize(Reader reader,Ticket t,OrderQueries.Authority a) {
         if(reader==Reader.OPERATOR) {

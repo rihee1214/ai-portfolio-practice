@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 /** Claim-owned physical/financial facts combined with the public order snapshot. */
 final class ReturnAftercareEvidence {
  private ReturnAftercareEvidence() { }
- static List<AftercareShippingRules.Unit> units(NamedParameterJdbcTemplate jdbc,AftercareSettlements.AftercareView view) {
+ private static List<AftercareShippingRules.Unit> originalUnits(NamedParameterJdbcTemplate jdbc,AftercareSettlements.AftercareView view) {
   var result=new ArrayList<AftercareShippingRules.Unit>();
   for(var unit:view.units()) {
    var ready=jdbc.queryForList("SELECT u.return_id,u.responsibility,r.hold_id FROM marketplace.claim_return_ready_unit u JOIN marketplace.claim_return_request r ON r.id=u.return_id JOIN marketplace.claim_return_item_ready x ON x.return_id=r.id WHERE u.item_id=:item AND u.ordinal=:ordinal AND r.order_id=:order AND r.seller_order_id=:seller",Map.of("item",unit.itemId(),"ordinal",unit.ordinal(),"order",view.orderId(),"seller",view.sellerOrderId()));
@@ -29,6 +29,24 @@ final class ReturnAftercareEvidence {
   return List.copyOf(result);
  }
 
+ static List<AftercareShippingRules.Unit> units(NamedParameterJdbcTemplate jdbc,AftercareSettlements.AftercareView view) {
+  var confirmed=jdbc.queryForList("""
+          SELECT a.id,a.confirmation_id,a.item_id,a.ordinal FROM marketplace.claim_support_refund_approval a
+          JOIN marketplace.claim_support_refund_execution x ON x.approval_id=a.id
+          JOIN marketplace.claim_support_refund_result r ON r.approval_id=a.id
+          AND (r.attempt_id=x.attempt_id OR EXISTS(SELECT 1 FROM marketplace.claim_support_refund_retry t
+            WHERE t.approval_id=a.id AND t.attempt_id=r.attempt_id AND t.purpose='ITEM'))
+          WHERE a.order_id=:order AND a.seller_order_id=:seller AND r.state='SUCCEEDED' AND r.purpose='ITEM'
+          """,Map.of("order",view.orderId(),"seller",view.sellerOrderId()));
+  var prior=originalUnits(jdbc,view);
+  return prior.stream().map(u->{
+   if(u.kind()!=AftercareShippingRules.Kind.CONFIRMED) { return u; }
+   return confirmed.stream().filter(row->u.itemId().equals(row.get("item_id"))&&Integer.valueOf(u.ordinal()).equals(row.get("ordinal"))
+           &&u.factId().equals(row.get("confirmation_id"))).findFirst()
+           .map(row->new AftercareShippingRules.Unit(u.itemId(),u.ordinal(),AftercareShippingRules.Kind.SELLER_SUPPORT_REFUNDED,(UUID)row.get("id")))
+           .orElse(u);
+  }).toList();
+ }
  static String fingerprint(AftercareSettlements.AftercareView view,List<AftercareShippingRules.Unit> units,AftercareShippingRules.Evaluation evaluation) {
   return ReturnFeeQuoting.hash(view.orderId()+"|"+view.sellerOrderId()+"|"+view.originalShipping()+"|"+units+"|"+evaluation);
  }

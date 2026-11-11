@@ -4,6 +4,7 @@ import {useAuthStore} from '../auth/AuthContext'
 import {guestAccessGeneration,onGuestAccessChange} from '../guest/GuestAccessLifecycle'
 import {InquiryImages} from '../content/InquiryInputs'
 import {useInquiryCommand} from '../content/useInquiryCommand'
+import {ConfirmedRefundPanel} from './ConfirmedRefundPanel'
 
 type Reader='CUSTOMER'|'SELLER'|'OPERATOR'
 type Props={reader?:Reader;number?:string;sellerOrder?:string}
@@ -77,6 +78,8 @@ function CaseList({reader='CUSTOMER',number,sellerOrder,member,onAccessLost}:Pro
       <dt>원 주문번호</dt><dd style={{overflowWrap:'anywhere'}}>{detail.orderNumber}</dd>
       <dt>판매자 주문 ID</dt><dd style={{overflowWrap:'anywhere'}}>{detail.sellerOrderId}</dd>
     </dl>}
+    {reader==='OPERATOR'&&detail?.id===selected&&detail.kind==='ORDER'&&
+      <ConfirmedRefundPanel key={detail.id+':'+detail.version} id={detail.id} version={detail.version} onAccessLost={onAccessLost}/>}
     {detail?.id===selected&&detail.messages.map(m=><article key={m.id}>
       <strong>{m.sender==='CUSTOMER'?'고객':m.sender==='SELLER'?'판매자':'담당 운영자'}</strong>
       <p style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{m.body}</p>

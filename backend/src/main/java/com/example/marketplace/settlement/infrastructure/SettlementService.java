@@ -65,7 +65,10 @@ public class SettlementService implements Settlements {
         var items=jdbc.query("SELECT l.*,i.eligible_at AS payable_at,i.hold_evidence::text AS hold_evidence,i.reservation_evidence::text AS reservation_evidence FROM marketplace.settlement_batch_item i JOIN marketplace.settlement_ledger l ON l.id=i.ledger_id WHERE i.batch_id=:id ORDER BY l.occurred_at,l.seller_order_id::text,l.item_id::text NULLS LAST,l.ordinal,l.kind,l.id",Map.of("id",id),(r,n)->new Item(r.getObject("id",UUID.class),r.getObject("store_id",UUID.class),r.getObject("order_id",UUID.class),r.getObject("seller_order_id",UUID.class),r.getObject("item_id",UUID.class),(Integer)r.getObject("ordinal"),r.getObject("cause_id",UUID.class),r.getObject("payment_id",UUID.class),r.getObject("refund_attempt_id",UUID.class),r.getString("kind"),r.getString("amount"),r.getString("fee"),Long.toString(Math.subtractExact(r.getLong("amount"),r.getLong("fee"))),r.getTimestamp("occurred_at").toInstant(),r.getTimestamp("payable_at").toInstant(),r.getString("policy_version"),List.of(mapper.readValue(r.getString("hold_evidence"),EligibilityHold[].class)),List.of(mapper.readValue(r.getString("reservation_evidence"),EligibilityReservation[].class))));
         Instant end=((Timestamp)b.get("period_end")).toInstant();
         var stored=List.of(mapper.readValue(b.get("held").toString(),Held[].class));
-        return new Batch(id,((java.sql.Date)b.get("week_start")).toLocalDate(),((Timestamp)b.get("period_start")).toInstant(),end,b.get("state").toString(),((Number)b.get("version")).longValue(),!clock.instant().isBefore(end),List.copyOf(items),b.get("gross").toString(),b.get("fee").toString(),b.get("net").toString(),stored);
+        var balances=List.of(mapper.readValue(b.get("store_balances").toString(),StoreBalance[].class));
+        String payout=((Number)b.get("readiness_version")).intValue()==1?b.get("net").toString():
+                Long.toString(balances.stream().mapToLong(v->Long.parseLong(v.payout())).reduce(0,Math::addExact));
+        return new Batch(id,((java.sql.Date)b.get("week_start")).toLocalDate(),((Timestamp)b.get("period_start")).toInstant(),end,b.get("state").toString(),((Number)b.get("version")).longValue(),!clock.instant().isBefore(end),List.copyOf(items),b.get("gross").toString(),b.get("fee").toString(),b.get("net").toString(),stored,balances,payout);
     }
     @Override @Transactional public Batch get(UUID id,Actor actor) { authorize(actor);return view(id,List.of()); }
     private static String hash(String raw) {
@@ -116,7 +119,9 @@ public class SettlementService implements Settlements {
                 (r.acquiredAt().isBefore(boundary)||!r.acquiredAt().isAfter(ready))).toList();
         return new Readiness(ready,evidence,financial);
     }
-    private record Concern(String reason,Instant beganAt,Instant releasedAt) { }
+    private record Concern(String reason,Instant beganAt,Instant releasedAt,UUID reservation) {
+        Concern(String reason,Instant beganAt,Instant releasedAt) { this(reason,beganAt,releasedAt,null); }
+    }
     private static Instant knownAt(Instant at) { return at==null?Instant.MIN:at; }
     private static boolean spansCutoff(Instant began,Instant released,Instant cutoff) {
         return began.isBefore(cutoff)&&(released==null||!released.isBefore(cutoff));
@@ -136,6 +141,12 @@ public class SettlementService implements Settlements {
         return null;
     }
     Sources sources(Policy policy,Instant start,Instant end) {
+        return sources(policy,start,end,false);
+    }
+    private static boolean affects(Line line,List<com.example.marketplace.order.api.OrderConfirmations.Unit> units) {
+        return line.item()==null||units==null||units.isEmpty()||units.contains(new com.example.marketplace.order.api.OrderConfirmations.Unit(line.item(),line.ordinal()));
+    }
+    private Sources sources(Policy policy,Instant start,Instant end,boolean scoped) {
         var lines=new ArrayList<Line>();var held=new ArrayList<Held>();var readiness=new HashMap<String,Readiness>();
         for(UUID order:orders.candidates(policy.version())) {
             var sellers=orders.lock(order,policy.version());var paid=payments.lock(order);
@@ -146,11 +157,11 @@ public class SettlementService implements Settlements {
                 var payment=paid.getFirst();var fees=SettlementRules.commissions(seller.units().stream().map(SettlementOrders.Unit::net).toList());
                 var refunds=new HashMap<UUID,SettlementPayments.Refund>();payment.refunds().forEach(r->refunds.put(r.id(),r));
                 var concerns=new ArrayList<Concern>();var financial=new ArrayList<EligibilityReservation>();
-                claim.reservations().forEach(r->{financial.add(new EligibilityReservation(r.id(),"CLAIM_FEE",r.acquiredAt(),r.releasedAt()));concerns.add(new Concern("CLAIM_RESERVATION",r.acquiredAt(),r.releasedAt()));});
+                claim.reservations().forEach(r->{financial.add(new EligibilityReservation(r.id(),"CLAIM_FEE",r.acquiredAt(),r.releasedAt()));concerns.add(new Concern("CLAIM_RESERVATION",r.acquiredAt(),r.releasedAt(),r.id()));});
                 if(claim.pending()&&claim.reservations().isEmpty()) { concerns.add(new Concern("CLAIM_RESERVATION",Instant.MIN,null)); }
                 payment.refunds().stream().filter(r->r.sellerOrderId().equals(seller.sellerOrderId())).forEach(r->{
                     Instant released=List.of("SUCCEEDED","FAILED","WITHDRAWN").contains(r.state())?r.releasedAt():null;
-                    financial.add(new EligibilityReservation(r.id(),"REFUND",r.reservedAt(),released));concerns.add(new Concern("UNRESOLVED_REFUND",r.reservedAt(),released));
+                    financial.add(new EligibilityReservation(r.id(),"REFUND",r.reservedAt(),released));concerns.add(new Concern("UNRESOLVED_REFUND",r.reservedAt(),released,r.id()));
                 });
                 if(seller.units().stream().anyMatch(u->u.state().equals("HELD"))&&seller.holds().stream().noneMatch(h->h.releasedAt()==null)) { concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",Instant.MIN,null)); }
                 var local=new ArrayList<Line>();Instant terminal=Instant.MIN;
@@ -171,24 +182,48 @@ public class SettlementService implements Settlements {
                         local.add(line(seller,u,cause,payment.id(),actual.id(),"COMMISSION_REVERSAL",0,-fees.get(i),at));
                     }
                 }
+                var supportAttempts=new java.util.HashSet<UUID>();
+                for(var result:claim.supportRefunds()) {
+                    var actual=refunds.get(result.attemptId());
+                    if(actual==null||!seller.sellerOrderId().equals(actual.sellerOrderId())||!result.approvalId().equals(actual.claimId())
+                            ||!actual.state().equals("SUCCEEDED")||!actual.purpose().equals(result.purpose())
+                            ||actual.amount()!=result.amount()||!result.resultAt().equals(actual.resultAt())) {
+                        concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",result.resultAt(),null));continue;
+                    }
+                    if(result.purpose().equals("SHIPPING")&&actual.amount()==seller.shipping()) {
+                        local.add(line(seller,null,result.approvalId(),payment.id(),actual.id(),"SHIPPING_REFUND",-actual.amount(),0,actual.resultAt()));
+                        supportAttempts.add(actual.id());continue;
+                    }
+                    for(int i=0;i<seller.units().size();i++) {
+                        var unit=seller.units().get(i);
+                        if(result.purpose().equals("ITEM")&&unit.itemId().equals(result.unit().itemId())&&unit.ordinal()==result.unit().ordinal()
+                                &&unit.state().equals("CONFIRMED")&&result.confirmationId().equals(unit.confirmationId())&&unit.net()==actual.amount()) {
+                            local.add(line(seller,unit,result.approvalId(),payment.id(),actual.id(),"REFUND",-unit.net(),0,actual.resultAt()));
+                            local.add(line(seller,unit,result.approvalId(),payment.id(),actual.id(),"COMMISSION_REVERSAL",0,-fees.get(i),actual.resultAt()));
+                            supportAttempts.add(actual.id());break;
+                        }
+                    }
+                }
                 for(var recovery:claim.recoveries()) {
                     var actual=refunds.get(recovery.attemptId());
                     if(actual==null||!actual.state().equals("SUCCEEDED")) { concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",recovery.occurredAt(),null));continue; }
                     local.add(line(seller,null,recovery.causeId(),payment.id(),actual.id(),"RECOVERY_FEE",recovery.deducted(),0,recovery.occurredAt()));
                 }
                 for(var actual:payment.refunds()) {
-                    if(!actual.sellerOrderId().equals(seller.sellerOrderId())||!actual.purpose().equals("ITEM")||!actual.state().equals("SUCCEEDED")) { continue; }
+                    if(supportAttempts.contains(actual.id())||!actual.sellerOrderId().equals(seller.sellerOrderId())||!actual.purpose().equals("ITEM")||!actual.state().equals("SUCCEEDED")) { continue; }
                     long original=seller.units().stream().filter(u->actual.id().equals(u.refundAttemptId())).mapToLong(SettlementOrders.Unit::net).reduce(0,Math::addExact);
                     long deducted=claim.recoveries().stream().filter(r->actual.id().equals(r.attemptId())).mapToLong(SettlementClaims.Recovery::deducted).reduce(0,Math::addExact);
                     if(original!=Math.addExact(actual.amount(),deducted)) { concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",actual.reservedAt(),null)); }
                 }
                 for(var actual:payment.refunds()) {
                     if(actual.sellerOrderId().equals(seller.sellerOrderId())&&actual.purpose().equals("SHIPPING")&&actual.state().equals("SUCCEEDED")&&
-                            seller.shippingRefunds().stream().noneMatch(r->r.attemptId().equals(actual.id()))) { concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",actual.reservedAt(),null)); }
+                            !supportAttempts.contains(actual.id())&&seller.shippingRefunds().stream().noneMatch(r->r.attemptId().equals(actual.id()))) { concerns.add(new Concern("INCOMPLETE_ORIGINAL_GRAPH",actual.reservedAt(),null)); }
                 }
                 boolean allTerminal=seller.units().stream().allMatch(u->List.of("CONFIRMED","REFUNDED").contains(u.state()));
                 boolean physical=seller.units().stream().anyMatch(u->u.state().equals("REFUNDED")&&!"CANCEL".equals(u.refundKind()));
-                boolean shippingReady=(seller.units().stream().noneMatch(u->u.state().equals("REFUNDED"))||"RETAINED".equals(seller.shippingState())||!seller.shippingRefunds().isEmpty())
+                // A later adjustment cannot move the original charge beyond the first retained outcome.
+                Instant retained=physical?claim.retainedForConfirmationAt():null;
+                boolean shippingReady=retained!=null||(seller.units().stream().noneMatch(u->u.state().equals("REFUNDED"))||"RETAINED".equals(seller.shippingState())||!seller.shippingRefunds().isEmpty())
                         &&(!physical||claim.shippingFinalizedAt()!=null);
                 Instant shippingAt=terminal;
                 if(physical&&claim.shippingFinalizedAt()!=null&&claim.shippingFinalizedAt().isAfter(shippingAt)) { shippingAt=claim.shippingFinalizedAt(); }
@@ -202,21 +237,32 @@ public class SettlementService implements Settlements {
                         if(actual.resultAt().isAfter(shippingAt)) { shippingAt=actual.resultAt(); }
                     }
                     for(var refund:shippingValid?seller.shippingRefunds():List.<SettlementOrders.ShippingRefund>of()) {
+                        if(supportAttempts.contains(refund.attemptId())) { continue; }
                         var actual=refunds.get(refund.attemptId());
                         if(actual!=null&&actual.state().equals("SUCCEEDED")) {
                             var economic=line(seller,null,refund.causeId(),payment.id(),actual.id(),"SHIPPING_REFUND",-actual.amount(),0,actual.resultAt());
                             local.add(new Line(economic.store(),economic.order(),economic.seller(),null,null,economic.cause(),economic.payment(),economic.refund(),economic.kind(),economic.amount(),0,economic.at(),shippingAt,economic.policy()));
                         }
                     }
-                    if(shippingValid) { local.add(line(seller,null,seller.sellerOrderId(),payment.id(),null,"SHIPPING",seller.shipping(),0,shippingAt)); }
+                    if(shippingValid) {
+                        Instant originalAt=retained==null?shippingAt:(terminal.isAfter(retained)?terminal:retained);
+                        local.add(line(seller,null,seller.sellerOrderId(),payment.id(),null,"SHIPPING",seller.shipping(),0,originalAt));
+                    }
                 }
                 String historical=historyReason(seller,concerns,end);
                 if(historical!=null&&relevant(seller,start,end)) { held.add(new Held(seller.sellerOrderId(),historical)); }
-                if(allTerminal&&inPeriod(terminal,start,end)&&(!shippingReady||!shippingAt.isBefore(end))) { held.add(new Held(seller.sellerOrderId(),"SHIPPING_OUTCOME_PENDING")); }
+                if(allTerminal&&retained==null&&inPeriod(terminal,start,end)&&(!shippingReady||!shippingAt.isBefore(end))) { held.add(new Held(seller.sellerOrderId(),"SHIPPING_OUTCOME_PENDING")); }
                 boolean deferred=false;
                 for(var economic:local) {
-                    var ready=readiness(economic.eligibleAt(),seller.holds(),financial);
-                    String issue=blocker(economic,ready,seller.holds(),concerns);
+                    var holds=scoped?seller.holds().stream().filter(h->affects(economic,h.units())).toList():seller.holds();
+                    java.util.function.Predicate<UUID> applies=id->{
+                        if(!scoped||id==null||economic.item()==null) { return true; }
+                        var refund=refunds.get(id);
+                        return (refund==null||!"SHIPPING".equals(refund.purpose()))&&affects(economic,claim.attributedUnits().get(id));
+                    };
+                    var reservations=financial.stream().filter(r->applies.test(r.id())).toList();
+                    var ready=readiness(economic.eligibleAt(),holds,reservations);
+                    String issue=blocker(economic,ready,holds,concerns.stream().filter(c->applies.test(c.reservation())).toList());
                     if(issue!=null) {
                         if(inPeriod(economic.eligibleAt(),start,end)||inPeriod(ready.eligibleAt(),start,end)) { held.add(new Held(seller.sellerOrderId(),historical==null?issue:historical)); }
                         continue;
@@ -268,7 +314,7 @@ public class SettlementService implements Settlements {
         return paidElsewhereOrConflict(id,keys,owners);
     }
     private Sources refresh(UUID id,Policy policy,boolean draft) {
-        var b=batch(id,true);var source=sources(policy,((Timestamp)b.get("period_start")).toInstant(),((Timestamp)b.get("period_end")).toInstant());
+        var b=batch(id,true);var source=batchSources(policy,b);
         var used=foreignPaid(source,id);
         var expected=snapshot(source);var financial=new HashMap<String,String>();source.lines().forEach(l->financial.put(l.key(),l.fingerprint()));
         var assigned=assigned(id);
@@ -282,7 +328,8 @@ public class SettlementService implements Settlements {
         if(!draft) {
             expected.keySet().removeAll(used);
             var saved=new HashMap<String,String>();assigned.forEach(l->saved.put(l.get("source_key").toString(),storedSnapshot(l)));
-            if(saved.isEmpty()||!sameSnapshot(expected,saved)||!List.of(mapper.readValue(b.get("held").toString(),Held[].class)).equals(source.held())) { throw new OrderRejected(409); }
+            if(saved.isEmpty()&&b.get("store_balances").toString().equals("[]")||!balancesCurrent(id)
+                    ||!sameSnapshot(expected,saved)||!List.of(mapper.readValue(b.get("held").toString(),Held[].class)).equals(source.held())) { throw new OrderRejected(409); }
         }
         if(draft) {
             for(var l:source.lines()) { append(l); }
@@ -294,8 +341,9 @@ public class SettlementService implements Settlements {
             long gross=new java.math.BigDecimal(totals.get("gross").toString()).longValueExact(),fee=new java.math.BigDecimal(totals.get("fee").toString()).longValueExact();
             boolean empty=((Number)totals.get("count")).longValue()==0;
             boolean priorDetails=!assigned.isEmpty()||Boolean.TRUE.equals(jdbc.queryForObject("SELECT EXISTS(SELECT 1 FROM marketplace.settlement_batch_revision WHERE batch_id=:id AND cardinality(ledger_ids)>0)",Map.of("id",id),Boolean.class));
-            if(empty&&(!priorDetails||source.held().isEmpty())||gross<fee) { throw new OrderRejected(409); }
-            jdbc.update("UPDATE marketplace.settlement_batch SET gross=:gross,fee=:fee,net=:net,held=CAST(:held AS jsonb),version=version+1 WHERE id=:id",Map.of("gross",gross,"fee",fee,"net",Math.subtractExact(gross,fee),"held",mapper.writeValueAsString(source.held()),"id",id));
+            String balances=jdbc.queryForObject("SELECT marketplace.settlement_store_balances(:id)::text",Map.of("id",id),String.class);
+            if(empty&&balances.equals("[]")&&(!priorDetails||source.held().isEmpty())) { throw new OrderRejected(409); }
+            jdbc.update("UPDATE marketplace.settlement_batch SET gross=:gross,fee=:fee,net=:net,held=CAST(:held AS jsonb),store_balances=CAST(:balances AS jsonb),version=version+1 WHERE id=:id",Map.of("gross",gross,"fee",fee,"net",Math.subtractExact(gross,fee),"held",mapper.writeValueAsString(source.held()),"balances",balances,"id",id));
         }
         checkpoint.after("LEDGER");return source;
     }
@@ -306,7 +354,7 @@ public class SettlementService implements Settlements {
     static boolean sameSnapshot(Map<String,String> expected,Map<String,String> saved) { return expected.equals(saved); }
     private void reopenReviewed(UUID id,Policy policy,Map<String,Object> batch) {
         Sources source;
-        try { source=sources(policy,((Timestamp)batch.get("period_start")).toInstant(),((Timestamp)batch.get("period_end")).toInstant()); }
+        try { source=sources(policy,((Timestamp)batch.get("period_start")).toInstant(),((Timestamp)batch.get("period_end")).toInstant(),true); }
         catch(ArithmeticException overflow) { throw new OrderRejected(409); }
         var expected=snapshot(source);var financial=new HashMap<String,String>();source.lines().forEach(l->financial.put(l.key(),l.fingerprint()));
         expected.keySet().removeAll(foreignPaid(source,id));
@@ -316,13 +364,17 @@ public class SettlementService implements Settlements {
             String key=line.get("source_key").toString();
             if(financial.containsKey(key)&&!line.get("fingerprint").equals(financial.get(key))) { throw new OrderRejected(409); }
         }
-        if(sameSnapshot(expected,saved)&&List.of(mapper.readValue(batch.get("held").toString(),Held[].class)).equals(source.held())) { throw new OrderRejected(409); }
+        if(sameSnapshot(expected,saved)&&balancesCurrent(id)&&List.of(mapper.readValue(batch.get("held").toString(),Held[].class)).equals(source.held())) { throw new OrderRejected(409); }
         jdbc.update("UPDATE marketplace.settlement_batch SET state='DRAFT',reviewed_by=NULL,reviewed_at=NULL,version=version+1 WHERE id=:id AND state='REVIEWED' AND NOT EXISTS(SELECT 1 FROM marketplace.settlement_mock_payment WHERE batch_id=:id)",Map.of("id",id));
         if(!batch(id,true).get("state").equals("DRAFT")) { throw new OrderRejected(409); }
     }
     private boolean replay(UUID key,UUID id,String fingerprint) {
         var rows=jdbc.queryForList("SELECT batch_id,fingerprint FROM marketplace.settlement_command WHERE request_key=:key",Map.of("key",key));
         if(rows.isEmpty()) { return false; }if(!rows.getFirst().get("batch_id").equals(id)||!rows.getFirst().get("fingerprint").equals(fingerprint)) { throw new OrderRejected(409); }return true;
+    }
+    private boolean balancesCurrent(UUID id) {
+        return Boolean.TRUE.equals(jdbc.queryForObject("SELECT readiness_version=1 OR store_balances=marketplace.settlement_store_balances(id) FROM marketplace.settlement_batch WHERE id=:id",
+                Map.of("id",id),Boolean.class));
     }
     private void receipt(UUID key,UUID id,String action,Long expected,Actor actor,String fingerprint) {
         jdbc.update("INSERT INTO marketplace.settlement_command(request_key,batch_id,action,expected_version,actor_id,fingerprint) VALUES(:key,:id,:action,:version,:actor,:hash)",new MapSqlParameterSource("key",key).addValue("id",id).addValue("action",action).addValue("version",expected).addValue("actor",actor.member()).addValue("hash",fingerprint));checkpoint.after("RECEIPT");
@@ -331,11 +383,15 @@ public class SettlementService implements Settlements {
         var existing=batch(id,true);
         if(!existing.get("state").equals("PAID_MOCK")) {
             Sources source;
-            try { source=sources(policy,((Timestamp)existing.get("period_start")).toInstant(),((Timestamp)existing.get("period_end")).toInstant()); }
+            try { source=batchSources(policy,existing); }
             catch(ArithmeticException overflow) { throw new OrderRejected(409); }
             foreignPaid(source,id);
         }
         authorize(actor);return view(id,List.of());
+    }
+    private Sources batchSources(Policy policy,Map<String,Object> batch) {
+        return sources(policy,((Timestamp)batch.get("period_start")).toInstant(),((Timestamp)batch.get("period_end")).toInstant(),
+                ((Number)batch.get("readiness_version")).intValue()==2);
     }
     @Override @Transactional public Batch open(Open cmd,Actor actor) {
         authorize(actor);if(cmd==null||cmd.key()==null) { throw new OrderRejected(400); }
@@ -349,6 +405,9 @@ public class SettlementService implements Settlements {
         var existing=batch(id,true);String action="OPEN";
         if(existing.get("state").equals("REVIEWED")) { reopenReviewed(id,policy,existing);action="REBUILD"; }
         else if(!existing.get("state").equals("DRAFT")) { throw new OrderRejected(409); }
+        if(((Number)existing.get("readiness_version")).intValue()==1) {
+            jdbc.update("UPDATE marketplace.settlement_batch SET readiness_version=2,version=version+1 WHERE id=:id AND state='DRAFT'",p);
+        }
         var source=safeRefresh(id,policy,true);authorize(actor);receipt(cmd.key(),id,action,null,actor,fingerprint);return view(id,source.held());
     }
     @Override @Transactional public Batch review(UUID id,Change cmd,Actor actor) { return change(id,cmd,actor,false); }
@@ -362,7 +421,7 @@ public class SettlementService implements Settlements {
         if(!b.get("state").equals(expectedState)||((Number)b.get("version")).longValue()!=cmd.expectedVersion()||clock.instant().isBefore(((Timestamp)b.get("period_end")).toInstant())) { throw new OrderRejected(409); }
         var source=safeRefresh(id,policy,false);authorize(actor);Instant at=clock.instant();
         if(pay) {
-            jdbc.update("INSERT INTO marketplace.settlement_mock_payment(id,batch_id,amount,actor_id,occurred_at) VALUES(:key,:id,:amount,:actor,:at)",Map.of("key",cmd.key(),"id",id,"amount",b.get("net"),"actor",actor.member(),"at",Timestamp.from(at)));checkpoint.after("PAYMENT");
+            jdbc.update("INSERT INTO marketplace.settlement_mock_payment(id,batch_id,amount,actor_id,occurred_at) SELECT :key,id,CASE WHEN readiness_version=1 THEN net ELSE marketplace.settlement_payout(store_balances) END,:actor,:at FROM marketplace.settlement_batch WHERE id=:id",Map.of("key",cmd.key(),"id",id,"actor",actor.member(),"at",Timestamp.from(at)));checkpoint.after("PAYMENT");
             jdbc.update("UPDATE marketplace.settlement_batch SET state='PAID_MOCK',paid_at=:at,version=version+1 WHERE id=:id",Map.of("id",id,"at",Timestamp.from(at)));
         }else {
             jdbc.update("UPDATE marketplace.settlement_batch SET state='REVIEWED',reviewed_by=:actor,reviewed_at=:at,version=version+1 WHERE id=:id",Map.of("id",id,"actor",actor.member(),"at",Timestamp.from(at)));

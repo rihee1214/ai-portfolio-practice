@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.JdbcTransactionManager;
-import org.springframework.test.context.bean.override.convention.TestBean;
 import org.springframework.transaction.support.TransactionTemplate;
 import tools.jackson.databind.JsonNode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,20 +34,73 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SettlementIT extends PostgresContractFixture {
+class SettlementIT extends SettlementContractFixture {
+    @Test void simultaneousSellerStatementsSerializeBeforeSessionReadAndRecheckLostSellerRole() throws Exception {
+        var purchase=twoEqualUnits("seller-race");
+        var shipment=paidShipment(purchase);
+        var week=com.example.marketplace.settlement.domain.SettlementRules.week(Instant.now()).plusWeeks(47);
+        var confirmedAt=com.example.marketplace.settlement.domain.SettlementRules.start(week).plusSeconds(300);
+        completeShipment(purchase,shipment,confirmedAt.minusSeconds(60));
+        var owner=shipmentAuthority(purchase);
+        var api=confirmationsWith(Clock.fixed(confirmedAt,ZoneOffset.UTC),stage->{ });
+        var current=api.get(purchase.order().orderNumber(),owner);
+        var receipt=api.confirm(purchase.order().orderNumber(),owner,new OrderConfirmations.Command("concurrent-seller-read",current.revision(),
+                current.units().stream().map(OrderConfirmations.Eligibility::unit).toList()));
+        var settlementClock=(SettlementClock)clock;
+        var previous=settlementClock.at;
+        try {
+            settlementClock.at=com.example.marketplace.settlement.domain.SettlementRules.start(week.plusWeeks(1));
+            var operator=supportFixture("b-seller-reads","SETTLEMENTS").browser();
+            post(operator,BATCHES,Map.of("key",UUID.randomUUID(),"weekStart",week.toString()),200);
+        }finally { settlementClock.at=previous; }
+        String path="/api/seller/settlements";var member=Map.of("id",owner.member());
+        String email=jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id",member,String.class);
+        var second=authBrowser();
+        assertEquals(200,authRequest(second,"/api/auth/login",loginForm(email,SIGNUP_PASSWORD),csrfToken(second)).statusCode());
+        String cause=receipt.receiptId().toString();
+        for(boolean revoke:List.of(false,true)) {
+            try(var lock=context.getBean(javax.sql.DataSource.class).getConnection();var pool=Executors.newFixedThreadPool(2)) {
+                lock.setAutoCommit(false);
+                try(var sql=lock.prepareStatement("SELECT pg_backend_pid() FROM marketplace.identity_user WHERE id=? FOR SHARE")) {
+                    sql.setObject(1,owner.member());int blocker;
+                    try(var rows=sql.executeQuery()){assertTrue(rows.next());blocker=rows.getInt(1);}
+                    var requests=List.of(purchase.browser(),second).stream().map(client->pool.submit(
+                            ()->accountRequest(client,"GET",path,null,null))).toList();
+                    try {
+                        long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);
+                        List<Map<String,Object>> waits;
+                        do {
+                            waits=jdbc.queryForList("""
+                                WITH RECURSIVE waiting(pid) AS (
+                                 SELECT pid FROM pg_stat_activity WHERE datname=current_database() AND :blocker=ANY(pg_blocking_pids(pid))
+                                 UNION SELECT a.pid FROM pg_stat_activity a JOIN waiting w ON w.pid=ANY(pg_blocking_pids(a.pid))
+                                 WHERE a.datname=current_database())
+                                SELECT a.pid,a.query FROM pg_stat_activity a JOIN waiting w ON w.pid=a.pid
+                                WHERE a.query LIKE '%marketplace.identity_user%' AND a.query LIKE '%FOR NO KEY UPDATE%'
+                                """,Map.of("blocker",blocker));
+                            if(waits.size()==2) { break; }
+                            Thread.sleep(20);
+                        }while(System.nanoTime()<deadline);
+                        java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"seller-statement-waits-"+revoke+".json"),authMapper.writeValueAsString(waits));
+                        assertEquals(2,waits.size(),"both requests reached the real member lock before releasing the blocker");
+                        if(revoke) {
+                            try(var drop=lock.prepareStatement("DELETE FROM marketplace.role_assignment WHERE user_id=? AND role='SELLER'")) {
+                                drop.setObject(1,owner.member());assertEquals(1,drop.executeUpdate());
+                            }
+                        }
+                    }finally { lock.commit(); }
+                    for(var request:requests) {
+                        var response=request.get(15,TimeUnit.SECONDS);
+                        assertEquals(revoke?403:200,response.statusCode(),response.body());
+                        assertEquals(!revoke,response.body().contains(cause));
+                    }
+                }
+            }
+        }
+    }
     private static final String BASE = "/api/admin/settlements";
     private static final String BATCHES = BASE + "/batches";
     private static final ZoneId SEOUL = ZoneId.of("Asia/Seoul");
-    private static final class SettlementClock extends Clock {
-        private volatile Instant at = Instant.now();
-        @Override public ZoneId getZone() { return ZoneOffset.UTC; }
-        @Override public Clock withZone(ZoneId zone) { return Clock.fixed(at, zone); }
-        @Override public Instant instant() { return at; }
-    }
-    @TestBean(name="settlementClock", methodName="testSettlementClock")
-    private Clock clock;
-    static Clock testSettlementClock() { return new SettlementClock(); }
-
     private JsonNode get(HttpClient client, String path) throws Exception {
         var response = accountRequest(client, "GET", path, null, null);
         assertEquals(200, response.statusCode(), path + response.body());
@@ -89,7 +141,8 @@ class SettlementIT extends PostgresContractFixture {
         assertEquals(Long.toString(net), batch.path("net").asText());
         assertEquals(net, batch.path("items").valueStream().mapToLong(i -> Long.parseLong(i.path("net").asText())).sum());
     }
-    private record CutoffOrder(UUID order, UUID sellerOrder, UUID confirmation, UUID hold, UUID cause, OrderConfirmations.Unit second) { }
+    private record CutoffOrder(UUID order, UUID sellerOrder, UUID confirmation, UUID hold, UUID cause, OrderConfirmations.Unit second,
+            PaymentFixture purchase) { }
 
     private CutoffOrder confirmFirstAndHoldSecond(String suffix, Instant sunday, Instant acquiredAt) throws Exception {
         var order = confirmFirst(suffix, sunday);
@@ -109,13 +162,81 @@ class SettlementIT extends PostgresContractFixture {
         var receipt = confirm.confirm(number, authority, new OrderConfirmations.Command("first-only",
                 confirm.get(number, authority).revision(), List.of(new OrderConfirmations.Unit(first.orderItemId(), 0))));
         return new CutoffOrder(purchase.order().id(), shipment.sellerOrderId(), receipt.receiptId(),
-                UUID.randomUUID(), UUID.randomUUID(), new OrderConfirmations.Unit(second.orderItemId(), 1));
+                UUID.randomUUID(), UUID.randomUUID(), new OrderConfirmations.Unit(second.orderItemId(), 1),purchase);
+    }
+
+    // Drive the two database-owned observations for this exact attempt. All production commands,
+    // deferred constraints, payment budgets, FKs and result/outbox handlers still run.
+    private UUID reserveFirstAt(PaymentFixture f,UUID seller,UUID item,Instant reservedAt,Instant releasedAt,String suffix) throws Exception {
+        var operator=supportFixture("bclock-"+suffix,"SUPPORT");
+        var who=operator.authority();
+        var opened=post(f.browser(),"/api/support/cases",Map.of("key",UUID.randomUUID(),"orderNumber",f.order().orderNumber(),
+                "sellerOrderId",seller,"body","확정 수량의 환불 예약 귀속 확인"),200);
+        var target=UUID.fromString(opened.path("id").asText());
+        var assignment=context.getBean(com.example.marketplace.operations.api.SupportAssignments.class);
+        var actor=new com.example.marketplace.operations.api.SupportAssignments.Actor(who.member(),who.browser(),who.version());
+        var entry=assignment.queue(actor).stream().filter(r->r.targetId().equals(target)).findFirst().orElseThrow();
+        assignment.assign(target,actor,new com.example.marketplace.operations.api.SupportAssignments.Change(UUID.randomUUID(),entry.version(),who.member()));
+        String path="/api/admin/support/cases/"+target+"/confirmed-refunds";
+        UUID collection=UUID.randomUUID(),inspection=UUID.randomUUID(),approval=UUID.randomUUID();
+        long version=opened.path("version").asLong();
+        post(operator.browser(),path+"/COLLECT",Map.of("caseVersion",version,"key",collection,"item",item,"ordinal",0,"reference","회수 "+suffix),200);
+        post(operator.browser(),path+"/INSPECT",Map.of("caseVersion",version,"key",inspection,"item",item,"ordinal",0,"previous",collection,
+                "reference","검수 "+suffix,"responsibility","SELLER","reason","회수품 하자 확인"),200);
+        post(operator.browser(),path+"/APPROVE",Map.of("caseVersion",version,"key",approval,"item",item,"ordinal",0,"previous",inspection,"reason","원확정 수량 확인"),200);
+        UUID attempt=UUID.nameUUIDFromBytes(("support-item:"+approval).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        var sql=jdbc.getJdbcTemplate();
+        sql.execute("CREATE TABLE IF NOT EXISTS marketplace.test_p11b_attempt_clock(id uuid PRIMARY KEY,reserved_at timestamptz NOT NULL,released_at timestamptz NOT NULL)");
+        sql.execute("""
+                CREATE OR REPLACE FUNCTION marketplace.test_p11b_attempt_time() RETURNS trigger LANGUAGE plpgsql AS $$
+                DECLARE observation timestamptz;
+                BEGIN
+                 IF TG_TABLE_NAME='payment_refund_attempt' THEN
+                  SELECT reserved_at INTO observation FROM marketplace.test_p11b_attempt_clock WHERE id=NEW.id;
+                  IF FOUND THEN NEW.created_at=observation;END IF;
+                 ELSIF NEW.action='FAILED' THEN
+                  SELECT released_at INTO observation FROM marketplace.test_p11b_attempt_clock WHERE id=NEW.attempt_id;
+                  IF FOUND THEN NEW.occurred_at=observation;END IF;
+                 END IF;RETURN NEW;
+                END $$;
+                """);
+        for(String table:List.of("payment_refund_attempt","payment_refund_event")) {
+            sql.execute("CREATE OR REPLACE TRIGGER test_p11b_attempt_time BEFORE INSERT ON marketplace."+table+
+                    " FOR EACH ROW EXECUTE FUNCTION marketplace.test_p11b_attempt_time()");
+        }
+        jdbc.update("INSERT INTO marketplace.test_p11b_attempt_clock VALUES(:id,:created,:released)",Map.of("id",attempt,
+                "created",java.sql.Timestamp.from(reservedAt),"released",java.sql.Timestamp.from(releasedAt)));
+        post(operator.browser(),path+"/EXECUTE",Map.of("caseVersion",version,"key",UUID.randomUUID(),"item",item,"ordinal",0,"previous",approval),200);
+        jdbc.update("INSERT INTO marketplace.payment_refund_mock_setting(claim_id,purpose,behavior) VALUES(:id,'ITEM','FAILED')",Map.of("id",approval));
+        assertEquals(reservedAt,jdbc.queryForObject("SELECT created_at FROM marketplace.payment_refund_attempt WHERE id=:id",Map.of("id",attempt),java.sql.Timestamp.class).toInstant());
+        return attempt;
+    }
+    private void releaseFailedReservation(UUID attempt,Instant expected) {
+        runCancellationJob("REFUND_SUBMIT.v1",attempt);runCancellationJob("REFUND_RESULT_RECORDED.v1",attempt);
+        assertEquals(expected,jdbc.queryForObject("SELECT occurred_at FROM marketplace.payment_refund_event WHERE attempt_id=:id AND action='FAILED'",
+                Map.of("id",attempt),java.sql.Timestamp.class).toInstant());
     }
 
     private void holdSecond(CutoffOrder order, Instant acquiredAt) {
         var atClaim = confirmationsWith(Clock.fixed(acquiredAt, ZoneOffset.UTC), stage -> { });
         new TransactionTemplate(transactionManager).executeWithoutResult(t -> atClaim.acquire(order.order(),
                 order.hold(), order.cause(), "RETURN", List.of(order.second())));
+    }
+
+    @Test void knownHoldOnSecondUnitLeavesFirstConfirmedUnitPayableInNewDraft() throws Exception {
+        var admin = supportFixture("p11b-scoped-hold", "SETTLEMENTS").browser();
+        var week = LocalDate.now(SEOUL).with(java.time.temporal.TemporalAdjusters.next(java.time.DayOfWeek.MONDAY)).plusWeeks(28);
+        Instant cutoff = week.plusWeeks(1).atStartOfDay(SEOUL).toInstant();
+        var order = confirmFirstAndHoldSecond("p11b-known", cutoff.minusSeconds(60), cutoff.minusSeconds(1));
+        ((SettlementClock) clock).at = cutoff;
+        var draft = post(admin, BATCHES, Map.of("weekStart", week.toString(), "key", UUID.randomUUID()), 200);
+        var products = entries(draft, order.sellerOrder(), "PRODUCT");
+        assertEquals(1, products.size());
+        assertEquals(0, products.getFirst().path("ordinal").asInt());
+        assertEquals(order.confirmation().toString(), products.getFirst().path("causeId").asText());
+        assertEquals(501L, entries(draft, order.sellerOrder(), "COMMISSION").getFirst().path("fee").asLong());
+        assertTrue(entries(draft, order.sellerOrder(), "SHIPPING").isEmpty());
+        assertTotals(draft, 10019, 501, 9518);
     }
 
     @Test void lateWeeklyPayoutUsesTheExclusiveMondayCutoffAndNeverPaysTheSameQuantityTwice() throws Exception {
@@ -127,6 +248,9 @@ class SettlementIT extends PostgresContractFixture {
         var before = confirmFirstAndHoldSecond("before-cutoff", sunday, cutoff.minusNanos(1000));
         var monday = confirmFirstAndHoldSecond("on-cutoff", sunday, cutoff);
         Instant tuesday = cutoff.plusSeconds(86400);
+        Instant releasedAt=tuesday.plusSeconds(60);
+        UUID beforeReservation=reserveFirstAt(before.purchase(),before.sellerOrder(),before.second().itemId(),cutoff.minusNanos(1000),releasedAt,"before");
+        UUID mondayReservation=reserveFirstAt(monday.purchase(),monday.sellerOrder(),monday.second().itemId(),cutoff,releasedAt,"monday");
         ((SettlementClock) clock).at = tuesday;
         Map<String,Object> open = Map.of("weekStart", week.toString(), "key", UUID.randomUUID());
         var draft = post(admin, BATCHES, open, 200);
@@ -143,7 +267,8 @@ class SettlementIT extends PostgresContractFixture {
         var reviewed = post(admin, path + "/review", change(draft.path("version").asLong()), 200);
         var pay = change(reviewed.path("version").asLong());
 
-        Instant releasedAt = tuesday.plusSeconds(60);
+        releaseFailedReservation(beforeReservation,releasedAt);
+        releaseFailedReservation(mondayReservation,releasedAt);
         var release = confirmationsWith(Clock.fixed(releasedAt, ZoneOffset.UTC), stage -> { });
         for (var order : List.of(before, monday)) {
             new TransactionTemplate(transactionManager).executeWithoutResult(t ->
@@ -161,7 +286,8 @@ class SettlementIT extends PostgresContractFixture {
         assertTrue(entries(next, monday.sellerOrder(), "PRODUCT").isEmpty());
         var carried = entries(next, before.sellerOrder(), "PRODUCT").getFirst();
         assertEquals(before.confirmation().toString(), carried.path("causeId").asText());
-        assertEquals(before.hold().toString(), carried.path("eligibilityHolds").get(0).path("id").asText());
+        assertTrue(carried.path("eligibilityHolds").isEmpty());
+        assertReservation(carried.path("eligibilityReservations"),"REFUND",beforeReservation,cutoff.minusNanos(1000),releasedAt);
         assertEquals(releasedAt, Instant.parse(carried.path("eligibleAt").asText()));
         String nextPath = BATCHES + "/" + next.path("id").asText();
         var nextReview = post(admin, nextPath + "/review", change(next.path("version").asLong()), 200);
@@ -183,6 +309,7 @@ class SettlementIT extends PostgresContractFixture {
         var w1 = post(admin, BATCHES, Map.of("weekStart", week.toString(), "key", UUID.randomUUID()), 200);
         var original = entries(w1, first.sellerOrder(), "PRODUCT").getFirst().path("id");
         holdSecond(first, cutoff.minusNanos(1000));
+        UUID reserved=reserveFirstAt(first.purchase(),first.sellerOrder(),first.second().itemId(),cutoff.minusNanos(1000),cutoff.plusSeconds(120),"draft");
         var other = confirmFirst("independent", cutoff.plusSeconds(60));
         at.at = week.plusWeeks(2).atStartOfDay(SEOUL).toInstant();
         Map<String,Object> openNext = Map.of("weekStart", week.plusWeeks(1).toString(), "key", UUID.randomUUID());
@@ -196,6 +323,7 @@ class SettlementIT extends PostgresContractFixture {
         // The source now records a release belonging to W2. The original row is still assigned to W1's unpaid draft.
         var release = confirmationsWith(Clock.fixed(cutoff.plusSeconds(120), ZoneOffset.UTC), stage -> { });
         new TransactionTemplate(transactionManager).executeWithoutResult(t -> release.release(first.order(), first.hold(), first.cause(), "WITHDRAWN"));
+        releaseFailedReservation(reserved,cutoff.plusSeconds(120));
         var pay = change(reviewed.path("version").asLong());
         assertUnpaidConflict(admin, path + "/simulate-pay", pay, week);
         assertUnpaidConflict(admin, path + "/review", reviewKey, week);
@@ -217,28 +345,6 @@ class SettlementIT extends PostgresContractFixture {
         assertEquals(paid, post(admin, path + "/simulate-pay", retry, 200));
         assertEquals(List.of(19036L), jdbc.queryForList("SELECT amount FROM marketplace.settlement_mock_payment WHERE batch_id=:id",
                 Map.of("id", UUID.fromString(w2.path("id").asText())), Long.class));
-    }
-
-    private PaymentFixture twoEqualUnits(String suffix) throws Exception {
-        var d = orderDraft("p11-" + suffix);
-        var line = d.quote().stores().getFirst().lines().getFirst();
-        var skus = context.getBean(com.example.marketplace.catalog.api.Skus.class);
-        var sku = skus.list(d.memberId(), line.productId(), 0).items().getFirst();
-        skus.save(d.memberId(), line.productId(), sku.id(),
-                new com.example.marketplace.catalog.api.Skus.Input(List.of(), 10019L, true, sku.version()));
-        var lines = List.of(quoteLine(sku.id(), 2));
-        var quote = quotes().calculate(d.memberId(), lines, List.of());
-        var saved = creation().create(d.purchaseSessionId().toString(), d.memberId(), null,
-                new com.example.marketplace.order.infrastructure.OrderCreationService.Input(
-                        "remainder", lines, List.of(), quote.fingerprint(), d.contact(), null, 0));
-        var buyer = authBrowser();
-        var member = Map.of("id", d.memberId());
-        String email = jdbc.queryForObject("SELECT email FROM marketplace.identity_user WHERE id=:id", member, String.class);
-        assertEquals(200, authRequest(buyer, "/api/auth/login", loginForm(email, SIGNUP_PASSWORD), csrfToken(buyer)).statusCode());
-        String session = jdbc.queryForObject("SELECT session_id FROM marketplace.spring_session WHERE principal_name=CAST(:id AS text)",
-                member, String.class);
-        long version = jdbc.queryForObject("SELECT auth_version FROM marketplace.identity_user WHERE id=:id", member, Long.class);
-        return new PaymentFixture(saved, buyer, new com.example.marketplace.payment.api.Payments.Authority(session, d.memberId(), version, null));
     }
 
     // Keep the real withdrawal transaction, including its order/fee/refund receipts, while supplying two week-boundary clocks.
@@ -378,6 +484,8 @@ class SettlementIT extends PostgresContractFixture {
         var fee = acceptReturnFee(partial, List.of(new ReturnFees.Target(secondUnit.orderItemId(), secondUnit.ordinal(),
                 ReturnFees.Responsibility.BUYER)), "p11-carry-fee");
         UUID holdId = fee.hold();
+        Instant exactReservation=Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+        UUID firstReservation=reserveFirstAt(partial,partialShipment.sellerOrderId(),firstUnit.orderItemId(),exactReservation,end.plusSeconds(60).plusNanos(1000),"partial");
         var tx = new TransactionTemplate(transactionManager);
 
         var mixed = cancellationMoneyFixture("p11-refund", true, false);
@@ -483,6 +591,7 @@ class SettlementIT extends PostgresContractFixture {
         Instant finalRelease = releaseAt.plusNanos(1000);
         var withdrawal = withdrawalAt(releaseAt, finalRelease);
         tx.executeWithoutResult(t -> withdrawal.withdraw(partialNumber, partialOwner, fee.accepted().id()));
+        releaseFailedReservation(firstReservation,finalRelease);
         var receipts = jdbc.queryForMap("""
                 SELECT a.accepted_at,w.withdrawn_at,p.created_at,e.occurred_at
                 FROM marketplace.claim_fee_assessment a JOIN marketplace.claim_fee_withdrawal w ON a.id=w.assessment_id
@@ -505,12 +614,17 @@ class SettlementIT extends PostgresContractFixture {
         assertEquals(originalUnit.path("occurredAt"), carriedUnit.path("occurredAt"));
         assertEquals(finalRelease, Instant.parse(carriedUnit.path("eligibleAt").asText()));
         var reservations = carriedUnit.path("eligibilityReservations");
-        assertEquals(2, reservations.size());
-        assertReservation(reservations, "CLAIM_FEE", fee.accepted().id(), feeStart, finalRelease);
-        assertReservation(reservations, "REFUND", fee.attempt(), refundStart, refundEnd);
-        assertTrue(carriedUnit.path("eligibilityHolds").valueStream()
-                .anyMatch(h -> holdId.toString().equals(h.path("id").asText())
-                        && releaseAt.equals(Instant.parse(h.path("releasedAt").asText()))));
+        assertEquals(1, reservations.size());
+        assertReservation(reservations,"REFUND",firstReservation,exactReservation,finalRelease);
+        assertTrue(carriedUnit.path("eligibilityHolds").isEmpty());
+        var reservationsForSeller=context.getBean(SettlementClaims.class);
+        var ownClaims=tx.execute(t->reservationsForSeller.lock(partialShipment.sellerOrderId()));
+        assertTrue(ownClaims.reservations().stream().anyMatch(r->r.id().equals(fee.accepted().id())&&r.acquiredAt().equals(feeStart)
+                &&r.releasedAt().equals(finalRelease)));
+        assertEquals(List.of(new OrderConfirmations.Unit(secondUnit.orderItemId(),1)),ownClaims.attributedUnits().get(fee.attempt()));
+        assertEquals(List.of(new OrderConfirmations.Unit(firstUnit.orderItemId(),0)),ownClaims.attributedUnits().get(firstReservation));
+        assertEquals(releaseAt,jdbc.queryForObject("SELECT occurred_at FROM marketplace.order_lifecycle_event WHERE cause_id=:id AND action='RELEASED'",Map.of("id",holdId),java.sql.Timestamp.class).toInstant());
+        assertFalse(refundEnd.isBefore(refundStart));
         assertEquals(paid, get(browser, path));
         localClock.at = week.plusWeeks(2).atStartOfDay(SEOUL).toInstant();
         var nextPath = BATCHES + "/" + carried.path("id").asText();
@@ -524,9 +638,8 @@ class SettlementIT extends PostgresContractFixture {
                 WHERE b.batch_id=:batch AND b.version=:version AND b.state='REVIEWED' AND entry->>'ledgerId'=:ledger
                 """, Map.of("batch", UUID.fromString(carried.path("id").asText()), "version", nextReview.path("version").asLong(),
                 "ledger", carriedUnit.path("id").asText()), String.class));
-        assertEquals(2, reviewedReservations.size());
-        assertReservation(reviewedReservations, "CLAIM_FEE", fee.accepted().id(), feeStart, finalRelease);
-        assertReservation(reviewedReservations, "REFUND", fee.attempt(), refundStart, refundEnd);
+        assertEquals(1, reviewedReservations.size());
+        assertReservation(reviewedReservations,"REFUND",firstReservation,exactReservation,finalRelease);
         assertEquals(List.of(9518L), jdbc.queryForList("SELECT amount FROM marketplace.settlement_mock_payment WHERE batch_id=:id",
                 Map.of("id", UUID.fromString(carried.path("id").asText())), Long.class));
         jdbc.update("DELETE FROM marketplace.admin_permission WHERE user_id=:id AND permission='SETTLEMENTS'",

@@ -4,7 +4,8 @@ import { expect, test, type Page } from '@playwright/test'
 import { geometry } from './post-purchase-helpers'
 import { headers } from './purchase-helpers'
 
-type Seed = { storeId: string; sellerOrderId: string; causeId: string; weekStart: string }
+type Seed = { storeId: string; sellerOrderId: string; causeId: string; weekStart: string;
+  sellerEmail:string;supportEmail:string;inquiry:string;item:string;ordinal:number }
 type Item = { sellerOrderId: string; kind: string; causeId: string; itemId: string | null; ordinal: number | null; amount: string; net: string }
 type Batch = { id: string; weekStart: string; closed: boolean; state: string; version: number; net: string; items: Item[] }
 
@@ -48,6 +49,7 @@ test('settlement operator traces three confirmed units through review and mock p
   expect(paid).toMatchObject({ id: draft.id, weekStart: source.weekStart, state: 'PAID_MOCK', net: '31501' })
   const status = detail.getByRole('heading', { name: source.weekStart + ' · 모의 지급 완료', exact: true })
   const payout = store.getByText('매대 지급액 31,501원', { exact: true })
+  await expect(detail.getByText('매대 ' + source.storeId + ' · 전주 미회수 조정 잔액 0원 · 이번 지급 31,501원 · 미회수 조정 잔액 (다음 주 이월) 0원', {exact:true})).toBeVisible()
   await expect(status).toBeVisible()
   await expect(payout).toBeVisible()
   await info.attach('weekly-mock-payout', { contentType: 'application/json', body: JSON.stringify({
@@ -56,4 +58,42 @@ test('settlement operator traces three confirmed units through review and mock p
     heading: await status.innerText(), storePayout: await payout.innerText(),
   }) })
   await geometry(page, info, 'settlement-original-ledger')
+  const settings={baseURL:new URL(page.url()).origin,viewport:page.viewportSize()}
+  const seller=await page.context().browser()!.newContext(settings)
+  const support=await page.context().browser()!.newContext(settings)
+  try {
+    for(const [ctx,email] of [[seller,source.sellerEmail],[support,source.supportEmail]] as const) {
+      expect((await ctx.request.post('/api/auth/login',{headers:await headers(ctx),form:{email,password:' A1-private-passphrase-가나다 '}})).status()).toBe(200)
+    }
+    const shop=await seller.newPage()
+    await shop.goto('/seller/settlements')
+    await expect(shop.getByRole('heading',{name:'내 매대 정산'})).toBeVisible()
+    await expect(shop.getByText("미회수 조정 잔액 (다음 주 이월)",{exact:true}).first()).toBeVisible()
+    await expect(shop.getByText(new RegExp(source.causeId)).first()).toBeVisible()
+    await expect(shop.getByText(new RegExp(seeds[info.project.name==='desktop'?'mobile':'desktop'].sellerOrderId))).toHaveCount(0)
+    const desk=await support.newPage()
+    await desk.goto('/admin/support')
+    await desk.getByRole('button',{name:'지원 접수함 열기'}).click()
+    await desk.locator('article').filter({hasText:source.inquiry.slice(-8)}).getByRole('button',{name:'본문 열기'}).click()
+    await desk.getByRole('button',{name:'회수·검수 기록 열기'}).click()
+    const panel=desk.getByRole('region',{name:'구매확정 후 하자 환불'})
+    await panel.getByLabel('원 주문 상품 ID').fill(source.item)
+    await panel.getByLabel('수량 번호').fill(String(source.ordinal))
+    await panel.getByLabel('회수 기록 번호').fill('실제 회수 기록 '+source.inquiry)
+    await panel.getByRole('button',{name:'실제 회수 기록'}).click()
+    await panel.getByLabel('검수 기록 번호').fill('검수 '+source.inquiry)
+    await panel.getByLabel('검수 책임').selectOption('SELLER')
+    await panel.getByLabel('검수 근거').fill('회수된 원 수량 판매자 책임 확인 '.repeat(24))
+    await geometry(desk,info,'confirmed-refund-inspection-long-reason')
+    await panel.getByRole('button',{name:'검수 결과 기록'}).click()
+    await panel.getByLabel('승인 사유').fill('회수와 검수 원 주문 일치')
+    await panel.getByRole('button',{name:'예외 환불 승인'}).click()
+    const execute=panel.getByRole('button',{name:'환불 실행',exact:true})
+    await expect(execute).toBeDisabled()
+    await panel.getByRole('checkbox').check()
+    await execute.click()
+    await expect(panel.getByRole('status')).toContainText('환불 실행 결과')
+    await geometry(desk,info,'confirmed-refund-approved-and-executed')
+    await geometry(shop,info,'own-store-settlement')
+  } finally { await support.close();await seller.close() }
 })

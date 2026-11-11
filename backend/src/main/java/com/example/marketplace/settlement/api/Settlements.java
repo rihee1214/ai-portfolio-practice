@@ -24,8 +24,9 @@ public interface Settlements {
             UUID paymentId,UUID refundAttemptId,String kind,String amount,String fee,String net,Instant occurredAt,Instant eligibleAt,String policyVersion,List<EligibilityHold> eligibilityHolds,List<EligibilityReservation> eligibilityReservations) { }
     record Summary(UUID id,LocalDate weekStart,Instant periodStart,Instant periodEnd,String state,long version,
             boolean closed,String gross,String fee,String net) { }
+    record StoreBalance(UUID storeId,String net,String opening,String payout,String closing) { }
     record Batch(UUID id,LocalDate weekStart,Instant periodStart,Instant periodEnd,String state,long version,
-            boolean closed,List<Item> items,String gross,String fee,String net,List<Held> held) { }
+            boolean closed,List<Item> items,String gross,String fee,String net,List<Held> held,List<StoreBalance> balances,String payout) { }
     Policy policy(Actor actor);
     List<Summary> list(Actor actor);
     Batch get(UUID id,Actor actor);

@@ -14,7 +14,10 @@ public interface SettlementOrders {
         }
     }
     record ShippingRefund(UUID causeId,UUID attemptId,long amount) { }
-    record Hold(UUID id,Instant acquiredAt,Instant releasedAt) { }
+    record Hold(UUID id,Instant acquiredAt,Instant releasedAt,List<OrderConfirmations.Unit> units) {
+        public Hold { units=List.copyOf(units); }
+        public Hold(UUID id,Instant acquiredAt,Instant releasedAt) { this(id,acquiredAt,releasedAt,List.of()); }
+    }
     record Seller(UUID orderId,UUID sellerOrderId,UUID storeId,String policyVersion,long shipping,List<Unit> units,
             List<ShippingRefund> shippingRefunds,String shippingState,Instant createdAt,List<Hold> holds) {
         public Seller(UUID orderId,UUID sellerOrderId,UUID storeId,String policyVersion,long shipping,List<Unit> units,

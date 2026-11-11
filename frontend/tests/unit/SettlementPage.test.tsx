@@ -1,6 +1,10 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { expect, it, vi } from 'vitest'
 import { SettlementPage } from '../../src/settlement/SettlementPage'
+import { ConfirmedRefundPanel } from '../../src/support/ConfirmedRefundPanel'
+import { SellerSettlementPage } from '../../src/settlement/SellerSettlementPage'
+import { AuthContext } from '../../src/auth/AuthContext'
+import { AuthStore } from '../../src/auth/AuthStore'
 
 const base = '/api/admin/settlements'
 const id = '2d77d12a-6952-4fb6-b96f-0578ec059bdb'
@@ -16,9 +20,65 @@ const row = { id: storeId, storeId, orderId: storeId, sellerOrderId: storeId, it
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data),
   { status, headers: { 'Content-Type': 'application/json' } })
 
+it('shows only the authenticated seller statement and clears private money on invalid responses and session loss', async () => {
+  const store=new AuthStore()
+  const record={weekStart:batch.weekStart,state:'PAID_MOCK',net:'-9518',opening:'0',payout:'0',closing:'9518',held:[],lines:[row]}
+  let records:unknown[]=[record]
+  vi.stubGlobal('fetch',vi.fn(async(path:string)=>{
+    if(path==='/api/auth/me')return json({id,roles:['SELLER']})
+    expect(path).toBe('/api/seller/settlements')
+    return json(records)
+  }))
+  render(<AuthContext.Provider value={store}><SellerSettlementPage/></AuthContext.Provider>)
+  expect(screen.getByText('판매자 로그인이 필요합니다.')).toBeVisible()
+  await act(()=>store.refresh())
+  expect(await screen.findByText('-9,518원')).toBeVisible()
+  expect(screen.getByText('미회수 조정 잔액 (다음 주 이월)').nextElementSibling).toHaveTextContent('9,518원')
+  records=[{...record,payout:'invalid'}]
+  fireEvent.click(screen.getByRole('button',{name:'다시 조회'}))
+  expect(await screen.findByRole('alert')).toHaveTextContent('정산 내역')
+  expect(screen.queryByText('-9,518원')).toBeNull()
+  records=[record]
+  fireEvent.click(screen.getByRole('button',{name:'다시 조회'}))
+  expect(await screen.findByText('-9,518원')).toBeVisible()
+  act(()=>store.stop())
+  expect(screen.queryByText('-9,518원')).toBeNull()
+})
+
+it('executes only the selected approved quantity and retries an uncertain response with identical command bytes', async () => {
+  const approved = {item:id, ordinal:1, collection:'collection', inspection:'inspection', responsibility:'SELLER',
+    approval:storeId, amount:'10019', execution:null, attempt:null, result:null, shippingState:null,shippingAttempt:null}
+  const commands:string[]=[]
+  let state='APPROVED'
+  vi.stubGlobal('fetch',vi.fn(async(path:string, init:RequestInit)=>{
+    if(path.endsWith('/csrf'))return json({token:'csrf'})
+    if(init.method==='POST'){
+      expect(path).toBe('/api/admin/support/cases/case/confirmed-refunds/EXECUTE')
+      commands.push(String(init.body))
+      if(commands.length===1)return json({},503)
+      state='UNKNOWN';return json([])
+    }
+    return json([state==='APPROVED'?approved:{...approved,execution:'execution',attempt:'attempt',result:state}])
+  }))
+  render(<ConfirmedRefundPanel id="case" version={7} onAccessLost={vi.fn()}/>)
+  fireEvent.click(screen.getByRole('button',{name:'회수·검수 기록 열기'}))
+  fireEvent.click(await screen.findByRole('button',{name:id+' · 수량 번호 1'}))
+  const execute=screen.getByRole('button',{name:/^환불 실행$/})
+  expect(execute).toBeDisabled()
+  expect(commands).toEqual([])
+  fireEvent.click(screen.getByRole('checkbox'))
+  fireEvent.click(execute)
+  fireEvent.click(await screen.findByRole('button',{name:'같은 요청으로 결과 확인'}))
+  expect(await screen.findByRole('status')).toHaveTextContent('UNKNOWN')
+  expect(commands).toHaveLength(2)
+  expect(commands[1]).toBe(commands[0])
+  expect(JSON.parse(commands[0])).toEqual({key:expect.any(String),caseVersion:7,item:id,ordinal:1,previous:storeId})
+  expect(screen.queryByRole('button',{name:/재시도/})).toBeNull()
+})
+
 it('shows the server week and posts only the batch identity and version through mock payout', async () => {
   const calls: { path: string; command: Record<string, unknown> }[] = []
-  let current = { ...batch, items: [row] }
+  let current = { ...batch, items: [row], balances: [{storeId,net:"22037",opening:"31555",closing:"9518",payout:"0"}], payout:"0" }
   vi.stubGlobal('fetch', vi.fn(async (path: string, init: RequestInit) => {
     if (path.endsWith('/csrf')) return json({ token: 'csrf' })
     if (path === base + '/policy') return json(policy)
@@ -36,6 +96,7 @@ it('shows the server week and posts only the batch identity and version through 
   fireEvent.click(screen.getByRole('button', { name: '초안 생성' }))
   expect(await screen.findByText('10,019원')).toBeVisible()
   expect(screen.getAllByText('22,037원').length).toBeGreaterThan(0)
+  expect(screen.getByText(/전주 미회수 조정 잔액 31,555원 · 이번 지급 0원 · 미회수 조정 잔액 \(다음 주 이월\) 9,518원/)).toBeVisible()
   fireEvent.click(screen.getByRole('button', { name: '검토 확정' }))
   fireEvent.click(await screen.findByRole('button', { name: '모의 지급' }))
   await screen.findByRole('heading', { name: /모의 지급 완료/ })
@@ -141,5 +202,7 @@ it('identifies the unpaid week to rebuild before another week can pay', async ()
   fireEvent.click(screen.getByRole('button', { name: oldWeek + ' 정산 상세' }))
   fireEvent.click(await screen.findByRole('button', { name: '선택한 주 초안 다시 작성' }))
   const rebuilt = await screen.findByRole('region', { name: '배치 상세' })
-  expect(within(rebuilt).getAllByText('0원')).toHaveLength(3)
+  for (const label of ['수수료 차감 전 금액', '수수료', '주간 순액', '모의 지급액']) {
+    expect(within(rebuilt).getByText(label,{selector:'dt'}).nextElementSibling).toHaveTextContent(/^0원$/)
+  }
 })

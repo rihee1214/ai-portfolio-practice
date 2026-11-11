@@ -11,6 +11,9 @@ public interface FinancialIntents {
  Reference registerReturn(String number,com.example.marketplace.order.api.OrderQueries.Authority authority,UUID id,UUID holdId,UUID causeId,List<OrderConfirmations.Unit> units);
  /** Explicit exchange-to-refund identity; preserves the actual EXCHANGE hold and physical workflow. */
  Reference registerExchangeRefund(String number,com.example.marketplace.order.api.OrderQueries.Authority authority,UUID exchangeId);
+ Reference registerSupport(UUID approvalId);
+ void bindSupportShipping(UUID approvalId,UUID attemptId);
+ void bindSupportItem(UUID approvalId,UUID attemptId);
  Reference lock(UUID id);
  void bindRefund(UUID intentId,UUID attemptId);
  void bindReturnRefund(UUID intentId,UUID attemptId,UUID assessmentId);

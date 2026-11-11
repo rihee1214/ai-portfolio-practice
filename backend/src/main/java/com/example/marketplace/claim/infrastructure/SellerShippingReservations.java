@@ -18,7 +18,7 @@ final class SellerShippingReservations {
   if(AftercareShippingRules.evaluate(view.originalShipping(),evidence).state()!=AftercareShippingRules.State.REFUND_REQUIRED) { throw new OrderRejected(409); }
   var prior=jdbc.queryForList("SELECT order_id,claim_id,amount,refund_attempt_id FROM marketplace.claim_shipping_obligation WHERE seller_order_id=:seller FOR UPDATE",Map.of("seller",view.sellerOrderId()));
   if(!prior.isEmpty()) { var row=prior.getFirst();if(!row.get("order_id").equals(view.orderId())||((Number)row.get("amount")).longValue()!=view.originalShipping()) { throw new OrderRejected(409); }var actual=refunds.get((UUID)row.get("refund_attempt_id"));if(!actual.purpose().equals("SHIPPING")||!actual.claimId().equals(row.get("claim_id"))||!actual.orderId().equals(view.orderId())||!actual.sellerOrderId().equals(view.sellerOrderId())||actual.amount()!=view.originalShipping()) { throw new OrderRejected(409); }return; }
-  UUID origin;if(preferredCancellation!=null) {
+  UUID origin;var support=evidence.stream().filter(u->u.kind()==AftercareShippingRules.Kind.SELLER_SUPPORT_REFUNDED).findFirst();if(support.isPresent()) { origin=support.get().factId(); }else if(preferredCancellation!=null) {
    if(evidence.stream().noneMatch(u->u.kind()==AftercareShippingRules.Kind.CANCELED&&preferredCancellation.equals(u.factId()))) { throw new OrderRejected(409); }origin=preferredCancellation;
   }else { origin=evidence.stream().filter(u->u.kind()==AftercareShippingRules.Kind.SELLER_RETURN_READY||u.kind()==AftercareShippingRules.Kind.SELLER_EXCHANGE_REFUND_READY).map(AftercareShippingRules.Unit::factId).findFirst().orElseGet(()->evidence.stream().filter(u->u.kind()==AftercareShippingRules.Kind.CANCELED).map(AftercareShippingRules.Unit::factId).findFirst().orElseThrow(()->new OrderRejected(409))); }
   var intent=intents.lock(origin);if(!intent.orderId().equals(view.orderId())||!intent.sellerOrderId().equals(view.sellerOrderId())) { throw new OrderRejected(409); }
@@ -26,7 +26,7 @@ final class SellerShippingReservations {
   UUID attempt=named("cancel-shipping-attempt:"+view.sellerOrderId()),cause=named("cancel-shipping-cause:"+view.sellerOrderId());
   jdbc.update("INSERT INTO marketplace.claim_shipping_obligation(seller_order_id,order_id,claim_id,amount,refund_attempt_id,state) VALUES(:seller,:order,:intent,:amount,:attempt,'RESERVED')",Map.of("seller",view.sellerOrderId(),"order",view.orderId(),"intent",intent.id(),"amount",view.originalShipping(),"attempt",attempt));
   refunds.reserve(new Refunds.Reserve(attempt,cause,original.paymentId(),view.orderId(),view.sellerOrderId(),intent.id(),"SHIPPING",1,view.originalShipping(),view.quoteFingerprint()));
-  switch(intent.kind()) { case "RETURN" -> intents.bindReturnShipping(intent.id(),attempt);case "EXCHANGE_REFUND" -> intents.bindExchangeRefundShipping(intent.id(),attempt);case "CANCEL" -> intents.bindRefund(intent.id(),attempt);default -> throw new OrderRejected(409); }
+  switch(intent.kind()) { case "RETURN" -> intents.bindReturnShipping(intent.id(),attempt);case "EXCHANGE_REFUND" -> intents.bindExchangeRefundShipping(intent.id(),attempt);case "SUPPORT" -> intents.bindSupportShipping(intent.id(),attempt);case "CANCEL" -> intents.bindRefund(intent.id(),attempt);default -> throw new OrderRejected(409); }
  }
  private static UUID named(String text) { return UUID.nameUUIDFromBytes(text.getBytes(StandardCharsets.UTF_8)); }
 }

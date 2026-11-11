@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service @Profile("db")
-public class JdbcSettlementOrders implements SettlementOrders {
+public class JdbcSettlementOrders implements SettlementOrders,com.example.marketplace.order.api.SellerSettlementOrders {
     private final NamedParameterJdbcTemplate jdbc;
     public JdbcSettlementOrders(NamedParameterJdbcTemplate jdbc) { this.jdbc=jdbc; }
+    @Override @Transactional(propagation=Propagation.MANDATORY)
+    public List<UUID> sellerOrdersForStore(UUID store) {
+        return jdbc.queryForList("SELECT id FROM marketplace.seller_order WHERE store_id=:store ORDER BY id",Map.of("store",store),UUID.class);
+    }
     @Override public List<UUID> candidates(String version) {
         return jdbc.queryForList("SELECT o.id FROM marketplace.purchase_order o JOIN marketplace.order_settlement_policy p ON p.order_id=o.id WHERE p.version=:version AND o.state IN('PAID','CLOSED','CANCELED') ORDER BY o.id",Map.of("version",version),UUID.class);
     }
@@ -51,12 +55,20 @@ public class JdbcSettlementOrders implements SettlementOrders {
                     WHERE l.seller_order_id=:seller AND l.state='REFUNDED'
                     AND NOT EXISTS(SELECT 1 FROM marketplace.order_cancellation_settlement_unit c WHERE c.item_id=l.item_id AND c.ordinal=l.ordinal))
                     """,s,Boolean.class))) { shippingState="RETAINED"; }
+            var heldUnits=new java.util.HashMap<UUID,List<com.example.marketplace.order.api.OrderConfirmations.Unit>>();
+            jdbc.query("""
+                    SELECT hu.hold_id,hu.item_id,hu.ordinal FROM marketplace.order_hold_unit hu
+                    JOIN marketplace.order_item i ON i.id=hu.item_id WHERE i.seller_order_id=:seller
+                    ORDER BY hu.hold_id,hu.item_id,hu.ordinal
+                    """,s,(org.springframework.jdbc.core.RowCallbackHandler) hu ->
+                    heldUnits.computeIfAbsent(hu.getObject(1,UUID.class),key->new java.util.ArrayList<>())
+                            .add(new com.example.marketplace.order.api.OrderConfirmations.Unit(hu.getObject(2,UUID.class),hu.getInt(3))));
             var holds=jdbc.query("""
                     SELECT DISTINCT h.id,h.acquired_at,e.occurred_at AS released_at FROM marketplace.order_unit_hold h
                     JOIN marketplace.order_hold_unit hu ON hu.hold_id=h.id JOIN marketplace.order_item i ON i.id=hu.item_id
                     LEFT JOIN marketplace.order_lifecycle_event e ON e.cause_id=h.id AND e.action IN('RELEASED','REFUNDED')
                     WHERE i.seller_order_id=:seller ORDER BY h.acquired_at,h.id
-                    """,s,(h,k)->new Hold(h.getObject("id",UUID.class),h.getTimestamp("acquired_at").toInstant(),h.getTimestamp("released_at")==null?null:h.getTimestamp("released_at").toInstant()));
+                    """,s,(h,k)->new Hold(h.getObject("id",UUID.class),h.getTimestamp("acquired_at").toInstant(),h.getTimestamp("released_at")==null?null:h.getTimestamp("released_at").toInstant(),heldUnits.get(h.getObject("id",UUID.class))));
             return new Seller(order,seller,r.getObject("store_id",UUID.class),version,r.getLong("shipping"),units,refunds,shippingState,r.getTimestamp("created_at").toInstant(),holds);
         });
     }
