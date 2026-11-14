@@ -134,6 +134,12 @@ class BrowserApiIT extends PostgresContractFixture {
             supportFixture("p11-browser", "SETTLEMENTS");
             var desktop = settlementBrowserOrder("desktop", SETTLEMENT_FIRST_WEEK);
             var mobile = settlementBrowserOrder("mobile", SETTLEMENT_FIRST_WEEK.plusWeeks(1));
+            var dashboardOperator=supportFixture("dash-web","SYSTEM").authority();
+            var run=context.getBean(com.example.marketplace.reporting.api.Dashboards.class).refresh(
+                    new com.example.marketplace.reporting.api.Dashboards.Actor(dashboardOperator.member(),dashboardOperator.browser(),dashboardOperator.version()),
+                    UUID.randomUUID(),"실제 확정·결제 증거를 두 플랫폼 매대 지표에 게시");
+            var dashboardJob=jdbc.queryForObject("SELECT job_id FROM marketplace.dashboard_run WHERE id=:id",Map.of("id",run),UUID.class);
+            runStoredJob("DASHBOARD_REFRESH.v1",dashboardJob);
             for (String field : List.of("storeId", "sellerOrderId", "causeId", "weekStart")) {
                 assertFalse(desktop.get(field).equals(mobile.get(field)), field);
             }

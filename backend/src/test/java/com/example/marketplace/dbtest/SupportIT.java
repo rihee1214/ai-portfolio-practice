@@ -396,6 +396,15 @@ class SupportIT extends SettlementContractFixture {
         assertEquals("SUCCEEDED",jdbc.queryForObject("SELECT state FROM marketplace.claim_shipping_obligation WHERE order_id=:order",member,String.class));
         assertEquals(2,jdbc.queryForObject("SELECT count(*) FROM marketplace.order_unit_lifecycle WHERE confirmation_id=:id AND state='CONFIRMED'",Map.of("id",confirmed.receiptId()),Integer.class));
         assertEquals(3,jdbc.queryForObject("SELECT count(*) FROM marketplace.payment_refund_attempt WHERE order_id=:order AND state='SUCCEEDED'",member,Integer.class));
+        var successful=new TransactionTemplate(transactionManager).execute(t->context.getBean(
+                com.example.marketplace.payment.api.DashboardPayments.class).refunds());
+        for(String purpose:List.of("ITEM","SHIPPING")) {
+            long original=jdbc.queryForObject("SELECT sum(amount) FROM marketplace.payment_refund_attempt WHERE order_id=:id AND purpose=:kind AND state='SUCCEEDED'",
+                    Map.of("id",purchase.order().id(),"kind",purpose),Long.class);
+            assertTrue(original>0);
+            assertEquals(original,successful.stream().filter(f->shipment.sellerOrderId().equals(f.sellerOrderId())&&purpose.equals(f.purpose()))
+                    .mapToLong(com.example.marketplace.payment.api.DashboardPayments.Refund::amount).sum());
+        }
         var latest=readOk(operator.browser(),path);
         var budget=jdbc.queryForMap("SELECT paid,reserved,succeeded FROM marketplace.payment_refund_budget WHERE order_id=:order",member);
         for(UUID old:previousResultJobs) { runStoredJob("REFUND_RESULT_RECORDED.v1",old); }
@@ -435,6 +444,25 @@ class SupportIT extends SettlementContractFixture {
             var legacy=service.get(produced.id(),actor);
             assertEquals(1,jdbc.queryForObject("SELECT readiness_version FROM marketplace.settlement_batch WHERE id=:id",id,Integer.class));
             assertTrue(legacy.balances().isEmpty());
+            // Materialize the original v1 payment protocol against its original item membership.
+            // Keep the v2 rebuild below independent by restoring the draft savepoint afterwards.
+            Object beforeLegacyPayment=t.createSavepoint();
+            var legacyParams=Map.of("id",produced.id(),"actor",actor.member(),"at",java.sql.Timestamp.from(boundary),"key",UUID.randomUUID());
+            jdbc.update("UPDATE marketplace.settlement_batch SET state='REVIEWED',reviewed_by=:actor,reviewed_at=:at,version=version+1 WHERE id=:id",legacyParams);
+            jdbc.update("INSERT INTO marketplace.settlement_mock_payment(id,batch_id,amount,actor_id,occurred_at) SELECT :key,id,net,:actor,:at FROM marketplace.settlement_batch WHERE id=:id",legacyParams);
+            jdbc.update("UPDATE marketplace.settlement_batch SET state='PAID_MOCK',paid_at=:at,version=version+1 WHERE id=:id",legacyParams);
+            jdbc.getJdbcTemplate().execute("SET CONSTRAINTS ALL IMMEDIATE");
+            var settlementFacts=context.getBean(com.example.marketplace.settlement.api.DashboardSettlements.class);
+            var expectedStore=shipment.sellerOrderId();
+            var originalNet=legacy.items().stream().filter(i->i.sellerOrderId().equals(expectedStore))
+                    .map(i->new java.math.BigInteger(i.net())).reduce(java.math.BigInteger.ZERO,java.math.BigInteger::add);
+            assertTrue(originalNet.signum()>0);
+            var storeId=purchase.order().sellers().getFirst().storeId();
+            var payoutDay=boundary.atZone(java.time.ZoneId.of("Asia/Seoul")).toLocalDate();
+            assertEquals(originalNet,settlementFacts.measure().stream().filter(f->f.metric().equals("MOCK_PAYOUT")
+                    && storeId.equals(f.owner()) && payoutDay.equals(f.day())).map(com.example.marketplace.settlement.api.DashboardSettlements.Fact::amount)
+                    .reduce(java.math.BigInteger.ZERO,java.math.BigInteger::add));
+            t.rollbackToSavepoint(beforeLegacyPayment);t.releaseSavepoint(beforeLegacyPayment);
             var prior=service.open(new Settlements.Open(UUID.randomUUID(),priorWeek),actor);
             assertEquals(2,jdbc.queryForObject("SELECT readiness_version FROM marketplace.settlement_batch WHERE id=:id",id,Integer.class));
             assertTrue(prior.version()>legacy.version());
@@ -470,6 +498,8 @@ class SupportIT extends SettlementContractFixture {
             long unpaid=Long.parseLong(local.opening())-Long.parseLong(local.net());
             assertTrue(unpaid>0 && Long.parseLong(local.net())>0);
             assertEquals(Long.toString(unpaid),local.closing());assertEquals("0",local.payout());
+            assertTrue(settlementFacts.measure().stream().anyMatch(f->store.equals(f.owner())&&"CARRY_CLOSING".equals(f.metric())
+                    && f.amount().longValueExact()==unpaid));
             assertTrue(Long.parseLong(foreign.net())>0);
             assertEquals("0",foreign.opening());assertEquals("0",foreign.closing());assertEquals(foreign.net(),foreign.payout());
             var excess=settleWeek(service,actor,testClock,currentWeek.plusWeeks(3));

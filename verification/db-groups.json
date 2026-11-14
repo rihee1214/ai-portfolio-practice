@@ -319,7 +319,7 @@
       "provides": [
         "browser.wire"
       ],
-      "consumes": [
+      "consumes": ["reporting.dashboard",
         "settlement.ledger",
         "operations.trade-support",
         "operations.moderation",
@@ -4136,7 +4136,7 @@
         }
       ],
       "expectedDatabaseCount": 1,
-      "consumes": [
+      "consumes": ["reporting.dashboard",
         "money.refund", "settlement.ledger", "order.confirmation", "return.financial", "exchange.financial", "aftercare.closure",
         "authority.current",
         "db.transaction",
@@ -4376,14 +4376,16 @@
           "invocations": 1
         }
       ]
-    }
+    },
+    {"id":"dashboard","kind":"cross-domain-contract","classes":["com.example.marketplace.dbtest.DashboardIT"],"expectedDatabaseCount":1,"provides":["reporting.dashboard"],"consumes":["order.snapshot","order.confirmation","payment.outcome","money.refund","authority.current","job.current-lease","seller.capability","db.transaction","schema.upgrade","settlement.ledger","delivery.actual-source","exchange.physical","return.physical","catalog.offer","stock.reservation","operations.support","operations.report","operations.moderation","content.questions"],"tests":[{"old":"com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents","new":"com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection","new":"com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently","new":"com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows","new":"com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct","new":"com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays","new":"com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded","new":"com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately","new":"com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally","new":"com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess","new":"com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney","new":"com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes","new":"com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt","new":"com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes","new":"com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck","new":"com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork","new":"com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork","invocations":1}]}
   ],
   "impact": {
-    "settlement": {"select": ["settlement", "support", "browser-api", "payment", "confirmation", "refund", "return-finance", "aftercare-contracts", "legacy", "fulfillment", "checkout", "exchange-finance", "identity", "database-runtime"], "reason": "주문·구매확정·실제 결제/환불·미결·주간 모의 지급과 운영 화면"},
+    "dashboard": {"select":["dashboard","support","job-contracts","legacy","browser-api"],"reason":"Dashboard publish, job registration, schema and browser consumers"},
+    "settlement": {"select": ["dashboard", "settlement", "support", "browser-api", "payment", "confirmation", "refund", "return-finance", "aftercare-contracts", "legacy", "fulfillment", "checkout", "exchange-finance", "identity", "database-runtime"], "reason": "주문·구매확정·실제 결제/환불·미결·주간 모의 지급과 운영 화면"},
     "operations": {"select":["operations","support","identity","seller-store","fulfillment","refund","return-physical","return-finance","order-history","guest","content","questions","moderation","reports","browser-api"],"reason":"운영 지원과 계정·판매·기존 주문·환불 권한의 소비 경로"},
-    "moderation": {"select":["moderation","exchange","reports","catalog","content","media","shopping","checkout","order-history","questions","support","confirmation","fulfillment","promotion","refund","legacy","browser-api", "operations"],"reason":"조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"},
+    "moderation": {"select":["dashboard", "moderation","exchange","reports","catalog","content","media","shopping","checkout","order-history","questions","support","confirmation","fulfillment","promotion","refund","legacy","browser-api", "operations"],"reason":"조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"},
     "exchange": {
-      "select": [
+      "select": ["dashboard",
         "exchange",
         "inventory",
         "exchange-finance",
@@ -4407,7 +4409,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "return-physical": {
-      "select": [
+      "select": ["dashboard",
         "return-physical",
         "return-finance",
         "return-recovery",
@@ -4477,7 +4479,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "refund": {
-      "select": [
+      "select": ["dashboard",
         "support",
         "refund",
         "return-finance",
@@ -4502,7 +4504,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "inventory": {
-      "select": [
+      "select": ["dashboard",
         "inventory",
         "checkout",
         "payment",
@@ -4530,7 +4532,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "confirmation": {
-      "select": [
+      "select": ["dashboard",
         "support",
         "confirmation",
         "fulfillment",
@@ -4553,7 +4555,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "fulfillment": {
-      "select": [
+      "select": ["dashboard",
         "fulfillment",
         "confirmation",
         "return-physical",
@@ -4577,7 +4579,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "catalog": {
-      "select": [
+      "select": ["dashboard",
         "catalog",
         "inventory",
         "promotion",
@@ -4607,7 +4609,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "seller-store": {
-      "select": [
+      "select": ["dashboard",
         "seller-store",
         "catalog",
         "promotion",
@@ -4662,7 +4664,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "checkout": {
-      "select": [
+      "select": ["dashboard",
         "checkout",
         "payment",
         "order-history",
@@ -4686,7 +4688,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "payment": {
-      "select": [
+      "select": ["dashboard",
         "payment",
         "checkout",
         "order-history",
@@ -4779,7 +4781,7 @@
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "identity": {
-      "select": [
+      "select": ["dashboard",
         "identity",
         "payment",
         "process-recovery",
@@ -4814,7 +4816,7 @@
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "job-contracts": {
-      "select": [
+      "select": ["dashboard",
         "settlement",
         "job-contracts",
         "payment",
@@ -4850,7 +4852,7 @@
         "reason": "공통 작업 실행기 변경은 등록된 모든 계약 묶음을 검증"
       },
       "database-runtime": {
-      "select": [
+      "select": ["dashboard",
         "database-runtime",
         "payment",
         "process-recovery",
@@ -4885,7 +4887,7 @@
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "legacy": {
-      "select": [
+      "select": ["dashboard",
         "legacy",
         "payment",
         "process-recovery",
@@ -4975,10 +4977,10 @@
         "browser-api", "reports", "moderation", "operations"],
       "reason": "후기 작성·공개 조회와 구매 브라우저 흐름"
     },
-    "support": {"select":["support","settlement","questions","browser-api", "reports", "moderation", "operations"],"reason":"지원 담당·주문 당사자와 비밀 문의 소비 계약"},
-    "reports": {"select":["reports","content","catalog","media","shopping","checkout","order-history","questions","support","browser-api", "moderation", "operations"],"reason":"신고·콘텐츠 조치의 접근과 공개·구매·기존 거래 소비 계약"},
+    "support": {"select":["dashboard", "support","settlement","questions","browser-api", "reports", "moderation", "operations"],"reason":"지원 담당·주문 당사자와 비밀 문의 소비 계약"},
+    "reports": {"select":["dashboard", "reports","content","catalog","media","shopping","checkout","order-history","questions","support","browser-api", "moderation", "operations"],"reason":"신고·콘텐츠 조치의 접근과 공개·구매·기존 거래 소비 계약"},
     "questions": {
-      "select": [
+      "select": ["dashboard",
         "questions",
         "support",
         "browser-api", "reports", "operations", "order-history", "payment", "confirmation", "fulfillment", "exchange", "moderation", "process-recovery", "job-contracts"],
@@ -4986,7 +4988,7 @@
     }
   },
   "aliases": {
-    "authentication": [
+    "authentication": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5018,7 +5020,7 @@
       "questions",
       "support",
       "reports", "moderation", "operations", "settlement"],
-    "job-runner": [
+    "job-runner": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5050,7 +5052,7 @@
       "questions",
       "support",
       "reports", "moderation", "operations", "settlement"],
-    "financial-common": [
+    "financial-common": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5082,7 +5084,7 @@
       "questions",
       "support",
       "reports", "moderation", "operations", "settlement"],
-    "schema": [
+    "schema": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5114,7 +5116,7 @@
       "questions",
       "support",
       "reports", "moderation", "operations", "settlement"],
-    "unknown": [
+    "unknown": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5146,7 +5148,7 @@
       "questions",
       "support",
       "reports", "moderation", "operations", "settlement"],
-    "test-tools": [
+    "test-tools": ["dashboard",
       "payment",
       "process-recovery",
       "browser-api",

@@ -29,6 +29,7 @@ export const workspaces: Workspace[] = [
     path: '/seller', label: '판매자', title: '매대 운영',
     description: '나만의 매대를 가꾸고, 상품과 주문을 관리할 공간입니다.',
     features: [
+      { path: 'dashboard', title: '매대 대시보드', description: '기간별 거래와 현재 처리 잔량을 확인합니다.', planned: '집계 결과 조회' },
       { path: 'store', title: '내 매대', description: '매대의 소개와 공개 정보를 관리합니다.', planned: '판매 신청·승인 후 본인 매대를 관리하도록 연결할 예정입니다.' },
       { path: 'coupons', title: '회원 쿠폰', description: '쿠폰 조건과 발급 한도를 관리합니다.', planned: '회원 쿠폰 발급·조건 관리' },
       { path: 'promotions', title: '공개 행사', description: '상품·배송 행사를 관리합니다.', planned: '회원·비회원 동일 공개 행사' },
@@ -42,6 +43,7 @@ export const workspaces: Workspace[] = [
     path: '/admin', label: '운영자', title: '사이트 운영',
     description: '회원과 판매 활동을 살피고, 신고와 거래 문제를 관리할 공간입니다.',
     features: [
+      { path: 'dashboard', title: '운영 대시보드', description: '기간별 거래와 현재 처리 잔량을 확인합니다.', planned: '집계 결과 조회' },
       { path: 'users', title: '회원 관리', description: '회원 상태와 조치 이력을 관리합니다.', planned: '계정 상태와 감사 이력을 확인하고 로그인 정지·복원 사유를 기록합니다.' },
       { path: 'sellers', title: '판매자 심사', description: '판매 신청과 매대 운영 상태를 확인합니다.', planned: '판매 신청 승인·반려와 처리 이력을 연결할 예정입니다.' },
       { path: 'stores', title: '매대 운영 관리', description: '판매 정지·복구와 조치 이력을 확인합니다.', planned: '매대 운영 조치를 관리합니다.' },
