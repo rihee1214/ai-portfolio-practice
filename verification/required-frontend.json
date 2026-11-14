@@ -356,6 +356,10 @@
     "tests/unit/DashboardPage.test.tsx#distinguishes inaccessible areas, first unpublished generation, and refresh failure with no exposed totals",
     "tests/unit/NotificationPage.test.tsx#clears the private notification destination on current-access denial and drops the response after logout",
     "tests/unit/NotificationPage.test.tsx#shows the public decision or legacy fallback with an appeal link and drops a late response",
-    "tests/unit/NotificationPage.test.tsx#clears the SYSTEM failure list after logout even when the request resolves later"
+    "tests/unit/NotificationPage.test.tsx#clears the SYSTEM failure list after logout even when the request resolves later",
+    "tests/unit/OrderAddress.test.tsx#saved delivery selection preserves buyer fields and requires new confirmation before the exact contact is submitted",
+    "tests/unit/OrderAddress.test.tsx#saved address lookup failure can retry and an empty list leaves manual delivery entry available",
+    "tests/unit/OrderAddress.test.tsx#a lost order response locks saved-address selection to the original immutable request",
+    "tests/unit/OrderAddress.test.tsx#auth transitions clear copied delivery data and discard a delayed address response"
   ]
 }

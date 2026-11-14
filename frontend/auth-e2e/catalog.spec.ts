@@ -100,8 +100,8 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
     await seller.getByRole('button', { name: /sku-.* · 보유 9 · 예약 0 · 가용 9/ }).click()
     await expect(seller.getByLabel('보유 수량', { exact: true })).toHaveValue('9')
     await expect(seller.getByRole('region', { name: '재고 조정 이력' })).toContainText('운영 실사')
-    await seller.getByRole('region', { name: '재고 관리', exact: true }).screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04d-stock-' + suffix + '.png') })
-    await page.getByRole('region', { name: '재고 관리', exact: true }).screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04d-admin-stock-' + suffix + '.png') })
+    await seller.getByRole('region', { name: '재고 관리', exact: true }).screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04d-stock-' + suffix + '.png') })
+    await page.getByRole('region', { name: '재고 관리', exact: true }).screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04d-admin-stock-' + suffix + '.png') })
     await seller.getByRole('button', { name: '새 옵션 SKU', exact: true }).click()
     await seller.getByLabel('옵션 이름 1', { exact: true }).fill('색상')
     await seller.getByLabel('옵션 값 1', { exact: true }).fill('빨강')
@@ -143,7 +143,7 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
     await expect(preview).toBeVisible()
     await expect.poll(() => preview.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(4)
     const oldUrl = (await preview.getAttribute('src'))!
-    await seller.getByRole('region', { name: '이미지 관리' }).screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04c-images-' + suffix + '.png') })
+    await seller.getByRole('region', { name: '이미지 관리' }).screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04c-images-' + suffix + '.png') })
     await seller.getByLabel('이미지 파일 1', { exact: true }).setInputFiles(resolve('../backend/src/test/resources/media/lossy.webp'))
     await seller.getByLabel('이미지 설명 1', { exact: true }).fill('교체 상품 사진')
     await seller.getByRole('button', { name: '이미지 1 교체', exact: true }).click()
@@ -152,7 +152,7 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
     await seller.getByLabel('이미지 1 삭제 확인', { exact: true }).check()
     await seller.getByRole('button', { name: '이미지 1 삭제', exact: true }).click()
     await expect(seller.getByRole('button', { name: '이미지 1 업로드', exact: true })).toBeVisible()
-    await seller.getByRole('region', { name: 'SKU 관리' }).screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04b-sku-' + suffix + '.png') })
+    await seller.getByRole('region', { name: 'SKU 관리' }).screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04b-sku-' + suffix + '.png') })
     await page.getByRole('button', { name: category + ' · 활성', exact: true }).click()
     await page.getByLabel('활성 카테고리').uncheck()
     await page.getByRole('button', { name: '카테고리 저장', exact: true }).click()
@@ -186,10 +186,10 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
       expect(await seller.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     }
     await seller.setViewportSize({ width: suffix === 'mobile' ? 375 : 1440, height: 1000 })
-    await seller.locator('.store-card').screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04-product-' + suffix + '.png') })
-    await page.locator('.store-card').screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04-category-' + suffix + '.png') })
+    await seller.locator('.store-card').screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04-product-' + suffix + '.png') })
+    await page.locator('.store-card').screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04-category-' + suffix + '.png') })
   } catch (error) {
-    await seller.screenshot({ path: resolve(process.env.A3_EVIDENCE!, 'p04-seller-failure-' + suffix + '.png') }).catch(() => {})
+    await seller.screenshot({ scale: 'css', path: resolve(process.env.A3_EVIDENCE!, 'p04-seller-failure-' + suffix + '.png') }).catch(() => {})
     throw error
   } finally { await sellerContext.close().catch(() => {}) }
 })

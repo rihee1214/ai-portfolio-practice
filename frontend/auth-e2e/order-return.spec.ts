@@ -19,7 +19,7 @@ async function assertResponsiveGeometry(p:Page,info:TestInfo,width:number){
   return {fits:document.documentElement.scrollWidth<=innerWidth,withinLayoutViewport:document.documentElement.scrollWidth<=document.documentElement.clientWidth,innerWidth,innerHeight,devicePixelRatio,visualViewport:visualViewport&&{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft},document:dimensions(document.documentElement),body:dimensions(document.body),overflow,activeElement:document.activeElement&&dimensions(document.activeElement),pending:[...document.querySelectorAll('[role="status"],[role="alert"]')].map(e=>({text:e.textContent,...identify(e)})),disabledButtons:document.querySelectorAll('button:disabled').length,fonts:{status:document.fonts.status,malgunGothic:document.fonts.check('16px "Malgun Gothic"'),loaded:[...document.fonts].map(f=>({family:f.family,status:f.status}))}}
  })
  await info.attach('d-responsive-geometry-'+width,{body:JSON.stringify({requestedWidth:width,...geometry}),contentType:'application/json'})
- if(!geometry.fits||!geometry.withinLayoutViewport)await info.attach('d-responsive-overflow-'+width,{body:await p.screenshot({fullPage:true}),contentType:'image/png'})
+ if(!geometry.fits||!geometry.withinLayoutViewport)await info.attach('d-responsive-overflow-'+width,{body:await p.screenshot({ scale: 'css',fullPage:true}),contentType:'image/png'})
  expect(geometry.fits,JSON.stringify({width,document:geometry.document,overflow:geometry.overflow})).toBe(true)
  expect(geometry.withinLayoutViewport,JSON.stringify({width,innerWidth:geometry.innerWidth,document:geometry.document,overflow:geometry.overflow})).toBe(true)
  expect(geometry.document.clientWidth).toBe(width)

@@ -54,7 +54,7 @@ test('모의 판매 신청·반려·재신청·승인과 구매자 자격 유지
     await operator.reload()
     await expect(operator.getByRole('article', { name }).getByText('승인', { exact: true })).toBeVisible()
     expect(await operator.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
-    await operator.screenshot({ path: info.outputPath('seller-review.png') })
+    await operator.screenshot({ scale: 'css', path: info.outputPath('seller-review.png') })
     await page.reload()
     await expect(page.getByText(/판매자 자격이 있습니다/)).toBeVisible()
     expect((await (await page.request.get('/api/auth/me')).json()).roles.sort()).toEqual(['BUYER', 'SELLER'])

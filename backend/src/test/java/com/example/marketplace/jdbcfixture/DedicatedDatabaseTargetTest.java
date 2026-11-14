@@ -116,11 +116,19 @@ class DedicatedDatabaseTargetTest {
 
     private int endpointChild(boolean diagnostic,boolean confirmed,boolean sharedUrl) throws Exception {
         String database="d2_it_0123456789abcdef0123456789abcdef",instance="4abe1092-7cdf-414b-8a2d-e9130af4012e";String cp=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path"));
-        var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getProperty("user.dir"),"../.local-tools/endpoint-guard-"+java.util.UUID.randomUUID()));var output=folder.resolve("child.txt");var builder=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"-cp",cp,"com.example.marketplace.jdbcfixture.DedicatedEndpointPropagationProbe").redirectErrorStream(true).redirectOutput(output.toFile());
+        // Exercise the Windows command-line boundary even from a short checkout.
+        while(cp.length()<=32767){cp=cp+java.io.File.pathSeparator+cp;}
+        var folder=java.nio.file.Files.createDirectory(java.nio.file.Path.of(System.getProperty("user.dir"),"../.local-tools/endpoint-guard-"+java.util.UUID.randomUUID()));var output=folder.resolve("child.txt");
+        var arguments=folder.resolve("probe.args");
+        java.nio.file.Files.writeString(arguments,"-cp\n\""+cp.replace((char)92,'/')+"\"\ncom.example.marketplace.jdbcfixture.DedicatedEndpointPropagationProbe\n");
+        var builder=new ProcessBuilder(java.nio.file.Path.of(System.getProperty("java.home"),"bin","java.exe").toString(),"@"+arguments).redirectErrorStream(true).redirectOutput(output.toFile());
         for(String key:java.util.List.of("D2_TEST_POSTGRES_PORT","D2_TEST_POSTGRES_INSTANCE","D2_DB_ENDPOINT_CONFIRMATION","D2_ADMIN_PASSWORD","D2_DB_PASSWORD","DB_PASSWORD","C3_TEST_ADMIN_PASSWORD","C3_TEST_DB_PASSWORD")){builder.environment().remove(key);}
         builder.environment().put("D2_DB_NAME",database);builder.environment().put("D2_DB_USERNAME","marketplace_test");builder.environment().put("D2_DB_URL","jdbc:postgresql://127.0.0.1:"+(sharedUrl?15433:26543)+"/"+database);
         if(diagnostic){builder.environment().put("D2_TEST_POSTGRES_PORT","26543");builder.environment().put("D2_TEST_POSTGRES_INSTANCE",instance);}
         if(confirmed){builder.environment().put("D2_DB_ENDPOINT_CONFIRMATION",diagnostic?"127.0.0.1:26543|"+instance:"127.0.0.1:15433|default");}
-        var process=builder.start();try{org.junit.jupiter.api.Assertions.assertTrue(process.waitFor(10,java.util.concurrent.TimeUnit.SECONDS),"endpoint guard child must finish without any DB connection");return process.exitValue();}finally{if(process.isAlive()){process.destroyForcibly();process.waitFor(10,java.util.concurrent.TimeUnit.SECONDS);}}
+        var process=builder.start();try{org.junit.jupiter.api.Assertions.assertTrue(process.waitFor(10,java.util.concurrent.TimeUnit.SECONDS),"endpoint guard child must finish without any DB connection");
+            String actual=java.nio.file.Files.readString(output);
+            org.junit.jupiter.api.Assertions.assertTrue(confirmed?actual.contains("TARGET_ALLOWED"):actual.contains("IllegalArgumentException: Missing or mismatched dedicated endpoint confirmation"),"child must execute the endpoint guard, not fail to launch: "+actual);
+            return process.exitValue();}finally{if(process.isAlive()){process.destroyForcibly();process.waitFor(10,java.util.concurrent.TimeUnit.SECONDS);}}
     }
 }

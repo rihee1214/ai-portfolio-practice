@@ -28,7 +28,7 @@ test('직접 접근·새로고침·역할/개별 운영 권한 경계를 화면�
   await page.reload()
   await expect(page.getByText('공간 접근 권한을 확인했습니다.', { exact: false })).toBeVisible()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
-  await page.screenshot({ path: info.outputPath('permission.png') })
+  await page.screenshot({ scale: 'css', path: info.outputPath('permission.png') })
   await page.goto('/admin/users')
   await expect(page.getByRole('alert')).toContainText('권한')
   await page.getByRole('button', { name: '권한 다시 확인' }).focus()

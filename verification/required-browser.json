@@ -176,6 +176,8 @@
     "desktop#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case",
     "mobile#reports.spec.ts:member reports a question and reads the decision after the assigned investigator reopens the case",
     "desktop#settlement.spec.ts:settlement operator traces three confirmed units through review and mock payout of a closed week",
-    "mobile#settlement.spec.ts:settlement operator traces three confirmed units through review and mock payout of a closed week"
+    "mobile#settlement.spec.ts:settlement operator traces three confirmed units through review and mock payout of a closed week",
+    "desktop#p12-demo.spec.ts:P12 API-produced sellers and buyer retain one trace through storefront purchase and seller purchase",
+    "mobile#p12-demo.spec.ts:P12 API-produced sellers and buyer retain one trace through storefront purchase and seller purchase"
   ]
 }

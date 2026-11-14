@@ -73,7 +73,7 @@ test('프로필·배송지 등록 수정 삭제와 기본 주소를 실제 DB로
   await page.reload()
   await expect(page.getByText(/202호/)).toBeVisible()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
-  await page.screenshot({ path: info.outputPath('addresses.png') })
+  await page.screenshot({ scale: 'css', path: info.outputPath('addresses.png') })
   page.on('dialog', dialog => { void dialog.accept() })
   await page.getByRole('button', { name: '삭제', exact: true }).click()
   await expect(page.getByRole('button', { name: '수정', exact: true })).toHaveCount(0)

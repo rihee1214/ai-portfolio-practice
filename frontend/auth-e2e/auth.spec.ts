@@ -35,7 +35,7 @@ test('실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로�
   expect(await page.evaluate(() => localStorage.length)).toBe(0)
   expect(await page.evaluate(() => sessionStorage.length)).toBe(0)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
-  await page.screenshot({ path: info.outputPath('account.png') })
+  await page.screenshot({ scale: 'css', path: info.outputPath('account.png') })
 
   const tab = await page.context().newPage()
   await tab.goto('/account')

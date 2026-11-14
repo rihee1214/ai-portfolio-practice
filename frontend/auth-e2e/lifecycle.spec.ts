@@ -60,8 +60,8 @@ test('판매 정지·복구·폐점은 구매 권한을 유지하고 기능과 �
     await expect(card.getByRole('button', { name: '판매 정지하기' })).toHaveCount(0)
     await expect(card.getByText(/모의 폐점 사유/)).toBeVisible()
     for (const target of [page, admin]) expect(await target.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
-    await page.locator('.store-card').screenshot({ path: info.outputPath('closed-store.png') })
-    await card.screenshot({ path: info.outputPath('store-operations.png') })
+    await page.locator('.store-card').screenshot({ scale: 'css', path: info.outputPath('closed-store.png') })
+    await card.screenshot({ scale: 'css', path: info.outputPath('store-operations.png') })
   } catch (error) {
     failed = true
     throw error
