@@ -85,6 +85,8 @@ public class AuthConfiguration {
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/payments/{number}/sandbox", "/api/payments/{number}/confirm").permitAll()
                         .requestMatchers(request->request.getMethod().equals("POST")&&request.getRequestURI().equals("/api/payments/webhooks/toss")).permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/events", "/api/events/*").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/site/shipping-policy", "/api/site/posts",
+                                "/api/site/posts/{id}", "/api/site/posts/{id}/images/{asset}", "/api/site/info").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/auth/csrf").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/checkout").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/guest/orders", "/api/guest/access/references", "/api/guest/access/references/{number}").permitAll()

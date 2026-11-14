@@ -114,4 +114,11 @@ public class DashboardReader implements Dashboards {
         authorize(actor,AccessArea.SYSTEM);
         return id;
     }
+    @Override @Transactional public long followup(Actor actor,UUID job,UUID key,String reason) {
+        authorize(actor,AccessArea.SYSTEM);
+        if(key==null||reason==null||reason.isBlank()||reason.length()>300) { throw new OrderRejected(400); }
+        long run=runs.followup(actor.member(),job,key,reason.strip());
+        authorize(actor,AccessArea.SYSTEM);
+        return run;
+    }
 }

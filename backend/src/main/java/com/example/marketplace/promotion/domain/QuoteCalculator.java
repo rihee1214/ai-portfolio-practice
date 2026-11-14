@@ -8,9 +8,16 @@ import java.util.UUID;
 public final class QuoteCalculator {
     private QuoteCalculator() { }
     public record Weight(UUID id,long amount) { }
-    public static long shipping(long afterPromotion) { if(afterPromotion<0) { throw new PromotionRejected(400); }return afterPromotion>=50000?0:3000; }
+    public static long shipping(long afterPromotion) { return shipping(afterPromotion,3000,50000); }
+    public static long shipping(long afterPromotion,long fee,long threshold) {
+        if(afterPromotion<0||fee<0||threshold<0) { throw new PromotionRejected(400); }
+        return afterPromotion>=threshold?0:fee;
+    }
     public static long storeTotal(long afterPromotion,long coupon,long shippingDiscount) {
-        long base=shipping(afterPromotion);if(coupon<0||coupon>afterPromotion||shippingDiscount<0||shippingDiscount>base) { throw new PromotionRejected(400); }
+        return storeTotal(afterPromotion,coupon,shippingDiscount,shipping(afterPromotion));
+    }
+    public static long storeTotal(long afterPromotion,long coupon,long shippingDiscount,long base) {
+        if(base<0||coupon<0||coupon>afterPromotion||shippingDiscount<0||shippingDiscount>base) { throw new PromotionRejected(400); }
         return Math.addExact(afterPromotion-coupon,base-shippingDiscount);
     }
     public static Map<UUID,Long> allocate(long discount,List<Weight> weights) {

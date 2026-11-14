@@ -1,7 +1,7 @@
 import {returnPolicyText} from '../catalog/ReturnPolicy'
 import {useEffect,useState,useSyncExternalStore} from 'react'
 import type {AuthStore} from '../auth/AuthStore'
-import {QuoteStore,formatMoney,type LineRequest} from './QuoteStore'
+import {QuoteStore,formatMoney,shippingTerms,type LineRequest} from './QuoteStore'
 import {CouponStore,couponStatus} from './CouponStore'
 import {Link} from 'react-router'
 import type {CartStore} from '../cart/CartStore'
@@ -12,7 +12,8 @@ export function QuotePanel({auth,lines,cart}:{auth:AuthStore;lines:LineRequest[]
  useEffect(()=>quotes.connect(),[quotes]);useEffect(()=>coupons.connect(),[coupons])
  const key=JSON.stringify(lines)
  useEffect(()=>{quotes.configure(JSON.parse(key) as LineRequest[])},[quotes,key])
- return <section aria-label="서버 견적"><h2>현재 구매 견적</h2><p>상품 행사 → 회원 쿠폰 → 배송 행사 순서로 계산합니다. 매대별 상품 행사 후 50,000원 이상은 기본 배송비가 무료이며, 미만은 3,000원입니다. 주문·결제 전에 다시 확인합니다.</p>
+ const terms=shippingTerms(state.quote?.policyVersion)
+ return <section aria-label="서버 견적"><h2>현재 구매 견적</h2><p>상품 행사 → 회원 쿠폰 → 배송 행사 순서로 계산합니다. {terms && <>매대별 상품 행사 후 {formatMoney(String(terms.threshold))} 이상은 기본 배송비가 무료이며, 미만은 {formatMoney(String(terms.fee))}입니다.</>} 주문·결제 전에 다시 확인합니다.</p>
  <button disabled={state.busy} onClick={()=>void quotes.refresh()}>견적 다시 계산</button>
  {state.busy&&<p role="status">견적을 계산하고 있습니다.</p>}{state.error&&<><p role="alert">{state.error}</p><button onClick={quotes.clearCoupons}>쿠폰 선택 초기화</button></>}
  {member.member&&<><p>보유 쿠폰 {owned.ownedPage+1} 페이지</p>{owned.error&&<p role="alert">{owned.error}</p>}<button disabled={owned.busy||!owned.ownedPage} onClick={()=>void coupons.load(owned.ownedPage-1)}>이전 선택 쿠폰</button><button disabled={owned.busy||!owned.ownedMore} onClick={()=>void coupons.load(owned.ownedPage+1)}>다음 선택 쿠폰</button></>}

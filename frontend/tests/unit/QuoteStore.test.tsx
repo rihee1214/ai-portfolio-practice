@@ -5,6 +5,16 @@ import {AuthStore} from '../../src/auth/AuthStore'
 const sku='00000000-0000-0000-0000-000000000001',store='00000000-0000-0000-0000-000000000002'
 const fixture=(quantity=1)=>{const price=9007199254740993n,gross=String(price*BigInt(quantity));return {policyVersion:'P07-C-1',evaluatedAt:'2026-01-01T00:00:00Z',fingerprint:'a'.repeat(64),total:gross,stores:[{storeId:store,slug:'store-one',name:'매대',version:0,subtotal:gross,productDiscount:'0',afterPromotion:gross,coupon:null,couponDiscount:'0',shippingBase:'0',shippingPromotion:null,shippingDiscount:'0',total:gross,lines:[{skuId:sku,productId:sku,productVersion:0,skuVersion:0,returnPolicy:policyFixture(sku),title:'상품',options:[],quantity,unitPrice:String(price),gross,promotion:null,promotionDiscount:'0',couponDiscount:'0',net:gross,units:Array.from({length:quantity},(_,ordinal)=>({ordinal,gross:String(price),promotionDiscount:'0',couponDiscount:'0',net:String(price)}))}]}]}}
 const json=(data:unknown)=>new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}})
+it('checks a revised shipping threshold and fee against the quoted allocation',()=>{
+ const q=fixture();q.policyVersion='SHIP-2-4800-65000'
+ const s=q.stores[0],l=s.lines[0]
+ s.subtotal=s.afterPromotion=l.gross=l.net=l.unitPrice=l.units[0].gross=l.units[0].net='50000'
+ q.total=s.total='54800';s.shippingBase='4800'
+ expect(quoteValid(q)).toBe(true)
+ expect(quoteValid({...q,policyVersion:'P07-C-1'})).toBe(false)
+ expect(quoteValid({...q,policyVersion:'SHIP-2-4800-50000'})).toBe(false)
+ expect(quoteValid({...q,policyVersion:'SHIP-2-4800-065000'})).toBe(false)
+})
 it('validates exact decimal amounts and every allocation total',()=>{
  const q=fixture();expect(quoteValid(q)).toBe(true);expect(formatMoney(q.total)).toBe('9,007,199,254,740,993원')
  for(const total of ['-1','01','1.5',9007199254740992,'9223372036854775808'])expect(quoteValid({...q,total})).toBe(false)

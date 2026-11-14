@@ -14,8 +14,16 @@ const amount=(v:unknown):v is string=>typeof v==='string'&&/^(0|[1-9]\d*)$/.test
 const version=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0
 const benefit=(v:unknown)=>v===null||(object(v)&&uuid(v.id)&&version(v.version)&&typeof v.title==='string'&&v.selectionReason==='MAX_DISCOUNT_ID_TIE')
 const moneyFields=(v:Record<string,unknown>,keys:string[])=>keys.every(k=>amount(v[k]))
+export function shippingTerms(version: unknown) {
+ if(version==='P07-C-1')return {fee:3000n,threshold:50000n}
+ if(typeof version!=='string'||version.length>60)return null
+ const m=/^SHIP-([1-9]\d*)-(0|[1-9]\d*)-(0|[1-9]\d*)$/.exec(version)
+ if(!m||BigInt(m[1])<2n||BigInt(m[1])>9223372036854775807n||BigInt(m[2])>2147483647n||BigInt(m[3])>2147483647n)return null
+ return {fee:BigInt(m[2]),threshold:BigInt(m[3])}
+}
 export function quoteValid(value:unknown):value is Quote {
- if(!object(value)||value.policyVersion!=='P07-C-1'||typeof value.evaluatedAt!=='string'||!Number.isFinite(Date.parse(value.evaluatedAt))||typeof value.fingerprint!=='string'||! /^[a-f0-9]{64}$/.test(value.fingerprint)||!amount(value.total)||!Array.isArray(value.stores)||value.stores.length<1||value.stores.length>20)return false
+ const terms=object(value)?shippingTerms(value.policyVersion):null
+ if(!object(value)||!terms||typeof value.evaluatedAt!=='string'||!Number.isFinite(Date.parse(value.evaluatedAt))||typeof value.fingerprint!=='string'||! /^[a-f0-9]{64}$/.test(value.fingerprint)||!amount(value.total)||!Array.isArray(value.stores)||value.stores.length<1||value.stores.length>20)return false
  const stores=new Set<string>(),skus=new Set<string>(),coupons=new Set<string>();let total=0n
  for(const s of value.stores){
   if(!object(s)||!uuid(s.storeId)||stores.has(s.storeId)||typeof s.slug!=='string'||typeof s.name!=='string'||!version(s.version)||!moneyFields(s,['subtotal','productDiscount','afterPromotion','couponDiscount','shippingBase','shippingDiscount','total'])||!benefit(s.shippingPromotion)||!Array.isArray(s.lines)||!s.lines.length)return false
@@ -33,7 +41,7 @@ export function quoteValid(value:unknown):value is Quote {
    if(ug!==BigInt(line.gross)||up!==BigInt(line.promotionDiscount)||uc!==BigInt(line.couponDiscount)||un!==BigInt(line.net)||(!line.promotion&&up!==0n))return false
    gross+=ug;promo+=up;coupon+=uc
   }
-  const store=s as unknown as Store,after=gross-promo,shipping=after>=50000n?0n:3000n,sd=BigInt(store.shippingDiscount)
+  const store=s as unknown as Store,after=gross-promo,shipping=after>=terms.threshold?0n:terms.fee,sd=BigInt(store.shippingDiscount)
   if(gross!==BigInt(store.subtotal)||promo!==BigInt(store.productDiscount)||after!==BigInt(store.afterPromotion)||coupon!==BigInt(store.couponDiscount)||(!store.coupon&&coupon!==0n)||shipping!==BigInt(store.shippingBase)||sd>shipping||(!store.shippingPromotion&&sd!==0n)||after-coupon+shipping-sd!==BigInt(store.total))return false
   total+=BigInt(store.total)
  }

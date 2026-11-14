@@ -1,6 +1,6 @@
 {
   "id": "FRONTEND-P01-P05-D",
-  "tests": [
+  "tests": [ "tests/unit/SitePages.test.tsx#omits the preview notice for the three live site tools and retains the workspace overview notice", "tests/unit/QuoteStore.test.tsx#checks a revised shipping threshold and fee against the quoted allocation", "tests/unit/SitePages.test.tsx#resends the same shipping change after response loss and discards fields after revocation", "tests/unit/SitePages.test.tsx#drops a delayed unpublished CONTENT list after logout and never exposes it in the next session",
     "tests/unit/ReturnStore.test.tsx#D contradictory allowed actions reject withdrawal after approval and shipping query before its own UNKNOWN effect",
     "tests/unit/ReturnStore.test.tsx#D 409 after checked final legacy consent discards both acknowledgements and cannot retry an obsolete quote",
     "tests/unit/ReturnStore.test.tsx#D GAS focus revalidation removes old private data immediately before its delayed current credential response",

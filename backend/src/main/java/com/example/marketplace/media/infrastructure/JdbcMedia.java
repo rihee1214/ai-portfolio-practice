@@ -18,7 +18,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 @Service @Profile("db")
 @org.springframework.boot.autoconfigure.condition.ConditionalOnProperty(name="marketplace.media.enabled",matchIfMissing=true)
-public final class JdbcMedia implements Media, com.example.marketplace.media.api.ReviewImages, com.example.marketplace.media.api.MessageImages {
+public final class JdbcMedia implements Media, com.example.marketplace.media.api.ReviewImages, com.example.marketplace.media.api.MessageImages, com.example.marketplace.media.api.SiteImages {
     private static final org.slf4j.Logger LOG=org.slf4j.LoggerFactory.getLogger(JdbcMedia.class);
     private static final String PROJECTION="""
             SELECT m.slot,m.asset_id,m.alt,m.version,a.width,a.height FROM marketplace.media_slot m
@@ -128,6 +128,26 @@ public final class JdbcMedia implements Media, com.example.marketplace.media.api
                 INSERT INTO marketplace.media_asset(id,owner_id,inquiry_guest_id,width,height,byte_size)
                 VALUES(:asset,:owner,:guest,:width,:height,:size)
                 """, new MapSqlParameterSource("asset",asset).addValue("owner",owner).addValue("guest",guest).addValue("width",image.width()).addValue("height",image.height()).addValue("size",image.png().length));
+    }
+
+    @Override public UUID save(UUID member,String filename,byte[] bytes) {
+        requireReviewTransaction();
+        if(member==null||filename==null||filename.contains("/")||filename.contains("\\")||filename.codePoints().anyMatch(Character::isISOControl)) {
+            throw new MediaException(400);
+        }
+        var asset=UUID.randomUUID();
+        persistAsset(member,null,asset,codec.normalize(filename,bytes));
+        jdbc.update("INSERT INTO marketplace.media_site_image(asset_id) VALUES(:asset)",Map.of("asset",asset));
+        return asset;
+    }
+    @Override public byte[] read(UUID asset) {
+        requireReviewTransaction();
+        if(jdbc.queryForList("SELECT asset_id FROM marketplace.media_site_image WHERE asset_id=:asset",Map.of("asset",asset),UUID.class).isEmpty()) {
+            throw new MediaException(404);
+        }
+        synchronized(files) {
+            try { return files.read(asset); } catch(java.io.IOException missing) { throw new MediaException(404); }
+        }
     }
 
     @Override public List<Image> list(UUID review, long edition) {

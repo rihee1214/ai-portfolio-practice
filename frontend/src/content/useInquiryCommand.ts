@@ -20,7 +20,7 @@ export function useInquiryCommand(saved:(request:InquiryRequest,data:unknown)=>v
       }
       const headers:Record<string,string>={'X-CSRF-TOKEN':csrf.data.token}
       let body:BodyInit|undefined
-      if(cmd.file){const f=new FormData();f.append('file',cmd.file);body=f}
+      if(cmd.file){const f=new FormData();f.append('file',cmd.file);if(cmd.data)f.append('command',new Blob([JSON.stringify(cmd.data)],{type:'application/json'}));body=f}
       else if(cmd.data){headers['Content-Type']='application/json';body=JSON.stringify(cmd.data)}
       const r=await requestJson(cmd.path,{method:cmd.method??'POST',headers,body})
       if(!live.current)return

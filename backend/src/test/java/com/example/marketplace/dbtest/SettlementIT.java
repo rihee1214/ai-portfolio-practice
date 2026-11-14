@@ -345,6 +345,26 @@ class SettlementIT extends SettlementContractFixture {
         assertEquals(paid, post(admin, path + "/simulate-pay", retry, 200));
         assertEquals(List.of(19036L), jdbc.queryForList("SELECT amount FROM marketplace.settlement_mock_payment WHERE batch_id=:id",
                 Map.of("id", UUID.fromString(w2.path("id").asText())), Long.class));
+        var system=supportFixture("site-paid-policy","SYSTEM").browser();
+        String policyPath="/api/admin/system/shipping-policy";
+        var originalPolicy=get(system,policyPath).get(0);
+        var saved=paidPolicyParticipants();
+        assertFalse(saved.get("settlement_mock_payment").equals("[]"));
+        var revised=post(system,policyPath,Map.of("key",UUID.randomUUID(),"expectedVersion",originalPolicy.path("version").asLong(),
+                "baseFee",4800,"freeThreshold",65000,"reason","이미 지급된 모의 정산 명세 보존"),200);
+        assertEquals(saved,paidPolicyParticipants());assertEquals(paid,post(admin,path+"/simulate-pay",retry,200));
+        post(system,policyPath,Map.of("key",UUID.randomUUID(),"expectedVersion",revised.path("version").asLong(),
+                "baseFee",originalPolicy.path("baseFee").asLong(),"freeThreshold",originalPolicy.path("freeThreshold").asLong(),"reason","후속 견적에 초기 금액 적용"),200);
+        assertEquals(saved,paidPolicyParticipants());
+    }
+
+    private Map<String,String> paidPolicyParticipants() {
+        var rows=new java.util.TreeMap<String,String>();
+        for(String table:List.of("purchase_order","seller_order","order_item","order_unit","order_reservation","order_settlement_policy","payment_refund_attempt",
+                "payment_refund_budget","settlement_ledger","settlement_batch","settlement_batch_item","settlement_batch_revision","settlement_mock_payment")) {
+            rows.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class));
+        }
+        return rows;
     }
 
     // Keep the real withdrawal transaction, including its order/fee/refund receipts, while supplying two week-boundary clocks.

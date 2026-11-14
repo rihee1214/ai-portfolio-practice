@@ -261,6 +261,8 @@ class DashboardIT extends SettlementContractFixture {
         var failed=worker(jobs,phase->{ if(phase.equals("AFTER_TRADE")) { throw new IllegalStateException("injected source failure"); } });
         try(var engine=new com.example.marketplace.platform.infrastructure.WorkerEngine(jobs,java.util.List.of(failed))) { assertTrue(engine.runOnce()); }
         assertEquals("READY",jobs.find(id).orElseThrow().status());assertEquals(published,head());
+        var safe=readView(system,"/api/admin/system/site-jobs/"+id);
+        assertEquals(TYPE,safe.path("type").asText());assertEquals("READY",safe.path("status").asText());assertFalse(safe.has("payload"));
         var last=authMapper.readTree(accountRequest(seller.browser(),"GET","/api/seller/dashboard",null,null).body());
         assertEquals("FAILED",last.path("status").asText());assertTrue(last.path("generation").isTextual());
         assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.dashboard_snapshot WHERE job_id=:id",Map.of("id",id),Integer.class));
@@ -271,6 +273,28 @@ class DashboardIT extends SettlementContractFixture {
         assertTrue(Long.parseLong(value(readView(system,"/api/admin/system/dashboard"),"REFRESH_FAILURES"))>=1);
         assertFalse(last.toString().contains("REFRESH_FAILURES"));
         verifyPublishedRowsImmutable(id,key,system);
+        UUID terminal=schedule();
+        var owner=new com.example.marketplace.platform.infrastructure.JdbcJobs(new OneJobJdbc(context.getBean(javax.sql.DataSource.class),terminal),transactionManager,now);
+        now.now=owner.find(terminal).orElseThrow().nextRunAt();
+        var claim=owner.claim(java.util.Set.of(TYPE)).orElseThrow();assertTrue(owner.fail(terminal,claim.ownerToken(),true,"HANDLER_EXCEPTION"));
+        var immutable=owner.find(terminal).orElseThrow();String follow="/api/admin/system/dashboard/failed/"+terminal+"/refresh";
+        var freshKey=UUID.randomUUID();var again=Map.of("key",freshKey,"reason","실패한 작업의 새 집계");
+        assertEquals(403,accountRequest(support,"POST",follow,again,csrfToken(support)).statusCode());
+        var newRun=command(system,follow,again);assertEquals(newRun,command(system,follow,again));
+        assertEquals(409,accountRequest(system,"POST",route,again,csrfToken(system)).statusCode());
+        UUID replacement=jdbc.queryForObject("SELECT next_job FROM marketplace.dashboard_failed_followup WHERE failed_job=:old AND request_key=:key",
+                Map.of("old",terminal,"key",freshKey),UUID.class);
+        org.junit.jupiter.api.Assertions.assertNotEquals(terminal,replacement);runStoredJob(TYPE,replacement);
+        var binding=Map.of("key",freshKey,"old",terminal,"next",replacement,"other",id);
+        String predicate=" WHERE request_key=:key AND failed_job=:old AND next_job=:next";
+        String table="marketplace.dashboard_failed_followup AS t";
+        String select="SELECT to_jsonb(t)::text FROM "+table+predicate;
+        String original=jdbc.queryForObject(select,binding,String.class);
+        for(String sql:java.util.List.of("UPDATE "+table+" SET next_job=:other"+predicate,"DELETE FROM "+table+predicate)) {
+            rejectSnapshotMutation(()->jdbc.update(sql,binding),"site history is immutable");
+            assertEquals(original,jdbc.queryForObject(select,binding,String.class));
+        }
+        assertEquals(newRun,command(system,follow,again));assertEquals(immutable,owner.find(terminal).orElseThrow());
     }
     private void verifyPublishedRowsImmutable(UUID jobId,UUID requestKey,java.net.http.HttpClient system) throws Exception {
         String path="/api/admin/system/dashboard";

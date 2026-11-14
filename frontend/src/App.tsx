@@ -27,6 +27,7 @@ import AuthProvider from './auth/AuthProvider'
 import CartProvider from './cart/CartProvider'
 import { CartPage } from './pages/CartPages'
 import { BrowsePage, ProductDetailPage } from './pages/BrowsePages'
+import { SiteAdmin, PublicPosts } from './site/SitePages'
 import { BrowserRouter, Route, Routes, useLocation, matchPath, Outlet } from 'react-router'
 import { SiteLayout } from './layouts/SiteLayout'
 import { WorkspaceLayout } from './layouts/WorkspaceLayout'
@@ -49,7 +50,7 @@ import { CategoryPage } from './pages/CatalogPages'
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
   const feature = workspace.features.find(item => matchPath({ path: workspace.path + '/' + item.path, end: true }, location.pathname))
-  const areas: Record<string, AccessArea> = { dashboard: 'ADMIN', users: 'ACCOUNTS', sellers: 'ACCOUNTS', stores: 'ACCOUNTS', catalog: 'CONTENT', moderation: 'CONTENT', orders: 'SUPPORT', refunds: 'SYSTEM', notifications: 'SYSTEM', settlements: 'SETTLEMENTS', support: 'SUPPORT', reports: 'CONTENT' }
+  const areas: Record<string, AccessArea> = { dashboard: 'ADMIN', publications: 'CONTENT', settings: 'SYSTEM', jobs: 'SYSTEM', users: 'ACCOUNTS', sellers: 'ACCOUNTS', stores: 'ACCOUNTS', catalog: 'CONTENT', moderation: 'CONTENT', orders: 'SUPPORT', refunds: 'SYSTEM', notifications: 'SYSTEM', settlements: 'SETTLEMENTS', support: 'SUPPORT', reports: 'CONTENT' }
   const area: AccessArea = workspace.path === '/seller' ? 'SELLER' : feature ? areas[feature.path] : 'ADMIN'
   return <WorkspaceAccess key={location.pathname} area={area} title={feature?.title ?? workspace.title}>
     <WorkspaceLayout workspace={workspace} />
@@ -67,7 +68,7 @@ export default function App() {
           <Route path="/support" element={<SupportDesk />} /><Route path="/support/lost-access" element={<LostAccessForm />} />
           <Route path="/guest/recovery" element={<GuestRecoveryPage />} /><Route path="/guest/security" element={<GuestRecoveryPage manage />} />
           <Route path="/guest/orders/login" element={<GuestOrdersPage />} /><Route path="/guest/orders" element={<GuestOrdersPage />} /><Route path="/guest/orders/:number" element={<OrderDetailPage guest />} />
-          <Route path="/events" element={<PublicPromotionPage />} /><Route path="/events/:id" element={<PublicPromotionPage />} /><Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
+          <Route path="/notices" element={<PublicPosts kind="NOTICE"/>}/><Route path="/notices/:id" element={<PublicPosts kind="NOTICE"/>}/><Route path="/faq" element={<PublicPosts kind="FAQ"/>}/><Route path="/events" element={<PublicPromotionPage />} /><Route path="/events/:id" element={<PublicPromotionPage />} /><Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />
@@ -92,7 +93,7 @@ export default function App() {
               <Route index element={<WorkspaceOverview workspace={workspace} />} />
               {workspace.path === '/seller' && <Route path="orders/:id" element={<SellerShipmentsPage />} />}
               {workspace.features.map((feature) => (
-                <Route key={feature.path} path={feature.path} element={feature.path === 'dashboard' ? <DashboardPage seller={workspace.path === '/seller'} /> : workspace.path === '/seller' ? feature.path === 'settlements' ? <SellerSettlementPage /> : feature.path === 'questions' ? <SellerQuestions /> : feature.path === 'orders' ? <SellerShipmentsPage /> : feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'settlements' ? <SettlementPage /> : feature.path === 'users' ? <ManagedAccountsPage /> : feature.path === 'moderation' ? <ModerationPage /> : feature.path === 'reports' ? <ReportQueue /> : feature.path === 'support' ? <SupportDesk reader="OPERATOR" /> : feature.path === 'notifications' ? <RetryNotificationsPage /> : feature.path === 'refunds' ? <SystemRefundsPage /> : feature.path === 'orders' ? <ReturnSupportPage /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
+                <Route key={feature.path} path={feature.path} element={feature.path === 'dashboard' ? <DashboardPage seller={workspace.path === '/seller'} /> : workspace.path === '/seller' ? feature.path === 'settlements' ? <SellerSettlementPage /> : feature.path === 'questions' ? <SellerQuestions /> : feature.path === 'orders' ? <SellerShipmentsPage /> : feature.path === 'coupons' ? <CouponTemplatePage /> : feature.path === 'promotions' ? <PromotionPage /> : feature.path === 'store' ? <StoreEditorPage /> : <SellerFeaturePage feature={feature} /> : feature.path === 'publications' ? <SiteAdmin area="posts"/> : feature.path === 'settings' ? <SiteAdmin area="settings"/> : feature.path === 'jobs' ? <SiteAdmin area="jobs"/> : feature.path === 'settlements' ? <SettlementPage /> : feature.path === 'users' ? <ManagedAccountsPage /> : feature.path === 'moderation' ? <ModerationPage /> : feature.path === 'reports' ? <ReportQueue /> : feature.path === 'support' ? <SupportDesk reader="OPERATOR" /> : feature.path === 'notifications' ? <RetryNotificationsPage /> : feature.path === 'refunds' ? <SystemRefundsPage /> : feature.path === 'orders' ? <ReturnSupportPage /> : feature.path === 'catalog' ? <CategoryPage /> : feature.path === 'stores' ? <StoreOperationsPage /> : feature.path === 'sellers' ? <SellerApplicationsPage admin /> : <FeaturePage feature={feature} />} />
               ))}
             </Route>
           ))}

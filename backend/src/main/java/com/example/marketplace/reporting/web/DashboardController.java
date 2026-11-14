@@ -45,4 +45,8 @@ public class DashboardController {
     public long refresh(@RequestBody Refresh command,HttpServletRequest request) {
         return dashboards.refresh(actor(request),command.key(),command.reason());
     }
+    @PostMapping("/api/admin/system/dashboard/failed/{job}/refresh")
+    public long followup(@PathVariable UUID job,@RequestBody Refresh command,HttpServletRequest request) {
+        return dashboards.followup(actor(request),job,command.key(),command.reason());
+    }
 }

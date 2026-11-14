@@ -237,6 +237,11 @@ class QuestionsIT extends PostgresContractFixture {
         var content=supportFixture("notice-content","CONTENT");
         String path="/api/admin/system/notifications/"+event+"/retry";
         var cmd=Map.of("key",UUID.randomUUID(),"failedJob",job,"reason","전달 확인");
+        var oldJob=platform.find(job).orElseThrow();
+        var inspect=accountRequest(system.browser(),"GET","/api/admin/system/site-jobs/"+job,null,null);
+        assertEquals(200,inspect.statusCode());var summary=authMapper.readTree(inspect.body());
+        assertEquals("NOTIFICATION_DELIVER.v1",summary.path("type").asText());assertEquals("FAILED",summary.path("status").asText());
+        assertEquals(false,summary.has("payload"));assertEquals(oldJob,platform.find(job).orElseThrow());
         for(var denied:java.util.List.of(support,content)) {
             assertEquals(403,accountRequest(denied.browser(),"POST",path,cmd,csrfToken(denied.browser())).statusCode());
         }

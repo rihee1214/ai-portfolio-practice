@@ -1,0 +1,6 @@
+.site-admin { min-width: 0; overflow-wrap: anywhere; }
+.site-admin fieldset { min-inline-size: 0; display: grid; gap: .7rem; }
+.site-admin label { display: grid; gap: .25rem; }
+.site-admin input, .site-admin select, .site-admin textarea { min-inline-size: 0; max-inline-size: 100%; box-sizing: border-box; }
+.site-admin p { white-space: pre-wrap; }
+.site-banners img, .site-admin img { max-width: 100%; height: auto; }

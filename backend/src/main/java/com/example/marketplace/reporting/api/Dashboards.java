@@ -12,4 +12,5 @@ public interface Dashboards {
                 int definitionVersion,Instant sourceAsOf,Instant completedAt,List<Metric> metrics) { }
     View read(Actor actor,String area,LocalDate from,LocalDate to);
     long refresh(Actor actor,UUID key,String reason);
+    long followup(Actor actor,UUID failedJob,UUID key,String reason);
 }

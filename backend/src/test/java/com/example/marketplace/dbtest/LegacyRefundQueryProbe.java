@@ -14,6 +14,14 @@ public final class LegacyRefundQueryProbe {
  static class V102Preparation {
   @org.springframework.context.annotation.Bean
   @org.springframework.context.annotation.Primary
+  com.example.marketplace.promotion.api.ShippingPolicies v102Shipping() {
+   return new com.example.marketplace.promotion.api.ShippingPolicies() {
+    @Override public Policy current() { return new Policy(1,3000,50000); }
+    @Override public Policy lockForCheckout() { return current(); }
+   };
+  }
+  @org.springframework.context.annotation.Bean
+  @org.springframework.context.annotation.Primary
   V102Notifications v102Notifications() { return new V102Notifications(); }
  }
  static final class V102Notifications implements NotificationEvents {
@@ -31,10 +39,15 @@ public final class LegacyRefundQueryProbe {
   try(var context=builder.run(options.toArray(String[]::new))){
    var sql=new org.springframework.jdbc.core.JdbcTemplate(context.getBean(javax.sql.DataSource.class));
    var events=context.getBean(NotificationEvents.class);
-   org.junit.jupiter.api.Assertions.assertEquals(prepare?102:129,sql.queryForObject(
+   org.junit.jupiter.api.Assertions.assertEquals(prepare?102:132,sql.queryForObject(
            "SELECT max(version::integer) FROM marketplace.flyway_schema_history WHERE success AND version ~ '^[0-9]+$'",Integer.class));
    org.junit.jupiter.api.Assertions.assertEquals(!prepare,sql.queryForObject(
            "SELECT to_regclass('marketplace.notification_event') IS NOT NULL",Boolean.class));
+   org.junit.jupiter.api.Assertions.assertEquals(!prepare,sql.queryForObject(
+           "SELECT to_regclass('marketplace.site_shipping_policy') IS NOT NULL",Boolean.class));
+   var policy=context.getBean(com.example.marketplace.promotion.api.ShippingPolicies.class);
+   org.junit.jupiter.api.Assertions.assertEquals(new com.example.marketplace.promotion.api.ShippingPolicies.Policy(1,3000,50000),policy.current());
+   if(!prepare) { org.junit.jupiter.api.Assertions.assertSame(context.getBean(com.example.marketplace.promotion.infrastructure.JdbcShippingPolicies.class),policy); }
    if(prepare) { org.junit.jupiter.api.Assertions.assertInstanceOf(V102Notifications.class,events); }
    else {
     org.junit.jupiter.api.Assertions.assertSame(context.getBean(NotificationDelivery.class),events);

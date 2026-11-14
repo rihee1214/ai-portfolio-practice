@@ -23,8 +23,11 @@ public final class JdbcQuotes implements Quotes {
     private final Promotions promotions;
     private final Coupons coupons;
     private final AccessPolicy access;
+    private final com.example.marketplace.promotion.api.ShippingPolicies shippingPolicies;
     private final TransactionTemplate tx;
-    public JdbcQuotes(Browse browse,Promotions promotions,Coupons coupons,AccessPolicy access,PlatformTransactionManager manager) {
+    public JdbcQuotes(Browse browse,Promotions promotions,Coupons coupons,AccessPolicy access,PlatformTransactionManager manager,
+                      com.example.marketplace.promotion.api.ShippingPolicies shippingPolicies) {
+        this.shippingPolicies=shippingPolicies;
         this.browse=browse;this.promotions=promotions;this.coupons=coupons;this.access=access;tx=new TransactionTemplate(manager);tx.setReadOnly(true);tx.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
     }
     private record Source(Browse.QuoteOffer offer,int quantity) { }
@@ -36,6 +39,8 @@ public final class JdbcQuotes implements Quotes {
         catch(ArithmeticException ex) { throw new PromotionRejected(400); }
     }
     private Quote calculateSnapshot(UUID member,List<LineRequest> requests,List<CouponSelection> selections) {
+        var policy=org.springframework.transaction.support.TransactionSynchronizationManager.isCurrentTransactionReadOnly()
+                ? shippingPolicies.current() : shippingPolicies.lockForCheckout();
         if(member!=null) { access.require(member,AccessArea.BUYER); }Instant at=Instant.now();
         var groups=new java.util.TreeMap<UUID,List<Source>>(java.util.Comparator.comparing(UUID::toString));
         for(var r:requests.stream().sorted(java.util.Comparator.comparing(x->x.skuId().toString())).toList()) {
@@ -59,10 +64,10 @@ public final class JdbcQuotes implements Quotes {
             }
             var shares=QuoteCalculator.allocate(couponDiscount,lines.stream().map(l->new QuoteCalculator.Weight(l.skuId(),l.net())).toList());var finalLines=new java.util.ArrayList<Line>();
             for(var l:lines) { long share=shares.get(l.skuId());finalLines.add(new Line(l.skuId(),l.productId(),l.productVersion(),l.skuVersion(),l.title(),l.options(),l.quantity(),l.unitPrice(),l.gross(),l.promotion(),l.promotionDiscount(),share,l.net()-share,QuoteCalculator.units(l.unitPrice(),l.promotionDiscount()/l.quantity(),share,l.quantity()),l.returnPolicy())); }
-            long shipping=QuoteCalculator.shipping(after);var shippingPromotion=PromotionRules.best(candidates.stream().filter(p->p.scope().equals("SHIPPING")).toList(),shipping);long shippingDiscount=shippingPromotion==null?0:PromotionRules.discount(shipping,shippingPromotion.kind(),shippingPromotion.value(),shippingPromotion.cap());long storeTotal=QuoteCalculator.storeTotal(after,couponDiscount,shippingDiscount);total=Math.addExact(total,storeTotal);
+            long shipping=QuoteCalculator.shipping(after,policy.baseFee(),policy.freeThreshold());var shippingPromotion=PromotionRules.best(candidates.stream().filter(p->p.scope().equals("SHIPPING")).toList(),shipping);long shippingDiscount=shippingPromotion==null?0:PromotionRules.discount(shipping,shippingPromotion.kind(),shippingPromotion.value(),shippingPromotion.cap());long storeTotal=QuoteCalculator.storeTotal(after,couponDiscount,shippingDiscount,shipping);total=Math.addExact(total,storeTotal);
             stores.add(new Store(storeId,display.storeSlug(),display.storeName(),display.storeVersion(),finalLines,subtotal,productDiscount,after,use,couponDiscount,shipping,benefit(shippingPromotion),shippingDiscount,storeTotal));
         }
-        var quote=new Quote(member,"P07-C-1",at,stores,total,"");return new Quote(member,quote.policyVersion(),at,stores,total,QuoteCalculator.fingerprint(quote));
+        var quote=new Quote(member,policy.quoteVersion(),at,stores,total,"");return new Quote(member,quote.policyVersion(),at,stores,total,QuoteCalculator.fingerprint(quote));
     }
     private Benefit benefit(Promotions.Promotion p) { return p==null?null:new Benefit(p.id(),p.version(),p.title(),p.kind(),p.value(),p.cap()); }
 }
