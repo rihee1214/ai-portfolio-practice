@@ -1,25 +1,252 @@
-import {test,expect} from '@playwright/test'
-import {create,preparedShipmentOrder,approve,headers,worker,verifyDatabase,verifyUI,sellerPage,read} from './purchase-helpers'
-import {diagnostic,instrument,measured} from './diagnostics'
-test.beforeEach(async({context},info)=>{instrument(context,info.project.name+':'+info.title)})
-test('sellerOrdersShowDifferentDeliveryStates',async({page,context,browser},info)=>{
- const n=await create(page,info.project.name,'shipmentmember');await page.goto('/account/orders/'+n);await expect(page.getByText('미결제: 결제 확인 후 배송을 준비합니다.')).toHaveCount(2);await approve(context,n);await page.getByRole('button',{name:'주문 상세 다시 조회',exact:true}).click();await expect(page.getByText(/배송 생성 대기:/)).toHaveCount(2);await worker(context,n,{action:'prepare'});let rows=await verifyDatabase(context,n);expect(rows.map(s=>s.state)).toEqual(['PREPARING','PREPARING'])
- const a=await browser.newContext({baseURL:new URL(page.url()).origin}),b=await browser.newContext({baseURL:new URL(page.url()).origin});try{
-  const [ap,bp]=await Promise.all([a.newPage(),b.newPage()]);await Promise.all([sellerPage(ap,info.project.name,'shipmentmember','a',n),sellerPage(bp,info.project.name,'shipmentmember','b',n)]);const aId=ap.url().split('/').at(-1)!,bId=bp.url().split('/').at(-1)!,sa=rows.find(s=>s.sellerOrderId===aId)!,sb=rows.find(s=>s.sellerOrderId===bId)!;expect(aId).not.toBe(bId);expect((await a.request.get('/api/seller/orders/'+bId+'/shipments')).status()).toBe(404);expect((await b.request.post('/api/seller/shipments/'+sa.id+'/ship',{headers:await headers(b),data:{key:'foreign',version:sa.version,items:sa.items}})).status()).toBe(404)
-  const bodies:unknown[]=[];await ap.route('**/api/seller/shipments/*/ship',async route=>{bodies.push(route.request().postDataJSON());const response=await route.fetch();expect(response.status()).toBe(200);if(bodies.length===1)await route.abort('failed');else await route.fulfill({response})});await ap.getByRole('checkbox',{name:'원 항목과 수량을 확인했습니다'}).check();await ap.getByRole('button',{name:'발송 처리',exact:true}).dblclick();await expect(ap.getByRole('button',{name:'같은 요청으로 발송 결과 확인'})).toBeVisible();expect(bodies).toHaveLength(1)
-  rows=await verifyDatabase(context,n);expect(rows.find(s=>s.id===sa.id)!.state).toBe('SHIPPED');expect(rows.find(s=>s.id===sb.id)!.state).toBe('PREPARING');await page.getByRole('button',{name:'배송 다시 조회'}).click();await verifyUI(page,rows)
-  await worker(context,n,{action:'progress',shipment:sa.id,target:'IN_TRANSIT'});await worker(context,n,{action:'progress',shipment:sa.id,target:'DELIVERED'});const retried=ap.waitForResponse(r=>r.url().endsWith('/ship'));await ap.getByRole('button',{name:'같은 요청으로 발송 결과 확인'}).click();expect((await retried).status()).toBe(200);expect(bodies).toHaveLength(2);expect(bodies[1]).toEqual(bodies[0]);await expect(ap.getByTestId('shipment-state-'+sa.id)).toHaveText('배송 완료')
-  await bp.getByRole('checkbox',{name:'원 항목과 수량을 확인했습니다'}).check();await bp.getByRole('button',{name:'발송 처리',exact:true}).click();await expect(bp.getByTestId('shipment-state-'+sb.id)).toHaveText('발송 완료');await worker(context,n,{action:'progress',shipment:sb.id,target:'IN_TRANSIT'});rows=await verifyDatabase(context,n);expect(rows.find(s=>s.id===sa.id)!.state).toBe('DELIVERED');expect(rows.find(s=>s.id===sb.id)!.state).toBe('IN_TRANSIT');await page.reload();await verifyUI(page,rows)
- }finally{await a.close();await b.close()}
-})
-
-test('guestDeliveryOnNewContext',async({page,context,browser},info)=>{
- const phone=info.project.name==='desktop'?'+821070000001':'+821070000002',n=await measured('guest:first-create',()=>create(page,info.project.name,'shipmentguest',true,phone));await measured('guest:first-approve',()=>approve(context,n))
- const fresh=await measured('guest:fresh-context',()=>browser.newContext({baseURL:new URL(page.url()).origin})),other=await measured('guest:other-context',()=>browser.newContext({baseURL:new URL(page.url()).origin}));instrument(fresh,'guest:fresh');instrument(other,'guest:other');try{const op=await measured('guest:other-page',()=>other.newPage()),otherNumber=await measured('guest:other-create',()=>create(op,info.project.name,'shipmentguest',true,info.project.name==='desktop'?'+821071000001':'+821071000002'));await measured('guest:other-approve',()=>approve(other,otherNumber));const p=await measured('guest:fresh-page',()=>fresh.newPage());const initial=await measured('guest:first-hidden-read',()=>fresh.request.get('/api/orders/'+n+'/shipments'));diagnostic('guest:first-hidden-read:status',{status:initial.status()});expect(initial.status()).toBe(404);await p.goto('/guest/orders/login');for(const [label,value] of [['주문번호',n],['등록 전화번호',phone],['조회 비밀번호','f2 actual guest password']])await p.getByLabel(label,{exact:true}).fill(value);const authenticated=p.waitForResponse(r=>r.url().endsWith('/api/guest/access/login'));await p.getByRole('button',{name:'주문 조회 인증',exact:true}).click();const authenticatedResponse=await authenticated;diagnostic('guest:gas-login:status',{status:authenticatedResponse.status()});expect(authenticatedResponse.status()).toBe(200);await measured('guest:prepare',()=>worker(fresh,n,{action:'prepare'}));const rows=await verifyDatabase(fresh,n);await p.getByRole('region',{name:'실제 주문 이력',exact:true}).getByRole('link',{name:n,exact:true}).click();await verifyUI(p,rows);await p.reload();await verifyUI(p,rows);for(const wrong of [otherNumber,'O'+'f'.repeat(32)]){const response=await fresh.request.get('/api/orders/'+wrong+'/shipments');expect(response.status()).toBe(404);expect(response.headers()['cache-control']).toContain('no-store');expect(await response.text()).not.toContain('F2 수령인')}expect((await fresh.request.post('/api/payments/'+n+'/approve',{headers:await headers(fresh),data:{}})).status()).toBe(401);await p.goto('/guest/orders');const logout=p.waitForResponse(r=>r.url().endsWith('/api/guest/access/logout'));await p.getByRole('button',{name:'비회원 조회 로그아웃',exact:true}).click();const logoutResponse=await logout;diagnostic('guest:logout:status',{status:logoutResponse.status()});expect(logoutResponse.status()).toBe(200);expect((await fresh.request.get('/api/orders/'+n+'/shipments')).status()).toBe(404)}finally{await measured('guest:fresh-close',()=>fresh.close());await measured('guest:other-close',()=>other.close())}
-})
-
-test('keyboardAndResponsiveShipmentFlow',async({page,context,browser},info)=>{
- const n=await preparedShipmentOrder(page,info.project.name,'shipmentkeyboard');await approve(context,n);await worker(context,n,{action:'prepare'});const rows=await read(context,n),seller=await browser.newContext({baseURL:new URL(page.url()).origin});try{const p=await seller.newPage();await sellerPage(p,info.project.name,'shipmentkeyboard','a',n);const sellerId=p.url().split('/').at(-1)!,own=rows.find(s=>s.sellerOrderId===sellerId)!,detail=await(await seller.request.get('/api/seller/orders/'+sellerId)).json();await page.goto('/account/orders/'+n);for(const width of [375,768,1440]){for(const target of [page,p]){await target.setViewportSize({width,height:900});expect(await target.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);for(const i of detail.items)await expect(target.getByText(i.title,{exact:false}).first()).toBeVisible()}await verifyUI(page,rows);await expect(p.getByRole('button',{name:'발송 처리',exact:true})).toBeVisible();await expect(p.getByText(detail.recipient.addressLine1,{exact:false})).toBeVisible()}
- const checkbox=p.getByRole('checkbox',{name:'원 항목과 수량을 확인했습니다'});await checkbox.focus();await p.keyboard.press('Space');expect((await seller.request.post('/api/seller/shipments/'+own.id+'/ship',{headers:await headers(seller),data:{key:'keyboard-concurrent',version:own.version,items:own.items}})).status()).toBe(200);const button=p.getByRole('button',{name:'발송 처리',exact:true});await button.focus();const response=p.waitForResponse(r=>r.url().endsWith('/ship'));await p.keyboard.press('Enter');expect((await response).status()).toBe(409);const error=p.getByRole('alert');await expect(error).toBeFocused();await expect(checkbox).toBeChecked();await expect(checkbox).toHaveAttribute('aria-describedby',await error.getAttribute('id')??'');await expect(p.getByTestId('shipment-state-'+own.id)).toHaveText('발송 완료');await verifyDatabase(context,n)
- }finally{await seller.close()}
-})
+import { operation, prepare, cleanup } from './business-deadline';
+import { test, expect } from './business-deadline';
+import { create, preparedShipmentOrder, approve, headers, worker, verifyDatabase, verifyUI, sellerPage, read } from './purchase-helpers';
+import { diagnostic, instrument, measured } from './diagnostics';
+test.beforeEach(async ({ context }, info) => {
+    instrument(context, info.project.name + ':' + info.title);
+});
+test('sellerOrdersShowDifferentDeliveryStates', async ({ page, context, browser }, info) => {
+    const n = await create(page, info.project.name, 'shipmentmember');
+    await operation("shipments: sellerOrdersShowDifferentDeliveryStates [1]", async () => {
+        await page.goto('/account/orders/' + n);
+        await expect(page.getByText('미결제: 결제 확인 후 배송을 준비합니다.')).toHaveCount(2);
+    });
+    await operation("shipments: 주문 상세 다시 조회 [2]", async () => {
+        await approve(context, n);
+        await page.getByRole('button', { name: '주문 상세 다시 조회', exact: true }).click();
+        await expect(page.getByText(/배송 생성 대기:/)).toHaveCount(2);
+    });
+    let { rows } = await operation("shipments: sellerOrdersShowDifferentDeliveryStates [3]", async () => {
+        await worker(context, n, { action: 'prepare' });
+        const rows = await verifyDatabase(context, n);
+        expect(rows.map(s => s.state)).toEqual(['PREPARING', 'PREPARING']);
+        return { rows };
+    });
+    const { a, b } = await prepare("shipments: sellerOrdersShowDifferentDeliveryStates [4]", async () => {
+        const a = await browser.newContext({ baseURL: new URL(page.url()).origin }), b = await browser.newContext({ baseURL: new URL(page.url()).origin });
+        return { a, b };
+    });
+    try {
+        const { ap, bp } = await prepare("shipments: sellerOrdersShowDifferentDeliveryStates [5]", async () => {
+            const [ap, bp] = await Promise.all([a.newPage(), b.newPage()]);
+            return { ap, bp };
+        });
+        await Promise.all([sellerPage(ap, info.project.name, 'shipmentmember', 'a', n), sellerPage(bp, info.project.name, 'shipmentmember', 'b', n)]);
+        const { sa, sb } = await operation("shipments: /api/seller/orders/ [6]", async () => {
+            const aId = ap.url().split('/').at(-1)!, bId = bp.url().split('/').at(-1)!, sa = rows.find(s => s.sellerOrderId === aId)!, sb = rows.find(s => s.sellerOrderId === bId)!;
+            expect(aId).not.toBe(bId);
+            expect((await a.request.get('/api/seller/orders/' + bId + '/shipments')).status()).toBe(404);
+            return { sa, sb };
+        });
+        const { bodies } = await operation("shipments: /api/seller/shipments/ [7]", async () => {
+            expect((await b.request.post('/api/seller/shipments/' + sa.id + '/ship', { headers: await headers(b), data: { key: 'foreign', version: sa.version, items: sa.items } })).status()).toBe(404);
+            const bodies: unknown[] = [];
+            return { bodies };
+        });
+        await prepare("shipments: sellerOrdersShowDifferentDeliveryStates [8]", async () => {
+            await ap.route('**/api/seller/shipments/*/ship', async (route) => {
+                bodies.push(route.request().postDataJSON());
+                const response = await route.fetch();
+                expect(response.status()).toBe(200);
+                if (bodies.length === 1)
+                    await route.abort('failed');
+                else
+                    await route.fulfill({ response });
+            });
+        });
+        await operation("shipments: lost shipment command and replay retain delivered provider result", async () => {
+            await operation("shipments: 원 항목과 수량을 확인했습니다 [9]", async () => {
+                await ap.getByRole('checkbox', { name: '원 항목과 수량을 확인했습니다' }).check();
+                await ap.getByRole('button', { name: '발송 처리', exact: true }).dblclick();
+                await expect(ap.getByRole('button', { name: '같은 요청으로 발송 결과 확인' })).toBeVisible();
+                expect(bodies).toHaveLength(1);
+                rows = await verifyDatabase(context, n);
+                expect(rows.find(s => s.id === sa.id)!.state).toBe('SHIPPED');
+                expect(rows.find(s => s.id === sb.id)!.state).toBe('PREPARING');
+                await page.getByRole('button', { name: '배송 다시 조회' }).click();
+                await verifyUI(page, rows);
+            });
+            await operation("shipments: sellerOrdersShowDifferentDeliveryStates [10]", async () => {
+                await worker(context, n, { action: 'progress', shipment: sa.id, target: 'IN_TRANSIT' });
+            });
+            await operation("shipments: 같은 요청으로 발송 결과 확인 [11]", async () => {
+                await worker(context, n, { action: 'progress', shipment: sa.id, target: 'DELIVERED' });
+                const retried = ap.waitForResponse(r => r.url().endsWith('/ship'));
+                await ap.getByRole('button', { name: '같은 요청으로 발송 결과 확인' }).click();
+                expect((await retried).status()).toBe(200);
+                expect(bodies).toHaveLength(2);
+                expect(bodies[1]).toEqual(bodies[0]);
+                await expect(ap.getByTestId('shipment-state-' + sa.id)).toHaveText('배송 완료');
+            });
+        });
+        await operation("shipments: 원 항목과 수량을 확인했습니다 [12]", async () => {
+            await bp.getByRole('checkbox', { name: '원 항목과 수량을 확인했습니다' }).check();
+            await bp.getByRole('button', { name: '발송 처리', exact: true }).click();
+            await expect(bp.getByTestId('shipment-state-' + sb.id)).toHaveText('발송 완료');
+        });
+        await operation("shipments: sellerOrdersShowDifferentDeliveryStates [13]", async () => {
+            await worker(context, n, { action: 'progress', shipment: sb.id, target: 'IN_TRANSIT' });
+            rows = await verifyDatabase(context, n);
+            expect(rows.find(s => s.id === sa.id)!.state).toBe('DELIVERED');
+            expect(rows.find(s => s.id === sb.id)!.state).toBe('IN_TRANSIT');
+            await page.reload();
+            await verifyUI(page, rows);
+        });
+    }
+    finally {
+        await cleanup("shipments: sellerOrdersShowDifferentDeliveryStates [14]", async () => {
+            await a.close();
+        });
+        await cleanup("shipments: sellerOrdersShowDifferentDeliveryStates [15]", async () => {
+            await b.close();
+        });
+    }
+});
+test('guestDeliveryOnNewContext', async ({ page, context, browser }, info) => {
+    const phone = info.project.name === 'desktop' ? '+821070000001' : '+821070000002', n = await measured('guest:first-create', () => create(page, info.project.name, 'shipmentguest', true, phone));
+    await operation("shipments: guestDeliveryOnNewContext [16]", async () => {
+        await measured('guest:first-approve', () => approve(context, n));
+    });
+    const { fresh, other } = await prepare("shipments: guestDeliveryOnNewContext [17]", async () => {
+        const fresh = await measured('guest:fresh-context', () => browser.newContext({ baseURL: new URL(page.url()).origin })), other = await measured('guest:other-context', () => browser.newContext({ baseURL: new URL(page.url()).origin }));
+        return { fresh, other };
+    });
+    instrument(fresh, 'guest:fresh');
+    instrument(other, 'guest:other');
+    try {
+        const { otherNumber } = await prepare("shipments: guestDeliveryOnNewContext [18]", async () => {
+            const op = await measured('guest:other-page', () => other.newPage()), otherNumber = await measured('guest:other-create', () => create(op, info.project.name, 'shipmentguest', true, info.project.name === 'desktop' ? '+821071000001' : '+821071000002'));
+            return { otherNumber };
+        });
+        await operation("shipments: guestDeliveryOnNewContext [19]", async () => {
+            await measured('guest:other-approve', () => approve(other, otherNumber));
+        });
+        const { p } = await prepare("shipments: guestDeliveryOnNewContext [20]", async () => {
+            const p = await measured('guest:fresh-page', () => fresh.newPage());
+            return { p };
+        });
+        await operation("shipments: /api/orders/ [21]", async () => {
+            const initial = await measured('guest:first-hidden-read', () => fresh.request.get('/api/orders/' + n + '/shipments'));
+            diagnostic('guest:first-hidden-read:status', { status: initial.status() });
+            expect(initial.status()).toBe(404);
+        });
+        const { rows } = await operation("shipments: 주문 조회 인증 [22]", async () => {
+            await p.goto('/guest/orders/login');
+            for (const [label, value] of [['주문번호', n], ['등록 전화번호', phone], ['조회 비밀번호', 'f2 actual guest password']]) {
+                await operation("shipments: guestDeliveryOnNewContext [23]", async () => {
+                    await p.getByLabel(label, { exact: true }).fill(value);
+                });
+            }
+            const authenticated = p.waitForResponse(r => r.url().endsWith('/api/guest/access/login'));
+            await p.getByRole('button', { name: '주문 조회 인증', exact: true }).click();
+            const authenticatedResponse = await authenticated;
+            diagnostic('guest:gas-login:status', { status: authenticatedResponse.status() });
+            expect(authenticatedResponse.status()).toBe(200);
+            await measured('guest:prepare', () => worker(fresh, n, { action: 'prepare' }));
+            const rows = await verifyDatabase(fresh, n);
+            return { rows };
+        });
+        await operation("shipments: 실제 주문 이력 [24]", async () => {
+            await p.getByRole('region', { name: '실제 주문 이력', exact: true }).getByRole('link', { name: n, exact: true }).click();
+            await verifyUI(p, rows);
+            await p.reload();
+            await verifyUI(p, rows);
+        });
+        for (const wrong of [otherNumber, 'O' + 'f'.repeat(32)]) {
+            await operation("shipments: /api/orders/ [25]", async () => {
+                const response = await fresh.request.get('/api/orders/' + wrong + '/shipments');
+                expect(response.status()).toBe(404);
+                expect(response.headers()['cache-control']).toContain('no-store');
+                expect(await response.text()).not.toContain('F2 수령인');
+            });
+        }
+        await operation("shipments: /api/payments/ [26]", async () => {
+            expect((await fresh.request.post('/api/payments/' + n + '/approve', { headers: await headers(fresh), data: {} })).status()).toBe(401);
+        });
+        await operation("shipments: 비회원 조회 로그아웃 [27]", async () => {
+            await p.goto('/guest/orders');
+            const logout = p.waitForResponse(r => r.url().endsWith('/api/guest/access/logout'));
+            await p.getByRole('button', { name: '비회원 조회 로그아웃', exact: true }).click();
+            const logoutResponse = await logout;
+            diagnostic('guest:logout:status', { status: logoutResponse.status() });
+            expect(logoutResponse.status()).toBe(200);
+            expect((await fresh.request.get('/api/orders/' + n + '/shipments')).status()).toBe(404);
+        });
+    }
+    finally {
+        await cleanup("shipments: guestDeliveryOnNewContext [28]", async () => {
+            await measured('guest:fresh-close', () => fresh.close());
+        });
+        await cleanup("shipments: guestDeliveryOnNewContext [29]", async () => {
+            await measured('guest:other-close', () => other.close());
+        });
+    }
+});
+test('keyboardAndResponsiveShipmentFlow', async ({ page, context, browser }, info) => {
+    const n = await preparedShipmentOrder(page, info.project.name, 'shipmentkeyboard');
+    await operation("shipments: keyboardAndResponsiveShipmentFlow [30]", async () => {
+        await approve(context, n);
+    });
+    await operation("shipments: keyboardAndResponsiveShipmentFlow [31]", async () => {
+        await worker(context, n, { action: 'prepare' });
+    });
+    const { rows, seller } = await prepare("shipments: keyboardAndResponsiveShipmentFlow [32]", async () => {
+        const rows = await read(context, n), seller = await browser.newContext({ baseURL: new URL(page.url()).origin });
+        return { rows, seller };
+    });
+    try {
+        const { p } = await prepare("shipments: keyboardAndResponsiveShipmentFlow [33]", async () => {
+            const p = await seller.newPage();
+            return { p };
+        });
+        await sellerPage(p, info.project.name, 'shipmentkeyboard', 'a', n);
+        const { own, detail } = await operation("shipments: /api/seller/orders/ [34]", async () => {
+            const sellerId = p.url().split('/').at(-1)!, own = rows.find(s => s.sellerOrderId === sellerId)!, detail = await (await seller.request.get('/api/seller/orders/' + sellerId)).json();
+            await page.goto('/account/orders/' + n);
+            return { own, detail };
+        });
+        for (const width of [375, 768, 1440]) {
+            for (const target of [page, p]) {
+                await operation("shipments: keyboardAndResponsiveShipmentFlow [35]", async () => {
+                    await target.setViewportSize({ width, height: 900 });
+                    expect(await target.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+                });
+                for (const i of detail.items) {
+                    await operation("shipments: keyboardAndResponsiveShipmentFlow [36]", async () => {
+                        await expect(target.getByText(i.title, { exact: false }).first()).toBeVisible();
+                    });
+                }
+            }
+            await operation("shipments: 발송 처리 [37]", async () => {
+                await verifyUI(page, rows);
+                await expect(p.getByRole('button', { name: '발송 처리', exact: true })).toBeVisible();
+                await expect(p.getByText(detail.recipient.addressLine1, { exact: false })).toBeVisible();
+            });
+        }
+        const { checkbox, response } = await operation("shipments: 원 항목과 수량을 확인했습니다 [38]", async () => {
+            const checkbox = p.getByRole('checkbox', { name: '원 항목과 수량을 확인했습니다' });
+            await checkbox.focus();
+            await p.keyboard.press('Space');
+            expect((await seller.request.post('/api/seller/shipments/' + own.id + '/ship', { headers: await headers(seller), data: { key: 'keyboard-concurrent', version: own.version, items: own.items } })).status()).toBe(200);
+            const button = p.getByRole('button', { name: '발송 처리', exact: true });
+            await button.focus();
+            const response = p.waitForResponse(r => r.url().endsWith('/ship'));
+            return { checkbox, response };
+        });
+        await operation("shipments: keyboardAndResponsiveShipmentFlow [39]", async () => {
+            await p.keyboard.press('Enter');
+            expect((await response).status()).toBe(409);
+            const error = p.getByRole('alert');
+            await expect(error).toBeFocused();
+            await expect(checkbox).toBeChecked();
+            await expect(checkbox).toHaveAttribute('aria-describedby', await error.getAttribute('id') ?? '');
+            await expect(p.getByTestId('shipment-state-' + own.id)).toHaveText('발송 완료');
+            await verifyDatabase(context, n);
+        });
+    }
+    finally {
+        await cleanup("shipments: keyboardAndResponsiveShipmentFlow [40]", async () => {
+            await seller.close();
+        });
+    }
+});

@@ -2369,11 +2369,13 @@ class PostgresContractFixture {
         builder.redirectErrorStream(true).redirectOutput(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "browser.txt").toFile());
         java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"e-browser-auth-preparation-final.json"),authMapper.writeValueAsString(authPostObservations));
         long browserStarted=System.nanoTime();var process = builder.start();recordBrowserTiming("child:started",browserStarted,process.pid());
-        if (!ContractTiming.awaitProcess(process,390,TimeUnit.SECONDS)) {
-            recordBrowserTiming("child:timeout",browserStarted,process.pid());
-            process.descendants().forEach(ProcessHandle::destroyForcibly);
-            process.destroyForcibly();
-            throw new AssertionError("Auth browser verification timed out");
+        try (var waitScope = ContractTiming.measure("process-wait", "browser-phase-watchdog")) {
+            com.example.marketplace.jdbcfixture.BrowserChildWatchdog.await(process,
+                    java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "browser-progress.ndjson"));
+        } catch (Exception | AssertionError failure) {
+            try { recordBrowserTiming("child:watchdog-failed",browserStarted,process.pid()); }
+            catch (java.io.IOException | RuntimeException evidenceFailure) { failure.addSuppressed(evidenceFailure); }
+            throw failure;
         }
         recordBrowserTiming("child:exited",browserStarted,process.exitValue());
         assertEquals(0, process.exitValue(), "See isolated evidence browser.txt");

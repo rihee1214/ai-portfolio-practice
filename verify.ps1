@@ -88,6 +88,7 @@ try {
         throw 'Browser gate failed (minimum current baseline: 22, no skips or retries accepted)'
     }
     $browserCases = @(Read-BrowserCases $browser.suites)
+    Assert-BrowserDeadlineEvidence (Get-Content "$output/db/groups/browser-api/browser-deadlines.json" -Raw | ConvertFrom-Json) $browserCases
     $browserRequired = Get-Content "$PSScriptRoot/verification/required-browser.json" -Raw | ConvertFrom-Json
     Assert-Coverage $browserCases $browserRequired -ExactNames | ConvertTo-Json -Depth 6 | Set-Content "$output/browser-coverage.json"
     }

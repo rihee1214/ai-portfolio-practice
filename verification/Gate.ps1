@@ -31,6 +31,22 @@ function Read-BrowserCases($Suites) {
     }
 }
 
+function Assert-BrowserDeadlineEvidence($Report, $BrowserCases) {
+    if ($Report.status -cne 'passed' -or @($Report.problems).Count -ne 0 -or $Report.scopes -le 0 -or
+        @($Report.tests).Count -ne @($BrowserCases).Count) { throw 'Missing or failed browser deadline evidence' }
+    $seen = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($test in $Report.tests) {
+        $key = $test.project + '#' + [IO.Path]::GetFileName($test.file.Replace('\','/')) + ':' + $test.title
+        if ($test.status -cne 'passed' -or $test.operations -le 0 -or -not $seen.Add($key)) { throw 'Unmeasured, failed or duplicate deadline test' }
+    }
+    foreach ($case in $BrowserCases) {
+        $colon = $case.name.IndexOf(':')
+        if ($colon -lt 0) { throw 'Invalid browser case name' }
+        $key = $case.classname + '#' + [IO.Path]::GetFileName($case.name.Substring(0,$colon).Replace('\','/')) + $case.name.Substring($colon)
+        if ($case.status -cne 'passed' -or -not $seen.Contains($key)) { throw 'Deadline evidence differs from the actual browser report' }
+    }
+}
+
 function Read-JUnitCases([string]$Directory) {
     $files = @(Get-ChildItem -LiteralPath $Directory -Filter 'TEST-*.xml')
     if (-not $files.Count) { throw "Missing JUnit XML: $Directory" }

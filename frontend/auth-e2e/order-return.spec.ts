@@ -1,93 +1,965 @@
-import {test,expect,type BrowserContext,type Page,type TestInfo} from '@playwright/test'
-import {request as rawRequest} from 'node:http'
-import {headers} from './purchase-helpers'
-import type {OrderDetail} from '../src/order/OrderQueryStore'
-import type {ReturnPage,ReturnDetail,ReturnReceipt,ReturnQuote,Unit} from '../src/returns/ReturnTypes'
-
-type Seed={orderNumber:string;sellerOrderId:string;guest:boolean;buyerEmail:string;sellerEmail:string;supportEmail:string;foreignSellerEmail:string;phone?:string;returnId?:string;competingReturnId?:string;withdrawId?:string;approveId?:string;rejectId?:string;failedReturnId?:string;unknownReturnId?:string;originReturnId?:string;viewReturnId?:string;oldCompletedReturnId?:string;originClaimId?:string}
-type Row=Record<string,unknown>
-type Database={order:{id:string;state:string;amount:number;quote:string};units:Row[];order_unit_lifecycle:Row[];order_unit_hold:Row[];claim_return_request:Row[];claim_return_history:Row[];claim_return_collection:Row[];claim_return_inspection_unit:Row[];claim_return_financial_consent:Row[];claim_return_completion:Row[];claim_fee_assessment:Row[];claim_shipping_obligation:Row[];payment_refund_attempt:Row[];payment_refund_budget:Row[];provider:Row[];inventory:Row[];restored:Row[];coupons:Row[];claim:Row[]}
-
-/** Observe the original width predicate in the same browser task; no settling wait or hidden overflow. */
-async function assertResponsiveGeometry(p:Page,info:TestInfo,width:number){
- await p.setViewportSize({width,height:900})
- const geometry=await p.evaluate(()=>{
-  const rect=(e:Element)=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,left:r.left,right:r.right,width:r.width,height:r.height}}
-  const identify=(e:Element)=>({tag:e.tagName,id:e.id,classes:e.getAttribute('class'),testId:e.getAttribute('data-testid'),ariaLabel:e.getAttribute('aria-label')})
-  const dimensions=(e:Element)=>({...identify(e),clientWidth:e.clientWidth,scrollWidth:e.scrollWidth,bbox:rect(e)})
-  const overflow=[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&(r.right>document.documentElement.clientWidth+.5||r.left<-.5||e.scrollWidth>e.clientWidth+1||e.matches('fieldset,select,input,button'))}).map(e=>{const c=getComputedStyle(e);return {...dimensions(e),text:(e.textContent??'').trim().slice(0,140),style:{display:c.display,position:c.position,width:c.width,minWidth:c.minWidth,maxWidth:c.maxWidth,overflowX:c.overflowX,whiteSpace:c.whiteSpace,wordBreak:c.wordBreak,overflowWrap:c.overflowWrap,transform:c.transform,font:c.font},ancestors:[e.parentElement,e.parentElement?.parentElement].filter((a):a is HTMLElement=>!!a).map(dimensions)}})
-  return {fits:document.documentElement.scrollWidth<=innerWidth,withinLayoutViewport:document.documentElement.scrollWidth<=document.documentElement.clientWidth,innerWidth,innerHeight,devicePixelRatio,visualViewport:visualViewport&&{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetLeft:visualViewport.offsetLeft},document:dimensions(document.documentElement),body:dimensions(document.body),overflow,activeElement:document.activeElement&&dimensions(document.activeElement),pending:[...document.querySelectorAll('[role="status"],[role="alert"]')].map(e=>({text:e.textContent,...identify(e)})),disabledButtons:document.querySelectorAll('button:disabled').length,fonts:{status:document.fonts.status,malgunGothic:document.fonts.check('16px "Malgun Gothic"'),loaded:[...document.fonts].map(f=>({family:f.family,status:f.status}))}}
- })
- await info.attach('d-responsive-geometry-'+width,{body:JSON.stringify({requestedWidth:width,...geometry}),contentType:'application/json'})
- if(!geometry.fits||!geometry.withinLayoutViewport)await info.attach('d-responsive-overflow-'+width,{body:await p.screenshot({ scale: 'css',fullPage:true}),contentType:'image/png'})
- expect(geometry.fits,JSON.stringify({width,document:geometry.document,overflow:geometry.overflow})).toBe(true)
- expect(geometry.withinLayoutViewport,JSON.stringify({width,innerWidth:geometry.innerWidth,document:geometry.document,overflow:geometry.overflow})).toBe(true)
- expect(geometry.document.clientWidth).toBe(width)
- expect(geometry.innerWidth).toBe(width)
+import { currentDeadline, operation, prepare, cleanup } from './business-deadline';
+import { test, expect, type BrowserContext, type Page, type TestInfo } from './business-deadline';
+import { request as rawRequest } from 'node:http';
+import { headers } from './purchase-helpers';
+import type { OrderDetail } from '../src/order/OrderQueryStore';
+import type { ReturnPage, ReturnDetail, ReturnReceipt, ReturnQuote, Unit } from '../src/returns/ReturnTypes';
+type Seed = {
+    orderNumber: string;
+    sellerOrderId: string;
+    guest: boolean;
+    buyerEmail: string;
+    sellerEmail: string;
+    supportEmail: string;
+    foreignSellerEmail: string;
+    phone?: string;
+    returnId?: string;
+    competingReturnId?: string;
+    withdrawId?: string;
+    approveId?: string;
+    rejectId?: string;
+    failedReturnId?: string;
+    unknownReturnId?: string;
+    originReturnId?: string;
+    viewReturnId?: string;
+    oldCompletedReturnId?: string;
+    originClaimId?: string;
+};
+type Row = Record<string, unknown>;
+type Database = {
+    order: {
+        id: string;
+        state: string;
+        amount: number;
+        quote: string;
+    };
+    units: Row[];
+    order_unit_lifecycle: Row[];
+    order_unit_hold: Row[];
+    claim_return_request: Row[];
+    claim_return_history: Row[];
+    claim_return_collection: Row[];
+    claim_return_inspection_unit: Row[];
+    claim_return_financial_consent: Row[];
+    claim_return_completion: Row[];
+    claim_fee_assessment: Row[];
+    claim_shipping_obligation: Row[];
+    payment_refund_attempt: Row[];
+    payment_refund_budget: Row[];
+    provider: Row[];
+    inventory: Row[];
+    restored: Row[];
+    coupons: Row[];
+    claim: Row[];
+};
+async function assertResponsiveGeometry(p: Page, info: TestInfo, width: number) {
+    return operation("order-return: assertResponsiveGeometry", async () => {
+        await p.setViewportSize({ width, height: 900 });
+        const geometry = await p.evaluate(() => {
+            const rect = (e: Element) => { const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, left: r.left, right: r.right, width: r.width, height: r.height }; };
+            const identify = (e: Element) => ({ tag: e.tagName, id: e.id, classes: e.getAttribute('class'), testId: e.getAttribute('data-testid'), ariaLabel: e.getAttribute('aria-label') });
+            const dimensions = (e: Element) => ({ ...identify(e), clientWidth: e.clientWidth, scrollWidth: e.scrollWidth, bbox: rect(e) });
+            const overflow = [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.right > document.documentElement.clientWidth + .5 || r.left < -.5 || e.scrollWidth > e.clientWidth + 1 || e.matches('fieldset,select,input,button')); }).map(e => { const c = getComputedStyle(e); return { ...dimensions(e), text: (e.textContent ?? '').trim().slice(0, 140), style: { display: c.display, position: c.position, width: c.width, minWidth: c.minWidth, maxWidth: c.maxWidth, overflowX: c.overflowX, whiteSpace: c.whiteSpace, wordBreak: c.wordBreak, overflowWrap: c.overflowWrap, transform: c.transform, font: c.font }, ancestors: [e.parentElement, e.parentElement?.parentElement].filter((a): a is HTMLElement => !!a).map(dimensions) }; });
+            return { fits: document.documentElement.scrollWidth <= innerWidth, withinLayoutViewport: document.documentElement.scrollWidth <= document.documentElement.clientWidth, innerWidth, innerHeight, devicePixelRatio, visualViewport: visualViewport && { width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale, offsetLeft: visualViewport.offsetLeft }, document: dimensions(document.documentElement), body: dimensions(document.body), overflow, activeElement: document.activeElement && dimensions(document.activeElement), pending: [...document.querySelectorAll('[role="status"],[role="alert"]')].map(e => ({ text: e.textContent, ...identify(e) })), disabledButtons: document.querySelectorAll('button:disabled').length, fonts: { status: document.fonts.status, malgunGothic: document.fonts.check('16px "Malgun Gothic"'), loaded: [...document.fonts].map(f => ({ family: f.family, status: f.status })) } };
+        });
+        await info.attach('d-responsive-geometry-' + width, { body: JSON.stringify({ requestedWidth: width, ...geometry }), contentType: 'application/json' });
+        if (!geometry.fits || !geometry.withinLayoutViewport)
+            await info.attach('d-responsive-overflow-' + width, { body: await p.screenshot({ scale: 'css', fullPage: true }), contentType: 'image/png' });
+        expect(geometry.fits, JSON.stringify({ width, document: geometry.document, overflow: geometry.overflow })).toBe(true);
+        expect(geometry.withinLayoutViewport, JSON.stringify({ width, innerWidth: geometry.innerWidth, document: geometry.document, overflow: geometry.overflow })).toBe(true);
+        expect(geometry.document.clientWidth).toBe(width);
+        expect(geometry.innerWidth).toBe(width);
+    });
 }
-
-type Actor='buyer'|'seller'|'support'
-const password=' A1-private-passphrase-가나다 '
-const panel=(p:Page)=>p.getByRole('region',{name:'반품 신청·처리',exact:true})
-const id=(value:string|undefined)=>{expect(value).toMatch(/^[0-9a-f-]{36}$/);return value!}
-const base=(s:Seed,actor:Actor='buyer')=>actor==='seller'?'/api/seller/orders/'+s.sellerOrderId+'/returns':(actor==='support'?'/api/admin/support':'/api')+'/orders/'+s.orderNumber+'/returns'
-const detailPath=(s:Seed,returnId:string,actor:Actor)=>base(s,actor)+'/'+returnId+(actor==='buyer'?'/view':'')
-async function seed(c:BrowserContext,project:string,scenario:string){const r=await c.request.get('/api/__test/returns/seed/'+project+'/'+scenario);expect(r.status(),await r.text()).toBe(200);return await r.json() as Seed}
-async function login(c:BrowserContext,email:string){expect((await c.request.post('/api/auth/login',{headers:await headers(c),form:{email,password}})).status()).toBe(200)}
-/** Real CSRF/login/cookies on a new bound customer; original login-form/rate-limit tests remain unchanged. */
-async function guestLogin(c:BrowserContext,s:Seed){
- const port=Number(process.env.A3_API_PORT);if(!Number.isInteger(port)||port<1||port>65535)throw new Error('isolated Java port required')
- const call=(path:string,method:string,data?:unknown,cookies:string[]=[],token?:string)=>new Promise<{status:number;data:Record<string,unknown>;cookies:string[]}>((resolve,reject)=>{const body=data===undefined?undefined:JSON.stringify(data),r=rawRequest({hostname:'127.0.0.1',port,path,method,localAddress:'127.0.0.7',headers:{Accept:'application/json',...(body===undefined?{}:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}),...(cookies.length?{Cookie:cookies.map(v=>v.split(';')[0]).join('; ')}:{}),...(token?{'X-CSRF-TOKEN':token}:{})}},response=>{let text='';response.setEncoding('utf8');response.on('data',chunk=>{text+=chunk});response.on('end',()=>{try{resolve({status:response.statusCode??0,data:JSON.parse(text) as Record<string,unknown>,cookies:response.headers['set-cookie']??[]})}catch(error){reject(error)}})});r.on('error',reject);r.setTimeout(10000,()=>r.destroy(new Error('isolated D guest HTTP timeout')));r.end(body)})
- const csrf=await call('/api/auth/csrf','GET');expect(csrf.status).toBe(200);expect(csrf.data.headerName).toBe('X-CSRF-TOKEN');const result=await call('/api/guest/access/login','POST',{orderNumber:s.orderNumber,phone:s.phone,password:'  guest lookup 密碼  '},csrf.cookies,String(csrf.data.token));expect(result.status).toBe(200);expect(result.data.status).toBe('AUTHENTICATED');expect(result.cookies.some(v=>v.startsWith('GUEST_ACCESS='))).toBe(true);await c.addCookies([...csrf.cookies,...result.cookies].map(raw=>{const [pair]=raw.split(';'),[name,...value]=pair.split('=');return {name,value:value.join('='),domain:'127.0.0.1',path:'/',httpOnly:true,secure:false,sameSite:'Lax' as const}}))
+type Actor = 'buyer' | 'seller' | 'support';
+const password = ' A1-private-passphrase-가나다 ';
+const panel = (p: Page) => p.getByRole('region', { name: '반품 신청·처리', exact: true });
+const id = (value: string | undefined) => { expect(value).toMatch(/^[0-9a-f-]{36}$/); return value!; };
+const base = (s: Seed, actor: Actor = 'buyer') => actor === 'seller' ? '/api/seller/orders/' + s.sellerOrderId + '/returns' : (actor === 'support' ? '/api/admin/support' : '/api') + '/orders/' + s.orderNumber + '/returns';
+const detailPath = (s: Seed, returnId: string, actor: Actor) => base(s, actor) + '/' + returnId + (actor === 'buyer' ? '/view' : '');
+async function seed(c: BrowserContext, project: string, scenario: string) { return prepare("order-return: seed", async () => { const r = await c.request.get('/api/__test/returns/seed/' + project + '/' + scenario); expect(r.status(), await r.text()).toBe(200); return await r.json() as Seed; }); }
+async function login(c: BrowserContext, email: string) { return operation("order-return: login", async () => { expect((await c.request.post('/api/auth/login', { headers: await headers(c), form: { email, password } })).status()).toBe(200); }); }
+async function guestLogin(c: BrowserContext, s: Seed) {
+    return operation("order-return: guestLogin", async () => {
+        const port = Number(process.env.A3_API_PORT);
+        if (!Number.isInteger(port) || port < 1 || port > 65535)
+            throw new Error('isolated Java port required');
+        const call = (path: string, method: string, data?: unknown, cookies: string[] = [], token?: string) => new Promise<{
+            status: number;
+            data: Record<string, unknown>;
+            cookies: string[];
+        }>((resolve, reject) => {
+            const transportTimeout = currentDeadline().remaining(10000);
+            const body = data === undefined ? undefined : JSON.stringify(data), r = rawRequest({ hostname: '127.0.0.1', port, path, method, localAddress: '127.0.0.7', headers: { Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }), ...(cookies.length ? { Cookie: cookies.map(v => v.split(';')[0]).join('; ') } : {}), ...(token ? { 'X-CSRF-TOKEN': token } : {}) } }, response => {
+                let text = '';
+                response.setEncoding('utf8');
+                response.on('data', chunk => { text += chunk; });
+                response.on('end', () => {
+                    try {
+                        resolve({ status: response.statusCode ?? 0, data: JSON.parse(text) as Record<string, unknown>, cookies: response.headers['set-cookie'] ?? [] });
+                    }
+                    catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            const absoluteTimer = setTimeout(() => r.destroy(new Error('Browser operation transport deadline exceeded')), transportTimeout);
+            r.once('close', () => clearTimeout(absoluteTimer));
+            r.on('error', reject);
+            r.setTimeout(10000, () => r.destroy(new Error('isolated D guest HTTP timeout')));
+            r.end(body);
+        });
+        const csrf = await call('/api/auth/csrf', 'GET');
+        expect(csrf.status).toBe(200);
+        expect(csrf.data.headerName).toBe('X-CSRF-TOKEN');
+        const result = await call('/api/guest/access/login', 'POST', { orderNumber: s.orderNumber, phone: s.phone, password: '  guest lookup 密碼  ' }, csrf.cookies, String(csrf.data.token));
+        expect(result.status).toBe(200);
+        expect(result.data.status).toBe('AUTHENTICATED');
+        expect(result.cookies.some(v => v.startsWith('GUEST_ACCESS='))).toBe(true);
+        await c.addCookies([...csrf.cookies, ...result.cookies].map(raw => { const [pair] = raw.split(';'), [name, ...value] = pair.split('='); return { name, value: value.join('='), domain: '127.0.0.1', path: '/', httpOnly: true, secure: false, sameSite: 'Lax' as const }; }));
+    });
 }
-async function owner(c:BrowserContext,s:Seed){if(s.guest)await guestLogin(c,s);else await login(c,s.buyerEmail)}
-async function order(c:BrowserContext,s:Seed){const r=await c.request.get('/api/orders/'+s.orderNumber);expect(r.status()).toBe(200);return await r.json() as OrderDetail}
-async function current(c:BrowserContext,s:Seed,actor:Actor='buyer'){const r=await c.request.get(base(s,actor)+'?size=20');expect(r.status(),await r.text()).toBe(200);expect(r.headers()['cache-control']).toContain('no-store');return await r.json() as ReturnPage}
-async function detail(c:BrowserContext,s:Seed,returnId:string,actor:Actor='buyer'){const r=await c.request.get(detailPath(s,returnId,actor));expect(r.status(),await r.text()).toBe(200);return await r.json() as ReturnDetail}
-async function database(c:BrowserContext,s:Seed){const r=await c.request.get('/api/__test/returns/'+s.orderNumber+'/database');expect(r.status(),await r.text()).toBe(200);return await r.json() as Database}
-async function fixture(c:BrowserContext,s:Seed,action:'prepare'|'work'|'mock',data:Record<string,string>){const r=await c.request.post('/api/__test/returns/'+s.orderNumber+'/'+action,{headers:await headers(c),data});expect(r.status(),await r.text()).toBe(200);return await r.json() as unknown}
-const work=(c:BrowserContext,s:Seed,action:'ITEM'|'SHIPPING',returnId='')=>action==='ITEM'?fixture(c,s,'work',{action,returnId}):fixture(c,s,'work',{action,sellerOrderId:s.sellerOrderId})
-const configure=(c:BrowserContext,s:Seed,intentId:string,purpose:'ITEM'|'SHIPPING',behavior:string)=>fixture(c,s,'mock',{intentId,purpose,behavior})
-async function open(p:Page,s:Seed,actor:Actor='buyer'){await p.goto(actor==='support'?'/admin/orders':actor==='seller'?'/seller/orders/'+s.sellerOrderId:(s.guest?'/guest/orders/':'/account/orders/')+s.orderNumber);if(actor==='support'){await p.getByLabel('지원할 주문번호',{exact:true}).fill(s.orderNumber);await p.getByRole('button',{name:'이 주문 반품 조회',exact:true}).click()}await expect(panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled()}
-async function refresh(p:Page,s:Seed,actor:Actor='buyer'){const wait=p.waitForResponse(r=>r.request().method()==='GET'&&new URL(r.url()).pathname===base(s,actor));await panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true}).click();expect((await wait).status()).toBe(200);await expect(panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled()}
-async function choose(p:Page,c:BrowserContext,s:Seed,returnId:string,actor:Actor='buyer'){await refresh(p,s,actor);const page=await current(c,s,actor),index=page.returns.findIndex(r=>r.returnId===returnId);expect(index).toBeGreaterThanOrEqual(0);const wait=p.waitForResponse(r=>r.request().method()==='GET'&&new URL(r.url()).pathname===detailPath(s,returnId,actor));await panel(p).getByRole('region',{name:'반품 신청 이력',exact:true}).locator('ol > li').nth(index).getByRole('button',{name:'이 반품 상세 보기',exact:true}).click();const response=await wait;expect(response.status()).toBe(200);expect((await response.json() as ReturnDetail).progress.accepted.returnId).toBe(returnId);await expect(panel(p).getByRole('heading',{name:'현재 반품 진행',exact:true})).toBeVisible()}
-function title(d:OrderDetail,u:Unit){return d.stores.flatMap(s=>s.items).find(i=>i.id===u.itemId)!.title+' 개별 '+(u.ordinal+1)}
-async function fillRequest(p:Page,c:BrowserContext,s:Seed,units:Unit[],responsibility:'BUYER'|'SELLER'='BUYER'){const d=await order(c,s);await expect(panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled();for(const u of units){await panel(p).getByRole('checkbox',{name:title(d,u)+' 반품 선택',exact:true}).check();await panel(p).getByRole('combobox',{name:title(d,u)+' 신청 책임',exact:true}).selectOption(responsibility)}await panel(p).getByLabel('반품 신청 사유',{exact:true}).fill('현재 원단위 D 실제 반품 신청')}
-async function requestReturn(p:Page,c:BrowserContext,s:Seed,units:Unit[],responsibility:'BUYER'|'SELLER'='BUYER'){await fillRequest(p,c,s,units,responsibility);const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base(s));await panel(p).getByRole('button',{name:'반품 신청 접수',exact:true}).click();const response=await wait;expect(response.status()).toBe(202);const receipt=await response.json() as ReturnReceipt;await expect(panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled();return receipt}
-async function sellerCommand(p:Page,returnId:string,action:'approve'|'reject'){await panel(p).getByLabel('처리 사유',{exact:true}).fill('실제 판매자 '+action);const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname==='/api/seller/returns/'+returnId+'/'+action);await panel(p).getByRole('button',{name:action==='approve'?'반품 승인':'사유를 기록하고 반려',exact:true}).click();expect((await wait).status()).toBe(200)}
-async function receive(p:Page,c:BrowserContext,s:Seed,returnId:string,units:Unit[],status:'RECEIVED'|'LOST_REPORTED'='RECEIVED'){const d=await order(c,s);await panel(p).getByLabel('처리 사유',{exact:true}).fill('실제 회수 사실 확인');for(const u of units){await panel(p).getByRole('checkbox',{name:title(d,u)+' 회수 사실 선택',exact:true}).check();await panel(p).getByRole('combobox',{name:title(d,u)+' 회수 상태',exact:true}).selectOption(status)}const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname==='/api/seller/returns/'+returnId+'/receive');await panel(p).getByRole('button',{name:'선택한 회수 사실 기록',exact:true}).click();expect((await wait).status()).toBe(200)}
-async function inspect(p:Page,c:BrowserContext,s:Seed,returnId:string,units:{unit:Unit;condition:'SALEABLE'|'DEFECTIVE';responsibility:'BUYER'|'SELLER'}[]){const d=await order(c,s);await panel(p).getByLabel('처리 사유',{exact:true}).fill('실제 검수와 책임 확인');for(const {unit:u,condition,responsibility} of units){await panel(p).getByRole('checkbox',{name:title(d,u)+' 검수 선택',exact:true}).check();await panel(p).getByRole('combobox',{name:title(d,u)+' 검수 결과',exact:true}).selectOption(condition);await panel(p).getByRole('combobox',{name:title(d,u)+' 확인 책임',exact:true}).selectOption(responsibility)}const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname==='/api/seller/returns/'+returnId+'/inspect');await panel(p).getByRole('button',{name:'선택한 실제 검수 기록',exact:true}).click();expect((await wait).status()).toBe(200)}
-async function quote(p:Page,s:Seed,returnId:string){const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base(s)+'/'+returnId+'/quote');await panel(p).getByRole('button',{name:'검수 후 최종 견적 확인',exact:true}).click();const response=await wait;expect(response.status()).toBe(200);return await response.json() as ReturnQuote}
-async function consent(p:Page,s:Seed,returnId:string){await panel(p).getByRole('checkbox',{name:'이번 환불·회수비 견적에 명시적으로 동의합니다',exact:true}).check();const wait=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base(s)+'/'+returnId+'/consent');await panel(p).getByRole('button',{name:'견적 동의 후 환불 진행',exact:true}).click();const response=await wait;expect(response.status()).toBe(202);await expect(panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled();return await response.json() as {refundAttemptId:string}}
-
-test('freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),seller=await browser.newContext({baseURL:'http://127.0.0.1:24176'});try{const s=await seed(c,info.project.name,'ghappy');await Promise.all([owner(c,s),login(seller,s.sellerEmail)]);const original=await order(c,s),before=await database(c,s),p=await c.newPage(),sp=await seller.newPage();expect((await c.request.post('/api/payments/'+s.orderNumber+'/approve',{headers:await headers(c),data:{}})).status()).toBe(401);await open(p,s);const units=(await current(c,s)).eligibility!.units.filter(u=>u.eligible);expect(units).toHaveLength(2);const accepted=await requestReturn(p,c,s,units,'SELLER');let db=await database(c,s);expect(db.order_unit_hold.filter(r=>r.state==='ACTIVE')).toHaveLength(1);expect(db.payment_refund_attempt).toHaveLength(0);await p.reload();await choose(p,c,s,accepted.returnId);await open(sp,s,'seller');await choose(sp,seller,s,accepted.returnId,'seller');await sellerCommand(sp,accepted.returnId,'approve');await receive(sp,c,s,accepted.returnId,units);await inspect(sp,c,s,accepted.returnId,units.map((u,index)=>({unit:u,condition:index===0?'SALEABLE':'DEFECTIVE',responsibility:'SELLER'})));db=await database(c,s);expect(db.restored).toHaveLength(1);expect(db.payment_refund_attempt).toHaveLength(0);expect(db.claim_return_financial_consent).toHaveLength(0);await choose(p,c,s,accepted.returnId);const q=await quote(p,s,accepted.returnId);expect(q.feeQuote.increment).toBe('0');expect(q.feeQuote.refund).toBe('20000');expect(q.feeQuote.additionalDue).toBe('0');await expect(panel(p).getByRole('button',{name:'견적 동의 후 환불 진행',exact:true})).toBeDisabled();const agreed=await consent(p,s,accepted.returnId);await work(c,s,'ITEM',accepted.returnId);db=await database(c,s);expect(db.order.state).toBe('PAID');expect(db.claim_return_completion).toHaveLength(0);expect(db.provider).toHaveLength(1);expect(db.claim_shipping_obligation).toHaveLength(1);expect(db.payment_refund_attempt.find(r=>r.id===agreed.refundAttemptId)?.state).toBe('SUCCEEDED');await work(c,s,'SHIPPING');await refresh(p,s);await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');db=await database(c,s);expect(db.order.state).toBe('CLOSED');expect(db.order_unit_hold[0].state).toBe('REFUNDED');expect(db.provider).toHaveLength(2);expect(db.provider.every(r=>r.effects===1&&r.submit_calls===1)).toBe(true);expect(db.restored).toHaveLength(1);expect(db.inventory.every(r=>r.status==='COMMITTED')).toBe(true);expect(Number(db.inventory[0].on_hand)-Number(before.inventory[0].on_hand)).toBe(1);expect(db.units).toEqual(before.units);expect(db.order.quote).toBe(before.order.quote);expect(String(db.payment_refund_budget[0].succeeded)).toBe(original.total);await p.reload();await expect(p.getByRole('heading',{name:'주문 종료',exact:true})).toBeVisible();await choose(p,c,s,accepted.returnId);expect((await detail(c,s,accepted.returnId)).progress.accepted).toEqual(accepted);await info.attach('d-guest-actual-db',{body:JSON.stringify(db),contentType:'application/json'})}finally{await c.close();await seller.close()}
-})
-
-test('memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),seller=await browser.newContext({baseURL:'http://127.0.0.1:24176'});try{const s=await seed(c,info.project.name,'states');await Promise.all([owner(c,s),login(seller,s.sellerEmail)]);const d=await order(c,s),p=await c.newPage(),sp=await seller.newPage();await open(p,s);const eligible=(await current(c,s)).eligibility!.units.filter(u=>u.eligible),lost=eligible.find(u=>d.stores.flatMap(s=>s.items).find(i=>i.id===u.itemId)!.units[u.ordinal].net==='2000')!,low=eligible.find(u=>d.stores.flatMap(s=>s.items).find(i=>i.id===u.itemId)!.units[u.ordinal].net==='1000')!;const first=await requestReturn(p,c,s,[lost]);await open(sp,s,'seller');await choose(sp,seller,s,first.returnId,'seller');await sellerCommand(sp,first.returnId,'approve');await receive(sp,c,s,first.returnId,[lost],'LOST_REPORTED');await refresh(p,s);await expect(panel(p).getByTestId('return-current-state')).toHaveText('거래 지원 확인 필요');await expect(panel(p).getByText(/분실 보고/)).toBeVisible();await expect(panel(p).getByRole('button',{name:'검수 후 최종 견적 확인',exact:true})).toHaveCount(0);const second=await requestReturn(p,c,s,[low]);await choose(sp,seller,s,second.returnId,'seller');await sellerCommand(sp,second.returnId,'approve');await receive(sp,c,s,second.returnId,[low]);await inspect(sp,c,s,second.returnId,[{unit:low,condition:'DEFECTIVE',responsibility:'BUYER'}]);await choose(p,c,s,second.returnId);const q=await quote(p,s,second.returnId);expect(q.feeQuote).toMatchObject({net:'1000',increment:'5000',refund:'0',additionalDue:'4000'});await consent(p,s,second.returnId);await work(c,s,'ITEM',second.returnId);await refresh(p,s);await expect(panel(p).getByTestId('return-current-state')).toHaveText('추가 비용 미수납');await expect(panel(p).getByRole('status').filter({hasText:'자동 수납하거나 면제하지 않습니다'})).toBeVisible();const db=await database(c,s);expect(db.order.state).toBe('PAID');expect(db.order_unit_hold.filter(r=>r.state==='ACTIVE')).toHaveLength(2);expect(db.provider).toHaveLength(0);expect(db.restored).toHaveLength(0);expect(db.coupons).toHaveLength(0);expect(db.claim_return_completion).toHaveLength(0);expect(db.claim_shipping_obligation).toHaveLength(0);expect(db.payment_refund_attempt[0].state).toBe('SUCCEEDED');await choose(p,c,s,first.returnId);expect((await detail(c,s,first.returnId)).progress.physical[0].collection).toBe('LOST_REPORTED');await expect(panel(p).getByText(/분실 보고/)).toBeVisible();await info.attach('d-unresolved-real-db',{body:JSON.stringify(db),contentType:'application/json'})}finally{await c.close();await seller.close()}
-})
-
-test('memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement',async({page,context},info)=>{
- const s=await seed(context,info.project.name,'retry');await owner(context,s);const before=await database(context,s);await open(page,s);const selected=(await current(context,s)).eligibility!.units.filter(u=>u.eligible).slice(0,1),bodies:unknown[]=[];await page.route('**/api/orders/'+s.orderNumber+'/returns',async route=>{if(route.request().method()!=='POST'){await route.continue();return}bodies.push(route.request().postDataJSON());const response=await route.fetch();expect(response.status()).toBe(202);if(bodies.length===1)await route.abort('failed');else await route.fulfill({response})});await fillRequest(page,context,s,selected);await panel(page).getByRole('button',{name:'반품 신청 접수',exact:true}).dblclick();await expect(panel(page).getByRole('button',{name:'같은 요청으로 반품 결과 확인',exact:true})).toBeVisible();expect(bodies).toHaveLength(1);await panel(page).getByRole('button',{name:'같은 요청으로 반품 결과 확인',exact:true}).click();await expect(panel(page).getByRole('heading',{name:'현재 반품 진행',exact:true})).toBeVisible();expect(bodies).toHaveLength(2);expect(bodies[1]).toEqual(bodies[0]);await page.unroute('**/api/orders/'+s.orderNumber+'/returns');const rows=await current(context,s),returnId=rows.returns.find(r=>r.returnId!==s.competingReturnId)!.returnId;let db=await database(context,s);expect(db.claim_return_request).toHaveLength(2);expect(db.order_unit_hold.filter(r=>r.state==='ACTIVE')).toHaveLength(2);expect(db.restored).toEqual(before.restored);expect(db.payment_refund_attempt).toHaveLength(0);await fixture(context,s,'prepare',{phase:'INSPECT',returnId,responsibility:'BUYER'});await choose(page,context,s,returnId);await quote(page,s,returnId);await panel(page).getByRole('checkbox',{name:'이번 환불·회수비 견적에 명시적으로 동의합니다',exact:true}).check();await fixture(context,s,'prepare',{phase:'CONSENT',returnId:id(s.competingReturnId)});let failed=false,consentPosts=0;page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/'+returnId+'/consent'))consentPosts++});await page.route('**/api/orders/'+s.orderNumber+'/returns?*',async route=>{if(!failed){failed=true;await route.fulfill({status:503,contentType:'application/json',body:'{}'})}else await route.continue()});const denied=page.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base(s)+'/'+returnId+'/consent');await panel(page).getByRole('button',{name:'견적 동의 후 환불 진행',exact:true}).click();expect((await denied).status()).toBe(409);await expect(panel(page).getByRole('alert')).toContainText('현재');await expect(panel(page).getByRole('checkbox',{name:'이번 환불·회수비 견적에 명시적으로 동의합니다',exact:true})).toHaveCount(0);await expect(panel(page).getByRole('button',{name:'같은 요청으로 반품 결과 확인',exact:true})).toHaveCount(0);expect(consentPosts).toBe(1);db=await database(context,s);expect(db.claim_return_financial_consent.filter(r=>r.return_id===returnId)).toHaveLength(0);expect(db.claim_return_financial_consent.filter(r=>r.return_id===s.competingReturnId)).toHaveLength(1);expect(db.provider).toHaveLength(0);expect(db.order.state).toBe('PAID');await page.reload();expect(consentPosts).toBe(1);await info.attach('d-response-loss-and-conflict-db',{body:JSON.stringify({bodies,db}),contentType:'application/json'})
-})
-
-test('currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),guard=await browser.newContext({baseURL:'http://127.0.0.1:24176'});let release=()=>{};try{const s=await seed(c,info.project.name,'glate');await owner(c,s);await owner(guard,s);const p=await c.newPage();await open(p,s);await choose(p,c,s,id(s.returnId));const free=(await current(c,s)).eligibility!.units.filter(u=>u.eligible).slice(0,1);await fillRequest(p,c,s,free);await panel(p).getByLabel('반품 신청 사유',{exact:true}).fill('폐기되어야 하는 비회원 입력');const before=await database(guard,s);let captured!:()=>void;const held=new Promise<void>(r=>{release=r}),ready=new Promise<void>(r=>{captured=r});await p.route('**/api/orders/'+s.orderNumber+'/returns?*',async route=>{const response=await route.fetch();expect(response.status()).toBe(200);expect((await response.json() as ReturnPage).returns.some(r=>r.returnId===s.returnId)).toBe(true);captured();await held;try{await route.fulfill({response})}catch{/* The real authority generation may abort this held read. */}});let posts=0;p.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/returns'))posts++});await panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true}).click();await ready;expect((await c.request.post('/api/guest/access/logout',{headers:await headers(c),data:{}})).status()).toBe(200);await p.evaluate(()=>window.dispatchEvent(new Event('focus')));release();await expect(p.getByTestId('order-number')).toHaveCount(0);await expect(panel(p)).toHaveCount(0);await expect(p.getByLabel('반품 신청 사유',{exact:true})).toHaveCount(0);expect((await c.request.get(base(s))).status()).toBe(404);expect(await database(guard,s)).toEqual(before);expect(posts).toBe(0)}finally{release();await c.close();await guard.close()}
-})
-
-test('currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),seller=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),foreign=await browser.newContext({baseURL:'http://127.0.0.1:24176'});try{const s=await seed(c,info.project.name,'actors');await Promise.all([owner(c,s),login(seller,s.sellerEmail),login(foreign,s.foreignSellerEmail)]);const p=await c.newPage(),sp=await seller.newPage();await open(p,s);await choose(p,c,s,id(s.withdrawId));await panel(p).getByLabel('처리 사유',{exact:true}).fill('승인 전 현재 본인 철회');const withdrawn=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/'+s.withdrawId+'/withdraw'));await panel(p).getByRole('button',{name:'사유를 기록하고 신청 철회',exact:true}).click();expect((await withdrawn).status()).toBe(200);await open(sp,s,'seller');await choose(sp,seller,s,id(s.approveId),'seller');await sellerCommand(sp,id(s.approveId),'approve');const beforeDenied=await database(c,s);expect((await c.request.post(base(s)+'/'+s.approveId+'/withdraw',{headers:await headers(c),data:{key:'after-approval-denied',expectedRevision:1,reason:'승인 후 철회 금지'}})).status()).toBe(409);expect(await database(c,s)).toEqual(beforeDenied);await choose(sp,seller,s,id(s.rejectId),'seller');await sellerCommand(sp,id(s.rejectId),'reject');const beforeForeign=await database(c,s);expect((await foreign.request.get(base(s,'seller'))).status()).toBe(404);const fp=await foreign.newPage();await fp.goto('/seller/orders/'+s.sellerOrderId);await expect(fp.getByTestId('seller-order-number')).toHaveCount(0);await expect(panel(fp)).toHaveCount(0);expect(await database(c,s)).toEqual(beforeForeign);await refresh(p,s);const states=(await current(c,s)).returns.map(r=>r.state).sort();expect(states).toEqual(['APPROVED','REJECTED','WITHDRAWN']);const d=await order(c,s),shortItem=d.stores.flatMap(v=>v.items).find(i=>i.title==='다른 회수비 상품')!;expect(shortItem).toBeDefined();const available=(await current(c,s)).eligibility!.units.find(u=>u.eligible&&u.itemId===shortItem.id)!;expect(available).toBeDefined();const box=panel(p).getByRole('checkbox',{name:title(d,available)+' 반품 선택',exact:true});await box.focus();await p.keyboard.press('Space');await expect(box).toBeChecked();await panel(p).getByLabel('반품 신청 사유',{exact:true}).fill('키보드로 확인한 새 원단위 신청');let posts=0;p.on('request',r=>{if(r.method()==='POST'&&new URL(r.url()).pathname===base(s))posts++});const accepted=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base(s));await panel(p).getByLabel('반품 신청 사유',{exact:true}).press('Enter');expect((await accepted).status()).toBe(202);expect(posts).toBe(1);const db=await database(c,s);expect(db.claim_return_request).toHaveLength(4);expect(db.payment_refund_attempt).toHaveLength(0);expect(db.restored).toHaveLength(0);expect(db.coupons).toHaveLength(0);const exchange=p.getByRole('region',{name:'동일 가격 교환',exact:true}),refreshed=p.waitForResponse(r=>r.request().method()==='GET'&&new URL(r.url()).pathname==='/api/orders/'+s.orderNumber+'/exchanges');await exchange.getByRole('button',{name:'교환 정보 다시 조회',exact:true}).click();const exchangeResponse=await refreshed;expect(exchangeResponse.status()).toBe(200);await info.attach('d-responsive-real-exchange-choices',{body:await exchangeResponse.body(),contentType:'application/json'});await expect(exchange.getByRole('button',{name:'교환 정보 다시 조회',exact:true})).toBeEnabled();const longSelect=exchange.locator('select').filter({has:p.locator('option').filter({hasText:/P05 reserve-order.*같은 SKU 교체/})}).first();await expect(longSelect).toBeVisible();await expect(longSelect.locator('option').filter({hasText:/P05 reserve-order.*같은 SKU 교체/})).toHaveCount(1);for(const width of [375,768,1440])await assertResponsiveGeometry(p,info,width);await longSelect.focus();await p.keyboard.press('Home');await p.keyboard.press('ArrowDown');await expect(longSelect).not.toHaveValue('');expect(await database(c,s)).toEqual(db)}finally{await c.close();await seller.close();await foreign.close()}
-})
-
-test('currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects',async({browser},info)=>{
- let c=await browser.newContext({baseURL:'http://127.0.0.1:24176'});const op=await browser.newContext({baseURL:'http://127.0.0.1:24176'});try{let s=await seed(c,info.project.name,'item');await Promise.all([owner(c,s),login(op,s.supportEmail)]);const p=await op.newPage();await open(p,s,'support');let before=await database(c,s);const failed=id(s.failedReturnId),firstAttempt=String(before.payment_refund_attempt.find(r=>r.claim_id===failed)?.id);await choose(p,op,s,failed,'support');const currentFailed=await detail(op,s,failed,'support');expect(currentFailed.item.state).toBe('FAILED');await configure(c,s,failed,'ITEM','SUCCESS');await panel(p).getByLabel('처리 사유',{exact:true}).fill('확인된 실패에 대한 실제 새 시도');const retry=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/'+failed+'/refunds/ITEM/retry'));await panel(p).getByRole('button',{name:'상품 환불 실패 확인 후 새 시도',exact:true}).click();const retried=await retry;expect(retried.status()).toBe(202);expect(retried.request().postDataJSON().expectedRevision).toBe(currentFailed.progress.version);const next=String((await retried.json()).refundAttemptId);expect(next).not.toBe(firstAttempt);await work(c,s,'ITEM',failed);await refresh(p,s,'support');await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');let db=await database(c,s);expect(db.payment_refund_attempt.find(r=>r.id===next)?.sequence).toBe(2);expect(db.payment_refund_attempt.find(r=>r.id===firstAttempt)?.state).toBe('FAILED');expect(db.provider.find(r=>r.attempt_id===next)).toMatchObject({submit_calls:1,effects:1});expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);expect(db.restored).toEqual(before.restored);expect(db.order.state).toBe('PAID');expect((await detail(op,s,failed,'support')).progress.accepted).toEqual(currentFailed.progress.accepted);await info.attach('d-item-failed-real-db',{body:JSON.stringify(db),contentType:'application/json'});await c.close();c=await browser.newContext({baseURL:'http://127.0.0.1:24176'});s=await seed(c,info.project.name,'itemunknown');await owner(c,s);before=await database(c,s);const unknown=id(s.unknownReturnId),unknownAttempt=String(before.payment_refund_attempt.find(r=>r.claim_id===unknown)?.id);await open(p,s,'support');await choose(p,op,s,unknown,'support');const currentUnknown=await detail(op,s,unknown,'support');expect(currentUnknown.item.state).toBe('UNKNOWN');await panel(p).getByLabel('처리 사유',{exact:true}).fill('불명확한 같은 시도 실제 결과 조회');const query=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/'+unknown+'/refunds/ITEM/query'));await panel(p).getByRole('button',{name:'상품 환불 같은 시도 결과 조회',exact:true}).click();const queried=await query;expect(queried.status()).toBe(202);expect((await queried.json()).refundAttemptId).toBe(unknownAttempt);expect(queried.request().postDataJSON().expectedRevision).toBe(currentUnknown.progress.version);await work(c,s,'ITEM',unknown);await refresh(p,s,'support');await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');db=await database(c,s);expect(db.payment_refund_attempt.filter(r=>r.claim_id===unknown&&r.purpose==='ITEM')).toHaveLength(1);expect(db.provider.find(r=>r.attempt_id===unknownAttempt)).toMatchObject({submit_calls:1,query_calls:1,effects:1});expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);expect(db.restored).toEqual(before.restored);expect(db.coupons).toHaveLength(0);expect(db.order.state).toBe('PAID');await info.attach('d-item-support-real-db',{body:JSON.stringify(db),contentType:'application/json'})}finally{await c.close();await op.close()}
-})
-
-test('sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),op=await browser.newContext({baseURL:'http://127.0.0.1:24176'});try{const s=await seed(c,info.project.name,'shipping');await Promise.all([owner(c,s),login(op,s.supportEmail)]);const p=await op.newPage(),origin=id(s.originReturnId),view=id(s.viewReturnId),old=id(s.oldCompletedReturnId);expect(origin).not.toBe(view);await open(p,s,'support');await choose(p,op,s,view,'support');const first=await detail(op,s,view,'support'),before=await database(c,s);expect(first.shipping).toMatchObject({originKind:'RETURN',originIntentId:origin,supportContract:'RETURN_SHIPPING',commandRevisionKind:'SHIPPING_OBLIGATION',state:'FAILED',resultState:'FAILED',commandRevision:1});await configure(c,s,origin,'SHIPPING','LOST_RESPONSE');await panel(p).getByLabel('배송비 지원 사유',{exact:true}).fill('원 의무의 확인된 실패를 재시도');const retry=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/refunds/SHIPPING/retry'));await panel(p).getByRole('button',{name:'배송비 환불 실패 확인 후 새 시도',exact:true}).click();const retried=await retry;expect(new URL(retried.url()).pathname).toBe('/api/admin/support/orders/'+s.orderNumber+'/returns/'+origin+'/refunds/SHIPPING/retry');expect(retried.status()).toBe(202);expect(retried.request().postDataJSON().expectedRevision).toBe(first.shipping.commandRevision);const attempt=String((await retried.json()).refundAttemptId);await work(c,s,'SHIPPING');await refresh(p,s,'support');const uncertain=await detail(op,s,view,'support');expect(uncertain.progress.accepted.returnId).toBe(view);expect(uncertain.shipping).toMatchObject({originIntentId:origin,state:'UNKNOWN',resultState:'UNKNOWN',sequence:2,commandRevision:3});await panel(p).getByLabel('배송비 지원 사유',{exact:true}).fill('같은 원 배송비 시도 결과 확인');const query=p.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/refunds/SHIPPING/query'));await panel(p).getByRole('button',{name:'배송비 환불 같은 시도 결과 조회',exact:true}).click();const queried=await query;expect(queried.status()).toBe(202);expect(new URL(queried.url()).pathname).toBe('/api/admin/support/orders/'+s.orderNumber+'/returns/'+origin+'/refunds/SHIPPING/query');expect(queried.request().postDataJSON().expectedRevision).toBe(uncertain.shipping.commandRevision);expect((await queried.json()).refundAttemptId).toBe(attempt);await work(c,s,'SHIPPING');await refresh(p,s,'support');await expect(panel(p).getByRole('button',{name:/배송비 환불.*시도/})).toHaveCount(0);const db=await database(c,s);expect(db.order.state).toBe('CLOSED');expect(db.coupons).toHaveLength(1);expect(db.provider.find(r=>r.attempt_id===attempt)).toMatchObject({submit_calls:1,query_calls:1,effects:1});expect(db.payment_refund_attempt.filter(r=>r.purpose==='SHIPPING')).toHaveLength(2);expect(db.claim_return_request.find(r=>r.id===old)).toEqual(before.claim_return_request.find(r=>r.id===old));expect(db.claim_return_history.filter(r=>r.return_id===old)).toEqual(before.claim_return_history.filter(r=>r.return_id===old));expect(db.claim_return_completion.filter(r=>r.return_id===old)).toEqual(before.claim_return_completion.filter(r=>r.return_id===old));expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);expect(db.restored).toEqual(before.restored);expect(db.units).toEqual(before.units);expect(db.order.quote).toBe(before.order.quote);const final=await detail(op,s,view,'support');expect(final.shipping.state).toBe('SUCCEEDED');expect(final.progress.state).toBe('COMPLETED');expect((await op.request.post('/api/admin/support/orders/'+s.orderNumber+'/returns/'+origin+'/refunds/SHIPPING/retry',{headers:await headers(op),data:{key:'no-new-success-retry',expectedRevision:final.shipping.commandRevision,reason:'이미 성공한 원 의무 재시도 금지'}})).status()).toBe(409);expect(await database(c,s)).toEqual(db);await info.attach('d-shared-shipping-origin-real-db',{body:JSON.stringify({origin,view,before,db}),contentType:'application/json'})}finally{await c.close();await op.close()}
-})
-
-test('pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout',async({browser},info)=>{
- const c=await browser.newContext({baseURL:'http://127.0.0.1:24176'}),op=await browser.newContext({baseURL:'http://127.0.0.1:24176'});let release=()=>{};try{const s=await seed(c,info.project.name,'cshipping');await Promise.all([owner(c,s),login(op,s.supportEmail)]);const p=await op.newPage(),origin=id(s.originClaimId);await open(p,s,'support');await expect(panel(p).getByText('접수된 반품이 없습니다.',{exact:true})).toBeVisible();const original=await database(c,s),projection=(await current(op,s,'support')).shipping[0];expect(projection).toMatchObject({originKind:'CANCEL',originIntentId:origin,supportContract:'CANCEL_SHIPPING',commandRevisionKind:'CANCEL_CLAIM',resultState:'FAILED'});await configure(c,s,origin,'SHIPPING','SUCCESS');const path='/api/admin/support/orders/'+s.orderNumber+'/cancellations/'+origin+'/refunds/SHIPPING/retry',bodies:unknown[]=[];await p.route('**'+path,async route=>{bodies.push(route.request().postDataJSON());const response=await route.fetch();expect(response.status()).toBe(202);if(bodies.length===1)await route.abort('failed');else await route.fulfill({response})});await panel(p).getByLabel('배송비 지원 사유',{exact:true}).fill('기존 취소 원 배송비 실제 새 시도');await panel(p).getByRole('button',{name:'배송비 환불 실패 확인 후 새 시도',exact:true}).dblclick();await expect(panel(p).getByRole('button',{name:'같은 요청으로 반품 결과 확인',exact:true})).toBeVisible();expect(bodies).toHaveLength(1);expect((bodies[0] as {expectedRevision:number}).expectedRevision).toBe(projection.commandRevision);await panel(p).getByRole('button',{name:'같은 요청으로 반품 결과 확인',exact:true}).click();await expect(panel(p).getByText('요청이 접수됐습니다. 아래 현재 진행 상태를 확인해 주세요.',{exact:true})).toBeVisible();expect(bodies).toHaveLength(2);expect(bodies[1]).toEqual(bodies[0]);await p.unroute('**'+path);await work(c,s,'SHIPPING');await refresh(p,s,'support');const completed=await database(c,s);expect(completed.order.state).toBe('CANCELED');expect(completed.claim_return_request).toHaveLength(0);expect(completed.claim[0].receipt).toEqual(original.claim[0].receipt);expect(completed.coupons).toHaveLength(1);expect(completed.payment_refund_attempt.filter(r=>r.purpose==='SHIPPING')).toHaveLength(2);expect((await current(op,s,'support')).shipping[0].supportActions).toHaveLength(0);let captured!:()=>void;const held=new Promise<void>(r=>{release=r}),ready=new Promise<void>(r=>{captured=r});await p.route('**/api/admin/support/orders/'+s.orderNumber+'/returns?*',async route=>{const response=await route.fetch();expect(response.status()).toBe(200);expect((await response.json() as ReturnPage).shipping[0].originIntentId).toBe(origin);captured();await held;try{await route.fulfill({response})}catch{/* A current authority change can abort this actual held response. */}});await panel(p).getByRole('button',{name:'반품 정보 다시 조회',exact:true}).click();await ready;expect((await op.request.post('/api/auth/logout',{headers:await headers(op)})).status()).toBe(200);await p.evaluate(()=>window.dispatchEvent(new Event('focus')));release();await expect(panel(p)).toHaveCount(0);await expect(p.getByText(origin,{exact:false})).toHaveCount(0);expect((await op.request.get(base(s,'support'))).status()).toBe(401);expect(await database(c,s)).toEqual(completed);expect(bodies).toHaveLength(2);await info.attach('d-pure-c-shipping-real-db',{body:JSON.stringify(completed),contentType:'application/json'})}finally{release();await c.close();await op.close()}
-})
+async function owner(c: BrowserContext, s: Seed) {
+    return operation("order-return: owner", async () => {
+        if (s.guest)
+            await guestLogin(c, s);
+        else
+            await login(c, s.buyerEmail);
+    });
+}
+async function order(c: BrowserContext, s: Seed) { return operation("order-return: order", async () => { const r = await c.request.get('/api/orders/' + s.orderNumber); expect(r.status()).toBe(200); return await r.json() as OrderDetail; }); }
+async function current(c: BrowserContext, s: Seed, actor: Actor = 'buyer') { return operation("order-return: current", async () => { const r = await c.request.get(base(s, actor) + '?size=20'); expect(r.status(), await r.text()).toBe(200); expect(r.headers()['cache-control']).toContain('no-store'); return await r.json() as ReturnPage; }); }
+async function detail(c: BrowserContext, s: Seed, returnId: string, actor: Actor = 'buyer') { return operation("order-return: detail", async () => { const r = await c.request.get(detailPath(s, returnId, actor)); expect(r.status(), await r.text()).toBe(200); return await r.json() as ReturnDetail; }); }
+async function database(c: BrowserContext, s: Seed) { return operation("order-return: database", async () => { const r = await c.request.get('/api/__test/returns/' + s.orderNumber + '/database'); expect(r.status(), await r.text()).toBe(200); return await r.json() as Database; }); }
+async function fixture(c: BrowserContext, s: Seed, action: 'prepare' | 'work' | 'mock', data: Record<string, string>) { return operation("order-return: fixture", async () => { const r = await c.request.post('/api/__test/returns/' + s.orderNumber + '/' + action, { headers: await headers(c), data }); expect(r.status(), await r.text()).toBe(200); return await r.json() as unknown; }); }
+const work = (c: BrowserContext, s: Seed, action: 'ITEM' | 'SHIPPING', returnId = '') => action === 'ITEM' ? fixture(c, s, 'work', { action, returnId }) : fixture(c, s, 'work', { action, sellerOrderId: s.sellerOrderId });
+const configure = (c: BrowserContext, s: Seed, intentId: string, purpose: 'ITEM' | 'SHIPPING', behavior: string) => fixture(c, s, 'mock', { intentId, purpose, behavior });
+async function open(p: Page, s: Seed, actor: Actor = 'buyer') {
+    return operation("order-return: open", async () => {
+        await p.goto(actor === 'support' ? '/admin/orders' : actor === 'seller' ? '/seller/orders/' + s.sellerOrderId : (s.guest ? '/guest/orders/' : '/account/orders/') + s.orderNumber);
+        if (actor === 'support') {
+            await p.getByLabel('지원할 주문번호', { exact: true }).fill(s.orderNumber);
+            await p.getByRole('button', { name: '이 주문 반품 조회', exact: true }).click();
+        }
+        await expect(panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled();
+    });
+}
+async function refresh(p: Page, s: Seed, actor: Actor = 'buyer') { return operation("order-return: refresh", async () => { const wait = p.waitForResponse(r => r.request().method() === 'GET' && new URL(r.url()).pathname === base(s, actor)); await panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true }).click(); expect((await wait).status()).toBe(200); await expect(panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled(); }); }
+async function choose(p: Page, c: BrowserContext, s: Seed, returnId: string, actor: Actor = 'buyer') { return operation("order-return: choose", async () => { await refresh(p, s, actor); const page = await current(c, s, actor), index = page.returns.findIndex(r => r.returnId === returnId); expect(index).toBeGreaterThanOrEqual(0); const wait = p.waitForResponse(r => r.request().method() === 'GET' && new URL(r.url()).pathname === detailPath(s, returnId, actor)); await panel(p).getByRole('region', { name: '반품 신청 이력', exact: true }).locator('ol > li').nth(index).getByRole('button', { name: '이 반품 상세 보기', exact: true }).click(); const response = await wait; expect(response.status()).toBe(200); expect((await response.json() as ReturnDetail).progress.accepted.returnId).toBe(returnId); await expect(panel(p).getByRole('heading', { name: '현재 반품 진행', exact: true })).toBeVisible(); }); }
+function title(d: OrderDetail, u: Unit) { return d.stores.flatMap(s => s.items).find(i => i.id === u.itemId)!.title + ' 개별 ' + (u.ordinal + 1); }
+async function fillRequest(p: Page, c: BrowserContext, s: Seed, units: Unit[], responsibility: 'BUYER' | 'SELLER' = 'BUYER') {
+    return operation("order-return: fillRequest", async () => {
+        const d = await order(c, s);
+        await expect(panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled();
+        for (const u of units) {
+            await panel(p).getByRole('checkbox', { name: title(d, u) + ' 반품 선택', exact: true }).check();
+            await panel(p).getByRole('combobox', { name: title(d, u) + ' 신청 책임', exact: true }).selectOption(responsibility);
+        }
+        await panel(p).getByLabel('반품 신청 사유', { exact: true }).fill('현재 원단위 D 실제 반품 신청');
+    });
+}
+async function requestReturn(p: Page, c: BrowserContext, s: Seed, units: Unit[], responsibility: 'BUYER' | 'SELLER' = 'BUYER') { return operation("order-return: requestReturn", async () => { await fillRequest(p, c, s, units, responsibility); const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base(s)); await panel(p).getByRole('button', { name: '반품 신청 접수', exact: true }).click(); const response = await wait; expect(response.status()).toBe(202); const receipt = await response.json() as ReturnReceipt; await expect(panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled(); return receipt; }); }
+async function sellerCommand(p: Page, returnId: string, action: 'approve' | 'reject') { return operation("order-return: sellerCommand", async () => { await panel(p).getByLabel('처리 사유', { exact: true }).fill('실제 판매자 ' + action); const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === '/api/seller/returns/' + returnId + '/' + action); await panel(p).getByRole('button', { name: action === 'approve' ? '반품 승인' : '사유를 기록하고 반려', exact: true }).click(); expect((await wait).status()).toBe(200); }); }
+async function receive(p: Page, c: BrowserContext, s: Seed, returnId: string, units: Unit[], status: 'RECEIVED' | 'LOST_REPORTED' = 'RECEIVED') {
+    return operation("order-return: receive", async () => {
+        const d = await order(c, s);
+        await panel(p).getByLabel('처리 사유', { exact: true }).fill('실제 회수 사실 확인');
+        for (const u of units) {
+            await panel(p).getByRole('checkbox', { name: title(d, u) + ' 회수 사실 선택', exact: true }).check();
+            await panel(p).getByRole('combobox', { name: title(d, u) + ' 회수 상태', exact: true }).selectOption(status);
+        }
+        const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === '/api/seller/returns/' + returnId + '/receive');
+        await panel(p).getByRole('button', { name: '선택한 회수 사실 기록', exact: true }).click();
+        expect((await wait).status()).toBe(200);
+    });
+}
+async function inspect(p: Page, c: BrowserContext, s: Seed, returnId: string, units: {
+    unit: Unit;
+    condition: 'SALEABLE' | 'DEFECTIVE';
+    responsibility: 'BUYER' | 'SELLER';
+}[]) {
+    return operation("order-return: inspect", async () => {
+        const d = await order(c, s);
+        await panel(p).getByLabel('처리 사유', { exact: true }).fill('실제 검수와 책임 확인');
+        for (const { unit: u, condition, responsibility } of units) {
+            await panel(p).getByRole('checkbox', { name: title(d, u) + ' 검수 선택', exact: true }).check();
+            await panel(p).getByRole('combobox', { name: title(d, u) + ' 검수 결과', exact: true }).selectOption(condition);
+            await panel(p).getByRole('combobox', { name: title(d, u) + ' 확인 책임', exact: true }).selectOption(responsibility);
+        }
+        const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === '/api/seller/returns/' + returnId + '/inspect');
+        await panel(p).getByRole('button', { name: '선택한 실제 검수 기록', exact: true }).click();
+        expect((await wait).status()).toBe(200);
+    });
+}
+async function quote(p: Page, s: Seed, returnId: string) { return operation("order-return: quote", async () => { const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base(s) + '/' + returnId + '/quote'); await panel(p).getByRole('button', { name: '검수 후 최종 견적 확인', exact: true }).click(); const response = await wait; expect(response.status()).toBe(200); return await response.json() as ReturnQuote; }); }
+async function consent(p: Page, s: Seed, returnId: string) {
+    return operation("order-return: consent", async () => {
+        await panel(p).getByRole('checkbox', { name: '이번 환불·회수비 견적에 명시적으로 동의합니다', exact: true }).check();
+        const wait = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base(s) + '/' + returnId + '/consent');
+        await panel(p).getByRole('button', { name: '견적 동의 후 환불 진행', exact: true }).click();
+        const response = await wait;
+        expect(response.status()).toBe(202);
+        await expect(panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled();
+        return await response.json() as {
+            refundAttemptId: string;
+        };
+    });
+}
+test('freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase', async ({ browser }, info) => {
+    const { c, seller } = await prepare("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [1]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), seller = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, seller };
+    });
+    try {
+        const s = await seed(c, info.project.name, 'ghappy');
+        await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [2]", async () => {
+            await Promise.all([owner(c, s), login(seller, s.sellerEmail)]);
+        });
+        const { original, before, p, sp } = await prepare("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [3]", async () => {
+            const original = await order(c, s), before = await database(c, s), p = await c.newPage(), sp = await seller.newPage();
+            return { original, before, p, sp };
+        });
+        const { units } = await operation("order-return: /api/payments/ [4]", async () => {
+            expect((await c.request.post('/api/payments/' + s.orderNumber + '/approve', { headers: await headers(c), data: {} })).status()).toBe(401);
+            await open(p, s);
+            const units = (await current(c, s)).eligibility!.units.filter(u => u.eligible);
+            expect(units).toHaveLength(2);
+            return { units };
+        });
+        const { accepted, db: initialDb1 } = await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [5]", async () => {
+            const accepted = await requestReturn(p, c, s, units, 'SELLER');
+            const db = await database(c, s);
+            expect(db.order_unit_hold.filter(r => r.state === 'ACTIVE')).toHaveLength(1);
+            expect(db.payment_refund_attempt).toHaveLength(0);
+            await p.reload();
+            await choose(p, c, s, accepted.returnId);
+            await open(sp, s, 'seller');
+            await choose(sp, seller, s, accepted.returnId, 'seller');
+            return { accepted, db };
+        });
+        let db = initialDb1;
+        await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [6]", async () => {
+            await sellerCommand(sp, accepted.returnId, 'approve');
+        });
+        await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [7]", async () => {
+            await receive(sp, c, s, accepted.returnId, units);
+        });
+        await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [8]", async () => {
+            await inspect(sp, c, s, accepted.returnId, units.map((u, index) => ({ unit: u, condition: index === 0 ? 'SALEABLE' : 'DEFECTIVE', responsibility: 'SELLER' })));
+            db = await database(c, s);
+            expect(db.restored).toHaveLength(1);
+            expect(db.payment_refund_attempt).toHaveLength(0);
+            expect(db.claim_return_financial_consent).toHaveLength(0);
+            await choose(p, c, s, accepted.returnId);
+        });
+        await operation("order-return: consent through item shipping refund and CLOSED database", async () => {
+            const { agreed } = await operation("order-return: 견적 동의 후 환불 진행 [9]", async () => {
+                const q = await quote(p, s, accepted.returnId);
+                expect(q.feeQuote.increment).toBe('0');
+                expect(q.feeQuote.refund).toBe('20000');
+                expect(q.feeQuote.additionalDue).toBe('0');
+                await expect(panel(p).getByRole('button', { name: '견적 동의 후 환불 진행', exact: true })).toBeDisabled();
+                const agreed = await consent(p, s, accepted.returnId);
+                return { agreed };
+            });
+            await operation("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [10]", async () => {
+                await work(c, s, 'ITEM', accepted.returnId);
+                db = await database(c, s);
+                expect(db.order.state).toBe('PAID');
+                expect(db.claim_return_completion).toHaveLength(0);
+                expect(db.provider).toHaveLength(1);
+                expect(db.claim_shipping_obligation).toHaveLength(1);
+                expect(db.payment_refund_attempt.find(r => r.id === agreed.refundAttemptId)?.state).toBe('SUCCEEDED');
+            });
+            await operation("order-return: 주문 종료 [11]", async () => {
+                await work(c, s, 'SHIPPING');
+                await refresh(p, s);
+                await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');
+                db = await database(c, s);
+                expect(db.order.state).toBe('CLOSED');
+                expect(db.order_unit_hold[0].state).toBe('REFUNDED');
+                expect(db.provider).toHaveLength(2);
+                expect(db.provider.every(r => r.effects === 1 && r.submit_calls === 1)).toBe(true);
+                expect(db.restored).toHaveLength(1);
+                expect(db.inventory.every(r => r.status === 'COMMITTED')).toBe(true);
+                expect(Number(db.inventory[0].on_hand) - Number(before.inventory[0].on_hand)).toBe(1);
+                expect(db.units).toEqual(before.units);
+                expect(db.order.quote).toBe(before.order.quote);
+                expect(String(db.payment_refund_budget[0].succeeded)).toBe(original.total);
+                await p.reload();
+                await expect(p.getByRole('heading', { name: '주문 종료', exact: true })).toBeVisible();
+                await choose(p, c, s, accepted.returnId);
+                expect((await detail(c, s, accepted.returnId)).progress.accepted).toEqual(accepted);
+                await info.attach('d-guest-actual-db', { body: JSON.stringify(db), contentType: 'application/json' });
+            });
+        });
+    }
+    finally {
+        await cleanup("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [12]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: freshGasNativeReturnSellerPhysicalInspectionExplicitConsentAndDemoWorkersMatchOriginalDatabase [13]", async () => {
+            await seller.close();
+        });
+    }
+});
+test('memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt', async ({ browser }, info) => {
+    const { c, seller } = await prepare("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [14]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), seller = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, seller };
+    });
+    try {
+        const s = await seed(c, info.project.name, 'states');
+        await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [15]", async () => {
+            await Promise.all([owner(c, s), login(seller, s.sellerEmail)]);
+        });
+        const { d, p, sp } = await prepare("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [16]", async () => {
+            const d = await order(c, s), p = await c.newPage(), sp = await seller.newPage();
+            return { d, p, sp };
+        });
+        const { lost, low, first } = await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [17]", async () => {
+            await open(p, s);
+            const eligible = (await current(c, s)).eligibility!.units.filter(u => u.eligible), lost = eligible.find(u => d.stores.flatMap(s => s.items).find(i => i.id === u.itemId)!.units[u.ordinal].net === '2000')!, low = eligible.find(u => d.stores.flatMap(s => s.items).find(i => i.id === u.itemId)!.units[u.ordinal].net === '1000')!;
+            const first = await requestReturn(p, c, s, [lost]);
+            await open(sp, s, 'seller');
+            await choose(sp, seller, s, first.returnId, 'seller');
+            return { lost, low, first };
+        });
+        await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [18]", async () => {
+            await sellerCommand(sp, first.returnId, 'approve');
+        });
+        await operation("order-return: 검수 후 최종 견적 확인 [19]", async () => {
+            await receive(sp, c, s, first.returnId, [lost], 'LOST_REPORTED');
+            await refresh(p, s);
+            await expect(panel(p).getByTestId('return-current-state')).toHaveText('거래 지원 확인 필요');
+            await expect(panel(p).getByText(/분실 보고/)).toBeVisible();
+            await expect(panel(p).getByRole('button', { name: '검수 후 최종 견적 확인', exact: true })).toHaveCount(0);
+        });
+        const { second } = await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [20]", async () => {
+            const second = await requestReturn(p, c, s, [low]);
+            await choose(sp, seller, s, second.returnId, 'seller');
+            return { second };
+        });
+        await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [21]", async () => {
+            await sellerCommand(sp, second.returnId, 'approve');
+        });
+        await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [22]", async () => {
+            await receive(sp, c, s, second.returnId, [low]);
+        });
+        await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [23]", async () => {
+            await inspect(sp, c, s, second.returnId, [{ unit: low, condition: 'DEFECTIVE', responsibility: 'BUYER' }]);
+            await choose(p, c, s, second.returnId);
+        });
+        await operation("order-return: consent through item refund and outstanding-fee database", async () => {
+            await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [24]", async () => {
+                const q = await quote(p, s, second.returnId);
+                expect(q.feeQuote).toMatchObject({ net: '1000', increment: '5000', refund: '0', additionalDue: '4000' });
+                await consent(p, s, second.returnId);
+            });
+            await operation("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [25]", async () => {
+                await work(c, s, 'ITEM', second.returnId);
+                await refresh(p, s);
+                await expect(panel(p).getByTestId('return-current-state')).toHaveText('추가 비용 미수납');
+                await expect(panel(p).getByRole('status').filter({ hasText: '자동 수납하거나 면제하지 않습니다' })).toBeVisible();
+                const db = await database(c, s);
+                expect(db.order.state).toBe('PAID');
+                expect(db.order_unit_hold.filter(r => r.state === 'ACTIVE')).toHaveLength(2);
+                expect(db.provider).toHaveLength(0);
+                expect(db.restored).toHaveLength(0);
+                expect(db.coupons).toHaveLength(0);
+                expect(db.claim_return_completion).toHaveLength(0);
+                expect(db.claim_shipping_obligation).toHaveLength(0);
+                expect(db.payment_refund_attempt[0].state).toBe('SUCCEEDED');
+                await choose(p, c, s, first.returnId);
+                expect((await detail(c, s, first.returnId)).progress.physical[0].collection).toBe('LOST_REPORTED');
+                await expect(panel(p).getByText(/분실 보고/)).toBeVisible();
+                await info.attach('d-unresolved-real-db', { body: JSON.stringify(db), contentType: 'application/json' });
+            });
+        });
+    }
+    finally {
+        await cleanup("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [26]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: memberLostAndDefectiveOutstandingFeeStatesNeverClaimCompletionOrRestockOrCollectDebt [27]", async () => {
+            await seller.close();
+        });
+    }
+});
+test('memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement', async ({ page, context }, info) => {
+    const s = await seed(context, info.project.name, 'retry');
+    await prepare("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [28]", async () => {
+        await owner(context, s);
+    });
+    const { before, selected, bodies } = await operation("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [29]", async () => {
+        const before = await database(context, s);
+        await open(page, s);
+        const selected = (await current(context, s)).eligibility!.units.filter(u => u.eligible).slice(0, 1), bodies: unknown[] = [];
+        return { before, selected, bodies };
+    });
+    await prepare("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [30]", async () => {
+        await page.route('**/api/orders/' + s.orderNumber + '/returns', async (route) => {
+            if (route.request().method() !== 'POST') {
+                await route.continue();
+                return;
+            }
+            bodies.push(route.request().postDataJSON());
+            const response = await route.fetch();
+            expect(response.status()).toBe(202);
+            if (bodies.length === 1)
+                await route.abort('failed');
+            else
+                await route.fulfill({ response });
+        });
+    });
+    const { returnId, db: initialDb2 } = await operation("order-return: 반품 신청 접수 [31] + recovery", async () => {
+        await operation("order-return: 반품 신청 접수 [31]", async () => {
+            await fillRequest(page, context, s, selected);
+            await panel(page).getByRole('button', { name: '반품 신청 접수', exact: true }).dblclick();
+            await expect(panel(page).getByRole('button', { name: '같은 요청으로 반품 결과 확인', exact: true })).toBeVisible();
+            expect(bodies).toHaveLength(1);
+            await panel(page).getByRole('button', { name: '같은 요청으로 반품 결과 확인', exact: true }).click();
+            await expect(panel(page).getByRole('heading', { name: '현재 반품 진행', exact: true })).toBeVisible();
+            expect(bodies).toHaveLength(2);
+            expect(bodies[1]).toEqual(bodies[0]);
+        });
+        await operation("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [32]", async () => {
+            await page.unroute('**/api/orders/' + s.orderNumber + '/returns');
+        });
+        const { returnId, db } = await operation("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [33]", async () => {
+            const rows = await current(context, s), returnId = rows.returns.find(r => r.returnId !== s.competingReturnId)!.returnId;
+            const db = await database(context, s);
+            expect(db.claim_return_request).toHaveLength(2);
+            expect(db.order_unit_hold.filter(r => r.state === 'ACTIVE')).toHaveLength(2);
+            expect(db.restored).toEqual(before.restored);
+            expect(db.payment_refund_attempt).toHaveLength(0);
+            await fixture(context, s, 'prepare', { phase: 'INSPECT', returnId, responsibility: 'BUYER' });
+            await choose(page, context, s, returnId);
+            return { returnId, db };
+        });
+        return { returnId, db };
+    });
+    let db = initialDb2;
+    await operation("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [34]", async () => {
+        await quote(page, s, returnId);
+    });
+    await operation("order-return: 이번 환불·회수비 견적에 명시적으로 동의합니다 [35]", async () => {
+        await panel(page).getByRole('checkbox', { name: '이번 환불·회수비 견적에 명시적으로 동의합니다', exact: true }).check();
+        await fixture(context, s, 'prepare', { phase: 'CONSENT', returnId: id(s.competingReturnId) });
+    });
+    let failed = false, consentPosts = 0;
+    page.on('request', r => {
+        if (r.method() === 'POST' && r.url().endsWith('/' + returnId + '/consent'))
+            consentPosts++;
+    });
+    await prepare("order-return: memberReturnCommitLossReplaysOneHoldAndStaleConsent409FailedRefreshDiscardsEveryAcknowledgement [36]", async () => {
+        await page.route('**/api/orders/' + s.orderNumber + '/returns?*', async (route) => {
+            if (!failed) {
+                failed = true;
+                await route.fulfill({ status: 503, contentType: 'application/json', body: '{}' });
+            }
+            else
+                await route.continue();
+        });
+    });
+    await operation("order-return: 견적 동의 후 환불 진행 [37]", async () => {
+        const denied = page.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base(s) + '/' + returnId + '/consent');
+        await panel(page).getByRole('button', { name: '견적 동의 후 환불 진행', exact: true }).click();
+        expect((await denied).status()).toBe(409);
+        await expect(panel(page).getByRole('alert')).toContainText('현재');
+        await expect(panel(page).getByRole('checkbox', { name: '이번 환불·회수비 견적에 명시적으로 동의합니다', exact: true })).toHaveCount(0);
+        await expect(panel(page).getByRole('button', { name: '같은 요청으로 반품 결과 확인', exact: true })).toHaveCount(0);
+        expect(consentPosts).toBe(1);
+        db = await database(context, s);
+        expect(db.claim_return_financial_consent.filter(r => r.return_id === returnId)).toHaveLength(0);
+        expect(db.claim_return_financial_consent.filter(r => r.return_id === s.competingReturnId)).toHaveLength(1);
+        expect(db.provider).toHaveLength(0);
+        expect(db.order.state).toBe('PAID');
+        await page.reload();
+        expect(consentPosts).toBe(1);
+        await info.attach('d-response-loss-and-conflict-db', { body: JSON.stringify({ bodies, db }), contentType: 'application/json' });
+    });
+});
+test('currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands', async ({ browser }, info) => {
+    const { c, guard } = await prepare("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [38]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), guard = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, guard };
+    });
+    let release = () => { };
+    try {
+        const s = await seed(c, info.project.name, 'glate');
+        await prepare("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [39]", async () => {
+            await owner(c, s);
+        });
+        await prepare("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [40]", async () => {
+            await owner(guard, s);
+        });
+        const { p } = await prepare("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [41]", async () => {
+            const p = await c.newPage();
+            return { p };
+        });
+        const { before } = await operation("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [42]", async () => {
+            await open(p, s);
+            await choose(p, c, s, id(s.returnId));
+            const free = (await current(c, s)).eligibility!.units.filter(u => u.eligible).slice(0, 1);
+            await fillRequest(p, c, s, free);
+            await panel(p).getByLabel('반품 신청 사유', { exact: true }).fill('폐기되어야 하는 비회원 입력');
+            const before = await database(guard, s);
+            return { before };
+        });
+        let captured!: () => void;
+        const held = new Promise<void>(r => { release = r; }), ready = new Promise<void>(r => { captured = r; });
+        await prepare("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [43]", async () => {
+            await p.route('**/api/orders/' + s.orderNumber + '/returns?*', async (route) => {
+                const response = await route.fetch();
+                expect(response.status()).toBe(200);
+                expect((await response.json() as ReturnPage).returns.some(r => r.returnId === s.returnId)).toBe(true);
+                captured();
+                await held;
+                try {
+                    await route.fulfill({ response });
+                }
+                catch { /* The real authority generation may abort this held read. */ }
+            });
+        });
+        let posts = 0;
+        await operation("order-return: 반품 정보 다시 조회 [44]", async () => {
+            p.on('request', r => {
+                if (r.method() === 'POST' && r.url().includes('/returns'))
+                    posts++;
+            });
+            await panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true }).click();
+            await ready;
+            expect((await c.request.post('/api/guest/access/logout', { headers: await headers(c), data: {} })).status()).toBe(200);
+            await p.evaluate(() => window.dispatchEvent(new Event('focus')));
+            release();
+            await expect(p.getByTestId('order-number')).toHaveCount(0);
+            await expect(panel(p)).toHaveCount(0);
+            await expect(p.getByLabel('반품 신청 사유', { exact: true })).toHaveCount(0);
+            expect((await c.request.get(base(s))).status()).toBe(404);
+            expect(await database(guard, s)).toEqual(before);
+            expect(posts).toBe(0);
+        });
+    }
+    finally {
+        release();
+        await cleanup("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [45]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: currentGasLatePrivateReturnReadAfterActualLogoutNeverRepublishesDraftHistoryOrCommands [46]", async () => {
+            await guard.close();
+        });
+    }
+});
+test('currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory', async ({ browser }, info) => {
+    const { c, seller, foreign } = await prepare("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [47]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), seller = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), foreign = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, seller, foreign };
+    });
+    try {
+        const s = await seed(c, info.project.name, 'actors');
+        await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [48]", async () => {
+            await Promise.all([owner(c, s), login(seller, s.sellerEmail), login(foreign, s.foreignSellerEmail)]);
+        });
+        const { p, sp } = await prepare("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [49]", async () => {
+            const p = await c.newPage(), sp = await seller.newPage();
+            return { p, sp };
+        });
+        await operation("order-return: 사유를 기록하고 신청 철회 [50]", async () => {
+            await open(p, s);
+            await choose(p, c, s, id(s.withdrawId));
+            await panel(p).getByLabel('처리 사유', { exact: true }).fill('승인 전 현재 본인 철회');
+            const withdrawn = p.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/' + s.withdrawId + '/withdraw'));
+            await panel(p).getByRole('button', { name: '사유를 기록하고 신청 철회', exact: true }).click();
+            expect((await withdrawn).status()).toBe(200);
+            await open(sp, s, 'seller');
+            await choose(sp, seller, s, id(s.approveId), 'seller');
+        });
+        const { beforeDenied } = await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [51]", async () => {
+            await sellerCommand(sp, id(s.approveId), 'approve');
+            const beforeDenied = await database(c, s);
+            return { beforeDenied };
+        });
+        await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [52]", async () => {
+            expect((await c.request.post(base(s) + '/' + s.approveId + '/withdraw', { headers: await headers(c), data: { key: 'after-approval-denied', expectedRevision: 1, reason: '승인 후 철회 금지' } })).status()).toBe(409);
+            expect(await database(c, s)).toEqual(beforeDenied);
+            await choose(sp, seller, s, id(s.rejectId), 'seller');
+        });
+        const { beforeForeign } = await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [53]", async () => {
+            await sellerCommand(sp, id(s.rejectId), 'reject');
+            const beforeForeign = await database(c, s);
+            expect((await foreign.request.get(base(s, 'seller'))).status()).toBe(404);
+            return { beforeForeign };
+        });
+        const { fp } = await prepare("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [54]", async () => {
+            const fp = await foreign.newPage();
+            return { fp };
+        });
+        const { box } = await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [55]", async () => {
+            await fp.goto('/seller/orders/' + s.sellerOrderId);
+            await expect(fp.getByTestId('seller-order-number')).toHaveCount(0);
+            await expect(panel(fp)).toHaveCount(0);
+            expect(await database(c, s)).toEqual(beforeForeign);
+            await refresh(p, s);
+            const states = (await current(c, s)).returns.map(r => r.state).sort();
+            expect(states).toEqual(['APPROVED', 'REJECTED', 'WITHDRAWN']);
+            const d = await order(c, s), shortItem = d.stores.flatMap(v => v.items).find(i => i.title === '다른 회수비 상품')!;
+            expect(shortItem).toBeDefined();
+            const available = (await current(c, s)).eligibility!.units.find(u => u.eligible && u.itemId === shortItem.id)!;
+            expect(available).toBeDefined();
+            const box = panel(p).getByRole('checkbox', { name: title(d, available) + ' 반품 선택', exact: true });
+            await box.focus();
+            return { box };
+        });
+        await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [56]", async () => {
+            await p.keyboard.press('Space');
+            await expect(box).toBeChecked();
+        });
+        await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [57]", async () => {
+            await panel(p).getByLabel('반품 신청 사유', { exact: true }).fill('키보드로 확인한 새 원단위 신청');
+        });
+        let posts = 0;
+        const { db, longSelect } = await operation("order-return: 동일 가격 교환 [58]", async () => {
+            p.on('request', r => {
+                if (r.method() === 'POST' && new URL(r.url()).pathname === base(s))
+                    posts++;
+            });
+            const accepted = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base(s));
+            await panel(p).getByLabel('반품 신청 사유', { exact: true }).press('Enter');
+            expect((await accepted).status()).toBe(202);
+            expect(posts).toBe(1);
+            const db = await database(c, s);
+            expect(db.claim_return_request).toHaveLength(4);
+            expect(db.payment_refund_attempt).toHaveLength(0);
+            expect(db.restored).toHaveLength(0);
+            expect(db.coupons).toHaveLength(0);
+            const exchange = p.getByRole('region', { name: '동일 가격 교환', exact: true }), refreshed = p.waitForResponse(r => r.request().method() === 'GET' && new URL(r.url()).pathname === '/api/orders/' + s.orderNumber + '/exchanges');
+            await exchange.getByRole('button', { name: '교환 정보 다시 조회', exact: true }).click();
+            const exchangeResponse = await refreshed;
+            expect(exchangeResponse.status()).toBe(200);
+            await info.attach('d-responsive-real-exchange-choices', { body: await exchangeResponse.body(), contentType: 'application/json' });
+            await expect(exchange.getByRole('button', { name: '교환 정보 다시 조회', exact: true })).toBeEnabled();
+            const longSelect = exchange.locator('select').filter({ has: p.locator('option').filter({ hasText: /P05 reserve-order.*같은 SKU 교체/ }) }).first();
+            await expect(longSelect).toBeVisible();
+            await expect(longSelect.locator('option').filter({ hasText: /P05 reserve-order.*같은 SKU 교체/ })).toHaveCount(1);
+            return { db, longSelect };
+        });
+        for (const width of [375, 768, 1440]) {
+            await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [59]", async () => {
+                await assertResponsiveGeometry(p, info, width);
+            });
+        }
+        await operation("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [60]", async () => {
+            await longSelect.focus();
+            await p.keyboard.press('Home');
+            await p.keyboard.press('ArrowDown');
+            await expect(longSelect).not.toHaveValue('');
+            expect(await database(c, s)).toEqual(db);
+        });
+    }
+    finally {
+        await cleanup("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [61]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [62]", async () => {
+            await seller.close();
+        });
+        await cleanup("order-return: currentBuyerWithdrawalOwnSellerDecisionsForeignSellerDenialAndKeyboardRequestKeepTerminalHistory [63]", async () => {
+            await foreign.close();
+        });
+    }
+});
+test('currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects', async ({ browser }, info) => {
+    let { c } = await prepare("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [64]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c };
+    });
+    const { op } = await prepare("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [65]", async () => {
+        const op = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { op };
+    });
+    try {
+        let s = await seed(c, info.project.name, 'item');
+        await operation("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [66]", async () => {
+            await Promise.all([owner(c, s), login(op, s.supportEmail)]);
+        });
+        const { p } = await prepare("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [67]", async () => {
+            const p = await op.newPage();
+            return { p };
+        });
+        const { before: initialBefore3, failed, firstAttempt, currentFailed } = await operation("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [68]", async () => {
+            await open(p, s, 'support');
+            const before = await database(c, s);
+            const failed = id(s.failedReturnId), firstAttempt = String(before.payment_refund_attempt.find(r => r.claim_id === failed)?.id);
+            await choose(p, op, s, failed, 'support');
+            const currentFailed = await detail(op, s, failed, 'support');
+            expect(currentFailed.item.state).toBe('FAILED');
+            await configure(c, s, failed, 'ITEM', 'SUCCESS');
+            return { before, failed, firstAttempt, currentFailed };
+        });
+        let before = initialBefore3;
+        const { next } = await operation("order-return: 상품 환불 실패 확인 후 새 시도 [69]", async () => {
+            await panel(p).getByLabel('처리 사유', { exact: true }).fill('확인된 실패에 대한 실제 새 시도');
+            const retry = p.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/' + failed + '/refunds/ITEM/retry'));
+            await panel(p).getByRole('button', { name: '상품 환불 실패 확인 후 새 시도', exact: true }).click();
+            const retried = await retry;
+            expect(retried.status()).toBe(202);
+            expect(retried.request().postDataJSON().expectedRevision).toBe(currentFailed.progress.version);
+            const next = String((await retried.json()).refundAttemptId);
+            expect(next).not.toBe(firstAttempt);
+            return { next };
+        });
+        let { db } = await operation("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [70]", async () => {
+            await work(c, s, 'ITEM', failed);
+            await refresh(p, s, 'support');
+            await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');
+            const db = await database(c, s);
+            expect(db.payment_refund_attempt.find(r => r.id === next)?.sequence).toBe(2);
+            expect(db.payment_refund_attempt.find(r => r.id === firstAttempt)?.state).toBe('FAILED');
+            expect(db.provider.find(r => r.attempt_id === next)).toMatchObject({ submit_calls: 1, effects: 1 });
+            expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);
+            expect(db.restored).toEqual(before.restored);
+            expect(db.order.state).toBe('PAID');
+            expect((await detail(op, s, failed, 'support')).progress.accepted).toEqual(currentFailed.progress.accepted);
+            await info.attach('d-item-failed-real-db', { body: JSON.stringify(db), contentType: 'application/json' });
+            return { db };
+        });
+        await cleanup("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [71]", async () => {
+            await c.close();
+        });
+        await prepare("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [72]", async () => {
+            c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        });
+        s = await seed(c, info.project.name, 'itemunknown');
+        await prepare("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [73]", async () => {
+            await owner(c, s);
+        });
+        const { unknown, unknownAttempt, currentUnknown } = await operation("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [74]", async () => {
+            before = await database(c, s);
+            const unknown = id(s.unknownReturnId), unknownAttempt = String(before.payment_refund_attempt.find(r => r.claim_id === unknown)?.id);
+            await open(p, s, 'support');
+            await choose(p, op, s, unknown, 'support');
+            const currentUnknown = await detail(op, s, unknown, 'support');
+            expect(currentUnknown.item.state).toBe('UNKNOWN');
+            return { unknown, unknownAttempt, currentUnknown };
+        });
+        await operation("order-return: 상품 환불 같은 시도 결과 조회 [75]", async () => {
+            await panel(p).getByLabel('처리 사유', { exact: true }).fill('불명확한 같은 시도 실제 결과 조회');
+            const query = p.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/' + unknown + '/refunds/ITEM/query'));
+            await panel(p).getByRole('button', { name: '상품 환불 같은 시도 결과 조회', exact: true }).click();
+            const queried = await query;
+            expect(queried.status()).toBe(202);
+            expect((await queried.json()).refundAttemptId).toBe(unknownAttempt);
+            expect(queried.request().postDataJSON().expectedRevision).toBe(currentUnknown.progress.version);
+            await work(c, s, 'ITEM', unknown);
+            await refresh(p, s, 'support');
+            await expect(panel(p).getByTestId('return-current-state')).toHaveText('개인 반품 완료');
+            db = await database(c, s);
+            expect(db.payment_refund_attempt.filter(r => r.claim_id === unknown && r.purpose === 'ITEM')).toHaveLength(1);
+            expect(db.provider.find(r => r.attempt_id === unknownAttempt)).toMatchObject({ submit_calls: 1, query_calls: 1, effects: 1 });
+            expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);
+            expect(db.restored).toEqual(before.restored);
+            expect(db.coupons).toHaveLength(0);
+            expect(db.order.state).toBe('PAID');
+            await info.attach('d-item-support-real-db', { body: JSON.stringify(db), contentType: 'application/json' });
+        });
+    }
+    finally {
+        await cleanup("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [76]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: currentSupportItemFailedRetryAndUnknownQueryUseActualRevisionSameTermsAndRealWorkerEffects [77]", async () => {
+            await op.close();
+        });
+    }
+});
+test('sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund', async ({ browser }, info) => {
+    const { c, op } = await prepare("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [78]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), op = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, op };
+    });
+    try {
+        const s = await seed(c, info.project.name, 'shipping');
+        await operation("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [79]", async () => {
+            await Promise.all([owner(c, s), login(op, s.supportEmail)]);
+        });
+        const { p, origin, view, old } = await prepare("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [80]", async () => {
+            const p = await op.newPage(), origin = id(s.originReturnId), view = id(s.viewReturnId), old = id(s.oldCompletedReturnId);
+            return { p, origin, view, old };
+        });
+        const { first, before, retry } = await operation("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [81]", async () => {
+            expect(origin).not.toBe(view);
+            await open(p, s, 'support');
+            await choose(p, op, s, view, 'support');
+            const first = await detail(op, s, view, 'support'), before = await database(c, s);
+            expect(first.shipping).toMatchObject({ originKind: 'RETURN', originIntentId: origin, supportContract: 'RETURN_SHIPPING', commandRevisionKind: 'SHIPPING_OBLIGATION', state: 'FAILED', resultState: 'FAILED', commandRevision: 1 });
+            await configure(c, s, origin, 'SHIPPING', 'LOST_RESPONSE');
+            await panel(p).getByLabel('배송비 지원 사유', { exact: true }).fill('원 의무의 확인된 실패를 재시도');
+            const retry = p.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/refunds/SHIPPING/retry'));
+            return { first, before, retry };
+        });
+        const { attempt } = await operation("order-return: 배송비 환불 실패 확인 후 새 시도 [82]", async () => {
+            await panel(p).getByRole('button', { name: '배송비 환불 실패 확인 후 새 시도', exact: true }).click();
+            const retried = await retry;
+            expect(new URL(retried.url()).pathname).toBe('/api/admin/support/orders/' + s.orderNumber + '/returns/' + origin + '/refunds/SHIPPING/retry');
+            expect(retried.status()).toBe(202);
+            expect(retried.request().postDataJSON().expectedRevision).toBe(first.shipping.commandRevision);
+            const attempt = String((await retried.json()).refundAttemptId);
+            return { attempt };
+        });
+        const { uncertain } = await operation("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [83]", async () => {
+            await work(c, s, 'SHIPPING');
+            await refresh(p, s, 'support');
+            const uncertain = await detail(op, s, view, 'support');
+            expect(uncertain.progress.accepted.returnId).toBe(view);
+            expect(uncertain.shipping).toMatchObject({ originIntentId: origin, state: 'UNKNOWN', resultState: 'UNKNOWN', sequence: 2, commandRevision: 3 });
+            return { uncertain };
+        });
+        await operation("order-return: 배송비 환불 같은 시도 결과 조회 [84]", async () => {
+            await panel(p).getByLabel('배송비 지원 사유', { exact: true }).fill('같은 원 배송비 시도 결과 확인');
+            const query = p.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/refunds/SHIPPING/query'));
+            await panel(p).getByRole('button', { name: '배송비 환불 같은 시도 결과 조회', exact: true }).click();
+            const queried = await query;
+            expect(queried.status()).toBe(202);
+            expect(new URL(queried.url()).pathname).toBe('/api/admin/support/orders/' + s.orderNumber + '/returns/' + origin + '/refunds/SHIPPING/query');
+            expect(queried.request().postDataJSON().expectedRevision).toBe(uncertain.shipping.commandRevision);
+            expect((await queried.json()).refundAttemptId).toBe(attempt);
+        });
+        await operation("order-return: /api/admin/support/orders/ [85]", async () => {
+            await work(c, s, 'SHIPPING');
+            await refresh(p, s, 'support');
+            await expect(panel(p).getByRole('button', { name: /배송비 환불.*시도/ })).toHaveCount(0);
+            const db = await database(c, s);
+            expect(db.order.state).toBe('CLOSED');
+            expect(db.coupons).toHaveLength(1);
+            expect(db.provider.find(r => r.attempt_id === attempt)).toMatchObject({ submit_calls: 1, query_calls: 1, effects: 1 });
+            expect(db.payment_refund_attempt.filter(r => r.purpose === 'SHIPPING')).toHaveLength(2);
+            expect(db.claim_return_request.find(r => r.id === old)).toEqual(before.claim_return_request.find(r => r.id === old));
+            expect(db.claim_return_history.filter(r => r.return_id === old)).toEqual(before.claim_return_history.filter(r => r.return_id === old));
+            expect(db.claim_return_completion.filter(r => r.return_id === old)).toEqual(before.claim_return_completion.filter(r => r.return_id === old));
+            expect(db.claim_return_financial_consent).toEqual(before.claim_return_financial_consent);
+            expect(db.restored).toEqual(before.restored);
+            expect(db.units).toEqual(before.units);
+            expect(db.order.quote).toBe(before.order.quote);
+            const final = await detail(op, s, view, 'support');
+            expect(final.shipping.state).toBe('SUCCEEDED');
+            expect(final.progress.state).toBe('COMPLETED');
+            expect((await op.request.post('/api/admin/support/orders/' + s.orderNumber + '/returns/' + origin + '/refunds/SHIPPING/retry', { headers: await headers(op), data: { key: 'no-new-success-retry', expectedRevision: final.shipping.commandRevision, reason: '이미 성공한 원 의무 재시도 금지' } })).status()).toBe(409);
+            expect(await database(c, s)).toEqual(db);
+            await info.attach('d-shared-shipping-origin-real-db', { body: JSON.stringify({ origin, view, before, db }), contentType: 'application/json' });
+        });
+    }
+    finally {
+        await cleanup("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [86]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: sharedShippingFromAnotherReturnViewUsesRealOriginIndependentRevisionAndOneOriginalRefund [87]", async () => {
+            await op.close();
+        });
+    }
+});
+test('pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout', async ({ browser }, info) => {
+    const { c, op } = await prepare("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [88]", async () => {
+        const c = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' }), op = await browser.newContext({ baseURL: 'http://127.0.0.1:24176' });
+        return { c, op };
+    });
+    let release = () => { };
+    try {
+        const s = await seed(c, info.project.name, 'cshipping');
+        await operation("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [89]", async () => {
+            await Promise.all([owner(c, s), login(op, s.supportEmail)]);
+        });
+        const { p, origin } = await prepare("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [90]", async () => {
+            const p = await op.newPage(), origin = id(s.originClaimId);
+            return { p, origin };
+        });
+        const { original, projection, path, bodies } = await operation("order-return: /api/admin/support/orders/ [91]", async () => {
+            await open(p, s, 'support');
+            await expect(panel(p).getByText('접수된 반품이 없습니다.', { exact: true })).toBeVisible();
+            const original = await database(c, s), projection = (await current(op, s, 'support')).shipping[0];
+            expect(projection).toMatchObject({ originKind: 'CANCEL', originIntentId: origin, supportContract: 'CANCEL_SHIPPING', commandRevisionKind: 'CANCEL_CLAIM', resultState: 'FAILED' });
+            await configure(c, s, origin, 'SHIPPING', 'SUCCESS');
+            const path = '/api/admin/support/orders/' + s.orderNumber + '/cancellations/' + origin + '/refunds/SHIPPING/retry', bodies: unknown[] = [];
+            return { original, projection, path, bodies };
+        });
+        await prepare("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [92]", async () => {
+            await p.route('**' + path, async (route) => {
+                bodies.push(route.request().postDataJSON());
+                const response = await route.fetch();
+                expect(response.status()).toBe(202);
+                if (bodies.length === 1)
+                    await route.abort('failed');
+                else
+                    await route.fulfill({ response });
+            });
+        });
+        const { completed } = await operation("order-return: 배송비 환불 실패 확인 후 새 시도 [93] + recovery", async () => {
+            await operation("order-return: 배송비 환불 실패 확인 후 새 시도 [93]", async () => {
+                await panel(p).getByLabel('배송비 지원 사유', { exact: true }).fill('기존 취소 원 배송비 실제 새 시도');
+                await panel(p).getByRole('button', { name: '배송비 환불 실패 확인 후 새 시도', exact: true }).dblclick();
+                await expect(panel(p).getByRole('button', { name: '같은 요청으로 반품 결과 확인', exact: true })).toBeVisible();
+                expect(bodies).toHaveLength(1);
+                expect((bodies[0] as {
+                    expectedRevision: number;
+                }).expectedRevision).toBe(projection.commandRevision);
+                await panel(p).getByRole('button', { name: '같은 요청으로 반품 결과 확인', exact: true }).click();
+                await expect(panel(p).getByText('요청이 접수됐습니다. 아래 현재 진행 상태를 확인해 주세요.', { exact: true })).toBeVisible();
+                expect(bodies).toHaveLength(2);
+                expect(bodies[1]).toEqual(bodies[0]);
+            });
+            await operation("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [94]", async () => {
+                await p.unroute('**' + path);
+            });
+            const { completed } = await operation("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [95]", async () => {
+                await work(c, s, 'SHIPPING');
+                await refresh(p, s, 'support');
+                const completed = await database(c, s);
+                expect(completed.order.state).toBe('CANCELED');
+                expect(completed.claim_return_request).toHaveLength(0);
+                expect(completed.claim[0].receipt).toEqual(original.claim[0].receipt);
+                expect(completed.coupons).toHaveLength(1);
+                expect(completed.payment_refund_attempt.filter(r => r.purpose === 'SHIPPING')).toHaveLength(2);
+                expect((await current(op, s, 'support')).shipping[0].supportActions).toHaveLength(0);
+                return { completed };
+            });
+            return { completed };
+        });
+        let captured!: () => void;
+        const held = new Promise<void>(r => { release = r; }), ready = new Promise<void>(r => { captured = r; });
+        await prepare("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [96]", async () => {
+            await p.route('**/api/admin/support/orders/' + s.orderNumber + '/returns?*', async (route) => {
+                const response = await route.fetch();
+                expect(response.status()).toBe(200);
+                expect((await response.json() as ReturnPage).shipping[0].originIntentId).toBe(origin);
+                captured();
+                await held;
+                try {
+                    await route.fulfill({ response });
+                }
+                catch { /* A current authority change can abort this actual held response. */ }
+            });
+        });
+        await operation("order-return: 반품 정보 다시 조회 [97]", async () => {
+            await panel(p).getByRole('button', { name: '반품 정보 다시 조회', exact: true }).click();
+            await ready;
+            expect((await op.request.post('/api/auth/logout', { headers: await headers(op) })).status()).toBe(200);
+            await p.evaluate(() => window.dispatchEvent(new Event('focus')));
+            release();
+            await expect(panel(p)).toHaveCount(0);
+            await expect(p.getByText(origin, { exact: false })).toHaveCount(0);
+            expect((await op.request.get(base(s, 'support'))).status()).toBe(401);
+            expect(await database(c, s)).toEqual(completed);
+            expect(bodies).toHaveLength(2);
+            await info.attach('d-pure-c-shipping-real-db', { body: JSON.stringify(completed), contentType: 'application/json' });
+        });
+    }
+    finally {
+        release();
+        await cleanup("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [98]", async () => {
+            await c.close();
+        });
+        await cleanup("order-return: pureCancellationShippingWithoutReturnRowsUsesExistingClaimContractAndLostResponseReplayThenClearsOnLogout [99]", async () => {
+            await op.close();
+        });
+    }
+});

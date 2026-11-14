@@ -1,89 +1,135 @@
-import { test, expect } from '@playwright/test'
+import { operation, prepare, cleanup } from './business-deadline';
+import { test, expect } from './business-deadline';
 test('방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다', async ({ page, context }, info) => {
-  await page.goto('/products/p05-browser-1')
-  await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled()
-  await page.getByLabel('담을 수량', { exact: true }).fill('2')
-  await page.getByRole('button', { name: '장바구니 담기', exact: true }).click()
-  await expect(page.getByText('방문자 장바구니를 변경했습니다.')).toBeVisible()
-  await page.getByRole('link', { name: '장바구니 보기', exact: true }).click()
-  await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('2')
-  await page.getByLabel('P05 browser 01 수량', { exact: true }).fill('3')
-  await page.getByRole('button', { name: 'P05 browser 01 수량 변경', exact: true }).click()
-  await expect(page.getByText('상품 금액: 3,300원', { exact: true })).toBeVisible()
-  await page.reload()
-  await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('3')
-  const guest = await page.evaluate(() => JSON.parse(localStorage.getItem('marketplace-guest-cart')!))
-  expect(Object.keys(guest[0]).sort()).toEqual(['quantity', 'skuId'])
-  await page.goto('/products/p05-browser-2')
-  await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled()
-  await page.getByRole('button', { name: '장바구니 담기', exact: true }).click()
-  await expect(page.getByText('방문자 장바구니를 변경했습니다.')).toBeVisible()
-  await page.getByRole('link', { name: '장바구니 보기', exact: true }).click()
-  await page.getByRole('button', { name: 'P05 browser 02 삭제', exact: true }).click()
-  await expect(page.getByRole('article')).toHaveCount(1)
-  let lost = false
-  const mergeIds: string[] = []
-  await context.route('**/api/cart/merge', async route => {
-    mergeIds.push(route.request().postDataJSON().requestId)
-    const response = await route.fetch()
-    if (!lost) { lost = true; await route.abort('failed'); return }
-    await route.fulfill({ response })
-  })
-  await page.goto('/login')
-  await page.getByLabel('이메일', { exact: true }).fill('cart-browser-' + info.project.name + '@example.com')
-  await page.getByLabel('비밀번호', { exact: true }).fill(' A1-private-passphrase-가나다 ')
-  await page.getByRole('button', { name: '로그인', exact: true }).click()
-  await expect(page.getByText('로그인되었습니다.', { exact: true })).toBeVisible()
-  await page.getByRole('link', { name: '장바구니', exact: true }).click()
-  // The server committed the first merge, but its response was lost. Reload retries the journal.
-  await expect.poll(() => lost).toBe(true)
-  await page.reload()
-  await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('99')
-  await expect(page.getByText('재고 부족: 현재 5개', { exact: true })).toBeVisible()
-  expect(await page.evaluate(() => [localStorage.getItem('marketplace-guest-cart'), localStorage.getItem('marketplace-cart-merge')])).toEqual([null, null])
-  await page.reload()
-  await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('99')
-  const owner = (await (await page.request.get('/api/auth/me')).json()).id
-  const cart = await (await page.request.get('/api/cart?owner=' + owner)).json()
-  expect(cart.items[0].quantity).toBe(99)
-  expect(cart.version).toBe(2)
-  expect(mergeIds.length).toBeGreaterThanOrEqual(2)
-  expect(new Set(mergeIds).size).toBe(1)
-  await page.getByLabel('P05 browser 01 수량', { exact: true }).fill('4')
-  await page.getByRole('button', { name: 'P05 browser 01 수량 변경', exact: true }).click()
-  await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('4')
-  expect((await (await page.request.get('/api/cart?owner=' + owner)).json()).items[0].quantity).toBe(4)
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  await page.goto('/account')
-  await page.getByRole('button', { name: '로그아웃', exact: true }).click()
-  await expect(page.getByText('로그아웃했습니다.', { exact: true })).toBeVisible()
-  await page.getByRole('link', { name: '장바구니', exact: true }).click()
-  await expect(page.getByText('장바구니가 비어 있습니다.', { exact: true })).toBeVisible()
-  await expect(page.getByText('P05 browser 01', { exact: true })).toHaveCount(0)
-})
-
+    await operation("cart: 장바구니 담기 [1]", async () => {
+        await page.goto('/products/p05-browser-1');
+        await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled();
+    });
+    await operation("cart: 장바구니 담기 [2]", async () => {
+        await page.getByLabel('담을 수량', { exact: true }).fill('2');
+        await page.getByRole('button', { name: '장바구니 담기', exact: true }).click();
+        await expect(page.getByText('방문자 장바구니를 변경했습니다.')).toBeVisible();
+    });
+    await operation("cart: 장바구니 보기 [3]", async () => {
+        await page.getByRole('link', { name: '장바구니 보기', exact: true }).click();
+        await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('2');
+    });
+    await operation("cart: P05 browser 01 수량 변경 [4]", async () => {
+        await page.getByLabel('P05 browser 01 수량', { exact: true }).fill('3');
+        await page.getByRole('button', { name: 'P05 browser 01 수량 변경', exact: true }).click();
+        await expect(page.getByText('상품 금액: 3,300원', { exact: true })).toBeVisible();
+        await page.reload();
+        await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('3');
+        const guest = await page.evaluate(() => JSON.parse(localStorage.getItem('marketplace-guest-cart')!));
+        expect(Object.keys(guest[0]).sort()).toEqual(['quantity', 'skuId']);
+    });
+    await operation("cart: 장바구니 담기 [5]", async () => {
+        await page.goto('/products/p05-browser-2');
+        await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled();
+    });
+    await operation("cart: 장바구니 담기 [6]", async () => {
+        await page.getByRole('button', { name: '장바구니 담기', exact: true }).click();
+        await expect(page.getByText('방문자 장바구니를 변경했습니다.')).toBeVisible();
+    });
+    await operation("cart: 장바구니 보기 [7]", async () => {
+        await page.getByRole('link', { name: '장바구니 보기', exact: true }).click();
+        await page.getByRole('button', { name: 'P05 browser 02 삭제', exact: true }).click();
+        await expect(page.getByRole('article')).toHaveCount(1);
+    });
+    let lost = false;
+    const mergeIds: string[] = [];
+    await prepare("cart: 방문자 장바구니 CRUD와 로그인 병합·재시도·로그아웃 비노출을 실제 DB로 확인한다 [8]", async () => {
+        await context.route('**/api/cart/merge', async (route) => {
+            mergeIds.push(route.request().postDataJSON().requestId);
+            const response = await route.fetch();
+            if (!lost) {
+                lost = true;
+                await route.abort('failed');
+                return;
+            }
+            await route.fulfill({ response });
+        });
+    });
+    await operation("cart: 로그인 [9]", async () => {
+        await page.goto('/login');
+        await page.getByLabel('이메일', { exact: true }).fill('cart-browser-' + info.project.name + '@example.com');
+        await page.getByLabel('비밀번호', { exact: true }).fill(' A1-private-passphrase-가나다 ');
+        await page.getByRole('button', { name: '로그인', exact: true }).click();
+        await expect(page.getByText('로그인되었습니다.', { exact: true })).toBeVisible();
+    });
+    const { owner } = await operation("cart: 장바구니 [10]", async () => {
+        await page.getByRole('link', { name: '장바구니', exact: true }).click();
+        await expect.poll(() => lost).toBe(true);
+        await page.reload();
+        await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('99');
+        await expect(page.getByText('재고 부족: 현재 5개', { exact: true })).toBeVisible();
+        expect(await page.evaluate(() => [localStorage.getItem('marketplace-guest-cart'), localStorage.getItem('marketplace-cart-merge')])).toEqual([null, null]);
+        await page.reload();
+        await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('99');
+        const owner = (await (await page.request.get('/api/auth/me')).json()).id;
+        const cart = await (await page.request.get('/api/cart?owner=' + owner)).json();
+        expect(cart.items[0].quantity).toBe(99);
+        expect(cart.version).toBe(2);
+        expect(mergeIds.length).toBeGreaterThanOrEqual(2);
+        expect(new Set(mergeIds).size).toBe(1);
+        return { owner };
+    });
+    await operation("cart: P05 browser 01 수량 변경 [11]", async () => {
+        await page.getByLabel('P05 browser 01 수량', { exact: true }).fill('4');
+        await page.getByRole('button', { name: 'P05 browser 01 수량 변경', exact: true }).click();
+        await expect(page.getByLabel('P05 browser 01 수량', { exact: true })).toHaveValue('4');
+        expect((await (await page.request.get('/api/cart?owner=' + owner)).json()).items[0].quantity).toBe(4);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    });
+    await operation("cart: 로그아웃 [12]", async () => {
+        await page.goto('/account');
+        await page.getByRole('button', { name: '로그아웃', exact: true }).click();
+        await expect(page.getByText('로그아웃했습니다.', { exact: true })).toBeVisible();
+    });
+    await operation("cart: 장바구니 [13]", async () => {
+        await page.getByRole('link', { name: '장바구니', exact: true }).click();
+        await expect(page.getByText('장바구니가 비어 있습니다.', { exact: true })).toBeVisible();
+        await expect(page.getByText('P05 browser 01', { exact: true })).toHaveCount(0);
+    });
+});
 test('두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다', async ({ page, context }) => {
-  await page.goto('/products/p05-browser-3')
-  const second = await context.newPage()
-  await second.goto('/cart')
-  await expect(second.getByText('장바구니가 비어 있습니다.', { exact: true })).toBeVisible()
-  await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled()
-  await second.evaluate(async () => {
-    const state = window as unknown as { releaseCartLock: () => void }
-    await new Promise<void>(resolve => {
-      void navigator.locks.request('marketplace-cart', async () => {
-        resolve()
-        await new Promise<void>(release => { state.releaseCartLock = release })
-      })
-    })
-  })
-  // DOM click avoids changing focus and triggering an unrelated auth refresh.
-  await page.getByRole('button', { name: '장바구니 담기', exact: true }).evaluate((button: HTMLButtonElement) => button.click())
-  await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeDisabled()
-  expect(await page.evaluate(() => localStorage.getItem('marketplace-guest-cart'))).toBeNull()
-  await second.evaluate(() => (window as unknown as { releaseCartLock: () => void }).releaseCartLock())
-  await expect(second.getByLabel('P05 browser 03 수량', { exact: true })).toHaveValue('1')
-  await page.getByRole('button', { name: '장바구니 담기', exact: true }).evaluate((button: HTMLButtonElement) => button.click())
-  await expect(second.getByLabel('P05 browser 03 수량', { exact: true })).toHaveValue('2')
-  await second.close()
-})
+    await operation("cart: 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 [14]", async () => {
+        await page.goto('/products/p05-browser-3');
+    });
+    const { second } = await prepare("cart: 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 [15]", async () => {
+        const second = await context.newPage();
+        return { second };
+    });
+    await operation("cart: 장바구니 담기 [16]", async () => {
+        await second.goto('/cart');
+        await expect(second.getByText('장바구니가 비어 있습니다.', { exact: true })).toBeVisible();
+        await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeEnabled();
+        await second.evaluate(async () => {
+            const state = window as unknown as {
+                releaseCartLock: () => void;
+            };
+            await new Promise<void>(resolve => {
+                void navigator.locks.request('marketplace-cart', async () => {
+                    resolve();
+                    await new Promise<void>(release => { state.releaseCartLock = release; });
+                });
+            });
+        });
+    });
+    await operation("cart: 장바구니 담기 [18]", async () => {
+        await page.getByRole('button', { name: '장바구니 담기', exact: true }).evaluate((button: HTMLButtonElement) => button.click());
+        await expect(page.getByRole('button', { name: '장바구니 담기', exact: true })).toBeDisabled();
+        expect(await page.evaluate(() => localStorage.getItem('marketplace-guest-cart'))).toBeNull();
+        await second.evaluate(() => (window as unknown as {
+            releaseCartLock: () => void;
+        }).releaseCartLock());
+        await expect(second.getByLabel('P05 browser 03 수량', { exact: true })).toHaveValue('1');
+    });
+    await operation("cart: 장바구니 담기 [19]", async () => {
+        await page.getByRole('button', { name: '장바구니 담기', exact: true }).evaluate((button: HTMLButtonElement) => button.click());
+        await expect(second.getByLabel('P05 browser 03 수량', { exact: true })).toHaveValue('2');
+    });
+    await cleanup("cart: 두 탭은 실제 Web Locks 대기 후 방문자 수량을 합산하고 저장 변경을 공유한다 [20]", async () => {
+        await second.close();
+    });
+});

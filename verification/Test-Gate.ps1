@@ -59,3 +59,19 @@ $didReject=$false
 try { Read-VerifiedBrowserBundle -Folder $bundleRun.FullName | Out-Null } catch { $didReject=$true }
 if (-not $didReject) { throw 'False PASS: changed browser asset' }
 'PASS reject changed browser asset'
+
+$deadlineCases = @([pscustomobject]@{classname='desktop';name='a.spec.ts:submit';status='passed'})
+$deadlineTest = @{id='one';project='desktop';file='C:/new/a.spec.ts';title='submit';status='passed';operations=1}
+$deadlineReport = @{status='passed';problems=@();scopes=1;tests=@($deadlineTest)}
+Assert-BrowserDeadlineEvidence $deadlineReport $deadlineCases
+Must-Reject 'missing deadline tests' { Assert-BrowserDeadlineEvidence @{status='passed';problems=@();scopes=1;tests=@()} $deadlineCases }
+Must-Reject 'deadline failure hidden by browser pass' { Assert-BrowserDeadlineEvidence @{status='failed';problems=@('late');scopes=1;tests=@($deadlineTest)} $deadlineCases }
+$deadlineTest.operations = 0
+Must-Reject 'browser pass without measured command' { Assert-BrowserDeadlineEvidence $deadlineReport $deadlineCases }
+$deadlineTest.operations = 1
+$deadlineTest.title = 'other'
+Must-Reject 'deadline from a different test' { Assert-BrowserDeadlineEvidence $deadlineReport $deadlineCases }
+$deadlineTest.title = 'submit'
+$deadlineReport.tests = @($deadlineTest,$deadlineTest)
+Must-Reject 'duplicate deadline evidence' { Assert-BrowserDeadlineEvidence $deadlineReport @($deadlineCases[0],$deadlineCases[0]) }
+'PASS browser deadline evidence gates'

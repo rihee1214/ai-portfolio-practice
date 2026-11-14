@@ -1,21 +1,199 @@
-import {test,expect,type Page,type BrowserContext} from '@playwright/test'
-async function headers(context:BrowserContext){const csrf=await(await context.request.get('/api/auth/csrf')).json();return {[csrf.headerName]:csrf.token}}
-async function login(page:Page,project:string,mode:string){await page.goto('/login');await page.getByLabel('이메일',{exact:true}).fill('p4b-browse-reserve-order-d-browser-'+project+'-'+mode+'@example.com');await page.getByLabel('비밀번호',{exact:true}).fill(' A1-private-passphrase-가나다 ');await page.getByRole('button',{name:'로그인',exact:true}).click();await expect(page.getByText('로그인되었습니다.',{exact:true})).toBeVisible()}
-async function order(context:BrowserContext){const result=await context.request.get('/api/__test/payment');expect(result.status()).toBe(200);return (await result.json())[0] as {order_number:string;state:string;approval_calls:number;approval_effects:number}}
-test('결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다',async({page,context},info)=>{
- await login(page,info.project.name,'zero');const saved=await order(context);let approvals=0;page.on('request',r=>{if(r.url().endsWith('/approve'))approvals++});await page.goto('/payments/'+saved.order_number+'/success');await expect(page.getByText('결제 대기 중입니다.',{exact:true})).toBeVisible();expect(approvals).toBe(0);expect((await order(context)).state).toBe('PENDING_PAYMENT');await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible();expect(approvals).toBe(1);expect(await order(context)).toMatchObject({state:'PAID',approval_calls:0,approval_effects:0});await page.reload();await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible();expect(approvals).toBe(1);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
-})
-test('응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다',async({page,context},info)=>{
- await login(page,info.project.name,'lost');const saved=await order(context);let approvals=0;page.on('request',r=>{if(r.url().endsWith('/approve'))approvals++});await page.goto('/payments/'+saved.order_number);await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByText('결제 확인 중입니다. 예약을 유지하고 서버 결과를 확인합니다.',{exact:true})).toBeVisible();expect((await order(context)).state).toBe('PENDING_PAYMENT');expect((await context.request.post('/api/__test/payment/query',{headers:await headers(context),data:{number:saved.order_number}})).status()).toBe(200);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible();expect(approvals).toBe(1);expect(await order(context)).toMatchObject({state:'PAID',approval_calls:1,approval_effects:1})
-})
-test('결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다',async({page,context},info)=>{
- await login(page,info.project.name,'session');const saved=await order(context);await page.goto('/payments/'+saved.order_number);await expect(page.getByRole('button',{name:'모의 결제 승인',exact:true})).toBeEnabled();expect((await context.request.post('/api/auth/logout',{headers:await headers(context)})).status()).toBe(200);await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByText('인증이 만료되었습니다. 다시 로그인해도 자동 승인하지 않습니다.',{exact:true})).toBeVisible();await login(page,info.project.name,'zero');expect((await context.request.get('/api/payments/'+saved.order_number)).status()).toBe(401);await login(page,info.project.name,'session');await page.goto('/payments/'+saved.order_number);await expect(page.getByText('결제 대기 중입니다.',{exact:true})).toBeVisible();expect(await order(context)).toMatchObject({state:'PENDING_PAYMENT',approval_calls:0});let failCsrf=true,posts=0;page.on('request',r=>{if(r.url().endsWith('/approve'))posts++});await page.route('**/api/auth/csrf',async route=>{if(failCsrf){failCsrf=false;await route.abort('failed')}else await route.continue()});await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByRole('alert')).toBeVisible();expect(posts).toBe(0);await page.getByRole('button',{name:'서버 결과 확인',exact:true}).click();await expect(page.getByRole('button',{name:'모의 결제 승인',exact:true})).toBeEnabled();expect(posts).toBe(0);await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible();expect(posts).toBe(1);expect(await order(context)).toMatchObject({state:'PAID',approval_calls:1})
-})
-test('다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다',async({page,context},info)=>{
- await login(page,info.project.name,'zero');const saved=await order(context);await page.goto('/payments/'+saved.order_number);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible()
- const panel=page.getByRole('region',{name:'결제',exact:true});await expect(panel.getByText(/^0원/)).toBeVisible();let posts=0;page.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/api/payments/'))posts++})
- let release!:()=>void,captured!:()=>void;const held=new Promise<void>(r=>release=r),ready=new Promise<void>(r=>captured=r)
- await page.route('**/api/payments/'+saved.order_number,async route=>{const response=await route.fetch();captured();await held;try{await route.fulfill({response})}catch{/* auth invalidation may abort the old read */}})
- await page.getByRole('button',{name:'서버 결과 확인',exact:true}).click();await ready
- const other=await context.newPage();try{await login(other,info.project.name,'session');await expect(panel.getByText(/^0원/)).toHaveCount(0);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toHaveCount(0);release();await page.unroute('**/api/payments/'+saved.order_number);await expect(panel.getByText(/^0원/)).toHaveCount(0);await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toHaveCount(0);expect(posts).toBe(0);expect((await context.request.get('/api/payments/'+saved.order_number)).status()).toBe(401)}finally{release();await other.close()}
-})
+import { operation, prepare, cleanup } from './business-deadline';
+import { test, expect, type Page, type BrowserContext } from './business-deadline';
+async function headers(context: BrowserContext) { return operation("payments-mock: headers", async () => { const csrf = await (await context.request.get('/api/auth/csrf')).json(); return { [csrf.headerName]: csrf.token }; }); }
+async function login(page: Page, project: string, mode: string) { return operation("payments-mock: login", async () => { await page.goto('/login'); await page.getByLabel('이메일', { exact: true }).fill('p4b-browse-reserve-order-d-browser-' + project + '-' + mode + '@example.com'); await page.getByLabel('비밀번호', { exact: true }).fill(' A1-private-passphrase-가나다 '); await page.getByRole('button', { name: '로그인', exact: true }).click(); await expect(page.getByText('로그인되었습니다.', { exact: true })).toBeVisible(); }); }
+async function order(context: BrowserContext) {
+    return operation("payments-mock: order", async () => {
+        const result = await context.request.get('/api/__test/payment');
+        expect(result.status()).toBe(200);
+        return (await result.json())[0] as {
+            order_number: string;
+            state: string;
+            approval_calls: number;
+            approval_effects: number;
+        };
+    });
+}
+test('결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다', async ({ page, context }, info) => {
+    await prepare("payments-mock: 결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다 [1]", async () => {
+        await login(page, info.project.name, 'zero');
+    });
+    const { saved } = await operation("payments-mock: 결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다 [2]", async () => {
+        const saved = await order(context);
+        return { saved };
+    });
+    let approvals = 0;
+    await operation("payments-mock: 결제 성공 주소는 조회만 하며 0원 승인은 전체 예약을 한 번 확정한다 [3]", async () => {
+        page.on('request', r => {
+            if (r.url().endsWith('/approve'))
+                approvals++;
+        });
+        await page.goto('/payments/' + saved.order_number + '/success');
+        await expect(page.getByText('결제 대기 중입니다.', { exact: true })).toBeVisible();
+        expect(approvals).toBe(0);
+        expect((await order(context)).state).toBe('PENDING_PAYMENT');
+    });
+    await operation("payments-mock: 모의 결제 승인 [4]", async () => {
+        await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+        await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        expect(approvals).toBe(1);
+        expect(await order(context)).toMatchObject({ state: 'PAID', approval_calls: 0, approval_effects: 0 });
+        await page.reload();
+        await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        expect(approvals).toBe(1);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    });
+});
+test('응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다', async ({ page, context }, info) => {
+    await prepare("payments-mock: 응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다 [5]", async () => {
+        await login(page, info.project.name, 'lost');
+    });
+    const { saved } = await operation("payments-mock: 응답 유실 결제는 확인 중을 표시하고 서버 조회로 수렴하며 새 승인하지 않는다 [6]", async () => {
+        const saved = await order(context);
+        return { saved };
+    });
+    let approvals = 0;
+    await operation("payments-mock: 모의 결제 승인 [7]", async () => {
+        page.on('request', r => {
+            if (r.url().endsWith('/approve'))
+                approvals++;
+        });
+        await page.goto('/payments/' + saved.order_number);
+        await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+        await expect(page.getByText('결제 확인 중입니다. 예약을 유지하고 서버 결과를 확인합니다.', { exact: true })).toBeVisible();
+        expect((await order(context)).state).toBe('PENDING_PAYMENT');
+    });
+    await operation("payments-mock: 결제가 완료되었습니다 [8]", async () => {
+        expect((await context.request.post('/api/__test/payment/query', { headers: await headers(context), data: { number: saved.order_number } })).status()).toBe(200);
+        await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        expect(approvals).toBe(1);
+        expect(await order(context)).toMatchObject({ state: 'PAID', approval_calls: 1, approval_effects: 1 });
+    });
+});
+test('결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다', async ({ page, context }, info) => {
+    await prepare("payments-mock: 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 [9]", async () => {
+        await login(page, info.project.name, 'session');
+    });
+    const { saved } = await operation("payments-mock: 모의 결제 승인 [10]", async () => {
+        const saved = await order(context);
+        await page.goto('/payments/' + saved.order_number);
+        await expect(page.getByRole('button', { name: '모의 결제 승인', exact: true })).toBeEnabled();
+        return { saved };
+    });
+    await operation("payments-mock: /api/auth/logout [11]", async () => {
+        expect((await context.request.post('/api/auth/logout', { headers: await headers(context) })).status()).toBe(200);
+    });
+    await operation("payments-mock: 모의 결제 승인 [12]", async () => {
+        await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+        await expect(page.getByText('인증이 만료되었습니다. 다시 로그인해도 자동 승인하지 않습니다.', { exact: true })).toBeVisible();
+    });
+    await prepare("payments-mock: 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 [13]", async () => {
+        await login(page, info.project.name, 'zero');
+    });
+    await operation("payments-mock: /api/payments/ [14]", async () => {
+        expect((await context.request.get('/api/payments/' + saved.order_number)).status()).toBe(401);
+    });
+    await prepare("payments-mock: 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 [15]", async () => {
+        await login(page, info.project.name, 'session');
+    });
+    await operation("payments-mock: 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 [16]", async () => {
+        await page.goto('/payments/' + saved.order_number);
+        await expect(page.getByText('결제 대기 중입니다.', { exact: true })).toBeVisible();
+        expect(await order(context)).toMatchObject({ state: 'PENDING_PAYMENT', approval_calls: 0 });
+    });
+    let failCsrf = true, posts = 0;
+    page.on('request', r => {
+        if (r.url().endsWith('/approve'))
+            posts++;
+    });
+    await prepare("payments-mock: 결제 인증 만료는 자동 승인을 차단하고 다른 회원 주문 접근을 거부한다 [17]", async () => {
+        await page.route('**/api/auth/csrf', async (route) => {
+            if (failCsrf) {
+                failCsrf = false;
+                await route.abort('failed');
+            }
+            else
+                await route.continue();
+        });
+    });
+    await operation("payments-mock: 모의 결제 승인 [18]", async () => {
+        await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+        await expect(page.getByRole('alert')).toBeVisible();
+        expect(posts).toBe(0);
+        await page.getByRole('button', { name: '서버 결과 확인', exact: true }).click();
+        await expect(page.getByRole('button', { name: '모의 결제 승인', exact: true })).toBeEnabled();
+        expect(posts).toBe(0);
+    });
+    await operation("payments-mock: 모의 결제 승인 [19]", async () => {
+        await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+        await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        expect(posts).toBe(1);
+        expect(await order(context)).toMatchObject({ state: 'PAID', approval_calls: 1 });
+    });
+});
+test('다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다', async ({ page, context }, info) => {
+    await prepare("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [20]", async () => {
+        await login(page, info.project.name, 'zero');
+    });
+    const { saved, panel } = await operation("payments-mock: 결제가 완료되었습니다 [21]", async () => {
+        const saved = await order(context);
+        await page.goto('/payments/' + saved.order_number);
+        await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        const panel = page.getByRole('region', { name: '결제', exact: true });
+        await expect(panel.getByText(/^0원/)).toBeVisible();
+        return { saved, panel };
+    });
+    let posts = 0;
+    page.on('request', r => {
+        if (r.method() === 'POST' && r.url().includes('/api/payments/'))
+            posts++;
+    });
+    let release!: () => void, captured!: () => void;
+    const held = new Promise<void>(r => release = r), ready = new Promise<void>(r => captured = r);
+    await prepare("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [22]", async () => {
+        await page.route('**/api/payments/' + saved.order_number, async (route) => {
+            const response = await route.fetch();
+            captured();
+            await held;
+            try {
+                await route.fulfill({ response });
+            }
+            catch { /* auth invalidation may abort the old read */ }
+        });
+    });
+    await operation("payments-mock: 서버 결과 확인 [23]", async () => {
+        await page.getByRole('button', { name: '서버 결과 확인', exact: true }).click();
+        await ready;
+    });
+    const { other } = await prepare("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [24]", async () => {
+        const other = await context.newPage();
+        return { other };
+    });
+    try {
+        await prepare("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [25]", async () => {
+            await login(other, info.project.name, 'session');
+        });
+        await operation("payments-mock: 결제가 완료되었습니다 [26] + recovery", async () => {
+            await operation("payments-mock: 결제가 완료되었습니다 [26]", async () => {
+                await expect(panel.getByText(/^0원/)).toHaveCount(0);
+                await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toHaveCount(0);
+                release();
+            });
+            await operation("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [27]", async () => {
+                await page.unroute('**/api/payments/' + saved.order_number);
+            });
+            await operation("payments-mock: 결제가 완료되었습니다 [28]", async () => {
+                await expect(panel.getByText(/^0원/)).toHaveCount(0);
+                await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toHaveCount(0);
+                expect(posts).toBe(0);
+                expect((await context.request.get('/api/payments/' + saved.order_number)).status()).toBe(401);
+            });
+        });
+    }
+    finally {
+        release();
+        await cleanup("payments-mock: 다른 탭 인증 변경은 결제 금액과 상태를 숨기고 늦은 응답이나 자동 승인을 게시하지 않는다 [29]", async () => {
+            await other.close();
+        });
+    }
+});

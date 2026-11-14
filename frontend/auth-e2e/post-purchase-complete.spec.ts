@@ -1,45 +1,545 @@
-import {test,expect,type BrowserContext,type Page} from '@playwright/test'
-import {create,approve,headers,read,verifyDatabase} from './purchase-helpers'
-import {actor,get,post,order,geometry,isolateGSource,snapshotAmounts} from './post-purchase-helpers'
-import type {Shipment} from '../src/fulfillment/ShipmentStore'
-import type {ClaimProgress,ClaimQuote} from '../src/claim/ClaimStore'
-import type {Refund} from '../src/payment/RefundStatusStore'
-import type {ReturnPage,ReturnReceipt,ReturnQuote} from '../src/returns/ReturnTypes'
-
-type Row=Record<string,string|number|null>
-type Db={order:Row;payment_refund_attempt:Row[];order_unit_lifecycle:Row[];restored:Row[];coupons:Row[];claim:Row[]}
-type Seed={orderNumber:string;attemptId:string;buyerEmail:string;operatorEmail:string;supportEmail:string;amount:string;mode:string}
-type SystemDb={attempts:Row[];budget:Row[];holds:Row[];observations:Row[];operations:Row[];externalCalls:Record<string,number>;restored:Row[];coupons:Row[]}
-type Receipt={operationId:string;attemptId:string;acceptedVersion:number;action:string;state:string}
-const source=(project:string)=>project==='desktop'?'127.0.0.17':'127.0.0.18'
-async function deliver(c:BrowserContext,seller:BrowserContext,p:Page,n:string,sellerOrder:string,exactShipment?:string){
- const before=await get<Shipment[]>(c,'/api/orders/'+n+'/shipments'),shipment=exactShipment?before.find(s=>s.id===exactShipment):before.find(s=>s.sellerOrderId===sellerOrder);expect(shipment).toBeTruthy();expect(shipment!.sellerOrderId).toBe(sellerOrder);expect(shipment!.state).toBe('PREPARING');await p.goto('/seller/orders/'+sellerOrder);await expect(p.getByTestId('seller-order-number')).toHaveText(n);const region=p.getByRole('region',{name:'배송 '+shipment!.id,exact:true});await region.getByRole('checkbox',{name:'원 항목과 수량을 확인했습니다',exact:true}).check();const sent=p.waitForResponse('**/api/seller/shipments/'+shipment!.id+'/ship');await region.getByRole('button',{name:'발송 처리',exact:true}).click();expect((await sent).status()).toBe(200);await expect(p.getByTestId('shipment-state-'+shipment!.id)).toHaveText('발송 완료');for(const target of ['IN_TRANSIT','DELIVERED'])await post(c,'/api/__test/shipments/'+n+'/current-worker',{action:'progress',shipment:shipment!.id,target});expect((await read(c,n)).find(s=>s.id===shipment!.id)?.state).toBe('DELIVERED');expect((await seller.request.get('/api/seller/orders/'+sellerOrder)).status()).toBe(200)
+import { operation, prepare, cleanup } from './business-deadline';
+import { test, expect, type BrowserContext, type Page } from './business-deadline';
+import { create, approve, headers, read, verifyDatabase } from './purchase-helpers';
+import { actor, get, post, order, geometry, isolateGSource, snapshotAmounts } from './post-purchase-helpers';
+import { armIsolatedSource } from './guest-login-source';
+import type { Shipment } from '../src/fulfillment/ShipmentStore';
+import type { ClaimProgress, ClaimQuote } from '../src/claim/ClaimStore';
+import type { Refund } from '../src/payment/RefundStatusStore';
+import type { ReturnPage, ReturnReceipt, ReturnQuote } from '../src/returns/ReturnTypes';
+type Row = Record<string, string | number | null>;
+type Db = {
+    order: Row;
+    payment_refund_attempt: Row[];
+    order_unit_lifecycle: Row[];
+    restored: Row[];
+    coupons: Row[];
+    claim: Row[];
+};
+type Seed = {
+    orderNumber: string;
+    attemptId: string;
+    buyerEmail: string;
+    operatorEmail: string;
+    supportEmail: string;
+    amount: string;
+    mode: string;
+};
+type SystemDb = {
+    attempts: Row[];
+    budget: Row[];
+    holds: Row[];
+    observations: Row[];
+    operations: Row[];
+    externalCalls: Record<string, number>;
+    restored: Row[];
+    coupons: Row[];
+};
+type Receipt = {
+    operationId: string;
+    attemptId: string;
+    acceptedVersion: number;
+    action: string;
+    state: string;
+};
+const source = (project: string) => project === 'desktop' ? '127.0.0.17' : '127.0.0.18';
+async function deliver(c: BrowserContext, seller: BrowserContext, p: Page, n: string, sellerOrder: string, exactShipment?: string) {
+    return operation("post-purchase-complete: deliver", async () => {
+        const before = await get<Shipment[]>(c, '/api/orders/' + n + '/shipments'), shipment = exactShipment ? before.find(s => s.id === exactShipment) : before.find(s => s.sellerOrderId === sellerOrder);
+        expect(shipment).toBeTruthy();
+        expect(shipment!.sellerOrderId).toBe(sellerOrder);
+        expect(shipment!.state).toBe('PREPARING');
+        await p.goto('/seller/orders/' + sellerOrder);
+        await expect(p.getByTestId('seller-order-number')).toHaveText(n);
+        const region = p.getByRole('region', { name: '배송 ' + shipment!.id, exact: true });
+        await region.getByRole('checkbox', { name: '원 항목과 수량을 확인했습니다', exact: true }).check();
+        const sent = p.waitForResponse('**/api/seller/shipments/' + shipment!.id + '/ship');
+        await region.getByRole('button', { name: '발송 처리', exact: true }).click();
+        expect((await sent).status()).toBe(200);
+        await expect(p.getByTestId('shipment-state-' + shipment!.id)).toHaveText('발송 완료');
+        for (const target of ['IN_TRANSIT', 'DELIVERED'])
+            await post(c, '/api/__test/shipments/' + n + '/current-worker', { action: 'progress', shipment: shipment!.id, target });
+        expect((await read(c, n)).find(s => s.id === shipment!.id)?.state).toBe('DELIVERED');
+        expect((await seller.request.get('/api/seller/orders/' + sellerOrder)).status()).toBe(200);
+    });
 }
-async function confirm(page:Page){const p=page.getByRole('region',{name:'구매 확정',exact:true});await p.getByRole('button',{name:'구매 확정 다시 조회',exact:true}).click();await expect(p.getByRole('button',{name:'구매 확정 다시 조회',exact:true})).toBeEnabled();const boxes=p.locator('li input[type=checkbox]');expect(await boxes.count()).toBeGreaterThan(0);for(const b of await boxes.all())await b.check();await p.getByRole('checkbox',{name:'선택한 수량을 구매 확정합니다',exact:true}).check();await p.getByRole('button',{name:'선택 수량 구매 확정',exact:true}).click();await expect(page.getByRole('heading',{name:'주문 종료',exact:true})).toBeVisible()}
-
-test('G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects',async({page,context,browser},info)=>{
- await isolateGSource(page,source(info.project.name));const scenario='gpost',n=await create(page,info.project.name,scenario,false,'',{quantity:3,coupons:true});await page.getByRole('link',{name:'결제로 이동'}).click();await page.getByRole('button',{name:'모의 결제 승인',exact:true}).click();await expect(page.getByRole('heading',{name:'결제가 완료되었습니다'})).toBeVisible();await approve(context,n);const original=await order(context,n);snapshotAmounts(original);const a=original.stores.find(s=>s.items.some(i=>i.title==='P05 order-'+scenario+'-'+info.project.name+'-a'))!;expect(a).toBeTruthy();const item=a.items.find(i=>i.quantity===3)!;expect(item.units).toHaveLength(3)
- await post(context,'/api/__test/shipments/'+n+'/current-worker',{action:'prepare'});const prepared=(await get<Shipment[]>(context,'/api/orders/'+n+'/shipments')).find(row=>row.sellerOrderId===a.sellerOrderId)!;expect(prepared.units).toEqual(item.units.map(u=>({orderItemId:item.id,ordinal:u.ordinal})));const sellers:BrowserContext[]=[];try{const splitContext=await browser.newContext({baseURL:new URL(page.url()).origin});sellers.push(splitContext);let remainingShipment='',canceledShipment='';const splitPage=await actor(splitContext,'p4b-browse-order-'+scenario+'-'+info.project.name+'-a@example.com',source(info.project.name));await splitPage.goto('/seller/orders/'+a.sellerOrderId);const form=splitPage.getByRole('form',{name:'배송 분할 '+prepared.id,exact:true});await form.getByLabel('항목 1 분할 수량',{exact:true}).fill('1');const result=splitPage.waitForResponse('**/api/seller/shipments/'+prepared.id+'/split');await form.getByRole('button',{name:'배송 나누기',exact:true}).click();const response=await result;expect(response.status()).toBe(200);const split=await response.json() as {source:{id:string};target:{id:string};units:{orderItemId:string;ordinal:number}[]};expect(split.units).toEqual([{orderItemId:item.id,ordinal:0}]);remainingShipment=split.source.id;canceledShipment=split.target.id;const allocated=await get<Shipment[]>(context,'/api/orders/'+n+'/shipments');expect(allocated.find(row=>row.id===remainingShipment)!.units).toEqual([{orderItemId:item.id,ordinal:1},{orderItemId:item.id,ordinal:2}]);expect(allocated.find(row=>row.id===canceledShipment)!.units).toEqual([{orderItemId:item.id,ordinal:0}])
- await page.goto('/account/orders/'+n);const panel=page.getByRole('region',{name:'발송 전 취소',exact:true});await expect(panel.getByRole('button',{name:'취소 수량 선택 열기',exact:true})).toBeEnabled();await panel.getByRole('button',{name:'취소 수량 선택 열기',exact:true}).click();await panel.getByRole('checkbox',{name:'취소할 '+item.title+' 개별 1',exact:true}).check();await panel.getByLabel('취소 사유',{exact:true}).fill('G 실제 부분 수량 취소 — 원 주문 할인과 나머지 배송 보존');const quoted=page.waitForResponse('**/cancellations/quote');await panel.getByRole('button',{name:'선택 수량 취소 견적',exact:true}).click();const q=await(await quoted).json() as ClaimQuote;expect(q.itemAmount).toBe(item.units.find(u=>u.ordinal===0)!.net);await panel.getByRole('checkbox',{name:'견적과 선택 수량을 확인하고 취소를 요청합니다',exact:true}).check();const accepted=page.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname==='/api/orders/'+n+'/cancellations');await panel.getByRole('button',{name:'선택 수량 취소 요청',exact:true}).click();expect((await accepted).status()).toBe(202);const progress=await get<ClaimProgress[]>(context,'/api/orders/'+n+'/cancellations');expect(progress).toHaveLength(1);const refund=progress[0].refunds.find(r=>r.purpose==='ITEM')!;for(const action of ['submit','result'])await post(context,'/api/__test/cancellations/'+n+'/current-worker',{attempt:refund.attemptId,action});const canceled=await get<Db>(context,'/api/__test/cancellations/'+n+'/database');expect(canceled.order.state).toBe('PAID');expect(canceled.restored).toHaveLength(1);expect(canceled.coupons).toHaveLength(0);expect(canceled.payment_refund_attempt.find(r=>r.id===refund.attemptId)?.state).toBe('SUCCEEDED')
- for(const side of ['a','b']){const c=side==='a'?splitContext:await browser.newContext({baseURL:new URL(page.url()).origin});if(side==='b')sellers.push(c);const p=side==='a'?splitPage:await actor(c,'p4b-browse-order-'+scenario+'-'+info.project.name+'-'+side+'@example.com',source(info.project.name)),s=original.stores.find(s=>s.items.some(i=>i.title.endsWith('-'+side)))!;await deliver(context,c,p,n,s.sellerOrderId,side==='a'?remainingShipment:undefined)}await verifyDatabase(context,n);const retained=(await get<Shipment[]>(context,'/api/orders/'+n+'/shipments')).find(row=>row.id===canceledShipment)!;expect(retained.state).toBe('PREPARING');expect(retained.units).toEqual([{orderItemId:item.id,ordinal:0}]);expect(retained.events.some(e=>e.applied&&e.nextState==='SHIPPED')).toBe(false);await page.goto('/account/orders/'+n);await confirm(page);const done=await get<Db>(context,'/api/__test/cancellations/'+n+'/database');expect(done.order.state).toBe('CLOSED');expect(done.order_unit_lifecycle.filter(u=>u.state==='CONFIRMED')).toHaveLength(3);expect(done.order_unit_lifecycle.filter(u=>u.state==='REFUNDED')).toHaveLength(1);expect(done.restored).toEqual(canceled.restored);expect(done.coupons).toEqual(canceled.coupons);expect((await order(context,n)).stores).toEqual(original.stores);snapshotAmounts(await order(context,n));await geometry(page,info,'g-member-completed');await info.attach('g-member-api-db-money',{body:JSON.stringify({original,canceled,done}),contentType:'application/json'})}finally{for(const c of sellers)await c.close()}
-})
-
-test('G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries',async({page,context,browser},info)=>{
- const project=info.project.name,scenario='gpostguest',phone=project==='desktop'?'+821076000001':'+821076000002';await isolateGSource(page,source(project));const n=await create(page,project,scenario,true,phone);await approve(context,n);const seller=await browser.newContext({baseURL:new URL(page.url()).origin}),fresh=await browser.newContext({baseURL:new URL(page.url()).origin}),other=await browser.newContext({baseURL:new URL(page.url()).origin});try{
- expect((await fresh.request.get('/api/orders/'+n)).status()).toBe(404);expect((await context.request.get('/api/orders/'+n)).status()).toBe(404);const p=await fresh.newPage();await isolateGSource(p,source(project));await p.goto('/guest/orders/login');for(const [label,value]of [['주문번호',n],['등록 전화번호',phone],['조회 비밀번호','f2 actual guest password']])await p.getByLabel(label,{exact:true}).fill(value);const logged=p.waitForResponse('**/api/guest/access/login');await p.getByRole('button',{name:'주문 조회 인증',exact:true}).click();expect((await logged).status()).toBe(200);await p.getByRole('region',{name:'실제 주문 이력',exact:true}).getByRole('link',{name:n,exact:true}).click();await expect(p.getByTestId('order-number')).toHaveText(n);expect((await fresh.request.get('/api/auth/me')).status()).toBe(401);expect((await fresh.request.post('/api/payments/'+n+'/approve',{headers:await headers(fresh),data:{}})).status()).toBe(401);const original=await order(fresh,n);snapshotAmounts(original);await post(fresh,'/api/__test/shipments/'+n+'/current-worker',{action:'prepare'});const a=original.stores.find(s=>s.items.some(i=>i.title.endsWith('-a')))!,b=original.stores.find(s=>s.items.some(i=>i.title.endsWith('-b')))!;const sp=await actor(seller,'p4b-browse-order-'+scenario+'-'+project+'-a@example.com',source(project));await deliver(fresh,seller,sp,n,a.sellerOrderId);const bp=await actor(other,'p4b-browse-order-'+scenario+'-'+project+'-b@example.com',source(project));await deliver(fresh,other,bp,n,b.sellerOrderId);await p.reload()
- const base='/api/orders/'+n+'/returns',rp=p.getByRole('region',{name:'반품 신청·처리',exact:true});await expect(rp.getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled();const eligible=await get<ReturnPage>(fresh,base),u=eligible.eligibility!.units.find(x=>x.itemId===a.items[0].id&&x.eligible)!,label=a.items[0].title+' 개별 '+(u.ordinal+1);await rp.getByRole('checkbox',{name:label+' 반품 선택',exact:true}).check();await rp.getByRole('combobox',{name:label+' 신청 책임',exact:true}).selectOption('SELLER');await rp.getByLabel('반품 신청 사유',{exact:true}).fill('G 비회원 새 브라우저 실제 회수·판매자 책임 검수와 명시 동의');const sent=p.waitForResponse(r=>r.request().method()==='POST'&&new URL(r.url()).pathname===base);await rp.getByRole('button',{name:'반품 신청 접수',exact:true}).click();const rr=await sent;expect(rr.status()).toBe(202);const receipt=await rr.json() as ReturnReceipt
- const choose=async(view:Page,c:BrowserContext,sellerView:boolean)=>{const panel=view.getByRole('region',{name:'반품 신청·처리',exact:true}),path=sellerView?'/api/seller/orders/'+a.sellerOrderId+'/returns':base;await panel.getByRole('button',{name:'반품 정보 다시 조회',exact:true}).click();await expect(panel.getByRole('button',{name:'반품 정보 다시 조회',exact:true})).toBeEnabled();const rows=await get<ReturnPage>(c,path),index=rows.returns.findIndex(r=>r.returnId===receipt.returnId);expect(index).toBeGreaterThanOrEqual(0);await panel.getByRole('region',{name:'반품 신청 이력',exact:true}).locator('ol > li').nth(index).getByRole('button',{name:'이 반품 상세 보기',exact:true}).click();await expect(panel.getByRole('heading',{name:'현재 반품 진행',exact:true})).toBeVisible();return panel}
- await sp.reload();const sellerPanel=await choose(sp,seller,true);await sellerPanel.getByLabel('처리 사유',{exact:true}).fill('G 판매자 실제 승인');await sellerPanel.getByRole('button',{name:'반품 승인',exact:true}).click();await expect(sellerPanel.getByRole('checkbox',{name:label+' 회수 사실 선택',exact:true})).toBeVisible();await sellerPanel.getByRole('checkbox',{name:label+' 회수 사실 선택',exact:true}).check();await sellerPanel.getByRole('combobox',{name:label+' 회수 상태',exact:true}).selectOption('RECEIVED');await sellerPanel.getByLabel('처리 사유',{exact:true}).fill('G 실제 원품 회수');await sellerPanel.getByRole('button',{name:'선택한 회수 사실 기록',exact:true}).click();await expect(sellerPanel.getByRole('checkbox',{name:label+' 검수 선택',exact:true})).toBeVisible();await sellerPanel.getByRole('checkbox',{name:label+' 검수 선택',exact:true}).check();await sellerPanel.getByRole('combobox',{name:label+' 검수 결과',exact:true}).selectOption('SALEABLE');await sellerPanel.getByRole('combobox',{name:label+' 확인 책임',exact:true}).selectOption('SELLER');await sellerPanel.getByLabel('처리 사유',{exact:true}).fill('G 실제 판매자 책임 검수');await sellerPanel.getByRole('button',{name:'선택한 실제 검수 기록',exact:true}).click();await expect(sellerPanel.getByRole('checkbox',{name:label+' 검수 선택',exact:true})).toHaveCount(0)
- await choose(p,fresh,false);const quoted=p.waitForResponse('**/returns/'+receipt.returnId+'/quote');await rp.getByRole('button',{name:'검수 후 최종 견적 확인',exact:true}).click();const q=await(await quoted).json() as ReturnQuote;expect(q.feeQuote.increment).toBe('0');expect(q.feeQuote.refund).toBe(a.items[0].units[0].net);await expect(rp.getByRole('button',{name:'견적 동의 후 환불 진행',exact:true})).toBeDisabled();await rp.getByRole('checkbox',{name:'이번 환불·회수비 견적에 명시적으로 동의합니다',exact:true}).check();const agreed=p.waitForResponse('**/returns/'+receipt.returnId+'/consent');await rp.getByRole('button',{name:'견적 동의 후 환불 진행',exact:true}).click();expect((await agreed).status()).toBe(202);await post(fresh,'/api/__test/returns/'+n+'/current-worker',{action:'ITEM',returnId:receipt.returnId});await post(fresh,'/api/__test/returns/'+n+'/current-worker',{action:'SHIPPING',sellerOrderId:a.sellerOrderId});await choose(p,fresh,false);await expect(rp.getByTestId('return-current-state')).toHaveText('개인 반품 완료');await confirm(p);const done=await get<Db>(fresh,'/api/__test/cancellations/'+n+'/database');expect(done.order.state).toBe('CLOSED');expect(done.restored).toHaveLength(1);expect(done.order_unit_lifecycle.filter(x=>x.state==='REFUNDED')).toHaveLength(1);expect(done.order_unit_lifecycle.filter(x=>x.state==='CONFIRMED')).toHaveLength(1);expect((await order(fresh,n)).stores).toEqual(original.stores);expect((await context.request.get('/api/guest/access/references')).status()).toBe(401);await geometry(p,info,'g-guest-return-completed');await info.attach('g-guest-return-api-db',{body:JSON.stringify({original,unit:u,quote:q,done}),contentType:'application/json'})
- }finally{await seller.close();await fresh.close();await other.close()}
-})
-
-test('G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated',async({browser},info)=>{
- const origin='http://127.0.0.1:24176',owner=await browser.newContext({baseURL:origin}),op=await browser.newContext({baseURL:origin}),support=await browser.newContext({baseURL:origin});try{const s=await get<Seed>(owner,'/api/__test/refunds/g-seed/'+info.project.name);const [,p,sp]=await Promise.all([actor(owner,s.buyerEmail,source(info.project.name)),actor(op,s.operatorEmail,source(info.project.name)),actor(support,s.supportEmail,source(info.project.name))]);const before=await get<SystemDb>(owner,'/api/__test/refunds/'+s.orderNumber+'/g-database');expect(before.observations).toContainEqual({operation:'POST',state:'UNKNOWN',transaction_key:null,response_fingerprint:null});expect(before.externalCalls['POST:cancel']).toBe(1);await sp.goto('/admin/refunds');await expect(sp.getByRole('alert')).toContainText('권한');expect((await support.request.get('/api/admin/system/refunds/'+s.attemptId)).status()).toBe(403);expect((await op.request.get('/api/admin/support/access')).status()).toBe(403)
- await p.goto('/admin/refunds');const root=p.getByRole('region',{name:'SYSTEM 환불 대사',exact:true});await expect(root.getByRole('button',{name:'환불 대기열 다시 조회',exact:true})).toBeEnabled();await root.getByLabel('조회할 환불 시도 ID',{exact:true}).fill(s.attemptId);await root.getByRole('button',{name:'이 시도 현재 근거 조회',exact:true}).click();const selected=root.getByRole('region',{name:'선택한 환불 대사',exact:true});await expect(selected).toContainText('최초 전송 · 결과 불명확');await expect(selected).toContainText('검증된 응답 fingerprint가 없습니다.');await expect(selected.getByRole('button',{name:'같은 시도 결과 조회',exact:true})).toBeVisible();expect(await get<SystemDb>(owner,'/api/__test/refunds/'+s.orderNumber+'/g-database')).toEqual(before)
- const endpoint='/api/admin/system/refunds/'+s.attemptId,bodies:unknown[]=[];let first:Receipt|undefined;await p.route('**'+endpoint+'/query',async route=>{bodies.push(route.request().postDataJSON());const response=await route.fetch();expect(response.status()).toBe(202);const accepted=await response.json() as Receipt;if(!first){first=accepted;await route.abort('failed')}else{expect(accepted).toEqual(first);await route.fulfill({response})}});await selected.getByLabel('환불 대사 사유',{exact:true}).fill('G 실제 보존 관측 확인 — '+ '긴운영사유'.repeat(45));await selected.getByRole('button',{name:'같은 시도 결과 조회',exact:true}).dblclick();await expect(root.getByRole('button',{name:'같은 요청으로 대사 결과 확인',exact:true})).toBeVisible();expect(bodies).toHaveLength(1);await geometry(p,info,'g-system-long-error');await root.getByRole('button',{name:'같은 요청으로 대사 결과 확인',exact:true}).click();await expect(root.getByText(/명령 접수/)).toBeVisible();expect(bodies).toHaveLength(2);expect(bodies[1]).toEqual(bodies[0]);expect(first!.attemptId).toBe(s.attemptId);await p.unroute('**'+endpoint+'/query');await post(op,'/api/__test/refunds/'+s.orderNumber+'/operation-worker',{attempt:s.attemptId,operationId:first!.operationId});const queried=await get<SystemDb>(owner,'/api/__test/refunds/'+s.orderNumber+'/g-database');expect(queried.externalCalls.GET).toBe(before.externalCalls.GET+1);expect(queried.externalCalls['POST:cancel']).toBe(1);expect(queried.operations).toHaveLength(before.operations.length+1);expect(queried.budget).toEqual(before.budget);expect(queried.holds).toEqual(before.holds);expect(queried.restored).toEqual(before.restored);expect(queried.coupons).toEqual(before.coupons)
- // The old UI version must reject without an implicit fresh command or amount-based success.
- await selected.getByLabel('환불 대사 사유',{exact:true}).fill('G 실제 저장 버전 변경 후 거부');const stale=p.waitForResponse('**'+endpoint+'/query');await selected.getByRole('button',{name:'같은 시도 결과 조회',exact:true}).click();expect((await stale).status()).toBe(409);await expect(root.getByRole('alert')).toContainText('정보가 변경');await expect(selected).toHaveCount(0);await root.getByRole('button',{name:'환불 대기열 다시 조회',exact:true}).click();await expect(root.getByRole('button',{name:'환불 대기열 다시 조회',exact:true})).toBeEnabled();await root.getByLabel('조회할 환불 시도 ID',{exact:true}).fill(s.attemptId);await root.getByRole('button',{name:'이 시도 현재 근거 조회',exact:true}).click();await expect(selected.getByRole('button',{name:'같은 시도 결과 조회',exact:true})).toBeVisible();await selected.getByLabel('환불 대사 사유',{exact:true}).fill('G 서버에서 검증할 수 없는 외부 운영 근거');await selected.getByLabel('운영 근거 참조',{exact:true}).fill('대사기록/'+ '매우긴외부감사참조'.repeat(80));await selected.getByLabel('확인할 제공자 거래',{exact:true}).fill('fixture-customer-'+s.attemptId);const reconciliation=p.waitForResponse('**'+endpoint+'/reconcile');await selected.getByRole('button',{name:'운영 근거 기록 후 같은 시도 조회',exact:true}).click();const accepted=await reconciliation;expect(accepted.status()).toBe(202);const r=await accepted.json() as Receipt;expect(r.state).toBe('EVIDENCE_RECORDED_QUERY_ONLY');await post(op,'/api/__test/refunds/'+s.orderNumber+'/operation-worker',{attempt:s.attemptId,operationId:r.operationId});const current=await get<Refund>(op,endpoint),after=await get<SystemDb>(owner,'/api/__test/refunds/'+s.orderNumber+'/g-database');expect(current.state).toBe('UNKNOWN');expect(current.providerReceipt).toBe(false);expect(current.providerReference).toBeNull();expect(current.automaticQueries).toBe(0);expect(after.budget).toEqual(before.budget);expect(after.holds).toEqual(before.holds);expect(after.restored).toEqual(before.restored);expect(after.coupons).toEqual(before.coupons);expect(after.externalCalls).toEqual({'POST:cancel':1,GET:before.externalCalls.GET+2});await geometry(p,info,'g-system-reconciliation');await info.attach('g-system-real-wire-business',{body:JSON.stringify({seed:s,before,queried,current,after}),contentType:'application/json'});expect(await p.locator('body').textContent()).not.toContain('fixture-g-system-')
- expect((await op.request.post('/api/auth/logout',{headers:await headers(op)})).status()).toBe(200);await p.evaluate(()=>window.dispatchEvent(new Event('focus')));await expect(selected).toHaveCount(0);await expect(root.getByText(s.attemptId,{exact:false})).toHaveCount(0)
- }finally{await owner.close();await op.close();await support.close()}
-})
+async function confirm(page: Page) {
+    return operation("post-purchase-complete: confirm", async () => {
+        const p = page.getByRole('region', { name: '구매 확정', exact: true });
+        await p.getByRole('button', { name: '구매 확정 다시 조회', exact: true }).click();
+        await expect(p.getByRole('button', { name: '구매 확정 다시 조회', exact: true })).toBeEnabled();
+        const boxes = p.locator('li input[type=checkbox]');
+        expect(await boxes.count()).toBeGreaterThan(0);
+        for (const b of await boxes.all())
+            await b.check();
+        await p.getByRole('checkbox', { name: '선택한 수량을 구매 확정합니다', exact: true }).check();
+        await p.getByRole('button', { name: '선택 수량 구매 확정', exact: true }).click();
+        await expect(page.getByRole('heading', { name: '주문 종료', exact: true })).toBeVisible();
+    });
+}
+test('G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects', async ({ page, context, browser }, info) => {
+    await prepare("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [1]", async () => {
+        await isolateGSource(page, source(info.project.name));
+    });
+    const scenario = 'gpost', n = await create(page, info.project.name, scenario, false, '', { quantity: 3, coupons: true });
+    const { original, a, item } = await operation("post-purchase-complete: payment approval replay through original unit money", async () => {
+        await operation("post-purchase-complete: 결제로 이동 [2]", async () => {
+            await page.getByRole('link', { name: '결제로 이동' }).click();
+            await page.getByRole('button', { name: '모의 결제 승인', exact: true }).click();
+            await expect(page.getByRole('heading', { name: '결제가 완료되었습니다' })).toBeVisible();
+        });
+        const { original, a, item } = await operation("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [3]", async () => {
+            await approve(context, n);
+            const original = await order(context, n);
+            snapshotAmounts(original);
+            const a = original.stores.find(s => s.items.some(i => i.title === 'P05 order-' + scenario + '-' + info.project.name + '-a'))!;
+            expect(a).toBeTruthy();
+            const item = a.items.find(i => i.quantity === 3)!;
+            expect(item.units).toHaveLength(3);
+            return { original, a, item };
+        });
+        return { original, a, item };
+    });
+    const { prepared, sellers } = await operation("post-purchase-complete: /api/__test/shipments/ [4]", async () => {
+        await post(context, '/api/__test/shipments/' + n + '/current-worker', { action: 'prepare' });
+        const prepared = (await get<Shipment[]>(context, '/api/orders/' + n + '/shipments')).find(row => row.sellerOrderId === a.sellerOrderId)!;
+        expect(prepared.units).toEqual(item.units.map(u => ({ orderItemId: item.id, ordinal: u.ordinal })));
+        const sellers: BrowserContext[] = [];
+        return { prepared, sellers };
+    });
+    try {
+        const { splitContext } = await prepare("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [5]", async () => {
+            const splitContext = await browser.newContext({ baseURL: new URL(page.url()).origin });
+            return { splitContext };
+        });
+        sellers.push(splitContext);
+        let remainingShipment = '', canceledShipment = '';
+        const splitPage = await actor(splitContext, 'p4b-browse-order-' + scenario + '-' + info.project.name + '-a@example.com', source(info.project.name));
+        await operation("post-purchase-complete: 배송 분할  [6]", async () => {
+            await splitPage.goto('/seller/orders/' + a.sellerOrderId);
+            const form = splitPage.getByRole('form', { name: '배송 분할 ' + prepared.id, exact: true });
+            await form.getByLabel('항목 1 분할 수량', { exact: true }).fill('1');
+            const result = splitPage.waitForResponse('**/api/seller/shipments/' + prepared.id + '/split');
+            await form.getByRole('button', { name: '배송 나누기', exact: true }).click();
+            const response = await result;
+            expect(response.status()).toBe(200);
+            const split = await response.json() as {
+                source: {
+                    id: string;
+                };
+                target: {
+                    id: string;
+                };
+                units: {
+                    orderItemId: string;
+                    ordinal: number;
+                }[];
+            };
+            expect(split.units).toEqual([{ orderItemId: item.id, ordinal: 0 }]);
+            remainingShipment = split.source.id;
+            canceledShipment = split.target.id;
+            const allocated = await get<Shipment[]>(context, '/api/orders/' + n + '/shipments');
+            expect(allocated.find(row => row.id === remainingShipment)!.units).toEqual([{ orderItemId: item.id, ordinal: 1 }, { orderItemId: item.id, ordinal: 2 }]);
+            expect(allocated.find(row => row.id === canceledShipment)!.units).toEqual([{ orderItemId: item.id, ordinal: 0 }]);
+        });
+        const { panel } = await operation("post-purchase-complete: 발송 전 취소 [7]", async () => {
+            await page.goto('/account/orders/' + n);
+            const panel = page.getByRole('region', { name: '발송 전 취소', exact: true });
+            await expect(panel.getByRole('button', { name: '취소 수량 선택 열기', exact: true })).toBeEnabled();
+            return { panel };
+        });
+        await operation("post-purchase-complete: 취소 수량 선택 열기 [8]", async () => {
+            await panel.getByRole('button', { name: '취소 수량 선택 열기', exact: true }).click();
+            await panel.getByRole('checkbox', { name: '취소할 ' + item.title + ' 개별 1', exact: true }).check();
+            await panel.getByLabel('취소 사유', { exact: true }).fill('G 실제 부분 수량 취소 — 원 주문 할인과 나머지 배송 보존');
+            const quoted = page.waitForResponse('**/cancellations/quote');
+            await panel.getByRole('button', { name: '선택 수량 취소 견적', exact: true }).click();
+            const q = await (await quoted).json() as ClaimQuote;
+            expect(q.itemAmount).toBe(item.units.find(u => u.ordinal === 0)!.net);
+        });
+        const { canceled } = await operation("post-purchase-complete: cancellation command through actual refund workers and retained money", async () => {
+            const { refund } = await operation("post-purchase-complete: 견적과 선택 수량을 확인하고 취소를 요청합니다 [9]", async () => {
+                await panel.getByRole('checkbox', { name: '견적과 선택 수량을 확인하고 취소를 요청합니다', exact: true }).check();
+                const accepted = page.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === '/api/orders/' + n + '/cancellations');
+                await panel.getByRole('button', { name: '선택 수량 취소 요청', exact: true }).click();
+                expect((await accepted).status()).toBe(202);
+                const progress = await get<ClaimProgress[]>(context, '/api/orders/' + n + '/cancellations');
+                expect(progress).toHaveLength(1);
+                const refund = progress[0].refunds.find(r => r.purpose === 'ITEM')!;
+                return { refund };
+            });
+            for (const action of ['submit', 'result']) {
+                await operation("post-purchase-complete: /api/__test/cancellations/ [10]", async () => {
+                    await post(context, '/api/__test/cancellations/' + n + '/current-worker', { attempt: refund.attemptId, action });
+                });
+            }
+            const { canceled } = await operation("post-purchase-complete: /api/__test/cancellations/ [11]", async () => {
+                const canceled = await get<Db>(context, '/api/__test/cancellations/' + n + '/database');
+                expect(canceled.order.state).toBe('PAID');
+                expect(canceled.restored).toHaveLength(1);
+                expect(canceled.coupons).toHaveLength(0);
+                expect(canceled.payment_refund_attempt.find(r => r.id === refund.attemptId)?.state).toBe('SUCCEEDED');
+                return { canceled };
+            });
+            return { canceled };
+        });
+        for (const side of ['a', 'b']) {
+            const { c } = await prepare("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [12]", async () => {
+                const c = side === 'a' ? splitContext : await browser.newContext({ baseURL: new URL(page.url()).origin });
+                return { c };
+            });
+            if (side === 'b')
+                sellers.push(c);
+            const p = side === 'a' ? splitPage : await actor(c, 'p4b-browse-order-' + scenario + '-' + info.project.name + '-' + side + '@example.com', source(info.project.name)), s = original.stores.find(s => s.items.some(i => i.title.endsWith('-' + side)))!;
+            await operation("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [13]", async () => {
+                await deliver(context, c, p, n, s.sellerOrderId, side === 'a' ? remainingShipment : undefined);
+            });
+        }
+        await operation("post-purchase-complete: /api/orders/ [14]", async () => {
+            await verifyDatabase(context, n);
+            const retained = (await get<Shipment[]>(context, '/api/orders/' + n + '/shipments')).find(row => row.id === canceledShipment)!;
+            expect(retained.state).toBe('PREPARING');
+            expect(retained.units).toEqual([{ orderItemId: item.id, ordinal: 0 }]);
+            expect(retained.events.some(e => e.applied && e.nextState === 'SHIPPED')).toBe(false);
+        });
+        await operation("post-purchase-complete: /api/__test/cancellations/ [15]", async () => {
+            await page.goto('/account/orders/' + n);
+            await confirm(page);
+            const done = await get<Db>(context, '/api/__test/cancellations/' + n + '/database');
+            expect(done.order.state).toBe('CLOSED');
+            expect(done.order_unit_lifecycle.filter(u => u.state === 'CONFIRMED')).toHaveLength(3);
+            expect(done.order_unit_lifecycle.filter(u => u.state === 'REFUNDED')).toHaveLength(1);
+            expect(done.restored).toEqual(canceled.restored);
+            expect(done.coupons).toEqual(canceled.coupons);
+            expect((await order(context, n)).stores).toEqual(original.stores);
+            snapshotAmounts(await order(context, n));
+            await geometry(page, info, 'g-member-completed');
+            await info.attach('g-member-api-db-money', { body: JSON.stringify({ original, canceled, done }), contentType: 'application/json' });
+        });
+    }
+    finally {
+        for (const c of sellers) {
+            await cleanup("post-purchase-complete: G member actual purchase partial refund and remaining multi-seller delivery confirmation preserve snapshot money and one-time effects [16]", async () => {
+                await c.close();
+            });
+        }
+    }
+});
+test('G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries', async ({ page, context, browser }, info) => {
+    const project = info.project.name, scenario = 'gpostguest', phone = project === 'desktop' ? '+821076000001' : '+821076000002';
+    await prepare("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [17]", async () => {
+        await isolateGSource(page, source(project));
+    });
+    const n = await create(page, project, scenario, true, phone);
+    await operation("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [18]", async () => {
+        await approve(context, n);
+    });
+    const { seller, fresh, other } = await prepare("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [19]", async () => {
+        const seller = await browser.newContext({ baseURL: new URL(page.url()).origin }), fresh = await browser.newContext({ baseURL: new URL(page.url()).origin }), other = await browser.newContext({ baseURL: new URL(page.url()).origin });
+        return { seller, fresh, other };
+    });
+    try {
+        await operation("post-purchase-complete: /api/orders/ [20]", async () => {
+            expect((await fresh.request.get('/api/orders/' + n)).status()).toBe(404);
+            expect((await context.request.get('/api/orders/' + n)).status()).toBe(404);
+        });
+        const { p } = await prepare("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [21]", async () => {
+            const p = await fresh.newPage();
+            return { p };
+        });
+        await prepare("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [22]", async () => {
+            await isolateGSource(p, source(project));
+        });
+        await operation("post-purchase-complete: 주문 조회 인증 [23]", async () => {
+            await armIsolatedSource(p, '/api/guest/access/login');
+            await p.goto('/guest/orders/login');
+            for (const [label, value] of [['주문번호', n], ['등록 전화번호', phone], ['조회 비밀번호', 'f2 actual guest password']]) {
+                await operation("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [24]", async () => {
+                    await p.getByLabel(label, { exact: true }).fill(value);
+                });
+            }
+            const logged = p.waitForResponse('**/api/guest/access/login');
+            await p.getByRole('button', { name: '주문 조회 인증', exact: true }).click();
+            expect((await logged).status()).toBe(200);
+        });
+        await operation("post-purchase-complete: 실제 주문 이력 [25]", async () => {
+            await p.getByRole('region', { name: '실제 주문 이력', exact: true }).getByRole('link', { name: n, exact: true }).click();
+            await expect(p.getByTestId('order-number')).toHaveText(n);
+            expect((await fresh.request.get('/api/auth/me')).status()).toBe(401);
+        });
+        const { original } = await operation("post-purchase-complete: /api/payments/ [26]", async () => {
+            expect((await fresh.request.post('/api/payments/' + n + '/approve', { headers: await headers(fresh), data: {} })).status()).toBe(401);
+            const original = await order(fresh, n);
+            snapshotAmounts(original);
+            return { original };
+        });
+        const { a, b } = await operation("post-purchase-complete: /api/__test/shipments/ [27]", async () => {
+            await post(fresh, '/api/__test/shipments/' + n + '/current-worker', { action: 'prepare' });
+            const a = original.stores.find(s => s.items.some(i => i.title.endsWith('-a')))!, b = original.stores.find(s => s.items.some(i => i.title.endsWith('-b')))!;
+            return { a, b };
+        });
+        const sp = await actor(seller, 'p4b-browse-order-' + scenario + '-' + project + '-a@example.com', source(project));
+        await operation("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [28]", async () => {
+            await deliver(fresh, seller, sp, n, a.sellerOrderId);
+        });
+        const bp = await actor(other, 'p4b-browse-order-' + scenario + '-' + project + '-b@example.com', source(project));
+        const { base, rp, u, label } = await operation("post-purchase-complete: 반품 신청·처리 [29]", async () => {
+            await deliver(fresh, other, bp, n, b.sellerOrderId);
+            await p.reload();
+            const base = '/api/orders/' + n + '/returns', rp = p.getByRole('region', { name: '반품 신청·처리', exact: true });
+            await expect(rp.getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled();
+            const eligible = await get<ReturnPage>(fresh, base), u = eligible.eligibility!.units.find(x => x.itemId === a.items[0].id && x.eligible)!, label = a.items[0].title + ' 개별 ' + (u.ordinal + 1);
+            return { base, rp, u, label };
+        });
+        const { receipt, choose, sellerPanel } = await operation("post-purchase-complete: 반품 신청 접수 [30]", async () => {
+            await rp.getByRole('checkbox', { name: label + ' 반품 선택', exact: true }).check();
+            await rp.getByRole('combobox', { name: label + ' 신청 책임', exact: true }).selectOption('SELLER');
+            await rp.getByLabel('반품 신청 사유', { exact: true }).fill('G 비회원 새 브라우저 실제 회수·판매자 책임 검수와 명시 동의');
+            const sent = p.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === base);
+            await rp.getByRole('button', { name: '반품 신청 접수', exact: true }).click();
+            const rr = await sent;
+            expect(rr.status()).toBe(202);
+            const receipt = await rr.json() as ReturnReceipt;
+            const choose = async (view: Page, c: BrowserContext, sellerView: boolean) => {
+                const { panel, index } = await operation("post-purchase-complete: 반품 신청·처리 [31]", async () => {
+                    const panel = view.getByRole('region', { name: '반품 신청·처리', exact: true }), path = sellerView ? '/api/seller/orders/' + a.sellerOrderId + '/returns' : base;
+                    await panel.getByRole('button', { name: '반품 정보 다시 조회', exact: true }).click();
+                    await expect(panel.getByRole('button', { name: '반품 정보 다시 조회', exact: true })).toBeEnabled();
+                    const rows = await get<ReturnPage>(c, path), index = rows.returns.findIndex(r => r.returnId === receipt.returnId);
+                    expect(index).toBeGreaterThanOrEqual(0);
+                    return { panel, index };
+                });
+                return operation("post-purchase-complete: 반품 신청 이력 [32]", async () => {
+                    await panel.getByRole('region', { name: '반품 신청 이력', exact: true }).locator('ol > li').nth(index).getByRole('button', { name: '이 반품 상세 보기', exact: true }).click();
+                    await expect(panel.getByRole('heading', { name: '현재 반품 진행', exact: true })).toBeVisible();
+                    return panel;
+                });
+            };
+            await sp.reload();
+            const sellerPanel = await choose(sp, seller, true);
+            return { receipt, choose, sellerPanel };
+        });
+        await operation("post-purchase-complete: 반품 승인 [33]", async () => {
+            await sellerPanel.getByLabel('처리 사유', { exact: true }).fill('G 판매자 실제 승인');
+            await sellerPanel.getByRole('button', { name: '반품 승인', exact: true }).click();
+            await expect(sellerPanel.getByRole('checkbox', { name: label + ' 회수 사실 선택', exact: true })).toBeVisible();
+        });
+        await operation("post-purchase-complete: 선택한 회수 사실 기록 [34]", async () => {
+            await sellerPanel.getByRole('checkbox', { name: label + ' 회수 사실 선택', exact: true }).check();
+            await sellerPanel.getByRole('combobox', { name: label + ' 회수 상태', exact: true }).selectOption('RECEIVED');
+            await sellerPanel.getByLabel('처리 사유', { exact: true }).fill('G 실제 원품 회수');
+            await sellerPanel.getByRole('button', { name: '선택한 회수 사실 기록', exact: true }).click();
+            await expect(sellerPanel.getByRole('checkbox', { name: label + ' 검수 선택', exact: true })).toBeVisible();
+        });
+        const { quoted } = await operation("post-purchase-complete: 선택한 실제 검수 기록 [35]", async () => {
+            await sellerPanel.getByRole('checkbox', { name: label + ' 검수 선택', exact: true }).check();
+            await sellerPanel.getByRole('combobox', { name: label + ' 검수 결과', exact: true }).selectOption('SALEABLE');
+            await sellerPanel.getByRole('combobox', { name: label + ' 확인 책임', exact: true }).selectOption('SELLER');
+            await sellerPanel.getByLabel('처리 사유', { exact: true }).fill('G 실제 판매자 책임 검수');
+            await sellerPanel.getByRole('button', { name: '선택한 실제 검수 기록', exact: true }).click();
+            await expect(sellerPanel.getByRole('checkbox', { name: label + ' 검수 선택', exact: true })).toHaveCount(0);
+            await choose(p, fresh, false);
+            const quoted = p.waitForResponse('**/returns/' + receipt.returnId + '/quote');
+            return { quoted };
+        });
+        const { q } = await operation("post-purchase-complete: 검수 후 최종 견적 확인 [36]", async () => {
+            await rp.getByRole('button', { name: '검수 후 최종 견적 확인', exact: true }).click();
+            const q = await (await quoted).json() as ReturnQuote;
+            expect(q.feeQuote.increment).toBe('0');
+            expect(q.feeQuote.refund).toBe(a.items[0].units[0].net);
+            await expect(rp.getByRole('button', { name: '견적 동의 후 환불 진행', exact: true })).toBeDisabled();
+            return { q };
+        });
+        await operation("post-purchase-complete: return consent through actual item and shipping refund", async () => {
+            await operation("post-purchase-complete: 이번 환불·회수비 견적에 명시적으로 동의합니다 [37]", async () => {
+                await rp.getByRole('checkbox', { name: '이번 환불·회수비 견적에 명시적으로 동의합니다', exact: true }).check();
+                const agreed = p.waitForResponse('**/returns/' + receipt.returnId + '/consent');
+                await rp.getByRole('button', { name: '견적 동의 후 환불 진행', exact: true }).click();
+                expect((await agreed).status()).toBe(202);
+            });
+            await operation("post-purchase-complete: /api/__test/returns/ [38]", async () => {
+                await post(fresh, '/api/__test/returns/' + n + '/current-worker', { action: 'ITEM', returnId: receipt.returnId });
+            });
+            await operation("post-purchase-complete: /api/__test/returns/ [39]", async () => {
+                await post(fresh, '/api/__test/returns/' + n + '/current-worker', { action: 'SHIPPING', sellerOrderId: a.sellerOrderId });
+                await choose(p, fresh, false);
+                await expect(rp.getByTestId('return-current-state')).toHaveText('개인 반품 완료');
+            });
+        });
+        await operation("post-purchase-complete: /api/__test/cancellations/ [40]", async () => {
+            await confirm(p);
+            const done = await get<Db>(fresh, '/api/__test/cancellations/' + n + '/database');
+            expect(done.order.state).toBe('CLOSED');
+            expect(done.restored).toHaveLength(1);
+            expect(done.order_unit_lifecycle.filter(x => x.state === 'REFUNDED')).toHaveLength(1);
+            expect(done.order_unit_lifecycle.filter(x => x.state === 'CONFIRMED')).toHaveLength(1);
+            expect((await order(fresh, n)).stores).toEqual(original.stores);
+            expect((await context.request.get('/api/guest/access/references')).status()).toBe(401);
+            await geometry(p, info, 'g-guest-return-completed');
+            await info.attach('g-guest-return-api-db', { body: JSON.stringify({ original, unit: u, quote: q, done }), contentType: 'application/json' });
+        });
+    }
+    finally {
+        await cleanup("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [41]", async () => {
+            await seller.close();
+        });
+        await cleanup("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [42]", async () => {
+            await fresh.close();
+        });
+        await cleanup("post-purchase-complete: G fresh guest browser actual return seller inspection consent and remaining confirmation retain GAS and financial boundaries [43]", async () => {
+            await other.close();
+        });
+    }
+});
+test('G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated', async ({ browser }, info) => {
+    const { owner, op, support } = await prepare("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [44]", async () => {
+        const origin = 'http://127.0.0.1:24176', owner = await browser.newContext({ baseURL: origin }), op = await browser.newContext({ baseURL: origin }), support = await browser.newContext({ baseURL: origin });
+        return { owner, op, support };
+    });
+    try {
+        const s = await prepare('post-purchase-complete: preexisting SYSTEM refund fixture identity', async () => {
+            const r = await owner.request.get('/api/__test/refunds/g-seed/' + info.project.name);
+            expect(r.status(), await r.text()).toBe(200);
+            return await r.json() as Seed;
+        });
+        const [, p, sp] = await Promise.all([actor(owner, s.buyerEmail, source(info.project.name)), actor(op, s.operatorEmail, source(info.project.name)), actor(support, s.supportEmail, source(info.project.name))]);
+        const { before } = await operation("post-purchase-complete: /api/__test/refunds/g-seed/ [45]", async () => {
+            const before = await get<SystemDb>(owner, '/api/__test/refunds/' + s.orderNumber + '/g-database');
+            expect(before.observations).toContainEqual({ operation: 'POST', state: 'UNKNOWN', transaction_key: null, response_fingerprint: null });
+            expect(before.externalCalls['POST:cancel']).toBe(1);
+            return { before };
+        });
+        await operation("post-purchase-complete: /api/admin/system/refunds/ [46]", async () => {
+            await sp.goto('/admin/refunds');
+            await expect(sp.getByRole('alert')).toContainText('권한');
+            expect((await support.request.get('/api/admin/system/refunds/' + s.attemptId)).status()).toBe(403);
+            expect((await op.request.get('/api/admin/support/access')).status()).toBe(403);
+        });
+        const { root } = await operation("post-purchase-complete: SYSTEM 환불 대사 [47]", async () => {
+            await p.goto('/admin/refunds');
+            const root = p.getByRole('region', { name: 'SYSTEM 환불 대사', exact: true });
+            await expect(root.getByRole('button', { name: '환불 대기열 다시 조회', exact: true })).toBeEnabled();
+            return { root };
+        });
+        const { selected, endpoint, bodies } = await operation("post-purchase-complete: 이 시도 현재 근거 조회 [48]", async () => {
+            await root.getByLabel('조회할 환불 시도 ID', { exact: true }).fill(s.attemptId);
+            await root.getByRole('button', { name: '이 시도 현재 근거 조회', exact: true }).click();
+            const selected = root.getByRole('region', { name: '선택한 환불 대사', exact: true });
+            await expect(selected).toContainText('최초 전송 · 결과 불명확');
+            await expect(selected).toContainText('검증된 응답 fingerprint가 없습니다.');
+            await expect(selected.getByRole('button', { name: '같은 시도 결과 조회', exact: true })).toBeVisible();
+            expect(await get<SystemDb>(owner, '/api/__test/refunds/' + s.orderNumber + '/g-database')).toEqual(before);
+            const endpoint = '/api/admin/system/refunds/' + s.attemptId, bodies: unknown[] = [];
+            return { selected, endpoint, bodies };
+        });
+        let first: Receipt | undefined;
+        await prepare("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [49]", async () => {
+            await p.route('**' + endpoint + '/query', async (route) => {
+                bodies.push(route.request().postDataJSON());
+                const response = await route.fetch();
+                expect(response.status()).toBe(202);
+                const accepted = await response.json() as Receipt;
+                if (!first) {
+                    first = accepted;
+                    await route.abort('failed');
+                }
+                else {
+                    expect(accepted).toEqual(first);
+                    await route.fulfill({ response });
+                }
+            });
+        });
+        const { queried } = await operation("post-purchase-complete: 같은 시도 결과 조회 [50] + recovery", async () => {
+            await operation("post-purchase-complete: 같은 시도 결과 조회 [50]", async () => {
+                await selected.getByLabel('환불 대사 사유', { exact: true }).fill('G 실제 보존 관측 확인 — ' + '긴운영사유'.repeat(45));
+                await selected.getByRole('button', { name: '같은 시도 결과 조회', exact: true }).dblclick();
+                await expect(root.getByRole('button', { name: '같은 요청으로 대사 결과 확인', exact: true })).toBeVisible();
+                expect(bodies).toHaveLength(1);
+                await geometry(p, info, 'g-system-long-error');
+                await root.getByRole('button', { name: '같은 요청으로 대사 결과 확인', exact: true }).click();
+                await expect(root.getByText(/명령 접수/)).toBeVisible();
+                expect(bodies).toHaveLength(2);
+                expect(bodies[1]).toEqual(bodies[0]);
+                expect(first!.attemptId).toBe(s.attemptId);
+            });
+            await operation("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [51]", async () => {
+                await p.unroute('**' + endpoint + '/query');
+            });
+            const { queried } = await operation("post-purchase-complete: /api/__test/refunds/ [52]", async () => {
+                await post(op, '/api/__test/refunds/' + s.orderNumber + '/operation-worker', { attempt: s.attemptId, operationId: first!.operationId });
+                const queried = await get<SystemDb>(owner, '/api/__test/refunds/' + s.orderNumber + '/g-database');
+                expect(queried.externalCalls.GET).toBe(before.externalCalls.GET + 1);
+                expect(queried.externalCalls['POST:cancel']).toBe(1);
+                expect(queried.operations).toHaveLength(before.operations.length + 1);
+                expect(queried.budget).toEqual(before.budget);
+                expect(queried.holds).toEqual(before.holds);
+                expect(queried.restored).toEqual(before.restored);
+                expect(queried.coupons).toEqual(before.coupons);
+                return { queried };
+            });
+            return { queried };
+        });
+        await operation("post-purchase-complete: 같은 시도 결과 조회 [53]", async () => {
+            await selected.getByLabel('환불 대사 사유', { exact: true }).fill('G 실제 저장 버전 변경 후 거부');
+            const stale = p.waitForResponse('**' + endpoint + '/query');
+            await selected.getByRole('button', { name: '같은 시도 결과 조회', exact: true }).click();
+            expect((await stale).status()).toBe(409);
+            await expect(root.getByRole('alert')).toContainText('정보가 변경');
+            await expect(selected).toHaveCount(0);
+            await root.getByRole('button', { name: '환불 대기열 다시 조회', exact: true }).click();
+            await expect(root.getByRole('button', { name: '환불 대기열 다시 조회', exact: true })).toBeEnabled();
+        });
+        await operation("post-purchase-complete: 이 시도 현재 근거 조회 [54]", async () => {
+            await root.getByLabel('조회할 환불 시도 ID', { exact: true }).fill(s.attemptId);
+            await root.getByRole('button', { name: '이 시도 현재 근거 조회', exact: true }).click();
+            await expect(selected.getByRole('button', { name: '같은 시도 결과 조회', exact: true })).toBeVisible();
+        });
+        await operation("post-purchase-complete: reconciliation command through durable same-attempt result", async () => {
+            const { r } = await operation("post-purchase-complete: 운영 근거 기록 후 같은 시도 조회 [55]", async () => {
+                await selected.getByLabel('환불 대사 사유', { exact: true }).fill('G 서버에서 검증할 수 없는 외부 운영 근거');
+                await selected.getByLabel('운영 근거 참조', { exact: true }).fill('대사기록/' + '매우긴외부감사참조'.repeat(80));
+                await selected.getByLabel('확인할 제공자 거래', { exact: true }).fill('fixture-customer-' + s.attemptId);
+                const reconciliation = p.waitForResponse('**' + endpoint + '/reconcile');
+                await selected.getByRole('button', { name: '운영 근거 기록 후 같은 시도 조회', exact: true }).click();
+                const accepted = await reconciliation;
+                expect(accepted.status()).toBe(202);
+                const r = await accepted.json() as Receipt;
+                expect(r.state).toBe('EVIDENCE_RECORDED_QUERY_ONLY');
+                return { r };
+            });
+            await operation("post-purchase-complete: /api/__test/refunds/ [56]", async () => {
+                await post(op, '/api/__test/refunds/' + s.orderNumber + '/operation-worker', { attempt: s.attemptId, operationId: r.operationId });
+                const current = await get<Refund>(op, endpoint), after = await get<SystemDb>(owner, '/api/__test/refunds/' + s.orderNumber + '/g-database');
+                expect(current.state).toBe('UNKNOWN');
+                expect(current.providerReceipt).toBe(false);
+                expect(current.providerReference).toBeNull();
+                expect(current.automaticQueries).toBe(0);
+                expect(after.budget).toEqual(before.budget);
+                expect(after.holds).toEqual(before.holds);
+                expect(after.restored).toEqual(before.restored);
+                expect(after.coupons).toEqual(before.coupons);
+                expect(after.externalCalls).toEqual({ 'POST:cancel': 1, GET: before.externalCalls.GET + 2 });
+                await geometry(p, info, 'g-system-reconciliation');
+                await info.attach('g-system-real-wire-business', { body: JSON.stringify({ seed: s, before, queried, current, after }), contentType: 'application/json' });
+                expect(await p.locator('body').textContent()).not.toContain('fixture-g-system-');
+            });
+        });
+        await operation("post-purchase-complete: /api/auth/logout [57]", async () => {
+            expect((await op.request.post('/api/auth/logout', { headers: await headers(op) })).status()).toBe(200);
+            await p.evaluate(() => window.dispatchEvent(new Event('focus')));
+            await expect(selected).toHaveCount(0);
+            await expect(root.getByText(s.attemptId, { exact: false })).toHaveCount(0);
+        });
+    }
+    finally {
+        await cleanup("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [58]", async () => {
+            await owner.close();
+        });
+        await cleanup("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [59]", async () => {
+            await op.close();
+        });
+        await cleanup("post-purchase-complete: G SYSTEM actual opaque evidence query and reconciliation preserve UNKNOWN reservation while SUPPORT and stale lifetime stay isolated [60]", async () => {
+            await support.close();
+        });
+    }
+});

@@ -107,6 +107,7 @@ try {
                 $browserReport = Get-Content "$folder/browser-report.json" -Raw | ConvertFrom-Json
                 if ($browserReport.errors.Count -or $browserReport.stats.skipped -or $browserReport.stats.unexpected -or $browserReport.stats.flaky) { throw 'Browser group failed or retried' }
                 $browserCases = @(Read-BrowserCases $browserReport.suites)
+                Assert-BrowserDeadlineEvidence (Get-Content "$folder/browser-deadlines.json" -Raw | ConvertFrom-Json) $browserCases
                 $browserRequired = Get-Content "$root/verification/required-browser.json" -Raw | ConvertFrom-Json
                 Assert-Coverage $browserCases $browserRequired -ExactNames | ConvertTo-Json -Depth 6 | Set-Content "$folder/browser-coverage.json"
             }
