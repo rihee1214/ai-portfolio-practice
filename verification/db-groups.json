@@ -158,8 +158,7 @@
         "guest.current-proof",
         "job.current-lease",
         "money.provider-refund-receipt",
-        "money.refund-reconciliation"
-      ],
+        "money.refund-reconciliation", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -270,8 +269,7 @@
         "guest.current-proof",
         "job.current-lease",
         "money.provider-refund-receipt",
-        "money.refund-reconciliation"
-      ],
+        "money.refund-reconciliation", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -354,8 +352,7 @@
         "content.review",
         "content.questions",
         "operations.report",
-        "operations.support"
-      ],
+        "operations.support", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -447,8 +444,7 @@
         "exchange.financial",
         "guest.current-proof",
         "job.current-lease",
-        "money.refund-reconciliation"
-      ],
+        "money.refund-reconciliation", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -563,8 +559,7 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease"
-      ],
+        "job.current-lease", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -2007,8 +2002,7 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease"
-      ],
+        "job.current-lease", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -2244,8 +2238,7 @@
       "consumes": [
         "authority.current",
         "db.transaction",
-        "schema.upgrade"
-      ],
+        "schema.upgrade", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -3052,8 +3045,7 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease"
-      ],
+        "job.current-lease", "notification.inbox"],
       "expectedDatabaseCount": 1
     },
     {
@@ -4110,11 +4102,9 @@
         "delivery.actual-source",
         "job.current-lease",
         "phone.proof",
-        "operations.support"
-      ],
+        "operations.support", "notification.inbox"],
       "provides": [
-        "content.questions"
-      ],
+        "content.questions", "notification.inbox"],
       "id": "questions",
       "classes": [
         "com.example.marketplace.dbtest.QuestionsIT"
@@ -4165,8 +4155,7 @@
         "delivery.actual-source",
         "job.current-lease",
         "phone.proof",
-        "promotion.coupon"
-      ],
+        "promotion.coupon", "notification.inbox"],
       "provides": [
         "operations.support"
       ],
@@ -4204,8 +4193,7 @@
         "promotion.quote",
         "promotion.coupon",
         "payment.outcome",
-        "order.current-view"
-      ],
+        "order.current-view", "notification.inbox"],
       "tests": [
         {"old":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","new":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","invocations":1},
         {"old":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","new":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","invocations":1},
@@ -4265,8 +4253,7 @@
         "media.visibility",
         "authority.current",
         "db.transaction",
-        "schema.upgrade"
-      ],
+        "schema.upgrade", "notification.inbox"],
       "tests": [
         {"old": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "new": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "invocations": 1},
         {"old": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "new": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "invocations": 1},
@@ -4994,7 +4981,7 @@
       "select": [
         "questions",
         "support",
-        "browser-api", "reports", "operations"],
+        "browser-api", "reports", "operations", "order-history", "payment", "confirmation", "fulfillment", "exchange", "moderation", "process-recovery", "job-contracts"],
       "reason": "상품 문의와 구매자/판매자 브라우저"
     }
   },

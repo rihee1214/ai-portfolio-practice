@@ -23,6 +23,7 @@ export class AuthStore {
   private generation = 0
   private controller = new AbortController()
   getSnapshot = () => this.state
+  getGeneration = () => this.generation
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener) } }
   private set(state: AuthState) { this.state = state; this.listeners.forEach(listener => listener()) }
   private begin() {

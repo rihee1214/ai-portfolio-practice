@@ -55,6 +55,21 @@ class FulfillmentIT extends PostgresContractFixture {
 
     @Test void shipmentEventsAreIdempotent() throws Exception {
         var f=paymentFixture("f1-events",false);var v=paidShipment(f);var command=shipCommand(v,"ship");var result=shipments().ship(v.id(),shipmentAuthority(f),command);assertEquals("SHIPPED",result.state());assertEquals(1,result.version());var before=shipmentState();assertEquals(result,shipments().ship(v.id(),shipmentAuthority(f),command));assertEquals(before,shipmentState());
+        var noticeParams=Map.of("order",f.order().id(),"member",f.order().memberId(),"shipment",v.id());
+        assertEquals(1,jdbc.queryForObject("""
+                SELECT count(*) FROM marketplace.order_event p JOIN marketplace.notification_event e ON e.cause_id=p.id
+                WHERE p.action='PAID' AND p.order_id=:order AND e.kind='PAYMENT_BUYER' AND e.recipient_id=:member AND e.target_id=:order
+                """,noticeParams,Integer.class));
+        assertEquals(f.order().sellers().size(),jdbc.queryForObject("""
+                SELECT count(*) FROM marketplace.order_event p JOIN marketplace.notification_event e ON e.cause_id=p.id
+                JOIN marketplace.seller_order s ON e.target_id=s.id AND s.order_id=p.order_id
+                JOIN marketplace.seller_store st ON st.id=s.store_id AND st.owner_id=e.recipient_id
+                WHERE p.action='PAID' AND p.order_id=:order AND e.kind='PAYMENT_SELLER'
+                """,noticeParams,Integer.class));
+        assertEquals(1,jdbc.queryForObject("""
+                SELECT count(*) FROM marketplace.order_dispatch d JOIN marketplace.notification_event e ON e.cause_id=d.event_id
+                WHERE d.shipment_id=:shipment AND e.kind='SHIPPED' AND e.target_id=:order AND e.recipient_id=:member
+                """,noticeParams,Integer.class));
         assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),new com.example.marketplace.fulfillment.api.Shipments.Command("ship",1L,v.items()))).status());assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().ship(v.id(),shipmentAuthority(f),shipCommand(v,"another"))).status());
         Instant at=Instant.parse("2026-10-28T00:00:00Z");assertEquals(409,assertThrows(com.example.marketplace.order.api.OrderRejected.class,()->shipments().progress(v.id(),"early","DELIVERED",1,at)).status());
         UUID transit=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key","progress:"+v.id()+":IN_TRANSIT"),UUID.class);shipmentJob(transit,Instant.now().plusSeconds(30));UUID delivered=jdbc.queryForObject("SELECT id FROM marketplace.job WHERE dedupe_key=:key",Map.of("key","progress:"+v.id()+":DELIVERED"),UUID.class);shipmentJob(delivered,Instant.now().plusSeconds(30));

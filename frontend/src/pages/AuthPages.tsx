@@ -65,6 +65,7 @@ export function AccountPage() {
       : state.member ? <><p>로그인되었습니다.</p><dl><dt>회원 ID</dt><dd>{state.member.id}</dd>
         <dt>이용 자격</dt><dd>{state.member.roles.map(role => ({ BUYER: '구매자', SELLER: '판매자', ADMIN: '운영자' })[role]).join(', ')}</dd></dl>
         <p><Link to="/account/reports">내 신고 상태</Link></p>
+        <p><Link to="/account/notifications">내 알림</Link></p>
         <button onClick={() => { void store.mutate('logout') }}>로그아웃</button>
         {state.member.roles.includes('ADMIN') ? <p>운영자 계정의 탈퇴는 권한 인계 절차가 마련된 후 지원합니다.</p> :
           <form onSubmit={event => {

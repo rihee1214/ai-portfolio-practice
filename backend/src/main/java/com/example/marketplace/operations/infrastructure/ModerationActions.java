@@ -15,7 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service @Profile("db") @Transactional
 public class ModerationActions {
-    public record Command(UUID key,Boolean hide,Long caseVersion,Long closeVersion,Long edition,Long targetVersion,UUID sourceHide,String reason) {}
+    public record Command(UUID key,Boolean hide,Long caseVersion,Long closeVersion,Long edition,Long targetVersion,UUID sourceHide,String reason,String publicReason) {
+        public Command(UUID key,Boolean hide,Long caseVersion,Long closeVersion,Long edition,Long targetVersion,UUID sourceHide,String reason) {
+            this(key,hide,caseVersion,closeVersion,edition,targetVersion,sourceHide,reason,null);
+        }
+    }
     public record Event(UUID id,UUID actor,String reason,boolean hidden,long edition,long targetVersion,java.time.Instant occurredAt) {}
     public record View(String kind,UUID targetId,long edition,Long targetVersion,Boolean hidden,UUID activeHide,Long closeVersion,Long caseVersion,
             boolean canHide,boolean canRestore,java.util.List<Event> history) {}
@@ -27,6 +31,7 @@ public class ModerationActions {
     private final ReportInvestigations reports;
     private final ProductVisibility products;
     private final ModerationTargets reviews;
+    @org.springframework.beans.factory.annotation.Autowired private OperationsNotices notices;
     public ModerationActions(NamedParameterJdbcTemplate jdbc,ReportInvestigations reports,ProductVisibility products,ModerationTargets reviews){
         this.jdbc=jdbc;this.reports=reports;this.products=products;this.reviews=reviews;
     }
@@ -75,7 +80,7 @@ public class ModerationActions {
     public Receipt apply(ProductReports.Actor actor,UUID report,UUID legacyProduct,Command cmd){
         reports.current(actor);
         if(cmd==null || cmd.key()==null || cmd.hide()==null || cmd.targetVersion()==null || cmd.edition()==null ||
-                cmd.reason()==null || cmd.reason().isBlank() || (cmd.caseVersion()==null)!=(report==null) ||
+                (cmd.publicReason()!=null && (cmd.publicReason().isBlank() || cmd.publicReason().length()>500)) || cmd.reason()==null || cmd.reason().isBlank() || (cmd.caseVersion()==null)!=(report==null) ||
                 (cmd.closeVersion()==null)!=(report==null)){throw new OrderRejected(400);}
         var c=report==null?null:reports.moderationCase(actor,report);
         var t=target(c,legacyProduct);
@@ -83,7 +88,7 @@ public class ModerationActions {
         var p=new MapSqlParameterSource("actor",actor.member()).addValue("key",cmd.key()).addValue("report",report)
                 .addValue("target",t.id()).addValue("kind",t.kind()).addValue("parent",t.parent()).addValue("case",cmd.caseVersion())
                 .addValue("close",cmd.closeVersion()).addValue("edition",cmd.edition()).addValue("version",cmd.targetVersion())
-                .addValue("hide",cmd.hide()).addValue("source",cmd.sourceHide()).addValue("reason",cmd.reason().strip());
+                .addValue("hide",cmd.hide()).addValue("source",cmd.sourceHide()).addValue("reason",cmd.reason().strip()).addValue("public",cmd.publicReason()==null?null:cmd.publicReason().strip());
         jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(:receipt,0))",Map.of("receipt",actor.member()+":"+cmd.key()),(r,n)->r.getObject(1));
         reports.current(actor);
         var prior=jdbc.queryForList("SELECT * FROM marketplace.operations_moderation_action WHERE actor=:actor AND request_key=:key",p);
@@ -92,7 +97,7 @@ public class ModerationActions {
             var previous=new Command(cmd.key(),(Boolean)saved.get("after_hidden"),(Long)saved.get("case_version"),(Long)saved.get("close_version"),
                     (Long)saved.get("edition"),(Long)saved.get("target_version"),(UUID)saved.get("source_hide"),(String)saved.get("reason"));
             var requested=new Command(cmd.key(),cmd.hide(),cmd.caseVersion(),cmd.closeVersion(),cmd.edition(),cmd.targetVersion(),cmd.sourceHide(),cmd.reason().strip());
-            if(!Objects.equals(saved.get("report_id"),report) || !t.id().equals(saved.get("target_id")) || !previous.equals(requested)){
+            if(!Objects.equals(saved.get("public_reason"),p.getValue("public")) || !Objects.equals(saved.get("report_id"),report) || !t.id().equals(saved.get("target_id")) || !previous.equals(requested)){
                 throw new OrderRejected(409);
             }
             return new Receipt((UUID)saved.get("id"),cmd.hide(),cmd.targetVersion()+1);
@@ -115,9 +120,10 @@ public class ModerationActions {
         UUID action=UUID.randomUUID();
         jdbc.update("""
                 INSERT INTO marketplace.operations_moderation_action(id,actor,request_key,report_id,case_version,close_version,kind,target_id,
-                    parent_id,edition,target_version,before_hidden,after_hidden,source_hide,reason)
-                VALUES(:action,:actor,:key,:report,:case,:close,:kind,:target,:parent,:edition,:version,:before,:hide,:source,:reason)
+                    parent_id,edition,target_version,before_hidden,after_hidden,source_hide,reason,public_reason)
+                VALUES(:action,:actor,:key,:report,:case,:close,:kind,:target,:parent,:edition,:version,:before,:hide,:source,:reason,:public)
                 """,p.addValue("action",action).addValue("before",state.hidden()));
+        notices.moderated(action,t.kind(),t.id(),t.parent(),t.edition(),cmd.hide());
         return new Receipt(action,cmd.hide(),state.version()+1);
     }
 }

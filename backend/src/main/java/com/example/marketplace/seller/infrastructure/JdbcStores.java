@@ -63,6 +63,9 @@ public final class JdbcStores implements Stores {
         return jdbc.query("SELECT * FROM marketplace.store_operation_event WHERE store_id=:id ORDER BY store_version DESC NULLS LAST,occurred_at DESC,id DESC LIMIT 20",Map.of("id",id),
                 (row,index)->new Event(row.getObject("actor_id",UUID.class),row.getString("action"),row.getString("before_state"),row.getString("after_state"),row.getString("reason"),row.getTimestamp("occurred_at").toInstant()));
     }
+    @Override public UUID tradeOwner(UUID id) {
+        return jdbc.queryForObject("SELECT owner_id FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),UUID.class);
+    }
     @Override public Store existingTrade(UUID id) {
         record Existing(UUID owner,Store value) { }
         var rows=jdbc.query("SELECT * FROM marketplace.seller_store WHERE id=:id",Map.of("id",id),(r,n)->new Existing(r.getObject("owner_id",UUID.class),map(r,n)));

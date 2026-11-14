@@ -12,6 +12,18 @@ import org.springframework.stereotype.Service;
 public class ReviewModeration implements ModerationTargets {
     private final NamedParameterJdbcTemplate jdbc;
     public ReviewModeration(NamedParameterJdbcTemplate jdbc){this.jdbc=jdbc;}
+    @Override public java.util.UUID owner(ReportTargets.Ref ref) {
+        if(ref.kind()==ReportTargets.Kind.REVIEW) {
+            return jdbc.queryForList("SELECT member_id FROM marketplace.content_review WHERE id=:id AND edition=:edition AND NOT author_deleted FOR SHARE",
+                    Map.of("id",ref.id(),"edition",ref.edition()),java.util.UUID.class).stream().findFirst().orElse(null);
+        }
+        return jdbc.queryForList("""
+                SELECT c.member_id FROM marketplace.content_review_response c JOIN marketplace.content_review r ON r.id=c.review_id
+                WHERE c.id=:id AND c.review_id=:parent AND c.edition=:edition AND r.edition=c.edition AND c.kind=:kind
+                  AND NOT r.author_deleted AND NOT c.author_deleted FOR SHARE OF c,r
+                """,Map.of("id",ref.id(),"parent",ref.parent(),"edition",ref.edition(),"kind",ref.kind().name()),java.util.UUID.class)
+                .stream().findFirst().orElse(null);
+    }
     public State lock(ReportTargets.Ref ref){
         var parents=jdbc.query("SELECT edition,version,hidden_by_admin FROM marketplace.content_review WHERE id=:id FOR UPDATE",
                 Map.of("id",ref.parent()),(r,n)->new State(r.getLong(1),r.getLong(2),r.getBoolean(3)));

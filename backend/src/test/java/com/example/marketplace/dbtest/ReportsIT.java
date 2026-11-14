@@ -17,6 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportsIT extends PostgresContractFixture {
+    private int closedNotices(UUID report) {
+        return jdbc.queryForObject("""
+                SELECT count(*) FROM marketplace.operations_report r JOIN marketplace.notification_event e
+                ON e.target_id=r.id AND e.recipient_id=r.reporter_id
+                WHERE r.id=:report AND e.kind='REPORT_CLOSED'
+                """,Map.of("report",report),Integer.class);
+    }
     private HttpClient member(String email) throws Exception {
         activeMember(email);
         var client=authBrowser();
@@ -217,6 +224,7 @@ class ReportsIT extends PostgresContractFixture {
         try{post(op,commands,close,500);assertEquals(3,authMapper.readTree(get(op,path,200)).path("version").asInt());}
         finally{jdbc.getJdbcTemplate().execute("ALTER TABLE marketplace.operations_report_event DROP CONSTRAINT deny_test_close");}
         var closed=post(op,commands,close,200);assertEquals(closed,post(op,commands,close,200));
+        assertEquals(1,closedNotices(UUID.fromString(report)));
         assertEquals("VIOLATION",authMapper.readTree(get(author,"/api/reports/mine",200)).get(0).path("decision").asText());
         assertFalse(get(author,"/api/reports/mine",200).contains("처리 근거"));
         post(author,target,Map.of("key",UUID.randomUUID(),"reason","신고 근거"),409);
@@ -229,6 +237,7 @@ class ReportsIT extends PostgresContractFixture {
         }
         post(op,commands,Map.of("key",UUID.randomUUID(),"action","REOPEN","version",5,"reason","새 근거 확인","reopenBasis","NEW_EVIDENCE","evidenceKey",evidence),200);
         post(op,commands,Map.of("key",UUID.randomUUID(),"action","CLOSE","decision","NO_VIOLATION","reason","재판정","version",6),200);
+        assertEquals(2,closedNotices(UUID.fromString(report)));
         post(op,commands,Map.of("key",UUID.randomUUID(),"action","REOPEN","version",7,"reason","지난 종결 근거","reopenBasis","NEW_EVIDENCE","evidenceKey",evidence),409);
         post(op,commands,Map.of("key",UUID.randomUUID(),"action","REOPEN","version",7,"reason","판단 오류 정정","reopenBasis","JUDGMENT_ERROR"),200);
         post(op,commands,assign(8,other.authority().member()),200);

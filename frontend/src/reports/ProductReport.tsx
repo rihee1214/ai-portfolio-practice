@@ -28,7 +28,7 @@ function ReportList({path,revision}:{path:string;revision:number}){
     })
     return ()=>controller.abort()
   },[path,revision])
-  return <>{status&&<p role="status">{status}</p>}<ul>{rows.map(row=><li key={row.reportId}>{row.reportId} · {states[row.state]} {row.decision&&decisions[row.decision]}</li>)}</ul></>
+  return <>{status&&<p role="status">{status}</p>}<ul>{rows.map(row=><li key={row.reportId} id={row.reportId}>{row.reportId} · {states[row.state]} {row.decision&&decisions[row.decision]}</li>)}</ul></>
 }
 
 export function MyReports(){

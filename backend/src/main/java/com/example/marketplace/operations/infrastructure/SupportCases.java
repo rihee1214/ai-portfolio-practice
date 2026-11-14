@@ -2,6 +2,7 @@ package com.example.marketplace.operations.infrastructure;
 
 import com.example.marketplace.guest.api.GuestAccessSessions;
 import com.example.marketplace.identity.api.HistorySessions;
+import com.example.marketplace.notification.api.NotificationEvents;
 import com.example.marketplace.operations.api.SupportAssignments;
 import com.example.marketplace.order.api.OrderQueries;
 import com.example.marketplace.order.api.OrderRejected;
@@ -32,8 +33,12 @@ public class SupportCases implements com.example.marketplace.operations.api.Supp
     private final GuestAccessSessions guests;
     private final OrderQueries orders;
     private final SupportAssignments assignments;
+    private final NotificationEvents notifications;
+    private final com.example.marketplace.identity.api.AccessPolicy access;
     public SupportCases(NamedParameterJdbcTemplate jdbc,HistorySessions sessions,GuestAccessSessions guests,
-            OrderQueries orders,SupportAssignments assignments) {
+            OrderQueries orders,SupportAssignments assignments,NotificationEvents notifications,
+            com.example.marketplace.identity.api.AccessPolicy access) {
+        this.notifications=notifications;this.access=access;
         this.jdbc=jdbc;this.sessions=sessions;this.guests=guests;this.orders=orders;this.assignments=assignments;
     }
     private Owner owner(OrderQueries.Authority a) {
@@ -186,7 +191,33 @@ public class SupportCases implements com.example.marketplace.operations.api.Supp
                 VALUES(:message,:id,:version,:sender,:member,:guest,:key,:body)
                 """,p.addValue("message",message));
         jdbc.update("UPDATE marketplace.operations_support_case SET version=:version WHERE id=:id",p);
+        if(t.kind()!=Kind.LOST_ACCESS) {
+            var recipients=new java.util.LinkedHashSet<UUID>();
+            if(reader!=Reader.CUSTOMER && access.allowed(t.member(),com.example.marketplace.identity.api.AccessArea.BUYER)) {
+                recipients.add(t.member());
+            }
+            if(reader!=Reader.SELLER && t.kind()==Kind.ORDER) {
+                UUID seller=orders.sellerMember(t.seller());
+                if(access.allowed(seller,com.example.marketplace.identity.api.AccessArea.SELLER)) { recipients.add(seller); }
+            }
+            if(reader!=Reader.OPERATOR) {
+                jdbc.queryForList("SELECT operator_id FROM marketplace.operations_support_assignment WHERE target_id=:id AND operator_id IS NOT NULL",p,UUID.class)
+                        .stream().filter(operator->access.allowed(operator,com.example.marketplace.identity.api.AccessArea.SUPPORT))
+                        .forEach(recipients::add);
+            }
+            recipients.remove(user.member());
+            for(UUID recipient:recipients) { notifications.record(NotificationEvents.Kind.CASE_REPLY,message,recipient,id); }
+        }
         return new Receipt(message,t.version()+1);
+    }
+    String noticeDestination(UUID id,com.example.marketplace.notification.api.NotificationAccess.Reader reader) {
+        var t=ticket(id,false);
+        var a=new OrderQueries.Authority(reader.session(),reader.member(),reader.version(),null);
+        if(reader.member().equals(t.member())) { authorize(Reader.CUSTOMER,t,a);return "/support?case="+id; }
+        if(t.kind()==Kind.ORDER && reader.member().equals(orders.sellerMember(t.seller()))) {
+            authorize(Reader.SELLER,t,a);return "/seller/orders/"+t.seller()+"?case="+id;
+        }
+        authorize(Reader.OPERATOR,t,a);return "/admin/support?case="+id;
     }
     @Transactional
     public Owner messageAccess(UUID id,UUID message,Reader reader,OrderQueries.Authority actor,boolean write) {

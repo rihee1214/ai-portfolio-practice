@@ -24,7 +24,8 @@ export function ModerationPage(){
 function Action({path,legacy}:{path:string;legacy:boolean}){
   const [view,setView]=useState<State|null>(null),[revision,refresh]=useState(0),[reason,setReason]=useState('')
   const [notice,setNotice]=useState('')
-  const reload=()=>{setView(null);setReason('');refresh(n=>n+1)}
+  const [publicReason,setPublicReason]=useState('')
+  const reload=()=>{setView(null);setReason('');setPublicReason('');refresh(n=>n+1)}
   const command=useInquiryCommand((_request,data)=>{
     const id=data&&typeof data==='object'&&'id' in data?String(data.id):''
     setNotice('조치를 저장했습니다. 조치 ID '+id);reload()
@@ -48,8 +49,8 @@ function Action({path,legacy}:{path:string;legacy:boolean}){
     </li>)}</ol>}
     {legacy&&view.hidden&&!view.canRestore&&<p>신고 사건에서 숨긴 상품입니다. <Link to="/admin/reports">원 사건에서 복원 확인</Link></p>}
     {permitted&&<fieldset disabled={!!command.pending}><label>조치 사유 <textarea value={reason} onChange={e=>setReason(e.target.value)}/></label>
-      <button disabled={!reason.trim()} onClick={()=>void command.send({path,data:{key:crypto.randomUUID(),hide:!view.hidden,
-        caseVersion:view.caseVersion,closeVersion:view.closeVersion,edition:view.edition,targetVersion:view.targetVersion,sourceHide:view.activeHide,reason}})}>
+      <label>대상자 공개 안내 (선택)<textarea maxLength={500} value={publicReason} onChange={e=>setPublicReason(e.target.value)}/></label><button disabled={!reason.trim()} onClick={()=>void command.send({path,data:{key:crypto.randomUUID(),hide:!view.hidden,
+        caseVersion:view.caseVersion,closeVersion:view.closeVersion,edition:view.edition,targetVersion:view.targetVersion,sourceHide:view.activeHide,reason,...(publicReason.trim()?{publicReason:publicReason.trim()}:{})}})}>
         {view.hidden?'운영 숨김 해제':'운영 비공개'}</button></fieldset>}</>}
     {notice&&<p role="status">{notice}</p>}{command.error&&<p role="alert">{command.error}</p>}
     {command.pending&&!command.busy&&<button onClick={()=>void command.send(command.pending!)}>같은 조치 요청 확인</button>}

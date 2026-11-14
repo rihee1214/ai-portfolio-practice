@@ -18,6 +18,9 @@ public class JdbcProductVisibility implements ProductVisibility {
         if(rows.isEmpty()){throw new CatalogException(404);}
         return rows.getFirst();
     }
+    @Override public UUID storeId(UUID product) {
+        return jdbc.queryForObject("SELECT store_id FROM marketplace.catalog_product WHERE id=:id",Map.of("id",product),UUID.class);
+    }
     public void change(UUID id,boolean hidden,long version){
         if(jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=:hidden,version=version+1 WHERE id=:id AND version=:version",
                 Map.of("id",id,"hidden",hidden,"version",version))!=1){throw new CatalogException(409);}

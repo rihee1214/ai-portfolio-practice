@@ -3,6 +3,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 public interface OrderQueries {
+    UUID sellerMember(UUID sellerOrder);
     record Authority(String browser,UUID member,Long version,String guestToken) { }
     record Owned(UUID id,String state,String amount,String mode) { }
     record Summary(String orderNumber,String state,String total,String mode,Instant createdAt) { }

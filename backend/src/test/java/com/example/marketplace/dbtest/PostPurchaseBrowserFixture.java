@@ -34,6 +34,17 @@ public final class PostPurchaseBrowserFixture {
  private static final Map<String,Map<String,Object>> SEEDS=new ConcurrentHashMap<>();
  static void register(String project,Map<String,Object> seed){SEEDS.put(project,Map.copyOf(seed));}
  private final NamedParameterJdbcTemplate jdbc;private final OrderQueries orders;private final Refunds refunds;private final RefundReconciliation operations;private final RefundBrowserFixture worker;private final TransactionTemplate tx;
+ @PostMapping("/api/__test/notifications/questions/{answer}/deliver")
+ public Map<String,Object> notifyAnswer(@PathVariable UUID answer,Principal principal) {
+  if(principal==null) { throw new OrderRejected(401); }
+  var rows=jdbc.queryForList("""
+          SELECT o.job_id FROM marketplace.notification_event e JOIN marketplace.outbox_event o ON o.id=e.id
+          WHERE e.kind='PRODUCT_ANSWER' AND e.cause_id=:answer AND e.recipient_id=:member
+          """,Map.of("answer",answer,"member",UUID.fromString(principal.getName())),UUID.class);
+  if(rows.size()!=1) { throw new OrderRejected(404); }
+  worker.run(rows.getFirst(),java.time.Clock.systemUTC());
+  return Map.of("delivered",true);
+ }
  public PostPurchaseBrowserFixture(NamedParameterJdbcTemplate jdbc,OrderQueries orders,Refunds refunds,RefundReconciliation operations,RefundBrowserFixture worker,PlatformTransactionManager manager){this.jdbc=jdbc;this.orders=orders;this.refunds=refunds;this.operations=operations;this.worker=worker;tx=new TransactionTemplate(manager);}
  @ExceptionHandler(OrderRejected.class) public ResponseEntity<?> denied(OrderRejected e){return ResponseEntity.status(e.status()).body(Map.of("code","G_FIXTURE_REJECTED"));}
  private Long version(Principal p,HttpServletRequest request){return p instanceof org.springframework.security.core.Authentication a&&a.getPrincipal() instanceof SessionMember saved?saved.authVersion():(Long)request.getAttribute(PurchaseSessions.AUTH_VERSION_ATTRIBUTE);}

@@ -22,6 +22,8 @@ public interface Stores {
     Store lockExistingTrade(UUID storeId);
     /** Trusted existing-order read; never grants new-sale eligibility and does not acquire later business locks. */
     Store existingTrade(UUID storeId);
+    /** Stored recipient of historical trade notices; this supplies no read or sale capability. */
+    UUID tradeOwner(UUID storeId);
     record PublicStore(String slug, String name, String introduction, String address, String notice,
             String imageKey, String imageAlt) { }
     Store own(UUID owner);

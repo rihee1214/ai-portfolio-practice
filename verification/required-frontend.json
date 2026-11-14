@@ -350,6 +350,9 @@
     "tests/unit/SettlementPage.test.tsx#clears the ledger on permission loss and prevents review of an open week",
     "tests/unit/SettlementPage.test.tsx#reuses the creation key after response loss and separates signed amounts by store",
     "tests/unit/SettlementPage.test.tsx#reopens the selected reviewed week after a stale payout instead of paying the changed amount",
-    "tests/unit/SettlementPage.test.tsx#identifies the unpaid week to rebuild before another week can pay"
+    "tests/unit/SettlementPage.test.tsx#identifies the unpaid week to rebuild before another week can pay",
+    "tests/unit/NotificationPage.test.tsx#clears the private notification destination on current-access denial and drops the response after logout",
+    "tests/unit/NotificationPage.test.tsx#shows the public decision or legacy fallback with an appeal link and drops a late response",
+    "tests/unit/NotificationPage.test.tsx#clears the SYSTEM failure list after logout even when the request resolves later"
   ]
 }

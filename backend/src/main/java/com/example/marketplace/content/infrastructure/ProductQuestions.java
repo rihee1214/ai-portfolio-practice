@@ -3,6 +3,8 @@ package com.example.marketplace.content.infrastructure;
 import com.example.marketplace.catalog.api.Browse;
 import com.example.marketplace.content.domain.InquiryText;
 import com.example.marketplace.identity.api.HistorySessions;
+import com.example.marketplace.notification.api.NotificationAccess;
+import com.example.marketplace.notification.api.NotificationEvents;
 import com.example.marketplace.operations.api.SupportAssignments;
 import com.example.marketplace.order.api.OrderRejected;
 import com.example.marketplace.seller.api.Stores;
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Profile("db")
-public class ProductQuestions {
+public class ProductQuestions implements NotificationAccess {
     public enum Visibility { PUBLIC, PRIVATE }
     public record Create(UUID key, Visibility visibility, String body) { }
     public record Answer(UUID key, Long expectedVersion, String body) { }
@@ -29,7 +31,9 @@ public class ProductQuestions {
     private final Stores stores;
     private final HistorySessions sessions;
     private final SupportAssignments assignments;
-    public ProductQuestions(NamedParameterJdbcTemplate jdbc,Browse browse,Stores stores,HistorySessions sessions,SupportAssignments assignments) {
+    private final NotificationEvents notifications;
+    public ProductQuestions(NamedParameterJdbcTemplate jdbc,Browse browse,Stores stores,HistorySessions sessions,SupportAssignments assignments,NotificationEvents notifications) {
+        this.notifications=notifications;
         this.jdbc=jdbc; this.browse=browse; this.stores=stores; this.sessions=sessions; this.assignments=assignments;
     }
     private boolean current(SupportAssignments.Actor actor) {
@@ -112,6 +116,19 @@ public class ProductQuestions {
         if (view==null) { throw new OrderRejected(404); }
         return view;
     }
+    @Override public boolean handles(NotificationEvents.Kind kind) { return kind==NotificationEvents.Kind.PRODUCT_ANSWER; }
+    @Override public String destination(NotificationEvents.Kind kind,UUID target,NotificationAccess.Reader reader) {
+        try {
+            var product=jdbc.queryForList("SELECT product_id FROM marketplace.content_product_question WHERE id=:id FOR SHARE",
+                    Map.of("id",target),UUID.class);
+            if(product.isEmpty() || !get(target,new SupportAssignments.Actor(reader.member(),reader.session(),reader.version()),false).ownQuestion()) { return null; }
+            var detail=browse.forProduct(product.getFirst());
+            return detail==null?null:"/products/"+detail.product().slug();
+        } catch(OrderRejected denied) {
+            if(denied.status()==403 || denied.status()==404) { return null; }
+            throw denied;
+        }
+    }
     @Transactional
     public Receipt answer(UUID id,SupportAssignments.Actor actor,Answer cmd) {
         if (actor.member()==null) { throw new OrderRejected(403); }
@@ -121,7 +138,7 @@ public class ProductQuestions {
         String body=body(cmd.body());
         var p=new MapSqlParameterSource("id",id).addValue("member",actor.member()).addValue("key",cmd.key())
                 .addValue("version",cmd.expectedVersion()).addValue("body",body);
-        var rows=jdbc.queryForList("SELECT product_id,version FROM marketplace.content_product_question WHERE id=:id FOR UPDATE",p);
+        var rows=jdbc.queryForList("SELECT product_id,author_id,version FROM marketplace.content_product_question WHERE id=:id FOR UPDATE",p);
         if (rows.isEmpty() || !current(actor)) { throw new OrderRejected(404); }
         var product=browse.forProduct((UUID)rows.getFirst().get("product_id"));
         if (product==null || !owns(actor,product.product().storeSlug(),true)) { throw new OrderRejected(404); }
@@ -134,6 +151,10 @@ public class ProductQuestions {
                 VALUES(:answer,:id,:member,:body,:key,:version) ON CONFLICT(question_id) DO NOTHING
                 """,p.addValue("answer",answer))!=1) { throw new OrderRejected(409); }
         jdbc.update("UPDATE marketplace.content_product_question SET version=version+1 WHERE id=:id",p);
+        UUID recipient=(UUID)rows.getFirst().get("author_id");
+        if(!recipient.equals(actor.member())) {
+            notifications.record(NotificationEvents.Kind.PRODUCT_ANSWER,answer,recipient,id);
+        }
         return new Receipt(answer,cmd.expectedVersion()+1);
     }
     @Transactional

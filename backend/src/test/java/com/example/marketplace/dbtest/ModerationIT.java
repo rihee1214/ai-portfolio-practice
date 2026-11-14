@@ -56,18 +56,47 @@ class ModerationIT extends PostgresContractFixture {
                     "expectedVersion",0,"edition",1,"body",kind+" 본문"),200)).get("id").asText();
             children.add(adjudicate(buyer.browser(),op,"/api/reports/content/"+kind+"/"+id+"/"+child+"/1"));
         }
+        var originalReasons=new java.util.HashMap<UUID,String>();
         for(String childCase:children){
             var expected=authMapper.readTree(get(visitor,list,200));
             String childId=authMapper.readTree(get(op.browser(),childCase,200)).path("targetId").asText();
             var changed=java.util.stream.StreamSupport.stream(expected.get("reviews").get(0).get("responses").spliterator(),false)
                     .filter(node->childId.equals(node.get("id").asText())).findFirst().orElseThrow();
             ((tools.jackson.databind.node.ObjectNode)changed).put("version",changed.path("version").asLong()+2);
-            post(op.browser(),childCase,command(op.browser(),childCase,true),200);
+            var hide=command(op.browser(),childCase,true);
+            String privateReason="private-investigation-"+UUID.randomUUID(),publicReason="대상자 공개 안내";
+            hide.put("reason",privateReason);hide.put("publicReason",publicReason);
+            String receipt=post(op.browser(),childCase,hide,200);
+            assertEquals(receipt,post(op.browser(),childCase,hide,200));
+            var conflict=new java.util.HashMap<>(hide);conflict.put("publicReason","다른 공개 안내");
+            post(op.browser(),childCase,conflict,409);
+            UUID action=UUID.fromString(authMapper.readTree(receipt).path("id").asText());
+            originalReasons.put(action,privateReason);
+            UUID job=jdbc.queryForObject("""
+                    SELECT o.job_id FROM marketplace.notification_event e JOIN marketplace.outbox_event o ON o.id=e.id
+                    WHERE e.cause_id=:action AND e.kind='MODERATION_ACTION'
+                    """,Map.of("action",action),UUID.class);
+            runStoredJob("NOTIFICATION_DELIVER.v1",job);
+            String inbox=get(buyer.browser(),"/api/account/notifications",200);
+            assertTrue(inbox.contains("/account/moderation/"+action));
+            org.junit.jupiter.api.Assertions.assertFalse(inbox.contains(privateReason) || inbox.contains(publicReason));
+            String decision=get(buyer.browser(),"/api/account/moderation/"+action,200);
+            assertEquals(publicReason,authMapper.readTree(decision).path("reason").asText());
+            org.junit.jupiter.api.Assertions.assertFalse(decision.contains(privateReason));
+            get(op.browser(),"/api/account/moderation/"+action,404);
             var partial=authMapper.readTree(get(visitor,list,200));
             assertEquals(1,partial.get("count").asInt());assertEquals(5,partial.get("ratingSum").asInt());
             assertEquals(1,partial.get("reviews").get(0).get("responses").size());get(visitor,photo,200);
             org.junit.jupiter.api.Assertions.assertNotEquals(childId,partial.get("reviews").get(0).get("responses").get(0).get("id").asText());
-            post(op.browser(),childCase,command(op.browser(),childCase,false),200);
+            var restore=command(op.browser(),childCase,false);
+            String restored=post(op.browser(),childCase,restore,200);
+            assertEquals(restored,post(op.browser(),childCase,restore,200));
+            UUID restoreId=UUID.fromString(authMapper.readTree(restored).path("id").asText());
+            assertEquals(1,jdbc.queryForObject("""
+                    SELECT count(*) FROM marketplace.notification_event WHERE kind='MODERATION_RESTORED'
+                    AND cause_id=:id AND target_id=:id AND recipient_id=:owner
+                    """,Map.of("id",restoreId,"owner",buyer.order().memberId()),Integer.class));
+            assertTrue(authMapper.readTree(get(buyer.browser(),"/api/account/moderation/"+restoreId,200)).get("reason").isNull());
             assertEquals(authMapper.readTree(expected.toString()),authMapper.readTree(get(visitor,list,200)));
         }
         String childCase=children.getFirst();
@@ -109,7 +138,9 @@ class ModerationIT extends PostgresContractFixture {
             assertTrue(archived.get("history").size()>=2);
             var event=archived.get("history").get(0);
             assertTrue(event.hasNonNull("id")&&event.hasNonNull("occurredAt")&&event.hasNonNull("actor"));
-            assertEquals("위반으로 숨김",event.path("reason").asText());
+            var eventId=UUID.fromString(event.path("id").asText());
+            assertTrue(originalReasons.containsKey(eventId));
+            assertEquals(originalReasons.get(eventId),event.path("reason").asText());
             var staleCommand=new java.util.HashMap<>(hideChild);staleCommand.put("key",UUID.randomUUID());
             post(op.browser(),oldCase,staleCommand,409);
         }
@@ -247,6 +278,14 @@ class ModerationIT extends PostgresContractFixture {
         org.mockito.Mockito.when(access.allowed(authority.member(),com.example.marketplace.identity.api.AccessArea.CONTENT)).thenReturn(true);
         var reports=new com.example.marketplace.operations.infrastructure.ReportInvestigations(named,session,access,null,null,null,null);
         var actions=new com.example.marketplace.operations.infrastructure.ModerationActions(named,reports,new com.example.marketplace.catalog.infrastructure.JdbcProductVisibility(named),null);
+        var manager=new org.springframework.jdbc.support.JdbcTransactionManager(ds);
+        var jobs=new com.example.marketplace.platform.infrastructure.JdbcJobs(named,manager,java.time.Clock.systemUTC());
+        var outbox=new com.example.marketplace.platform.infrastructure.JdbcOutbox(named,manager,jobs);
+        var notices=new com.example.marketplace.operations.infrastructure.OperationsNotices(named,
+                new com.example.marketplace.notification.infrastructure.NotificationDelivery(named,outbox,jobs),
+                new com.example.marketplace.catalog.infrastructure.JdbcProductVisibility(named),null,
+                new com.example.marketplace.seller.infrastructure.JdbcStores(named,null,access,manager),null,session);
+        org.springframework.test.util.ReflectionTestUtils.setField(actions,"notices",notices);
         var actor=new com.example.marketplace.operations.infrastructure.ProductReports.Actor(authority.member(),authority.browser(),authority.version());
         var tx=new org.springframework.transaction.support.TransactionTemplate(new org.springframework.jdbc.support.JdbcTransactionManager(ds));
         var before=tx.execute(t->actions.view(actor,null,product.id()));assertTrue(before.canRestore());

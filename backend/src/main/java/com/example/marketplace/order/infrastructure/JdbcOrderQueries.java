@@ -21,13 +21,48 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.springframework.transaction.support.TransactionTemplate;
 
 @Service @Profile("db")
-public final class JdbcOrderQueries implements OrderQueries,com.example.marketplace.order.api.FulfillmentOrders {
+public final class JdbcOrderQueries implements OrderQueries,com.example.marketplace.order.api.FulfillmentOrders,com.example.marketplace.notification.api.NotificationAccess {
+    @Override public boolean handles(com.example.marketplace.notification.api.NotificationEvents.Kind kind) {
+        return switch(kind) {
+            case PAYMENT_BUYER,PAYMENT_SELLER,PURCHASE_CONFIRMED,SHIPPED,EXCHANGE_SHIPPED -> true;
+            default -> false;
+        };
+    }
+    @Override public String destination(com.example.marketplace.notification.api.NotificationEvents.Kind kind,UUID target,
+            com.example.marketplace.notification.api.NotificationAccess.Reader reader) {
+        var actor=new Authority(reader.session(),reader.member(),reader.version(),null);
+        try {
+            if(kind==com.example.marketplace.notification.api.NotificationEvents.Kind.PAYMENT_SELLER ||
+                    kind==com.example.marketplace.notification.api.NotificationEvents.Kind.PURCHASE_CONFIRMED) {
+                sellerOrder(target,actor);
+                return "/seller/orders/"+target;
+            }
+            var numbers=jdbc.queryForList("SELECT order_number FROM marketplace.purchase_order WHERE id=:id AND member_id=:member FOR SHARE",
+                    Map.of("id",target,"member",reader.member()),String.class);
+            if(numbers.isEmpty()) { return null; }
+            requireOwned(numbers.getFirst(),actor);
+            return "/account/orders/"+numbers.getFirst();
+        } catch(OrderRejected denied) {
+            if(denied.status()==403 || denied.status()==404) { return null; }
+            throw denied;
+        } catch(com.example.marketplace.seller.api.StoreException denied) {
+            if(denied.status()==403 || denied.status()==404) { return null; }
+            throw denied;
+        } catch(com.example.marketplace.identity.api.AccountException denied) {
+            if("STATE_CONFLICT".equals(denied.getMessage())) { return null; }
+            throw denied;
+        }
+    }
     private final NamedParameterJdbcTemplate jdbc;
     private final Orders orders;
     private final GuestAccessSessions guests;
     private final HistorySessions sessions;
     private final Stores stores;
     private final TransactionTemplate tx;
+    @Override public UUID sellerMember(UUID sellerOrder) {
+        UUID store=jdbc.queryForObject("SELECT store_id FROM marketplace.seller_order WHERE id=:id",Map.of("id",sellerOrder),UUID.class);
+        return stores.tradeOwner(store);
+    }
     @org.springframework.beans.factory.annotation.Autowired private AftercareLifecycle aftercare;
     public JdbcOrderQueries(NamedParameterJdbcTemplate jdbc,Orders orders,GuestAccessSessions guests,HistorySessions sessions,Stores stores,PlatformTransactionManager manager) {
         this.jdbc=jdbc;this.orders=orders;this.guests=guests;this.sessions=sessions;this.stores=stores;this.tx=new TransactionTemplate(manager);

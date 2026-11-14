@@ -27,6 +27,8 @@ public final class JdbcOrders implements Orders {
     private final ObjectMapper mapper;
     private final TransactionTemplate tx;
     private final Supplier<UUID> numbers;
+    private OrderNotifications notificationEvents;
+    @Autowired public void notifications(OrderNotifications events) { this.notificationEvents=events; }
     private java.util.function.Supplier<AftercarePolicySource.Policy> aftercarePolicy=()->new AftercarePolicySource().current();
     public void policySource(java.util.function.Supplier<AftercarePolicySource.Policy> source) { this.aftercarePolicy=java.util.Objects.requireNonNull(source); }
     private com.example.marketplace.identity.api.SellerMembership members;
@@ -154,7 +156,9 @@ public final class JdbcOrders implements Orders {
         var saved=lock(number);OrderRules.transition(saved.state(),target);
         if(saved.state().equals(target)) { return; }
         jdbc.update("UPDATE marketplace.purchase_order SET state=:s,version=version+1 WHERE id=:id",Map.of("s",target,"id",saved.id()));
-        jdbc.update("INSERT INTO marketplace.order_event(id,order_id,action,occurred_at) VALUES(:id,:o,:s,clock_timestamp())",Map.of("id",UUID.randomUUID(),"o",saved.id(),"s",target));
+        UUID event=UUID.randomUUID();
+        jdbc.update("INSERT INTO marketplace.order_event(id,order_id,action,occurred_at) VALUES(:id,:o,:s,clock_timestamp())",Map.of("id",event,"o",saved.id(),"s",target));
+        if(target.equals("PAID")) { notificationEvents.paid(saved,event); }
     }
     private void text(String value,int max,boolean empty) {
         if(value==null || value.length()>max || (!empty && value.isBlank())) { throw new IllegalArgumentException("INVALID_ORDER_CONTACT"); }

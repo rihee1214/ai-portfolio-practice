@@ -21,7 +21,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @Service @Profile("db")
 public final class AftercareLifecycle {
  private final NamedParameterJdbcTemplate jdbc;private final Outbox outbox;
- public AftercareLifecycle(NamedParameterJdbcTemplate jdbc,Outbox outbox) { this.jdbc=jdbc;this.outbox=outbox; }
+ final OrderNotifications notifications;
+ public AftercareLifecycle(NamedParameterJdbcTemplate jdbc,Outbox outbox,OrderNotifications notifications) { this.jdbc=jdbc;this.outbox=outbox;this.notifications=notifications; }
  static void initialize(NamedParameterJdbcTemplate jdbc,UUID order,AftercarePolicySource.Policy policy,Instant at) {
   var p=new MapSqlParameterSource("id",order).addValue("version",policy.version()).addValue("delay",policy.confirmationDelaySeconds()).addValue("window",policy.claimWindowSeconds()).addValue("at",Timestamp.from(ConfirmationRules.normalized(at)));
   jdbc.update("INSERT INTO marketplace.order_aftercare_policy(order_id,schema_version,status,policy_version,confirmation_delay_seconds,claim_window_seconds,captured_at,effective_at,source) VALUES(:id,1,'ACTIVE',:version,:delay,:window,:at,:at,'ORDER_CREATION')",p);
@@ -55,6 +56,7 @@ public final class AftercareLifecycle {
   var p=new MapSqlParameterSource("e",f.eventId()).addValue("order",f.orderId()).addValue("seller",f.sellerOrderId()).addValue("shipment",f.shipmentId()).addValue("at",Timestamp.from(ConfirmationRules.normalized(f.occurredAt()))).addValue("hash",fingerprint);
   jdbc.update("INSERT INTO marketplace.order_dispatch(event_id,order_id,seller_order_id,shipment_id,occurred_at,fingerprint) VALUES(:e,:order,:seller,:shipment,:at,:hash)",p);
   for(var u:units) { jdbc.update("INSERT INTO marketplace.order_dispatch_unit(item_id,ordinal,event_id,order_id,seller_order_id) VALUES(:i,:o,:e,:order,:seller)",p.addValue("i",u.itemId()).addValue("o",u.ordinal())); }bump(f.orderId());
+  notifications.shipped(f.orderId(),f.eventId(),false);
  }
  public void delivered(FulfillmentOrders.InitialDelivery fact) { transaction();bump(fact.orderId());for(var unit:fact.units()) { schedule(fact.orderId(),new Unit(unit.itemId(),unit.ordinal()),null); } }
  public void schedule(UUID order,Unit unit,Instant reevaluatedAt) {

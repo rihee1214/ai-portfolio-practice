@@ -45,6 +45,7 @@ public class ReportInvestigations {
     private final ReportTargets targets;
     private final Browse browse;
     private final ObjectProvider<Media> media;
+    @org.springframework.beans.factory.annotation.Autowired private OperationsNotices notices;
 
     public ReportInvestigations(NamedParameterJdbcTemplate jdbc,HistorySessions sessions,AccessPolicy access,
             SupportAssignments support,ReportTargets targets,Browse browse,ObjectProvider<Media> media){
@@ -189,6 +190,7 @@ public class ReportInvestigations {
                     previous_assignee,next_assignee,decision,reason,reopen_basis,evidence_key)
                     VALUES(:id,:version,:actor,:key,:action,:before,:state,:previous,:next,:decision,:reason,:basis,:evidenceKey)
                 """,p);
+        if(cmd.action()==Action.CLOSE) { notices.closed(id,c.version()+1); }
         return new Saved(c.version()+1,state);
     }
     private String transition(ReportTransition action,String current){

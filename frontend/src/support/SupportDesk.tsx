@@ -17,20 +17,22 @@ const valid=(value:string)=>!!value.trim()&&[...value.trim()].length<=2000
 export function SupportDesk(props:Props) {
   const auth=useAuthStore(),session=useSyncExternalStore(auth.subscribe,auth.getSnapshot)
   const gas=useSyncExternalStore(onGuestAccessChange,guestAccessGeneration)
-  return <Desk key={[session.member?.id,gas,props.number,props.sellerOrder,props.reader].join(':')}
+  return <Desk key={[session.member?.id,auth.getGeneration(),gas,props.number,props.sellerOrder,props.reader].join(':')}
     {...props} member={session.member?.id}/>
 }
 function Desk({reader='CUSTOMER',number,sellerOrder,member}:Props&{member?:string}){
-  const [open,setOpen]=useState(false)
+  const candidate=new URLSearchParams(window.location.search).get('case') ?? ''
+  const initialCase=/^[0-9a-f-]{36}$/i.test(candidate)?candidate:''
+  const [open,setOpen]=useState(!!initialCase)
   const [generation,reset]=useState(0)
   return <section aria-label={sellerOrder?'주문 문의':'고객지원'}><h2>{sellerOrder?'주문 문의':'고객지원'}</h2>
-    {open?<CaseList key={generation} reader={reader} number={number} sellerOrder={sellerOrder} member={member} onAccessLost={()=>reset(n=>n+1)}/>:
+    {open?<CaseList key={generation} initialCase={generation===0?initialCase:''} reader={reader} number={number} sellerOrder={sellerOrder} member={member} onAccessLost={()=>reset(n=>n+1)}/>:
       <button onClick={()=>setOpen(true)}>{sellerOrder?'주문 문의 열기':'지원 접수함 열기'}</button>}
   </section>
 }
-function CaseList({reader='CUSTOMER',number,sellerOrder,member,onAccessLost}:Props&{member?:string;onAccessLost:()=>void}){
+function CaseList({reader='CUSTOMER',number,sellerOrder,member,onAccessLost,initialCase}:Props&{member?:string;initialCase:string;onAccessLost:()=>void}){
   const [list,setList]=useState<Entry[]>([]),[queue,setQueue]=useState<QueueEntry[]>([])
-  const [detail,setDetail]=useState<Detail|null>(null),[selected,select]=useState('')
+  const [detail,setDetail]=useState<Detail|null>(null),[selected,select]=useState(initialCase)
   const [body,setBody]=useState(''),[next,setNext]=useState(''),[error,setError]=useState('')
   const [revision,reload]=useState(0)
   const clear=()=>{setList([]);setQueue([]);setDetail(null);select('');setBody('');setNext('');reload(n=>n+1)}

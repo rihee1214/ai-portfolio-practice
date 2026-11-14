@@ -41,14 +41,60 @@ class SupportIT extends SettlementContractFixture {
         assertEquals(number,detail.get("orderNumber").asText());
         assertEquals(sellerOrder.toString(),detail.get("sellerOrderId").asText());
         String followUp="판매자 답변을 확인했습니다. 원 주문의 배송 상태를 확인하겠습니다.";
-        post(initial.browser(),memberCase+"/messages?reader=OPERATOR",Map.of("key",UUID.randomUUID(),"expectedVersion",detail.get("version").asLong(),"body",followUp),200);
+        UUID ticket=UUID.fromString(memberMessage);
+        UUID buyer=jdbc.queryForObject("SELECT member_id FROM marketplace.operations_support_case WHERE id=:id",Map.of("id",ticket),UUID.class);
+        UUID seller=jdbc.queryForObject("SELECT owner_id FROM marketplace.seller_store st JOIN marketplace.seller_order s ON s.store_id=st.id WHERE s.id=:id",Map.of("id",sellerOrder),UUID.class);
+        String operatorReply=post(initial.browser(),memberCase+"/messages?reader=OPERATOR",Map.of("key",UUID.randomUUID(),"expectedVersion",detail.get("version").asLong(),"body",followUp),200);
+        assertCaseRecipients(operatorReply,ticket,buyer,seller);
         assertTrue(readOk(customer,memberCase).contains(followUp));
+        long next=authMapper.readTree(operatorReply).path("version").asLong();
+        String reply=post(customer,memberCase+"/messages",Map.of("key",UUID.randomUUID(),"expectedVersion",next,"body","담당자에게 추가 확인"),200);
+        assertCaseRecipients(reply,ticket,seller,initial.authority().member());
+        var ids=jdbc.queryForMap("""
+                SELECT e.id,o.job_id FROM marketplace.notification_event e JOIN marketplace.outbox_event o ON o.id=e.id
+                WHERE e.kind='CASE_REPLY' AND e.cause_id=:msg AND e.recipient_id=:member
+                """,Map.of("msg",UUID.fromString(authMapper.readTree(reply).path("id").asText()),"member",initial.authority().member()));
+        runStoredJob("NOTIFICATION_DELIVER.v1",(UUID)ids.get("job_id"));
+        String inbox="/api/account/notifications",read=inbox+"/"+ids.get("id")+"/read";
+        String csrf=csrfToken(initial.browser());
+        assertTrue(readOk(initial.browser(),inbox).contains(ids.get("id").toString()));
+        var marked=accountRequest(initial.browser(),"POST",read,Map.of(),csrf);
+        assertEquals(200,marked.statusCode(),marked.body());
+        try(var pool=java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor();
+                var gate=context.getBean(javax.sql.DataSource.class).getConnection()) {
+            gate.setAutoCommit(false);
+            try {
+            try(var lock=gate.prepareStatement("SELECT target_id FROM marketplace.operations_support_assignment WHERE target_id=? FOR UPDATE")) {
+                lock.setObject(1,ticket);lock.executeQuery().close();
+            }
+            var pending=pool.submit(()->accountRequest(initial.browser(),"POST",read,Map.of(),csrf));
+            awaitHistoryLock("operations_support_assignment");
+            var listing=pool.submit(()->accountRequest(initial.browser(),"GET",inbox,null,null));
+            try(var revoke=gate.prepareStatement("DELETE FROM marketplace.admin_permission WHERE user_id=? AND permission='SUPPORT'")) {
+                revoke.setObject(1,initial.authority().member());assertEquals(1,revoke.executeUpdate());
+            }
+            gate.commit();
+            assertEquals(404,pending.get(10,java.util.concurrent.TimeUnit.SECONDS).statusCode());
+            var hidden=listing.get(10,java.util.concurrent.TimeUnit.SECONDS);
+            assertEquals(200,hidden.statusCode());assertFalse(hidden.body().contains(ids.get("id").toString()));
+            assertFalse(hidden.body().contains(ticket.toString()));
+            } finally { gate.rollback(); }
+        }
+        jdbc.update("INSERT INTO marketplace.admin_permission(user_id,permission) VALUES(:id,'SUPPORT')",Map.of("id",initial.authority().member()));
+        assertEquals(marked.body(),post(initial.browser(),read,Map.of(),200));
         post(initial.browser(),assign,Map.of("key",UUID.randomUUID(),"operator",successor.authority().member(),"expectedVersion",1),200);
         assertEquals(404,accountRequest(initial.browser(),"GET",operatorDetail,null,null).statusCode());
         assertEquals(404,accountRequest(initial.browser(),"GET",operatorFile,null,null).statusCode());
         assertEquals(200,accountRequest(successor.browser(),"GET",operatorFile,null,null).statusCode());
         assertTrue(readOk(successor.browser(),operatorDetail).contains(followUp));
         assertEquals(orderBefore,readOk(customer,orderPath));assertEquals(paymentBefore,readOk(customer,paymentPath));
+    }
+    private void assertCaseRecipients(String receipt,UUID ticket,UUID... expected) throws Exception {
+        var recipients=jdbc.queryForList("""
+                SELECT recipient_id FROM marketplace.notification_event WHERE kind='CASE_REPLY' AND cause_id=:reply AND target_id=:ticket
+                """,Map.of("reply",UUID.fromString(authMapper.readTree(receipt).path("id").asText()),"ticket",ticket),UUID.class);
+        assertEquals(expected.length,recipients.size());
+        assertEquals(java.util.Set.of(expected),java.util.Set.copyOf(recipients));
     }
     @Test void lostIntakeAndReassignmentNeverDiscloseAnUnassignedBody() throws Exception {
         var visitor=authBrowser();
@@ -109,10 +155,11 @@ class SupportIT extends SettlementContractFixture {
         var guest=cancellationGuest("b-gas");
         var visitor=authBrowser();
         var key=UUID.randomUUID();
-        var memberBody=Map.of("key",key,"body","구매자 주문 문의","orderNumber",buyer.order().orderNumber(),"sellerOrderId",buyer.order().sellers().getFirst().id());
+        var ownSellerOrder=ownSeller(buyer);
+        var storeOrder=buyer.order().sellers().stream().filter(s->!s.id().equals(ownSellerOrder)).findFirst().orElseThrow();
+        var memberBody=Map.of("key",key,"body","구매자 주문 문의","orderNumber",buyer.order().orderNumber(),"sellerOrderId",storeOrder.id());
         String receipt=post(buyer.browser(),CASES,memberBody,200);
         assertEquals(receipt,post(buyer.browser(),CASES,memberBody,200));
-        var storeOrder=buyer.order().sellers().getFirst();
         var seller=asSeller(buyer,storeOrder.id());
         var stores=context.getBean(com.example.marketplace.seller.api.Stores.class);
         var shop=stores.own(seller.authority().member());
@@ -126,10 +173,11 @@ class SupportIT extends SettlementContractFixture {
         assertEquals(200,accountRequest(seller.browser(),"GET",memberCase+"?reader=SELLER",null,null).statusCode());
         var suspended=stores.transition(admin.authority().member(),shop.id(),"suspend",new com.example.marketplace.seller.api.Stores.Change(shop.version(),"기존 주문 판매 정지"));
         assertFalse(stores.capabilities(seller.authority().member()).newSales());
-        post(seller.browser(),memberCase+"/messages?reader=SELLER",Map.of("key",UUID.randomUUID(),"expectedVersion",1,"body","판매 정지 후 주문 답변"),200);
+        var sellerReply=post(seller.browser(),memberCase+"/messages?reader=SELLER",Map.of("key",UUID.randomUUID(),"expectedVersion",1,"body","판매 정지 후 주문 답변"),200);
+        assertCaseRecipients(sellerReply,UUID.fromString(authMapper.readTree(receipt).path("id").asText()),buyer.order().memberId());
         stores.transition(seller.authority().member(),shop.id(),"close",new com.example.marketplace.seller.api.Stores.Change(suspended.version(),"기존 주문 문의 응답 검증"));
         assertFalse(stores.capabilities(seller.authority().member()).newSales());
-        var otherSeller=asSeller(buyer,buyer.order().sellers().get(1).id());
+        var otherSeller=asSeller(buyer,ownSellerOrder);
         String memberMessage=authMapper.readTree(receipt).path("id").asText();
         String images=memberCase+"/messages/"+memberMessage+"/images";
         byte[] pixel=java.util.Base64.getDecoder().decode("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEElEQVR4XmNgYGD4D8UQBgAd9AP95BvM/wAAAABJRU5ErkJggg==");
@@ -485,7 +533,30 @@ class SupportIT extends SettlementContractFixture {
         long version=inquiry.path("version").asLong();
         var before=supportFinancialSnapshot();
         var response=authMapper.readTree(post(operator.browser(),details+"/messages?reader=OPERATOR",Map.of("key",UUID.randomUUID(),"expectedVersion",version,"body","배송비와 환불 요청을 확인했습니다."),200));
-        assertEquals(before,supportFinancialSnapshot());
+        var afterReply=supportFinancialSnapshot();
+        var message=UUID.fromString(response.path("id").asText());
+        var notice=jdbc.queryForMap("""
+                SELECT e.id,o.job_id FROM marketplace.notification_event e JOIN marketplace.outbox_event o ON o.id=e.id
+                JOIN marketplace.job j ON j.id=o.job_id
+                WHERE e.kind='CASE_REPLY' AND e.cause_id=:message AND e.target_id=:ticket AND e.recipient_id=:buyer
+                AND j.type='NOTIFICATION_DELIVER.v1' AND j.status='READY' AND j.attempts=0
+                AND j.cause_key=e.id::text AND j.payload=e.id::text AND j.dedupe_key='notify:'||e.id::text
+                """,Map.of("message",message,"ticket",id,"buyer",purchase.order().memberId()));
+        var preceding=new java.util.TreeMap<>(afterReply);
+        for(String table:List.of("job","outbox_event")) {
+            UUID newId=(UUID)notice.get(table.equals("job")?"job_id":"id");
+            var priorRows=authMapper.readTree(before.get(table));
+            var remaining=authMapper.createArrayNode();
+            int matching=0;
+            for(var row:authMapper.readTree(afterReply.get(table))) {
+                if(newId.toString().equals(row.path("id").asText())) { matching++; }
+                else { remaining.add(row); }
+            }
+            assertEquals(1,matching);
+            assertEquals(priorRows,remaining,table);
+            preceding.put(table,before.get(table));
+        }
+        assertEquals(before,preceding);
         version=authMapper.readTree(readOk(operator.browser(),details+"?reader=OPERATOR")).path("version").asLong();
         assertEquals(version,response.path("version").asLong());
         assertTrue(version>inquiry.path("version").asLong());
@@ -493,7 +564,7 @@ class SupportIT extends SettlementContractFixture {
         var cmd=new java.util.HashMap<String,Object>(Map.of("caseVersion",version,"key",UUID.randomUUID(),"item",foreign.order().sellers().getFirst().items().getFirst().id(),"ordinal",0,"reference","타 주문 수량"));
         var denied=accountRequest(operator.browser(),"POST",path+"COLLECT",cmd,csrfToken(operator.browser()));
         assertTrue(List.of(404,409).contains(denied.statusCode()));
-        assertEquals(before,supportFinancialSnapshot());
+        assertEquals(afterReply,supportFinancialSnapshot());
         UUID collection=UUID.randomUUID(),inspection=UUID.randomUUID();
         cmd.put("key",collection);cmd.put("item",unit.orderItemId());cmd.put("ordinal",unit.ordinal());cmd.put("reference","실제 회수 확인");
         post(operator.browser(),path+"COLLECT",cmd,200);

@@ -15,9 +15,16 @@ public final class JdbcPurchaseSessions implements PurchaseSessions,com.example.
     @org.springframework.beans.factory.annotation.Autowired public JdbcPurchaseSessions(NamedParameterJdbcTemplate jdbc) { this(jdbc,java.time.Clock.systemUTC()); }
     public JdbcPurchaseSessions(NamedParameterJdbcTemplate jdbc,java.time.Clock clock) { this.jdbc=jdbc;this.clock=clock; }
     @Override public boolean lockReadable(String sessionId,UUID memberId,Long version) {
+        return lockReadable(sessionId,memberId,version,false);
+    }
+    @Override public boolean lockMemberThenSession(String sessionId,UUID memberId,Long version) {
+        return lockReadable(sessionId,memberId,version,true);
+    }
+    private boolean lockReadable(String sessionId,UUID memberId,Long version,boolean exclusive) {
         if(!TransactionSynchronizationManager.isActualTransactionActive()) { throw new IllegalStateException("TRANSACTION_REQUIRED"); }
         if(memberId==null||version==null||sessionId==null) { return false; }
-        var rows=jdbc.queryForList("SELECT state,auth_version FROM marketplace.identity_user WHERE id=:id FOR SHARE",java.util.Map.of("id",memberId));
+        var rows=jdbc.queryForList("SELECT state,auth_version FROM marketplace.identity_user WHERE id=:id "+
+                (exclusive?"FOR NO KEY UPDATE":"FOR SHARE"),java.util.Map.of("id",memberId));
         return rows.size()==1&&"ACTIVE".equals(rows.getFirst().get("state"))&&((Number)rows.getFirst().get("auth_version")).longValue()==version&&lockCurrent(sessionId,memberId,version);
     }
     @Override public boolean lockCurrent(String sessionId,UUID memberId,Long authVersion) {
