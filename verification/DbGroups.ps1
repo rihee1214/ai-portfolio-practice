@@ -61,6 +61,13 @@ function Assert-DbGroupRegistration {
     $legacy = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $classes = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     foreach ($group in $Registry.groups) {
+        if ($group.browser) {
+            if ($group.browser.project -cnotin @('desktop','mobile') -or $group.classes.Count -ne 1 -or
+                $group.expectedDatabaseCount -ne 1 -or $group.id -cne ('site-maintenance-'+$group.browser.project) -or
+                $group.browser.requirements -cne 'required-browser-site-maintenance.json') {
+                throw "Invalid isolated browser lifecycle registration: $($group.id)"
+            }
+        }
         if ($group.expectedDatabaseCount -isnot [long] -and $group.expectedDatabaseCount -isnot [int]) { throw "Missing database count: $($group.id)" }
         if (($group.id -ceq 'phone-provider' -and $group.expectedDatabaseCount -ne 0) -or ($group.id -cne 'phone-provider' -and $group.expectedDatabaseCount -lt 1)) { throw "Invalid database count: $($group.id)" }
         if (-not $group.tests.Count -or -not $group.classes.Count) { throw "Empty group: $($group.id)" }

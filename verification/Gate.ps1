@@ -92,3 +92,38 @@ function Read-VerifiedBrowserBundle([string]$Folder) {
     @{mode=$record.mode;entry=$record.entry;assets=$actual.Count;buildMs=$record.buildMs;
       manifestSha256=(Get-FileHash -LiteralPath (Join-Path $Folder 'browser-app-build.json')).Hash}
 }
+
+function Assert-BrowserGroupCoverage($Group, $Cases, $Requirements) {
+    $project = $Group.browser.project
+    $required = @($Requirements | ForEach-Object {
+        $tests = @($_.tests | Where-Object { -not $project -or $_.StartsWith($project+'#',[StringComparison]::Ordinal) })
+        if ($tests.Count) { [pscustomobject]@{id=$_.id;tests=$tests} }
+    })
+    $expected = @($required.tests)
+    $seen = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($case in $Cases) {
+        $id = $case.classname+'#'+$case.name
+        if (($project -and $case.classname -cne $project) -or $id -cnotin $expected -or -not $seen.Add($id)) {
+            throw "Unexpected, foreign or duplicate browser case in $($Group.id): $id"
+        }
+    }
+    Assert-Coverage $Cases $required -ExactNames
+}
+
+function Assert-MaintenanceBrowserLifecycle($Group, $Proof, $CompletedGroups) {
+    $expectedProject = $Group.id -creplace '^site-maintenance-',''
+    if ($expectedProject -cnotin @('desktop','mobile') -or $Proof.project -cne $expectedProject -or
+        $Proof.database -cne $Group.database -or $Proof.pid -ne $Group.pid -or $Proof.httpPort -ne $Group.httpPort -or
+        [IO.Path]::GetFullPath($Proof.media) -cne [IO.Path]::GetFullPath($Group.media) -or $Proof.initialPolicy.version -ne 1 -or $Proof.initialPolicy.baseFee -ne 3000 -or
+        $Proof.initialPolicy.freeThreshold -ne 50000 -or $Proof.finalPolicy.version -ne 2 -or
+        $Proof.finalPolicy.baseFee -ne 4567 -or $Proof.finalPolicy.freeThreshold -ne 51000 -or
+        $Proof.orders -lt 2 -or $Proof.businessRowsBefore -ne 0 -or $Proof.originalPolicyReset -ne $false) {
+        throw 'Maintenance browser did not retain its own fresh migration policy and final changed data'
+    }
+    foreach ($previous in $CompletedGroups) {
+        foreach ($field in @('database','pid','media','evidence')) {
+            if ($null -ne $previous.$field -and $previous.$field -ceq $Group.$field) { throw "Browser scope reused $field from $($previous.id)" }
+        }
+    }
+    [pscustomobject]@{project=$Proof.project;freshPolicy=$true;finalPolicyPreserved=$true;ownedDatabase=$Proof.database}
+}

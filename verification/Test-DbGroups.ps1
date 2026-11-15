@@ -6,6 +6,13 @@ function Must-RejectGroup([string]$Label, [scriptblock]$Action) {
     if (-not $rejected) { throw "Accepted invalid selection: $Label" }
 }
 $registry = Get-DbGroupRegistry
+$badBrowser = $registry | ConvertTo-Json -Depth 15 | ConvertFrom-Json
+$isolatedIndex = [array]::IndexOf(@($badBrowser.groups.id),'site-maintenance-desktop')
+$badBrowser.groups[$isolatedIndex].browser.project='desktop,mobile'
+Must-RejectGroup 'multiple projects in singleton policy group' { Assert-DbGroupRegistration -Registry $badBrowser }
+$badBrowser.groups[$isolatedIndex].browser.project='desktop'
+$badBrowser.groups[$isolatedIndex].classes += 'com.example.marketplace.dbtest.SiteManagementIT'
+Must-RejectGroup 'multiple execution classes in isolated browser group' { Assert-DbGroupRegistration -Registry $badBrowser }
 $primary = 'd2_it_' + ('a' * 32)
 $created = @($primary) + @(1..13 | ForEach-Object { 'd2_it_' + $_.ToString('x32') })
 $proof = Assert-DbGroupDatabases -ExpectedCount 14 -Primary $primary -Created $created
@@ -22,6 +29,12 @@ $missingCount.groups[0].PSObject.Properties.Remove('expectedDatabaseCount')
 Must-RejectGroup 'missing expected database count' { Assert-DbGroupRegistration -Registry $missingCount }
 $all = Resolve-DbGroups -Registry $registry
 if ($all.mode -cne 'full' -or $all.selected.Count -ne $registry.groups.Count) { throw 'Default must select the full registry' }
+$isolated = Resolve-DbGroups -Registry $registry -Selection 'site-maintenance-desktop,site-maintenance-mobile'
+if ($isolated.selected.Count -ne 2 -or $isolated.certificationEligible -or $isolated.selected -ccontains 'browser-api') { throw 'Exact maintenance selection borrowed the existing browser group' }
+$siteImpact = Resolve-DbGroups -Registry $registry -ChangedContracts 'site-management'
+foreach($id in @('site-maintenance-desktop','site-maintenance-mobile','browser-api')) {
+    if ($id -cnotin $all.selected -or $id -cnotin $siteImpact.selected) { throw "Full/site impact omitted browser consumer: $id" }
+}
 Must-RejectGroup 'empty explicit selection' { Resolve-DbGroups -Registry $registry -Selection '' }
 Must-RejectGroup 'unknown group' { Resolve-DbGroups -Registry $registry -Selection 'misspelled' }
 Must-RejectGroup 'empty list member' { Resolve-DbGroups -Registry $registry -Selection 'exchange-recovery,' }

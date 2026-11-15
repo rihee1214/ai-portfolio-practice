@@ -82,15 +82,21 @@ try {
     $coverage = @(Assert-Coverage $java $requirements)
     $coverage | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $output 'coverage.json')
     $java | ConvertTo-Json | Set-Content (Join-Path $output 'java-cases.json')
-    if ($selection.selected -ccontains 'browser-api') {
-    $browser = Get-Content "$output/db/groups/browser-api/browser-report.json" -Raw | ConvertFrom-Json
-    if ($browser.errors.Count -or $browser.stats.expected -lt 22 -or $browser.stats.skipped -or $browser.stats.unexpected -or $browser.stats.flaky) {
-        throw 'Browser gate failed (minimum current baseline: 22, no skips or retries accepted)'
+    $allBrowserCases = @()
+    foreach ($browserGroup in @($registry.groups | Where-Object { $_.id -cin $selection.selected -and ($_.id -ceq 'browser-api' -or $_.browser) })) {
+    $browserFolder = "$output/db/groups/$($browserGroup.id)"
+    $browser = Get-Content "$browserFolder/browser-report.json" -Raw | ConvertFrom-Json
+    if ($browser.errors.Count -or ($browserGroup.id -ceq 'browser-api' -and $browser.stats.expected -lt 22) -or $browser.stats.skipped -or $browser.stats.unexpected -or $browser.stats.flaky) {
+        throw 'Browser gate failed (registered cases required, no skips or retries accepted)'
     }
     $browserCases = @(Read-BrowserCases $browser.suites)
-    Assert-BrowserDeadlineEvidence (Get-Content "$output/db/groups/browser-api/browser-deadlines.json" -Raw | ConvertFrom-Json) $browserCases
-    $browserRequired = Get-Content "$PSScriptRoot/verification/required-browser.json" -Raw | ConvertFrom-Json
-    Assert-Coverage $browserCases $browserRequired -ExactNames | ConvertTo-Json -Depth 6 | Set-Content "$output/browser-coverage.json"
+    Assert-BrowserDeadlineEvidence (Get-Content "$browserFolder/browser-deadlines.json" -Raw | ConvertFrom-Json) $browserCases
+    $requirementsFile = if ($browserGroup.browser) { $browserGroup.browser.requirements } else { 'required-browser.json' }
+    $browserRequired = Get-Content "$PSScriptRoot/verification/$requirementsFile" -Raw | ConvertFrom-Json
+    $browserCoverage = @(Assert-BrowserGroupCoverage $browserGroup $browserCases $browserRequired)
+    $browserCoverage | ConvertTo-Json -Depth 6 | Set-Content "$output/browser-coverage-$($browserGroup.id).json"
+    if ($browserGroup.id -ceq 'browser-api') { $browserCoverage | ConvertTo-Json -Depth 6 | Set-Content "$output/browser-coverage.json" }
+    $allBrowserCases += $browserCases
     }
     Push-Location frontend
     try {
@@ -110,7 +116,7 @@ try {
     if (($inputs | ConvertTo-Json -Compress) -cne ($afterInputs | ConvertTo-Json -Compress)) { throw 'Source changed during verification' }
     $result.junit = $java.Count
     $result.frontendUnit = $frontend.Count
-    $result.browser = if ($selection.selected -ccontains 'browser-api') { $browser.stats.expected } else { 0 }
+    $result.browser = $allBrowserCases.Count
     Assert-FullVerificationAllowed -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
     $result.status = if ($selection.mode -ceq 'full') { 'passed' } else { 'selected-passed' }
 } catch {

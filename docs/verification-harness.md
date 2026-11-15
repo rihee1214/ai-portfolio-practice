@@ -1,5 +1,9 @@
 # 통합 자동 검증 하네스
 
+P12-B는 전역 배송 정책을 변경하는 유지보수 시나리오를 `site-maintenance-desktop`·`site-maintenance-mobile` 두 묶음으로 등록한다. 각 묶음은 별도 IT/JVM·새 DB/media·API·브라우저를 사용하고 migration 초기 정책에서 시작해 변경 후 상태를 보존한다. 기존 `browser-api`의178개와 초기 정책/seed 계약은 유지하며 새4개는 `verification/required-browser-site-maintenance.json`과 명시 단일 project로 대조한다. 두 묶음은 무선택 전체에 필수 포함되고 등록된 소비 영향표를 따른다. 선택 예시는 `-DbGroups 'site-maintenance-desktop,site-maintenance-mobile'`이며 선택 통과를 전체 인증으로 표시하지 않는다. 소스별 실행·독립 판정은 [P12-B 기록](work-items/P12-B.md)을 따른다.
+
+브라우저 묶음별 `db/groups/<id>/` 아래 bundle·report·deadline 원장·자원 식별을 보존한다. 기존 루트 `browser-coverage.json`은 유지하고 새 묶음은 `browser-coverage-site-maintenance-desktop.json`·`browser-coverage-site-maintenance-mobile.json`에 별도 필수4개 중 해당project 결과를 기록한다. 새 시나리오도 아래 업무별 공유10초와 유한 준비·정리·watchdog을 소비하며 총 제한이나 실행 병렬화를 추가하지 않는다. 아래 과거 시점의 필수 개수와 실행 결과는 당시 이력이다.
+
 2026-11-14 사용자 승인 후속 변경 **로컬 수용·인계 완료**: 브라우저 child390초/시나리오30·60초 총 제한을 업무별 공유10초 deadline과 유한 infrastructure 단계 감시로 대체한다. 준비 완료는 실제 API/DB/화면 조건으로 확인하며, 검증대상 명령은 준비로 제외하지 않는다. 같은 업무의 클릭·응답·재조회·폴링·최종 assertion은 하나의 기한을 공유하고 기존 더 짧은 개별 계약은 유지한다. 준비60초·정리10초·서버기동30초·연결/요청 제한과 외부 Java watchdog을 결합한다. 아래390초 설명은 이전 실행 정책이며 과거 판정은 바꾸지 않는다. 새 무선택 전체와 소비 준비 경계 보완 후 선택 재검증의 결합을 독립 수용했으며 최종 manifest 자체의 무선택 전체 PASS는 아니다. 최종 근거·정확한 범위는 [P12-A 후속 기록](work-items/P12-A.md)을 따른다.
 
 2026-10-25 사용자 지시: 하네스를 먼저 준비한 뒤 제약조건을 검토한다. 단위 테스트(JUnit 등)와 아키텍처 테스트(ArchUnit 등)를 포함한다.

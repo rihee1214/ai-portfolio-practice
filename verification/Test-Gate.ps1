@@ -75,3 +75,23 @@ $deadlineTest.title = 'submit'
 $deadlineReport.tests = @($deadlineTest,$deadlineTest)
 Must-Reject 'duplicate deadline evidence' { Assert-BrowserDeadlineEvidence $deadlineReport @($deadlineCases[0],$deadlineCases[0]) }
 'PASS browser deadline evidence gates'
+
+# An isolated project must never borrow the other project's green report.
+$maintenanceGroup = @{id='site-maintenance-desktop';browser=@{project='desktop'}}
+$maintenanceRequirements = @{id='maintenance';tests=@('desktop#site-maintenance.spec.ts:policy','mobile#site-maintenance.spec.ts:policy')}
+$maintenanceCases = @(@{classname='desktop';name='site-maintenance.spec.ts:policy';status='passed'})
+Assert-BrowserGroupCoverage $maintenanceGroup $maintenanceCases $maintenanceRequirements | Out-Null
+Must-Reject 'foreign project in isolated browser group' { Assert-BrowserGroupCoverage $maintenanceGroup @(@{classname='mobile';name='site-maintenance.spec.ts:policy';status='passed'}) $maintenanceRequirements }
+Must-Reject 'duplicate isolated browser result' { Assert-BrowserGroupCoverage $maintenanceGroup @($maintenanceCases[0],$maintenanceCases[0]) $maintenanceRequirements }
+Must-Reject 'unregistered isolated browser result' { Assert-BrowserGroupCoverage $maintenanceGroup @($maintenanceCases[0],@{classname='desktop';name='other.spec.ts:other';status='passed'}) $maintenanceRequirements }
+Must-Reject 'missing isolated browser requirement' { Assert-BrowserGroupCoverage $maintenanceGroup $maintenanceCases @{id='wrong';tests=@('mobile#site-maintenance.spec.ts:policy')} }
+$scope = @{id='site-maintenance-desktop';database='d2_it_'+('a'*32);pid=101;httpPort=31001;media='D:/new/desktop/media';evidence='D:/new/desktop'}
+$proof = @{project='desktop';database=$scope.database;pid=101;httpPort=31001;media=$scope.media;initialPolicy=@{version=1;baseFee=3000;freeThreshold=50000};finalPolicy=@{version=2;baseFee=4567;freeThreshold=51000};orders=2;businessRowsBefore=0;originalPolicyReset=$false}
+Assert-MaintenanceBrowserLifecycle $scope $proof @() | Out-Null
+Must-Reject 'policy scenario reused changed database' { $bad=$proof.Clone();$bad.initialPolicy=@{version=2;baseFee=3000;freeThreshold=50000}; Assert-MaintenanceBrowserLifecycle $scope $bad @() }
+Must-Reject 'policy reset hidden after scenario' { $bad=$proof.Clone();$bad.finalPolicy=@{version=3;baseFee=3000;freeThreshold=50000}; Assert-MaintenanceBrowserLifecycle $scope $bad @() }
+Must-Reject 'policy browser API identity mismatch' { $bad=$proof.Clone();$bad.pid=102; Assert-MaintenanceBrowserLifecycle $scope $bad @() }
+foreach($field in @('database','pid','media','evidence')) {
+    Must-Reject "reused isolated browser $field" { $previous=@{id='site-maintenance-mobile';database='d2_it_'+('b'*32);pid=102;httpPort=31002;media='D:/new/mobile/media';evidence='D:/new/mobile'};$previous[$field]=$scope[$field];Assert-MaintenanceBrowserLifecycle $scope $proof @($previous) }
+}
+'PASS isolated browser registration, project ownership and lifecycle gates'

@@ -146,6 +146,12 @@ class BrowserApiIT extends PostgresContractFixture {
             var evidence = java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "settlement-browser-order.json");
             java.nio.file.Files.writeString(evidence, authMapper.writeValueAsString(Map.of("desktop", desktop, "mobile", mobile)));
         }
+        var migrationPolicy=jdbc.queryForMap("SELECT p.version,p.base_fee,p.free_threshold FROM marketplace.site_shipping_head h JOIN marketplace.site_shipping_policy p ON p.version=h.version",Map.of());
+        assertEquals(Map.of("version",1L,"base_fee",3000L,"free_threshold",50000L),migrationPolicy);
         runAuthBrowsersIfRequested();
+        assertEquals(migrationPolicy,jdbc.queryForMap("SELECT p.version,p.base_fee,p.free_threshold FROM marketplace.site_shipping_head h JOIN marketplace.site_shipping_policy p ON p.version=h.version",Map.of()));
+        if ("true".equals(System.getenv("A3_RUN_BROWSER"))) {
+            assertEquals("P05 browser 00",jdbc.queryForObject("SELECT title FROM marketplace.catalog_product WHERE slug='p05-browser-0'",Map.of(),String.class));
+        }
     }
 }

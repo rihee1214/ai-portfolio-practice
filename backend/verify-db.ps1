@@ -24,7 +24,7 @@ $allowed = [IO.Path]::GetFullPath((Join-Path $root '.local-tools')) + [IO.Path]:
 if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { throw 'Evidence must be inside .local-tools' }
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
-$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD','A3_RUN_BROWSER','A3_EVIDENCE','D2_TEST_POSTGRES_PORT','D2_TEST_POSTGRES_INSTANCE','D2_DB_ENDPOINT_CONFIRMATION','MAVEN_ARGS','P09_F_BROWSER_ONLY')
+$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD','A3_RUN_BROWSER','A3_EVIDENCE','P12_B_BROWSER_PROJECT','D2_TEST_POSTGRES_PORT','D2_TEST_POSTGRES_INSTANCE','D2_DB_ENDPOINT_CONFIRMATION','MAVEN_ARGS','P09_F_BROWSER_ONLY')
 $previous = @{}
 foreach ($name in $names) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 $secrets = @{}
@@ -75,7 +75,8 @@ try {
         $env:D2_DB_URL = "jdbc:postgresql://127.0.0.1:$($endpoint.port)/$env:D2_DB_NAME"
         $env:A3_EVIDENCE = $folder
         # The registered browser contract always runs its browser assertions, including standalone execution.
-        $env:A3_RUN_BROWSER = if ($id -ceq 'browser-api') { 'true' } else { 'false' }
+        $env:A3_RUN_BROWSER = if ($id -ceq 'browser-api' -or $definition.browser) { 'true' } else { 'false' }
+        $env:P12_B_BROWSER_PROJECT = if ($definition.browser) { $definition.browser.project } else { $null }
         $group = @{id=$id;status='failed';database=$env:D2_DB_NAME;media="$folder/media";evidence=$folder;started=(Get-Date).ToString('o');classes=$definition.classes}
         $clock = [Diagnostics.Stopwatch]::StartNew()
         try {
@@ -102,14 +103,19 @@ try {
                 $actualCases = @($cases | Where-Object { ($_.classname+'#'+($_.name -replace '\(.*$','')) -ceq $test.new })
                 if ($actualCases.Count -ne $test.invocations) { throw "Missing or duplicate parameter invocation: $($test.new)" }
             }
-            if ($id -ceq 'browser-api') {
+            if ($id -ceq 'browser-api' -or $definition.browser) {
                 $group.browserApplication = Read-VerifiedBrowserBundle -Folder $folder
                 $browserReport = Get-Content "$folder/browser-report.json" -Raw | ConvertFrom-Json
                 if ($browserReport.errors.Count -or $browserReport.stats.skipped -or $browserReport.stats.unexpected -or $browserReport.stats.flaky) { throw 'Browser group failed or retried' }
                 $browserCases = @(Read-BrowserCases $browserReport.suites)
                 Assert-BrowserDeadlineEvidence (Get-Content "$folder/browser-deadlines.json" -Raw | ConvertFrom-Json) $browserCases
-                $browserRequired = Get-Content "$root/verification/required-browser.json" -Raw | ConvertFrom-Json
-                Assert-Coverage $browserCases $browserRequired -ExactNames | ConvertTo-Json -Depth 6 | Set-Content "$folder/browser-coverage.json"
+                $requirementsFile = if ($definition.browser) { $definition.browser.requirements } else { 'required-browser.json' }
+                $browserRequired = Get-Content "$root/verification/$requirementsFile" -Raw | ConvertFrom-Json
+                Assert-BrowserGroupCoverage $definition $browserCases $browserRequired | ConvertTo-Json -Depth 6 | Set-Content "$folder/browser-coverage.json"
+                if ($definition.browser) {
+                    $proof = Get-Content "$folder/site-maintenance-lifecycle.json" -Raw | ConvertFrom-Json
+                    $group.browserIsolation = Assert-MaintenanceBrowserLifecycle $group $proof $groups
+                }
             }
             $cases | ConvertTo-Json -Depth 4 | Set-Content "$folder/java-cases.json"
             $group.tests = $cases.Count

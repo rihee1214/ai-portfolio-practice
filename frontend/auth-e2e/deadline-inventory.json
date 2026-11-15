@@ -9063,6 +9063,223 @@
       "kind": "cleanup",
       "file": "business-deadline.ts",
       "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: authenticate owned actor",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 29,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create isolated policy sessions",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 47,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: establish buyer purchase session",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 55,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: confirm owned initial policy",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 56,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: verify observation is read-only and rejects unrelated identifiers",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 63,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create category through content API",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 70,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create seller store",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 71,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create draft product and inspect initial SKU",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 72,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: set actual SKU price",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 77,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: receive actual inventory",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 78,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: publish actual product",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 82,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create original order from actual quote",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 84,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: approve original payment and capture durable financial rows",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 91,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: add current product to buyer cart",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 101,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: open original checkout quote",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 105,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: enter shipping and policy draft",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 110,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: reject CONTENT shipping change without database effects",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 117,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: save policy UI and recover original lost response",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 122,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: reject old quote at the actual order UI",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 146,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: explicitly refresh quote and require new buyer confirmation",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 155,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create explicitly reconfirmed order with new financial terms",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 165,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: close policy sessions",
+      "kind": "cleanup",
+      "file": "site-maintenance.spec.ts",
+      "line": 179,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: create isolated publication sessions",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 187,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: establish independent site-info preconditions",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 194,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: upload banner UI and recover the same multipart request",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 208,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: reject CONTENT site-info command with unchanged rows",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 241,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: enter unsaved site-info text",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 247,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: discard editor fields after injected HTTP 403",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 252,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: enter new explicit site-info draft",
+      "kind": "prepare",
+      "file": "site-maintenance.spec.ts",
+      "line": 267,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: save recovered site-info UI through exact public and database values",
+      "kind": "operation",
+      "file": "site-maintenance.spec.ts",
+      "line": 271,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "site-maintenance: close publication sessions",
+      "kind": "cleanup",
+      "file": "site-maintenance.spec.ts",
+      "line": 287,
+      "maxOccurrencesPerTest": 100
     }
   ]
 }

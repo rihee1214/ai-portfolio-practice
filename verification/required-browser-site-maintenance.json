@@ -1,0 +1,9 @@
+{
+  "id": "BROWSER-P12-B-SITE-MAINTENANCE",
+  "tests": [
+    "desktop#site-maintenance.spec.ts:SYSTEM policy UI advances new quotes while stale confirmation and paid snapshots stay protected",
+    "desktop#site-maintenance.spec.ts:CONTENT banner upload and SYSTEM site-info UI persist exact public values with failure recovery",
+    "mobile#site-maintenance.spec.ts:SYSTEM policy UI advances new quotes while stale confirmation and paid snapshots stay protected",
+    "mobile#site-maintenance.spec.ts:CONTENT banner upload and SYSTEM site-info UI persist exact public values with failure recovery"
+  ]
+}
