@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Profile("db & local-mailbox")
+@Profile("db")
 public class SignupController {
     private final SignupOperations signup;
     public SignupController(SignupOperations signup) { this.signup = signup; }

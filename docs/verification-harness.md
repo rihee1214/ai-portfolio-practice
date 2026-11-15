@@ -41,6 +41,16 @@ P10-A부터 Playwright는 `frontend/auth-e2e/serve-current-bundle.mjs`로 현재
 
 변경 이유와 이전 390초 timeout·진단 한계·실제 브라우저 결과는 [P10-A 실행 기록](work-items/P10-A.md)을 따른다. 브라우저 하네스 동작 변경은 최종 무선택 전체 근거를 요구한다.
 
+### P12-C 실제 패키지 검증 — 로컬·모의 수용
+
+P12-C는 기존 브라우저 묶음을 유지하고 `package-runtime`과 `public-demo-runtime`을 추가한다. 전자는 같은 실행 JAR의 API/non-web worker, 새 PostgreSQL DB와 media, 새 production dist, 실제 TLS NGINX를 연결한다. 이전 P12-B의 보존 번들을 별도 새 경로로 복제해 새 API와의 세션·오류 호환성도 검사한다. 구형 번들은 당시 development build이고 현재 production build와 구분한다. 테스트용 읽기 관측 서버는 별도 loopback 프로세스이며 제품 JAR나 공개 프록시의 API가 아니다. 단독 proxy 경계 검사는 실제 NGINX와 제어된 upstream을 사용하므로 제품 DB 장애 실행으로 확대 해석하지 않는다.
+
+`public-demo-runtime`은 공개 모드의 실제 세션·CSRF·미지원 발급/SANDBOX 거부와 DB/명시 제공자 무효과를 검사한다. 하네스의 로컬 전화 에뮬레이터 환경은 이 묶음의 자식 JVM에서만 제외하고 이후 원복한다. public-demo의 금지 설정 가드를 완화하지 않는다. 공통 Java 임시 파일은 실행별 evidence의 새 `java-tmp` 경로를 사용하며 과거 실패 파일은 삭제하지 않는다.
+
+새 필수 브라우저 이름·준비/업무 deadline 계측은 기존 게이트에 등록했다. 업무별 공유10초, 유한 준비·기동·요청·정리, 재시도 deadline 불변 정책을 유지하며 시나리오/전체 총 제한을 복원하지 않는다. 루트 필수 Run-PackageProxy 경로는 공유 절대기한과 부모 phase 감시, child close 후 출력 복구, 잘못된 progress 거부, 정리 실패 시 원실패·결과 보존을 검사한다. 음성5개·주소 선택5 assertion·실제 NGINX8업무를 실행하고 기존 네트워크/호스트 경로와 겹치지 않는 새 사설 /28을 명시한다. 기존 네트워크 삭제나 Docker 전역 변경은 하지 않는다.
+
+최종1003입력의 무선택 full2 40묶음·Java852·브라우저192·프런트392·Node95 및 보존 통과와 동일 소스 독립 수용을 확보했다. 실제 실행/실패·소스 일치·모델 제약·외부 미검증은 [P12-C 기록](work-items/P12-C.md)을 따른다. 공개 배포·전체 Compose 기동·다른 환경 검증으로 확대하지 않는다.
+
 ## 변경 영향·위험과 완료 검증의 구분
 
 2026-11-03 이후 분할·검토·재실행 절차와 양식은 [개발 흐름의 영향·위험 기준](development-workflow.md#변경-영향과-위험에-따른-검증-범위)을 따른다. 과거 실행 판정은 소급 수정하지 않는다.

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Profile("db & local-mailbox")
+@Profile("db")
 public class PasswordRecoveryController {
     private final PasswordRecoveryOperations recovery;
     public PasswordRecoveryController(PasswordRecoveryOperations recovery) { this.recovery = recovery; }

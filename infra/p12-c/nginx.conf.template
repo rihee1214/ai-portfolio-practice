@@ -1,0 +1,78 @@
+pid /tmp/nginx.pid;
+events { worker_connections 128; }
+http {
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+  server_tokens off;
+  resolver 127.0.0.11 ipv6=off valid=30s;
+  client_body_temp_path /tmp/client-body;
+  proxy_temp_path /tmp/proxy;
+  fastcgi_temp_path /tmp/fastcgi;
+  uwsgi_temp_path /tmp/uwsgi;
+  scgi_temp_path /tmp/scgi;
+  log_format safe '$request_id $request_method $status $request_time';
+  access_log /dev/stdout safe;
+  # Upstream/client errors otherwise include the raw request line and token-bearing queries.
+  error_log /dev/stderr crit;
+  map $request_uri $raw_path { ~^([^?]*) $1; }
+  map $raw_path $invalid_path {
+    default 0;
+    "~*(%(?![0-9a-f]{2})|%[0-7][0-9a-f]|[\\\\;]|//|(?:^|/)\\.{1,2}(?:/|$))" 1;
+  }
+  map "$uri:$invalid_path" $reject_invalid {
+    volatile;
+    default 0;
+    ~^/__package_error_400: 0;
+    ~:1$ 1;
+  }
+  map $raw_path $management_alias {
+    default 0;
+    ~^/actuator/health$ 0;
+    ~*^/actuator(?:/|$) 1;
+    ~*^/%61ctuator 1;
+  }
+  map $raw_path $api_alias {
+    default 0;
+    ~^/api(?:/|$) 0;
+    ~*^/api(?:/|$) 1;
+    ~*^/%61pi 1;
+  }
+  server {
+    listen 8443 ssl;
+    server_name __HOST__;
+    ssl_certificate /run/secrets/tls.crt;
+    ssl_certificate_key /run/secrets/tls.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    root /usr/share/nginx/html;
+    auth_basic "Invited reviewers";
+    auth_basic_user_file /run/secrets/reviewers;
+    client_max_body_size 6m;
+    client_body_timeout 10s;
+    send_timeout 10s;
+    if ($host != __HOST__) { return 421; }
+    if ($management_alias) { return 404; }
+    if ($api_alias) { return 404; }
+    if ($reject_invalid) { return 400; }
+    error_page 400 = /__package_error_400;
+    error_page 404 = @missing;
+    error_page 413 = @large;
+    location = /__package_error_400 { internal; default_type application/json; add_header Cache-Control no-store always; return 400 '{"error":"INVALID_PATH"}'; }
+    location @missing { default_type application/json; add_header Cache-Control no-store always; return 404 '{"error":"NOT_FOUND"}'; }
+    location @large { default_type application/json; add_header Cache-Control no-store always; return 413 '{"error":"PAYLOAD_TOO_LARGE"}'; }
+    location @unavailable { default_type application/json; add_header Cache-Control no-store always; return 502 '{"error":"UPSTREAM_UNAVAILABLE"}'; }
+    location @timeout { default_type application/json; add_header Cache-Control no-store always; return 504 '{"error":"UPSTREAM_TIMEOUT"}'; }
+    location = /actuator/health { include /etc/nginx/package-proxy.conf; }
+    location = /api { include /etc/nginx/package-proxy.conf; }
+    location ^~ /api/ { include /etc/nginx/package-proxy.conf; }
+    location ^~ /assets/ {
+      limit_except GET { deny all; }
+      try_files $uri =404;
+      add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+    location / {
+      limit_except GET { deny all; }
+      try_files $uri /index.html;
+      add_header Cache-Control "no-cache" always;
+    }
+  }
+}

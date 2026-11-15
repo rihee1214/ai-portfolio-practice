@@ -46,6 +46,7 @@ import { SellerApplicationsPage } from './pages/SellerApplicationsPage'
 import { StoreEditorPage, PublicStorePage } from './pages/StorePages'
 import { StoreOperationsPage, SellerFeaturePage } from './pages/StoreLifecycle'
 import { CategoryPage } from './pages/CatalogPages'
+import { RuntimeFeature, RuntimePolicyProvider } from './runtime/RuntimePolicy'
 
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
@@ -57,24 +58,24 @@ function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   </WorkspaceAccess>
 }
 
-function ShoppingProviders() { return <AuthProvider><CartProvider><Outlet /></CartProvider></AuthProvider> }
+function ShoppingProviders() { return <RuntimePolicyProvider><AuthProvider><CartProvider><Outlet /></CartProvider></AuthProvider></RuntimePolicyProvider> }
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
-          <Route path="/payments/:number" element={<PaymentPage />} /><Route path="/payments/:number/success" element={<PaymentPage />} /><Route path="/payments/:number/failure" element={<PaymentPage />} /><Route path="/checkout/guest" element={<GuestPage />} />
-          <Route path="/support" element={<SupportDesk />} /><Route path="/support/lost-access" element={<LostAccessForm />} />
-          <Route path="/guest/recovery" element={<GuestRecoveryPage />} /><Route path="/guest/security" element={<GuestRecoveryPage manage />} />
-          <Route path="/guest/orders/login" element={<GuestOrdersPage />} /><Route path="/guest/orders" element={<GuestOrdersPage />} /><Route path="/guest/orders/:number" element={<OrderDetailPage guest />} />
+          <Route path="/payments/:number" element={<PaymentPage />} /><Route path="/payments/:number/success" element={<PaymentPage />} /><Route path="/payments/:number/failure" element={<PaymentPage />} /><Route path="/checkout/guest" element={<RuntimeFeature title="방문자 구매 인증"><GuestPage /></RuntimeFeature>} />
+          <Route path="/support" element={<SupportDesk />} /><Route path="/support/lost-access" element={<RuntimeFeature title="비회원 조회 복구 지원"><LostAccessForm /></RuntimeFeature>} />
+          <Route path="/guest/recovery" element={<RuntimeFeature title="비회원 조회 비밀번호 복구"><GuestRecoveryPage /></RuntimeFeature>} /><Route path="/guest/security" element={<RuntimeFeature title="비회원 조회 자격 관리"><GuestRecoveryPage manage /></RuntimeFeature>} />
+          <Route path="/guest/orders/login" element={<RuntimeFeature title="비회원 주문 조회 인증"><GuestOrdersPage /></RuntimeFeature>} /><Route path="/guest/orders" element={<RuntimeFeature title="비회원 주문 조회 인증"><GuestOrdersPage /></RuntimeFeature>} /><Route path="/guest/orders/:number" element={<OrderDetailPage guest />} />
           <Route path="/notices" element={<PublicPosts kind="NOTICE"/>}/><Route path="/notices/:id" element={<PublicPosts kind="NOTICE"/>}/><Route path="/faq" element={<PublicPosts kind="FAQ"/>}/><Route path="/events" element={<PublicPromotionPage />} /><Route path="/events/:id" element={<PublicPromotionPage />} /><Route index element={<HomePage />} /><Route path="/cart" element={<CartPage />} /><Route path="/checkout" element={<CheckoutPage />} /><Route path="/products" element={<BrowsePage />} /><Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/stores/:slug" element={<PublicStorePage />} />
           <Route element={<AuthLayout />}>
-            <Route path="/password/request" element={<PasswordPage key="request" mode="request" />} />
-            <Route path="/password/reset" element={<PasswordPage key="reset" mode="reset" />} />
-            <Route path="/signup" element={<AuthForm key="signup" mode="signup" />} />
-            <Route path="/verify-email" element={<AuthForm key="verify" mode="verify-email" />} />
+            <Route path="/password/request" element={<RuntimeFeature title="복구 코드 요청"><PasswordPage key="request" mode="request" /></RuntimeFeature>} />
+            <Route path="/password/reset" element={<RuntimeFeature title="비밀번호 재설정"><PasswordPage key="reset" mode="reset" /></RuntimeFeature>} />
+            <Route path="/signup" element={<RuntimeFeature title="회원가입"><AuthForm key="signup" mode="signup" /></RuntimeFeature>} />
+            <Route path="/verify-email" element={<RuntimeFeature title="이메일 확인"><AuthForm key="verify" mode="verify-email" /></RuntimeFeature>} />
             <Route path="/login" element={<AuthForm key="login" mode="login" />} />
             <Route path="/account">
               <Route path="notifications" element={<NotificationPage />} />

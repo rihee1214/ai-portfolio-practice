@@ -110,6 +110,44 @@ function Assert-BrowserGroupCoverage($Group, $Cases, $Requirements) {
     Assert-Coverage $Cases $required -ExactNames
 }
 
+function Read-VerifiedPackageBundle([string]$Folder) {
+    $record = Get-Content -LiteralPath "$Folder/package-dist.json" -Raw | ConvertFrom-Json
+    $proof = Get-Content -LiteralPath "$Folder/package-proof.json" -Raw | ConvertFrom-Json
+    if ($record.mode -cne 'production' -or $proof.runtimeMode -cne 'public-demo' -or
+        $proof.apiJarSha256 -cne $proof.workerJarSha256 -or $proof.workerWebServer -ne $false -or
+        $proof.apiPid -eq $proof.workerPid -or $proof.apiProfiles -cne 'db' -or $proof.workerProfiles -cne 'db,worker') {
+        throw 'Actual package artifact and separated role proof is missing or inconsistent'
+    }
+    if ((Get-FileHash -LiteralPath $proof.jar).Hash -ine $proof.apiJarSha256) { throw 'Packaged JAR changed' }
+    $files = @(Get-ChildItem -LiteralPath "$Folder/browser-app" -Recurse -Force -File)
+    if ($files.Count -ne $record.files.Count -or $record.files.file -cnotcontains 'index.html' -or
+        $record.files.file -cnotcontains '.vite/manifest.json') { throw 'Package dist file inventory differs' }
+    foreach ($file in $files) {
+        $name = [IO.Path]::GetRelativePath("$Folder/browser-app", $file.FullName).Replace('\','/')
+        $expected = @($record.files | Where-Object file -CEQ $name)
+        if ($expected.Count -ne 1 -or $expected[0].bytes -ne $file.Length -or
+            $expected[0].sha256 -ine (Get-FileHash -LiteralPath $file.FullName).Hash) { throw "Package dist changed: $name" }
+    }
+    $legacy = Get-Content -LiteralPath "$Folder/package-legacy-dist.json" -Raw | ConvertFrom-Json
+    if ($legacy.sourceInputsSha256 -cne '93d5f36020475dc792e3fa2276f14a510d2ed51d12e59cd890e3cf8af32142a0' -or
+        (Get-FileHash -LiteralPath $legacy.sourceInputs).Hash -ine $legacy.sourceInputsSha256 -or
+        $legacy.retainedBuildMode -cne 'development') { throw 'Retained previous bundle source provenance differs' }
+    $legacyFiles = @(Get-ChildItem -LiteralPath "$Folder/browser-legacy-app" -Recurse -Force -File)
+    if ($legacyFiles.Count -ne $legacy.files.Count -or $legacy.files.file -cnotcontains 'index.html') { throw 'Previous dist inventory differs' }
+    foreach ($file in $legacyFiles) {
+        $name = [IO.Path]::GetRelativePath("$Folder/browser-legacy-app", $file.FullName).Replace('\','/')
+        $expected = @($legacy.files | Where-Object file -CEQ $name)
+        $original = Join-Path $legacy.source $name
+        if ($expected.Count -ne 1 -or $expected[0].bytes -ne $file.Length -or
+            $expected[0].sha256 -ine (Get-FileHash -LiteralPath $file.FullName).Hash -or
+            $expected[0].sha256 -ine (Get-FileHash -LiteralPath $original).Hash) { throw "Previous bundle or preserved source changed: $name" }
+    }
+    $owner = Get-Content -LiteralPath "$Folder/proxy-owner.json" -Raw | ConvertFrom-Json
+    if ($owner.mediaMount -ne $false -or $owner.databaseMount -ne $false -or
+        $owner.apiPort -ne $proof.apiPort -or $owner.httpsPort -ne $proof.httpsPort) { throw 'Package proxy resource boundary differs' }
+    @{mode='production';assets=$files.Count;jarSha256=$proof.apiJarSha256;runtimeMode=$proof.runtimeMode}
+}
+
 function Assert-MaintenanceBrowserLifecycle($Group, $Proof, $CompletedGroups) {
     $expectedProject = $Group.id -creplace '^site-maintenance-',''
     if ($expectedProject -cnotin @('desktop','mobile') -or $Proof.project -cne $expectedProject -or

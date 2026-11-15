@@ -2085,126 +2085,126 @@
       "name": "guest: /api/guest/checkout [2]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 11,
+      "line": 12,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 인증번호 요청 [3]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 16,
+      "line": 17,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 [4]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 42,
+      "line": 43,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 [5]",
       "kind": "prepare",
       "file": "guest.spec.ts",
-      "line": 46,
+      "line": 47,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: /api/guest/checkout [6]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 51,
+      "line": 52,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 [7]",
       "kind": "cleanup",
       "file": "guest.spec.ts",
-      "line": 58,
+      "line": 59,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 [8]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 62,
+      "line": 63,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: /api/account/profile [9]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 72,
+      "line": 73,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 정보 변경·새 인증 시작 [10]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 87,
+      "line": 88,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 구매 인증은 현재 세션에만 결합하고 재사용을 차단한다 [11]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 91,
+      "line": 92,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 인증번호 요청 [12]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 94,
+      "line": 95,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 모의 인증번호 요청 [13]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 102,
+      "line": 103,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 [14]",
       "kind": "prepare",
       "file": "guest.spec.ts",
-      "line": 123,
+      "line": 124,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 인증 확인 [15] + recovery",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 132,
+      "line": 133,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 인증 확인 [15]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 133,
+      "line": 134,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 [16]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 139,
+      "line": 140,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 [17]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 142,
+      "line": 143,
       "maxOccurrencesPerTest": 100
     },
     {
       "name": "guest: 확인 응답 유실 뒤 새로고침은 서버 결과를 복구하고 재확인을 거부한다 [18]",
       "kind": "operation",
       "file": "guest.spec.ts",
-      "line": 150,
+      "line": 151,
       "maxOccurrencesPerTest": 100
     },
     {
@@ -9279,6 +9279,160 @@
       "kind": "cleanup",
       "file": "site-maintenance.spec.ts",
       "line": 287,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: read API state",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 27,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: issue real API command",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 34,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: login individual prepared account",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 42,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: separate individual browser session",
+      "kind": "prepare",
+      "file": "package-runtime.spec.ts",
+      "line": 50,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: reload static deep link and verify exact assets",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 73,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: exact health traverses proxy into existing UI",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 95,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: individual login secure cookie CSRF and role denial",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 113,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: server capability restricts public demo issuance",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 137,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: valid session unsupported commands preserve server refusal",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 145,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: storefront adds real product and reads server quote",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 161,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: synthetic order contact input",
+      "kind": "prepare",
+      "file": "package-runtime.spec.ts",
+      "line": 166,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: lost response recovery reuses one durable order command",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 172,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: DEMO approval and autonomous worker produce delivery and notification",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 191,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: another individual cannot read durable purchase",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 210,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: real upload persists normalized bytes behind owner authorization",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 222,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: rejected MIME and oversized proxy upload preserve existing media",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 234,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: public media consumer receives original normalized bytes until visibility changes",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 244,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: previous bundle loads exact preserved asset",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 267,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: previous login UI connects CSRF and current individual session",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 281,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: previous issuance UI consumes new 503 without success or database issuance",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 293,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: previous logout UI consumes current session revocation",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 311,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "package: individual passwords cannot authenticate another account",
+      "kind": "operation",
+      "file": "package-runtime.spec.ts",
+      "line": 106,
       "maxOccurrencesPerTest": 100
     }
   ]

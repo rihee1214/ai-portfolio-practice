@@ -19,10 +19,12 @@ public class PaymentProviderConfiguration {
  @Bean Settings tossSettings(@Value("${marketplace.toss.client-key:${TOSS_CLIENT_KEY:}}") String client,@Value("${marketplace.toss.secret-key:${TOSS_SECRET_KEY:}}") String secret,@Value("${marketplace.toss.mid:${TOSS_MID:}}") String mid,@Value("${marketplace.toss.api-version:${TOSS_API_VERSION:}}") String version,@Value("${marketplace.toss.webhook-security-key:${TOSS_WEBHOOK_SECURITY_KEY:}}") String webhook,@Value("${marketplace.toss.endpoint:https://api.tosspayments.com}") String endpoint) {
   if(client.startsWith("live_")||secret.startsWith("live_")) { throw new IllegalArgumentException("LIVE_PAYMENT_KEYS_DISABLED"); }if(!endpoint.equals("https://api.tosspayments.com")) { throw new IllegalArgumentException("UNTRUSTED_TOSS_ENDPOINT"); }return new Settings(client,secret,mid,version,webhook,endpoint);
  }
- @Bean PaymentProvider paymentProvider(MockPaymentProvider demo,Settings settings,NamedParameterJdbcTemplate jdbc) {
+ @Bean PaymentProvider paymentProvider(MockPaymentProvider demo,Settings settings,NamedParameterJdbcTemplate jdbc,org.springframework.beans.factory.ObjectProvider<com.example.marketplace.platform.api.RuntimePolicy> policies) {
+  var policy=policies.getIfAvailable(()->new com.example.marketplace.platform.api.RuntimePolicy("local-full"));
+  if(policy.restricted()&&settings.ready()){throw new com.example.marketplace.platform.api.DemoFeatureUnavailable();}
   PaymentProvider sandbox=settings.ready()?new TossPaymentProvider(URI.create(settings.endpoint()),settings.secretKey(),settings.mid(),settings.apiVersion(),id->{var rows=jdbc.query("SELECT provider_payment_key,provider_order_id,amount FROM marketplace.payment_toss_binding WHERE attempt_id=:id",Map.of("id",id),(r,i)->new TossPaymentProvider.Binding(r.getString(1),r.getString(2),r.getLong(3)));return rows.isEmpty()?null:rows.getFirst();},Duration.ofSeconds(3)):null;
   return new PaymentProvider() {
-   private PaymentProvider select(Request request) { return "DEMO".equals(request.mode())?demo:"SANDBOX".equals(request.mode())?sandbox:null; }
+   private PaymentProvider select(Request request) { policy.requirePaymentMode(request.mode());return "DEMO".equals(request.mode())?demo:"SANDBOX".equals(request.mode())?sandbox:null; }
    @Override public Result approve(Request request) { var selected=select(request);return selected==null?Result.UNKNOWN:selected.approve(request); }
    @Override public Result query(Request request) { var selected=select(request);return selected==null?Result.UNKNOWN:selected.query(request); }
    @Override public Result cancel(Request request) { var selected=select(request);return selected==null?Result.UNKNOWN:selected.cancel(request); }

@@ -38,6 +38,8 @@ public final class PaymentCoordinator implements Payments {
  @Autowired private com.example.marketplace.order.api.AftercareSettlements aftercareSettlements;
  @Autowired private JdbcRefunds customerRefunds;
  @Autowired void sandboxSettings(PaymentProviderConfiguration.Settings settings) { this.sandboxSettings=settings; }
+ private com.example.marketplace.platform.api.RuntimePolicy runtimePolicy=new com.example.marketplace.platform.api.RuntimePolicy("local-full");
+ @Autowired(required=false) void runtimePolicy(com.example.marketplace.platform.api.RuntimePolicy policy) { this.runtimePolicy=policy; }
  public record SandboxCheckout(String clientKey,String orderId,String amount,String customerKey) { }
  public record Confirmation(String paymentKey,String orderId,String amount) {
   @Override public String toString() { return "TossConfirmation[redacted]"; }
@@ -61,15 +63,17 @@ public final class PaymentCoordinator implements Payments {
   return approve(number,authority,null);
  }
  public SandboxCheckout sandbox(String number,Authority authority) {
+  runtimePolicy.requirePaymentMode("SANDBOX");
   return tx.execute(status->{var order=authorized(number,authority);if(!order.mode().equals("SANDBOX")||!order.state().equals("PENDING_PAYMENT")||order.quote().total()<=0||!clock.instant().isBefore(order.expiresAt())||attempt(number)!=null) { throw new OrderRejected(409); }if(!sandboxSettings.ready()) { throw new OrderRejected(503); }validate(order,true);authorized(number,authority);return new SandboxCheckout(sandboxSettings.clientKey(),order.id().toString(),Long.toString(order.quote().total()),order.id().toString());});
  }
  public View confirm(String number,Authority authority,Confirmation confirmation) {
+  runtimePolicy.requirePaymentMode("SANDBOX");
   if(confirmation==null||confirmation.paymentKey()==null||confirmation.paymentKey().isBlank()||confirmation.paymentKey().length()>200||confirmation.paymentKey().chars().anyMatch(c->c<32||c==127)||confirmation.orderId()==null||confirmation.amount()==null||!confirmation.amount().matches("[1-9][0-9]*")) { throw new OrderRejected(400); }
   return approve(number,authority,confirmation);
  }
  private View approve(String number,Authority authority,Confirmation confirmation) {
   outside();var fresh=new java.util.concurrent.atomic.AtomicBoolean();
-  Attempt prepared=tx.execute(status->{var order=authorized(number,authority);
+  Attempt prepared=tx.execute(status->{var order=authorized(number,authority);runtimePolicy.requirePaymentMode(order.mode());
    if(confirmation!=null) {
     if(!order.mode().equals("SANDBOX")) { throw new OrderRejected(409); }
     if(!order.id().toString().equals(confirmation.orderId())||!Long.toString(order.quote().total()).equals(confirmation.amount())) { throw new OrderRejected(400); }
@@ -94,6 +98,7 @@ public final class PaymentCoordinator implements Payments {
   return tx.execute(status->{orders.lock(number);return view(number);});
  }
  public void webhook(byte[] payload,String time,String signature,String transmissionId) {
+  runtimePolicy.requirePaymentMode("SANDBOX");
   outside();if(sandboxSettings.webhookSecurityKey().isBlank()) { throw new OrderRejected(503); }
   // Transmission IDs are opaque delivery metadata, not authentication or payload-deduplication keys.
   if(!new TossWebhookVerifier(sandboxSettings.webhookSecurityKey(),clock).authentic(payload,time,signature)||transmissionId==null) { throw new OrderRejected(403); }

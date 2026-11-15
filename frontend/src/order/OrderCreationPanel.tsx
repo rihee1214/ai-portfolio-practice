@@ -6,6 +6,7 @@ import type {Quote} from '../promotion/QuoteStore'
 import {formatMoney} from '../promotion/QuoteStore'
 import {GuestStore} from '../guest/GuestStore'
 import {OrderCreationStore,type Contact} from './OrderCreationStore'
+import {useRuntimePolicy} from '../runtime/RuntimePolicyContext'
 const initial:Contact={buyerName:'',buyerPhone:'',recipientName:'',recipientPhone:'',postalCode:'',addressLine1:'',addressLine2:''}
 function purchaseWorkflow(auth:AuthStore,cart:CartStore){
  let submitted:PurchaseCart|null=null
@@ -22,13 +23,14 @@ function SavedDeliveryAddresses({auth,select}:{auth:AuthStore;select:(address:Ad
  <button type="button" disabled={state.busy} onClick={()=>void addresses.load()}>배송지 다시 조회</button></section>
 }
 export function OrderCreationPanel({auth,cart,quote,refresh}:{auth:AuthStore;cart:CartStore;quote:Quote|null;refresh:()=>Promise<void>}){
+ const policy=useRuntimePolicy()
  const [{store,approve}]=useState(()=>purchaseWorkflow(auth,cart))
  const [guest]=useState(()=>new GuestStore()),[contact,setContact]=useState(initial),[confirmed,setConfirmed]=useState('')
  const [showAddresses,setShowAddresses]=useState(false)
  const state=useSyncExternalStore(store.subscribe,store.getSnapshot),session=useSyncExternalStore(auth.subscribe,auth.getSnapshot),verification=useSyncExternalStore(guest.subscribe,guest.getSnapshot)
- useEffect(()=>{if(!session.member)void guest.load();return()=>guest.dispose()},[guest,session.member])
+ useEffect(()=>{if(!session.member&&!policy.restricted)void guest.load();return()=>guest.dispose()},[guest,session.member,policy.restricted])
  useEffect(()=>auth.subscribe(()=>{setContact(initial);setConfirmed('');setShowAddresses(false);approve(null)}),[auth,approve])
- const ready=!!session.member||(verification.state==='VERIFIED'&&verification.linkKnown&&(verification.passwordReady||verification.linkReady))
+ const ready=!!session.member||(!policy.restricted&&verification.state==='VERIFIED'&&verification.linkKnown&&(verification.passwordReady||verification.linkReady))
  const labels:Record<keyof Contact,string>={buyerName:'주문 구매자 이름',buyerPhone:'주문 구매자 전화번호',recipientName:'수령인 이름',recipientPhone:'수령인 전화번호',postalCode:'우편번호',addressLine1:'기본 주소',addressLine2:'상세 주소'}
  if(state.result)return <section aria-label="생성된 주문"><h2>주문이 생성되었습니다</h2><p data-testid="created-order-number">{state.result.orderNumber}</p><p>결제 대기 · {state.result.stores}개 매대 · {formatMoney(state.result.total)}</p><p>예약 기한: {new Date(state.result.expiresAt).toLocaleString('ko-KR')}</p><p>아직 결제가 완료되지 않았습니다.</p><a href={"/payments/"+state.result.orderNumber}>결제로 이동</a>{state.cleanupError&&<p role="alert">주문은 생성됐지만 장바구니 반영을 확인하지 못했습니다. 주문을 다시 만들지 말고 장바구니를 확인해 주세요.</p>}</section>
  return <section aria-label="주문 생성"><h2>배송 정보와 주문 확인</h2>{!ready&&<p>비회원 구매 인증과 주문 묶음 준비를 완료해 주세요.</p>}

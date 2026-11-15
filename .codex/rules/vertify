@@ -1,0 +1,10 @@
+prefix_rule(
+    pattern = [
+        "pwsh.exe",
+        "-NoProfile",
+        "-File",
+        ".local-tools/p11-e-verify.ps1",
+    ],
+    decision = "allow",
+    justification = "개발 환경 검증 스크립트 실행 허용",
+)

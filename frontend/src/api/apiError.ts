@@ -14,6 +14,7 @@ const messages: Record<string, string> = {
   RATE_LIMITED: '요청이 많습니다. 잠시 후 다시 시도해 주세요.',
   REQUEST_FAILED: '요청을 처리할 수 없습니다.',
   INTERNAL_ERROR: fallback,
+  DEMO_FEATURE_UNAVAILABLE: '공개 데모에서 지원하지 않는 기능입니다. 기존 개별 계정과 모의 결제를 이용해 주세요.',
 }
 const codes: Record<number, string> = {
   400: 'INVALID_REQUEST', 401: 'AUTHENTICATION_REQUIRED', 403: 'FORBIDDEN', 404: 'NOT_FOUND',
@@ -29,7 +30,7 @@ export function apiErrorView(result: JsonResult): ApiErrorView | null {
   const data = result.data
   if (typeof data !== 'object' || data === null || Array.isArray(data)) return { message: fallback }
   const body = data as Record<string, unknown>
-  const expected = codes[result.status] ?? (result.status >= 500 && result.status <= 599 ? 'INTERNAL_ERROR'
+  const expected = result.status === 503 && body.code === 'DEMO_FEATURE_UNAVAILABLE' ? 'DEMO_FEATURE_UNAVAILABLE' : codes[result.status] ?? (result.status >= 500 && result.status <= 599 ? 'INTERNAL_ERROR'
     : result.status >= 400 && result.status <= 499 ? 'REQUEST_FAILED' : undefined)
   if (body.code !== expected || !expected || typeof body.message !== 'string'
     || !body.message.trim() || body.message.length > 300) return { message: fallback }

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "P12-C actual production package desktop/mobile",
+    "tests": [
+      "desktop#package-runtime.spec.ts:P12-C package preserves exact SPA assets health and individual auth boundaries",
+      "desktop#package-runtime.spec.ts:P12-C public demo disables issuance and rejects valid session unsupported commands",
+      "desktop#package-runtime.spec.ts:P12-C packaged commerce persists one order through response loss and autonomous worker",
+      "desktop#package-runtime.spec.ts:P12-C packaged media preserves bytes ownership and failed upload state",
+      "mobile#package-runtime.spec.ts:P12-C package preserves exact SPA assets health and individual auth boundaries",
+      "mobile#package-runtime.spec.ts:P12-C public demo disables issuance and rejects valid session unsupported commands",
+      "mobile#package-runtime.spec.ts:P12-C packaged commerce persists one order through response loss and autonomous worker",
+      "mobile#package-runtime.spec.ts:P12-C packaged media preserves bytes ownership and failed upload state",
+      "desktop#package-runtime.spec.ts:P12-C previous bundle consumes current login session and public demo refusal",
+      "mobile#package-runtime.spec.ts:P12-C previous bundle consumes current login session and public demo refusal"
+    ]
+  }
+]

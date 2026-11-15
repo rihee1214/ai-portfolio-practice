@@ -5,6 +5,7 @@ test('모의 구매 인증은 현재 세션에만 결합하고 재사용을 차�
         const phone = info.project.name === 'desktop' ? '+821061000001' : '+821061000002';
         await page.goto('/checkout/guest');
         await expect(page.getByText('로컬 모의 인증입니다.', { exact: false })).toBeVisible();
+        await expect(page.getByRole('button', { name: '모의 인증번호 요청', exact: true })).toBeEnabled();
         const initialCsrf = await (await context.request.get('/api/auth/csrf')).json();
         return { phone, initialCsrf };
     });

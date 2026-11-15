@@ -1,0 +1,74 @@
+# Prepared artifacts/config/secrets only. No build, pull, issuance, deployment or restore.
+name: ${PACKAGE_PROJECT:?explicit isolated project required}
+x-application: &application
+  MARKETPLACE_RUNTIME_MODE: public-demo
+  MARKETPLACE_RUNTIME_ACCESS: invited-only
+  MARKETPLACE_RUNTIME_PUBLIC_ORIGIN: ${PACKAGE_PUBLIC_ORIGIN:?}
+  MARKETPLACE_RUNTIME_INTERNAL_API: "true"
+  DB_URL: jdbc:postgresql://postgres:5432/${PACKAGE_DB_NAME:?}
+  DB_USERNAME: ${PACKAGE_DB_USER:?}
+  DB_PASSWORD: ${PACKAGE_DB_PASSWORD:?}
+services:
+  proxy:
+    image: nginx@sha256:5b44a5ab8ab467854f2bf7b835a32f850f32eb414b749fbf7ed506b139cd8d6b
+    pull_policy: never
+    user: "101:101"
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    read_only: true
+    tmpfs: ["/tmp:uid=101,gid=101,mode=0700,size=32m"]
+    ports: ["127.0.0.1:${PACKAGE_HTTPS_PORT:?}:8443"]
+    volumes:
+      - ${PACKAGE_DIST:?}:/usr/share/nginx/html:ro
+      - ${PACKAGE_CONFIG:?}/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${PACKAGE_CONFIG:?}/package-proxy.conf:/etc/nginx/package-proxy.conf:ro
+      - ${PACKAGE_SECRETS:?}:/run/secrets:ro
+    networks: [edge]
+    mem_limit: 96m
+    cpus: 0.5
+  api:
+    image: ${PACKAGE_APP_IMAGE:?same immutable app image required}
+    pull_policy: never
+    read_only: true
+    tmpfs: ["/tmp:uid=10001,gid=10001,mode=0700,size=64m"]
+    environment:
+      <<: *application
+      SPRING_PROFILES_ACTIVE: db
+      SERVER_ADDRESS: 0.0.0.0
+      MEDIA_ROOT: /media
+    volumes: ["${PACKAGE_MEDIA:?}:/media"]
+    networks: [edge, data]
+    mem_limit: 768m
+    cpus: 1
+    stop_grace_period: 10s
+  worker:
+    image: ${PACKAGE_APP_IMAGE:?same immutable app image required}
+    pull_policy: never
+    read_only: true
+    tmpfs: ["/tmp:uid=10001,gid=10001,mode=0700,size=64m"]
+    environment:
+      <<: *application
+      SPRING_PROFILES_ACTIVE: db,worker
+    networks: [data]
+    mem_limit: 768m
+    cpus: 1
+    stop_grace_period: 10s
+  postgres:
+    image: postgres@sha256:edb0c08dc33befd0262ab3b5cf1c4f3f8cfd8b09e88c05b45adee29d6761ddb6
+    pull_policy: never
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PACKAGE_DB_ADMIN_PASSWORD:?separate bootstrap administrator secret required}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      APP_DB: ${PACKAGE_DB_NAME:?}
+      APP_USER: ${PACKAGE_DB_USER:?}
+      APP_PASSWORD: ${PACKAGE_DB_PASSWORD:?}
+    volumes:
+      - package-db:/var/lib/postgresql
+      - ../postgres/init-app.sh:/docker-entrypoint-initdb.d/10-init-app.sh:ro
+    networks: [data]
+    mem_limit: 512m
+networks:
+  edge: {}
+  data: {internal: true}
+volumes:
+  package-db: {}

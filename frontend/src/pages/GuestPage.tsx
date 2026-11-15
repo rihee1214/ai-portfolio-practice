@@ -1,12 +1,34 @@
 import { useEffect, useState, useSyncExternalStore } from 'react'
 import { Link } from 'react-router'
 import { GuestStore } from '../guest/GuestStore'
+import { requestJson } from '../api/http'
 
 export function GuestPage() {
   const [store] = useState(() => new GuestStore())
   const view = useSyncExternalStore(store.subscribe, store.getSnapshot)
   const [name, setName] = useState(''), [phone, setPhone] = useState(''), [code, setCode] = useState('')
-  useEffect(() => { void store.load(); const timer = setInterval(store.expire, 1000); return () => { clearInterval(timer); store.dispose() } }, [store])
+  const [preparation, setPreparation] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [preparationAttempt, retryPreparation] = useState(0)
+  useEffect(() => {
+    const controller = new AbortController()
+    let active = true
+    void (async () => {
+      // Complete the checkout's Set-Cookie before asking that same session to persist its first CSRF token.
+      const known = await store.load()
+      if (!active) return
+      if (!known) { setPreparation('error'); return }
+      const result = await requestJson('/api/auth/csrf', { credentials: 'same-origin', cache: 'no-store', signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) })
+      if (!active) return
+      const token = result.kind === 'success' && result.status === 200 ? result.data as { headerName?: string; token?: string } | null : null
+      setPreparation(token?.headerName === 'X-CSRF-TOKEN' && typeof token.token === 'string' && token.token.length > 0 ? 'ready' : 'error')
+    })()
+    const timer = setInterval(store.expire, 1000)
+    return () => { active = false; controller.abort(); clearInterval(timer); store.dispose() }
+  }, [store, preparationAttempt])
+  if (preparation !== 'ready') return <section><h1>방문자 구매 인증</h1>
+    <p role={preparation === 'error' ? 'alert' : 'status'}>{preparation === 'error' ? '구매 인증을 위한 서버 세션을 준비하지 못했습니다. 상태를 다시 확인해 주세요.' : '구매 인증을 위한 서버 세션을 준비하고 있습니다.'}</p>
+    {preparation === 'error' && <button onClick={() => { setPreparation('loading'); retryPreparation(value => value + 1) }}>서버 준비 상태 다시 확인</button>}
+  </section>
   return <section><h1>방문자 구매 인증</h1>
     <p>로컬 모의 인증입니다. 실제 문자나 실명 확인은 하지 않습니다. 가상의 이름과 전화번호만 입력해 주세요.</p>
     <p>구매자 정보입니다. 배송받는 사람의 정보는 이후 주문 단계에서 입력합니다. 주문·결제·이전 주문 조회 권한은 아직 생성되지 않습니다.</p>

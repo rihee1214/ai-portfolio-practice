@@ -3,12 +3,11 @@ package com.example.marketplace.media.infrastructure;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 
-@Configuration @Profile("db") @EnableScheduling
+@Configuration @Profile("db")
 @org.springframework.boot.autoconfigure.condition.ConditionalOnProperty(name="marketplace.media.enabled",matchIfMissing=true)
 public class MediaConfiguration {
     @Bean(destroyMethod="close") @DependsOnDatabaseInitialization

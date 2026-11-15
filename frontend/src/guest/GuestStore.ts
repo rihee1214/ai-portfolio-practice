@@ -5,6 +5,9 @@ type View = { busy: boolean; state: 'INPUT' | 'SENT' | 'VERIFIED'; attempt: stri
 type Fetcher = typeof fetch
 const empty = (): View => ({ busy: false, state: 'INPUT', attempt: '', maskedPhone: '', error: '', expiresAt: '', passwordReady: false, linkMode: 'NEW', linkReady: false, linkRevision: 0, linkKnown: true })
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object'
+class GuestRequestFailure extends Error {
+  constructor(readonly status: number | undefined, message: string) { super(message) }
+}
 export class GuestStore {
   private view = empty()
   private listeners = new Set<() => void>()
@@ -16,7 +19,7 @@ export class GuestStore {
   getSnapshot = () => this.view
   private set(patch: Partial<View>) { this.view = { ...this.view, ...patch }; this.listeners.forEach(fn => fn()) }
   dispose() { ++this.generation; this.controller.abort(); this.phone = ''; this.view = empty() }
-  private async call(path: string, body?: unknown) {
+  private async call(path: string, body?: unknown, expectedStatus?: number) {
     const signal = this.controller.signal
     const generation = this.generation
     const headers: Record<string, string> = {}
@@ -28,7 +31,7 @@ export class GuestStore {
     }
     const result = await requestJson(path, { fetcher: this.fetcher, credentials: 'same-origin', cache: 'no-store', signal, headers, method: body === undefined ? 'GET' : 'POST', ...(body === undefined ? {} : { body: JSON.stringify(body) }) })
     if (generation !== this.generation) throw new Error('cancelled')
-    if (result.kind !== 'success' || !object(result.data)) throw new Error(result.kind === 'http' && result.status === 429 ? 'limit' : 'request')
+    if (result.kind !== 'success' || !object(result.data) || expectedStatus !== undefined && result.status !== expectedStatus) throw new GuestRequestFailure(result.kind === 'http' ? result.status : undefined, result.kind === 'http' && result.status === 429 ? 'limit' : 'request')
     return result.data
   }
   private async run(action: () => Promise<void>) {
@@ -39,30 +42,37 @@ export class GuestStore {
     catch (error) { if (generation === this.generation) this.set({ error: error instanceof Error && error.message === 'limit' ? '요청이 많습니다. 잠시 후 새 인증을 시작해 주세요.' : '인증을 완료하지 못했습니다. 기존 묶음은 조회 인증과 같은 번호의 구매 인증이 필요합니다. 상태를 다시 확인하거나 새 인증을 시작해 주세요.' }) }
     finally { if (generation === this.generation) this.set({ busy: false }) }
   }
-  load = () => {
+  load = async () => {
     if (this.controller.signal.aborted) this.controller = new AbortController()
-    return this.run(async () => {
+    const generation = this.generation
+    let known = false
+    await this.run(async () => {
     const loadGeneration = this.generation
     const previousMode = this.view.linkMode, hadState = this.view.state !== 'INPUT'
     let loadedVerified = false
     this.set({ linkReady: false, passwordReady: false, linkKnown: false })
     try {
-      const result = await this.call('/api/guest/checkout')
+      const result = await this.call('/api/guest/checkout', undefined, 200)
       if (result.state === 'VERIFIED' || result.state === 'SENT') {
         if (result.state === 'SENT') {
           if (typeof result.phone !== 'string' || !/^\+8210\d{8}$/.test(result.phone)) throw new Error('schema')
           this.phone = result.phone
         }
         this.accept(result)
+        known = true
         if (result.state === 'VERIFIED') { loadedVerified = true; this.set({ linkMode: previousMode, linkKnown: false }); await this.refreshLink() }
       } else {
+        known = ['OPEN', 'EXPIRED', 'EXCHANGED', 'CONSUMED'].includes(String(result.state))
         this.set({ ...empty(), error: result.state === 'OPEN' ? '' : '이전 인증을 이어갈 수 없습니다. 새 인증번호를 요청해 주세요.' })
       }
-    } catch {
+    } catch (error) {
       if (loadGeneration !== this.generation) return
+      // An initial missing checkout is expected, but its response must finish saving the session first.
+      known = error instanceof GuestRequestFailure && error.status === 409 && !hadState
       this.set({ linkMode: previousMode, linkReady: false, passwordReady: false, linkKnown: false, error: hadState || loadedVerified ? '서버 준비 상태를 확인하지 못했습니다. 상태를 다시 확인해 주세요.' : '' })
     }
     })
+    return known && generation === this.generation && !this.controller.signal.aborted
   }
   expire = () => {
     if (!this.view.busy && this.view.expiresAt && Date.parse(this.view.expiresAt) <= Date.now()) {

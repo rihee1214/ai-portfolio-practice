@@ -45,7 +45,7 @@ $result.certificationEligible = -not $ResourceOnlyDiagnostic -and $selection.cer
 $result.selection = $selection
 if ($ResourceOnlyDiagnostic) { $result.scope = 'DIAGNOSTIC ONLY: original database dump preservation omitted; whole verification cannot be certified. ' + $result.scope }
 function Get-Inputs {
-    $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend verification verify.ps1)
+    $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend infra verification verify.ps1)
     if ($LASTEXITCODE -ne 0) { throw 'Source inventory failed' }
     @($files | Sort-Object -Unique | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | ForEach-Object {
         [pscustomobject]@{ path=$_; sha256=(Get-FileHash -LiteralPath $_).Hash }
@@ -66,6 +66,8 @@ try {
     & "$PSScriptRoot/verification/Test-DbGroups.ps1" | Set-Content "$output/db-group-tests.txt"
     & "$PSScriptRoot/verification/Test-Gate.ps1" | Set-Content (Join-Path $output 'gate-tests.txt')
     & "$PSScriptRoot/verification/Test-DatabaseTarget.ps1" | Set-Content (Join-Path $output 'database-target-tests.txt')
+    & node "$PSScriptRoot/verification/Run-PackageProxy.mjs" "$EvidenceDirectory/package-proxy" 2>&1 | Set-Content (Join-Path $output 'package-proxy-tests.txt')
+    if ($LASTEXITCODE -ne 0) { throw 'Actual NGINX proxy contract checks failed' }
     $backendSelection = @{}
     if ($selection.mode -ceq 'selected') { $backendSelection.DbGroups=($selection.selected -join ',') }
     & "$PSScriptRoot/backend/verify-db.ps1" -EvidenceDirectory "$EvidenceDirectory/db" @backendSelection -ReverseGroups:$ReverseGroups -Offline:$Offline -RunBrowser -TestPostgresPort $TestPostgresPort -TestPostgresInstance $TestPostgresInstance -TestPostgresContainer $TestPostgresContainer

@@ -61,7 +61,12 @@ function Assert-DbGroupRegistration {
     $legacy = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $classes = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     foreach ($group in $Registry.groups) {
-        if ($group.browser) {
+        if ($group.browser -and $group.id -ceq 'package-runtime') {
+            if ($group.browser.project -or $group.browser.requirements -cne 'required-browser-package.json' -or
+                $group.classes.Count -ne 1 -or $group.expectedDatabaseCount -ne 1) {
+                throw 'Invalid actual package browser lifecycle registration'
+            }
+        } elseif ($group.browser) {
             if ($group.browser.project -cnotin @('desktop','mobile') -or $group.classes.Count -ne 1 -or
                 $group.expectedDatabaseCount -ne 1 -or $group.id -cne ('site-maintenance-'+$group.browser.project) -or
                 $group.browser.requirements -cne 'required-browser-site-maintenance.json') {

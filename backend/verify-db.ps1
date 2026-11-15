@@ -31,7 +31,7 @@ $secrets = @{}
 $groups = @()
 $result = @{status='failed';started=(Get-Date).ToString('o');selection=$selection;groups=@()}
 function Invoke-ContractMaven([string[]]$Goals, [string]$Log, [string[]]$Properties=@()) {
-    $arguments = @('-B','-ntp','-Pdb-it','-Dmaven.repo.local=../.local-tools/m2/repository',"-Dmarketplace.build.directory=$build") + $Properties + $Goals
+    $arguments = @('-B','-ntp','-Pdb-it','-Dmaven.repo.local=../.local-tools/m2/repository',"-Dmarketplace.build.directory=$build", "-Djava.io.tmpdir=$output/java-tmp") + $Properties + $Goals
     if ($Offline) { $arguments = @('-o') + $arguments }
     Push-Location $PSScriptRoot
     try {
@@ -60,6 +60,7 @@ try {
     $env:D2_DB_PASSWORD = $secrets['TEST_DB_PASSWORD']
     $env:D2_ADMIN_PASSWORD = $secrets['TEST_ADMIN_PASSWORD']
     $build = Join-Path $output 'build'
+    New-Item -ItemType Directory -Path "$output/java-tmp" | Out-Null
     $compileClock = [Diagnostics.Stopwatch]::StartNew()
     $compileExit = Invoke-ContractMaven -Goals @('package') -Log "$output/maven.txt"
     $result.commonBuildSeconds = $compileClock.Elapsed.TotalSeconds
@@ -79,7 +80,16 @@ try {
         $env:P12_B_BROWSER_PROJECT = if ($definition.browser) { $definition.browser.project } else { $null }
         $group = @{id=$id;status='failed';database=$env:D2_DB_NAME;media="$folder/media";evidence=$folder;started=(Get-Date).ToString('o');classes=$definition.classes}
         $clock = [Diagnostics.Stopwatch]::StartNew()
+        $isolatedPublicEnvironment = @{}
         try {
+            if ($id -ceq 'public-demo-runtime') {
+                foreach ($entry in @(Get-ChildItem Env: | Where-Object Name -Match '^(TOSS_|FIREBASE_|FIRESTORE_|GCLOUD_)')) {
+                    $isolatedPublicEnvironment[$entry.Name] = $entry.Value
+                    [Environment]::SetEnvironmentVariable($entry.Name, $null, 'Process')
+                }
+                @{mode='public-demo';removedNames=@($isolatedPublicEnvironment.Keys | Sort-Object);valuesRecorded=$false} |
+                    ConvertTo-Json -Depth 3 | Set-Content "$folder/environment-isolation.json"
+            }
             $reports = Join-Path $folder 'failsafe-reports'
             $props = @("-Dit.test=$($definition.classes -join ',')","-Dmarketplace.failsafe.reports=$reports")
             $group.exitCode = Invoke-ContractMaven -Goals @('failsafe:integration-test','failsafe:verify') -Properties $props -Log "$folder/maven.txt"
@@ -104,7 +114,7 @@ try {
                 if ($actualCases.Count -ne $test.invocations) { throw "Missing or duplicate parameter invocation: $($test.new)" }
             }
             if ($id -ceq 'browser-api' -or $definition.browser) {
-                $group.browserApplication = Read-VerifiedBrowserBundle -Folder $folder
+                $group.browserApplication = if ($id -ceq 'package-runtime') { Read-VerifiedPackageBundle -Folder $folder } else { Read-VerifiedBrowserBundle -Folder $folder }
                 $browserReport = Get-Content "$folder/browser-report.json" -Raw | ConvertFrom-Json
                 if ($browserReport.errors.Count -or $browserReport.stats.skipped -or $browserReport.stats.unexpected -or $browserReport.stats.flaky) { throw 'Browser group failed or retried' }
                 $browserCases = @(Read-BrowserCases $browserReport.suites)
@@ -112,7 +122,7 @@ try {
                 $requirementsFile = if ($definition.browser) { $definition.browser.requirements } else { 'required-browser.json' }
                 $browserRequired = Get-Content "$root/verification/$requirementsFile" -Raw | ConvertFrom-Json
                 Assert-BrowserGroupCoverage $definition $browserCases $browserRequired | ConvertTo-Json -Depth 6 | Set-Content "$folder/browser-coverage.json"
-                if ($definition.browser) {
+                if ($definition.browser -and $id -cne 'package-runtime') {
                     $proof = Get-Content "$folder/site-maintenance-lifecycle.json" -Raw | ConvertFrom-Json
                     $group.browserIsolation = Assert-MaintenanceBrowserLifecycle $group $proof $groups
                 }
@@ -122,6 +132,9 @@ try {
             $group.status = 'passed'
         } catch { $group.error=$_.Exception.Message }
         finally {
+            foreach ($name in $isolatedPublicEnvironment.Keys) {
+                [Environment]::SetEnvironmentVariable($name, $isolatedPublicEnvironment[$name], 'Process')
+            }
             $group.seconds=$clock.Elapsed.TotalSeconds
             $group.finished=(Get-Date).ToString('o')
             $group | ConvertTo-Json -Depth 5 | Set-Content "$folder/result.json"

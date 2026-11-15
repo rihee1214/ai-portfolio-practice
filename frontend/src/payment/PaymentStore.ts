@@ -1,5 +1,6 @@
 import type {AuthStore} from '../auth/AuthStore'
 import {requestJson} from '../api/http'
+import {apiErrorView} from '../api/apiError'
 import type {SandboxSetup,TossConfirmation} from './TossPaymentAdapter'
 export type PaymentView={orderNumber:string;orderState:string;paymentState:string;compensation:string;reviewRequired:boolean;amount:string;mode:string;providerOrderId?:string|null}
 export class PaymentStore {
@@ -33,6 +34,7 @@ export class PaymentStore {
    const response=await this.request('/api/payments/'+encodeURIComponent(this.number)+'/sandbox',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-TOKEN':data.token},body:'{}'})
    if(!this.current(g))return null
    if(response.kind==='http'&&[401,403].includes(response.status)){this.deny();return null}
+   if(response.kind==='http'&&response.status===503&&response.data&&typeof response.data==='object'&&'code'in response.data&&response.data.code==='DEMO_FEATURE_UNAVAILABLE'){this.set({error:apiErrorView(response)!.message});return null}
    if(response.kind!=='success')throw new Error('response')
    const setup=response.data as SandboxSetup
    if(!setup||setup.amount!==this.state.view?.amount||typeof setup.clientKey!=='string'||!setup.clientKey.startsWith('test_ck_')||typeof setup.orderId!=='string'||setup.customerKey!==setup.orderId)throw new Error('schema')
@@ -54,6 +56,7 @@ export class PaymentStore {
    const response=await this.request('/api/payments/'+encodeURIComponent(this.number)+(approval?(confirmation?'/confirm':'/approve'):''),{method:approval?'POST':'GET',headers,...(approval?{body:confirmation?JSON.stringify(confirmation):'{}'}:{})})
    if(!this.current(g))return
    if(response.kind==='http'&&[401,403].includes(response.status)){this.deny();return}
+   if(response.kind==='http'&&response.status===503&&response.data&&typeof response.data==='object'&&'code'in response.data&&response.data.code==='DEMO_FEATURE_UNAVAILABLE'){this.set({error:apiErrorView(response)!.message});return}
    if(response.kind!=='success')throw new Error('response')
    const view=response.data as PaymentView
    if(!view||view.orderNumber!==this.number||!['PENDING_PAYMENT','PAID','CANCELED','EXPIRED','CLOSED'].includes(view.orderState)||!['NONE','CREATED','PROCESSING','UNKNOWN','SUCCEEDED','FAILED'].includes(view.paymentState)||!['NONE','PENDING','UNKNOWN','CANCELED','FAILED'].includes(view.compensation)||typeof view.reviewRequired!=='boolean'||typeof view.amount!=='string'||!/^(0|[1-9]\d*)$/.test(view.amount)||BigInt(view.amount)>9223372036854775807n||!['DEMO','SANDBOX'].includes(view.mode))throw new Error('schema')

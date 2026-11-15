@@ -2,7 +2,69 @@
   "schemaVersion": 1,
   "expansion": "direct declared impact closure (rows already include downstream contracts; no path inference)",
   "groups": [
-    {"id":"site-management","kind":"cross-domain-contract","classes":["com.example.marketplace.dbtest.SiteManagementIT"],"expectedDatabaseCount":1,"provides":["site.publication","site.settings","site.jobs"],"consumes":["promotion.quote","order.snapshot","money.refund","settlement.ledger","authority.current","media.visibility","job.current-lease","schema.upgrade","reporting.dashboard","notification.inbox","db.transaction"],"tests":[{"new":"com.example.marketplace.dbtest.SiteManagementIT#settingsAndFaqRejectControlCharactersWithoutChangingAuditOrReceipt","old":"com.example.marketplace.dbtest.SiteManagementIT#settingsAndFaqRejectControlCharactersWithoutChangingAuditOrReceipt","invocations":1},{"new":"com.example.marketplace.dbtest.SiteManagementIT#systemInspectsJobStatesWithoutPayloadAndCannotResetUnsupportedJobs","old":"com.example.marketplace.dbtest.SiteManagementIT#systemInspectsJobStatesWithoutPayloadAndCannotResetUnsupportedJobs","invocations":1},{"new":"com.example.marketplace.dbtest.SiteManagementIT#concurrentReplayAndFailedPublicationCommitLeaveOneVisibleVersionAndReceipt","old":"com.example.marketplace.dbtest.SiteManagementIT#concurrentReplayAndFailedPublicationCommitLeaveOneVisibleVersionAndReceipt","invocations":1},{"new":"com.example.marketplace.dbtest.SiteManagementIT#bannerControlsActualNormalizedFileAndPreservesReplacedAssetAndFailedRevision","old":"com.example.marketplace.dbtest.SiteManagementIT#bannerControlsActualNormalizedFileAndPreservesReplacedAssetAndFailedRevision","invocations":1},{"new":"com.example.marketplace.dbtest.SiteManagementIT#currentContentAndSystemRightsAreRecheckedAfterActualMemberLockWait","old":"com.example.marketplace.dbtest.SiteManagementIT#currentContentAndSystemRightsAreRecheckedAfterActualMemberLockWait","invocations":1},{"old":"com.example.marketplace.dbtest.SiteManagementIT#contentPublishesAndWithdrawsNoticeWithExactHistoryAndSchedule","new":"com.example.marketplace.dbtest.SiteManagementIT#contentPublishesAndWithdrawsNoticeWithExactHistoryAndSchedule","invocations":1},{"old":"com.example.marketplace.dbtest.SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots","new":"com.example.marketplace.dbtest.SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots","invocations":1}]},
+    {
+      "id": "site-management",
+      "kind": "cross-domain-contract",
+      "classes": [
+        "com.example.marketplace.dbtest.SiteManagementIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "site.publication",
+        "site.settings",
+        "site.jobs"
+      ],
+      "consumes": [
+        "promotion.quote",
+        "order.snapshot",
+        "money.refund",
+        "settlement.ledger",
+        "authority.current",
+        "media.visibility",
+        "job.current-lease",
+        "schema.upgrade",
+        "reporting.dashboard",
+        "notification.inbox",
+        "db.transaction"
+      ],
+      "tests": [
+        {
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#settingsAndFaqRejectControlCharactersWithoutChangingAuditOrReceipt",
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#settingsAndFaqRejectControlCharactersWithoutChangingAuditOrReceipt",
+          "invocations": 1
+        },
+        {
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#systemInspectsJobStatesWithoutPayloadAndCannotResetUnsupportedJobs",
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#systemInspectsJobStatesWithoutPayloadAndCannotResetUnsupportedJobs",
+          "invocations": 1
+        },
+        {
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#concurrentReplayAndFailedPublicationCommitLeaveOneVisibleVersionAndReceipt",
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#concurrentReplayAndFailedPublicationCommitLeaveOneVisibleVersionAndReceipt",
+          "invocations": 1
+        },
+        {
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#bannerControlsActualNormalizedFileAndPreservesReplacedAssetAndFailedRevision",
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#bannerControlsActualNormalizedFileAndPreservesReplacedAssetAndFailedRevision",
+          "invocations": 1
+        },
+        {
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#currentContentAndSystemRightsAreRecheckedAfterActualMemberLockWait",
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#currentContentAndSystemRightsAreRecheckedAfterActualMemberLockWait",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#contentPublishesAndWithdrawsNoticeWithExactHistoryAndSchedule",
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#contentPublishesAndWithdrawsNoticeWithExactHistoryAndSchedule",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots",
+          "new": "com.example.marketplace.dbtest.SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots",
+          "invocations": 1
+        }
+      ]
+    },
     {
       "id": "payment",
       "classes": [
@@ -159,7 +221,9 @@
         "guest.current-proof",
         "job.current-lease",
         "money.provider-refund-receipt",
-        "money.refund-reconciliation", "notification.inbox"],
+        "money.refund-reconciliation",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -270,7 +334,9 @@
         "guest.current-proof",
         "job.current-lease",
         "money.provider-refund-receipt",
-        "money.refund-reconciliation", "notification.inbox"],
+        "money.refund-reconciliation",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -320,7 +386,8 @@
       "provides": [
         "browser.wire"
       ],
-      "consumes": ["reporting.dashboard",
+      "consumes": [
+        "reporting.dashboard",
         "settlement.ledger",
         "operations.trade-support",
         "operations.moderation",
@@ -353,7 +420,9 @@
         "content.review",
         "content.questions",
         "operations.report",
-        "operations.support", "notification.inbox"],
+        "operations.support",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -445,7 +514,9 @@
         "exchange.financial",
         "guest.current-proof",
         "job.current-lease",
-        "money.refund-reconciliation", "notification.inbox"],
+        "money.refund-reconciliation",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -560,7 +631,9 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease", "notification.inbox"],
+        "job.current-lease",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -2003,7 +2076,9 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease", "notification.inbox"],
+        "job.current-lease",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -2239,7 +2314,9 @@
       "consumes": [
         "authority.current",
         "db.transaction",
-        "schema.upgrade", "notification.inbox"],
+        "schema.upgrade",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -3046,7 +3123,9 @@
         "exchange.physical",
         "exchange.financial",
         "guest.current-proof",
-        "job.current-lease", "notification.inbox"],
+        "job.current-lease",
+        "notification.inbox"
+      ],
       "expectedDatabaseCount": 1
     },
     {
@@ -3678,7 +3757,11 @@
         "com.example.marketplace.dbtest.IdentityIT"
       ],
       "tests": [
-        {"old":"com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget","new":"com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget","invocations":1},
+        {
+          "old": "com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget",
+          "new": "com.example.marketplace.dbtest.IdentityIT#accountLookupAndSuspensionRejectAnOperatorWhoExpiresWhileWaitingForTarget",
+          "invocations": 1
+        },
         {
           "old": "com.example.marketplace.dbtest.PostgresJdbcIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
           "new": "com.example.marketplace.dbtest.IdentityIT#accountStateLifecycleRevokesSessionsAndPreservesIdentityReference",
@@ -4103,9 +4186,13 @@
         "delivery.actual-source",
         "job.current-lease",
         "phone.proof",
-        "operations.support", "notification.inbox"],
+        "operations.support",
+        "notification.inbox"
+      ],
       "provides": [
-        "content.questions", "notification.inbox"],
+        "content.questions",
+        "notification.inbox"
+      ],
       "id": "questions",
       "classes": [
         "com.example.marketplace.dbtest.QuestionsIT"
@@ -4120,10 +4207,14 @@
           "invocations": 1
         },
         {
-          "old": "com.example.marketplace.dbtest.SupportIT#confirmedDefectAndSellerReturnOrExchangeShareOneShippingRefundInEitherOrder", "new": "com.example.marketplace.dbtest.SupportIT#confirmedDefectAndSellerReturnOrExchangeShareOneShippingRefundInEitherOrder", "invocations": 1
+          "old": "com.example.marketplace.dbtest.SupportIT#confirmedDefectAndSellerReturnOrExchangeShareOneShippingRefundInEitherOrder",
+          "new": "com.example.marketplace.dbtest.SupportIT#confirmedDefectAndSellerReturnOrExchangeShareOneShippingRefundInEitherOrder",
+          "invocations": 1
         },
         {
-          "old": "com.example.marketplace.dbtest.SupportIT#supportReplyWrongOriginalAndBuyerInspectionDoNotAuthorizeMoney", "new": "com.example.marketplace.dbtest.SupportIT#supportReplyWrongOriginalAndBuyerInspectionDoNotAuthorizeMoney", "invocations": 1
+          "old": "com.example.marketplace.dbtest.SupportIT#supportReplyWrongOriginalAndBuyerInspectionDoNotAuthorizeMoney",
+          "new": "com.example.marketplace.dbtest.SupportIT#supportReplyWrongOriginalAndBuyerInspectionDoNotAuthorizeMoney",
+          "invocations": 1
         },
         {
           "old": "com.example.marketplace.dbtest.SupportIT#lostIntakeAndReassignmentNeverDiscloseAnUnassignedBody",
@@ -4137,8 +4228,14 @@
         }
       ],
       "expectedDatabaseCount": 1,
-      "consumes": ["reporting.dashboard",
-        "money.refund", "settlement.ledger", "order.confirmation", "return.financial", "exchange.financial", "aftercare.closure",
+      "consumes": [
+        "reporting.dashboard",
+        "money.refund",
+        "settlement.ledger",
+        "order.confirmation",
+        "return.financial",
+        "exchange.financial",
+        "aftercare.closure",
         "authority.current",
         "db.transaction",
         "schema.upgrade",
@@ -4156,7 +4253,9 @@
         "delivery.actual-source",
         "job.current-lease",
         "phone.proof",
-        "promotion.coupon", "notification.inbox"],
+        "promotion.coupon",
+        "notification.inbox"
+      ],
       "provides": [
         "operations.support"
       ],
@@ -4172,7 +4271,7 @@
       "classes": [
         "com.example.marketplace.dbtest.ReportsIT"
       ],
-        "expectedDatabaseCount": 2,
+      "expectedDatabaseCount": 2,
       "provides": [
         "operations.report"
       ],
@@ -4194,10 +4293,20 @@
         "promotion.quote",
         "promotion.coupon",
         "payment.outcome",
-        "order.current-view", "notification.inbox"],
+        "order.current-view",
+        "notification.inbox"
+      ],
       "tests": [
-        {"old":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","new":"com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps","invocations":1},
-        {"old":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","new":"com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota","invocations":1},
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps",
+          "new": "com.example.marketplace.dbtest.ReportsIT#migrationPreservesOldEvidenceWithoutInferringVersionsFromTimestamps",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota",
+          "new": "com.example.marketplace.dbtest.ReportsIT#intakeExpiryDuringCaseLockAddsNeitherEvidenceNorQuota",
+          "invocations": 1
+        },
         {
           "old": "com.example.marketplace.dbtest.ReportsIT#productReportsSerializeReplaysSeparateMembersAndKeepQueueMinimal",
           "new": "com.example.marketplace.dbtest.ReportsIT#productReportsSerializeReplaysSeparateMembersAndKeepQueueMinimal",
@@ -4254,12 +4363,25 @@
         "media.visibility",
         "authority.current",
         "db.transaction",
-        "schema.upgrade", "notification.inbox"],
+        "schema.upgrade",
+        "notification.inbox"
+      ],
       "tests": [
-        {"old": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "new": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores", "invocations": 1},
-        {"old": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "new": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct", "invocations": 1},
-        {"old": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit", "new": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit", "invocations": 1},
-
+        {
+          "old": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores",
+          "new": "com.example.marketplace.dbtest.ModerationIT#reviewFamilyRestoresOnlyCurrentVisibleChildrenAndScores",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct",
+          "new": "com.example.marketplace.dbtest.ModerationIT#twoCasesCompeteOnceAndExistingTradeSurvivesHiddenProduct",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit",
+          "new": "com.example.marketplace.dbtest.ModerationIT#migratedHideRestoresOnceWithSeparateAudit",
+          "invocations": 1
+        },
         {
           "old": "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit",
           "new": "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit",
@@ -4378,18 +4500,369 @@
         }
       ]
     },
-    {"id":"dashboard","kind":"cross-domain-contract","classes":["com.example.marketplace.dbtest.DashboardIT"],"expectedDatabaseCount":1,"provides":["reporting.dashboard"],"consumes":["order.snapshot","order.confirmation","payment.outcome","money.refund","authority.current","job.current-lease","seller.capability","db.transaction","schema.upgrade","settlement.ledger","delivery.actual-source","exchange.physical","return.physical","catalog.offer","stock.reservation","operations.support","operations.report","operations.moderation","content.questions"],"tests":[{"old":"com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents","new":"com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection","new":"com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently","new":"com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows","new":"com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct","new":"com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays","new":"com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded","new":"com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately","new":"com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally","new":"com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess","new":"com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney","new":"com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes","new":"com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt","new":"com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes","new":"com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck","new":"com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck","invocations":1},{"old":"com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork","new":"com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork","invocations":1}]},
-    {"id":"site-maintenance-desktop","kind":"browser-api","classes":["com.example.marketplace.dbtest.SiteMaintenanceDesktopIT"],"expectedDatabaseCount":1,"browser":{"project":"desktop","requirements":"required-browser-site-maintenance.json"},"provides":["browser.site-maintenance.desktop"],"consumes":["site.publication","site.settings","promotion.quote","order.snapshot","payment.outcome","authority.current","media.visibility","catalog.offer","stock.reservation","seller.capability","money.refund","settlement.ledger","db.transaction"],"tests":[{"old":"com.example.marketplace.dbtest.SiteMaintenanceDesktopIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots","new":"com.example.marketplace.dbtest.SiteMaintenanceDesktopIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots","invocations":1}]},
-    {"id":"site-maintenance-mobile","kind":"browser-api","classes":["com.example.marketplace.dbtest.SiteMaintenanceMobileIT"],"expectedDatabaseCount":1,"browser":{"project":"mobile","requirements":"required-browser-site-maintenance.json"},"provides":["browser.site-maintenance.mobile"],"consumes":["site.publication","site.settings","promotion.quote","order.snapshot","payment.outcome","authority.current","media.visibility","catalog.offer","stock.reservation","seller.capability","money.refund","settlement.ledger","db.transaction"],"tests":[{"old":"com.example.marketplace.dbtest.SiteMaintenanceMobileIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots","new":"com.example.marketplace.dbtest.SiteMaintenanceMobileIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots","invocations":1}]}
+    {
+      "id": "dashboard",
+      "kind": "cross-domain-contract",
+      "classes": [
+        "com.example.marketplace.dbtest.DashboardIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "reporting.dashboard"
+      ],
+      "consumes": [
+        "order.snapshot",
+        "order.confirmation",
+        "payment.outcome",
+        "money.refund",
+        "authority.current",
+        "job.current-lease",
+        "seller.capability",
+        "db.transaction",
+        "schema.upgrade",
+        "settlement.ledger",
+        "delivery.actual-source",
+        "exchange.physical",
+        "return.physical",
+        "catalog.offer",
+        "stock.reservation",
+        "operations.support",
+        "operations.report",
+        "operations.moderation",
+        "content.questions"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents",
+          "new": "com.example.marketplace.dbtest.DashboardIT#moderationAndRepeatedReportClosuresUseCurrentVisibilityAndDistinctDatedEvents",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection",
+          "new": "com.example.marketplace.dbtest.DashboardIT#accountsApplicationIntakeRemainsTwoAfterApprovalAndRejection",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently",
+          "new": "com.example.marketplace.dbtest.DashboardIT#explicitBasicShipmentDelayFailureAndResumeAreCountedIndependently",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows",
+          "new": "com.example.marketplace.dbtest.DashboardIT#completedOriginalItemAndShippingRefundUseSuccessAmountsWithoutChangingSourceRows",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct",
+          "new": "com.example.marketplace.dbtest.DashboardIT#productAndStockReadModelsFollowActualSaleAndSellerStoppingTheProduct",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays",
+          "new": "com.example.marketplace.dbtest.DashboardIT#confirmationReceiptsAcrossSeoulMidnightUseOriginalUnitAmountsAndSeparateDays",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded",
+          "new": "com.example.marketplace.dbtest.DashboardIT#successfulRefundAndAppliedFeeCountOnceWhileUnknownAndFailedRemainExcluded",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately",
+          "new": "com.example.marketplace.dbtest.DashboardIT#reassignedCaseMovesOnNextSnapshotButDetailPermissionChangesImmediately",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally",
+          "new": "com.example.marketplace.dbtest.DashboardIT#oldestExchangeAgeUsesMaximumOfActiveShipmentsPerStoreAndGlobally",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess",
+          "new": "com.example.marketplace.dbtest.DashboardIT#concurrentSystemCommandsCoalesceAndAFailedRunKeepsTheLastSuccess",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney",
+          "new": "com.example.marketplace.dbtest.DashboardIT#accessRevokedWhileReadingCannotReturnPreviouslyVisibleMoney",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes",
+          "new": "com.example.marketplace.dbtest.DashboardIT#readerPinsPeriodAndCurrentValuesWhenAnotherGenerationPublishes",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt",
+          "new": "com.example.marketplace.dbtest.DashboardIT#finalFenceAfterActualJobLockWaitRollsBackHeadAndRunUntilFreshAttempt",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes",
+          "new": "com.example.marketplace.dbtest.DashboardIT#privateRepeatableSnapshotSurvivesHeartbeatAndOnlyLiveTakeoverPublishes",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck",
+          "new": "com.example.marketplace.dbtest.DashboardIT#publishedGenerationAndSourceRowsSurviveRealWorkerRestartBeforeAck",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork",
+          "new": "com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "site-maintenance-desktop",
+      "kind": "browser-api",
+      "classes": [
+        "com.example.marketplace.dbtest.SiteMaintenanceDesktopIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "browser": {
+        "project": "desktop",
+        "requirements": "required-browser-site-maintenance.json"
+      },
+      "provides": [
+        "browser.site-maintenance.desktop"
+      ],
+      "consumes": [
+        "site.publication",
+        "site.settings",
+        "promotion.quote",
+        "order.snapshot",
+        "payment.outcome",
+        "authority.current",
+        "media.visibility",
+        "catalog.offer",
+        "stock.reservation",
+        "seller.capability",
+        "money.refund",
+        "settlement.ledger",
+        "db.transaction"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.SiteMaintenanceDesktopIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
+          "new": "com.example.marketplace.dbtest.SiteMaintenanceDesktopIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "site-maintenance-mobile",
+      "kind": "browser-api",
+      "classes": [
+        "com.example.marketplace.dbtest.SiteMaintenanceMobileIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "browser": {
+        "project": "mobile",
+        "requirements": "required-browser-site-maintenance.json"
+      },
+      "provides": [
+        "browser.site-maintenance.mobile"
+      ],
+      "consumes": [
+        "site.publication",
+        "site.settings",
+        "promotion.quote",
+        "order.snapshot",
+        "payment.outcome",
+        "authority.current",
+        "media.visibility",
+        "catalog.offer",
+        "stock.reservation",
+        "seller.capability",
+        "money.refund",
+        "settlement.ledger",
+        "db.transaction"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.SiteMaintenanceMobileIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
+          "new": "com.example.marketplace.dbtest.SiteMaintenanceMobileIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "package-runtime",
+      "kind": "cross-domain-contract",
+      "classes": [
+        "com.example.marketplace.dbtest.PackageRuntimeIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "package.proxy",
+        "package.artifact",
+        "runtime.policy"
+      ],
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "catalog.offer",
+        "media.visibility",
+        "payment.outcome",
+        "job.current-lease",
+        "notification.inbox",
+        "order.snapshot"
+      ],
+      "browser": {
+        "requirements": "required-browser-package.json"
+      },
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.PackageRuntimeIT#productionArtifactsServeTlsRolesAndActualBrowserBusiness",
+          "new": "com.example.marketplace.dbtest.PackageRuntimeIT#productionArtifactsServeTlsRolesAndActualBrowserBusiness",
+          "invocations": 1
+        }
+      ]
+    },
+    {
+      "id": "public-demo-runtime",
+      "kind": "shared-contract",
+      "classes": [
+        "com.example.marketplace.dbtest.PublicDemoRuntimeIT"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "runtime.policy"
+      ],
+      "consumes": [
+        "authority.current",
+        "db.transaction",
+        "schema.upgrade",
+        "payment.outcome"
+      ],
+      "tests": [
+        {
+          "old": "com.example.marketplace.dbtest.PublicDemoRuntimeIT#publicDemoKeepsExistingLoginAndRejectsEveryIssuanceAndSandboxWithoutMutation",
+          "new": "com.example.marketplace.dbtest.PublicDemoRuntimeIT#publicDemoKeepsExistingLoginAndRejectsEveryIssuanceAndSandboxWithoutMutation",
+          "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.PublicDemoRuntimeIT#publicDemoDispatchersRejectSandboxWithoutProviderOrDatabaseEffects",
+          "new": "com.example.marketplace.dbtest.PublicDemoRuntimeIT#publicDemoDispatchersRejectSandboxWithoutProviderOrDatabaseEffects",
+          "invocations": 1
+        }
+      ]
+    }
   ],
   "impact": {
-    "site-management": {"select":["site-maintenance-desktop","site-maintenance-mobile","site-management","browser-api","promotion","checkout","identity","media","job-contracts","questions","dashboard","refund","legacy","settlement"],"reason":"Publication, prospective quote and authorized job metadata are consumed by public and operator workflows."},
-    "dashboard": {"select":["site-management","dashboard","support","job-contracts","legacy","browser-api"],"reason":"Dashboard publish, job registration, schema and browser consumers"},
-    "settlement": {"select": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard", "settlement", "support", "browser-api", "payment", "confirmation", "refund", "return-finance", "aftercare-contracts", "legacy", "fulfillment", "checkout", "exchange-finance", "identity", "database-runtime"], "reason": "주문·구매확정·실제 결제/환불·미결·주간 모의 지급과 운영 화면"},
-    "operations": {"select":["operations","support","identity","seller-store","fulfillment","refund","return-physical","return-finance","order-history","guest","content","questions","moderation","reports","browser-api"],"reason":"운영 지원과 계정·판매·기존 주문·환불 권한의 소비 경로"},
-    "moderation": {"select":["dashboard", "moderation","exchange","reports","catalog","content","media","shopping","checkout","order-history","questions","support","confirmation","fulfillment","promotion","refund","legacy","browser-api", "operations"],"reason":"조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"},
+    "site-management": {
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "browser-api",
+        "promotion",
+        "checkout",
+        "identity",
+        "media",
+        "job-contracts",
+        "questions",
+        "dashboard",
+        "refund",
+        "legacy",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "Publication, prospective quote and authorized job metadata are consumed by public and operator workflows."
+    },
+    "dashboard": {
+      "select": [
+        "site-management",
+        "dashboard",
+        "support",
+        "job-contracts",
+        "legacy",
+        "browser-api",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "Dashboard publish, job registration, schema and browser consumers"
+    },
+    "settlement": {
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
+        "settlement",
+        "support",
+        "browser-api",
+        "payment",
+        "confirmation",
+        "refund",
+        "return-finance",
+        "aftercare-contracts",
+        "legacy",
+        "fulfillment",
+        "checkout",
+        "exchange-finance",
+        "identity",
+        "database-runtime",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "주문·구매확정·실제 결제/환불·미결·주간 모의 지급과 운영 화면"
+    },
+    "operations": {
+      "select": [
+        "operations",
+        "support",
+        "identity",
+        "seller-store",
+        "fulfillment",
+        "refund",
+        "return-physical",
+        "return-finance",
+        "order-history",
+        "guest",
+        "content",
+        "questions",
+        "moderation",
+        "reports",
+        "browser-api",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "운영 지원과 계정·판매·기존 주문·환불 권한의 소비 경로"
+    },
+    "moderation": {
+      "select": [
+        "dashboard",
+        "moderation",
+        "exchange",
+        "reports",
+        "catalog",
+        "content",
+        "media",
+        "shopping",
+        "checkout",
+        "order-history",
+        "questions",
+        "support",
+        "confirmation",
+        "fulfillment",
+        "promotion",
+        "refund",
+        "legacy",
+        "browser-api",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "조치와 공개 조회·이미지·신규 구매·기존 거래의 소비 경로"
+    },
     "exchange": {
-      "select": ["dashboard",
+      "select": [
+        "dashboard",
         "exchange",
         "inventory",
         "exchange-finance",
@@ -4408,12 +4881,15 @@
         "checkout",
         "payment",
         "promotion",
-        "content"
+        "content",
+        "package-runtime",
+        "public-demo-runtime"
       ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "return-physical": {
-      "select": ["dashboard",
+      "select": [
+        "dashboard",
         "return-physical",
         "return-finance",
         "return-recovery",
@@ -4432,7 +4908,11 @@
         "exchange",
         "exchange-finance",
         "exchange-recovery",
-        "content", "operations"],
+        "content",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "return-finance": {
@@ -4455,7 +4935,12 @@
         "exchange",
         "exchange-recovery",
         "legacy",
-        "content", "operations", "settlement"],
+        "content",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "exchange-finance": {
@@ -4479,11 +4964,19 @@
         "exchange",
         "legacy",
         "inventory",
-        "content", "settlement"],
+        "content",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "refund": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
         "support",
         "refund",
         "return-finance",
@@ -4503,12 +4996,21 @@
         "exchange",
         "exchange-recovery",
         "catalog",
-        "content"
-      , "reports", "moderation", "operations", "settlement"],
+        "content",
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "inventory": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "dashboard",
         "inventory",
         "checkout",
         "payment",
@@ -4532,11 +5034,17 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "confirmation": {
-      "select": ["dashboard",
+      "select": [
+        "dashboard",
         "support",
         "confirmation",
         "fulfillment",
@@ -4555,11 +5063,18 @@
         "exchange-finance",
         "exchange-recovery",
         "legacy",
-        "content", "moderation", "operations", "settlement"],
+        "content",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "fulfillment": {
-      "select": ["dashboard",
+      "select": [
+        "dashboard",
         "fulfillment",
         "confirmation",
         "return-physical",
@@ -4579,11 +5094,20 @@
         "exchange-recovery",
         "content",
         "questions",
-        "support", "moderation", "operations", "settlement"],
+        "support",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "catalog": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "dashboard",
         "catalog",
         "inventory",
         "promotion",
@@ -4609,11 +5133,19 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "seller-store": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "dashboard",
         "seller-store",
         "catalog",
         "promotion",
@@ -4639,11 +5171,19 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "promotion": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-management",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
         "promotion",
         "checkout",
         "payment",
@@ -4664,11 +5204,21 @@
         "shopping",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations"],
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "checkout": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
         "checkout",
         "payment",
         "order-history",
@@ -4688,11 +5238,21 @@
         "legacy",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations", "settlement"],
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "payment": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "dashboard",
         "payment",
         "checkout",
         "order-history",
@@ -4712,7 +5272,14 @@
         "legacy",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations", "settlement"],
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "guest": {
@@ -4738,25 +5305,39 @@
         "identity",
         "content",
         "questions",
-        "support", "operations"],
+        "support",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "media": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-management",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
         "media",
         "catalog",
         "browser-api",
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations"],
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "shopping": {
       "select": [
         "shopping",
         "checkout",
-        "browser-api"
+        "browser-api",
+        "package-runtime",
+        "public-demo-runtime"
       ],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
@@ -4781,11 +5362,23 @@
         "legacy",
         "content",
         "questions",
-        "support", "reports", "moderation", "operations"],
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "공개 계약의 직접 소비·정상 선행 업무 준비·교차 종결/금액/복구·브라우저/이행을 포함한 명시 영향표"
     },
     "identity": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
         "identity",
         "payment",
         "process-recovery",
@@ -4816,11 +5409,21 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations", "settlement"],
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "job-contracts": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
         "settlement",
         "job-contracts",
         "payment",
@@ -4851,12 +5454,23 @@
         "phone-provider",
         "content",
         "questions",
-          "support",
-          "reports", "moderation", "operations"],
-        "reason": "공통 작업 실행기 변경은 등록된 모든 계약 묶음을 검증"
-      },
-      "database-runtime": {
-      "select": ["site-maintenance-desktop","site-maintenance-mobile","site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "공통 작업 실행기 변경은 등록된 모든 계약 묶음을 검증"
+    },
+    "database-runtime": {
+      "select": [
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "site-management",
+        "dashboard",
         "database-runtime",
         "payment",
         "process-recovery",
@@ -4887,11 +5501,19 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations", "settlement"],
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "legacy": {
-      "select": ["site-management","dashboard",
+      "select": [
+        "site-management",
+        "dashboard",
         "legacy",
         "payment",
         "process-recovery",
@@ -4922,7 +5544,13 @@
         "content",
         "questions",
         "support",
-        "reports", "moderation", "operations", "settlement"],
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "제공 계약 변경 시 소비 업무·경합·복구·브라우저 회귀 포함"
     },
     "money.refund-reconciliation": {
@@ -4947,7 +5575,11 @@
         "catalog",
         "identity",
         "guest",
-        "job-contracts", "settlement"],
+        "job-contracts",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "F durable query slots and SYSTEM operations are consumed by payment, owner views, jobs, and claim financial/recovery contracts; common-schema milestone still uses unselected whole."
     },
     "money.provider-refund-receipt": {
@@ -4972,27 +5604,179 @@
         "catalog",
         "identity",
         "guest",
-        "job-contracts", "settlement"],
+        "job-contracts",
+        "settlement",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "F exact provider receipt is consumed by payment, cancellation, return/exchange financial outcomes, recovery, owner views and worker contracts; final common-schema scope is unselected whole."
     },
     "content": {
       "select": [
         "content",
-        "browser-api", "reports", "moderation", "operations"],
+        "browser-api",
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "후기 작성·공개 조회와 구매 브라우저 흐름"
     },
-    "support": {"select":["dashboard", "support","settlement","questions","browser-api", "reports", "moderation", "operations"],"reason":"지원 담당·주문 당사자와 비밀 문의 소비 계약"},
-    "reports": {"select":["dashboard", "reports","content","catalog","media","shopping","checkout","order-history","questions","support","browser-api", "moderation", "operations"],"reason":"신고·콘텐츠 조치의 접근과 공개·구매·기존 거래 소비 계약"},
-    "questions": {
-      "select": ["site-management","dashboard",
+    "support": {
+      "select": [
+        "dashboard",
+        "support",
+        "settlement",
+        "questions",
+        "browser-api",
+        "reports",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "지원 담당·주문 당사자와 비밀 문의 소비 계약"
+    },
+    "reports": {
+      "select": [
+        "dashboard",
+        "reports",
+        "content",
+        "catalog",
+        "media",
+        "shopping",
+        "checkout",
+        "order-history",
         "questions",
         "support",
-        "browser-api", "reports", "operations", "order-history", "payment", "confirmation", "fulfillment", "exchange", "moderation", "process-recovery", "job-contracts"],
+        "browser-api",
+        "moderation",
+        "operations",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "신고·콘텐츠 조치의 접근과 공개·구매·기존 거래 소비 계약"
+    },
+    "questions": {
+      "select": [
+        "site-management",
+        "dashboard",
+        "questions",
+        "support",
+        "browser-api",
+        "reports",
+        "operations",
+        "order-history",
+        "payment",
+        "confirmation",
+        "fulfillment",
+        "exchange",
+        "moderation",
+        "process-recovery",
+        "job-contracts",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
       "reason": "상품 문의와 구매자/판매자 브라우저"
+    },
+    "package-runtime": {
+      "select": [
+        "site-management",
+        "payment",
+        "process-recovery",
+        "browser-api",
+        "order-history",
+        "confirmation",
+        "refund",
+        "return-physical",
+        "return-finance",
+        "return-recovery",
+        "aftercare-contracts",
+        "legacy",
+        "fulfillment",
+        "checkout",
+        "job-contracts",
+        "promotion",
+        "guest",
+        "shopping",
+        "exchange",
+        "exchange-finance",
+        "exchange-recovery",
+        "catalog",
+        "inventory",
+        "media",
+        "seller-store",
+        "identity",
+        "database-runtime",
+        "phone-provider",
+        "content",
+        "questions",
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "dashboard",
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "Deployment proxy, role packaging, runtime policy and authentication transport cross shared producer/consumer boundaries; conservatively include all registered contracts."
+    },
+    "public-demo-runtime": {
+      "select": [
+        "site-management",
+        "payment",
+        "process-recovery",
+        "browser-api",
+        "order-history",
+        "confirmation",
+        "refund",
+        "return-physical",
+        "return-finance",
+        "return-recovery",
+        "aftercare-contracts",
+        "legacy",
+        "fulfillment",
+        "checkout",
+        "job-contracts",
+        "promotion",
+        "guest",
+        "shopping",
+        "exchange",
+        "exchange-finance",
+        "exchange-recovery",
+        "catalog",
+        "inventory",
+        "media",
+        "seller-store",
+        "identity",
+        "database-runtime",
+        "phone-provider",
+        "content",
+        "questions",
+        "support",
+        "reports",
+        "moderation",
+        "operations",
+        "settlement",
+        "dashboard",
+        "site-maintenance-desktop",
+        "site-maintenance-mobile",
+        "package-runtime",
+        "public-demo-runtime"
+      ],
+      "reason": "Shared fail-closed mode and issuance/payment boundary reaches all production entry points."
     }
   },
   "aliases": {
-    "authentication": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+    "authentication": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5023,8 +5807,18 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"],
-    "job-runner": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ],
+    "job-runner": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5055,8 +5849,18 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"],
-    "financial-common": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ],
+    "financial-common": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5087,8 +5891,18 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"],
-    "schema": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ],
+    "schema": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5119,8 +5933,18 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"],
-    "unknown": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ],
+    "unknown": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5151,8 +5975,18 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"],
-    "test-tools": ["site-maintenance-desktop","site-maintenance-mobile","site-management","dashboard",
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ],
+    "test-tools": [
+      "site-maintenance-desktop",
+      "site-maintenance-mobile",
+      "site-management",
+      "dashboard",
       "payment",
       "process-recovery",
       "browser-api",
@@ -5183,6 +6017,12 @@
       "content",
       "questions",
       "support",
-      "reports", "moderation", "operations", "settlement"]
+      "reports",
+      "moderation",
+      "operations",
+      "settlement",
+      "package-runtime",
+      "public-demo-runtime"
+    ]
   }
 }

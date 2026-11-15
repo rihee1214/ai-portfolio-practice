@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"D:/Workspace/ai-portfolio-practice/.codex/hooks/gsd-check-update.cmd\"",
+            "commandWindows": "\"D:/Workspace/ai-portfolio-practice/.codex/hooks/gsd-check-update.cmd\""
+          }
+        ]
+      }
+    ]
+  }
+}
