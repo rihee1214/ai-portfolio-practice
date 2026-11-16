@@ -2,6 +2,7 @@ import { operation, prepare, cleanup } from './business-deadline';
 import { expect, test } from './business-deadline';
 import { headers } from './purchase-helpers';
 import { geometry } from './post-purchase-helpers';
+import { PublicationDiagnostic } from './publication-diagnostic';
 test('closed product report hides public detail and restores it through the recorded action', async ({ page, context, browser }, info) => {
     const suffix = 'questionmember-' + info.project.name;
     const slug = 'p4b-browse-order-' + suffix + '-a';
@@ -61,7 +62,8 @@ test('closed product report hides public detail and restores it through the reco
             await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
         });
         const { notice, literal, direct } = await operation("moderation: publish notice through actual public body", async () => {
-            const { notice, literal } = await operation("moderation: 새 공지 작성 [8]", async () => {
+            const diagnostic = new PublicationDiagnostic(info.project.name);
+            const { notice, literal, saved } = await operation("moderation: 새 공지 작성 [8]", async () => {
                 await admin.goto('/admin/publications');
                 await admin.getByRole('button', { name: '새 공지 작성' }).click();
                 const notice = '배송 안내 ' + info.project.name;
@@ -71,16 +73,24 @@ test('closed product report hides public detail and restores it through the reco
                 await admin.getByLabel('게시 상태').selectOption('PUBLISHED');
                 await admin.getByLabel('변경 사유').fill('공지 게시');
                 await admin.getByRole('button', { name: '게시 설정 저장' }).focus();
+                const saved = diagnostic.captureSave(admin, notice, literal);
                 await admin.keyboard.press('Enter');
                 await expect(admin.getByRole('button', { name: notice + ' · PUBLISHED' })).toBeVisible();
-                return { notice, literal };
+                return { notice, literal, saved };
             });
             const { direct } = await operation("moderation: closed product report hides public detail and restores it through the recorded action [9]", async () => {
-                await page.goto('/notices');
-                await page.getByRole('link', { name: notice, exact: true }).click();
-                await expect(page.getByText(literal, { exact: true })).toBeVisible();
-                await geometry(page, info, 'site-notice-long-body');
-                const direct = page.url();
+                const direct = await diagnostic.publicList(page, staff, saved, () => page.goto('/notices'), async (post, mark) => {
+                    const link = page.getByRole('link', { name: notice, exact: true });
+                    const href = await link.getAttribute('href');
+                    mark('expected-list-link', { expectedPostId: post.id, expectedVersion: post.version, actualHref: href });
+                    expect(href).toBe('/notices/' + post.id);
+                    await link.click();
+                    mark('list-link-clicked', { expectedPostId: post.id, actualUrl: page.url() });
+                    await expect(page.getByText(literal, { exact: true })).toBeVisible();
+                    mark('exact-detail-body', { expectedPostId: post.id, actualUrl: page.url(), literalBodyMatched: true });
+                    await geometry(page, info, 'site-notice-long-body');
+                    return page.url();
+                });
                 return { direct };
             });
             return { notice, literal, direct };

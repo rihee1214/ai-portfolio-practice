@@ -41,6 +41,14 @@ P10-A부터 Playwright는 `frontend/auth-e2e/serve-current-bundle.mjs`로 현재
 
 변경 이유와 이전 390초 timeout·진단 한계·실제 브라우저 결과는 [P10-A 실행 기록](work-items/P10-A.md)을 따른다. 브라우저 하네스 동작 변경은 최종 무선택 전체 근거를 요구한다.
 
+### P12-D 릴리스·복구 검증 — 격리 로컬 수용
+
+`release-upgrade`는 고정 P11-D H129 산출물을 실제 실행하여 V129→V132 이행과 과거 API 소비를 검사한다. `P12_D_H129_JAR`, `P12_D_HISTORY_PROOF`는 보존된 과거 산출물과 commit/JAR 출처를 가리켜야 한다. 현재 API 또는 SQL 결과만으로 대체하지 않으며 산출물 부재는 필수 차단이다. `release-recovery`는 `P12_D_R0_JAR`·`P12_D_R0_DIST`와 현재 후보를 실제 교체하고 새 DB/media 복원을 검사한다. R1은 제품 API가 같을 수 있는 운영 패키지 릴리스이며 실제 고정 payload 소비·프로세스·pointer·업무 결과를 확인한다. ZIP timestamp 차이는 버전 변경 근거가 아니다.
+
+L의 local-full/local-test 비회원 성공 경로와 P의 초대 제한·개별 로그인 public-demo 경로를 구분한다. P의 비회원503·DB 무효과는 실제 P 경로에서 관측하고 제공자 무호출은 같은 제품 클래스에 결합된 `public-demo-runtime` 근거와 대조한다. 해당 연결 선택 검사에는 두 묶음을 함께 지정한다. 각 소유 DB와 실패 대상까지 필수 보조 DB 수에 등록하며, 의도한 거부도 정확한 명령·원인·무효과 assertion이 있어야 한다. 임의 실패 무시는 허용하지 않는다.
+
+운영 phase와 브라우저 사용자 업무 시간을 구분한다. 사용자 명령/응답/재조회/최종 assertion은 기존 공유10초를 따르고, 준비·기동·연결·종료는 유한 phase와 소유 자식 정리로 제한한다. 전체 또는 시나리오 총 제한은 추가하지 않는다. 이 설명은 실행 통과 판정이 아니며 최신 소스·명령·선택/전체·실패·독립 판정은 [P12-D 기록](work-items/P12-D.md)을 따른다. 인증·공통 실행·복구 통합 변경의 새 무선택 full3 전체 근거를 확보했다. 이후 테스트 전용 관측4파일만 변경하고 browser-api 선택 검증을 통과해 동일소스 독립 영향 수용으로 결합했다. 최종 manifest 자체의 무선택 전체 PASS와 구분하며 구체적인 입력 해시·근거·외부 미검증은 P12-D 인계를 따른다.
+
 ### P12-C 실제 패키지 검증 — 로컬·모의 수용
 
 P12-C는 기존 브라우저 묶음을 유지하고 `package-runtime`과 `public-demo-runtime`을 추가한다. 전자는 같은 실행 JAR의 API/non-web worker, 새 PostgreSQL DB와 media, 새 production dist, 실제 TLS NGINX를 연결한다. 이전 P12-B의 보존 번들을 별도 새 경로로 복제해 새 API와의 세션·오류 호환성도 검사한다. 구형 번들은 당시 development build이고 현재 production build와 구분한다. 테스트용 읽기 관측 서버는 별도 loopback 프로세스이며 제품 JAR나 공개 프록시의 API가 아니다. 단독 proxy 경계 검사는 실제 NGINX와 제어된 upstream을 사용하므로 제품 DB 장애 실행으로 확대 해석하지 않는다.
@@ -177,6 +185,8 @@ P06의 fixture 소유권 참조 읽기는 `/api/guest/access/references[/{number
 ```
 
 쉼표 목록은 PowerShell에서 **따옴표로 감싼 문자열**로 전달한다. `-DbGroups`와 `-ChangedContracts`는 함께 사용할 수 없다. 오타·빈 값·빈 목록 원소·중복은 실행 전에 실패한다. 명시 옵션으로 모든 묶음을 골라도 판정은 `selected-passed`, `certificationEligible=false`다. 전체 인증은 무선택 실행의 `passed`·보존 통과·정상 종료로만 주장한다. 적절한 선택 범위의 작업 완료 가능 여부는 위 결과 필드 기준을 따른다. 선택 실행도 Java 단위·ArchUnit·프런트 단위/Node/type/lint/build를 실행하며, 일반 브라우저154건은 `browser-api`, 실제 phone SDK probe는 `phone-provider`를 선택한 경우에 실행한다. 미선택 검사를 skip으로 수집하지 않는다. 작업에 브라우저/전화 소비 영향이 있으면 해당 묶음을 포함하거나 영향 불명확으로 전체를 선택한다.
+
+실행 순서는 등록부의 명시적 `prerequisites`를 지키는 안정 위상 정렬이다. 실행 가능한 묶음 중 등록 순서를 우선하고, `-ReverseGroups`는 현재 선행 조건이 충족된 묶음 사이에서 역등록 순서를 우선한다. 따라서 `public-demo-runtime`의 같은 실행 증거를 소비하는 `release-recovery`는 역순 옵션에서도 생산자 뒤에 실행한다. 알 수 없는·자기 자신·중복 선행 조건, 누락된 선택 선행 묶음과 순환 그래프는 자원 취득 전에 거부한다. 선택 묶음을 자동 추가하거나 소비 검사를 생략하지 않으며 `provides`/`consumes` 영향표에서 실행 선행 관계를 추론하지 않는다. 선택·제외·인증 가능 여부는 그대로 유지하고 실제 순서는 DB 실행 `summary.json`의 `executionOrder`에 별도로 기록한다.
 
 ### 영향표와 검사 소유권
 

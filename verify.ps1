@@ -66,6 +66,9 @@ try {
     & "$PSScriptRoot/verification/Test-DbGroups.ps1" | Set-Content "$output/db-group-tests.txt"
     & "$PSScriptRoot/verification/Test-Gate.ps1" | Set-Content (Join-Path $output 'gate-tests.txt')
     & "$PSScriptRoot/verification/Test-DatabaseTarget.ps1" | Set-Content (Join-Path $output 'database-target-tests.txt')
+    & node --test --test-reporter=junit "--test-reporter-destination=$output/release-operation-tests.xml" "$PSScriptRoot/verification/Test-ReleaseOperations.cjs" 2>&1 | Set-Content "$output/release-operation-tests.txt"
+    if ($LASTEXITCODE -ne 0) { throw 'Release operation guard checks failed' }
+    Assert-ReleaseOperationTests -Report "$output/release-operation-tests.xml" | ConvertTo-Json -Depth 5 | Set-Content "$output/release-operation-coverage.json"
     & node "$PSScriptRoot/verification/Run-PackageProxy.mjs" "$EvidenceDirectory/package-proxy" 2>&1 | Set-Content (Join-Path $output 'package-proxy-tests.txt')
     if ($LASTEXITCODE -ne 0) { throw 'Actual NGINX proxy contract checks failed' }
     $backendSelection = @{}
@@ -87,6 +90,15 @@ try {
     $allBrowserCases = @()
     foreach ($browserGroup in @($registry.groups | Where-Object { $_.id -cin $selection.selected -and ($_.id -ceq 'browser-api' -or $_.browser) })) {
     $browserFolder = "$output/db/groups/$($browserGroup.id)"
+    if ($browserGroup.id -ceq 'release-recovery') {
+        $releaseProof = Assert-ReleaseRecoveryEvidence -Folder $browserFolder -Group $browserGroup
+        foreach ($mode in @('L','P')) {
+            $releaseReport = Get-Content "$browserFolder/browser-$mode/browser-report.json" -Raw | ConvertFrom-Json
+            $allBrowserCases += @(Read-BrowserCases $releaseReport.suites)
+        }
+        $releaseProof | ConvertTo-Json -Depth 6 | Set-Content "$browserFolder/root-release-coverage.json"
+        continue
+    }
     $browser = Get-Content "$browserFolder/browser-report.json" -Raw | ConvertFrom-Json
     if ($browser.errors.Count -or ($browserGroup.id -ceq 'browser-api' -and $browser.stats.expected -lt 22) -or $browser.stats.skipped -or $browser.stats.unexpected -or $browser.stats.flaky) {
         throw 'Browser gate failed (registered cases required, no skips or retries accepted)'

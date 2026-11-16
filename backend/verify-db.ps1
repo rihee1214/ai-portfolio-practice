@@ -18,18 +18,19 @@ Assert-DbGroupRegistration -Registry $registry -Root $root
 $selectionArgs = @{Registry=$registry}
 if ($PSBoundParameters.ContainsKey('DbGroups')) { $selectionArgs.Selection=$DbGroups }
 $selection = Resolve-DbGroups @selectionArgs
+$ordered = @(Get-DbGroupExecutionOrder -Registry $registry -Selected $selection.selected -Reverse:$ReverseGroups)
 $endpoint = Resolve-TestPostgresEndpoint -Port $TestPostgresPort -Instance $TestPostgresInstance -Container $TestPostgresContainer
 $output = [IO.Path]::GetFullPath((Join-Path $root $EvidenceDirectory))
 $allowed = [IO.Path]::GetFullPath((Join-Path $root '.local-tools')) + [IO.Path]::DirectorySeparatorChar
 if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { throw 'Evidence must be inside .local-tools' }
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
-$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD','A3_RUN_BROWSER','A3_EVIDENCE','P12_B_BROWSER_PROJECT','D2_TEST_POSTGRES_PORT','D2_TEST_POSTGRES_INSTANCE','D2_DB_ENDPOINT_CONFIRMATION','MAVEN_ARGS','P09_F_BROWSER_ONLY')
+$names = @('JAVA_HOME','MAVEN_USER_HOME','D2_DB_NAME','D2_DB_URL','D2_DB_USERNAME','D2_DB_PASSWORD','D2_ADMIN_PASSWORD','A3_RUN_BROWSER','A3_EVIDENCE','P12_B_BROWSER_PROJECT','D2_TEST_POSTGRES_PORT','D2_TEST_POSTGRES_INSTANCE','D2_TEST_POSTGRES_CONTAINER','D2_DB_ENDPOINT_CONFIRMATION','MAVEN_ARGS','P09_F_BROWSER_ONLY')
 $previous = @{}
 foreach ($name in $names) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 $secrets = @{}
 $groups = @()
-$result = @{status='failed';started=(Get-Date).ToString('o');selection=$selection;groups=@()}
+$result = @{status='failed';started=(Get-Date).ToString('o');selection=$selection;executionOrder=$ordered;reversePriority=[bool]$ReverseGroups;groups=@()}
 function Invoke-ContractMaven([string[]]$Goals, [string]$Log, [string[]]$Properties=@()) {
     $arguments = @('-B','-ntp','-Pdb-it','-Dmaven.repo.local=../.local-tools/m2/repository',"-Dmarketplace.build.directory=$build", "-Djava.io.tmpdir=$output/java-tmp") + $Properties + $Goals
     if ($Offline) { $arguments = @('-o') + $arguments }
@@ -55,6 +56,7 @@ try {
     $env:MAVEN_USER_HOME = Join-Path $root '.local-tools/m2'
     $env:D2_TEST_POSTGRES_PORT = [string]$endpoint.port
     $env:D2_TEST_POSTGRES_INSTANCE = $endpoint.instance
+    $env:D2_TEST_POSTGRES_CONTAINER = $endpoint.container
     $env:D2_DB_ENDPOINT_CONFIRMATION = $endpoint.confirmation
     $env:D2_DB_USERNAME = 'marketplace_test'
     $env:D2_DB_PASSWORD = $secrets['TEST_DB_PASSWORD']
@@ -66,8 +68,6 @@ try {
     $result.commonBuildSeconds = $compileClock.Elapsed.TotalSeconds
     if ($compileExit -ne 0) { throw 'Common compile, Checkstyle, unit or architecture tests failed' }
     $common = @(Read-JUnitCases "$build/surefire-reports")
-    $ordered = @($selection.selected)
-    if ($ReverseGroups) { [array]::Reverse($ordered) }
     foreach ($id in $ordered) {
         $definition = @($registry.groups | Where-Object id -CEQ $id)[0]
         $folder = Join-Path $output "groups/$id"
@@ -98,7 +98,11 @@ try {
             $group.databaseProof = Assert-DbGroupDatabases -ExpectedCount $definition.expectedDatabaseCount -Primary $env:D2_DB_NAME -Created $created
             if ($id -cne 'phone-provider') {
                 $identity = Get-Content "$folder/execution-identity.json" -Raw | ConvertFrom-Json
-                if ($identity.database -cne $env:D2_DB_NAME -or $identity.media -cne "$folder\media") { throw 'Group scope identity mismatch' }
+                $expectedMedia = if ($id -ceq 'release-recovery') {
+                    (Get-Content "$folder/release-lifecycle.json" -Raw | ConvertFrom-Json).sourceMedia
+                } else { "$folder\media" }
+                if ($identity.database -cne $env:D2_DB_NAME -or $identity.media -cne $expectedMedia) { throw 'Group scope identity mismatch' }
+                $group.media = $expectedMedia
                 $group.pid = $identity.pid
                 $group.httpPort = $identity.httpPort
             } else { $group.database=$null; $group.media=$null }
@@ -113,7 +117,9 @@ try {
                 $actualCases = @($cases | Where-Object { ($_.classname+'#'+($_.name -replace '\(.*$','')) -ceq $test.new })
                 if ($actualCases.Count -ne $test.invocations) { throw "Missing or duplicate parameter invocation: $($test.new)" }
             }
-            if ($id -ceq 'browser-api' -or $definition.browser) {
+            if ($id -ceq 'release-recovery') {
+                $group.browserApplication = Assert-ReleaseRecoveryEvidence -Folder $folder -Group $definition
+            } elseif ($id -ceq 'browser-api' -or $definition.browser) {
                 $group.browserApplication = if ($id -ceq 'package-runtime') { Read-VerifiedPackageBundle -Folder $folder } else { Read-VerifiedBrowserBundle -Folder $folder }
                 $browserReport = Get-Content "$folder/browser-report.json" -Raw | ConvertFrom-Json
                 if ($browserReport.errors.Count -or $browserReport.stats.skipped -or $browserReport.stats.unexpected -or $browserReport.stats.flaky) { throw 'Browser group failed or retried' }

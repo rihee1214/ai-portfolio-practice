@@ -9434,6 +9434,286 @@
       "file": "package-runtime.spec.ts",
       "line": 106,
       "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: issue actual local guest phone challenge from UI",
+      "kind": "operation",
+      "file": "release-guest.ts",
+      "line": 8,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: enter current local guest challenge",
+      "kind": "prepare",
+      "file": "release-guest.ts",
+      "line": 20,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: verify actual guest challenge and prepare lookup password",
+      "kind": "operation",
+      "file": "release-guest.ts",
+      "line": 21,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: new guest lookup login consumes preserved original business ID",
+      "kind": "operation",
+      "file": "release-guest.ts",
+      "line": 32,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: open isolated browser context",
+      "kind": "prepare",
+      "file": "release-helpers.ts",
+      "line": 18,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: read current authorized API state",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 29,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: execute real producer API command",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 37,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: individual login through actual UI",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 44,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: verify loaded production index and network asset bytes",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 54,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: previously published lazy asset bytes remain immutable and never HTML",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 84,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: upload actual media and record authorized bytes",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 115,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: real storefront cart command and independent quote amount",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 134,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: enter synthetic shipping contact",
+      "kind": "prepare",
+      "file": "release-helpers.ts",
+      "line": 149,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: submit durable UI order and same-key response-loss recovery",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 155,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: approve payment through UI and verify original-unit amount",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 195,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: retained production UI navigates actual account order links",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 226,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: compare actual database observer evidence",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 235,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: consume same business ID amount and payment history in UI",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 241,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: preserve public and private media bytes and owner boundary",
+      "kind": "operation",
+      "file": "release-helpers.ts",
+      "line": 251,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: public member commerce persists one autonomous worker effect",
+      "kind": "operation",
+      "file": "release-public.spec.ts",
+      "line": 16,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: obtain public guest rejection CSRF session",
+      "kind": "operation",
+      "file": "release-public.spec.ts",
+      "line": 25,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: public guest issuance and lookup receive explicit 503 JSON",
+      "kind": "operation",
+      "file": "release-public.spec.ts",
+      "line": 30,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: public guest lookup UI preserves explicit restriction and never displays order",
+      "kind": "operation",
+      "file": "release-public.spec.ts",
+      "line": 42,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: public restored member snapshot cannot revive prior session",
+      "kind": "operation",
+      "file": "release-public.spec.ts",
+      "line": 63,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: reconcile independent original-unit amounts and refund IDs in actual UI API",
+      "kind": "operation",
+      "file": "release-reconciliation.ts",
+      "line": 30,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: seller own settlement UI preserves exact payout and carryover",
+      "kind": "operation",
+      "file": "release-reconciliation.ts",
+      "line": 58,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: settlement operator UI traces same batch store and original seller order",
+      "kind": "operation",
+      "file": "release-reconciliation.ts",
+      "line": 69,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: system operator reads preserved terminal failure and safe followup UI",
+      "kind": "operation",
+      "file": "release-reconciliation.ts",
+      "line": 84,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: capture source session CSRF before checkpoint",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 29,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: await actual worker and verify one purchase effect in database",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 32,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: retained credentials and CSRF reject another owner",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 56,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: restored target rejects source issued unused email and reset tokens",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 99,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: restored target rejects old member guest and CSRF credentials",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 110,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: restored readers cannot see post-checkpoint or foreign business IDs",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 132,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: fresh restore login logout and CSRF rotation preserve commerce",
+      "kind": "operation",
+      "file": "release-recovery.spec.ts",
+      "line": 140,
+      "maxOccurrencesPerTest": 100
+    },
+    {
+      "name": "release: actual restored notification retry preserves one effect and one operator audit",
+      "kind": "operation",
+      "maxOccurrencesPerTest": 100,
+      "file": "release-reconciliation.ts",
+      "line": 97
+    },
+    {
+      "name": "release: verify authorized original-unit order amounts",
+      "kind": "operation",
+      "maxOccurrencesPerTest": 100,
+      "file": "release-helpers.ts",
+      "line": 217
+    },
+    {
+      "name": "release: bind completed checkpoint manifest to quiesced full snapshot",
+      "kind": "operation",
+      "maxOccurrencesPerTest": 100,
+      "file": "release-preservation.ts",
+      "line": 13
+    },
+    {
+      "name": "release: consume exact quiescent boundary and typed live graph preservation proof",
+      "kind": "operation",
+      "maxOccurrencesPerTest": 100,
+      "file": "release-preservation.ts",
+      "line": 35
+    },
+    {
+      "name": "release: stopped original source preserves every table sequence and media inventory after restore",
+      "kind": "operation",
+      "maxOccurrencesPerTest": 100,
+      "file": "release-preservation.ts",
+      "line": 72
     }
   ]
 }

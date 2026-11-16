@@ -1161,5 +1161,143 @@
       "com.example.marketplace.api.RuntimeRoleSchedulingTest#apiKeepsExclusiveMediaOwnerAndRegistersActualCleanup",
       "com.example.marketplace.api.RuntimeRoleSchedulingTest#workerOmitsAllMediaOwnersAndStillRegistersActualDashboardRefresh"
     ]
+  },
+  {
+    "id": "P12-D actual retained historical API upgrade",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseUpgradeIT#retainedH129ApiWritesBeforeAndAfterRealV132MigrationWithoutRewritingHistory"
+    ]
+  },
+  {
+    "id": "P12-D actual release commands and isolated recovery",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseRecoveryIT#actualReleaseCommandsExchangeRestoreAndReopenIsolatedLocalAndPublicStacks"
+    ]
+  },
+  {
+    "id": "P12-D full snapshot causal preservation counterexamples",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#acceptsOnlyTheExactStartupGraphWhilePreservingEveryOriginalRow",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsDeletionOfAnOriginalRow",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsOneWonMutationOfOriginalMoney",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsRewriteOfOriginalImmutableHistory",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsAnUnrelatedRecoveryAppend",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsDuplicateRestartRuns",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsWrongClaimOwnerAndWrongJobCause",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsCompletedStageCursorRegression",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsAnUnregisteredTableChange",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#rejectsSourceSequenceAndMediaMutationDuringRestore",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#nonPrimaryIdentityPreservesEveryDuplicateMultiplicity",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#actualObserverErrorStreamPreservesPrivateThrowableAndReportsFailedPhase",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#sellerRecoverySkipRequiresOriginalCompletionAndCurrentDecisionChain",
+      "com.example.marketplace.dbtest.ReleaseSnapshotContractTest#readyRetryUsesNoPreviousLiveOwnerAndKeepsOriginalDueBinding"
+    ]
+  },
+  {
+    "id": "P12-D scheduled runtime producer preservation counterexamples",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#acceptsZeroScheduledDeltaAndUnchangedSessionCredentials",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#acceptsCausalCronGenerationWithLiteralMetricsAndExactNullToOneAllocation",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsOneWonMutationOfIndependentlyExpectedPaidAmount",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsRewriteOfAnExistingImmutableMetric",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsDeletionOfAnExistingImmutableMetric",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsMixedDashboardHeadGeneration",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsDashboardSnapshotWithoutItsExactClaimOwner",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsUnexplainedDashboardSequenceAllocationGap",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsTwoCausalRunsForTheSameCronSlot",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#acceptsOneExistingNotificationJobCompletionAndOneInboxEffect",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsInboxForAnExternalUnregisteredEvent",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsDuplicateNotificationBusinessEffect",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsSessionPrincipalChangeWithoutAnAuthenticationCommand",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsSessionCredentialAttributeRewrite",
+      "com.example.marketplace.dbtest.ReleaseScheduledWorkTest#rejectsUnexplainedSessionTtlChange"
+    ]
+  },
+  {
+    "id": "P12-D owned operator cancellation and immutable phase forwarding",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#actualOwnedChildAndDescendantAndRequestFinishBeforeTargetCleanup",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#refusesSelfJoinAndNewAdmissionsBeforeLaunchingAnyCleanupRace",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#readinessProgressAndSpawnReceiptsCannotEndOrRenewTheOuterPhase",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#onlyMatchingOuterCompletionEndsTheOriginalPhase",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#overlappingOuterPhaseStartsAreRejectedWithoutReplacingTheOriginalDeadline",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#readinessProgressRequiresItsMatchingOuterPhaseOrExplicitRoleSpawn",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#producerAbsoluteDeadlinesRejectExpiredAndUnboundedPhases",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#actualNonzeroOwnedCommandJournalRemainsATerminalFailure",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#sequentialFinitePhasesDoNotAcquireAnAggregateScenarioTimeout",
+      "com.example.marketplace.dbtest.ReleaseOperationLifecycleTest#unfinishedOuterPhaseCannotFinishAndMatchingTimeoutIsFailed"
+    ]
+  },
+  {
+    "id": "P12-D actual worker startup preparation precedes public rejection probes",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#emptyQueueBeforeApplicationReadyCannotPassPreparation",
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#priorCompletedRunsCannotStandInForTheNewWorker",
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#bothNewRunsWithEveryStageAndJobCompleteAreReady",
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#newRunWithAnUnfinishedStageOrClaimedJobCannotPass",
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#duplicateNewStartupRunsAreRejected",
+      "com.example.marketplace.dbtest.ReleaseStartupPreparationTest#anUnrelatedJobCannotProveStartupCompletion"
+    ]
+  },
+  {
+    "id": "P12-D checkpoint retained actual worker incarnation and ownership",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#checkpointCannotManufactureAnIdentityWithoutVerifiedActivation",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#missingEitherHostIncarnationFieldIsRejected",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#checkpointRetainsTheVerifiedActiveBindingInsteadOfAColonPlaceholder",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#beginningAnotherActivationInvalidatesOldCacheEvenWhenItFails",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#maintenanceDataObservationCannotCreateALiveWorkerOrigin",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#sameHostPidWithNewCreationIsADifferentActualIncarnation",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#sameContainerIdWithNewStartedAtIsADifferentActualIncarnation",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#identicalIncarnationCannotPassBecauseEvidenceOrLabelsChanged",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#originalWorkerFromAnotherSourceScopeIsRejected",
+      "com.example.marketplace.dbtest.ReleaseWorkerOriginTest#actualComposeObservationMustMatchRunProjectRoleReleaseAndContainer"
+    ]
+  },
+  {
+    "id": "P12-D Java native safe worker metadata transport",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseWorkerObservationTest#nativeArgvTemplateHasNoDoubleQuotesOrEnvironmentSelection",
+      "com.example.marketplace.dbtest.ReleaseWorkerObservationTest#selectedFieldsPreserveFullIncarnationAndStoppedLivenessExactly",
+      "com.example.marketplace.dbtest.ReleaseWorkerObservationTest#unexpectedFieldsRecordsOrInvalidLivenessAreRejected"
+    ]
+  },
+  {
+    "id": "P12-D exact fixed confirmation startup without financial effects",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#actualFixedStartupScanWithUndeliveredUnitsPreservesCommerce",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#existingFixedRunRemainsExactAcrossAnotherWorkerStartup",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#wrongHighWaterUuidIsRejected",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#unrelatedFixedRunIsRejected",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#wrongCauseAndSkippedPageCursorAreRejected",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#eligibleDeliveredUnitCannotUseTheNoFinancialEffectException",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#wrongOutboxOrMissingActualClaimCannotProveTheScan",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#originalFixedScanHistoryCannotBeRewritten",
+      "com.example.marketplace.dbtest.ReleaseConfirmationStartupTest#oneWonMutationStillFailsWithAValidStartupGraph"
+    ]
+  },
+  {
+    "id": "P12-D valid-integrity wrong-namespace checkpoint fault fixture",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleaseMixedCheckpointTest#pairsOriginalDatabaseDumpWithTheEntireForeignMediaInventory",
+      "com.example.marketplace.dbtest.ReleaseMixedCheckpointTest#constructionDoesNotModifyEitherRetainedCheckpoint",
+      "com.example.marketplace.dbtest.ReleaseMixedCheckpointTest#integrityRebindingChangesOnlyMediaAndItsCompositeDigest",
+      "com.example.marketplace.dbtest.ReleaseMixedCheckpointTest#identicalNamespacesCannotPretendToExerciseTheMismatchGuard"
+    ]
+  },
+  {
+    "id": "P12-D scoped publication diagnostic readonly observer guards",
+    "tests": [
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#observerRequiresBothExplicitTestProfiles",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#scopedReadUsesActualReadonlyRepeatableReadAndBoundedJdbcStatement",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#uninitializedObserverRefusesBeforeAnyJdbcAccess",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#nonLoopbackObserverRequestsAreRejectedBeforeJdbc",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#missingOrWrongRunCredentialsAreRejectedBeforeJdbc",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#mutationMethodAndUnregisteredPhaseAreRejectedBeforeJdbc",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#missingPrincipalCannotReadAnotherActorsPublication",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#unmatchedPostAndRequestKeyHaveNoFallbackToBroaderRows",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#wrongDatabaseReadonlyOrIsolationObservationFailsClosed",
+      "com.example.marketplace.dbtest.PublicationBrowserObservationTest#bootstrapContractIsPrivateAndCannotBeReinitialized"
+    ]
   }
 ]

@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@org.springframework.test.context.ActiveProfiles("publication-observation-fixture")
+@org.springframework.context.annotation.Import(PublicationBrowserObservation.class)
 class BrowserApiIT extends PostgresContractFixture {
     private static final ZoneId SETTLEMENT_ZONE = ZoneId.of("Asia/Seoul");
     // Keep monetary browser causes away from the current-time shared browser journeys.
@@ -148,6 +150,9 @@ class BrowserApiIT extends PostgresContractFixture {
         }
         var migrationPolicy=jdbc.queryForMap("SELECT p.version,p.base_fee,p.free_threshold FROM marketplace.site_shipping_head h JOIN marketplace.site_shipping_policy p ON p.version=h.version",Map.of());
         assertEquals(Map.of("version",1L,"base_fee",3000L,"free_threshold",50000L),migrationPolicy);
+        if ("true".equals(System.getenv("A3_RUN_BROWSER"))) {
+            context.getBean(PublicationBrowserObservation.class).initialize(System.getenv("D2_DB_NAME"),port,java.nio.file.Path.of(System.getenv("A3_EVIDENCE")));
+        }
         runAuthBrowsersIfRequested();
         assertEquals(migrationPolicy,jdbc.queryForMap("SELECT p.version,p.base_fee,p.free_threshold FROM marketplace.site_shipping_head h JOIN marketplace.site_shipping_policy p ON p.version=h.version",Map.of()));
         if ("true".equals(System.getenv("A3_RUN_BROWSER"))) {

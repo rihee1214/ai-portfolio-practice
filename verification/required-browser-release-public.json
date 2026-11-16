@@ -1,0 +1,8 @@
+[
+  {
+    "id": "P12-D isolated public demo recovery boundary desktop/mobile",
+    "tests": [
+      "release#release-public.spec.ts:P12-D public release rejects guest issuance and lookup without database or provider effects"
+    ]
+  }
+]

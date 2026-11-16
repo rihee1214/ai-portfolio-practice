@@ -95,3 +95,45 @@ foreach($field in @('database','pid','media','evidence')) {
     Must-Reject "reused isolated browser $field" { $previous=@{id='site-maintenance-mobile';database='d2_it_'+('b'*32);pid=102;httpPort=31002;media='D:/new/mobile/media';evidence='D:/new/mobile'};$previous[$field]=$scope[$field];Assert-MaintenanceBrowserLifecycle $scope $proof @($previous) }
 }
 'PASS isolated browser registration, project ownership and lifecycle gates'
+$faults = [pscustomobject]@{
+    mixedCheckpoint=[pscustomobject]@{commandId='11111111-1111-4111-8111-111111111111'}
+    schemaReadiness=[pscustomobject]@{commandId='22222222-2222-4222-8222-222222222222'}
+}
+$expectedFaults = @(
+    [pscustomobject]@{commandId=$faults.mixedCheckpoint.commandId;action='Restore';status='failed';error='Media namespace mismatch'},
+    [pscustomobject]@{commandId=$faults.schemaReadiness.commandId;action='Activate';status='failed';error='Schema version mismatch'}
+)
+Assert-ExpectedReleaseFailures -Results $expectedFaults -Faults $faults | Out-Null
+Must-Reject 'unexpected operator failure' { Assert-ExpectedReleaseFailures -Results @($expectedFaults + [pscustomobject]@{commandId='33333333-3333-4333-8333-333333333333';status='failed'}) -Faults $faults }
+Must-Reject 'expected fault returned success' { $copy=$expectedFaults | ConvertTo-Json | ConvertFrom-Json; $copy[0].status='passed'; Assert-ExpectedReleaseFailures -Results $copy -Faults $faults }
+Must-Reject 'fault failed at wrong boundary' { $copy=$expectedFaults | ConvertTo-Json | ConvertFrom-Json; $copy[0].error='File missing'; Assert-ExpectedReleaseFailures -Results $copy -Faults $faults }
+Must-Reject 'duplicate expected failure result' { Assert-ExpectedReleaseFailures -Results @($expectedFaults + $expectedFaults[0]) -Faults $faults }
+Must-Reject 'missing expected failure result' { Assert-ExpectedReleaseFailures -Results @($expectedFaults[0]) -Faults $faults }
+'PASS exact expected operator fault identities, reasons and no unrelated failure'
+$typed=@{}
+foreach($table in @('claim_exchange_refund_recovery_run','claim_exchange_refund_recovery_stage','claim_exchange_refund_recovery_page',
+    'claim_exchange_refund_recovery_page_complete','claim_return_recovery_run','claim_return_recovery_stage',
+    'claim_return_recovery_page','claim_return_recovery_page_complete','claim_return_recovery_candidate','job_claim_fact',
+    'job','outbox_event','dashboard_run','dashboard_snapshot','dashboard_metric','dashboard_head','notification_inbox')) {
+    $typed[$table]=@{passed=$true;validator='typed-original-and-cause';addedIds=@();changedIds=@()}
+}
+$preservation=@{boundaryExact=@{passed=$true;beforeDigest=('a'*64);afterDigest=('a'*64);tableInventory=@('purchase_order');sequencesEqual=$true;mediaEqual=$true};
+    live=@{passed=$true;allOldRowsPreserved=$true;coverageComplete=$true;unregisteredChanges=@();beforeSnapshotId='11111111-1111-4111-8111-111111111111';afterSnapshotId='22222222-2222-4222-8222-222222222222';typeRegistry=@($typed.Keys|Sort-Object);typedResults=$typed}} | ConvertTo-Json -Depth 10 | ConvertFrom-Json
+Assert-ReleasePreservationProof $preservation
+Must-Reject 'quiet preservation digest mismatch' {$copy=$preservation|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.boundaryExact.afterDigest=('b'*64);Assert-ReleasePreservationProof $copy}
+Must-Reject 'full table preservation coverage omitted' {$copy=$preservation|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.live.coverageComplete=$false;Assert-ReleasePreservationProof $copy}
+Must-Reject 'typed row validator failure hidden by overall pass' {$copy=$preservation|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.live.typedResults.job_claim_fact.passed=$false;Assert-ReleasePreservationProof $copy}
+$rollbackProof=$preservation|ConvertTo-Json -Depth 10|ConvertFrom-Json
+$rollbackProof.boundaryExact|Add-Member beforeSnapshotId $rollbackProof.live.beforeSnapshotId
+$rollbackProof.live|Add-Member inputSnapshotId '33333333-3333-4333-8333-333333333333'
+$rollbackProof.live|Add-Member quietBaselineDigest $rollbackProof.boundaryExact.afterDigest
+Assert-ReleasePreservationProof $rollbackProof -Action Rollback
+Must-Reject 'running input disguised as quiet rollback baseline' {$copy=$rollbackProof|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.live.inputSnapshotId=$copy.live.beforeSnapshotId;Assert-ReleasePreservationProof $copy -Action Rollback}
+Must-Reject 'quiet rollback baseline digest unbound' {$copy=$rollbackProof|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.live.quietBaselineDigest=('b'*64);Assert-ReleasePreservationProof $copy -Action Rollback}
+'PASS exact full quiet and typed row preservation proof gates'
+$cancel=@{status='passed';limitMs=10000;activeOperations=0;activeRequests=0;executorTerminated=$true;observedHandles=@(@{pid=12345;alive=$false});handlerThreads=@(@{id=12;alive=$false});started='2026-11-16T00:00:00Z';ended='2026-11-16T00:00:01Z'}
+Assert-ReleaseOperationCancellation $cancel
+Must-Reject 'operator still alive before target cleanup' {$bad=$cancel.Clone();$bad.observedHandles=@(@{pid=12345;alive=$true});Assert-ReleaseOperationCancellation $bad}
+Must-Reject 'handler still running before target cleanup' {$bad=$cancel.Clone();$bad.handlerThreads=@(@{id=12;alive=$true});Assert-ReleaseOperationCancellation $bad}
+Must-Reject 'operator join failed despite all other counters' {$bad=$cancel.Clone();$bad.status='failed';Assert-ReleaseOperationCancellation $bad}
+'PASS finite operator and handler cancellation evidence before target cleanup'

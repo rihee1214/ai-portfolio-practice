@@ -148,6 +148,143 @@ function Read-VerifiedPackageBundle([string]$Folder) {
     @{mode='production';assets=$files.Count;jarSha256=$proof.apiJarSha256;runtimeMode=$proof.runtimeMode}
 }
 
+function Assert-ReleaseOperationTests([string]$Report) {
+    [xml]$xml = Get-Content -LiteralPath $Report -Raw
+    $required = Get-Content "$PSScriptRoot/required-release-operations.json" -Raw | ConvertFrom-Json
+    $cases = @($xml.SelectNodes('//testcase'))
+    if (-not $cases.Count -or @($xml.SelectNodes('//failure|//error|//skipped')).Count -or
+        @($xml.SelectNodes('//testsuite') | Where-Object { [int]$_.failures -gt 0 -or [int]$_.errors -gt 0 -or [int]$_.skipped -gt 0 }).Count) {
+        throw 'Missing, failed or skipped release operation assertions'
+    }
+    if ($cases.Count -ne $required.tests.Count) { throw 'Release operation assertion inventory changed without registration' }
+    foreach ($name in $required.tests) {
+        if (@($cases | Where-Object name -CEQ $name).Count -ne 1) { throw "Missing or duplicate release operation assertion: $name" }
+    }
+    @{status='passed';tests=$cases.Count;required=$required.tests}
+}
+
+function Assert-ExpectedReleaseFailures($Results, $Faults) {
+    $expected = @(
+        @{id=$Faults.mixedCheckpoint.commandId;action='Restore';error='Media namespace mismatch'},
+        @{id=$Faults.schemaReadiness.commandId;action='Activate';error='Schema version mismatch'}
+    )
+    if (@($expected.id | Where-Object { $_ -cmatch '^[0-9a-f-]{36}$' } | Sort-Object -Unique).Count -ne 2) { throw 'Expected operator failure identities missing or duplicate' }
+    foreach ($item in $expected) {
+        $actual = @($Results | Where-Object commandId -CEQ $item.id)
+        if ($actual.Count -ne 1 -or $actual[0].status -cne 'failed' -or $actual[0].action -cne $item.action -or
+            $actual[0].error -cne $item.error) { throw 'Expected operator fault did not fail at its asserted boundary' }
+    }
+    if (@($Results | Where-Object { $_.status -cne 'passed' -and $_.commandId -cnotin $expected.id }).Count) { throw 'Unexpected failed operator command' }
+    @{expectedFailures=2;commandIds=$expected.id}
+}
+
+function Assert-ReleaseRecoveryEvidence([string]$Folder, $Group) {
+    $lifecycle = Get-Content -LiteralPath "$Folder/release-lifecycle.json" -Raw | ConvertFrom-Json
+    $artifacts = Get-Content -LiteralPath "$Folder/release-artifacts.json" -Raw | ConvertFrom-Json
+    $faults = Get-Content -LiteralPath "$Folder/operator-faults.json" -Raw | ConvertFrom-Json
+    $cancellationFiles=@(Get-ChildItem -LiteralPath $Folder -File -Filter 'operation-cancellation-*.json')
+    if ($cancellationFiles.Count -ne 1) { throw 'Release operator cancellation/join evidence missing or duplicated' }
+    Assert-ReleaseOperationCancellation (Get-Content -LiteralPath $cancellationFiles[0].FullName -Raw | ConvertFrom-Json)
+    if ($lifecycle.stacks.Count -ne 4 -or $lifecycle.stacks.mode -cnotcontains 'L' -or
+        $lifecycle.stacks.mode -cnotcontains 'P' -or $lifecycle.originalResourcesPreserved -ne $true -or
+        $artifacts.localGuest.mode -cne 'development' -or $lifecycle.failedRestoreTargets.Count -ne 1 -or
+        $faults.mixedCheckpoint.apiStarted -ne $false -or $faults.mixedCheckpoint.sourceRowsUnchanged -ne $true -or
+        $faults.schemaReadiness.apiWorkerIngressRunning -ne $false -or $faults.schemaReadiness.sourceRowsUnchanged -ne $true) { throw 'Release lifecycle modes and isolated targets missing' }
+    foreach ($field in @('database','project','container','root','mediaPath','postgresPort','httpsPort')) {
+        if (@((@($lifecycle.stacks)+@($lifecycle.failedRestoreTargets)).target.$field | Sort-Object -Unique).Count -ne 5) { throw "Release targets share $field" }
+    }
+    if ($lifecycle.sourceDatabase -cne $lifecycle.stacks[0].target.database -or
+        $lifecycle.sourceMedia -cne $lifecycle.stacks[0].target.mediaPath) { throw 'Release primary target identity mismatch' }
+    foreach ($release in @('R0','R1','localGuest')) {
+        $record = $artifacts.$release
+        $actual = @(Get-ChildItem -LiteralPath $record.dist -Recurse -Force -File)
+        if ($actual.Count -ne $record.files.Count -or $record.files.path -cnotcontains 'index.html') { throw "Release $release inventory missing" }
+        foreach ($file in $actual) {
+            $relative = [IO.Path]::GetRelativePath($record.dist,$file.FullName).Replace('\','/')
+            $expected = @($record.files | Where-Object path -CEQ $relative)
+            if ($expected.Count -ne 1 -or $expected[0].size -ne $file.Length -or
+                $expected[0].sha256 -ine (Get-FileHash -LiteralPath $file.FullName).Hash) { throw "Release $release bytes changed: $relative" }
+        }
+        if ($release -cne 'localGuest' -and (Get-FileHash -LiteralPath $record.jar).Hash -ine $record.sha256) { throw "Release $release JAR changed" }
+    }
+    if ((Get-FileHash -LiteralPath $artifacts.candidateInputs).Hash -ine $artifacts.candidateInputsSha256) { throw 'Release candidate input manifest changed' }
+    $requirements = Get-Content "$PSScriptRoot/required-browser-release.json" -Raw | ConvertFrom-Json
+    $allCases = @()
+    foreach ($mode in @('L','P')) {
+        $scope = Join-Path $Folder "browser-$mode"
+        $report = Get-Content "$scope/browser-report.json" -Raw | ConvertFrom-Json
+        if ($report.errors.Count -or $report.stats.skipped -or $report.stats.unexpected -or $report.stats.flaky) { throw "Release $mode browser failed or retried" }
+        $cases = @(Read-BrowserCases $report.suites)
+        Assert-BrowserDeadlineEvidence (Get-Content "$scope/browser-deadlines.json" -Raw | ConvertFrom-Json) $cases
+        $allCases += $cases
+    }
+    Assert-BrowserGroupCoverage $Group $allCases $requirements | ConvertTo-Json -Depth 6 | Set-Content "$Folder/browser-coverage.json"
+    $results = @(Get-ChildItem -LiteralPath $Folder -Directory -Filter 'operation-*' | ForEach-Object {
+        Get-Content -LiteralPath (Join-Path $_.FullName 'result.json') -Raw | ConvertFrom-Json
+    })
+    Assert-ExpectedReleaseFailures -Results $results -Faults $faults | ConvertTo-Json -Depth 4 | Set-Content "$Folder/operator-fault-coverage.json"
+    $observerResults = @(Get-ChildItem -LiteralPath $Folder -File -Filter 'observer-operation-*.json' | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json })
+    $preservationResults = @($observerResults | Where-Object action -CIn @('Rollback','Restore'))
+    if ($preservationResults.Count -ne 3 -or @($preservationResults | Where-Object action -CEQ 'Rollback').Count -ne 1 -or
+        @($preservationResults | Where-Object action -CEQ 'Restore').Count -ne 2) { throw 'Mandatory rollback and both restore preservation proofs missing' }
+    foreach ($result in $preservationResults) {
+        Assert-ReleasePreservationProof $result.preservation -Action $result.action
+        if ($result.action -ceq 'Restore') {
+            $selected = @($observerResults | Where-Object { $_.mode -ceq $result.mode -and $_.action -ceq 'Checkpoint' -and $_.checkpointRef.commandId -ceq $result.checkpointRef.commandId })
+            if ($selected.Count -ne 1 -or $selected[0].checkpointRef.manifestSha256 -cne $result.checkpointRef.manifestSha256 -or
+                $selected[0].quiescedSnapshot.full.sha256 -cne $result.preservation.boundaryExact.beforeDigest -or
+                $selected[0].quiescedSnapshot.snapshotId -cne $result.preservation.live.beforeSnapshotId -or
+                $result.preservation.sourceStopped.passed -ne $true -or
+                $result.preservation.sourceStopped.beforeSnapshotId -ceq $result.preservation.live.beforeSnapshotId -or
+                $result.preservation.sourceStopped.beforeDigest -cne $result.preservation.sourceStopped.afterDigest) { throw 'Restore did not retain the selected original checkpoint and stopped separate source' }
+        }
+    }
+    $preservationResults | ConvertTo-Json -Depth 20 | Set-Content "$Folder/preservation-coverage.json"
+    if (@('Prepare','Checkpoint','Restore','Activate','Rollback' | Where-Object { $_ -cnotin $results.action }).Count) { throw 'Actual release command evidence missing or failed' }
+    foreach ($stack in $lifecycle.stacks) {
+        $owner = Get-Content -LiteralPath (Join-Path $stack.target.root 'ownership.json') -Raw | ConvertFrom-Json
+        $state = Get-Content -LiteralPath (Join-Path $stack.target.root 'state.json') -Raw | ConvertFrom-Json
+        $expectedState = if ($stack.target.project -ceq $faults.schemaReadiness.targetProject) { 'QUIESCED' } else { 'CHECKPOINTED' }
+        if ($owner.runId -cne $stack.runId -or $owner.target.database -cne $stack.target.database -or
+            $state.state -cne $expectedState -or -not $state.artifactIdentities.Count) { throw 'Actual release ownership, activation or final quiescence proof missing' }
+        $pointer = Get-Content -LiteralPath (Join-Path $stack.target.root 'active-release.json') -Raw | ConvertFrom-Json
+        if (-not $pointer.controllerPayloadSha256 -or -not $pointer.operationalPayloadSha256) { throw 'Active release lacks actual immutable operational payload identity' }
+    }
+    @{modes=@('L','P');targets=5;expectedOperatorFaults=2;browserCases=$allCases.Count;operations=$results.Count;candidateInputsSha256=$artifacts.candidateInputsSha256}
+}
+
+function Assert-ReleaseOperationCancellation($Proof) {
+    if ($Proof.status -cne 'passed' -or $Proof.limitMs -ne 10000 -or $Proof.activeOperations -ne 0 -or $Proof.activeRequests -ne 0 -or
+        $Proof.executorTerminated -ne $true -or @($Proof.observedHandles | Where-Object alive -NE $false).Count -or
+        @($Proof.handlerThreads | Where-Object alive -NE $false).Count -or
+        ([DateTimeOffset]::Parse($Proof.ended)-[DateTimeOffset]::Parse($Proof.started)).TotalMilliseconds -gt 10000) {
+        throw 'Release target cleanup began without finite completed operator and handler cancellation'
+    }
+}
+
+function Assert-ReleasePreservationProof($Proof, [string]$Action='') {
+    $audit = @('claim_exchange_refund_recovery_run','claim_exchange_refund_recovery_stage','claim_exchange_refund_recovery_page',
+        'claim_exchange_refund_recovery_page_complete','claim_return_recovery_run','claim_return_recovery_stage',
+        'claim_return_recovery_page','claim_return_recovery_page_complete','claim_return_recovery_candidate','job_claim_fact',
+        'job','outbox_event','dashboard_run','dashboard_snapshot','dashboard_metric','dashboard_head','notification_inbox')
+    if ($Proof.boundaryExact.passed -ne $true -or $Proof.boundaryExact.beforeDigest -cnotmatch '^[0-9a-f]{64}$' -or
+        $Proof.boundaryExact.beforeDigest -cne $Proof.boundaryExact.afterDigest -or
+        $Proof.boundaryExact.tableInventory.Count -lt 1 -or $Proof.boundaryExact.sequencesEqual -ne $true -or $Proof.boundaryExact.mediaEqual -ne $true -or
+        $Proof.live.passed -ne $true -or $Proof.live.allOldRowsPreserved -ne $true -or $Proof.live.coverageComplete -ne $true -or
+        $Proof.live.unregisteredChanges.Count -ne 0 -or $Proof.live.beforeSnapshotId -cnotmatch '^[0-9a-f-]{36}$' -or
+        $Proof.live.afterSnapshotId -cnotmatch '^[0-9a-f-]{36}$') { throw 'Exact quiet and typed live preservation assertions missing or failed' }
+    $keys = @($Proof.live.typedResults.PSObject.Properties.Name | Sort-Object)
+    if (($keys -join ',') -cne (@($Proof.live.typeRegistry) -join ',') -or @($audit | Where-Object { $_ -cnotin $keys }).Count) { throw 'Typed preservation registry coverage incomplete' }
+    foreach ($table in $keys) {
+        $validator=$Proof.live.typedResults.$table
+        if ($validator.passed -ne $true -or -not $validator.validator -or $null -eq $validator.addedIds -or $null -eq $validator.changedIds) { throw "Typed row preservation validator failed: $table" }
+    }
+    if ($Action -ceq 'Rollback' -and ($Proof.live.inputSnapshotId -cnotmatch '^[0-9a-f-]{36}$' -or
+        $Proof.live.inputSnapshotId -ceq $Proof.live.beforeSnapshotId -or
+        $Proof.live.beforeSnapshotId -cne $Proof.boundaryExact.beforeSnapshotId -or
+        $Proof.live.quietBaselineDigest -cne $Proof.boundaryExact.afterDigest)) { throw 'Rollback live proof is not bound to the actual operator quiet baseline and original input' }
+}
+
 function Assert-MaintenanceBrowserLifecycle($Group, $Proof, $CompletedGroups) {
     $expectedProject = $Group.id -creplace '^site-maintenance-',''
     if ($expectedProject -cnotin @('desktop','mobile') -or $Proof.project -cne $expectedProject -or

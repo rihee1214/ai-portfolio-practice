@@ -2,6 +2,64 @@ function Get-DbGroupRegistry {
     Get-Content "$PSScriptRoot/db-groups.json" -Raw | ConvertFrom-Json
 }
 
+function Get-DbGroupTopologicalOrder {
+    param([string[]]$Priority, $Dependencies)
+    $pending = [Collections.Generic.List[string]]::new()
+    foreach ($id in $Priority) { $pending.Add($id) }
+    $ordered = [Collections.Generic.List[string]]::new()
+    $emitted = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    while ($pending.Count) {
+        $next = $null
+        foreach ($id in $pending) {
+            if (@($Dependencies[$id] | Where-Object { -not $emitted.Contains($_) }).Count -eq 0) { $next=$id; break }
+        }
+        if ($null -eq $next) { throw "Cyclic database group prerequisites: $($pending -join ',')" }
+        $ordered.Add($next)
+        [void]$emitted.Add($next)
+        [void]$pending.Remove($next)
+    }
+    # Buffer the complete order: a rejected graph must never emit a usable partial schedule.
+    $ordered.ToArray()
+}
+
+function Get-DbGroupExecutionOrder {
+    param($Registry, [string[]]$Selected, [switch]$Reverse)
+    $all = @($Registry.groups.id)
+    $known = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($id in $all) {
+        if ([string]::IsNullOrWhiteSpace($id) -or -not $known.Add($id)) { throw 'Empty or duplicate group registry' }
+    }
+    if (-not $all.Count) { throw 'Empty group registry' }
+    $dependencies = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::Ordinal)
+    foreach ($definition in $Registry.groups) {
+        $seen = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        $edges = [Collections.Generic.List[string]]::new()
+        foreach ($prerequisite in $definition.prerequisites) {
+            if ([string]::IsNullOrWhiteSpace($prerequisite) -or -not $known.Contains($prerequisite) -or
+                $prerequisite -ceq $definition.id -or -not $seen.Add($prerequisite)) {
+                throw "Unknown, self or duplicate group prerequisite: $($definition.id)"
+            }
+            $edges.Add($prerequisite)
+        }
+        $dependencies[$definition.id] = $edges.ToArray()
+    }
+    # Validate the whole registry even when an exact selection excludes a malformed cycle.
+    Get-DbGroupTopologicalOrder -Priority $all -Dependencies $dependencies | Out-Null
+    $chosen = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($id in $Selected) {
+        if (-not $known.Contains($id) -or -not $chosen.Add($id)) { throw 'Unknown or duplicate selected database group' }
+    }
+    if (-not $chosen.Count) { throw 'No database groups selected for execution' }
+    foreach ($id in $Selected) {
+        foreach ($prerequisite in $dependencies[$id]) {
+            if (-not $chosen.Contains($prerequisite)) { throw "Selected group $id requires same-source consumer evidence from $prerequisite" }
+        }
+    }
+    $priority = @($all | Where-Object { $chosen.Contains($_) })
+    if ($Reverse) { [array]::Reverse($priority) }
+    Get-DbGroupTopologicalOrder -Priority $priority -Dependencies $dependencies
+}
+
 function Resolve-DbGroups {
     param($Registry, [string]$Selection, [string]$ChangedContracts)
     $hasSelection = $PSBoundParameters.ContainsKey('Selection')
@@ -38,6 +96,11 @@ function Resolve-DbGroups {
         $reasons = @(@{requested='default';selected=$all;reason='no selection options: mandatory whole verification'})
     }
     if (-not $selected.Count) { throw 'No database groups selected' }
+    foreach ($definition in @($Registry.groups | Where-Object { $selected.Contains($_.id) })) {
+        foreach ($prerequisite in $definition.prerequisites) {
+            if (-not $selected.Contains($prerequisite)) { throw "Selected group $($definition.id) requires same-source consumer evidence from $prerequisite" }
+        }
+    }
     [pscustomobject]@{mode=$(if($hasSelection -or $hasImpact){'selected'}else{'full'});
         certificationEligible=(-not ($hasSelection -or $hasImpact));
         selected=@($all | Where-Object { $selected.Contains($_) });
@@ -57,11 +120,17 @@ function Assert-DbGroupDatabases {
 
 function Assert-DbGroupRegistration {
     param($Registry, [string]$Root = (Split-Path $PSScriptRoot -Parent))
+    Get-DbGroupExecutionOrder -Registry $Registry -Selected @($Registry.groups.id) | Out-Null
     $registered = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $legacy = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $classes = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     foreach ($group in $Registry.groups) {
-        if ($group.browser -and $group.id -ceq 'package-runtime') {
+        if ($group.browser -and $group.id -ceq 'release-recovery') {
+            if ($group.browser.project -or $group.browser.requirements -cne 'required-browser-release.json' -or
+                $group.classes.Count -ne 1 -or $group.expectedDatabaseCount -ne 5) {
+                throw 'Invalid actual release recovery lifecycle registration'
+            }
+        } elseif ($group.browser -and $group.id -ceq 'package-runtime') {
             if ($group.browser.project -or $group.browser.requirements -cne 'required-browser-package.json' -or
                 $group.classes.Count -ne 1 -or $group.expectedDatabaseCount -ne 1) {
                 throw 'Invalid actual package browser lifecycle registration'

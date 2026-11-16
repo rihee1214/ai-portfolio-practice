@@ -155,6 +155,21 @@ class PublicDemoRuntimeIT {
         assertEquals(503, body.statusCode());
         assertEquals(before, businessSnapshot());
         verifyNoInteractions(demoPayments, demoRefunds);
+        try {
+            var hashes=new java.util.TreeMap<String,String>();
+            for(Class<?> type:java.util.List.of(com.example.marketplace.platform.web.PublicDemoBoundary.class,
+                    com.example.marketplace.platform.config.RuntimeSettingsConfiguration.class)) {
+                String resource="/"+type.getName().replace('.','/')+".class";
+                try(var bytes=type.getResourceAsStream(resource)) {
+                    hashes.put(resource,java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(bytes.readAllBytes())));
+                }
+            }
+            java.nio.file.Files.writeString(java.nio.file.Path.of(System.getenv("A3_EVIDENCE"),"provider-boundary-proof.json"),json.writeValueAsString(Map.of(
+                    "test","publicDemoKeepsExistingLoginAndRejectsEveryIssuanceAndSandboxWithoutMutation","database",System.getenv("D2_DB_NAME"),
+                    "phoneProviderBeans",context.getBeansOfType(com.example.marketplace.phone.api.PhoneVerifications.class).size(),
+                    "paymentProviderCalls",org.mockito.Mockito.mockingDetails(demoPayments).getInvocations().size(),
+                    "refundProviderCalls",org.mockito.Mockito.mockingDetails(demoRefunds).getInvocations().size(),"businessUnchanged",true,"implementationHashes",hashes)));
+        } catch(Exception failure) {throw new IllegalStateException("Public boundary evidence could not be retained",failure);}
         assertEquals(200, request(port, "POST", "/api/auth/logout", "{}", csrf).statusCode());
         assertEquals(401, request(port, "GET", "/api/auth/me", null, null).statusCode());
     }

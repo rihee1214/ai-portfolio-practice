@@ -1,0 +1,22 @@
+{
+  "id": "P12-D operator command fail-closed assertions",
+  "tests": [
+    "D01 explicit target prevents default server and old resource selection",
+    "D01 path traversal and linked inventory cannot escape owned root",
+    "D01 immutable bytes and mode/provider environment are verified before Docker",
+    "D04 complete inventory rejects missing and modified retained lazy assets",
+    "D04 open transactions prohibit a checkpoint before dump or copy",
+    "D05 partial checkpoint and same target are rejected before resource creation",
+    "D01 command lock refuses concurrent project mutation and retains holder",
+    "D01 completed command replay verifies input and every retained output byte",
+    "D09 phase timeout kills owned descendants and preserves partial output",
+    "D09 command exit retains stdout stderr and failure without waiting indefinitely",
+    "D01 retained operational closure rejects missing modified and undeclared files",
+    "D05 retained controller consumes its pinned restore SQL after mutable source changes",
+    "D09 detached host roles release launcher IO and cleanup guards identity under one deadline",
+    "D08 quiet rollback proof preserves every row sequence media and closed worker boundary",
+    "D08 owner-private quiet rows preserve canonical bytes without stdout exposure",
+    "D01 readiness retries remain progress under one absolute phase and preserve terminal failures",
+    "D05 local mailbox is explicit API-only and public mode rejects the profile"
+  ]
+}

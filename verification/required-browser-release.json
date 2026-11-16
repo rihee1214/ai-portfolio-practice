@@ -1,0 +1,14 @@
+[
+  {
+    "id": "P12-D actual release exchange and isolated restore desktop/mobile",
+    "tests": [
+      "release#release-recovery.spec.ts:P12-D actual release exchange restores isolated commerce credentials and media"
+    ]
+  },
+  {
+    "id": "P12-D isolated public demo recovery boundary desktop/mobile",
+    "tests": [
+      "release#release-public.spec.ts:P12-D public release rejects guest issuance and lookup without database or provider effects"
+    ]
+  }
+]
