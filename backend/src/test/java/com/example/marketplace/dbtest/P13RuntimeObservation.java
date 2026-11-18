@@ -1,5 +1,6 @@
 package com.example.marketplace.dbtest;
 
+import com.sun.management.HotSpotDiagnosticMXBean;
 import com.zaxxer.hikari.HikariDataSource;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.postgresql.Driver;
@@ -26,7 +28,19 @@ import tools.jackson.databind.json.JsonMapper;
 
 /** P13-only runtime checkpoints. The worker entry delegates all business work to the existing probe. */
 public final class P13RuntimeObservation {
+    private static final String TIERED_STOP_AT_LEVEL = "TieredStopAtLevel";
+
     private P13RuntimeObservation() {
+    }
+
+    static List<String> tieredStopAtLevelArguments() {
+        return ManagementFactory.getRuntimeMXBean().getInputArguments().stream()
+                .filter(argument -> argument.startsWith("-XX:" + TIERED_STOP_AT_LEVEL + "=")).toList();
+    }
+
+    static int tieredStopAtLevel() {
+        return Integer.parseInt(ManagementFactory.getPlatformMXBean(HotSpotDiagnosticMXBean.class)
+                .getVMOption(TIERED_STOP_AT_LEVEL).getValue());
     }
 
     static Map<String, Object> capture(String phase, String role, String database, DataSource source) {
@@ -90,6 +104,8 @@ public final class P13RuntimeObservation {
         jvm.put("javaVersion", Runtime.version().toString());
         jvm.put("vmName", runtime.getVmName());
         jvm.put("vmVersion", runtime.getVmVersion());
+        jvm.put("tieredStopAtLevelArguments", tieredStopAtLevelArguments());
+        jvm.put("tieredStopAtLevel", tieredStopAtLevel());
         jvm.put("availableProcessors", Runtime.getRuntime().availableProcessors());
         jvm.put("heap", memory(memory.getHeapMemoryUsage()));
         jvm.put("nonHeap", memory(memory.getNonHeapMemoryUsage()));

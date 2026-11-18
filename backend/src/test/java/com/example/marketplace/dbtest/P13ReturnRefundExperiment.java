@@ -33,6 +33,8 @@ class P13ReturnRefundExperiment extends PostgresContractFixture {
     private static final long REVISION = 3L;
     private static final long USER_COMMAND_LIMIT_NS = TimeUnit.SECONDS.toNanos(10);
     private static final String CONSENT_KEY = "child-prepared";
+    private static final String WORKER_JVM_MODE = "P13_REFUND_WORKER_JVM_MODE";
+    private static final String TIER1_ARGUMENT = "-XX:TieredStopAtLevel=1";
     private static final List<String> STARTING_TABLES = List.of("identity_user", "purchase_order", "order_item",
             "seller_order", "shipment", "shipment_unit", "payment_attempt", "payment_refund_attempt",
             "payment_refund_budget", "claim_return_request", "claim_fee_quote", "claim_fee_assessment",
@@ -45,17 +47,22 @@ class P13ReturnRefundExperiment extends PostgresContractFixture {
     void measurePreparedCrashAndSameAttemptRecovery() throws Exception {
         String trial = System.getenv("P13_REFUND_EXPERIMENT");
         assertTrue(trial != null && trial.matches("warmup|run-[1-9][0-9]*"), "Explicit P13 trial required");
+        String workerJvmMode = System.getenv(WORKER_JVM_MODE);
+        assertTrue("baseline".equals(workerJvmMode) || "tier1".equals(workerJvmMode), "Explicit worker JVM mode required");
         String database = System.getenv("D2_DB_NAME");
         Path evidence = Path.of(System.getenv("A3_EVIDENCE"));
         Path processes = Files.createDirectory(evidence.resolve("processes"));
         var report = new LinkedHashMap<String, Object>();
         report.put("trial", trial);
+        report.put("workerJvmMode", workerJvmMode);
         report.put("database", database);
         report.put("media", evidence.resolve("media").toString());
         report.put("timeline", timeline);
         report.put("status", "failed");
         report.put("schemaVersion", 1);
         try {
+            assertEquals(List.of(), P13RuntimeObservation.tieredStopAtLevelArguments(), "Parent JVM must keep default tiering");
+            assertEquals(4, P13RuntimeObservation.tieredStopAtLevel(), "Parent JVM must retain the effective default tier");
             mark("fixture-started");
             var fixture = prepareReturn(report);
             mark("fixture-ready");
@@ -256,7 +263,8 @@ class P13ReturnRefundExperiment extends PostgresContractFixture {
         Path arguments = folder.resolve(phase + ".args");
         Path marker = folder.resolve(phase + "-effect");
         String classpath = System.getProperty("surefire.test.class.path", System.getProperty("java.class.path")).replace('\\', '/');
-        Files.writeString(arguments, "-cp\n\"" + classpath + "\"\n" + P13RuntimeObservation.class.getName()
+        String workerOptions = "tier1".equals(System.getenv(WORKER_JVM_MODE)) ? TIER1_ARGUMENT + "\n" : "";
+        Files.writeString(arguments, workerOptions + "-cp\n\"" + classpath + "\"\n" + P13RuntimeObservation.class.getName()
                 + "\n" + clock + "\n" + jobId + "\n\"" + marker.toString().replace('\\', '/') + "\"\n" + mode + "\n",
                 StandardOpenOption.CREATE_NEW);
         var builder = new ProcessBuilder(Path.of(System.getProperty("java.home"), "bin", "java.exe").toString(), "@" + arguments)
@@ -274,9 +282,15 @@ class P13ReturnRefundExperiment extends PostgresContractFixture {
         assertEquals(System.getenv("D2_DB_NAME"), snapshot.path("pool").path("database").asText());
         assertEquals(5, snapshot.path("pool").path("maximum").asInt());
         assertTrue(snapshot.path("pool").path("total").asInt() > 0);
-        assertTrue(snapshot.path("jvm").path("heap").path("usedBytes").asLong() > 0);
-        assertTrue(snapshot.path("jvm").path("threads").path("live").asInt() > 0);
-        assertFalse(snapshot.path("jvm").path("gc").isEmpty());
+        var jvm = snapshot.path("jvm");
+        boolean workerTier1 = "tier1".equals(System.getenv(WORKER_JVM_MODE));
+        assertEquals(workerTier1 ? List.of(TIER1_ARGUMENT) : List.of(),
+                authMapper.convertValue(jvm.required("tieredStopAtLevelArguments"),
+                        new tools.jackson.core.type.TypeReference<List<String>>() {}), role + " JVM tiering arguments");
+        assertEquals(workerTier1 ? 1 : 4, jvm.required("tieredStopAtLevel").asInt(), role + " effective tier");
+        assertTrue(jvm.path("heap").path("usedBytes").asLong() > 0);
+        assertTrue(jvm.path("threads").path("live").asInt() > 0);
+        assertFalse(jvm.path("gc").isEmpty());
     }
 
     private void stopOwned(Process process) throws Exception {

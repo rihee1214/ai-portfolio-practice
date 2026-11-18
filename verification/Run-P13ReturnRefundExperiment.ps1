@@ -3,6 +3,8 @@ param(
     [int]$TestPostgresPort,
     [string]$TestPostgresInstance,
     [string]$TestPostgresContainer,
+    [switch]$WorkerTier1,
+    [switch]$WarmupOnly,
     [string]$Request
 )
 
@@ -84,6 +86,7 @@ if ($Request) {
         $arguments += 'test-compile'
     } elseif ($data.action -cmatch '^(warmup|run-[1-3])$') {
         if ($env:P13_REFUND_EXPERIMENT -cne $data.action -or $env:A3_EVIDENCE -ine $folder -or
+                $data.workerJvmMode -cnotin @('baseline','tier1') -or $env:P13_REFUND_WORKER_JVM_MODE -cne $data.workerJvmMode -or
                 $env:D2_DB_NAME -cnotmatch '^d2_it_[0-9a-f]{32}$' -or
                 $env:D2_DB_URL -cne "jdbc:postgresql://127.0.0.1:$($endpoint.port)/$env:D2_DB_NAME") {
             throw 'Invalid isolated experiment environment'
@@ -115,7 +118,7 @@ function Invoke-OwnedPhase([string]$Action, [string]$Folder, [int]$TimeoutSecond
     New-Item -ItemType Directory -Path $Folder | Out-Null
     $jobName = 'Local\marketplace-verify-' + [guid]::NewGuid().ToString('N')
     $requestPath = Join-Path $Folder 'request.json'
-    Write-Evidence $requestPath @{action=$Action;folder=$Folder;maven=$maven;commonBuild=$commonBuild;endpoint=$endpoint;jobName=$jobName}
+    Write-Evidence $requestPath @{action=$Action;folder=$Folder;maven=$maven;commonBuild=$commonBuild;endpoint=$endpoint;jobName=$jobName;workerJvmMode=$workerJvmMode}
     $requestSha = (Get-FileHash -LiteralPath $requestPath).Hash.ToLowerInvariant()
     $start = [Diagnostics.ProcessStartInfo]::new((Get-VerificationPowerShellPath))
     $start.WorkingDirectory = $root
@@ -142,7 +145,7 @@ function Invoke-OwnedPhase([string]$Action, [string]$Folder, [int]$TimeoutSecond
             D2_ADMIN_PASSWORD=$passwords.TEST_ADMIN_PASSWORD; A3_EVIDENCE=$Folder;
             D2_TEST_POSTGRES_PORT=[string]$endpoint.port; D2_TEST_POSTGRES_INSTANCE=$endpoint.instance;
             D2_TEST_POSTGRES_CONTAINER=$endpoint.container; D2_DB_ENDPOINT_CONFIRMATION=$endpoint.confirmation;
-            P13_REFUND_EXPERIMENT=$Action
+            P13_REFUND_EXPERIMENT=$Action; P13_REFUND_WORKER_JVM_MODE=$workerJvmMode
         }
         foreach ($key in $trialEnvironment.Keys) { $start.Environment[$key] = $trialEnvironment[$key] }
     }
@@ -235,8 +238,10 @@ New-Item -ItemType Directory -Path $output | Out-Null
 $null = Assert-VerificationPowerShellRuntime -EvidencePath "$output/powershell.json"
 Write-Output "EVIDENCE=$output"
 $passwords = @{}
+$workerJvmMode = if ($WorkerTier1) { 'tier1' } else { 'baseline' }
+$executionOrder = if ($WarmupOnly) { @('warmup') } else { @('warmup','run-1','run-2','run-3') }
 $result = [ordered]@{schemaVersion=1;status='failed';certificationEligible=$false;started=[DateTimeOffset]::UtcNow.ToString('o');
-    testId=$testId;endpoint=$endpoint;executionOrder=@('warmup','run-1','run-2','run-3');trials=@()}
+    testId=$testId;endpoint=$endpoint;workerJvmMode=$workerJvmMode;executionOrder=@($executionOrder);trials=@()}
 $before = $null
 $source = $null
 $javaHome = Join-Path $local 'jdk-21.0.12.1+1'
@@ -294,6 +299,7 @@ try {
         $row.databaseProof = Assert-DbGroupDatabases -ExpectedCount 1 -Primary $database -Created $created
         $trial = Get-Content -LiteralPath "$folder/trial.json" -Raw | ConvertFrom-Json -AsHashtable
         if ($trial.status -cne 'passed' -or $trial.schemaVersion -ne 1 -or $trial.trial -cne $action -or
+                $trial.workerJvmMode -cne $workerJvmMode -or
                 $trial.database -cne $database -or $trial.media -ine $row.media -or -not (Test-Path -LiteralPath $row.media -PathType Container)) {
             throw 'Experiment report or private resources do not match the trial'
         }
