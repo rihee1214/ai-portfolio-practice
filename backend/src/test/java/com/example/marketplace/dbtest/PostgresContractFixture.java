@@ -374,7 +374,10 @@ class PostgresContractFixture {
         var guest=cancellationGuest("browser-"+project);C_BROWSER_SEEDS.put(project+":guest",Map.of("orderNumber",guest.order().orderNumber(),"phone",guest.fixture().phone,"sellerOrderId",guest.order().sellers().getFirst().id()));
     }
     protected Map<String,String> aftercareState() {
-        try (var contractTimingScope = ContractTiming.measure("state-comparison", "aftercareState")) { var state=new java.util.TreeMap<>(paymentParticipantState());for(String table:List.of("order_aftercare_policy","order_policy_migration","order_confirmation_state","order_unit_lifecycle","order_confirmation","order_confirmation_unit","order_unit_hold","order_hold_unit","order_lifecycle_event","order_dispatch","order_dispatch_unit","order_confirmation_schedule","order_confirmation_scan","order_initial_delivery","order_initial_delivery_unit","shipment","shipment_item","shipment_unit","shipment_event","shipment_audit","shipment_preparation","shipment_command","shipment_tracking_history")) { state.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class)); }return state; 
+        try (var contractTimingScope = ContractTiming.measure("state-comparison", "aftercareState")) {
+            var state=new java.util.TreeMap<>(paymentParticipantState());
+            state.putAll(ParticipantSnapshots.read(jdbc.getJdbcTemplate(),"marketplace",ParticipantSnapshots.AFTERCARE_TABLES));
+            return state;
         }
     }
     protected void seedPendingShipmentBrowserOrders(String project) throws Exception {
@@ -933,18 +936,12 @@ class PostgresContractFixture {
 
     protected Map<String,String> returnApplicationParticipants() {
         try (var contractTimingScope = ContractTiming.measure("state-comparison", "returnApplicationParticipants")) {
-        var result=new java.util.LinkedHashMap<String,String>(returnFinancialParticipants());
-        for(String table:List.of("order_return_application","claim_return_request","claim_return_unit","claim_return_history","claim_return_command","claim_return_collection","claim_return_inspection","claim_return_inspection_unit","inventory_return_restitution","inventory_restitution_unit","inventory_restitution_movement","claim_return_fee_quote_context","claim_return_financial_consent","claim_return_financial_result","claim_return_support_command","order_return_physical_unit","claim_return_physical_source","inventory_return_physical_restitution","claim_return_item_ready","claim_return_ready_unit","claim_seller_shipping_decision","claim_seller_shipping_current","claim_return_shipping_binding","order_return_completion","order_return_completion_unit","order_shipping_decision","order_shipping_current","order_aftercare_shipping","claim_shipping_result","claim_return_completion","claim_shipping_support_command")) {
-            result.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class));
-        }
-        return result;
-    
+            var result=new java.util.LinkedHashMap<String,String>(returnFinancialParticipants());
+            var additional=ParticipantSnapshots.read(jdbc.getJdbcTemplate(),"marketplace",ParticipantSnapshots.RETURN_APPLICATION_TABLES);
+            for(String table:ParticipantSnapshots.RETURN_APPLICATION_TABLES) { result.put(table,additional.get(table)); }
+            return result;
         }
     }
-
-
-
-
     protected com.example.marketplace.catalog.api.Products.Product ownedPaymentProduct(PaymentFixture f) {
         UUID store=context.getBean(com.example.marketplace.seller.api.Stores.class).own(f.authority().member()).id();var product=f.order().quote().stores().stream().filter(s->s.storeId().equals(store)).findFirst().orElseThrow().lines().getFirst().productId();return context.getBean(com.example.marketplace.catalog.api.Products.class).own(f.authority().member(),product);
     }
@@ -1194,11 +1191,7 @@ class PostgresContractFixture {
     }
     protected Map<String,String> orderParticipantState() {
         try (var contractTimingScope = ContractTiming.measure("state-comparison", "orderParticipantState")) {
-        var result=new java.util.TreeMap<String,String>();
-        for(String table:List.of("guest_checkout","guest_attempt","guest_buyer","guest_access_session","guest_order_reference","order_checkout_attempt","purchase_order","seller_order","order_item","order_unit","order_contact","order_reservation","order_event","inventory_balance","inventory_reservation","inventory_reservation_event","coupon_reservation_batch","issued_coupon","coupon_reservation","coupon_reservation_event","job","outbox_event")) {
-            result.put(table,jdbc.getJdbcTemplate().queryForObject("SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb)::text FROM marketplace."+table+" t",String.class));
-        }
-        return result;
+        return ParticipantSnapshots.read(jdbc.getJdbcTemplate(),"marketplace",ParticipantSnapshots.ORDER_TABLES);
     
         }
     }
@@ -2147,7 +2140,10 @@ class PostgresContractFixture {
                 "-Dloader.main=com.example.marketplace.identity.infrastructure.InitialAdminCommand", "-cp", jar.toString(),
                 "org.springframework.boot.loader.launch.PropertiesLauncher"));
         if (forbiddenArgument) { command.add("--spring.flyway.enabled=true"); }
-        var output = java.nio.file.Files.createTempFile(build, "bootstrap-", ".txt");
+        var bootstrapTmp = java.nio.file.Path.of(System.getenv("A3_EVIDENCE"), "java-tmp").toAbsolutePath().normalize();
+        java.nio.file.Files.createDirectories(bootstrapTmp);
+        var output = java.nio.file.Files.createTempFile(bootstrapTmp, "bootstrap-", ".txt");
+        assertTrue(output.toAbsolutePath().normalize().startsWith(bootstrapTmp), "Bootstrap output must stay inside this group's evidence");
         var builder = new ProcessBuilder(command).redirectErrorStream(true).redirectOutput(output.toFile());
         builder.environment().put("DB_URL", System.getenv("D2_DB_URL"));
         builder.environment().put("DB_USERNAME", System.getenv("D2_DB_USERNAME"));

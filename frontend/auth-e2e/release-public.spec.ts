@@ -2,6 +2,7 @@ import { test, expect, operation } from './business-deadline'
 import { assets, csrf, evidence, input, login, observation, order, product, purchase, read, session } from './release-helpers'
 import { infrastructure, type Snapshot } from './release-infrastructure'
 import { completedCheckpoint, preservation, stoppedSourceUnchanged } from './release-preservation'
+import { shipmentConsumerComplete, type PublicPurchaseProof } from './release-shipment-consumer'
 
 type PublicSnapshot = Snapshot & { guest: { verifications: number; checkouts: number; accessSessions: number; providerCalls: number } }
 test('P12-D public release rejects guest issuance and lookup without database or provider effects', async ({ browser }) => {
@@ -19,6 +20,8 @@ test('P12-D public release rejects guest issuance and lookup without database or
       expect(await observation(input.source, '/purchase?orderNumber=' + number)).toMatchObject({
         order: { state: 'PAID', amount: 13000 }, attempts: [{ approval_effects: 1, success_events: 1 }],
       })
+      await expect.poll(async () => shipmentConsumerComplete(number,
+        await observation<PublicPurchaseProof>(input.source, '/purchase?orderNumber=' + number))).toBe(true)
     })
     purchases.push({ project, number, cookies: await actor.context.cookies() })
     const visitor = await session(browser, input.source, project === 'mobile')

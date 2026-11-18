@@ -2,6 +2,51 @@ function Get-DbGroupRegistry {
     Get-Content "$PSScriptRoot/db-groups.json" -Raw | ConvertFrom-Json
 }
 
+function Assert-DbGroupScheduling($Registry) {
+    $resources=$Registry.executionResources
+    if($resources.schemaVersion -ne 1 -or $resources.maxConcurrency -ne 2){throw 'Explicit execution resource schema and cap2 required'}
+    $known=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach($key in $resources.resources){if($key -cnotmatch '^[a-z][a-z0-9-]*$' -or -not $known.Add($key)){throw 'Invalid or duplicate execution resource'}}
+    foreach($group in $Registry.groups){
+        $execution=$group.execution
+        if(-not $execution -or $execution.exclusive -isnot [bool] -or -not($execution.PSObject.Properties.Name -ccontains 'resources') -or [string]::IsNullOrWhiteSpace($execution.reason)){throw "Missing execution classification: $($group.id)"}
+        $claimed=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        foreach($key in $execution.resources){if(-not $known.Contains($key) -or -not $claimed.Add($key)){throw "Unknown or duplicate execution claim: $($group.id)"}}
+    }
+    $null=Get-DbGroupDurationHints -Registry $Registry
+}
+
+function Get-DbGroupDurationHints($Registry) {
+    $hints=[Collections.Generic.Dictionary[string,double]]::new([StringComparer]::Ordinal)
+    if(-not ($Registry.PSObject.Properties.Name -ccontains 'executionPriority')){return $hints}
+    $metadata=$Registry.executionPriority
+    if(-not $metadata -or
+        ($metadata.schemaVersion -isnot [int] -and $metadata.schemaVersion -isnot [long]) -or $metadata.schemaVersion -ne 1 -or
+        $metadata.policy -cne 'measured-duration-descending' -or $metadata.tieBreak -cne 'existing-normal-or-reverse-order'){
+        throw 'Invalid advisory duration scheduling policy'
+    }
+    $source=$metadata.source
+    if(-not $source -or $source.evidence -isnot [string] -or $source.evidence -cnotmatch '^\.local-tools/[A-Za-z0-9][A-Za-z0-9/_-]*$' -or
+        $source.inputsSha256 -isnot [string] -or $source.inputsSha256 -cnotmatch '^[a-fA-F0-9]{64}$' -or
+        $source.timingBoundary -cne 'worker-start-to-validated-terminal-seconds' -or $metadata.durations -isnot [array]){
+        throw 'Advisory durations require explicit source identity and ownership boundary'
+    }
+    $known=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach($group in $Registry.groups){$null=$known.Add($group.id)}
+    # Validate every hint before selecting work. Provenance is descriptive only:
+    # no historical evidence is read, and advisory seconds never become deadlines.
+    foreach($hint in $metadata.durations){
+        if($hint.id -isnot [string] -or -not $known.Contains($hint.id) -or $hints.ContainsKey($hint.id)){throw 'Unknown or duplicate advisory duration group'}
+        $seconds=$hint.seconds
+        $numeric=$seconds -is [byte] -or $seconds -is [sbyte] -or $seconds -is [short] -or $seconds -is [ushort] -or
+            $seconds -is [int] -or $seconds -is [uint] -or $seconds -is [long] -or $seconds -is [ulong] -or
+            $seconds -is [single] -or $seconds -is [double] -or $seconds -is [decimal]
+        if(-not $numeric -or -not [double]::IsFinite([double]$seconds) -or [double]$seconds -lt 0){throw 'Advisory duration must be finite nonnegative numeric seconds'}
+        $hints.Add($hint.id,[double]$seconds)
+    }
+    return $hints
+}
+
 function Get-DbGroupTopologicalOrder {
     param([string[]]$Priority, $Dependencies)
     $pending = [Collections.Generic.List[string]]::new()
@@ -30,6 +75,7 @@ function Get-DbGroupExecutionOrder {
         if ([string]::IsNullOrWhiteSpace($id) -or -not $known.Add($id)) { throw 'Empty or duplicate group registry' }
     }
     if (-not $all.Count) { throw 'Empty group registry' }
+    $durationHints=Get-DbGroupDurationHints -Registry $Registry
     $dependencies = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::Ordinal)
     foreach ($definition in $Registry.groups) {
         $seen = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
@@ -57,6 +103,10 @@ function Get-DbGroupExecutionOrder {
     }
     $priority = @($all | Where-Object { $chosen.Contains($_) })
     if ($Reverse) { [array]::Reverse($priority) }
+    # Reverse changes only the existing tie/fallback order, never longest-first.
+    if($durationHints.Count){
+        $priority=@($priority|Sort-Object -Stable -Property @{Expression={if($durationHints.ContainsKey($_)){$durationHints[$_]}else{0}};Descending=$true})
+    }
     Get-DbGroupTopologicalOrder -Priority $priority -Dependencies $dependencies
 }
 
@@ -67,6 +117,7 @@ function Resolve-DbGroups {
     if ($hasSelection -and $hasImpact) { throw 'Choose exact groups OR changed contracts, not both' }
     $all = @($Registry.groups.id)
     if (-not $all.Count -or @($all | Sort-Object -Unique).Count -ne $all.Count) { throw 'Empty or duplicate group registry' }
+    Assert-RootPhaseRegistration -Registry $Registry
     $selected = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $reasons = @()
     if ($hasSelection -or $hasImpact) {
@@ -104,7 +155,42 @@ function Resolve-DbGroups {
     [pscustomobject]@{mode=$(if($hasSelection -or $hasImpact){'selected'}else{'full'});
         certificationEligible=(-not ($hasSelection -or $hasImpact));
         selected=@($all | Where-Object { $selected.Contains($_) });
-        excluded=@($all | Where-Object { -not $selected.Contains($_) });reasons=$reasons}
+        excluded=@($all | Where-Object { -not $selected.Contains($_) });reasons=$reasons;
+        rootPhases=@{selected=@($Registry.rootPhases | Where-Object { $_.prerequisites | Where-Object { $selected.Contains($_) } } | ForEach-Object id);
+            excluded=@($Registry.rootPhases | Where-Object { -not @($_.prerequisites | Where-Object { $selected.Contains($_) }).Count } | ForEach-Object id)}}
+}
+
+# Root phases consume actual same-run artifacts; they are not JVM/IT groups and
+# never contribute a fictitious Java test or DB to the backend group registry.
+function Assert-RootPhaseRegistration {
+    param($Registry)
+    if($Registry.schemaVersion -eq 1 -and @($Registry.rootPhases).Count -ne 1){throw 'Mandatory container reproduction root phase missing or duplicated'}
+    $seen=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach($phase in $Registry.rootPhases) {
+        if(-not $seen.Add($phase.id) -or $phase.id -cne 'container-reproduction' -or
+            $phase.kind -cne 'root-container-contract' -or $phase.expectedDatabaseCount -ne 1 -or
+            @($phase.prerequisites).Count -ne 1 -or $phase.prerequisites[0] -cne 'package-runtime' -or
+            $phase.browser.requirements -cne 'required-browser-container-reproduction.json' -or $phase.browser.project) {
+            throw 'Unknown, duplicate or invalid root verification phase/producer'
+        }
+        foreach($prerequisite in $phase.prerequisites) {
+            if($prerequisite -cnotin $Registry.groups.id){throw 'Unknown root phase artifact producer'}
+        }
+        if(-not @($phase.consumes).Count -or -not @($phase.provides).Count){throw 'Empty root phase contract registration'}
+        foreach($contract in $phase.consumes) {
+            $providers=@($Registry.groups | Where-Object { $contract -cin $_.provides })
+            if(-not $providers.Count){throw "Unknown root phase consumed contract: $contract"}
+            foreach($provider in $providers) {
+                $impact=$Registry.impact.PSObject.Properties[$provider.id]
+                # Missing impact rows already expand to every DB group.
+                if($impact -and 'package-runtime' -cnotin $impact.Value.select){throw "Change impact omits root phase consumer of $($provider.id)"}
+            }
+        }
+        $impact=$Registry.impact.PSObject.Properties[$phase.id]
+        if(-not $impact -or @($impact.Value.select).Count -ne 1 -or $impact.Value.select[0] -cne 'package-runtime') {
+            throw 'Root phase impact must select its same-run artifact producer'
+        }
+    }
 }
 
 function Assert-DbGroupDatabases {
@@ -120,6 +206,7 @@ function Assert-DbGroupDatabases {
 
 function Assert-DbGroupRegistration {
     param($Registry, [string]$Root = (Split-Path $PSScriptRoot -Parent))
+    Assert-DbGroupScheduling -Registry $Registry
     Get-DbGroupExecutionOrder -Registry $Registry -Selected @($Registry.groups.id) | Out-Null
     $registered = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $legacy = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)

@@ -37,6 +37,7 @@ class ReleaseRecoveryIT {
     private final List<HttpServer> observers=new ArrayList<>();
     private final List<String> extraContainers=new ArrayList<>();
     private final java.util.Set<Integer> allocatedPorts=new java.util.HashSet<>();
+    private ReleasePortPool portPool;
     private Path r0jar,r1jar,r0dist,r1dist,devdist,r0Source;
     private String r0image,r1image,sourceInputs;
     private Map<String,Object> controllerPayload,r0Payload;
@@ -44,6 +45,7 @@ class ReleaseRecoveryIT {
     @Test void actualReleaseCommandsExchangeRestoreAndReopenIsolatedLocalAndPublicStacks() throws Exception {
         Throwable primaryFailure=null;
         try {
+            preparePortPool();
             prepareArtifacts();
             Stack local=create("L",false,true),localRestore=create("L",true,false);
             Files.writeString(support.folder.resolve("execution-identity.json"),support.json.writeValueAsString(Map.of("pid",ProcessHandle.current().pid(),"httpPort",local.apiPort,
@@ -58,6 +60,7 @@ class ReleaseRecoveryIT {
             browser("P",publicStack,publicRestore);
             stopStack(publicStack);stopStack(publicRestore);
             operatorFaults(local,publicStack);
+            SharedProductionBundle.verifyIfDeclared(support.root, support.folder, r1dist);
             var lifecycle=new LinkedHashMap<String,Object>();
             lifecycle.put("sourceDatabase",local.database);lifecycle.put("sourceMedia",local.media.toString());
             lifecycle.put("stacks",stacks.stream().map(Stack::identity).toList());
@@ -84,6 +87,17 @@ class ReleaseRecoveryIT {
                 if(primaryFailure!=null) {primaryFailure.addSuppressed(cleanup);}else {throw cleanup;}
             }
         }
+    }
+
+    private void preparePortPool() throws Exception {
+        String observationId=UUID.randomUUID().toString();Path directory=support.folder.resolve("port-observation-"+observationId);
+        long deadline=System.currentTimeMillis()+60000;
+        support.command(support.folder.resolve("port-observation-"+observationId+".log"),List.of(pwsh,"-NoProfile","-File",
+                support.root.resolve("verification/Observe-ReleasePortRanges.ps1").toString(),"-EvidenceDirectory",directory.toString(),
+                "-ObservationId",observationId,"-DeadlineEpochMs",Long.toString(deadline)),Map.of(),60);
+        Path report=directory.resolve("observation.json");portPool=ReleasePortPool.fromObservation(support.json.readTree(Files.readString(report)),observationId);
+        Files.writeString(directory.resolve("eligible-pool.json"),support.json.writeValueAsString(Map.of("observationSha256",ReleaseContractSupport.sha(report),
+                "intervals",portPool.intervals(),"size",portPool.size(),"attemptLimit",100,"historicalCollisionOwner","unresolved")));
     }
 
     private void prepareArtifacts() throws Exception {
@@ -156,8 +170,12 @@ class ReleaseRecoveryIT {
     }
 
     private int isolatedPort() throws Exception {
+        assertTrue(portPool!=null,"Fresh current port observation must precede all stack allocation");
+        return isolatedPort(portPool,allocatedPorts,()->java.util.concurrent.ThreadLocalRandom.current().nextInt(portPool.size()));
+    }
+    static int isolatedPort(ReleasePortPool pool,java.util.Set<Integer> allocatedPorts,java.util.function.IntSupplier index) throws Exception {
         for(int attempt=0;attempt<100;attempt++) {
-            int candidate=java.util.concurrent.ThreadLocalRandom.current().nextInt(20000,65536);
+            int candidate=pool.portAt(index.getAsInt());
             if(allocatedPorts.contains(candidate)) {continue;}
             try(var socket=new java.net.ServerSocket()) {
                 socket.bind(new InetSocketAddress(java.net.InetAddress.getLoopbackAddress(),candidate));allocatedPorts.add(candidate);return candidate;
@@ -167,6 +185,9 @@ class ReleaseRecoveryIT {
     }
 
     private Path buildDist(String mode,Path output) throws Exception {
+        if (mode.equals("production") && SharedProductionBundle.copyIfDeclared(support.root,support.folder,output)) {
+            return output;
+        }
         var builder=new ProcessBuilder(node,"node_modules/vite/bin/vite.js","build","--mode",mode,"--manifest","--outDir",output.toString())
                 .directory(support.root.resolve("frontend").toFile()).redirectErrorStream(true).redirectOutput(support.folder.resolve("dist-"+mode+".txt").toFile());
         builder.environment().put("NODE_ENV",mode);var child=builder.start();support.children.add(child);
@@ -317,7 +338,7 @@ class ReleaseRecoveryIT {
         void configuration() throws Exception {
             Path secrets=configuration.resolve("secrets");Files.createDirectory(secrets);
             Path script=configuration.resolve("tls.ps1");
-            Files.writeString(script,"$ErrorActionPreference='Stop'\n$rsa=[Security.Cryptography.RSA]::Create(2048)\ntry {$r=[Security.Cryptography.X509Certificates.CertificateRequest]::new('CN=localhost',$rsa,[Security.Cryptography.HashAlgorithmName]::SHA256,[Security.Cryptography.RSASignaturePadding]::Pkcs1); $s=[Security.Cryptography.X509Certificates.SubjectAlternativeNameBuilder]::new();$s.AddDnsName('localhost');$s.AddIpAddress([Net.IPAddress]::Loopback);$r.CertificateExtensions.Add($s.Build());$c=$r.CreateSelfSigned([DateTimeOffset]::UtcNow.AddMinutes(-1),[DateTimeOffset]::UtcNow.AddDays(2));[IO.File]::WriteAllText($env:P12D_SECRETS+'/tls.crt',$c.ExportCertificatePem());[IO.File]::WriteAllText($env:P12D_SECRETS+'/tls.key',$rsa.ExportPkcs8PrivateKeyPem())}finally{$rsa.Dispose()}\n$h=[Convert]::ToBase64String([Security.Cryptography.SHA1]::HashData([Text.Encoding]::UTF8.GetBytes($env:P12D_GATE)));[IO.File]::WriteAllText($env:P12D_SECRETS+'/reviewers',\"reviewer:{SHA}$h`n\")\n");
+            Files.writeString(script,"$ErrorActionPreference='Stop'\n. '"+support.root.resolve("verification/PowerShellRuntime.ps1").toString().replace("'","''")+"'\n$null=Assert-VerificationPowerShellRuntime\n$rsa=[Security.Cryptography.RSA]::Create(2048)\ntry {$r=[Security.Cryptography.X509Certificates.CertificateRequest]::new('CN=localhost',$rsa,[Security.Cryptography.HashAlgorithmName]::SHA256,[Security.Cryptography.RSASignaturePadding]::Pkcs1); $s=[Security.Cryptography.X509Certificates.SubjectAlternativeNameBuilder]::new();$s.AddDnsName('localhost');$s.AddIpAddress([Net.IPAddress]::Loopback);$r.CertificateExtensions.Add($s.Build());$c=$r.CreateSelfSigned([DateTimeOffset]::UtcNow.AddMinutes(-1),[DateTimeOffset]::UtcNow.AddDays(2));[IO.File]::WriteAllText($env:P12D_SECRETS+'/tls.crt',$c.ExportCertificatePem());[IO.File]::WriteAllText($env:P12D_SECRETS+'/tls.key',$rsa.ExportPkcs8PrivateKeyPem())}finally{$rsa.Dispose()}\n$h=[Convert]::ToBase64String([Security.Cryptography.SHA1]::HashData([Text.Encoding]::UTF8.GetBytes($env:P12D_GATE)));[IO.File]::WriteAllText($env:P12D_SECRETS+'/reviewers',\"reviewer:{SHA}$h`n\")\n");
             support.command(configuration.resolve("tls.txt"),List.of(pwsh,"-NoProfile","-File",script.toString()),Map.of("P12D_SECRETS",secrets.toString(),"P12D_GATE",gate),10);
             Path environment=configuration.resolve("database.private.env");Files.writeString(environment,"PACKAGE_DB_USER="+user+"\nPACKAGE_DB_PASSWORD="+password+"\nPACKAGE_DB_ADMIN_PASSWORD="+adminPassword+"\n");
             String upstream=mode.equals("L")?"host.docker.internal:"+apiPort:"api:8080";
@@ -576,10 +597,11 @@ class ReleaseRecoveryIT {
         }
         Map<String,Object> purchase(String number) {
             var jdbc=jdbc();var p=Map.of("number",number);var result=new LinkedHashMap<String,Object>();
-            result.put("order",jdbc.queryForMap("SELECT id::text,state,amount,mode FROM marketplace.purchase_order WHERE order_number=:number",p));
+            result.put("order",jdbc.queryForMap("SELECT id::text,order_number,state,amount,mode FROM marketplace.purchase_order WHERE order_number=:number",p));
             result.put("inventory",jdbc.queryForList("SELECT r.status FROM marketplace.inventory_reservation r JOIN marketplace.order_reservation b ON b.reservation_id=r.id JOIN marketplace.purchase_order o ON o.id=b.order_id WHERE o.order_number=:number",p));
             result.put("attempts",jdbc.queryForList("SELECT a.state,a.id::text,m.approval_effects,(SELECT count(*) FROM marketplace.payment_event e WHERE e.attempt_id=a.id AND e.action='SUCCEEDED') success_events FROM marketplace.payment_attempt a LEFT JOIN marketplace.payment_mock m ON m.attempt_id=a.id JOIN marketplace.purchase_order o ON o.id=a.order_id WHERE o.order_number=:number",p));
-            result.put("shipments",jdbc.queryForList("SELECT s.id::text,s.state FROM marketplace.shipment s JOIN marketplace.purchase_order o ON o.id=s.order_id WHERE o.order_number=:number",p));return result;
+            result.put("shipments",jdbc.queryForList("SELECT s.id::text,s.order_id::text,s.order_number,s.state FROM marketplace.shipment s JOIN marketplace.purchase_order o ON o.id=s.order_id WHERE o.order_number=:number",p));
+            result.put("shipmentConsumers",jdbc.queryForList("SELECT s.id::text shipment_id,s.order_id::text,s.order_number,j.id::text job_id,j.type job_type,j.cause_key,j.dedupe_key,j.status,j.attempts job_attempts,f.job_id::text claim_job_id,f.attempt claim_attempt FROM marketplace.shipment s JOIN marketplace.purchase_order o ON o.id=s.order_id LEFT JOIN marketplace.job j ON j.type='SHIPMENT_CREATED' AND j.cause_key='created:'||s.id::text AND j.dedupe_key='created:'||s.id::text LEFT JOIN marketplace.job_claim_fact f ON f.job_id=j.id AND f.attempt=j.attempts WHERE o.order_number=:number ORDER BY s.id",p));return result;
         }
     }
 

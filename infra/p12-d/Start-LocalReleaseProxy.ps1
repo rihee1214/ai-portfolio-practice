@@ -3,8 +3,8 @@ param([Parameter(Mandatory)][string]$Evidence,[Parameter(Mandatory)][int]$ApiPor
       [Parameter(Mandatory)][string]$SecretsPath,[Parameter(Mandatory)][string]$RunId,
       [Parameter(Mandatory)][string]$WorkspaceRoot)
 $ErrorActionPreference='Stop'
-if($PSVersionTable.PSVersion.Major -ne 7){throw 'PowerShell 7 required'}
 . "$PSScriptRoot/../p12-c/ProxyNetwork.ps1"
+$null = Assert-VerificationPowerShellRuntime
 $workspace=[IO.Path]::GetFullPath($WorkspaceRoot)
 if(-not [IO.Path]::IsPathFullyQualified($WorkspaceRoot) -or -not(Test-Path -LiteralPath "$workspace/AGENTS.md" -PathType Leaf)){throw 'Explicit workspace root required'}
 function Assert-OwnedPath([string]$Value) {

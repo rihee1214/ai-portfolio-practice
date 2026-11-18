@@ -26,6 +26,7 @@ Must-RejectEndpoint 'malformed instance' { Resolve-TestPostgresEndpoint -Port 26
 Must-RejectEndpoint 'shared instance override' { Resolve-TestPostgresEndpoint -Port 15433 -Instance $instance -Container 'new-test' }
 foreach ($port in @(0,1023,65536)) { Must-RejectEndpoint "invalid port $port" { Resolve-TestPostgresEndpoint -Port $port -Instance $instance -Container 'new-test' } }
 $command = New-PhoneHarnessCommand -Root (Split-Path $PSScriptRoot -Parent) -EvidenceDirectory '.local-tools/endpoint-unit' -Endpoint $target -Offline
+if (-not $command.StartsWith('"' + (Get-VerificationPowerShellPath) + '" -NoProfile -File ')) { throw 'Phone child lost exact explicit PowerShell executable' }
 foreach ($expected in @('-TestPostgresPort 26543',"-TestPostgresInstance $instance",'-TestPostgresContainer p09-e-diagnostic-unit','-Offline','-PhoneEmulatorReady')) {
     if (-not $command.Contains($expected)) { throw "Phone child lost explicit argument: $expected" }
 }

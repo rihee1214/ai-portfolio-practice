@@ -1,27 +1,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { createServer, request } from 'node:http'
+import { createServer } from 'node:http'
 import { mkdtemp, writeFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, resolve, dirname, basename } from 'node:path'
 import { createServer as createViteServer, preview } from 'vite'
 import { apiProxy } from '../vite/apiProxy.ts'
-
-// fetch normalizes dot segments before sending, so use the raw HTTP request target.
-function rawGet(port, path) {
-  return new Promise((resolve, reject) => {
-    const req = request({ host: '127.0.0.1', port, path, headers: { Accept: 'text/html' } }, res => {
-      let body = ''
-      res.setEncoding('utf8')
-      res.on('data', chunk => { body += chunk })
-      res.on('end', () => resolve({ status: res.statusCode, type: res.headers['content-type'], body }))
-      res.on('error', reject)
-    })
-    req.setTimeout(2000, () => req.destroy(new Error('Test request timed out')))
-    req.on('error', reject)
-    req.end()
-  })
-}
+import { rawGet } from './proxyHttp.mjs'
 
 for (const mode of ['dev', 'preview']) {
   test(`${mode}: API path aliases cannot escape into management routes or SPA fallback`, async t => {

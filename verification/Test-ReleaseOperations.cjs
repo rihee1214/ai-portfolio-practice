@@ -119,6 +119,24 @@ test('D01 retained operational closure rejects missing modified and undeclared f
   const extra=payloads.createPayload({...payloadDefinition,outputRoot:path.join(evidence,'extra-file'),kind:'p12-d-operations',sourceReleaseId:'R1'});fs.writeFileSync(path.join(extra.root,'unlisted.cjs'),'undeclared');
   assert.throws(()=>payloads.validatePayload(extra),/hash mismatch/);
 });
+test('D01 historical R0 preparation preserves original runtime closure while R1 pins current execution helpers',()=>{
+  const historicalFiles=['infra/p12-c/Dockerfile','infra/p12-c/ProxyNetwork.ps1','infra/p12-c/Start-LocalProxy.ps1','infra/p12-c/compose.yaml','infra/p12-c/nginx.conf.template','infra/p12-c/package-proxy.conf.template','infra/postgres/init-app.sh'].sort();
+  const historical=path.join(evidence,'historical-R0-source');fs.mkdirSync(historical);
+  for(const relative of historicalFiles){const to=path.join(historical,relative);fs.mkdirSync(path.dirname(to),{recursive:true});fs.writeFileSync(to,'immutable historical R0 '+relative,'utf8');}
+  assert.equal(fs.existsSync(path.join(historical,'verification')),false,'Historical source predates execution helpers');
+  const before=historicalFiles.map(relative=>[relative,sha(fs.readFileSync(path.join(historical,relative)))]);
+  const r0=payloads.createPayload({...payloadDefinition,sourceRoot:historical,outputRoot:path.join(evidence,'historical-R0-prepared'),kind:'p12-c-runtime',sourceReleaseId:'R0'});
+  assert.deepEqual(r0.files.map(file=>file.path).sort(),historicalFiles,'Exact original R0 dependency closure');
+  assert.equal(fs.existsSync(path.join(historical,'verification')),false,'New helpers must not be injected into historical source');
+  assert.deepEqual(historicalFiles.map(relative=>[relative,sha(fs.readFileSync(path.join(historical,relative)))]),before,'Historical source bytes preserved');
+  assert.equal(payloads.validatePayload(r0),r0);
+  const r1=payloads.createPayload({...payloadDefinition,outputRoot:path.join(evidence,'current-R1-prepared'),kind:'p12-d-operations',sourceReleaseId:'R1'});
+  for(const helper of ['verification/PowerShellRuntime.cjs','verification/PowerShellRuntime.ps1']){
+    assert.equal(r1.files.filter(file=>file.path===helper).length,1,'Current controller pins '+helper);
+    assert.equal(sha(fs.readFileSync(path.join(r1.root,helper))),sha(fs.readFileSync(path.join(workspace,helper))),'Actual current helper bytes');
+    assert.throws(()=>payloads.validatePayload({...r1,files:r1.files.filter(file=>file.path!==helper)}),/closure incomplete/,'Current helper remains mandatory');
+  }
+});
 test('D05 retained controller consumes its pinned restore SQL after mutable source changes',()=>{
   const source=path.join(evidence,'mutable-source');fs.mkdirSync(source);
   for(const relative of payloads.controllerFiles){const to=path.join(source,relative);fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(path.join(workspace,relative),to);}

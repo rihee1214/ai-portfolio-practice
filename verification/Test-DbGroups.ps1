@@ -6,6 +6,18 @@ function Must-RejectGroup([string]$Label, [scriptblock]$Action) {
     if (-not $rejected) { throw "Accepted invalid selection: $Label" }
 }
 $registry = Get-DbGroupRegistry
+Assert-DbGroupScheduling -Registry $registry
+foreach($mutation in @('missing','unknown','duplicate','reason','cap')){
+    $badExecution=$registry|ConvertTo-Json -Depth 20|ConvertFrom-Json
+    switch($mutation){
+        'missing' {$badExecution.groups[0].PSObject.Properties.Remove('execution')}
+        'unknown' {$badExecution.groups[0].execution.resources=@('unknown')}
+        'duplicate' {$badExecution.groups[0].execution.resources=@('fault-injection','fault-injection')}
+        'reason' {$badExecution.groups[0].execution.reason=''}
+        'cap' {$badExecution.executionResources.maxConcurrency=3}
+    }
+    Must-RejectGroup "execution $mutation" {Assert-DbGroupScheduling -Registry $badExecution}
+}
 $badBrowser = $registry | ConvertTo-Json -Depth 15 | ConvertFrom-Json
 $isolatedIndex = [array]::IndexOf(@($badBrowser.groups.id),'site-maintenance-desktop')
 $badBrowser.groups[$isolatedIndex].browser.project='desktop,mobile'
@@ -59,8 +71,10 @@ function Assert-PrerequisiteOrder($Registry, [string[]]$Order) {
 }
 $registryBeforeOrder = $registry | ConvertTo-Json -Depth 15 -Compress
 $selectionBeforeOrder = $releaseSelection | ConvertTo-Json -Depth 15 -Compress
-$normal = @(Get-DbGroupExecutionOrder -Registry $registry -Selected $all.selected)
-$reverse = @(Get-DbGroupExecutionOrder -Registry $registry -Selected $all.selected -Reverse)
+$unhintedRegistry=$registry|ConvertTo-Json -Depth 20|ConvertFrom-Json
+$unhintedRegistry.PSObject.Properties.Remove('executionPriority')
+$normal = @(Get-DbGroupExecutionOrder -Registry $unhintedRegistry -Selected $all.selected)
+$reverse = @(Get-DbGroupExecutionOrder -Registry $unhintedRegistry -Selected $all.selected -Reverse)
 Assert-GroupOrder 'existing normal registry order' $normal $all.selected
 Assert-PrerequisiteOrder $registry $normal
 Assert-PrerequisiteOrder $registry $reverse
@@ -68,6 +82,19 @@ if ($reverse.Count -ne $all.selected.Count -or (Compare-Object $reverse $all.sel
 Assert-GroupOrder 'reverse ready priority at prerequisite boundary' $reverse[0..2] @('release-upgrade','public-demo-runtime','release-recovery')
 Assert-GroupOrder 'exact release normal' @(Get-DbGroupExecutionOrder -Registry $registry -Selected $releaseSelection.selected) @('public-demo-runtime','release-recovery')
 Assert-GroupOrder 'exact release reverse' @(Get-DbGroupExecutionOrder -Registry $registry -Selected $releaseSelection.selected -Reverse) @('public-demo-runtime','release-recovery')
+$actualNormal=@(Get-DbGroupExecutionOrder -Registry $registry -Selected $all.selected)
+$actualReverse=@(Get-DbGroupExecutionOrder -Registry $registry -Selected $all.selected -Reverse)
+$expectedMeasured='browser-api,return-recovery,process-recovery,return-finance,exchange-recovery,legacy,refund,aftercare-contracts,exchange-finance,exchange,fulfillment,return-physical,package-runtime,release-upgrade,dashboard,identity,payment,support,settlement,confirmation,questions,promotion,catalog,job-contracts,moderation,reports,checkout,site-maintenance-mobile,site-maintenance-desktop,guest,order-history,content,inventory,database-runtime,operations,site-management,seller-store,media,shopping,public-demo-runtime,release-recovery,phone-provider'.Split(',')
+Assert-GroupOrder 'actual source-bound measured whole normal priority' $actualNormal $expectedMeasured
+Assert-GroupOrder 'actual source-bound measured whole reverse tie priority' $actualReverse $expectedMeasured
+foreach($actualOrder in @($actualNormal,$actualReverse)){
+    Assert-PrerequisiteOrder $registry $actualOrder
+    if($actualOrder.Count -ne 42 -or (Compare-Object $actualOrder $all.selected -CaseSensitive)){throw 'Advisory ordering changed exact whole42 membership'}
+}
+if($registry.executionPriority.source.inputsSha256 -cne '299d4040349ed1f6710d1f7bc41beb109793d16205dce28da9babf962e97576d' -or
+    $registry.executionPriority.source.evidence -cne '.local-tools/perf2-baseline2-fc14033b6dce4c70a2ab55326e593f6a' -or
+    $registry.executionPriority.durations.Count -ne 42 -or
+    (Compare-Object @($registry.executionPriority.durations.id) $all.selected -CaseSensitive)){throw 'Checked-in hints lost exact baseline provenance or42 group coverage'}
 if (($registry | ConvertTo-Json -Depth 15 -Compress) -cne $registryBeforeOrder -or
     ($releaseSelection | ConvertTo-Json -Depth 15 -Compress) -cne $selectionBeforeOrder) { throw 'Scheduling mutated registry or selection/certification metadata' }
 $free = [pscustomobject]@{groups=@([pscustomobject]@{id='a';provides=@('x');consumes=@('y')},[pscustomobject]@{id='b';provides=@('y');consumes=@('x')},[pscustomobject]@{id='c'})}
@@ -79,6 +106,84 @@ Assert-GroupOrder 'reordered chain reverse' @(Get-DbGroupExecutionOrder -Registr
 $diamond = [pscustomobject]@{groups=@([pscustomobject]@{id='d';prerequisites=@('b','c')},[pscustomobject]@{id='b';prerequisites=@('a')},[pscustomobject]@{id='a'},[pscustomobject]@{id='c';prerequisites=@('a')})}
 Assert-GroupOrder 'diamond normal' @(Get-DbGroupExecutionOrder -Registry $diamond -Selected @('a','b','c','d')) @('a','b','c','d')
 Assert-GroupOrder 'diamond reverse ready priority' @(Get-DbGroupExecutionOrder -Registry $diamond -Selected @('a','b','c','d') -Reverse) @('a','c','b','d')
+function New-DurationPriority([object[]]$Durations) {
+    [pscustomobject]@{schemaVersion=1;policy='measured-duration-descending';tieBreak='existing-normal-or-reverse-order';
+        source=[pscustomobject]@{evidence='.local-tools/synthetic-duration-source';inputsSha256=('a'*64);timingBoundary='worker-start-to-validated-terminal-seconds'};
+        durations=$Durations}
+}
+$weighted=[pscustomobject]@{groups=@('a','b','c','d','e'|ForEach-Object{[pscustomobject]@{id=$_}});
+    executionPriority=(New-DurationPriority @([pscustomobject]@{id='a';seconds=10},[pscustomobject]@{id='b';seconds=30},[pscustomobject]@{id='c';seconds=30},[pscustomobject]@{id='d';seconds=0}))}
+$weightedBefore=$weighted|ConvertTo-Json -Depth 15 -Compress
+Assert-GroupOrder 'duration descending with stable normal ties and zero missing fallback' @(Get-DbGroupExecutionOrder -Registry $weighted -Selected @('a','b','c','d','e')) @('b','c','a','d','e')
+Assert-GroupOrder 'reverse changes only duration ties and fallback' @(Get-DbGroupExecutionOrder -Registry $weighted -Selected @('a','b','c','d','e') -Reverse) @('c','b','a','e','d')
+Assert-GroupOrder 'duration selection remains exact' @(Get-DbGroupExecutionOrder -Registry $weighted -Selected @('a','d','e')) @('a','d','e')
+Assert-GroupOrder 'duration selection reverse remains exact' @(Get-DbGroupExecutionOrder -Registry $weighted -Selected @('a','d','e') -Reverse) @('a','e','d')
+if(($weighted|ConvertTo-Json -Depth 15 -Compress) -cne $weightedBefore){throw 'Advisory ordering mutated metadata'}
+$emptyHints=$weighted|ConvertTo-Json -Depth 15|ConvertFrom-Json
+$emptyHints.executionPriority.durations=@()
+Assert-GroupOrder 'empty hints preserve normal fallback' @(Get-DbGroupExecutionOrder -Registry $emptyHints -Selected @('a','b','c','d','e')) @('a','b','c','d','e')
+Assert-GroupOrder 'empty hints preserve reverse fallback' @(Get-DbGroupExecutionOrder -Registry $emptyHints -Selected @('a','b','c','d','e') -Reverse) @('e','d','c','b','a')
+$weightedChain=$chain|ConvertTo-Json -Depth 15|ConvertFrom-Json
+$weightedChain|Add-Member -NotePropertyName executionPriority -NotePropertyValue (New-DurationPriority @([pscustomobject]@{id='c';seconds=100},[pscustomobject]@{id='b';seconds=20},[pscustomobject]@{id='a';seconds=1}))
+Assert-GroupOrder 'duration hints cannot bypass chain producers' @(Get-DbGroupExecutionOrder -Registry $weightedChain -Selected @('a','b','c')) @('a','b','c')
+$weightedDiamond=$diamond|ConvertTo-Json -Depth 15|ConvertFrom-Json
+$weightedDiamond|Add-Member -NotePropertyName executionPriority -NotePropertyValue (New-DurationPriority @([pscustomobject]@{id='d';seconds=100},[pscustomobject]@{id='b';seconds=20},[pscustomobject]@{id='c';seconds=20},[pscustomobject]@{id='a';seconds=1}))
+Assert-GroupOrder 'duration diamond normal ready ties' @(Get-DbGroupExecutionOrder -Registry $weightedDiamond -Selected @('a','b','c','d')) @('a','b','c','d')
+Assert-GroupOrder 'duration diamond reverse ready ties' @(Get-DbGroupExecutionOrder -Registry $weightedDiamond -Selected @('a','b','c','d') -Reverse) @('a','c','b','d')
+$interaction=[pscustomobject]@{groups=@(
+    [pscustomobject]@{id='p';prerequisites=@();execution=@{exclusive=$false;resources=@()}},
+    [pscustomobject]@{id='x';prerequisites=@('p');execution=@{exclusive=$true;resources=@()}},
+    [pscustomobject]@{id='b';prerequisites=@();execution=@{exclusive=$false;resources=@()}},
+    [pscustomobject]@{id='a';prerequisites=@();execution=@{exclusive=$false;resources=@()}});
+    executionPriority=(New-DurationPriority @([pscustomobject]@{id='x';seconds=100},[pscustomobject]@{id='a';seconds=50},[pscustomobject]@{id='b';seconds=20},[pscustomobject]@{id='p';seconds=10}))}
+$effective=@(Get-DbGroupExecutionOrder -Registry $interaction -Selected @('p','x','b','a'))
+Assert-GroupOrder 'measured order retains prerequisite exclusive interaction' $effective @('a','b','p','x')
+$encodedInteraction=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes((@{groups=$interaction.groups;priority=$effective}|ConvertTo-Json -Depth 10 -Compress)))
+$interactionScript=@'
+const assert=require('node:assert/strict'),{readyGroups}=require('./verification/DbGroupExecution.cjs');
+const input=JSON.parse(Buffer.from(process.argv[1],'base64').toString('utf8')),defs=new Map(input.groups.map(g=>[g.id,g])),groups=input.priority.map(id=>defs.get(id));
+const ids=(states,active)=>readyGroups(groups,states,active.map(id=>defs.get(id)),2).map(g=>g.id);
+assert.deepEqual(ids({a:'pending',b:'pending',p:'pending',x:'pending'},[]),['a','b']);
+assert.deepEqual(ids({a:'running',b:'passed',p:'pending',x:'pending'},['a']),['p']);
+assert.deepEqual(ids({a:'running',b:'passed',p:'passed',x:'pending'},['a']),[]);
+assert.deepEqual(ids({a:'passed',b:'passed',p:'passed',x:'pending'},[]),['x']);
+assert.deepEqual(ids({a:'pending',b:'passed',p:'passed',x:'running'},['x']),[]);
+console.log('PASS actual returned duration priority preserves producer admission and exclusive drain/cap');
+'@
+& (Join-Path (Split-Path $PSScriptRoot -Parent) '.local-tools/node-v24.22.0-win-x64/node.exe') -e $interactionScript $encodedInteraction
+if($LASTEXITCODE -ne 0){throw 'Measured priority bypassed actual scheduler readiness'}
+foreach($kind in @('null-metadata','schema','schema-string','policy','tie','source','source-evidence','source-hash','source-boundary','durations','unknown','duplicate','null-hint','missing-seconds','null','string','bool','nan','infinite','negative')) {
+    $badHints=$weighted|ConvertTo-Json -Depth 15|ConvertFrom-Json
+    switch($kind){
+        'null-metadata' {$badHints.executionPriority=$null}
+        'schema' {$badHints.executionPriority.schemaVersion=2}
+        'schema-string' {$badHints.executionPriority.schemaVersion='1'}
+        'policy' {$badHints.executionPriority.policy='unknown'}
+        'tie' {$badHints.executionPriority.tieBreak='shortest-first'}
+        'source' {$badHints.executionPriority.source=$null}
+        'source-evidence' {$badHints.executionPriority.source.evidence='../unbound-source'}
+        'source-hash' {$badHints.executionPriority.source.inputsSha256='not-source-hash'}
+        'source-boundary' {$badHints.executionPriority.source.timingBoundary='deadline'}
+        'durations' {$badHints.executionPriority.durations=[pscustomobject]@{id='a';seconds=1}}
+        'unknown' {$badHints.executionPriority.durations[1].id='unregistered'}
+        'duplicate' {$badHints.executionPriority.durations[1].id='a'}
+        'null-hint' {$badHints.executionPriority.durations[1]=$null}
+        'missing-seconds' {$badHints.executionPriority.durations[1].PSObject.Properties.Remove('seconds')}
+        'null' {$badHints.executionPriority.durations[1].seconds=$null}
+        'string' {$badHints.executionPriority.durations[1].seconds='30'}
+        'bool' {$badHints.executionPriority.durations[1].seconds=$true}
+        'nan' {$badHints.executionPriority.durations[1].seconds=[double]::NaN}
+        'infinite' {$badHints.executionPriority.durations[1].seconds=[double]::PositiveInfinity}
+        'negative' {$badHints.executionPriority.durations[1].seconds=-1}
+    }
+    $partial=[Collections.Generic.List[string]]::new();$rejected=$false
+    try {Get-DbGroupExecutionOrder -Registry $badHints -Selected @('a')|ForEach-Object{$partial.Add($_)}}catch{$rejected=$true}
+    if(-not $rejected -or $partial.Count){throw "Malformed global/unselected advisory hint emitted schedule: $kind"}
+    "PASS invalid global duration hint rejected without partial output: $kind"
+}
+$badRegisteredHints=$registry|ConvertTo-Json -Depth 20|ConvertFrom-Json
+$badRegisteredHints|Add-Member -NotePropertyName executionPriority -NotePropertyValue (New-DurationPriority @([pscustomobject]@{id='identity';seconds='invalid'})) -Force
+Must-RejectGroup 'registration rejects unselected invalid duration hints' {Assert-DbGroupScheduling -Registry $badRegisteredHints}
 Must-RejectGroup 'scheduler missing selected prerequisite' { Get-DbGroupExecutionOrder -Registry $registry -Selected @('release-recovery') }
 Must-RejectGroup 'scheduler unknown selected ID' { Get-DbGroupExecutionOrder -Registry $registry -Selected @('unregistered') }
 Must-RejectGroup 'scheduler duplicate selected ID' { Get-DbGroupExecutionOrder -Registry $free -Selected @('a','a') }
@@ -112,8 +217,10 @@ $backendAst=[Management.Automation.Language.Parser]::ParseFile((Join-Path (Split
 if ($groupParseErrors.Count) { throw 'Backend group runner syntax is invalid' }
 $orderAssignments=@($backendAst.FindAll({param($node) $node -is [Management.Automation.Language.AssignmentStatementAst] -and $node.Left -is [Management.Automation.Language.VariableExpressionAst] -and $node.Left.VariablePath.UserPath -ceq 'ordered'},$true))
 $endpointCalls=@($backendAst.FindAll({param($node) $node -is [Management.Automation.Language.CommandAst] -and $node.GetCommandName() -ceq 'Resolve-TestPostgresEndpoint'},$true))
-$executionLoops=@($backendAst.FindAll({param($node) $node -is [Management.Automation.Language.ForEachStatementAst] -and $node.Variable.VariablePath.UserPath -ceq 'id' -and $node.Condition.Extent.Text -ceq '$ordered'},$true))
-if ($orderAssignments.Count -ne 1 -or $endpointCalls.Count -ne 1 -or $executionLoops.Count -ne 1 -or
+$schedulerAssignments=@($backendAst.FindAll({param($node) $node -is [Management.Automation.Language.AssignmentStatementAst] -and $node.Left -is [Management.Automation.Language.VariableExpressionAst] -and $node.Left.VariablePath.UserPath -ceq 'schedulerRequest'},$true))
+$schedulerCalls=@($backendAst.FindAll({param($node) $node -is [Management.Automation.Language.CommandAst] -and $node.Extent.Text.Contains('DbGroupExecution.cjs')},$true))
+if ($orderAssignments.Count -ne 1 -or $endpointCalls.Count -ne 1 -or $schedulerAssignments.Count -ne 1 -or $schedulerCalls.Count -ne 1 -or
+    -not $schedulerAssignments[0].Right.Extent.Text.Contains('priority=$ordered') -or
     $orderAssignments[0].Right.Extent.Text -notmatch 'Get-DbGroupExecutionOrder' -or
     $orderAssignments[0].Extent.StartOffset -ge $endpointCalls[0].Extent.StartOffset) { throw 'Runner must consume its prerequisite-safe schedule before acquiring an endpoint' }
 $chosen = Resolve-DbGroups -Registry $registry -Selection 'exchange-recovery'
@@ -151,6 +258,10 @@ $command = New-PhoneHarnessCommand -Root (Split-Path $PSScriptRoot -Parent) -Evi
 if (-not $command.Contains('-DbGroups database-runtime,job-contracts') -or -not $command.Contains('-ReverseGroups')) { throw 'Emulator lost exact group selection/order' }
 $command = New-PhoneHarnessCommand -Root (Split-Path $PSScriptRoot -Parent) -EvidenceDirectory '.local-tools/group-unit' -Endpoint $target -ChangedContracts 'exchange'
 if (-not $command.Contains('-ChangedContracts exchange')) { throw 'Emulator lost impact mode' }
+$serialCommand=New-PhoneHarnessCommand -Root '.' -EvidenceDirectory '.local-tools/unit' -Endpoint $target -GroupConcurrency '1'
+if(-not $serialCommand.Contains('-GroupConcurrency 1')){throw 'Emulator lost explicit serial mode'}
+Must-RejectGroup 'fractional concurrency' {New-PhoneHarnessCommand -Root '.' -EvidenceDirectory '.local-tools/unit' -Endpoint $target -GroupConcurrency '1.5'}
+Must-RejectGroup 'concurrency beyond cap2' {New-PhoneHarnessCommand -Root '.' -EvidenceDirectory '.local-tools/unit' -Endpoint $target -GroupConcurrency '3'}
 Must-RejectGroup 'unsafe shell selector' { New-PhoneHarnessCommand -Root '.' -EvidenceDirectory '.local-tools/unit' -Endpoint $target -DbGroups 'exchange;whoami' }
 'PASS database group selection, impact expansion, registration and default-full gates'
 'PASS prerequisite-safe normal/reverse execution, exact scope, deterministic ready priority and graph preflight rejection'

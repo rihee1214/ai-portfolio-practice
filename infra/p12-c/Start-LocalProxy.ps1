@@ -3,6 +3,7 @@ param([Parameter(Mandatory)][string]$Evidence, [Parameter(Mandatory)][int]$ApiPo
       [Parameter(Mandatory)][string]$Dist)
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/ProxyNetwork.ps1"
+$null = Assert-VerificationPowerShellRuntime
 $folder = [IO.Path]::GetFullPath($Evidence)
 $root = [IO.Path]::GetFullPath("$PSScriptRoot/../..")
 if (-not $folder.StartsWith("$root\.local-tools\", [StringComparison]::OrdinalIgnoreCase)) { throw 'Fresh owned evidence required' }

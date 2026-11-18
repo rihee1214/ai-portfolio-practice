@@ -1,4 +1,5 @@
 $script:ProxyPreparationClock = [Diagnostics.Stopwatch]::StartNew()
+. "$PSScriptRoot/../../verification/PowerShellRuntime.ps1"
 function Invoke-ProxyDocker {
     param([Parameter(Mandatory)][string[]]$Arguments)
     $remaining = 60000 - $script:ProxyPreparationClock.ElapsedMilliseconds
@@ -57,6 +58,7 @@ function New-IsolatedProxyNetwork {
         if (-not $ids.Count) { throw 'Docker network inventory is missing' }
         $networks=@((Invoke-ProxyDocker (@('network','inspect')+$ids)) | ConvertFrom-Json)
         if ($networks.Count -ne $ids.Count) { throw 'Incomplete Docker network inventory' }
+        Import-VerificationNetworkModule
         $routes=@(Get-NetRoute -AddressFamily IPv4 -ErrorAction Stop | Select-Object DestinationPrefix,NextHop,InterfaceAlias)
         if (-not $routes.Count) { throw 'Host route inventory is missing' }
         $excluded=@($networks | ForEach-Object { $_.IPAM.Config | ForEach-Object { if ($_.Subnet -and $_.Subnet -notmatch ':') { $_.Subnet } } })

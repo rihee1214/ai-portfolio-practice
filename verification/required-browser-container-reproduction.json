@@ -1,0 +1,9 @@
+[
+  {
+    "id": "P12-E AC16 isolated Compose business reproduction",
+    "tests": [
+      "desktop#reproduction.spec.ts:E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+      "mobile#reproduction.spec.ts:E AC16 fresh container buyer seller operator retain real business IDs and worker effects"
+    ]
+  }
+]

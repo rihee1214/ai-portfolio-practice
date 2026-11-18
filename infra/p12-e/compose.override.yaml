@@ -1,0 +1,34 @@
+# Used after p12-c/compose.yaml. All names derive from a fresh, checked project.
+services:
+  api:
+    environment:
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+    volumes: !override
+      - type: volume
+        source: package-media
+        target: /media
+        volume:
+          nocopy: true
+  worker:
+    environment:
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+  prepare:
+    image: ${PACKAGE_APP_IMAGE:?}
+    pull_policy: never
+    profiles: [prepare]
+    user: "10001:10001"
+    entrypoint: [java, -cp, '/bootstrap:/artifact/BOOT-INF/classes:/artifact/BOOT-INF/lib/*', PrepareAccounts]
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${PACKAGE_DB_NAME:?}
+      DB_USERNAME: ${PACKAGE_DB_USER:?}
+      DB_PASSWORD: ${PACKAGE_DB_PASSWORD:?}
+      EXPECTED_DATABASE: ${PACKAGE_DB_NAME:?}
+      MEDIA_ROOT: /tmp/preparation-media
+    volumes:
+      - ${E_BOOTSTRAP:?}:/bootstrap:ro
+      - ${E_ARTIFACT:?}:/artifact:ro
+      - ${E_OUTPUT:?}:/output
+    networks: [data]
+    mem_limit: 768m
+volumes:
+  package-media: {}

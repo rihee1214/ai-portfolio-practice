@@ -1,4 +1,5 @@
 . "$PSScriptRoot/DatabaseTarget.ps1"
+. "$PSScriptRoot/PowerShellRuntime.ps1"
 function Get-PreservationSnapshot {
     param($Endpoint = (Resolve-TestPostgresEndpoint), [switch]$ResourceOnlyDiagnostic)
     $selected = Get-SelectedPostgresSnapshot $Endpoint
@@ -25,6 +26,7 @@ function Get-PreservationSnapshot {
     }
     $containers = @(& docker ps --format '{{.ID}} {{.Names}}' --filter name=moa-market-local)
     if ($LASTEXITCODE -ne 0) { throw 'Container inventory failed' }
+    Import-VerificationNetworkModule
     $ports = @(Get-NetTCPConnection -State Listen | Where-Object LocalPort -in @(8080,4174,5174,15432,15433,$Endpoint.port) |
         ForEach-Object { "$($_.LocalAddress)|$($_.LocalPort)|$($_.OwningProcess)" } | Sort-Object)
     $media = @{}

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "PERF2-IR1-public-shipment-consumer-readiness",
+    "file": "frontend/tests/release-shipment-consumer.test.mjs",
+    "tests": [
+      "public shipment readiness requires the tested order and its exact completed consumer",
+      "public shipment readiness rejects unfinished jobs and absent or mismatched durable claim attempts",
+      "public shipment readiness rejects the preserved failed BEFORE state and accepts its completed AFTER state",
+      "public shipment readiness polling retains the original ten-second commerce deadline",
+      "public shipment consumer polling stays inside commerce before the unchanged exact guest boundary"
+    ]
+  }
+]

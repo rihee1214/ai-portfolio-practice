@@ -110,6 +110,7 @@ class PackageRuntimeIT {
             assertTrue(api.isAlive());
             assertTrue(worker.isAlive());
             assertEquals(jarHash, sha(jar));
+            SharedProductionBundle.verifyIfDeclared(root, folder, folder.resolve("browser-app"));
             var proof = new LinkedHashMap<String,Object>();
             proof.put("jar", jar.toString()); proof.put("apiJarSha256", jarHash); proof.put("workerJarSha256", jarHash);
             proof.put("apiPid", api.pid()); proof.put("workerPid", worker.pid()); proof.put("apiProfiles", "db");
@@ -237,9 +238,11 @@ class PackageRuntimeIT {
 
     private void buildDist() throws Exception {
         var build = folder.resolve("browser-app");
-        command(folder.resolve("package-build.txt"), root.resolve("frontend"),
+        if (!SharedProductionBundle.copyIfDeclared(root, folder, build)) {
+            command(folder.resolve("package-build.txt"), root.resolve("frontend"),
                 List.of(root.resolve(".local-tools/node-v24.22.0-win-x64/node.exe").toString(), "node_modules/vite/bin/vite.js",
                         "build", "--manifest", "--outDir", build.toString()), 60, Map.of());
+        }
         var files = new ArrayList<Map<String,Object>>();
         try (var paths = Files.walk(build)) {
             for (Path path : paths.filter(Files::isRegularFile).toList()) {

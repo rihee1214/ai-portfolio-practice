@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /** A fixed historical application is first and exclusive; only enumerated test support follows. */
 final class HistoricalReleaseArtifacts {
     private static final List<String> HELPERS=List.of("HistoricalReleaseProbe","ReleaseReconciliationFixture",
-            "SettlementContractFixture","PostgresContractFixture","ContractTiming","ReleaseContractSupport","OneJobJdbc");
+            "SettlementContractFixture","PostgresContractFixture","ParticipantSnapshots","ContractTiming","ReleaseContractSupport","OneJobJdbc");
     private static final List<String> FIXTURES=List.of("AccountRepository","TransferService","BatchService",
             "DedicatedDatabaseTarget","BrowserChildWatchdog");
     private static final List<String> TEST_LIBRARIES=List.of("junit-jupiter-api-","junit-platform-commons-","opentest4j-",
@@ -58,6 +58,9 @@ final class HistoricalReleaseArtifacts {
             }
         }
         assertTrue(Files.isRegularFile(helpers.resolve("com/example/marketplace/dbtest/HistoricalReleaseProbe.class")));
+        Path participantHelper=Path.of("com/example/marketplace/dbtest/ParticipantSnapshots.class");
+        assertTrue(Files.isRegularFile(helpers.resolve(participantHelper)),"Current fixture's full-snapshot dependency must be retained");
+        assertEquals(ReleaseContractSupport.sha(compiled.resolve(participantHelper)),ReleaseContractSupport.sha(helpers.resolve(participantHelper)),"Retained current test-helper dependency bytes");
         assertFalse(Files.exists(helpers.resolve("com/example/marketplace/MarketplaceApplication.class")));
         var dependencyRecords=new ArrayList<Map<String,Object>>();
         String classpath=System.getProperty("surefire.test.class.path",System.getProperty("java.class.path"));

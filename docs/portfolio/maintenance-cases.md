@@ -1,0 +1,70 @@
+# 실제 유지보수와 복구 사례
+
+2026-11-16 P12-E가 정리한 **기존 실행의 설명**이다. 사례를 만들기 위해 오류를 다시 주입하거나 운영 정책을 변경하지 않았다. 현재 진입 소스는 P12-D 커밋 `dbaef2ddedfa7f2393e93bea6b648cf832c5cbf9`다. 아래 B/D의 원 실행은 각 당시 입력/조건에 대한 근거이며 이 문서 작성 시 새 실행한 결과가 아니다. 실행 준비는 [로컬 안내](../local-development.md), 전체 상태·AC16 독립 컨테이너 결과는 [P12-E](../work-items/P12-E.md)를 따른다.
+
+## 1. 배송 정책 변경 — 새 거래에 적용하고 기존 금액을 보존
+
+**문제와 결정.** 고정 배송비/무료 기준을 운영자가 바꿀 수 있어야 하지만 결제한 주문의 배송비·할인·환불·정산 명세는 뒤의 정책 변경으로 달라지면 안 된다. P11-E에서 사용자가 승인한 두 항목만 SYSTEM 명령의 버전형 정책으로 만들었다. P12-B는 그 정책을 재구현하지 않고 부족했던 실제 화면→요청→DB→견적/주문 소비 연결을 보완했다. [승인된 실제6파일 소스 diff](../../.local-tools/p12-b-policy-history-8b52fa03-d4a5-419a-85e7-9c41a6b6e453/approved-policy-source.diff)와 [현재 소스/당시 입력 대조](../../.local-tools/p12-b-policy-history-8b52fa03-d4a5-419a-85e7-9c41a6b6e453/result.json)가 원 변경 근거다.
+
+**데이터 흐름.** [React SettingForm](../../frontend/src/site/SitePages.tsx)은 현재 version·금액·사유와 요청키를 `/api/admin/system/shipping-policy`에 보낸다. [ShippingPolicyController](../../backend/src/main/java/com/example/marketplace/promotion/web/ShippingPolicyController.java)와 [JdbcShippingPolicies](../../backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcShippingPolicies.java)가 현재 SYSTEM 권한·version·같은 키 재생을 검사한다. [QuoteCalculator](../../backend/src/main/java/com/example/marketplace/promotion/domain/QuoteCalculator.java)와 [JdbcQuotes](../../backend/src/main/java/com/example/marketplace/promotion/infrastructure/JdbcQuotes.java)는 새 정책을 견적에 반영하고 지문을 바꾼다. 주문은 거래 시점의 명세를 보존한다. React state는 화면 입력이며 서버의 타입·권한·금액 검증을 대신하지 않는다.
+
+| 제약·검사 | 기대하는 assertion | 실제 증거·결과 |
+| --- | --- | --- |
+| B01/B02 전향 적용·기존 금융 불변 | `SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots`: 새 배송4,567·총54,566·새 지문, 기존 금융 전체행 동일. 실제 모의지급 뒤 정책 변경도 원 지급/정산 보존 | [P11-E recovery1](../../.local-tools/p11-e-recovery1-21e8945f71504a8b9f2a5ccb63848b45/result.json)의28묶음 선택 통과. 해당 원 실행의 브라우저는0이며 후속 UI 근거와 구분 |
+| B03/B04 권한·멱등·version | CONTENT403, 잠금 대기 후 현재 권한 재확인, 같은 키/본문은 같은 결과, 다른 본문/낡은 version409, 응답유실 시 같은 요청 재전달 | [P12-B full1 추적](../../.local-tools/p12-b-full1-trace-20261115/trace.json)의 원 XML 연결, 아래 최종 선택 브라우저와 결합 |
+| B05 checkout 직렬화·rollback | 주문 OUTBOX 시점 DB PID/정책 잠금 blocker 확인, 먼저 접수한 주문은 옛 금액, 낡은 견적 주문409·재확인 성공, 실패 commit은 부분 이력0 | 같은 `SiteManagementIT`와 [P12-B 제약표](../work-items/P12-B.md#제약과-assertion-추적). 코드 존재가 아니라 원 XML의 실행 결과로 판정 |
+| B08 실제 UI 생산→DB→소비 | 요청키/version/baseFee/freeThreshold/actor/reason과 DB 행 정확 일치·head version 확인, 새 주문 응답/DB의 정책·금액 일치, 옛 주문 보존 | [최종 desktop policy 추적](../../.local-tools/p12-b-reviewfix1-7668b98a396d4377b5ed9e2ddf3bd9f9/db/groups/site-maintenance-desktop/browser-results/site-maintenance-SYSTEM-po-dc64f-id-snapshots-stay-protected-desktop/policy-api-database-trace.json), [선택 결과](../../.local-tools/p12-b-reviewfix1-7668b98a396d4377b5ed9e2ddf3bd9f9/result.json). desktop/mobile 새4개 모두 통과 |
+
+**검사 격리의 판단.** 전역 singleton 정책을 기존178개 공유 브라우저 DB에서 바꾼 뒤 값을 되돌리면 version과 이력이 남는다. 그래서 desktop/mobile을 각각 새 JVM·DB·media·API의 전용 묶음으로 등록했다. 각 DB는 migration의 version1/3,000/50,000에서 시작하고 version2/4,567/51,000으로 끝난다. SQL reset 없이 변경 상태를 보존하며 mobile은 desktop 결과를 승계하지 않는다. [격리·불간섭 계약과 실제 실행](../work-items/P12-B.md)이 판단/검증 근거다.
+
+**독립 검토에서 보완한 점.** 처음 브라우저는 정책 행 개수1과 새 주문 응답만 확인했다. 검토 R1은 생산 payload의 각 필드 및 **새 주문 DB 행** 대조 부족을 지적했다. spec 한 파일의 assertion을 보완하고 같은 두 묶음을 재실행했다. [full1 전체](../../.local-tools/p12-b-full1-640368218b3a498aa1e9d9b1351c47ee/result.json)는38묶음/JUnit839/브라우저182 통과, [reviewfix1](../../.local-tools/p12-b-reviewfix1-7668b98a396d4377b5ed9e2ddf3bd9f9/result.json)은2묶음/JUnit255/브라우저4 선택 통과다. [Astra 최종 판정](../../.local-tools/p12-b-independent-20261115/final-review.json)은 최종965입력의 불일치0·필수잔여0으로 결합 수용했다. 최종 manifest `53cdcf0e6a7ab9c73d70b580a21174410b60ad8a33934e6bb8932289da8c9097` 자체의 무선택 전체 인증은 아니다. 로컬 커밋은 `2c115083b62c8a1bed40469506f054ecead49885`다.
+
+## 2. 실제 DTO 입력 오류 — 잘못된 HTTP 입력을 400·무효과로 차단
+
+**관측한 결함.** 게시/배너/사이트 안내 HTTP가 DTO 변환에 기대어 문자열·소수·숫자 enum·추가 필드 등 잘못된 입력을 수용했다. 원 probe의27조건 중17조건은 HTTP200과 영속 행 변경을 보였고, missing/null10조건은 이미400이었다. 화면의 TypeScript 타입이 정수라고 선언해도 외부 요청의 입력을 보호하지 못한 사례다.
+
+**실제 수정.** [SiteController](../../backend/src/main/java/com/example/marketplace/operations/web/SiteController.java)는 JSON과 multipart의 command를 JsonNode로 읽어 허용 필드, 정수 version, 문자열, enum 등을 검사한 뒤 명령을 만든다. 기존 권한·CSRF·revision·media 귀속과 실패 rollback은 유지했다. [원 RED/GREEN 입력·현재 해시 비교](../../.local-tools/p12-b-case-history-f331b3cf-9e05-4079-99b0-7ea63c4ce46d/result.json)와 [javap bytecode 차이](../../.local-tools/p12-b-case-history-f331b3cf-9e05-4079-99b0-7ea63c4ce46d/SiteController-bytecode.diff)가 실제 전후 실행 코드를 연결한다. **수정 전 Java 원문은 미확보**이며 이 bytecode 차이를 원 Java 소스 diff라고 부르지 않는다.
+
+| 검사·제약 | 원 실행과 assertion | 실제 판정 |
+| --- | --- | --- |
+| 원 RED | [dto-probe 결과](../../.local-tools/p11-e-dto-probe-a8ab570b2d20485282611dfed47ca069/result.json)·[실패 XML](../../.local-tools/p11-e-dto-probe-a8ab570b2d20485282611dfed47ca069/db/groups/site-management/failsafe-reports/TEST-com.example.marketplace.dbtest.SiteManagementIT.xml): 게시11+multipart11+안내5의 타입/필드 경계 |127.5297153초 failed, 보존 통과.17조건 오류를 실패로 보존 |
+| 수정 GREEN | [dto-fixed 결과](../../.local-tools/p11-e-dto-fixed-f22f3a5b2a254effbf550915de11c73d/result.json)·[원 XML](../../.local-tools/p11-e-dto-fixed-f22f3a5b2a254effbf550915de11c73d/db/groups/site-management/failsafe-reports/TEST-com.example.marketplace.dbtest.SiteManagementIT.xml), `settingsAndFaqRejectControlCharactersWithoutChangingAuditOrReceipt`의 `assertTypedCommands` |183.1256029초 selected-passed, site7 실패/오류/skip0.27조건400·관련 네 테이블 전체행 동일 |
+| 정상 기능·이력 회귀 | `contentPublishesAndWithdrawsNoticeWithExactHistoryAndSchedule`, `bannerControlsActualNormalizedFileAndPreservesReplacedAssetAndFailedRevision`; revision 직접 UPDATE/DELETE는 SQLSTATE23514·원행 동일 | [불변 이력 보강 결과](../../.local-tools/p11-e-review-fixed-6f3cff25d7854252b0fc5867fd872839/result.json)의선택 통과. 정상 게시/개행/배너·실패 rollback 유지 |
+| 실제 React 정상 생산 | CONTENT 배너·SYSTEM 안내의 JSON/multipart→revision/asset 귀속→공개 조회를 같은 요청/ID로 비교 | [최종 desktop publication 추적](../../.local-tools/p12-b-reviewfix1-7668b98a396d4377b5ed9e2ddf3bd9f9/db/groups/site-maintenance-desktop/browser-results/site-maintenance-CONTENT-b-ef866-alues-with-failure-recovery-desktop/publication-api-database-trace.json). mobile도 같은 선택 결과에서 통과. malformed27종은 HTTP/PG assertion 책임 |
+
+P12-B의 개발 실패는 등록 영향표 누락1회와 실제 브라우저 선택자 실패1회다. 후자는 label 문자열 exact 매칭이 정상 화면을 찾지 못해 역할/이름 선택자로 교정했으며 assertion·업무 기한을 줄이지 않았다. [원 focused1 실패](../../.local-tools/p12-b-focused1-492fbc6cc2194962aef318ad61db9d3b/result.json)와 [focused2 선택 통과](../../.local-tools/p12-b-focused2-1539c991ee7a4828a9a421cc3d794527/result.json)를 유지한다. 인계 정적 검사 실패1회, 독립 필수 보완1회/1건, 과거 설계 보완은 이 개발 실패와 별도 집계다.
+
+## 3. 앱 교체·복귀와 DB/media 복원 — 서로 다른 복구 경계
+
+**문제와 결정.** 앱을 이전 버전으로 돌리는 것과 DB를 과거 시점으로 복원하는 것은 보존할 데이터가 다르다. P12-D는 실제 보존 R0/P12-C와 R1/D 운영 payload·JAR/dist·프로세스·pointer를 교체하고, 앱 복귀에서는 **현재 DB/media와 교체 후 거래**를 유지한다. DB/media 복원은 통제된 쓰기 정지 checkpoint를 **별도 새 대상**에 복원해 대사한다. 실제 서비스의 DB를 덮어쓰거나 자동 down migration하지 않는다. [운영 명령·manifest·실패 경계](../../infra/p12-d/README.md)가 실행 계약이다.
+
+| 제약·검사 | 반드시 확인하는 assertion | full3의 실제 원증거 |
+| --- | --- | --- |
+| D01/D03 실제 교체·구/신 UI | 실행 payload/hash와 R0/R1 pointer·실제 API/worker identity 일치, 과거/현재 asset 탭과 세션/CSRF, 같은 주문 결과·교체 후 거래 보존 | [release-artifacts.json](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/release-artifacts.json), [L assets](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-assets.ndjson), [L 결과](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-recovery-result.ndjson) |
+| D02 실제 Flyway 이행 | `ReleaseUpgradeIT#retainedH129ApiWritesBeforeAndAfterRealV132MigrationWithoutRewritingHistory`: 고정 H129 실제 API의 V129 전후 읽기/쓰기, V132 이행, 원 이력/금융/세션 보존, checksum 거부·재시작 | [release-upgrade JUnit XML](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-upgrade/failsafe-reports/TEST-com.example.marketplace.dbtest.ReleaseUpgradeIT.xml). 실제 과거 API를 현재 API/SQL 비교로 대체하지 않음 |
+| D04 checkpoint | 모든 소유 writer 종료·다른 DB 연결0,300테이블 전체행/sequence 정확 비교, dump 검증, media 전체 hash/namespace/참조 일치, 완료 manifest 마지막 게시 | [L 완료 checkpoint](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/operation-Checkpoint-febb9f6d-0daa-4878-8791-4c15309a3177/checkpoint.json), [보존 coverage](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/preservation-coverage.json) |
+| D05 새 복원본 인증 경계 | 원 DB/media 전체 일치 후 복원본만 미사용 자격 폐기; 사용한 주문/계정/비밀번호 보존, old cookie·CSRF·미만료 token·guest grant 거부, 새 로그인 성공 | [L pending 자격 거부](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-rejected-pending-credentials.ndjson), [복원 SQL](../../infra/p12-d/Invalidate-RestoredCredentials.sql), 아래 L/P report |
+| D06 원단위 대사 | 부분환불·반품비·원 지급·음수 이월·UNKNOWN 예약 및 원장 정확 일치(허용 오차0),152 dashboard metric 독립 계산, 복원 중 원본 불변 | [실제 거래 생산자](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/reconciliation-producers.json), [L preservation proof](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-preservation-proof.ndjson), [L 결과의 sourcePreservedAfterRestore=true](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-recovery-result.ndjson) |
+| D08 의도 거부 | 혼합 DB/media namespace 복원 거부, 실제 API health 이후 잘못된 schema 선언 거부; maintenance/pointer/DB/media 보존 | [operator-faults.json](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/operator-faults.json)·[정확2개 expected failure coverage](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/operator-fault-coverage.json). 임의 실패 무시가 아님 |
+
+정지 경계에서는 전체 canonical DB/sequence/media를 정확 비교한다. worker를 다시 시작한 뒤에는 scanner/dashboard/confirmation/notification/job의 **명시 생산자·claim·원인 graph**로 입증된 변화만 허용하고 나머지는 exact다. 단순 row 수·총액 또는 테이블 제외로 통과시키지 않는다. 보호된 원행은 private artifact에 남기며 공개 inventory에 원 개인정보를 싣지 않는다. [snapshot·원인 graph 판단과 실패 이력](../work-items/P12-D.md)에 실제 보완 과정을 보존했다.
+
+## 4. 실제 worker 중단·재개와 실패 작업 처리
+
+**문제와 결정.** 업무 효과가 생기기 전 또는 commit 직후 worker가 죽으면 작업 인수와 업무 효과의 중복을 분리해야 한다. [WorkerEngine](../../backend/src/main/java/com/example/marketplace/platform/infrastructure/WorkerEngine.java)·[JdbcJobs](../../backend/src/main/java/com/example/marketplace/platform/infrastructure/JdbcJobs.java)의 owner token·30초 lease·heartbeat·fencing 계약을 유지했다. 제품 lease를 줄이거나 DB UPDATE로 성공 상태를 주입하지 않았다.
+
+| 검사 | 기대 결과 | 실제 원증거·관측 |
+| --- | --- | --- |
+| 효과 전/후 crash·두 worker 경쟁 | 원 API 종료 후 non-web worker 재개, 실제 lease 경과·새 claim, 효과1, 이전 owner의 complete/fail/heartbeat/업무 쓰기 거부 | [real-lease-recovery.json](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/real-lease-recovery.json): BEFORE/AFTER 각각 `realLeaseSeconds=30`, `attempts=2`, `effects=1`, `staleCompleteFailHeartbeatAndWriteRejected=true`, `producerApiTerminatedBeforeWorkerCommands=true` |
+| 최대시도 실패 보존·운영 재처리 | 자동 성공 처리하지 않고 FAILED/이유/attempts를 복원, 실제 UI에서 권한·같은 키 재전달·다른 본문409·무권한403·감사1 확인 | [실패 작업 대사](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-failed-job-reconciliation.ndjson): source/restored 모두 NOTIFICATION_DELIVER.v1·FAILED·attempts5·HANDLER_EXCEPTION. [복원 후 retry](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/release-restored-notification-retry.ndjson), [L report](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-L/browser-report.json) |
+| 소유 프로세스·정리 | PID 숫자만으로 종료하지 않고 생성시각/정확 인수/JAR 검증, OS 부재 확인 후 불변 종료 receipt, 자식 join 뒤 DB 정리, 공유10초·유한 준비/기동/정리 | [release lifecycle](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/release-lifecycle.json)과 [운영 계약 설명](../../infra/p12-d/README.md). 과거 PID 식별 실패는 당시 실패로 유지 |
+
+모드 L의 local-full/local-test는 회원·비회원 성공/복원 경로다. 모드 P는 실제 full Compose public-demo/invited-only의 초대 제한·개별 로그인, 비회원503·DB 무효과를 확인했다. [P report](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/browser-P/browser-report.json)와 [제공자 소비 결합](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/db/groups/release-recovery/public-provider-consumer.json)을 연결한다. P의 금지 경로를 L의 성공으로 대체하지 않는다. 실제 Toss 승인·외부 환불/송금·공개 환경 장애 복구는 이 증거 범위 밖이다.
+
+## 5. 수용 범위·실패·재현 인계
+
+P12-D [full3 무선택 전체](../../.local-tools/p12-d-full3-df330177d05144dfa7d9bf1182ce161e/result.json)는 DB42묶음·JUnit935·브라우저194·프런트413 및 보존 통과다. 이후 테스트 전용 공지 관측4파일만 보완한 [최종 영향 선택](../../.local-tools/p12-d-diag1-final-4223da6208ed49949301a1be5f6728b6/result.json)은 `selected-passed/certificationEligible=false`, JUnit350·브라우저178·프런트427·보존 통과다. [4파일 차이](../../.local-tools/p12-d-full3-to-diag1-final-delta-20261116.json)와 [별도 Astra 최종 검토](../../.local-tools/p12-d-implementation-review-20261116/final-review.md)는 최종1063입력 manifest `ff07416d61f7aad3d142c2a2c86b01192552216cf6a45a704848a1b2fc87496f`에 대한 근거 결합·IR1/DIAG1 해결·필수잔여0을 수용했다. 검토자가 별도 전체 실행을 했다는 뜻은 아니다.
+
+개발 우발적 실패는 [52회 원장](../../.local-tools/p12-d-failure-ledger-20261116.json), 별도 계획 RED1실행/예상 assertion 실패8개다. full1/full2 원실패를 유지하며 full2 공지 실패는 **원인 미확정·후속 비재현**이다. 관측 보완을 과거 원인 해결로 바꾸지 않는다. [새 분석 초안 원바이트 보존 한계](../../.local-tools/p12-d-full3-publication-analysis-metadata-failure-20261116/record.json)도 남긴다. 원 검증 NDJSON/결과/소스 보존과 구분한다. 약58.6분 전체/약11.4분 최종 선택 실행을 일반 성능 개선의 근거로 확대하지 않는다.
+
+새 독자는 저장소와 [명시 준비물](../local-development.md#2-명시적으로-준비할-도구캐시산출물)을 확인한 뒤 [P12-E](../work-items/P12-E.md)의 독립 컨테이너 절차·실제 결과를 따른다. 기존 B/C/D 과거 산출물은 checksum·출처가 있는 전달 입력이며 암묵적 개인 캐시가 아니다. 원증거는 `.local-tools/`의 Git 제외 파일이므로 이 Markdown만 전달하면 링크 대상이 함께 전달되는 것은 아니다. 증거 패키지 누락은 미확보로 기록한다. 사용자 본인의 직접 실습·학습 확인은 미확인이고 P13/P14·공개 배포·실제 PG를 완료했다고 주장하지 않는다.

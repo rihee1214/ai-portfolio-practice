@@ -3,12 +3,15 @@
 // part of the content digest; labels, timestamps and target paths cannot make a
 // different operational payload.
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+// Historical release runtime bytes retain their original closure. New execution
+// helpers belong to the current controller that actually launches host commands.
 const runtimeFiles=[
   'infra/p12-c/Dockerfile','infra/p12-c/ProxyNetwork.ps1','infra/p12-c/Start-LocalProxy.ps1',
   'infra/p12-c/compose.yaml','infra/p12-c/nginx.conf.template','infra/p12-c/package-proxy.conf.template',
   'infra/postgres/init-app.sh'
 ].sort();
 const controllerFiles=[...runtimeFiles,
+  'verification/PowerShellRuntime.cjs','verification/PowerShellRuntime.ps1',
   'infra/p12-d/Invalidate-RestoredCredentials.sql','infra/p12-d/Invoke-ReleaseOperation.ps1',
   'infra/p12-d/New-ReleaseNetworks.ps1','infra/p12-d/Start-LocalReleaseProxy.ps1',
   'infra/p12-d/create-release-manifest.cjs','infra/p12-d/host-runtime.cjs',

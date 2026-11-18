@@ -1,5 +1,18 @@
 [
   {
+    "id": "com.example.marketplace.dbtest.ReleasePortPoolTest",
+    "tests": [
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#derivesInclusivePoolFromAllObservedHostRanges",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#unionsOverlappingAdjacentAndClippedRangesWithoutDiscardingSafePorts",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#malformedMissingNullCoercedAndReversedRangesFailClosed",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#failedOldOrUnverifiedNamespaceObservationCannotSupplyFallbackRanges",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#emptyEligiblePoolAndInvalidBoundsAreRejected",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#everyCandidateIsUniqueInsideTheDerivedComplementAndIndexBoundsAreStrict",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#allocatedAndOccupiedCandidatesAreSkippedWithoutClosingTheirListener",
+      "com.example.marketplace.dbtest.ReleasePortPoolTest#oneHundredUnavailableAttemptsFailWithoutExpandingThePoolOrTouchingTheListener"
+    ]
+  },
+  {
     "id": "com.example.marketplace.jdbcfixture.BrowserChildWatchdogTest",
     "tests": [
       "com.example.marketplace.jdbcfixture.BrowserChildWatchdogTest#accumulatedSuiteDurationCanExceed390SecondsWithIndividualOperationsWithinTen",
@@ -356,7 +369,8 @@
       "com.example.marketplace.dbtest.AftercareContractsIT#platformDueClaimFactsAreAtomicImmutableAndNeverReplaceCurrentLeaseOrRetryDeadline",
       "com.example.marketplace.dbtest.ExchangeIT#backwardObservedExtensionAndReapprovalRetainExactPriorExpiryGenerationsAndRawReceipts",
       "com.example.marketplace.dbtest.AftercareContractsIT#actualDeliveredSourcesAllowEarlierObservedReturnRequestsButRejectMissingDeliveryAndExpiredWindows",
-      "com.example.marketplace.dbtest.ExchangeIT#causalApprovalAndProgressRejectForeignRealReceiptsDueFactsAndMissingEffectsBeforeNormalResume"
+      "com.example.marketplace.dbtest.ExchangeIT#causalApprovalAndProgressRejectForeignRealReceiptsDueFactsAndMissingEffectsBeforeNormalResume",
+      "com.example.marketplace.dbtest.DatabaseRuntimeIT#batchedParticipantSnapshotsPreserveEveryTableAndValue"
     ]
   },
   {

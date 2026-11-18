@@ -1,6 +1,221 @@
 {
   "schemaVersion": 1,
+  "executionPriority": {
+    "schemaVersion": 1,
+    "policy": "measured-duration-descending",
+    "tieBreak": "existing-normal-or-reverse-order",
+    "source": {
+      "evidence": ".local-tools/perf2-baseline2-fc14033b6dce4c70a2ab55326e593f6a",
+      "inputsSha256": "299d4040349ed1f6710d1f7bc41beb109793d16205dce28da9babf962e97576d",
+      "timingBoundary": "worker-start-to-validated-terminal-seconds"
+    },
+    "durations": [
+      {
+        "id": "site-management",
+        "seconds": 20.648
+      },
+      {
+        "id": "payment",
+        "seconds": 42.198
+      },
+      {
+        "id": "process-recovery",
+        "seconds": 201.461
+      },
+      {
+        "id": "browser-api",
+        "seconds": 520.305
+      },
+      {
+        "id": "order-history",
+        "seconds": 24.686
+      },
+      {
+        "id": "confirmation",
+        "seconds": 33.177
+      },
+      {
+        "id": "refund",
+        "seconds": 160.325
+      },
+      {
+        "id": "return-physical",
+        "seconds": 74.08
+      },
+      {
+        "id": "return-finance",
+        "seconds": 197.263
+      },
+      {
+        "id": "return-recovery",
+        "seconds": 238.356
+      },
+      {
+        "id": "aftercare-contracts",
+        "seconds": 121.733
+      },
+      {
+        "id": "legacy",
+        "seconds": 179.615
+      },
+      {
+        "id": "fulfillment",
+        "seconds": 95.8
+      },
+      {
+        "id": "checkout",
+        "seconds": 26.279
+      },
+      {
+        "id": "job-contracts",
+        "seconds": 27.417
+      },
+      {
+        "id": "promotion",
+        "seconds": 28.753
+      },
+      {
+        "id": "guest",
+        "seconds": 25.374
+      },
+      {
+        "id": "shopping",
+        "seconds": 18.18
+      },
+      {
+        "id": "exchange",
+        "seconds": 104.266
+      },
+      {
+        "id": "exchange-finance",
+        "seconds": 109.814
+      },
+      {
+        "id": "exchange-recovery",
+        "seconds": 187.863
+      },
+      {
+        "id": "catalog",
+        "seconds": 28.432
+      },
+      {
+        "id": "inventory",
+        "seconds": 22.972
+      },
+      {
+        "id": "media",
+        "seconds": 18.498
+      },
+      {
+        "id": "seller-store",
+        "seconds": 19.454
+      },
+      {
+        "id": "identity",
+        "seconds": 42.293
+      },
+      {
+        "id": "database-runtime",
+        "seconds": 22.618
+      },
+      {
+        "id": "phone-provider",
+        "seconds": 9.51
+      },
+      {
+        "id": "content",
+        "seconds": 23.062
+      },
+      {
+        "id": "questions",
+        "seconds": 29.471
+      },
+      {
+        "id": "support",
+        "seconds": 38.335
+      },
+      {
+        "id": "reports",
+        "seconds": 27.065
+      },
+      {
+        "id": "moderation",
+        "seconds": 27.375
+      },
+      {
+        "id": "operations",
+        "seconds": 21.203
+      },
+      {
+        "id": "settlement",
+        "seconds": 34.725
+      },
+      {
+        "id": "dashboard",
+        "seconds": 45.047
+      },
+      {
+        "id": "site-maintenance-desktop",
+        "seconds": 25.965
+      },
+      {
+        "id": "site-maintenance-mobile",
+        "seconds": 26.23
+      },
+      {
+        "id": "package-runtime",
+        "seconds": 68.383
+      },
+      {
+        "id": "public-demo-runtime",
+        "seconds": 18.045
+      },
+      {
+        "id": "release-upgrade",
+        "seconds": 64.242
+      },
+      {
+        "id": "release-recovery",
+        "seconds": 533.351
+      }
+    ]
+  },
   "expansion": "direct declared impact closure (rows already include downstream contracts; no path inference)",
+  "rootPhases": [
+    {
+      "id": "container-reproduction",
+      "kind": "root-container-contract",
+      "prerequisites": [
+        "package-runtime"
+      ],
+      "expectedDatabaseCount": 1,
+      "provides": [
+        "container.reproduction"
+      ],
+      "consumes": [
+        "package.artifact",
+        "package.proxy",
+        "runtime.policy",
+        "schema.upgrade",
+        "authority.current",
+        "seller.capability",
+        "catalog.offer",
+        "stock.reservation",
+        "shopping.cart",
+        "promotion.quote",
+        "site.settings",
+        "order.snapshot",
+        "payment.outcome",
+        "delivery.actual-source",
+        "job.current-lease",
+        "notification.inbox",
+        "db.transaction"
+      ],
+      "browser": {
+        "requirements": "required-browser-container-reproduction.json"
+      }
+    }
+  ],
   "groups": [
     {
       "id": "site-management",
@@ -63,7 +278,12 @@
           "new": "com.example.marketplace.dbtest.SiteManagementIT#shippingPolicyChangesOnlyNewQuotesAndLeavesPaidOrderAndRefundSnapshots",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "payment",
@@ -224,7 +444,12 @@
         "money.refund-reconciliation",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "process-recovery",
@@ -337,7 +562,14 @@
         "money.refund-reconciliation",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "id": "browser-api",
@@ -423,7 +655,15 @@
         "operations.support",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "browser-preview-24176",
+          "firebase-auth-project"
+        ],
+        "reason": "Shared loopback preview or emulator project requires matching resource exclusion."
+      }
     },
     {
       "id": "order-history",
@@ -517,7 +757,12 @@
         "money.refund-reconciliation",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "confirmation",
@@ -634,7 +879,12 @@
         "job.current-lease",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "refund",
@@ -1078,7 +1328,12 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "return-physical",
@@ -1302,7 +1557,12 @@
         "guest.current-proof",
         "job.current-lease"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "return-finance",
@@ -1563,7 +1823,12 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "return-recovery",
@@ -1668,7 +1933,12 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "aftercare-contracts",
@@ -1821,7 +2091,12 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "legacy",
@@ -1920,7 +2195,14 @@
         "job.current-lease",
         "money.refund-reconciliation"
       ],
-      "expectedDatabaseCount": 15
+      "expectedDatabaseCount": 15,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "id": "fulfillment",
@@ -2079,7 +2361,14 @@
         "job.current-lease",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "id": "checkout",
@@ -2250,7 +2539,12 @@
         "guest.current-proof",
         "job.current-lease"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "job-contracts",
@@ -2317,7 +2611,12 @@
         "schema.upgrade",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "promotion",
@@ -2560,7 +2859,12 @@
         "guest.current-proof",
         "job.current-lease"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "guest",
@@ -2825,7 +3129,12 @@
         "schema.upgrade",
         "phone.proof"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "shopping",
@@ -2877,7 +3186,12 @@
         "stock.reservation",
         "promotion.quote"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "exchange",
@@ -3126,7 +3440,12 @@
         "job.current-lease",
         "notification.inbox"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "exchange-finance",
@@ -3267,7 +3586,12 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "exchange-recovery",
@@ -3336,7 +3660,14 @@
         "job.current-lease",
         "money.provider-refund-receipt"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "id": "catalog",
@@ -3498,7 +3829,12 @@
         "stock.reservation",
         "money.fee"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "inventory",
@@ -3609,7 +3945,12 @@
         "catalog.offer",
         "seller.capability"
       ],
-      "expectedDatabaseCount": 2
+      "expectedDatabaseCount": 2,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "media",
@@ -3677,7 +4018,12 @@
         "catalog.offer",
         "seller.capability"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "seller-store",
@@ -3749,7 +4095,12 @@
         "db.transaction",
         "schema.upgrade"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "identity",
@@ -3989,7 +4340,12 @@
         "schema.upgrade",
         "guest.current-proof"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "database-runtime",
@@ -4068,6 +4424,11 @@
           "new": "com.example.marketplace.dbtest.DatabaseRuntimeIT#caughtRequiredFailureRollsBackEarlierSuccessfulTransfer",
           "originalSha256": "1ca406045191fabb16bc6e54a3517458be742d9544faf2833a894592b24ec34a",
           "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.DatabaseRuntimeIT#batchedParticipantSnapshotsPreserveEveryTableAndValue",
+          "new": "com.example.marketplace.dbtest.DatabaseRuntimeIT#batchedParticipantSnapshotsPreserveEveryTableAndValue",
+          "invocations": 1
         }
       ],
       "kind": "shared-contract",
@@ -4079,7 +4440,12 @@
         "db.transaction",
         "schema.upgrade"
       ],
-      "expectedDatabaseCount": 1
+      "expectedDatabaseCount": 1,
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "phone-provider",
@@ -4098,7 +4464,14 @@
         "phone.proof"
       ],
       "consumes": [],
-      "expectedDatabaseCount": 0
+      "expectedDatabaseCount": 0,
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "firebase-auth-project"
+        ],
+        "reason": "Shared loopback preview or emulator project requires matching resource exclusion."
+      }
     },
     {
       "classes": [
@@ -4157,7 +4530,12 @@
           "new": "com.example.marketplace.dbtest.ContentIT#ownerConfirmationCreationReplayAndRewriteUseOneReview",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "tests": [
@@ -4197,7 +4575,14 @@
       "classes": [
         "com.example.marketplace.dbtest.QuestionsIT"
       ],
-      "kind": "domain"
+      "kind": "domain",
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "tests": [
@@ -4263,7 +4648,12 @@
       "classes": [
         "com.example.marketplace.dbtest.SupportIT"
       ],
-      "kind": "domain"
+      "kind": "domain",
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "reports",
@@ -4332,7 +4722,12 @@
           "new": "com.example.marketplace.dbtest.ReportsIT#reviewGenerationAndChildKindMustMatchTheCurrentlyVisibleContent",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "moderation",
@@ -4387,7 +4782,12 @@
           "new": "com.example.marketplace.dbtest.ModerationIT#productActionUsesCurrentClosureAndRollsBackWithItsAudit",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "operations",
@@ -4439,7 +4839,12 @@
           "new": "com.example.marketplace.dbtest.OperationsIT#supportHandoffCannotReleaseUnknownMoneyOrInvokeSystemReconciliation",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "settlement",
@@ -4498,7 +4903,12 @@
           "new": "com.example.marketplace.dbtest.SettlementIT#unpaidPriorDraftMustReleaseItsLedgerBeforeTheFollowingWeekCanPay",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "dashboard",
@@ -4612,7 +5022,14 @@
           "new": "com.example.marketplace.dbtest.DashboardIT#paidSellerSeesOwnSnapshotAndHistoricalReadsDoNotEnqueueWork",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "fault-injection"
+        ],
+        "reason": "Owned private child fault injection: one fault contract at a time, may pair with an isolated ordinary group."
+      }
     },
     {
       "id": "site-maintenance-desktop",
@@ -4649,7 +5066,14 @@
           "new": "com.example.marketplace.dbtest.SiteMaintenanceDesktopIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "browser-preview-24176"
+        ],
+        "reason": "Shared loopback preview or emulator project requires matching resource exclusion."
+      }
     },
     {
       "id": "site-maintenance-mobile",
@@ -4686,7 +5110,14 @@
           "new": "com.example.marketplace.dbtest.SiteMaintenanceMobileIT#actualMaintenanceUiUsesOwnedDatabaseAndPreservesSnapshots",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [
+          "browser-preview-24176"
+        ],
+        "reason": "Shared loopback preview or emulator project requires matching resource exclusion."
+      }
     },
     {
       "id": "package-runtime",
@@ -4720,7 +5151,12 @@
           "new": "com.example.marketplace.dbtest.PackageRuntimeIT#productionArtifactsServeTlsRolesAndActualBrowserBusiness",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": true,
+        "resources": [],
+        "reason": "Real Docker/global resource observations or historical runtime operation requires exclusive ownership."
+      }
     },
     {
       "id": "public-demo-runtime",
@@ -4749,7 +5185,12 @@
           "new": "com.example.marketplace.dbtest.PublicDemoRuntimeIT#publicDemoDispatchersRejectSandboxWithoutProviderOrDatabaseEffects",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": false,
+        "resources": [],
+        "reason": "Private JVM, UUID database/media, random API port and separate Maven build/temp/report outputs."
+      }
     },
     {
       "id": "release-upgrade",
@@ -4775,7 +5216,12 @@
           "new": "com.example.marketplace.dbtest.ReleaseUpgradeIT#retainedH129ApiWritesBeforeAndAfterRealV132MigrationWithoutRewritingHistory",
           "invocations": 1
         }
-      ]
+      ],
+      "execution": {
+        "exclusive": true,
+        "resources": [],
+        "reason": "Real Docker/global resource observations or historical runtime operation requires exclusive ownership."
+      }
     },
     {
       "id": "release-recovery",
@@ -4818,10 +5264,21 @@
       "prerequisites": [
         "public-demo-runtime"
       ],
-      "registrationNotes": "Four successful L/P source/restore databases plus one preserved failed mixed-checkpoint restore target; public-demo-runtime same-implementation provider consumer proof required"
+      "registrationNotes": "Four successful L/P source/restore databases plus one preserved failed mixed-checkpoint restore target; public-demo-runtime same-implementation provider consumer proof required",
+      "execution": {
+        "exclusive": true,
+        "resources": [],
+        "reason": "Real Docker/global resource observations or historical runtime operation requires exclusive ownership."
+      }
     }
   ],
   "impact": {
+    "container-reproduction": {
+      "select": [
+        "package-runtime"
+      ],
+      "reason": "Root-only fresh Compose/DB/media reproduction consumes same-run production package artifacts and exact desktop/mobile business contracts."
+    },
     "site-management": {
       "select": [
         "site-maintenance-desktop",
@@ -6203,6 +6660,15 @@
       "public-demo-runtime",
       "release-upgrade",
       "release-recovery"
+    ]
+  },
+  "executionResources": {
+    "schemaVersion": 1,
+    "maxConcurrency": 2,
+    "resources": [
+      "browser-preview-24176",
+      "firebase-auth-project",
+      "fault-injection"
     ]
   }
 }

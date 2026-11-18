@@ -1,5 +1,51 @@
 # 통합 자동 검증 하네스
 
+## 성능 후속 실행 계약
+
+사용자 승인 후속 구현은 `./verify.ps1 -Offline`의 DB 묶음을 기본 `-GroupConcurrency 2`로 실행한다. 진단·비교용 `1`을 지원하고 다른 값·소수·2초과는 생성 전에 거부한다. 사전 검사·phone emulator 재진입·backend에 같은 값을 전달하고 준비 근거에 결합한다. 기존42개 묶음·정확한 필수 이름·매개변수 호출 수·새 DB/media·권한/금액/복구 assertion과 업무별 공유10초는 유지한다. 선행 재사용·동시2 구현은 전체2회로 수용됐으며, 추가 우선순위 개선의 실행·수용·성능 판정은 [최신 작업 기록](work-items/verification-performance.md)을 따른다. 과거 측정은 새 소스의 통과 근거로 바꾸지 않는다.
+
+`db-groups.json.executionResources`와 각 묶음의 `execution`은 영향표와 별개인 실행 분류다. `public-demo-runtime → release-recovery`의 성공 검증 의존성과 root `package-runtime → container-reproduction`을 유지한다. 실제 Docker/전역 관측·과거 릴리스의 `release-recovery`·`package-runtime`·`release-upgrade`는 전역 단독이다. 지정된6개 실제 fault 묶음은 `fault-injection` 자원을 공유하며 다른 fault와 겹치지 않는다. 일반 browser와 site2는 `browser-preview-24176`, browser/phone-provider는 `firebase-auth-project`를 공유한다. 분류 누락·중복·알 수 없는 자원은 생성 전에 거부한다.
+
+부모가 공통 Java build·JUnit/ArchUnit을 한 번 끝낸 뒤 현재 production bundle을 한 번 생산한다. 각 PowerShell7.6.9 worker는 비밀을 request 파일에 쓰지 않고 별도 환경으로 전달받으며, UUID DB/media/evidence·java tmp·report·Maven build/Failsafe fork scratch를 분리한다. 측정된 compiled tree 복제 비용(선택2의 약2.9초/묶음)을 줄이기 위해 classes/test-classes/JAR는 같은 실행의 공통 산출물을 읽기 전용으로 소비한다. 로컬 Failsafe3.5.6 descriptor에서 확인한 `classesDirectory`·`testClassesDirectory`만 명시하고 private build/tmp/report는 유지한다. `CompiledBuild.cjs`가 source/tool과 정확한 전체 compiled inventory·해시를 생산 직후, **매 worker 입장 전**, 실패를 포함한 최종 `finally`에서 대조한다. worker는 manifest/JAR 해시와 실제 JUnit classpath의 공통 경로·private compiled copy 부재를 확인한다. 초기 관리자 명령의 출력 파일도 실제 `A3_EVIDENCE/java-tmp` 내부임을 assertion으로 확인한다. 이전 선택2의 복제 산출물과 결과는 원 이력으로 보존한다.
+
+부모는 엄격한 최종 JUnit·필수 ID·호출 수·DB 개수/중복·교차 browser 격리를 다시 대조한다. 종료 코드0이나 폴더 존재만으로 producer를 통과시키지 않는다. 실패한 producer의 소비자는 `blocked`, 미실행/취소는 명시 비통과로 남기고 독립 묶음의 결과를 보존한다. worker는 native 작업 전에 새 UUID Windows JobObject에 자신을 연결하고 실제 membership/request 증거를 남긴 뒤 부모 admission을 기다린다. handle은 비상속이며 `KILL_ON_JOB_CLOSE`만 설정하고 breakaway를 허용하지 않는다. 정상 종료 원근거를 쓴 뒤 OS 종료까지 handle을 유지해 비정상 부모 종료에도 자손 소유가 유실되지 않게 한다. 부모 정리는 유일한 소유 job의 kernel membership과 유한 종료/관측으로 확인하며, PID 추측·호스트 전체 kill을 사용하지 않는다. 정리 거부/정체 시에도 유한 시간 안에 실패 원근거·`unresolvedOwnership`·`unreleasedClaims`를 남기고 새 admission을 중단한다. attachment 충돌은 native 업무 전에 거부하고 기존 job을 종료하지 않는다. 전체·시나리오 총 timeout은 추가하지 않는다. 공통 compiled hash 준비/입장/최종 비용, worker binding 및 job attachment 비용도 결과에 별도 측정한다.
+
+실제 Failsafe classpath의 빈 component는 Java의 현재 작업 디렉터리를 뜻한다. reader는 실제 `user.dir`와 빈 component 수를 기록하고 명시된 두 공통 compiled 디렉터리·private copy 부재만 assertion으로 대조한다. 전체 classpath 동일성을 주장하거나 빈 문자열을 `GetFullPath`에 넘기지 않는다. 선택3에서 보존된 원 XML13/8/37개는 Java 검사 자체는 통과했고, 당시 worker 후처리는 trailing separator의 빈 component 처리 오류로 실패했다. 수정된 reader의 새 fixture와 원 XML 읽기 전용 재처리는 해당 후처리 계약의 근거이며, 당시 실패 root를 통과로 바꾸지 않는다.
+
+production byte 재사용은 같은 실행의 source/config/lock/tool/mode/환경·파일 해시를 확인한 fresh copy에만 적용한다. package/release/root frontend는 각자 새 경로를 소비하며 development bundle·역사 산출물·세션/DB·과거 검사 결과를 재사용하지 않는다. root 프런트 검사는 검증된 `frontend-production` 복사본을 preview에 전달하고 검사 뒤 다시 해시를 대조한다. production 준비 비용도 root 측정 구간 안에 포함한다.
+
+기존99개 Node 필수 이름에 scheduler7·production bundle5·compiled sharing/classpath5·worker job lifecycle5를 더한 선행121개를 사전 수집한다. 이전115개를 보존하고 공통 compiled source/tool/바이트·누락/추가·manifest 변조/다른 실행 경로 거부, worker 생성 전 변경 거부와 실패 원근거 보존을 추가 확인한다. 실제 dummy7.6.9 두 worker의 중첩·환경/경로/DB 식별/포트 분리, 실패/위조 producer 거부, 소유 자손 취소와 무관 sentinel 보존, 미실행 필수 목록 보존을 검증한다. 새 lifecycle 검사는 실제 비정상 부모 종료 후 열린 kernel job handle로 소유가 유지된 child/grandchild 정리, 기존 충돌 job 보존, 정리 거부/정체의 유한 실패와 미해제 소유 기록을 확인한다. `DatabaseRuntimeIT#batchedParticipantSnapshotsPreserveEveryTableAndValue`의 invocation1도 기존 DB 묶음에 추가하며 기존 필수 ID를 줄이지 않는다. 실행 이벤트는 `db/scheduler-events.ndjson`, 작은 현재 상태는 `db/scheduler-progress.json`, 최종 결과는 `db/scheduler-result.json`에 남긴다.
+
+추가 성능 개선의 PERF2-IR1 보완은 위121개를 유지하고 `Test-FrontendNodeCoverage.cjs`의 필수7개를 더해128개를 등록한다. 별도의 frontend Node 실행은 기존 `tests/*.test.mjs` glob을 한 번만 실행하면서 spec/JUnit 보고서를 함께 남긴다. Node 인수는 glob 앞에 두며 `FrontendNodeCoverage.ps1`이 `required-frontend-node.json`의 정확한5개 파일/이름/1회 실행과 전체 보고서의 실패·오류·skip/TODO 부재를 검사한다. 보고서 누락·빈 내용·잘못된 XML·중복·다른 파일 귀속은 실패다. `frontend-node-tests.xml`은 Vitest의 `TEST-*.xml` 스캔에서 제외되어 기존 프런트427 집계를 늘리지 않는다. 기존101개 Node 검사는 그대로 실행하며 새 필수 매핑5개만 실행하도록 축소하지 않는다. 후속 포트 관측 guard7을 더한 현재 필수 등록은135개이며 기존128개를 유지한다. 실제135/101 전체 실행 판정은 최신 작업의 전체 근거를 따른다.
+
+릴리스 검사의 서버 포트는 Windows 호스트뿐 아니라 Docker Linux 호스트 네임스페이스의 동적 클라이언트 포트 범위와도 분리한다. `release-recovery`가 선택된 preflight는 필요한 시스템 도구와 이미 실행 중인 Docker Desktop VM·`nsenter`의 가용성을 먼저 확인한다. 실제 IPv4/IPv6·dockerd 네임스페이스의 범위는 릴리스 검사 시작 때 한 번 관측하며, preflight의 가용성 결과나 과거 `.local-tools` 관측을 현재 범위 증거로 재사용하지 않는다. 잘못된·모호한 관측이나 빈 후보는 실패다. 기존20000~65535 후보에서 관측된 범위의 합집합을 제외하고, 이미 할당한 포트와 실제 bind로 점유를 거른다. 각 대상의 포트는 R0/R1 교체 동안 고정하며100회 시도 제한을 유지한다.
+
+이 보완은 테스트 환경의 할당 위험 완화다. final1의 과거 바인딩 충돌 소유자는 미확정으로 보존한다. 운영 Activate/quiescence·실패 시 닫힘·업무 공유10초를 바꾸거나 timeout 확대·충돌 명령 재시도를 하지 않는다. 도구 설치·VM 명시 시작·네트워크 설정 변경·기존 자원 종료·기본 범위 추정은 하지 않는다. running 확인과 WSL exec 사이의 TOCTOU를 원자적으로 제거했다고 주장하지 않는다. 현재 Windows/Docker Desktop 전제의 가용성·실제 범위·유한한 준비/자식 명령·실행 증거는 최신 작업 기록에서 별도로 확인한다.
+
+기준 root3785.0445586초와 launch→exit3841.4221501초는 서로 다른 측정 경계다. [읽기 전용 기준 분석](../.local-tools/perf-baseline-4015e6e3-fea3-4bfb-81d7-37ce97f99386/analysis.md)은42묶음3450.071초·공통 build79.893초·보존23.342초를 구분한다. 이상적인2-slot만으로도 root 하한2060.009초이므로 절반 목표1892.522초 달성을 미리 주장하지 않는다. 실제 실행의 준비·산출물 생산·자원 압력과 모든 실패를 측정하며, 목표 미달을 숨기려고 assertion/기한/격리를 완화하지 않는다. 아래 P12-D/E 기록은 당시 수용 이력이다.
+
+## P12-D/E 실행 준비 후속 — 현재 구현 계약
+
+루트는 명시된 `C:/Users/rihee/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe` 안정7.6.9의 실제 실행 경로·버전·Core edition과 Windows 호환 세션0을 검사한다. 전역 PATH/설정 변경이나 이전 PowerShell 자동 대체는 하지 않는다. `powershell.json`, `powershell-processes/`와 E의 실제 네트워크 자식 기록을 증거에 남긴다.
+
+`verification/Preflight.ps1`은 emulator·통합 DB·Docker 자원 생성 전에 새 `<EvidenceDirectory>-preflight/`를 만든다. 현재 PowerShell/CJS/MJS 구문, 명시 도구·캐시·과거 산출물 존재, 프런트 타입/lint, 선택된 실제 Playwright `--list`의 프로젝트·파일·제목 ID와 기존 필수 JSON을 대조한다. 수집용 loopback/합성 계약은 서버를 시작하거나 검증할 업무를 실행하지 않는다. E가 선택되면 기존 cache guard와 서브넷 allocator로 로컬 고정 이미지 및 Docker IPAM/호스트 경로의 비중첩 가용 주소도 생성 전에 확인한다. 자원 관측은 기존 `snapshotDockerResources`의 안전한 projection·정확한 ID 대조·최대20개 inspect batch를 재사용하며 필수 ID를 빠뜨리지 않는다. 실제 E 단계는 생성 직전에 다시 관측해 환경 변화에 대응한다. 현재 소스·선택·도구 경로/명령·각 결과는 preflight manifest에 묶으며 자식 루트 재진입 시 같은 통과 소스만 재사용한다. `Offline`·역순 실행·진단 옵션·해결된 PG endpoint와 선택된 과거 JAR/proof/dist의 명시 경로·파일 해시·정확한 dist 파일 목록도 시작/종료/재진입에서 대조한다. emulator가 새로 초기화한 Firebase/GCLOUD 값이나 비밀 내용은 이 불변 준비 계약에 넣지 않는다. 네이티브 명령의 stdout이 비어도 새 UTF-8 로그를 먼저 생성해 루트 복사 소비가 실패하지 않게 하며, 원 실패 exit와 stderr는 보존한다. 실패 경로는 보존하고 재시도는 새 경로를 쓴다. 타입/lint의 동일 소스 근거를 DB 실행 뒤 중복 실행하지 않는다.
+
+Node guard 실행 파일과 정확한 필수 이름은 `required-container-reproduction-guards.json`의 `files`·`tests`에 함께 등록하며 실행과 XML assertion이 같은 등록을 소비한다. 기존77개를 보존하고 runtime8·preflight9·E runtime/source mutation5를 더한 현재99개를 필수 대조한다. runtime8은 실제 PowerShell→자식→leaf의 산출물 빌드 제한·부분 UTF-8 출력·소유 자손 종료도 포함한다. preflight9는 무출력 성공 로그의 루트 복사 소비, 실패 exit/UTF-8 보존, 소스가 같아도 실행 설정·과거 산출물 변경 거부, 47개 네트워크의20/20/7 batch와 정확한 전체 ID·비밀 제외, 과거 런타임 의존 파일의 생성 전 누락 거부·내용 변경 시 근거 재사용 거부를 포함한다. 누락·중복·실패·skip은 생성 전 차단한다. 이 절은 구현 계약이며 통과·최종 수용은 [후속 작업 기록](work-items/P12-DE-execution-hardening.md)의 실제 소스와 근거를 따른다. 아래 기존77개 설명과 당시 결과는 과거 이력이다.
+
+`release-recovery`를 선택하면 `ReleaseRecoveryIT`와 동일하게 R0 JAR의 상위3단계에서 과거 sourceRoot를 구한다. 수정된 `infra/p12-d/payload.cjs`가 내보내는 `runtimeFiles`의 과거7파일을 읽기 전용으로 확인하고 경로·SHA256·크기를 준비 근거에 포함한다. 현재 컨트롤러의 PowerShell helper를 과거 소스에 요구하거나 복사하지 않는다. 필수 파일 누락은 preflight 명령 실행 이전에 거부하고, 같은 현재 소스/JAR/dist/proof라도 과거7파일이 바뀌면 재진입 근거 재사용을 거부한다. 과거 런타임7과 현재 컨트롤러18의 소유 구분 및 실제 payload 검사는 별도 `required-release-operations.json`의18개 필수 이름으로 검증한다.
+
+`verification/Get-VerificationProgress.ps1 -EvidenceDirectory <경로>`는 루트/DB 묶음 결과와 E의 마지막 진행 이벤트만 읽어 현재 phase·완료/실패를 요약한다. 로그 전체나 과거 증거를 재귀로 반복 탐색하지 않는다. 업무별 공유10초 및 기존 유한 준비/정리 제한은 유지하고 전체·시나리오 총 제한은 추가하지 않는다.
+
+P12-E 1차 필수 보완 후 현재 Node 필수 목록은 **77개**(root proof42·기존 준비물 guard5·보존 guard22·cache guard8)다. 과거56개 실행 근거는 당시 소스로 보존한다. `cached-images.test.cjs`를 기존3파일과 함께 루트 JUnit에 수집해 기존56개를 유지한 정확한 이름·실패/skip을 대조한다. 새 gate는 동일 신청 ID/신청자의 APPROVED DB 상태와 신청자 PENDING/운영자 APPROVED audit·정확한 사유, 고정 이미지의 로컬 digest 존재·불변 FROM ID·빌드 후 base layer를 확인한다. 실제 Docker 변경 전 cache 누락 시 build/pull/resource callback이 실행되지 않는 자동 guard가 있다. 현재 E 소스 복제는 새 helper/test를 포함한13파일이며 과거 reproduction14의11파일·화면 출처는 변경하지 않는다. 수정 전 전체와 수정 후 선택·독립 판정은 [P12-E 기록](work-items/P12-E.md)의 각 소스/시점으로 구분한다.
+
+P12-E는 `container-reproduction`을 **루트 전용 계약 phase**로 등록한다. 기존42개 JVM/IT 묶음과 그 DB 개수는 유지한다. 이 phase는 같은 루트 실행의 `package-runtime`이 생산한 JAR·production dist·출처만 명시 입력으로 소비한다. 무선택 전체와 `package-runtime`을 포함하는 선택 실행에 필수이며, `-ChangedContracts 'container-reproduction'`은 producer를 선택한다. 다른 정확한 선택은 `selection.json.rootPhases.excluded`에 제외를 기록한다. 제공/소비 계약과 영향표는 `verification/db-groups.json.rootPhases`에 있으며 미등록 phase·중복·producer 누락·소비 영향 누락은 자원 생성 전에 거부한다. 공유 하네스 실행 변경이므로 이번 변경의 최종 근거에는 새 무선택 전체가 필요하다.
+
+`container-reproduction/`은 새 Compose 프로젝트, PostgreSQL 컨테이너의 새 앱 DB1개, 새 DB/media 볼륨과 전용 네트워크2개를 보존한다. 이 DB는 backend IT DB 총계에 합산하지 않고 `result.json.rootPhases.container-reproduction`의 DB 이름·컨테이너·볼륨 ID로 구분한다. migration131개/latest132/실패0, before에 없던 컨테이너/볼륨, API/worker 동일 JAR 이미지·worker mount 없음, 기존 Docker 자원 동일성을 관측 자료로 대조한다. 단순 `existingDatabaseUsed=false` 선언이나 health만으로 통과하지 않는다.
+
+새 브라우저 필수 이름은 `required-browser-container-reproduction.json`의 desktop/mobile **정확한2개**다. 루트는 실제 Playwright 결과의 실패/skip/retry와 이름·프로젝트·중복, 기존 공유10초 업무 deadline 원장을 대조하고 `browser-coverage-container-reproduction.json`에 기록한다. 같은 주문 ID의 UI→API→PG→worker/판매자 배송→구매자 재조회, 금액13000원·PAID·COMMITTED·SHIPPED와 같은 결제 attempt의 승인 효과1회/성공 event1회를 두 프로젝트에서 각각 확인한다. 결제 관측은 이4개 필드의 정확한 전체 객체를 대조한다. 종료 후에는 모든 소유 컨테이너의 exited/running=false와 paused/restarting/OOM/dead=false를 확인하고, 서비스의 정상/SIGTERM 종료0 또는143·준비 helper의 종료0을 대조한다. 정리 오류 배열만으로 종료를 수용하지 않는다. `container-reproduction-proof.json`은 같은 실행 artifact/source 해시·관측 DB/볼륨·보존 원근거의 교차 검증이다. 원 화면·명령·실패와 기존 자원을 지우지 않으며 E의 공개/실결제 제한은 [P12-E 기록](work-items/P12-E.md)을 따른다.
+
+1차 보완 전 root guard는 `Test-ContainerReproduction.ps1`과 `required-container-reproduction-guards.json`의 Node56개였다. 당시 Node는 root proof29개와 `infra/p12-e/guards.test.cjs`5개·`preservation.test.cjs`22개를 같은 필수 JUnit 보고서로 수집해 이름·개수·실패/skip을 대조했다. 현재77개는 이56개를 모두 유지한다. 누락/중복 phase·잘못된 producer/영향표, 한 viewport 누락/skip·deadline 누락, stale artifact/source·누락/추가 dist, 잘못된 DB/migration/금액/주문, worker media mount·기존 volume·이미지 불일치·기존 자원 변조를 거부한다. 명시 준비물/새 경로·주소 충돌 회피·비밀을 담지 않는 관측, bounded inspect batch·불완전/중복 관측 거부와 기존 자원 변조/삭제·미소유 추가 거부도 필수다. 실행 결과는 `container-reproduction-gate-tests.txt`, `container-reproduction-guard-tests.xml`, `container-reproduction-guard-coverage.json`에 남긴다. 이 등록 설명은 실행 통과 선언이 아니며 실제 새 전체·실패 이력과 독립 판정은 작업 기록에서 확인한다.
+
 P12-B는 전역 배송 정책을 변경하는 유지보수 시나리오를 `site-maintenance-desktop`·`site-maintenance-mobile` 두 묶음으로 등록한다. 각 묶음은 별도 IT/JVM·새 DB/media·API·브라우저를 사용하고 migration 초기 정책에서 시작해 변경 후 상태를 보존한다. 기존 `browser-api`의178개와 초기 정책/seed 계약은 유지하며 새4개는 `verification/required-browser-site-maintenance.json`과 명시 단일 project로 대조한다. 두 묶음은 무선택 전체에 필수 포함되고 등록된 소비 영향표를 따른다. 선택 예시는 `-DbGroups 'site-maintenance-desktop,site-maintenance-mobile'`이며 선택 통과를 전체 인증으로 표시하지 않는다. 소스별 실행·독립 판정은 [P12-B 기록](work-items/P12-B.md)을 따른다.
 
 브라우저 묶음별 `db/groups/<id>/` 아래 bundle·report·deadline 원장·자원 식별을 보존한다. 기존 루트 `browser-coverage.json`은 유지하고 새 묶음은 `browser-coverage-site-maintenance-desktop.json`·`browser-coverage-site-maintenance-mobile.json`에 별도 필수4개 중 해당project 결과를 기록한다. 새 시나리오도 아래 업무별 공유10초와 유한 준비·정리·watchdog을 소비하며 총 제한이나 실행 병렬화를 추가하지 않는다. 아래 과거 시점의 필수 개수와 실행 결과는 당시 이력이다.
@@ -186,7 +232,9 @@ P06의 fixture 소유권 참조 읽기는 `/api/guest/access/references[/{number
 
 쉼표 목록은 PowerShell에서 **따옴표로 감싼 문자열**로 전달한다. `-DbGroups`와 `-ChangedContracts`는 함께 사용할 수 없다. 오타·빈 값·빈 목록 원소·중복은 실행 전에 실패한다. 명시 옵션으로 모든 묶음을 골라도 판정은 `selected-passed`, `certificationEligible=false`다. 전체 인증은 무선택 실행의 `passed`·보존 통과·정상 종료로만 주장한다. 적절한 선택 범위의 작업 완료 가능 여부는 위 결과 필드 기준을 따른다. 선택 실행도 Java 단위·ArchUnit·프런트 단위/Node/type/lint/build를 실행하며, 일반 브라우저154건은 `browser-api`, 실제 phone SDK probe는 `phone-provider`를 선택한 경우에 실행한다. 미선택 검사를 skip으로 수집하지 않는다. 작업에 브라우저/전화 소비 영향이 있으면 해당 묶음을 포함하거나 영향 불명확으로 전체를 선택한다.
 
-실행 순서는 등록부의 명시적 `prerequisites`를 지키는 안정 위상 정렬이다. 실행 가능한 묶음 중 등록 순서를 우선하고, `-ReverseGroups`는 현재 선행 조건이 충족된 묶음 사이에서 역등록 순서를 우선한다. 따라서 `public-demo-runtime`의 같은 실행 증거를 소비하는 `release-recovery`는 역순 옵션에서도 생산자 뒤에 실행한다. 알 수 없는·자기 자신·중복 선행 조건, 누락된 선택 선행 묶음과 순환 그래프는 자원 취득 전에 거부한다. 선택 묶음을 자동 추가하거나 소비 검사를 생략하지 않으며 `provides`/`consumes` 영향표에서 실행 선행 관계를 추론하지 않는다. 선택·제외·인증 가능 여부는 그대로 유지하고 실제 순서는 DB 실행 `summary.json`의 `executionOrder`에 별도로 기록한다.
+실행 우선순위는 등록부의 명시적 `prerequisites`를 지키는 안정 위상 정렬이다. `executionPriority`의 `measured-duration-descending` 정책은 고정된 측정 시간 힌트가 긴 묶음을 우선하며, 같은 값·누락값0의 동률은 기존 등록 순서로 결정한다. `-ReverseGroups`는 이 동률·fallback 순서만 역순으로 하며 긴 작업 우선을 짧은 작업 우선으로 바꾸지 않는다. 메타데이터가 없는 등록부는 기존 정순·역순 동작을 유지한다. `source`의 기준 증거·입력 해시·worker 시작→검증된 종료 경계는 출처 설명이며, 실행 때 과거 `.local-tools` 증거를 읽거나 결과를 재사용하지 않는다. 힌트는 timeout이 아니고 자동 학습하지 않는다. 선택되지 않은 항목까지 알 수 없는·중복 ID, 비수치·null·bool·문자열·음수·비유한 힌트를 자원 취득 전에 거부한다.
+
+`public-demo-runtime`의 같은 실행 증거를 소비하는 `release-recovery`는 우선순위나 역순 옵션과 무관하게 생산자의 성공 검증 뒤에 입장한다. 알 수 없는·자기 자신·중복 선행 조건, 누락된 선택 선행 묶음과 순환 그래프는 자원 취득 전에 거부한다. 선택 묶음을 자동 추가하거나 소비 검사를 생략하지 않으며 `provides`/`consumes` 영향표에서 실행 선행 관계를 추론하지 않는다. 선택·제외·인증 가능 여부는 그대로 유지한다. `summary.json.executionOrder`와 scheduler 요청에는 실제 반환한 우선순위를 기록하며 scheduler 내부에서 숨겨진 재정렬을 하지 않는다. 최대2개 worker의 실제 입장·종료·자원 배제·중첩 구간은 `scheduler-events.ndjson`에 기록한다. 기존 Node ready 판단의 선행 통과·cap·공유 자원 배타·ready-exclusive drain은 그대로 유지한다.
 
 ### 영향표와 검사 소유권
 
@@ -215,6 +263,8 @@ phone emulator는 루트 실행별 새 demo project·동적 포트다. `browser-
 
 ### 실제 검사 묶음 목록
 
+아래는 초기 묶음 등록의 요약 표이며 이후 추가된 현재 전체42개 목록과 정확한 필수 메서드/실행 수는 `db-groups.json`을 기준으로 한다. `database-runtime`은 이번 성능 후속의 새 assertion1개를 반영해 현재13/13으로 보완했다. 과거12/12 실행·수용 원근거는 당시 이력으로 유지한다.
+
 | ID | 책임 분류 | 기존 메서드 수 / 예상 실행 수 |
 | --- | --- | --- |
 | payment | cross-domain-contract | 20 / 25 |
@@ -242,7 +292,7 @@ phone emulator는 루트 실행별 새 demo project·동적 포트다. `browser-
 | media | domain | 8 / 8 |
 | seller-store | domain | 9 / 9 |
 | identity | shared-contract | 36 / 36 |
-| database-runtime | shared-contract | 12 / 12 |
+| database-runtime | shared-contract | 13 / 13 |
 | phone-provider | shared-contract | 1 / 1 |
 
 변경 영향 행에는 준비 업무가 소비하는 계약도 포함한다. `provides`/`consumes` 연결에 선언된 소비 묶음이 영향표에서 빠지면 자동 검사가 실패한다. 아직 완전한 영향 행이 없는 등록 묶음을 `-ChangedContracts`로 지정하면 전체로 확대한다. 이는 복잡한 파일 분석 없이 명시 표의 누락을 거부하기 위한 보수적 규칙이다. 거래 계열 변경은 정상 선행 주문/결제와 교차 금액·복구 계약 때문에 비교적 넓게 선택되며, 가설이 좁고 소비 계약을 이미 검토한 경우 정확한 `-DbGroups` 집중 실행을 사용한다.
@@ -255,4 +305,4 @@ phone emulator는 루트 실행별 새 demo project·동적 포트다. `browser-
 
 계측 해석: 실제 브라우저 실행시간은 `browser-report.json.stats.duration`이다. `runAuthBrowsersIfRequested`의 inclusive 시간에는 준비·자식 프로세스 대기가 들어가며, 그 내부 `process-wait`는 exclusive 집계에서 별도 분류된다. 따라서 `browser` exclusive 값만 브라우저 총시간으로 보고하지 않는다. 실제 프로세스 대기는 JVM 기동/child 업무 실행도 포함하므로 순수 sleep 시간이 아니다. 초기화 값은 성공한 DB/context refresh 구간이며 별도 child 초기화는 child 실행/대기에 남을 수 있다. 증거 쓰기 시간은 부모 구간과 겹치는 진단값이고 root before/after 보존 시간과 별개다. 스레드 간 중첩이 있을 수 있어 모든 phase 합을 루트 경과시간으로 대체하지 않는다.
 
-현재 등록된 묶음은 각각 한 실행 클래스다. 새 도메인도 데이터·트랜잭션·복구 계약에 맞는 실행 범위를 먼저 정하고 등록한다. 여러 클래스를 한 묶음에 합치거나 병렬로 바꿀 때는 fixture의 AfterAll 종료, Spring context와 static 상태 수명을 다시 검증해야 한다. 현재 순차·단일 클래스 묶음의 결과를 그 변경의 안전성 증거로 사용하지 않는다.
+현재 등록된 묶음은 각각 한 실행 클래스다. 이번 성능 후속은 이 경계를 유지하며 독립 worker를 최대2개로 제한하고 명시된 자원·의존 조건을 적용한다. 새 도메인도 데이터·트랜잭션·복구 계약에 맞는 실행 범위를 먼저 정하고 등록한다. 여러 클래스를 한 묶음에 합치거나 동시 실행 범위를 넓힐 때는 fixture의 AfterAll 종료, Spring context와 static 상태 수명을 다시 검증해야 한다. 기존 순차·단일 클래스 묶음의 수용 결과만으로 새 동시 실행의 안전성을 주장하지 않으며 같은 소스의 실제 worker 격리·자원 배제·전체 검사 근거를 확인한다.

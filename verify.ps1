@@ -5,14 +5,18 @@ param(
     [string]$DbGroups,
     [string]$ChangedContracts,
     [switch]$ReverseGroups,
+    [ValidateSet('1','2')][string]$GroupConcurrency='2',
     [int]$TestPostgresPort = 15433,
     [string]$TestPostgresInstance = '',
     [string]$TestPostgresContainer = '',
     [switch]$ResourceOnlyDiagnostic
 )
 $ErrorActionPreference = 'Stop'
+. "$PSScriptRoot/verification/PowerShellRuntime.ps1"
+$null=Assert-VerificationPowerShellRuntime
 . "$PSScriptRoot/verification/DatabaseTarget.ps1"
 . "$PSScriptRoot/verification/DbGroups.ps1"
+. "$PSScriptRoot/verification/Preflight.ps1"
 $registry = Get-DbGroupRegistry
 Assert-DbGroupRegistration -Registry $registry
 $selectionArgs = @{Registry=$registry}
@@ -24,18 +28,29 @@ if ($PSBoundParameters.ContainsKey('DbGroups')) { $forwardSelection.DbGroups=$Db
 if ($PSBoundParameters.ContainsKey('ChangedContracts')) { $forwardSelection.ChangedContracts=$ChangedContracts }
 if ($ReverseGroups) { $forwardSelection.ReverseGroups=$true }
 $endpoint = Resolve-TestPostgresEndpoint -Port $TestPostgresPort -Instance $TestPostgresInstance -Container $TestPostgresContainer -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
+$preflightSettings=@{groupConcurrency=[int]$GroupConcurrency;offline=[bool]$Offline;reverseGroups=[bool]$ReverseGroups;resourceOnlyDiagnostic=[bool]$ResourceOnlyDiagnostic;endpoint=$endpoint}
+$preflight = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ($EvidenceDirectory+'-preflight')))
+$preflightAllowed = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '.local-tools')) + [IO.Path]::DirectorySeparatorChar
+if (-not $preflight.StartsWith($preflightAllowed,[StringComparison]::OrdinalIgnoreCase)) { throw 'Preflight evidence must be inside .local-tools' }
 if (-not $PhoneEmulatorReady) {
-    & "$PSScriptRoot/verification/Run-PhoneEmulator.ps1" -EvidenceDirectory $EvidenceDirectory @forwardSelection -Offline:$Offline -TestPostgresPort $TestPostgresPort -TestPostgresInstance $TestPostgresInstance -TestPostgresContainer $TestPostgresContainer -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
+    Invoke-VerificationPreflight -Root $PSScriptRoot -Evidence $preflight -Selection $selection -Settings $preflightSettings
+    & "$PSScriptRoot/verification/Run-PhoneEmulator.ps1" -EvidenceDirectory $EvidenceDirectory @forwardSelection -GroupConcurrency $GroupConcurrency -Offline:$Offline -TestPostgresPort $TestPostgresPort -TestPostgresInstance $TestPostgresInstance -TestPostgresContainer $TestPostgresContainer -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
     return
 }
+Assert-VerificationPreflight -Root $PSScriptRoot -Evidence $preflight -Selection $selection -Settings $preflightSettings
 if (-not $env:FIREBASE_AUTH_EMULATOR_HOST -or -not $env:GCLOUD_PROJECT.StartsWith('demo-')) { throw 'Fresh local phone emulator required' }
 . "$PSScriptRoot/verification/Gate.ps1"
+. "$PSScriptRoot/verification/FrontendNodeCoverage.ps1"
 . "$PSScriptRoot/verification/Preservation.ps1"
+. "$PSScriptRoot/verification/ContainerReproduction.ps1"
 $output = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot $EvidenceDirectory))
 $allowed = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '.local-tools')) + [IO.Path]::DirectorySeparatorChar
 if (-not $output.StartsWith($allowed, [StringComparison]::OrdinalIgnoreCase)) { throw 'Evidence must be inside .local-tools' }
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh evidence directory' }
 New-Item -ItemType Directory -Path $output | Out-Null
+$previousPowerShellEvidence=$env:VERIFY_POWERSHELL_EVIDENCE
+$env:VERIFY_POWERSHELL_EVIDENCE=Join-Path $output 'powershell-processes'
+$rootRuntime=Assert-VerificationPowerShellRuntime -EvidencePath "$output/powershell.json"
 $oldPath = $env:PATH
 $wholeClock = [Diagnostics.Stopwatch]::StartNew()
 $result = @{ status='failed'; started=(Get-Date).ToString('o'); scope='Local marketplace verification. See selection.json for the selected and excluded contracts and the case reports for the executed assertions.'; evidence=$output }
@@ -43,6 +58,8 @@ $result.testPostgres = $endpoint
 $result.resourceOnlyDiagnostic = [bool]$ResourceOnlyDiagnostic
 $result.certificationEligible = -not $ResourceOnlyDiagnostic -and $selection.certificationEligible
 $result.selection = $selection
+$result.preflight = "$preflight/result.json"
+$result.powerShell = $rootRuntime
 if ($ResourceOnlyDiagnostic) { $result.scope = 'DIAGNOSTIC ONLY: original database dump preservation omitted; whole verification cannot be certified. ' + $result.scope }
 function Get-Inputs {
     $files = @(& git ls-files --cached --others --exclude-standard -- backend frontend infra verification verify.ps1)
@@ -66,6 +83,9 @@ try {
     & "$PSScriptRoot/verification/Test-DbGroups.ps1" | Set-Content "$output/db-group-tests.txt"
     & "$PSScriptRoot/verification/Test-Gate.ps1" | Set-Content (Join-Path $output 'gate-tests.txt')
     & "$PSScriptRoot/verification/Test-DatabaseTarget.ps1" | Set-Content (Join-Path $output 'database-target-tests.txt')
+    & "$PSScriptRoot/verification/Test-ContainerReproduction.ps1" | Set-Content "$output/container-reproduction-gate-tests.txt"
+    foreach($guardEvidence in @('container-reproduction-guard-tests.xml','container-reproduction-guard-tests.txt','container-reproduction-guard-coverage.json')) { Copy-Item -LiteralPath "$preflight/$guardEvidence" -Destination "$output/$guardEvidence" }
+    Assert-ContainerReproductionGuardTests -Report "$output/container-reproduction-guard-tests.xml" | ConvertTo-Json -Depth 5 | Set-Content "$output/container-reproduction-guard-coverage.json"
     & node --test --test-reporter=junit "--test-reporter-destination=$output/release-operation-tests.xml" "$PSScriptRoot/verification/Test-ReleaseOperations.cjs" 2>&1 | Set-Content "$output/release-operation-tests.txt"
     if ($LASTEXITCODE -ne 0) { throw 'Release operation guard checks failed' }
     Assert-ReleaseOperationTests -Report "$output/release-operation-tests.xml" | ConvertTo-Json -Depth 5 | Set-Content "$output/release-operation-coverage.json"
@@ -73,7 +93,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Actual NGINX proxy contract checks failed' }
     $backendSelection = @{}
     if ($selection.mode -ceq 'selected') { $backendSelection.DbGroups=($selection.selected -join ',') }
-    & "$PSScriptRoot/backend/verify-db.ps1" -EvidenceDirectory "$EvidenceDirectory/db" @backendSelection -ReverseGroups:$ReverseGroups -Offline:$Offline -RunBrowser -TestPostgresPort $TestPostgresPort -TestPostgresInstance $TestPostgresInstance -TestPostgresContainer $TestPostgresContainer
+    & "$PSScriptRoot/backend/verify-db.ps1" -EvidenceDirectory "$EvidenceDirectory/db" @backendSelection -GroupConcurrency $GroupConcurrency -ReverseGroups:$ReverseGroups -Offline:$Offline -RunBrowser -TestPostgresPort $TestPostgresPort -TestPostgresInstance $TestPostgresInstance -TestPostgresContainer $TestPostgresContainer
     $java = @(Read-JUnitCases "$output/db/build/surefire-reports")
     foreach ($id in $selection.selected) { $java += @(Read-JUnitCases "$output/db/groups/$id/failsafe-reports") }
     $requirements = Get-Content "$PSScriptRoot/verification/required-tests.json" -Raw | ConvertFrom-Json
@@ -112,16 +132,33 @@ try {
     if ($browserGroup.id -ceq 'browser-api') { $browserCoverage | ConvertTo-Json -Depth 6 | Set-Content "$output/browser-coverage.json" }
     $allBrowserCases += $browserCases
     }
+    if ('container-reproduction' -cin $selection.rootPhases.selected) {
+        $containerProof=Invoke-ContainerReproduction -Root $PSScriptRoot -Evidence $output -SourceHead $result.commit
+        $allBrowserCases += @($containerProof.cases)
+        $result.rootPhases=@{ 'container-reproduction'=$containerProof.proof }
+    }
+    & node "$PSScriptRoot/verification/ProductionBundle.cjs" copy $PSScriptRoot "$output/db/current-production/manifest.json" "$output/frontend-production" "$output/frontend-production-copy.json"
+    if($LASTEXITCODE -ne 0){throw 'Same-run root production bundle copy failed'}
+    $previousProductionDist=$env:D2_PRODUCTION_DIST
+    $env:D2_PRODUCTION_DIST="$output/frontend-production"
     Push-Location frontend
     try {
         # Proxy preview tests require dist even in a fresh checkout.
-        foreach ($task in @('typecheck','lint','test:unit','build','test')) {
-            $arguments = @('run',$task)
-            if ($task -eq 'test:unit') { $arguments += @('--','--reporter=default','--reporter=junit',"--outputFile=$output/TEST-frontend.xml") }
-            & npm.cmd @arguments 2>&1 | Set-Content (Join-Path $output ($task.Replace(':','-')+'.txt'))
+        # Type/lint evidence was bound to this source before integration resource creation.
+        foreach ($task in @('test:unit','test')) {
+            if ($task -eq 'test:unit') {
+                & npm.cmd run test:unit -- --reporter=default --reporter=junit "--outputFile=$output/TEST-frontend.xml" 2>&1 | Set-Content "$output/test-unit.txt"
+            } else {
+                # Reporter flags must precede the existing glob; flags appended by npm are ignored by Node.
+                & node --test --test-reporter=spec --test-reporter=junit --test-reporter-destination=stdout "--test-reporter-destination=$output/frontend-node-tests.xml" 'tests/*.test.mjs' 2>&1 | Set-Content "$output/test.txt"
+            }
             if ($LASTEXITCODE -ne 0) { throw "Frontend $task failed" }
         }
-    } finally { Pop-Location }
+    } finally { Pop-Location; $env:D2_PRODUCTION_DIST=$previousProductionDist }
+    $frontendNode = Assert-FrontendNodeCoverage -Report "$output/frontend-node-tests.xml" -Root $PSScriptRoot
+    $frontendNode | ConvertTo-Json -Depth 8 | Set-Content "$output/frontend-node-coverage.json"
+    & node "$PSScriptRoot/verification/ProductionBundle.cjs" verify-copy $PSScriptRoot "$output/db/current-production/manifest.json" "$output/frontend-production" "$output/frontend-production-copy.json"
+    if($LASTEXITCODE -ne 0){throw 'Root production bundle changed during frontend verification'}
     $frontend = @(Read-JUnitCases $output)
     if ($frontend.Count -lt 96 -or @($frontend | Where-Object status -ne 'passed').Count) { throw 'Frontend unit gate failed (minimum current baseline: 96)' }
     $frontendRequired = Get-Content "$PSScriptRoot/verification/required-frontend.json" -Raw | ConvertFrom-Json
@@ -130,6 +167,7 @@ try {
     if (($inputs | ConvertTo-Json -Compress) -cne ($afterInputs | ConvertTo-Json -Compress)) { throw 'Source changed during verification' }
     $result.junit = $java.Count
     $result.frontendUnit = $frontend.Count
+    $result.frontendNode = $frontendNode.tests
     $result.browser = $allBrowserCases.Count
     Assert-FullVerificationAllowed -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
     $result.status = if ($selection.mode -ceq 'full') { 'passed' } else { 'selected-passed' }
@@ -154,6 +192,7 @@ try {
         $result.elapsedSeconds = $wholeClock.Elapsed.TotalSeconds
         $result | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $output 'result.json')
         $env:PATH = $oldPath
+        $env:VERIFY_POWERSHELL_EVIDENCE=$previousPowerShellEvidence
         Pop-Location
     }
 }

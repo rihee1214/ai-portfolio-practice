@@ -7,6 +7,7 @@ const { spawn } = require('node:child_process');
 const https = require('node:https');
 const hostRuntime = require('./host-runtime.cjs');
 const payloads = require('./payload.cjs');
+const powershell = require('../../verification/PowerShellRuntime.cjs');
 const startupRequest = require.main===module && process.argv[2] ? JSON.parse(fs.readFileSync(process.argv[2],'utf8').replace(/^\uFEFF/,'')) : null;
 const workspace = path.resolve(startupRequest?.workspaceRoot || process.env.P12_D_WORKSPACE_ROOT || path.resolve(__dirname, '../..'));
 const localRoot = path.join(workspace, '.local-tools');
@@ -126,7 +127,7 @@ function validateManifest(m) {
   safePath(m.runtime.secretsPath,workspace,true);
   for (const f of ['tls.crt','tls.key','reviewers']) safePath(path.join(m.runtime.secretsPath,f),m.runtime.secretsPath,true);
   safePath(m.runtime.environmentFile,workspace,true);
-  check(path.isAbsolute(m.runtime.powershellPath || ''),'Explicit PowerShell 7 executable required');
+  powershell.assertExecutable(m.runtime.powershellPath);
   safePath(m.runtime.powershellPath,path.parse(m.runtime.powershellPath).root,true);
   const env = m.runtime.applicationEnvironment || {};
   const allowed = ['FIREBASE_AUTH_EMULATOR_HOST','GCLOUD_PROJECT','MARKETPLACE_PHONE_PROVIDER','MARKETPLACE_PHONE_MODE'];
@@ -538,7 +539,7 @@ COMMIT;`,{phase:'quiet-sequence-diagnostics'});
   async execute() {
     this.recordExecution();
     this.loadEnv();
-    check(await hostRuntime.command(this.m.runtime.powershellPath,['-NoProfile','-NonInteractive','-Command','$PSVersionTable.PSVersion.Major'])==='7','PowerShell 7 is required');
+    check(await hostRuntime.command(this.m.runtime.powershellPath,['-NoProfile','-NonInteractive','-Command','$PSVersionTable.PSVersion.ToString()'])==='7.6.9','PowerShell 7.6.9 stable is required');
     check(this.m.runtime.origin==='https://localhost','Exact loopback origin required');
     if(this.m.runtime.execution==='host-jar')check(this.t.postgresPort && this.t.apiPort,'Host JAR mode requires isolated database/API ports');
     for(const [name,item]of [['nginx.conf',this.m.artifacts.nginxConfig],['package-proxy.conf',this.m.artifacts.proxyConfig]]) {

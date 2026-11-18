@@ -1,0 +1,895 @@
+{
+  "schemaVersion": 1,
+  "status": "focused-passed; full verification and independent review pending",
+  "publishedAt": "2026-11-16T13:44:32.167Z",
+  "scope": "Eight masked screenshots from real synthetic browser workflows in a fresh same-PC public-demo Compose environment. Screenshots supplement exact assertions; they are not their substitute.",
+  "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+  "sourceHead": "dbaef2ddedfa7f2393e93bea6b648cf832c5cbf9",
+  "sourceHeadMeaning": "P12-D baseline; the separate uncommitted P12-E execution source inventory is pinned below.",
+  "sourceFiles": [
+    {
+      "path": "../../../infra/p12-e/browser.config.ts",
+      "sha256": "3359abef0ee43e2b1342d03679c5dda29ba8957108900eebe1ff1402ba0d93d8"
+    },
+    {
+      "path": "../../../infra/p12-e/compose.override.yaml",
+      "sha256": "e0a2d2440fbfa4e7098e365a8cd5bc0dfbe7930fc0b6d76b862bcde63ecbf9f7"
+    },
+    {
+      "path": "../../../infra/p12-e/guards.test.cjs",
+      "sha256": "ae737fa139155383e72ae0fcd39a35d821594d786332cd4efecb6950d447d37a"
+    },
+    {
+      "path": "../../../infra/p12-e/package.json",
+      "sha256": "a90fc33418afa2b9cbf4768524b021135b965ecdf993457505bfae3ac44a8428"
+    },
+    {
+      "path": "../../../infra/p12-e/prepare-artifacts.cjs",
+      "sha256": "98d373b5c70ecc7e0fc33acd6ece0fe360eea0349631d9881d410c1a7c399fb1"
+    },
+    {
+      "path": "../../../infra/p12-e/PrepareAccounts.java",
+      "sha256": "e73fb5b48d7904ea72731e487115a85507c4805b81c2949e52c7f2cdb448bfaf"
+    },
+    {
+      "path": "../../../infra/p12-e/preservation.cjs",
+      "sha256": "f55a3c1a60d0773125b23575baf71dc4bb54f9b576739c8f90919b15583921b8"
+    },
+    {
+      "path": "../../../infra/p12-e/preservation.test.cjs",
+      "sha256": "b2fc6aded9759643ffcf92d50d87ecca9b67eb7e8c24b848c92abd7b8213a6dd"
+    },
+    {
+      "path": "../../../infra/p12-e/README.md",
+      "sha256": "e66d4f432728c738c621dd6569d7b3aaa084ff8eaacfa3fcf0c89c0b33990695"
+    },
+    {
+      "path": "../../../infra/p12-e/reproduce.cjs",
+      "sha256": "0e38a363dacf7f9ddaceb7f157b7e12a3089456eb3b4fa1da38215d104b28f41"
+    },
+    {
+      "path": "../../../infra/p12-e/reproduction.spec.ts",
+      "sha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97"
+    }
+  ],
+  "proofs": [
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/result.json",
+      "sha256": "398f3493a456b8ba8a131ac33feea2b2ab583a57437fc8bc410fb3bdba88db59",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/proof-source.json",
+      "sha256": "3e4490ef61b5661b331685e95766443671ffeb1d92177193fd5b0b531532e3e8",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/migration.json",
+      "sha256": "f0325f663c2a55908ee0165a5bee0c8b0dba4c98ce07ade4b51fb2bbcc869d9e",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-report.json",
+      "sha256": "816011f838de4fccac3f7bcfddbf1501d4cf9ecc0f81c9b40008b3c43c5cdf0b",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson",
+      "sha256": "9faba44c6f283b99486f978afcdccad7940007c1e3a76098a5ca0046bd2210df",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-deadlines.json",
+      "sha256": "dc77df09e28500dc278506edfdf4b22784dc4bcfe7175c0ec93eafbc4f36eeb0",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/desktop-business.json",
+      "sha256": "e9b73844215289213184e7b65b00f72fab2a1d68adc59af45d8fb8f9d1467797",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/mobile-business.json",
+      "sha256": "1cb795852b75cd64283dfa34c412bc6264ac38b42eda123392d1a8cb7f17420c",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/preservation.json",
+      "sha256": "9a2a77b1cd787085c1e639727df69dbb8e10da42b7473564790c289445f0574a",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/jar-provenance.json",
+      "sha256": "d246ebab09ddeeb9c221a8f8c021fb05d75dcfdf2c6b2790a70f90d72232fd2b",
+      "repositoryTracked": false
+    },
+    {
+      "path": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/dist-provenance.json",
+      "sha256": "5bfc51b6ee2c69c9a95e3f4b12e4bec6cac11329072c9e107f226a0ee0858e17",
+      "repositoryTracked": false
+    }
+  ],
+  "runtime": {
+    "mode": "public-demo",
+    "externalPayment": false,
+    "jarSha256": "eb4752f13d45e1d10a084671842e432d89d8d3160db5f5682e12641043e8cc55",
+    "existingDatabaseUsed": false,
+    "migration": {
+      "successful": 131,
+      "failed": 0,
+      "latestVersion": 132
+    },
+    "browser": {
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "projects": [
+        "desktop",
+        "mobile"
+      ]
+    },
+    "maximumBusinessOperationMs": 3507.3983,
+    "operationDeadlineMs": 10000
+  },
+  "privacy": {
+    "publishedFiles": "Exactly the eight masked PNG derivatives and this safe manifest; no raw private screenshots, account credentials, contacts, tokens or absolute local paths.",
+    "syntheticBusinessIdsRetained": true,
+    "rawEvidenceAvailability": "Raw proof references are local Git-ignored evidence; distributing this manifest does not distribute those files.",
+    "visualReview": "Parent inspected desktop four and mobile buyer quote, buyer shipment and operator approval; documentation agent inspected mobile seller shipped."
+  },
+  "images": [
+    {
+      "file": "desktop-buyer-quote.png",
+      "sha256": "fd18ae7d14fe7c139eb27d727e6b5d96eecb2ee11bd889b7e4b87ff44c4cfd27",
+      "byteSize": 89232,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/desktop-buyer-quote.json",
+      "sourceMetadataSha256": "951401670ce9cac08d9dbeab17153af980a40f873e99b54d5ecfcb8a6a5a7d02",
+      "original": {
+        "private": true,
+        "file": "desktop-buyer-quote.private.png",
+        "sha256": "35326dc8f7a73ca03b8b8903b438d736b23c953888a625925db7f62a5cc8295b",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:32.186Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "fullPage": true,
+        "urlPath": "/checkout",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "product": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "sku": "119d23ec-ce4b-4922-9635-d9d37e7989ee"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "2f1317e6-0850-49ab-abcb-0512d69b762a",
+        "product": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "sku": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "order": "Ocb991bf831ed454896f57668b426026a",
+        "sellerOrder": "a4f7a5da-01ce-4fce-ab57-34aeeadcb440",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The final order is created after this capture; the final business record links the preceding application/product flow to that later server order.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "desktop",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          43,
+          44
+        ],
+        "operationName": "E: buyer storefront UI consumes seller product and server quote",
+        "operationId": "b31d83a0-5f89-4f39-8adb-515440cc9241",
+        "testId": "ff0f9736443589895b2b-cddadbab5c845ec6dca9",
+        "startedAt": "2026-11-16T13:34:31.632Z",
+        "endedAt": "2026-11-16T13:34:32.030Z",
+        "elapsedMs": 398.08640000000014,
+        "status": "passed",
+        "checks": [
+          "The buyer adds the ordinary-API-produced seller product through the storefront UI.",
+          "Checkout quote-total text equals 현재 견적 합계: 13,000원."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "e36a42a8-0038-497d-a547-44c26f35c9a3",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:32.031Z",
+        "endedAt": "2026-11-16T13:34:32.187Z"
+      }
+    },
+    {
+      "file": "desktop-buyer-shipment.png",
+      "sha256": "d742706c74e11e78dfcf384246fa81e42a44d5a697c719b646ec825be7be4245",
+      "byteSize": 174004,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/desktop-buyer-shipment.json",
+      "sourceMetadataSha256": "1adf745196fb063fc358dee09eb881215db36d9c10ebac978eef54e34fe4ae67",
+      "original": {
+        "private": true,
+        "file": "desktop-buyer-shipment.private.png",
+        "sha256": "d877ede93c061c2aca77ddfb56b11340d1b33eb5f47bcf66ed6cb0781ea9762d",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:34.739Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "fullPage": true,
+        "urlPath": "/account/orders/Ocb991bf831ed454896f57668b426026a",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "order": "Ocb991bf831ed454896f57668b426026a"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "2f1317e6-0850-49ab-abcb-0512d69b762a",
+        "product": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "sku": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "order": "Ocb991bf831ed454896f57668b426026a",
+        "sellerOrder": "a4f7a5da-01ce-4fce-ab57-34aeeadcb440",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The captured order is the same server order in the final business record.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "desktop",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          52,
+          53
+        ],
+        "operationName": "E: buyer reload consumes shipment and other role cannot own purchase",
+        "operationId": "813ce230-2986-495c-8e21-652652e30efd",
+        "testId": "ff0f9736443589895b2b-cddadbab5c845ec6dca9",
+        "startedAt": "2026-11-16T13:34:34.304Z",
+        "endedAt": "2026-11-16T13:34:34.514Z",
+        "elapsedMs": 209.7560000000003,
+        "status": "passed",
+        "checks": [
+          "The reloaded buyer page order-number equals the created server orderNumber and displays 발송 완료.",
+          "The other seller session GET /api/orders/{order} returns 404; buyer GET /api/admin/content/categories returns 403.",
+          "document.documentElement.scrollWidth <= innerWidth."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "657978e9-474a-418a-b5bc-7b647a642673",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:34.514Z",
+        "endedAt": "2026-11-16T13:34:34.739Z"
+      }
+    },
+    {
+      "file": "desktop-operator-approval.png",
+      "sha256": "bc5c8b2b652494478adc1a25f34a139651220bfb392257c6abab2241c690d198",
+      "byteSize": 80713,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/desktop-operator-approval.json",
+      "sourceMetadataSha256": "c5d897e3be872c0ff03b18352a2d3f45225a125eb412fe694d9f00cf7e5b04f4",
+      "original": {
+        "private": true,
+        "file": "desktop-operator-approval.private.png",
+        "sha256": "503b685e470f6f0901985b15720a5784b920b70fe9416a157c85bc91ef452700",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:31.326Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "fullPage": true,
+        "urlPath": "/admin/sellers",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "application": "2f1317e6-0850-49ab-abcb-0512d69b762a"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "2f1317e6-0850-49ab-abcb-0512d69b762a",
+        "product": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "sku": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "order": "Ocb991bf831ed454896f57668b426026a",
+        "sellerOrder": "a4f7a5da-01ce-4fce-ab57-34aeeadcb440",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The final order is created after this capture; the final business record links the preceding application/product flow to that later server order.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "desktop",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          34,
+          35
+        ],
+        "operationName": "E: operator approval UI consumes same application ID",
+        "operationId": "7a187835-d6ab-4490-8cfd-4e3ab19fe77f",
+        "testId": "ff0f9736443589895b2b-cddadbab5c845ec6dca9",
+        "startedAt": "2026-11-16T13:34:30.897Z",
+        "endedAt": "2026-11-16T13:34:31.179Z",
+        "elapsedMs": 282.6569000000004,
+        "status": "passed",
+        "checks": [
+          "The UI POST /api/admin/accounts/seller-applications/{application}/decision returned 200.",
+          "The completion message is visible and the same seller session GET /api/auth/me roles equal BUYER and SELLER."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "ba81e28a-3d86-4b31-8e41-bf799c441f1f",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:31.180Z",
+        "endedAt": "2026-11-16T13:34:31.327Z"
+      }
+    },
+    {
+      "file": "desktop-seller-shipped.png",
+      "sha256": "af44227cf008347e471376236b71d3e4f710fd64f5e122681bfc26bdc54ec4ff",
+      "byteSize": 132754,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/desktop-seller-shipped.json",
+      "sourceMetadataSha256": "40f64035ba86e45fbad4eb11245faece61bc2654caec651efbde9147c703d6e9",
+      "original": {
+        "private": true,
+        "file": "desktop-seller-shipped.private.png",
+        "sha256": "1631e719f253b2d0b0dabbf98f11d7fa07981ad739a3baf0a09987f387a7f457",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:34.303Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "fullPage": true,
+        "urlPath": "/seller/orders/a4f7a5da-01ce-4fce-ab57-34aeeadcb440",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "order": "Ocb991bf831ed454896f57668b426026a",
+        "sellerOrder": "a4f7a5da-01ce-4fce-ab57-34aeeadcb440"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "2f1317e6-0850-49ab-abcb-0512d69b762a",
+        "product": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "sku": "119d23ec-ce4b-4922-9635-d9d37e7989ee",
+        "order": "Ocb991bf831ed454896f57668b426026a",
+        "sellerOrder": "a4f7a5da-01ce-4fce-ab57-34aeeadcb440",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The captured order is the same server order in the final business record.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "desktop",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          50,
+          51
+        ],
+        "operationName": "E: seller shipment UI consumes buyer same order",
+        "operationId": "814e3550-951b-441d-b8b5-e7f5796b1436",
+        "testId": "ff0f9736443589895b2b-cddadbab5c845ec6dca9",
+        "startedAt": "2026-11-16T13:34:33.466Z",
+        "endedAt": "2026-11-16T13:34:34.091Z",
+        "elapsedMs": 625.3662000000004,
+        "status": "passed",
+        "checks": [
+          "Seller order list is matched by the buyer orderNumber and resolves the same sellerOrderId.",
+          "The seller confirms original items and clicks 발송 처리; 발송 완료 is visible.",
+          "Read-only PostgreSQL observation for the same order returns shipments=[SHIPPED]."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "160c6ebe-c44e-4f82-834a-4187fdcb1b41",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:34.092Z",
+        "endedAt": "2026-11-16T13:34:34.304Z"
+      }
+    },
+    {
+      "file": "mobile-buyer-quote.png",
+      "sha256": "b8f1c09ed7e529fd4278d866951c88c230efa54f1b2b1d4472ef2c998da13a09",
+      "byteSize": 319532,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/mobile-buyer-quote.json",
+      "sourceMetadataSha256": "828b022b68543161504472314368cd5da9affca49e3ab6ecdeb9e96a5482e3dc",
+      "original": {
+        "private": true,
+        "file": "mobile-buyer-quote.private.png",
+        "sha256": "6359fe1f7b3367bdb029ac6c19cf39bf4a4595d203558bddee8696296467a83a",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:38.503Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 412,
+          "height": 839
+        },
+        "fullPage": true,
+        "urlPath": "/checkout",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "product": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "sku": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "16787053-2894-4283-89e7-9995fb69bfba",
+        "product": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "sku": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1",
+        "sellerOrder": "e67cde98-b266-43a8-b6a8-04da1aa00682",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The final order is created after this capture; the final business record links the preceding application/product flow to that later server order.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "mobile",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          43,
+          44
+        ],
+        "operationName": "E: buyer storefront UI consumes seller product and server quote",
+        "operationId": "2805df6e-3692-41bb-a1af-a772773df7f3",
+        "testId": "ff0f9736443589895b2b-77ac9748b5cebca90564",
+        "startedAt": "2026-11-16T13:34:37.718Z",
+        "endedAt": "2026-11-16T13:34:38.095Z",
+        "elapsedMs": 377.5419999999999,
+        "status": "passed",
+        "checks": [
+          "The buyer adds the ordinary-API-produced seller product through the storefront UI.",
+          "Checkout quote-total text equals 현재 견적 합계: 13,000원."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "4d6db96e-7dd5-41b2-9def-93cb621e4db2",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:38.095Z",
+        "endedAt": "2026-11-16T13:34:38.504Z"
+      }
+    },
+    {
+      "file": "mobile-buyer-shipment.png",
+      "sha256": "c94f708c90892672040fb50ee8822a7cadc135974ee28f1a70ff0ca8a13af7d8",
+      "byteSize": 650988,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/mobile-buyer-shipment.json",
+      "sourceMetadataSha256": "1baabbb7a0f71d857e4514d59ca0a304e5064649bade44695e257216c2ea0b22",
+      "original": {
+        "private": true,
+        "file": "mobile-buyer-shipment.private.png",
+        "sha256": "2d8f9ed70483a0e1077fee60d4600b1cb1eacee45fd580eb782f1d2c6afd0d1c",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:43.826Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 412,
+          "height": 839
+        },
+        "fullPage": true,
+        "urlPath": "/account/orders/O8c2d6924e21243168d0e5b9984f25ef1",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "16787053-2894-4283-89e7-9995fb69bfba",
+        "product": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "sku": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1",
+        "sellerOrder": "e67cde98-b266-43a8-b6a8-04da1aa00682",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The captured order is the same server order in the final business record.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "mobile",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          52,
+          53
+        ],
+        "operationName": "E: buyer reload consumes shipment and other role cannot own purchase",
+        "operationId": "30b80508-d7f9-4447-b641-c6d5ea03c6db",
+        "testId": "ff0f9736443589895b2b-77ac9748b5cebca90564",
+        "startedAt": "2026-11-16T13:34:43.131Z",
+        "endedAt": "2026-11-16T13:34:43.315Z",
+        "elapsedMs": 183.33999999999924,
+        "status": "passed",
+        "checks": [
+          "The reloaded buyer page order-number equals the created server orderNumber and displays 발송 완료.",
+          "The other seller session GET /api/orders/{order} returns 404; buyer GET /api/admin/content/categories returns 403.",
+          "document.documentElement.scrollWidth <= innerWidth."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "8d2b5a19-13aa-4ca7-b54b-a2240c55617c",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:43.315Z",
+        "endedAt": "2026-11-16T13:34:43.826Z"
+      }
+    },
+    {
+      "file": "mobile-operator-approval.png",
+      "sha256": "0dde3ea2f8248080e8d2c093db7f7377959cd178a2ef62549f76c712be823b7e",
+      "byteSize": 363554,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/mobile-operator-approval.json",
+      "sourceMetadataSha256": "df09607510127c5c5a81dc675563c86fcabb65f3ab17095ffb227e1af958d7e9",
+      "original": {
+        "private": true,
+        "file": "mobile-operator-approval.private.png",
+        "sha256": "1e01754912f2fe8f27453e0fb75275505ab10d344620d5fbd45fa86e785084f9",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:37.555Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 412,
+          "height": 839
+        },
+        "fullPage": true,
+        "urlPath": "/admin/sellers",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "application": "16787053-2894-4283-89e7-9995fb69bfba"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "16787053-2894-4283-89e7-9995fb69bfba",
+        "product": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "sku": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1",
+        "sellerOrder": "e67cde98-b266-43a8-b6a8-04da1aa00682",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The final order is created after this capture; the final business record links the preceding application/product flow to that later server order.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "mobile",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          34,
+          35
+        ],
+        "operationName": "E: operator approval UI consumes same application ID",
+        "operationId": "b39b5ac8-d2c8-4b0a-9a99-7532860fd401",
+        "testId": "ff0f9736443589895b2b-77ac9748b5cebca90564",
+        "startedAt": "2026-11-16T13:34:36.946Z",
+        "endedAt": "2026-11-16T13:34:37.196Z",
+        "elapsedMs": 250.45640000000003,
+        "status": "passed",
+        "checks": [
+          "The UI POST /api/admin/accounts/seller-applications/{application}/decision returned 200.",
+          "The completion message is visible and the same seller session GET /api/auth/me roles equal BUYER and SELLER."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "4a89d81b-00e3-4321-b34f-4402235d6493",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:37.196Z",
+        "endedAt": "2026-11-16T13:34:37.556Z"
+      }
+    },
+    {
+      "file": "mobile-seller-shipped.png",
+      "sha256": "4f3af050b58d2f6cc30791ee2efa18ea8804a34e8a60aa62ebffbbbd386147e6",
+      "byteSize": 409749,
+      "sourceRun": ".local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26",
+      "sourceMetadata": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/mobile-seller-shipped.json",
+      "sourceMetadataSha256": "6c13be95e84b8bf36c823f1b6aa2b1f0c538b385330009158ab906c516384630",
+      "original": {
+        "private": true,
+        "file": "mobile-seller-shipped.private.png",
+        "sha256": "787be77f9e9dc304b7a18c5c2ac3ccb0372cb49701f381a2e137d4c0a7d17e34",
+        "copiedToRepository": false
+      },
+      "derivative": {
+        "method": "Separate full-page Playwright screenshot of the same asserted synthetic state with capture-time masks; copied byte-for-byte from the approved masked preview.",
+        "capturedAt": "2026-11-16T13:34:43.131Z",
+        "capturedAtMeaning": "Metadata time written after original and masked captures complete.",
+        "viewport": {
+          "width": 412,
+          "height": 839
+        },
+        "fullPage": true,
+        "urlPath": "/seller/orders/e67cde98-b266-43a8-b6a8-04da1aa00682",
+        "redaction": {
+          "maskedSelectors": [
+            "input",
+            "header"
+          ],
+          "maskedTextPattern": "\\+82|010[0-9]{8}|합성 수령인|합성 배송 주소|101호|01234",
+          "maskColor": "Playwright default magenta",
+          "businessStateAltered": false
+        }
+      },
+      "capturedBusinessIds": {
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1",
+        "sellerOrder": "e67cde98-b266-43a8-b6a8-04da1aa00682"
+      },
+      "sameFlowFinalBusinessIds": {
+        "application": "16787053-2894-4283-89e7-9995fb69bfba",
+        "product": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "sku": "68bd087f-a15e-460f-b6ff-f6c2d9d8c005",
+        "order": "O8c2d6924e21243168d0e5b9984f25ef1",
+        "sellerOrder": "e67cde98-b266-43a8-b6a8-04da1aa00682",
+        "total": 13000,
+        "database": {
+          "order": {
+            "state": "PAID",
+            "amount": 13000
+          },
+          "inventory": [
+            "COMMITTED"
+          ],
+          "shipments": [
+            "SHIPPED"
+          ],
+          "attempts": [
+            {
+              "approval_effects": 1,
+              "success_events": 1
+            }
+          ]
+        },
+        "externalPayment": false
+      },
+      "flowTimingNote": "The captured order is the same server order in the final business record.",
+      "assertion": {
+        "testTitle": "E AC16 fresh container buyer seller operator retain real business IDs and worker effects",
+        "project": "mobile",
+        "source": "../../../infra/p12-e/reproduction.spec.ts",
+        "sourceSha256": "e4281ccb2dfe7e91a243572d6e40cdb07b47497a4ba30d8366a4074e6747bf97",
+        "sourceLines": [
+          50,
+          51
+        ],
+        "operationName": "E: seller shipment UI consumes buyer same order",
+        "operationId": "cf5226b0-a5ce-45f1-8ab8-074613e4c3c7",
+        "testId": "ff0f9736443589895b2b-77ac9748b5cebca90564",
+        "startedAt": "2026-11-16T13:34:42.165Z",
+        "endedAt": "2026-11-16T13:34:42.693Z",
+        "elapsedMs": 527.8182999999999,
+        "status": "passed",
+        "checks": [
+          "Seller order list is matched by the buyer orderNumber and resolves the same sellerOrderId.",
+          "The seller confirms original items and clicks 발송 처리; 발송 완료 is visible.",
+          "Read-only PostgreSQL observation for the same order returns shipments=[SHIPPED]."
+        ],
+        "progressProof": "../../../.local-tools/p12-e-reproduction14-cd7a6078e7fa44d5bcba2af612fdda26/browser-progress.ndjson"
+      },
+      "captureOperation": {
+        "id": "c24e01ae-3e0c-48c4-b56d-1794df258453",
+        "status": "passed",
+        "startedAt": "2026-11-16T13:34:42.693Z",
+        "endedAt": "2026-11-16T13:34:43.131Z"
+      }
+    }
+  ]
+}

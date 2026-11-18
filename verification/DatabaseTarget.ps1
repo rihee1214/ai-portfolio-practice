@@ -53,8 +53,11 @@ function Assert-FullVerificationAllowed([switch]$ResourceOnlyDiagnostic) {
 }
 
 function New-PhoneHarnessCommand {
-    param([string]$Root, [string]$EvidenceDirectory, $Endpoint, [switch]$Offline, [switch]$ResourceOnlyDiagnostic, [string]$DbGroups, [string]$ChangedContracts, [switch]$ReverseGroups)
-    $command = 'pwsh -NoProfile -File "' + (Join-Path $Root 'verify.ps1') + '" -PhoneEmulatorReady -EvidenceDirectory "' + $EvidenceDirectory + '"'
+    param([string]$Root, [string]$EvidenceDirectory, $Endpoint, [switch]$Offline, [switch]$ResourceOnlyDiagnostic, [string]$DbGroups, [string]$ChangedContracts, [switch]$ReverseGroups,
+        [ValidateSet('1','2')][string]$GroupConcurrency='2')
+    . "$PSScriptRoot/PowerShellRuntime.ps1"
+    $command = '"' + (Get-VerificationPowerShellPath) + '" -NoProfile -File "' + (Join-Path $Root 'verify.ps1') + '" -PhoneEmulatorReady -EvidenceDirectory "' + $EvidenceDirectory + '"'
+    $command += ' -GroupConcurrency '+$GroupConcurrency
     if ($Offline) { $command += ' -Offline' }
     $command += ' -TestPostgresPort ' + $Endpoint.port
     if ($Endpoint.port -ne 15433) {

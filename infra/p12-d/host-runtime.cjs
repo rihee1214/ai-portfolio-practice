@@ -5,9 +5,13 @@ const {spawn}=require('node:child_process');
 const http=require('node:http');
 const {runOwned,terminateTree}=require('./process-runner.cjs');
 const payloads=require('./payload.cjs');
+const powershell=require('../../verification/PowerShellRuntime.cjs');
 function assert(x,message){if(!x)throw new Error(message);}
 function recordPath(op,role){return path.join(op.root,'processes',role+'.json');}
 async function command(file,args,input,timeout=10000){
+  if (/^(?:pwsh|powershell)\.exe$/i.test(path.basename(file))) {
+    file=powershell.assertExecutable(file);args=powershell.checkedArguments(args);
+  }
   try{const result=await runOwned(file,args,{input,timeout,maxBuffer:1024*1024});if(result.code!==0){const error=new Error('Owned infrastructure subprocess failed');error.result=result;throw error;}return result.out.trim();}
   catch(error){error.detail=error.result?.err || '';throw error;}
 }

@@ -2,6 +2,7 @@ param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$RunI
       [Parameter(Mandatory)][string]$Evidence,[Parameter(Mandatory)][ValidateSet('compose','host-jar')][string]$Execution)
 $ErrorActionPreference='Stop'
 . "$PSScriptRoot/../p12-c/ProxyNetwork.ps1"
+$null = Assert-VerificationPowerShellRuntime
 if($Project -notmatch '^p12d-[a-z0-9-]{8,70}$' -or $RunId -notmatch '^[0-9a-f-]{36}$'){throw 'Explicit owned network identity required'}
 $result=@{}
 foreach($role in @('data','edge')) {
@@ -12,6 +13,7 @@ foreach($role in @('data','edge')) {
         $networks=@((Invoke-ProxyDocker (@('network','inspect')+$ids)) | ConvertFrom-Json)
         if($networks.Count -ne $ids.Count){throw 'Incomplete network inventory'}
         if(@($networks | Where-Object Name -EQ $name).Count){throw 'Existing network rejected'}
+        Import-VerificationNetworkModule
         $routes=@(Get-NetRoute -AddressFamily IPv4 -ErrorAction Stop | Select-Object DestinationPrefix,NextHop,InterfaceAlias)
         if(-not $routes.Count){throw 'Host route inventory missing'}
         $excluded=@($networks | ForEach-Object {$_.IPAM.Config | ForEach-Object {if($_.Subnet -and $_.Subnet -notmatch ':'){$_.Subnet}}})

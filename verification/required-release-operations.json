@@ -12,6 +12,7 @@
     "D09 phase timeout kills owned descendants and preserves partial output",
     "D09 command exit retains stdout stderr and failure without waiting indefinitely",
     "D01 retained operational closure rejects missing modified and undeclared files",
+    "D01 historical R0 preparation preserves original runtime closure while R1 pins current execution helpers",
     "D05 retained controller consumes its pinned restore SQL after mutable source changes",
     "D09 detached host roles release launcher IO and cleanup guards identity under one deadline",
     "D08 quiet rollback proof preserves every row sequence media and closed worker boundary",

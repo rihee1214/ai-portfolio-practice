@@ -1,8 +1,11 @@
 param([Parameter(Mandatory)][string]$EvidenceDirectory, [switch]$Offline,
     [int]$TestPostgresPort = 15433, [string]$TestPostgresInstance = '', [string]$TestPostgresContainer = '',
-    [switch]$ResourceOnlyDiagnostic, [string]$DbGroups, [string]$ChangedContracts, [switch]$ReverseGroups)
+    [switch]$ResourceOnlyDiagnostic, [string]$DbGroups, [string]$ChangedContracts, [switch]$ReverseGroups,
+    [ValidateSet('1','2')][string]$GroupConcurrency='2')
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
+. "$PSScriptRoot/PowerShellRuntime.ps1"
+$null = Assert-VerificationPowerShellRuntime
 . "$PSScriptRoot/DatabaseTarget.ps1"
 $endpoint = Resolve-TestPostgresEndpoint -Port $TestPostgresPort -Instance $TestPostgresInstance -Container $TestPostgresContainer -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
 $cli = Join-Path $root '.local-tools/p06-a-provider-probe-20261025/node_modules/.bin/firebase.cmd'
@@ -27,7 +30,7 @@ $selectionForward = @{}
 if ($PSBoundParameters.ContainsKey('DbGroups')) { $selectionForward.DbGroups=$DbGroups }
 if ($PSBoundParameters.ContainsKey('ChangedContracts')) { $selectionForward.ChangedContracts=$ChangedContracts }
 if ($ReverseGroups) { $selectionForward.ReverseGroups=$true }
-$command = New-PhoneHarnessCommand @selectionForward -Root $root -EvidenceDirectory $EvidenceDirectory -Endpoint $endpoint -Offline:$Offline -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
+$command = New-PhoneHarnessCommand @selectionForward -Root $root -EvidenceDirectory $EvidenceDirectory -Endpoint $endpoint -GroupConcurrency $GroupConcurrency -Offline:$Offline -ResourceOnlyDiagnostic:$ResourceOnlyDiagnostic
 Push-Location $run
 try {
     & $cli emulators:exec --only auth --project $project --config (Join-Path $run 'firebase.json') $command *> (Join-Path $run 'emulator.txt')
