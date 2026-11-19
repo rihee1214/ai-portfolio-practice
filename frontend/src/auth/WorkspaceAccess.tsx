@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
-import { Link } from 'react-router'
 import { useAuthStore } from './AuthContext'
+import { AuthEntryActions } from './AuthEntryActions'
 import { requestJson } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
@@ -32,11 +32,13 @@ export function WorkspaceAccess({ area, title, children }: { area: AccessArea; t
   }, [auth, session, area])
   const checked = result?.session === session && result.area === area
   if (session.member && !session.busy && checked && !result.error) return children
+  const checking = !session.checked || session.busy || (session.member && !checked)
+  const error = session.error ?? (checked ? result.error : null)
+  const guest = !checking && !error && !session.member
   return <section className="auth-card"><h1>{title}</h1>
-    {!session.checked || session.busy || (session.member && !checked) ? <p role="status">접근 권한을 확인하고 있습니다.</p>
-      : !session.member ? <p>로그인이 필요합니다. <Link to="/login">로그인하러 가기</Link></p>
-        : result?.error && <ApiErrorNotice error={result.error} />}
-    {session.error && <ApiErrorNotice error={session.error} />}
-    <button disabled={session.busy} onClick={() => auth.invalidate()}>권한 다시 확인</button>
+    {checking && <p role="status">접근 권한을 확인하고 있습니다.</p>}
+    {error && <ApiErrorNotice error={error} />}
+    {guest ? <><p>로그인이 필요합니다.</p><AuthEntryActions /></>
+      : <button disabled={session.busy} onClick={() => auth.invalidate()}>권한 다시 확인</button>}
   </section>
 }

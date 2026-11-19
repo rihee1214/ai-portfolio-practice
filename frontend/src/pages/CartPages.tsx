@@ -2,6 +2,7 @@ import { purchaseSummary } from '../cart/Purchase'
 import { useContext, useSyncExternalStore } from 'react'
 import { QuantityForm } from '../forms/QuantityForm'
 import { Link } from 'react-router'
+import { AuthEntryActions } from '../auth/AuthEntryActions'
 import { CartContext } from '../cart/CartContext'
 import type { CartStore, Line } from '../cart/CartStore'
 const money = (value: number) => value.toLocaleString('ko-KR') + '원'
@@ -44,7 +45,7 @@ function CartContent({ store }: { store: CartStore }) {
     <button disabled={state.busy} onClick={() => { void store.refresh() }}>장바구니 다시 확인</button>
     {state.notice && <p role="status">{state.notice}</p>}
     {state.ready && <><p>{state.member ? '회원 장바구니' : '방문자 장바구니 · 이 브라우저에만 저장됩니다.'}</p>
-      {!state.member && <p><Link to="/login">로그인하면 회원 장바구니로 가져옵니다.</Link></p>}
+      {!state.member && <><p>로그인하면 회원 장바구니로 가져옵니다.</p><AuthEntryActions /></>}
       {state.items.length ? <>{summary.groups.map(group => <section key={group.slug} aria-label={group.name + ' 장바구니 상품'}><h2>{group.name}</h2>{group.items.map(row => <CartLine key={row.skuId + ':' + row.quantity} line={row} store={store} />)}<p>매대 상품 금액: {money(group.subtotal)}</p></section>)}
         {state.items.filter(row => !row.detail).map(row => <CartLine key={row.skuId + ':' + row.quantity} line={row} store={store} />)}
         <p>판매 가능한 항목의 상품 금액 합계: {money(total)}</p><p>품절·재고 부족 항목은 별도 안내를 확인하세요. 배송비·할인 미포함입니다.</p>

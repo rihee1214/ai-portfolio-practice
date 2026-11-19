@@ -73,6 +73,10 @@ test('실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로�
         await operation("auth: 실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로그아웃 [11]", async () => {
             await independent.goto('http://127.0.0.1:24176/account');
             await expect(independent.getByText('로그인이 필요합니다.', { exact: true })).toBeVisible();
+            const main = independent.getByRole('main');
+            await expect(main.getByRole('link', { name: '로그인', exact: true })).toHaveAttribute('href', '/login');
+            await expect(main.getByRole('link', { name: '회원가입', exact: true })).toHaveAttribute('href', '/signup');
+            await expect(main.getByRole('navigation', { name: '회원 메뉴' })).toHaveCount(0);
         });
         await operation("auth: 로그인 [12]", async () => {
             await independent.goto('http://127.0.0.1:24176/login');
@@ -90,6 +94,7 @@ test('실제 DB 가입·확인·새로고침·다중 탭·독립 문맥과 로�
             await page.bringToFront();
             await expect(page.getByText('로그인이 필요합니다.', { exact: true })).toBeVisible();
             await expect(page.getByText('회원 ID', { exact: true })).toHaveCount(0);
+            await expect(page.getByRole('navigation', { name: '회원 메뉴' })).toHaveCount(0);
         });
         await operation("auth: /api/auth/logout [15]", async () => {
             expect((await page.request.post('/api/auth/logout', { headers: { 'X-CSRF-TOKEN': oldCsrf.token }, data: {} })).status()).toBe(403);

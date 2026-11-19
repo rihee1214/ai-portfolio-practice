@@ -107,3 +107,56 @@ test('카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 
   await waitFor(() => expect(new URL(calls.filter(p => p.startsWith('/api/browse/')).at(-1)!, 'http://test').searchParams.get('page')).toBe('2'))
 })
 
+test('상품 목록은 조회 상태와 빈 목록을 구분하고 검색 조건을 초기화한다', async () => {
+  const { render, screen, waitFor } = await import('@testing-library/react')
+  const { default: userEvent } = await import('@testing-library/user-event')
+  const { vi } = await import('vitest')
+  const { MemoryRouter, useLocation } = await import('react-router')
+  const { BrowsePage } = await import('../../src/pages/BrowsePages')
+  const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
+  let initial = true
+  let settleSearch: ((result: Response) => void) | undefined
+  vi.stubGlobal('fetch', vi.fn((path: string) => {
+    if (path.startsWith('/api/categories')) return Promise.resolve(response({ items: [], page: 0, hasMore: false }))
+    const query = new URL(path, 'http://test').searchParams
+    if (query.has('q')) return new Promise<Response>(resolve => { settleSearch = resolve })
+    const items = initial ? [] : [item]
+    initial = false
+    return Promise.resolve(response({ items, page: 0, hasMore: false }))
+  }))
+  function Address() { return <output aria-label="현재 주소">{useLocation().search}</output> }
+  render(<MemoryRouter initialEntries={['/products?sort=price_desc']}><Address /><BrowsePage /></MemoryRouter>)
+  expect(await screen.findByText('아직 등록된 상품이 없습니다')).toBeVisible()
+  expect(screen.queryByRole('link', { name: '조건 초기화' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '다음 카테고리' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('navigation', { name: '상품 페이지' })).not.toBeInTheDocument()
+
+  const user = userEvent.setup()
+  await user.type(screen.getByLabelText('상품 검색'), '없는 상품{Enter}')
+  await waitFor(() => expect(settleSearch).toBeDefined())
+  expect(screen.getByText('상품을 불러오고 있습니다.')).toBeVisible()
+  expect(screen.queryByText('아직 등록된 상품이 없습니다')).not.toBeInTheDocument()
+  expect(screen.queryByText('검색 결과가 없습니다')).not.toBeInTheDocument()
+  settleSearch!(response({}, 500)); settleSearch = undefined
+  const retry = await screen.findByRole('button', { name: '상품 다시 불러오기' })
+  expect(screen.queryByText('검색 결과가 없습니다')).not.toBeInTheDocument()
+
+  await user.click(retry)
+  await waitFor(() => expect(settleSearch).toBeDefined())
+  expect(screen.queryByRole('button', { name: '상품 다시 불러오기' })).not.toBeInTheDocument()
+  settleSearch!(response({ items: [], page: 0, hasMore: false })); settleSearch = undefined
+  expect(await screen.findByText('검색 결과가 없습니다')).toBeVisible()
+  await user.click(screen.getByRole('link', { name: '조건 초기화' }))
+  expect(await screen.findByRole('link', { name: '상품' })).toBeVisible()
+  expect(screen.getByLabelText('현재 주소')).toBeEmptyDOMElement()
+  expect(screen.getByLabelText('상품 검색')).toHaveValue('')
+  expect(screen.getByLabelText('정렬')).toHaveValue('newest')
+
+  await user.type(screen.getByLabelText('상품 검색'), '다른 상품{Enter}')
+  await waitFor(() => expect(settleSearch).toBeDefined())
+  expect(screen.queryByRole('link', { name: '상품' })).not.toBeInTheDocument()
+  settleSearch!(response({}, 500))
+  expect(await screen.findByRole('button', { name: '상품 다시 불러오기' })).toBeVisible()
+  expect(screen.queryByRole('link', { name: '상품' })).not.toBeInTheDocument()
+})
+

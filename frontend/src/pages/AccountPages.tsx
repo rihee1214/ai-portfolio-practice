@@ -1,7 +1,7 @@
 import { useFormDraft } from '../forms/useFormDraft'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
-import { Link } from 'react-router'
 import { AccountStore, type Address, type AddressFields, type Profile } from '../auth/AccountStore'
+import { AuthEntryActions } from '../auth/AuthEntryActions'
 import { useAuthStore } from '../auth/AuthContext'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
 
@@ -14,7 +14,7 @@ export function AccountDetailsPage({ resource }: { resource: 'profile' | 'addres
   const ready = session.member && session.checked && !session.busy
   return <div className="auth-card"><h1>{resource === 'profile' ? '프로필' : '배송지'}</h1>
     {!ready ? session.busy || !session.checked ? <p role="status">로그인 상태를 확인하고 있습니다.</p>
-      : <p>로그인이 필요합니다. <Link to="/login">로그인하러 가기</Link></p> : <>
+      : !session.error && <><p>로그인이 필요합니다.</p><AuthEntryActions /></> : <>
       {state.busy && <p role="status">정보를 확인하고 있습니다.</p>}
       {state.profile && <ProfileForm key={JSON.stringify(state.profile)} profile={state.profile} store={store} busy={state.busy} />}
       {state.addresses && <AddressBook addresses={state.addresses} store={store} busy={state.busy} />}

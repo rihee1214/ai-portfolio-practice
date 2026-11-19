@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
-import { Link } from 'react-router'
 import { useAuthStore } from '../auth/AuthContext'
+import { AuthEntryActions } from '../auth/AuthEntryActions'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
 import { SellerApplicationsStore } from '../seller/SellerApplicationsStore'
 
@@ -32,7 +32,8 @@ export function SellerApplicationsPage({ admin = false }: { admin?: boolean }) {
   }
   return <section className="auth-card"><h1>{admin ? '판매자 심사' : '판매 신청'}</h1>
     <p>포트폴리오용 모의 심사입니다. 실제 사업자 검증이 아니며 실제 사업자번호·개인정보·은행 정보를 입력하지 마세요.</p>
-    {!ready ? <p role="status">{session.busy || !session.checked ? '로그인 상태를 확인하고 있습니다.' : '로그인이 필요합니다.'} <Link to="/login">로그인</Link></p> : <>
+    {!ready ? session.busy || !session.checked ? <p role="status">로그인 상태를 확인하고 있습니다.</p>
+      : !session.error && <><p>로그인이 필요합니다.</p><AuthEntryActions /></> : <>
       {state.busy && <p role="status">정보를 확인하고 있습니다.</p>}
       {!admin && state.items && !session.member?.roles.includes('SELLER') && <form onSubmit={event => { void submit(event) }} aria-busy={state.busy}>
         <label htmlFor="seller-name">모의 매대 이름</label><input id="seller-name" name="displayName" required maxLength={160} disabled={state.busy} />

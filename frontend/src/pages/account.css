@@ -1,0 +1,38 @@
+.auth-card.account-card {
+  max-width: 440px;
+  margin-inline: auto;
+  padding: clamp(24px, 6vw, 44px);
+  text-align: center;
+  background: #fff;
+}
+
+.account-card.auth-card h1 {
+  margin: 0 0 10px;
+  letter-spacing: -1.2px;
+}
+
+.account-card > p {
+  margin: 0;
+  color: #58665e;
+}
+
+.account-card > p + p {
+  margin-top: 8px;
+}
+
+.account-card > .auth-entry-actions {
+  margin: 24px 0 0;
+}
+
+.account-card > .auth-entry-actions > .navigation-link {
+  flex: 1 1 0;
+}
+
+.account-card .account-retry:hover {
+  background: #213a2b;
+}
+
+.account-card .api-error-notice {
+  text-align: start;
+  overflow-wrap: anywhere;
+}

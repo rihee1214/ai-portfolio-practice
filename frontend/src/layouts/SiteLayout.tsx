@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
+import { AuthEntryLinks } from '../auth/AuthEntryActions'
 import { workspaces } from '../navigation'
 
 export function SiteLayout() {
@@ -22,13 +23,14 @@ export function SiteLayout() {
       <header className="site-header">
         <Link className="brand" to="/" aria-label="모아마켓 홈">모아<span>마켓</span><span className="brand-dot">.</span></Link>
         <nav className="primary-nav" aria-label="주요 화면">
-          <NavLink to="/" end>둘러보기</NavLink><NavLink to="/products">상품</NavLink>
-          {workspaces.map((workspace) => <NavLink key={workspace.path} to={workspace.path}>{workspace.label}</NavLink>)}
+          <NavLink className="navigation-link" to="/" end>둘러보기</NavLink>
+          <NavLink className="navigation-link" to="/products">상품</NavLink>
+          {workspaces.map((workspace) => <NavLink className="navigation-link" key={workspace.path} to={workspace.path}>{workspace.label}</NavLink>)}
         </nav>
         <nav className="account-nav" aria-label="회원 서비스">
-          <Link className="account-link" to="/cart">장바구니</Link><Link className="account-link" to="/login">로그인</Link>
-          <Link className="account-link" to="/signup">회원가입</Link>
-          <Link className="account-link" to="/account">내 계정</Link>
+          <NavLink className="navigation-link" to="/cart">장바구니</NavLink>
+          <AuthEntryLinks />
+          <NavLink className="navigation-link" to="/account" end>내 계정</NavLink>
         </nav>
       </header>
       <main id="main-content" ref={mainRef} tabIndex={-1}><Outlet /></main>
