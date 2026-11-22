@@ -3,7 +3,12 @@ package com.example.marketplace.media.infrastructure;
 import com.example.marketplace.media.api.Media;
 import com.example.marketplace.media.api.MediaException;
 import com.example.marketplace.catalog.api.Products;
+import com.example.marketplace.catalog.api.CatalogException;
+import com.example.marketplace.catalog.api.ProductDescription.Block;
+import com.example.marketplace.catalog.api.ProductDescriptionMedia;
 import com.example.marketplace.seller.api.Stores;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,7 +23,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 @Service @Profile("db")
 @org.springframework.boot.autoconfigure.condition.ConditionalOnProperty(name="marketplace.media.enabled",matchIfMissing=true)
-public final class JdbcMedia implements Media, com.example.marketplace.media.api.ReviewImages, com.example.marketplace.media.api.MessageImages, com.example.marketplace.media.api.SiteImages {
+public final class JdbcMedia implements Media, ProductDescriptionMedia, com.example.marketplace.media.api.ReviewImages, com.example.marketplace.media.api.MessageImages, com.example.marketplace.media.api.SiteImages {
     private static final org.slf4j.Logger LOG=org.slf4j.LoggerFactory.getLogger(JdbcMedia.class);
     private static final String PROJECTION="""
             SELECT m.slot,m.asset_id,m.alt,m.version,a.width,a.height FROM marketplace.media_slot m
@@ -29,7 +34,21 @@ public final class JdbcMedia implements Media, com.example.marketplace.media.api
             LEFT JOIN marketplace.catalog_category c ON c.id=p.category_id
             WHERE u.state='ACTIVE' AND EXISTS(SELECT 1 FROM marketplace.role_assignment r WHERE r.user_id=u.id AND r.role='SELLER')
             """;
-    private static final String PUBLIC="s.state='OPEN' AND s.visible AND (m.kind='stores' OR (p.state='ACTIVE' AND NOT p.is_hidden_by_admin AND c.active))";
+    private static final String PRODUCT_PUBLIC="p.state='ACTIVE' AND NOT p.is_hidden_by_admin AND c.active";
+    private static final String STORE_PUBLIC="s.state='OPEN' AND s.visible";
+    private static final String PUBLIC=STORE_PUBLIC+" AND (m.kind='stores' OR ("+PRODUCT_PUBLIC+"))";
+    private static final String DESCRIPTION_ACCESS="""
+            SELECT EXISTS(SELECT 1 FROM marketplace.media_product_description d
+            JOIN marketplace.media_asset a ON a.id=d.asset_id AND a.retired_at IS NULL
+            JOIN marketplace.catalog_product p ON p.id=d.product_id
+            JOIN marketplace.catalog_category c ON c.id=p.category_id
+            JOIN marketplace.seller_store s ON s.id=p.store_id
+            JOIN marketplace.identity_user u ON u.id=s.owner_id
+            WHERE a.id=:asset AND a.owner_id=s.owner_id AND u.state='ACTIVE'
+            AND EXISTS (SELECT 1 FROM marketplace.role_assignment r WHERE r.user_id=u.id AND r.role='SELLER')
+            AND p.description_blocks @> jsonb_build_array(jsonb_build_object('kind','image','assetId',a.id::text))
+            AND %s)
+            """;
     private final NamedParameterJdbcTemplate jdbc;
     private final Products products;
     private final Stores stores;
@@ -62,22 +81,62 @@ public final class JdbcMedia implements Media, com.example.marketplace.media.api
         return jdbc.query(PROJECTION+" AND "+PUBLIC+" AND m.kind=:kind AND "+("products".equals(kind)?"p":"s")+".slug=:slug ORDER BY m.slot",Map.of("kind",kind,"slug",slug),this::map);
     }
     @Override public byte[] content(UUID viewer,UUID asset) {
-        return readAsset(viewer,asset,"((m.kind='stores' AND a.owner_id=:viewer) OR ("+PUBLIC+"))");
+        return readAsset(viewer,asset,false);
     }
     @Override public byte[] ownerPreview(UUID owner,UUID asset) {
         if(owner==null){throw new MediaException(403);}
-        return readAsset(owner,asset,"a.owner_id=:viewer AND s.owner_id=:viewer");
+        return readAsset(owner,asset,true);
     }
-    private byte[] readAsset(UUID viewer,UUID asset,String visibility) {
+    private byte[] readAsset(UUID viewer,UUID asset,boolean preview) {
+        String ownership="a.owner_id=:viewer AND s.owner_id=:viewer";
+        String visibility=preview?ownership:"((m.kind='stores' AND a.owner_id=:viewer) OR ("+PUBLIC+"))";
+        String descriptionVisibility=preview?ownership:STORE_PUBLIC+" AND "+PRODUCT_PUBLIC;
         // Obtain the pooled connection before taking the filesystem monitor.
         return tx.execute(status->{
         synchronized(files) {
             var args=new MapSqlParameterSource().addValue("asset",asset).addValue("viewer",viewer);
             var allowed=jdbc.query(PROJECTION+" AND a.id=:asset AND "+visibility,args,this::map);
-            if(allowed.isEmpty()) { throw new MediaException(404); }
+            if(allowed.isEmpty() && !Boolean.TRUE.equals(jdbc.queryForObject(
+                    DESCRIPTION_ACCESS.formatted(descriptionVisibility),args,Boolean.class))) {
+                throw new MediaException(404);
+            }
             try { return files.read(asset); } catch(java.io.IOException missing) { throw new MediaException(404); }
         }
         });
+    }
+    @Override public List<Block> reconcile(UUID owner,UUID product,List<Block> blocks,Map<Integer, Upload> uploads) {
+        requireReviewTransaction();
+        var args=Map.of("product",product,"owner",owner);
+        var old=jdbc.queryForList("""
+                SELECT a.id FROM marketplace.media_product_description d
+                JOIN marketplace.media_asset a ON a.id=d.asset_id AND a.retired_at IS NULL
+                WHERE d.product_id=:product AND a.owner_id=:owner
+                """,args,UUID.class);
+        var keep=new HashSet<UUID>();
+        for(Block block:blocks) {
+            if(block.assetId()!=null && (!old.contains(block.assetId()) || !keep.add(block.assetId()))) {
+                throw new CatalogException(400);
+            }
+        }
+
+        var result=new ArrayList<Block>();
+        for(Block block:blocks) {
+            if(block.uploadIndex()==null) { result.add(block); continue; }
+            var upload=uploads.get(block.uploadIndex());
+            UUID asset=UUID.randomUUID();
+            persistAsset(owner,null,asset,codec.normalize(upload.filename(),upload.bytes()));
+            jdbc.update("INSERT INTO marketplace.media_product_description(asset_id,product_id) VALUES(:asset,:product)",
+                    Map.of("asset",asset,"product",product));
+            result.add(block.savedImage(asset));
+        }
+        for(UUID asset:old) {
+            if(!keep.contains(asset)) {
+                var retired=Map.of("asset",asset,"product",product);
+                jdbc.update("DELETE FROM marketplace.media_product_description WHERE asset_id=:asset AND product_id=:product",retired);
+                jdbc.update("UPDATE marketplace.media_asset SET retired_at=clock_timestamp() WHERE id=:asset",retired);
+            }
+        }
+        return List.copyOf(result);
     }
     @Override public Slot upload(UUID owner,String kind,UUID target,int slot,long version,String alt,String filename,byte[] bytes) {
         own(owner,kind,target,false); validate(kind,slot,version);
@@ -265,7 +324,7 @@ public final class JdbcMedia implements Media, com.example.marketplace.media.api
     public void cleanup() {
         var cutoff=java.time.Instant.now().minus(java.time.Duration.ofHours(24));
         tx.executeWithoutResult(status->{
-            var ids=jdbc.queryForList("SELECT id FROM marketplace.media_asset a WHERE retired_at<:cutoff AND NOT EXISTS(SELECT 1 FROM marketplace.media_slot m WHERE m.asset_id=a.id) AND NOT EXISTS(SELECT 1 FROM marketplace.media_review_slot r WHERE r.asset_id=a.id) AND NOT EXISTS(SELECT 1 FROM marketplace.media_message_slot s WHERE s.asset_id=a.id) FOR UPDATE SKIP LOCKED",Map.of("cutoff",java.sql.Timestamp.from(cutoff)),UUID.class);
+            var ids=jdbc.queryForList("SELECT id FROM marketplace.media_asset a WHERE retired_at<:cutoff AND NOT EXISTS(SELECT 1 FROM marketplace.media_slot m WHERE m.asset_id=a.id) AND NOT EXISTS(SELECT 1 FROM marketplace.media_review_slot r WHERE r.asset_id=a.id) AND NOT EXISTS(SELECT 1 FROM marketplace.media_message_slot s WHERE s.asset_id=a.id) AND NOT EXISTS(SELECT 1 FROM marketplace.media_product_description d WHERE d.asset_id=a.id) FOR UPDATE SKIP LOCKED",Map.of("cutoff",java.sql.Timestamp.from(cutoff)),UUID.class);
             for(UUID id:ids) {
                 synchronized(files) {
                     if(files.inFlight.contains(id)) { continue; }

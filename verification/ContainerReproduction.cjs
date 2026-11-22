@@ -30,7 +30,7 @@ function verifyEvidence(request,runRoot){
  const copied=load('proof-source');assert.ok(copied.length>0);assert.deepEqual(inventory(path.join(folder,'proof-source')),copied.map(x=>x.file).sort());
  assert.deepEqual(fs.readdirSync(path.join(sourceRoot,'infra/p12-e')).filter(file=>fs.statSync(path.join(sourceRoot,'infra/p12-e',file)).isFile()).sort(),copied.map(x=>x.file).sort(),'Complete current reproduction source snapshot');
  for(const file of copied){assert.ok(!path.isAbsolute(file.file)&&!file.file.split(/[\\/]/).includes('..'));assert.equal(sha(path.join(folder,'proof-source',file.file)),file.sha256.toLowerCase());assert.equal(sha(path.join(sourceRoot,'infra/p12-e',file.file)),file.sha256.toLowerCase())}
- const database='e_'+result.project.replaceAll('-','_'),migration=load('migration');assert.deepEqual(migration,{database,migrations:131,failed:0,latest:132});
+ const database='e_'+result.project.replaceAll('-','_'),migration=load('migration');assert.deepEqual(migration,{database,migrations:132,failed:0,latest:133});
  const media=load('media-init');assert.equal(media.expectedOwner,'10001:10001');assert.equal(media.observed.trim(),'10001:10001');assert.equal(media.nocopy,true);
  const containers=load('containers');assert.equal(containers.length,4);assert.equal(new Set(containers.map(x=>x.Id)).size,4);
  const role=name=>{const found=containers.filter(x=>x.Name==='/'+result.project+'-'+name+'-1');assert.equal(found.length,1,'Exact owned '+name+' container');assert.equal(found[0].State.Status,'running');return found[0]};

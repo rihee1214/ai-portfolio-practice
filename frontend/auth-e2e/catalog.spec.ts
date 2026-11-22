@@ -82,22 +82,37 @@ test('카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB�
         await prepare("catalog: 카테고리 운영과 상품 등록·공개·중지·보관을 실제 DB로 연결한다 [10]", async () => {
             await login(seller, 'p4-seller-' + suffix + '@example.com');
         });
-        await operation("catalog: 상품 등록 [11]", async () => {
+        const { descriptionImage } = await operation("catalog: 상품 등록 [11]", async () => {
             await seller.goto('/seller/products');
             await seller.getByLabel('상품 주소').fill(slug);
             await seller.getByLabel('상품명', { exact: true }).fill(title);
-            await seller.getByLabel('설명', { exact: true }).fill('브라우저에서 등록한 상품\n둘째 줄 설명');
+            await seller.getByRole('textbox', { name: '상품 설명' }).fill('브라우저에서 등록한 상품\n둘째 줄 설명');
             await findOnPages(seller, seller.getByRole('option', { name: category, exact: true }), '상품 카테고리 페이지');
             await seller.getByLabel('카테고리', { exact: true }).selectOption({ label: category });
+            await seller.getByRole('button', { name: '이미지 삽입', exact: true }).click();
+            await seller.getByLabel('이미지 파일', { exact: true }).setInputFiles(resolve('../backend/src/test/resources/media/alpha.webp'));
+            await seller.getByLabel('이미지 대체 텍스트', { exact: true }).fill('설명에 넣은 사진');
+            await seller.getByRole('button', { name: '설명에 이미지 추가', exact: true }).click();
             await seller.getByRole('button', { name: '상품 등록', exact: true }).click();
             await seller.getByRole('button', { name: title + ' · 초안', exact: true }).click();
-            await expect(seller.getByLabel('설명', { exact: true })).toHaveValue('브라우저에서 등록한 상품\n둘째 줄 설명');
+            const editor = seller.getByRole('textbox', { name: '상품 설명' });
+            await expect(editor).toHaveText(/브라우저에서 등록한 상품\s*둘째 줄 설명/, { useInnerText: true });
+            const preview = editor.getByRole('img', { name: '설명에 넣은 사진', exact: true });
+            await expect(preview).toHaveAttribute('src', /^\/api\/media\/owner\/[^/]+\/preview$/);
+            await expect.poll(() => preview.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(4);
+            const descriptionImage = (await preview.getAttribute('src'))!.split('/')[4];
+            expect((await seller.request.get('/api/media/' + descriptionImage + '/content')).status()).toBe(404);
+            return { descriptionImage };
         });
         await operation("catalog: 상품 저장 [12]", async () => {
             await seller.getByLabel('상품 상태').selectOption('ACTIVE');
             await seller.getByRole('button', { name: '상품 저장', exact: true }).click();
             await expect(seller.getByRole('button', { name: title + ' · 공개 등록', exact: true })).toBeVisible();
             expect((await seller.request.get('/api/products/' + slug)).status()).toBe(200);
+            const detail = await (await page.request.get('/api/browse/products/' + slug)).json();
+            expect(detail.descriptionBlocks).toContainEqual(expect.objectContaining({ kind: 'image', assetId: descriptionImage, alt: '설명에 넣은 사진' }));
+            expect((await page.request.get('/api/media/' + descriptionImage + '/content')).status()).toBe(200);
+            expect(await (await page.request.get('/api/media/public/products/' + slug)).json()).toEqual([]);
         });
         const { stockButton } = await operation("catalog: 기본 SKU · 0원 · 판매 중지 [13]", async () => {
             await seller.getByRole('button', { name: '기본 SKU · 0원 · 판매 중지', exact: true }).click();

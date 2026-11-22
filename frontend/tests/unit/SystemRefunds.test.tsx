@@ -1,4 +1,4 @@
-import {act,render,screen,waitFor} from '@testing-library/react'
+import {act,render,screen,waitFor,within} from '@testing-library/react'
 import {expect,test,vi} from 'vitest'
 import App from '../../src/App'
 import {StrictMode} from 'react'
@@ -16,7 +16,14 @@ const json=(data:unknown,status=200)=>new Response(JSON.stringify(data),{status,
 
 test('G SYSTEM refund page reads the existing queue without SUPPORT access or automatic financial POST',async()=>{
  window.history.replaceState(null,'','/admin/refunds')
- const http=vi.fn((input:RequestInfo|URL,init?:RequestInit)=>{const path=String(input);if(path==='/api/auth/me')return Promise.resolve(json({id:actor,roles:['ADMIN']}));if(path==='/api/admin/system/access')return Promise.resolve(json({access:'SYSTEM'}));if(path==='/api/admin/system/refunds'&&(!init?.method||init.method==='GET'))return Promise.resolve(json([status]));return Promise.resolve(json({}))})
+ const http=vi.fn(async (input:RequestInfo|URL,init?:RequestInit)=>{
+  const path=String(input)
+  if(path==='/api/auth/me')return json({id:actor,roles:['ADMIN']})
+  if(path==='/api/admin/system/access')return json({access:'SYSTEM'})
+  if(path.endsWith('/access'))return json({code:'FORBIDDEN',message:'Forbidden'},403)
+  if(path==='/api/admin/system/refunds'&&(!init?.method||init.method==='GET'))return json([status])
+  return json({})
+ })
  vi.stubGlobal('fetch',http)
  render(<App />)
  expect(await screen.findByRole('region',{name:'SYSTEM 환불 대사'})).toBeVisible()
@@ -24,7 +31,12 @@ test('G SYSTEM refund page reads the existing queue without SUPPORT access or au
  expect(await screen.findByText('운영 확인 필요',{exact:true})).toBeVisible()
  expect(screen.getByText(/^상품 환불 · 9,900원/)).toBeVisible()
  expect(http.mock.calls.some(([path])=>String(path)==='/api/admin/system/access')).toBe(true)
- expect(http.mock.calls.some(([path])=>String(path).startsWith('/api/admin/support/'))).toBe(false)
+ const menu=within(screen.getByRole('navigation',{name:'운영자 메뉴'}))
+ expect(await menu.findByRole('link',{name:'환불 대사'})).toBeVisible()
+ expect(menu.queryByRole('link',{name:/고객지원|거래 관리/})).not.toBeInTheDocument()
+ const supportCalls=http.mock.calls.filter(([path])=>String(path).startsWith('/api/admin/support/'))
+ expect(new Set(supportCalls.map(([path])=>String(path)))).toEqual(new Set(['/api/admin/support/access']))
+ expect(supportCalls.every(([,init])=>(init?.method??'GET')==='GET')).toBe(true)
  expect(http.mock.calls.filter(([,init])=>init?.method==='POST')).toHaveLength(0)
 })
 

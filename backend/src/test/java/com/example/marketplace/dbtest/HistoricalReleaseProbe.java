@@ -84,9 +84,9 @@ public final class HistoricalReleaseProbe {
                 var fixture=JSON.readTree(Files.readString(fixtureFile));fixture.path("passwords").properties().forEach(entry -> support.passwords.put(entry.getKey(),entry.getValue().asText()));
                 try(var configured=open(url,username,password,media)) {
                     UUID refund=UUID.fromString(request.path("refundAttempt").asText());
-                    business("H129 refund submit and result after V132 migration",() -> {runCause(configured,"REFUND_SUBMIT.v1",refund);runCause(configured,"REFUND_RESULT_RECORDED.v1",refund);return refund;});
+                    business("H129 refund submit and result after V133 migration",() -> {runCause(configured,"REFUND_SUBMIT.v1",refund);runCause(configured,"REFUND_RESULT_RECORDED.v1",refund);return refund;});
                     long run=request.path("dashboardRun").asLong();
-                    var dashboard=business("H129 queued HTTP dashboard refresh after V132 migration",() -> dashboard(configured,support,run));
+                    var dashboard=business("H129 queued HTTP dashboard refresh after V133 migration",() -> dashboard(configured,support,run));
                     Files.writeString(folder.resolve("historical-dashboard-after.json"),JSON.writeValueAsString(dashboard));
                 }
             } else {throw new IllegalArgumentException("Unknown historical probe action");}

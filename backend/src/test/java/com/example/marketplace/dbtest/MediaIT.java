@@ -1,5 +1,15 @@
 package com.example.marketplace.dbtest;
 
+import com.example.marketplace.catalog.api.Browse;
+import com.example.marketplace.catalog.api.CatalogException;
+import com.example.marketplace.catalog.api.ProductDescription.Block;
+import com.example.marketplace.catalog.api.ProductDescription.Run;
+import com.example.marketplace.catalog.api.ProductDescriptionMedia.Upload;
+import com.example.marketplace.catalog.api.Products;
+import com.example.marketplace.media.api.Media;
+import com.example.marketplace.media.api.MediaException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.net.http.HttpResponse;
 import java.time.Duration;
@@ -16,10 +26,108 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.support.TransactionTemplate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MediaIT extends PostgresContractFixture {
+    @Test
+    void productDescriptionImagesAreAtomicAndScopedAcrossLegacyAndRichWriters() throws Exception {
+        var fixture=skuFixture("description-owner");
+        UUID owner=(UUID)fixture.get("owner");
+        var seed=(Products.Product)fixture.get("product");
+        UUID outsider=(UUID)skuFixture("description-other").get("owner");
+        var products=context.getBean(Products.class);
+        var browse=context.getBean(Browse.class);
+        var media=context.getBean(Media.class);
+        var root=Path.of(context.getEnvironment().getRequiredProperty("marketplace.media.root"));
+        var firstImage=new Block("image",null,null,"설명 사진",0);
+        var secondImage=new Block("image",null,null,"다음 사진",1);
+        var heading=new Block("heading",List.of(new Run("  소제목 <그대로> ",true,false)),null,null,null);
+        var ending=new Block("paragraph",List.of(new Run("둘째 줄  ",false,true)),null,null,null);
+        byte[] png=mediaPng();
+        var validUpload=new Upload("description.png",png);
+        String slug="description-rich-media";
+        long before=pngCount(root);
+        assertEquals(400,assertThrows(MediaException.class,()->products.save(owner,null,new Products.Input(seed.categoryId(),slug,
+                "상세", "ignored","DRAFT",0L,null,List.of(heading,firstImage,secondImage,ending),
+                Map.of(0,validUpload,1,new Upload("invalid.png",new byte[] {1,2,3}))))).status());
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_product WHERE slug=:slug",Map.of("slug",slug),Integer.class));
+        assertEquals(before,pngCount(root));
+        var created=products.save(owner,null,new Products.Input(seed.categoryId(),slug,"상세","","DRAFT",0L,null,
+                List.of(heading,firstImage,ending),Map.of(0,validUpload)));
+        UUID asset=created.descriptionBlocks().get(1).assetId();
+        assertEquals(before+1,pngCount(root));
+        assertEquals(heading,created.descriptionBlocks().getFirst());
+        assertEquals("소제목 <그대로> \n둘째 줄",created.description());
+        assertEquals(404,assertThrows(CatalogException.class,()->browse.detail(slug)).status());
+        assertEquals(404,assertThrows(MediaException.class,()->media.content(owner,asset)).status());
+        assertEquals(404,assertThrows(MediaException.class,()->media.ownerPreview(outsider,asset)).status());
+        assertTrue(media.ownerPreview(owner,asset).length>0);
+        assertTrue(media.list(owner,"products",created.id()).stream().allMatch(slot->slot.assetId()==null));
+        assertEquals(400,assertThrows(CatalogException.class,()->products.save(owner,seed.id(),new Products.Input(seed.categoryId(),
+                seed.slug(),seed.title(),"",seed.state(),seed.version(),null,created.descriptionBlocks(),Map.of()))).status());
+        assertEquals(seed.version(),products.own(owner,seed.id()).version());
+
+        var active=products.save(owner,created.id(),new Products.Input(created.categoryId(),slug,"제목만 변경",
+                created.description(),"ACTIVE",created.version()));
+        assertEquals(created.descriptionBlocks(),active.descriptionBlocks());
+        assertEquals(active.descriptionBlocks(),browse.detail(slug).descriptionBlocks());
+        assertTrue(media.published("products",slug).isEmpty());
+        assertTrue(media.content(null,asset).length>0);
+        assertEquals(409,assertThrows(CatalogException.class,()->products.save(owner,active.id(),new Products.Input(
+                active.categoryId(),slug,"낡은 수정","","ACTIVE",created.version(),null,List.of(firstImage),Map.of(0,validUpload)))).status());
+        assertEquals(before+1,pngCount(root));
+        UUID store=context.getBean(com.example.marketplace.seller.api.Stores.class).own(owner).id();
+        assertDescriptionVisibility(media,asset,creatorVisibility(owner,active.categoryId(),store,active.id()));
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",Map.of("id",active.id()));
+        assertEquals(404,assertThrows(MediaException.class,()->media.content(null,asset)).status());
+        assertTrue(media.ownerPreview(owner,asset).length>0);
+        jdbc.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=false,title='이전 앱 수정',description=description,version=version+1 WHERE id=:id",
+                Map.of("id",active.id()));
+        assertEquals(active.descriptionBlocks(),browse.detail(slug).descriptionBlocks());
+        assertTrue(media.content(null,asset).length>0);
+        jdbc.update("UPDATE marketplace.catalog_product SET description='이전 앱의 새 설명',version=version+1 WHERE id=:id",Map.of("id",active.id()));
+        assertNull(browse.detail(slug).descriptionBlocks());
+        assertEquals("이전 앱의 새 설명",browse.detail(slug).product().description());
+        assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.media_product_description WHERE asset_id=:id",Map.of("id",asset),Integer.class));
+        assertTrue(Boolean.TRUE.equals(jdbc.queryForObject("SELECT retired_at IS NOT NULL FROM marketplace.media_asset WHERE id=:id",Map.of("id",asset),Boolean.class)));
+        assertEquals(404,assertThrows(MediaException.class,()->media.content(null,asset)).status());
+        assertEquals(404,assertThrows(MediaException.class,()->media.ownerPreview(owner,asset)).status());
+    }
+
+    private static long pngCount(Path root) throws java.io.IOException {
+        try(var files=Files.list(root)) { return files.filter(path->path.getFileName().toString().endsWith(".png")).count(); }
+    }
+
+    private record VisibilityChange(String disable, String restore, UUID target) { }
+
+    private static List<VisibilityChange> creatorVisibility(UUID owner,UUID category,UUID store,UUID product) {
+        return List.of(
+                new VisibilityChange("UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:id",
+                        "UPDATE marketplace.identity_user SET state='ACTIVE' WHERE id=:id",owner),
+                new VisibilityChange("DELETE FROM marketplace.role_assignment WHERE user_id=:id AND role='SELLER'",
+                        "INSERT INTO marketplace.role_assignment VALUES(:id,'SELLER')",owner),
+                new VisibilityChange("UPDATE marketplace.seller_store SET visible=false WHERE id=:id",
+                        "UPDATE marketplace.seller_store SET visible=true WHERE id=:id",store),
+                new VisibilityChange("UPDATE marketplace.seller_store SET state='CLOSED',visible=false WHERE id=:id",
+                        "UPDATE marketplace.seller_store SET state='OPEN',visible=true WHERE id=:id",store),
+                new VisibilityChange("UPDATE marketplace.catalog_category SET active=false WHERE id=:id",
+                        "UPDATE marketplace.catalog_category SET active=true WHERE id=:id",category),
+                new VisibilityChange("UPDATE marketplace.catalog_product SET state='STOPPED' WHERE id=:id",
+                        "UPDATE marketplace.catalog_product SET state='ACTIVE' WHERE id=:id",product));
+    }
+
+    private void assertDescriptionVisibility(Media media,UUID asset,List<VisibilityChange> changes) {
+        for(var change:changes) {
+            var args=Map.of("id",change.target());
+            assertEquals(1,jdbc.update(change.disable(),args));
+            try { assertEquals(404,assertThrows(MediaException.class,()->media.content(null,asset)).status()); }
+            finally { assertEquals(1,jdbc.update(change.restore(),args)); }
+            assertTrue(media.content(null,asset).length>0,change.disable());
+        }
+    }
+
     @Test
     void mediaStoreOwnershipCsrfAndPublicProjectionAreEnforced() throws Exception {
         var f=skuFixture("media-access"); UUID owner=(UUID)f.get("owner"); var product=(com.example.marketplace.catalog.api.Products.Product)f.get("product");

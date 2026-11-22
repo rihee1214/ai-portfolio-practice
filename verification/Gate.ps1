@@ -184,7 +184,7 @@ function Assert-ReleaseRecoveryEvidence([string]$Folder, $Group) {
     $faults = Get-Content -LiteralPath "$Folder/operator-faults.json" -Raw | ConvertFrom-Json
     $cancellationFiles=@(Get-ChildItem -LiteralPath $Folder -File -Filter 'operation-cancellation-*.json')
     if ($cancellationFiles.Count -ne 1) { throw 'Release operator cancellation/join evidence missing or duplicated' }
-    Assert-ReleaseOperationCancellation (Get-Content -LiteralPath $cancellationFiles[0].FullName -Raw | ConvertFrom-Json)
+    Assert-ReleaseOperationCancellation (Get-Content -LiteralPath $cancellationFiles[0].FullName -Raw)
     if ($lifecycle.stacks.Count -ne 4 -or $lifecycle.stacks.mode -cnotcontains 'L' -or
         $lifecycle.stacks.mode -cnotcontains 'P' -or $lifecycle.originalResourcesPreserved -ne $true -or
         $artifacts.localGuest.mode -cne 'development' -or $lifecycle.failedRestoreTargets.Count -ne 1 -or
@@ -253,13 +253,25 @@ function Assert-ReleaseRecoveryEvidence([string]$Folder, $Group) {
     @{modes=@('L','P');targets=5;expectedOperatorFaults=2;browserCases=$allCases.Count;operations=$results.Count;candidateInputsSha256=$artifacts.candidateInputsSha256}
 }
 
-function Assert-ReleaseOperationCancellation($Proof) {
+function Read-ReleaseOperationInstant([string]$Value) {
+    if ($Value -cnotmatch '\A(?<whole>[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2})(?:\.(?<fraction>[0-9]{1,9}))?(?<zone>Z|[+-][0-9]{2}:[0-9]{2})\z') {
+        throw 'Invalid release operation timestamp'
+    }
+    $culture = [Globalization.CultureInfo]::InvariantCulture
+    $whole = [DateTimeOffset]::ParseExact($Matches.whole + $Matches.zone, "yyyy-MM-dd'T'HH:mm:ssK", $culture)
+    $fraction = [decimal]::Parse('0.' + ([string]$Matches.fraction).PadRight(9, '0'), $culture)
+    # Java Instant emits up to nine digits. DateTimeOffset only stores seven.
+    [decimal]$whole.ToUnixTimeSeconds() + $fraction
+}
+
+function Assert-ReleaseOperationCancellation([string]$ProofJson) {
+    $Proof = ConvertFrom-Json -InputObject $ProofJson -DateKind String -ErrorAction Stop
+    $failure = 'Release target cleanup began without finite completed operator and handler cancellation'
     if ($Proof.status -cne 'passed' -or $Proof.limitMs -ne 10000 -or $Proof.activeOperations -ne 0 -or $Proof.activeRequests -ne 0 -or
         $Proof.executorTerminated -ne $true -or @($Proof.observedHandles | Where-Object alive -NE $false).Count -or
-        @($Proof.handlerThreads | Where-Object alive -NE $false).Count -or
-        ([DateTimeOffset]::Parse($Proof.ended)-[DateTimeOffset]::Parse($Proof.started)).TotalMilliseconds -gt 10000) {
-        throw 'Release target cleanup began without finite completed operator and handler cancellation'
-    }
+        @($Proof.handlerThreads | Where-Object alive -NE $false).Count) { throw $failure }
+    $elapsedSeconds = (Read-ReleaseOperationInstant $Proof.ended) - (Read-ReleaseOperationInstant $Proof.started)
+    if ($elapsedSeconds -lt 0 -or $elapsedSeconds -gt 10) { throw $failure }
 }
 
 function Assert-ReleasePreservationProof($Proof, [string]$Action='') {

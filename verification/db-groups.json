@@ -4005,6 +4005,11 @@
           "new": "com.example.marketplace.dbtest.MediaIT#mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait",
           "originalSha256": "85e470ffacdf8b675c77aaa2ee4e9432eafe431b80273bacc87c4b351f27b3c5",
           "invocations": 1
+        },
+        {
+          "old": "com.example.marketplace.dbtest.MediaIT#productDescriptionImagesAreAtomicAndScopedAcrossLegacyAndRichWriters",
+          "new": "com.example.marketplace.dbtest.MediaIT#productDescriptionImagesAreAtomicAndScopedAcrossLegacyAndRichWriters",
+          "invocations": 1
         }
       ],
       "kind": "domain",

@@ -47,6 +47,36 @@ export function PublicMedia({ kind, slug }: { kind: 'products' | 'stores'; slug:
     })
     return () => { active = false; controller.abort() }
   }, [key, kind, slug])
-  if (result?.key !== key) return <p role="status">이미지를 확인하고 있습니다.</p>
-  return <>{result.error && <ApiErrorNotice error={result.error} />}{result.items?.map(row => row.assetId && <img className="managed-image" key={row.assetId} src={'/api/media/' + row.assetId + '/content'} alt={row.alt} />)}</>
+  if (result?.key !== key) {
+    const loading = <p role="status">이미지를 확인하고 있습니다.</p>
+    return kind === 'products' ? <div className="product-gallery-main">{loading}</div> : loading
+  }
+  if (result.error) return <ApiErrorNotice error={result.error} />
+  const images = result.items?.flatMap(row => row.assetId ? [{ assetId: row.assetId, alt: row.alt }] : []) ?? []
+  return kind === 'products' ? <ProductGallery key={key} images={images} />
+    : images.map(image => <img className="managed-image" key={image.assetId} src={photoUrl(image.assetId)} alt={image.alt} />)
+}
+
+type Photo = { assetId: string; alt: string }
+const photoUrl = (assetId: string) => '/api/media/' + assetId + '/content'
+
+export function ProductPhoto({ photo, lazy = false, decorative = false }: { photo?: Photo | null; lazy?: boolean; decorative?: boolean }) {
+  const [failedAsset, markFailed] = useState<string>()
+  return photo && failedAsset !== photo.assetId
+    ? <img src={photoUrl(photo.assetId)} alt={decorative ? '' : photo.alt} loading={lazy ? 'lazy' : undefined} onError={() => markFailed(photo.assetId)} />
+    : <span className="product-photo-placeholder">{photo ? '사진을 불러오지 못했습니다.' : '등록된 사진 없음'}</span>
+}
+
+function ProductGallery({ images }: { images: Photo[] }) {
+  const [selected, select] = useState<string>()
+  const active = images.find(image => image.assetId === selected) ?? images[0]
+  return <>
+    <div className="product-gallery-main"><ProductPhoto key={active?.assetId} photo={active} /></div>
+    {images.length > 1 && <div className="product-gallery-options">
+      {images.map(image => <button type="button" key={image.assetId} aria-label={image.alt + ' 보기'}
+        aria-pressed={active.assetId === image.assetId} onClick={() => select(image.assetId)}>
+        <ProductPhoto photo={image} lazy decorative />
+      </button>)}
+    </div>}
+  </>
 }

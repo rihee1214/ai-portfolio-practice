@@ -1,4 +1,4 @@
-import { render, screen, waitFor, act } from '@testing-library/react'
+import { render, screen, waitFor, act, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
 import App from '../../src/App'
@@ -47,6 +47,8 @@ test('승인 전 회원의 모의 판매 신청은 CSRF와 함께 본인 신청 
   const user = userEvent.setup()
   await user.click(await screen.findByRole('link', { name: '판매 신청·이력' }))
   await user.type(await screen.findByLabelText('모의 매대 이름'), '가상 매대')
+  const nav = within(screen.getByRole('navigation', { name: '회원 서비스' }))
+  expect(nav.queryByRole('link', { name: '판매 신청 상태' })).not.toBeInTheDocument()
   await user.type(screen.getByLabelText('판매 계획'), '가상 상품 판매')
   await user.click(screen.getByRole('button', { name: '판매 신청하기' }))
   await screen.findByText('처리했습니다.')
@@ -55,6 +57,7 @@ test('승인 전 회원의 모의 판매 신청은 CSRF와 함께 본인 신청 
   expect(new Headers(post[1].headers).get('X-CSRF-TOKEN')).toBe('csrf')
   expect(JSON.parse(String(post[1].body))).toEqual({ displayName: '가상 매대', description: '가상 상품 판매' })
   expect(screen.getByText('심사 대기', { selector: 'strong' })).toBeVisible()
+  expect(nav.getByRole('link', { name: '판매 신청 상태' })).toHaveAttribute('href', '/account/seller-application')
 })
 
 test('로그인 상태 재확인 중 개인 신청을 숨기고 늦은 목록 응답을 무시한다', async () => {

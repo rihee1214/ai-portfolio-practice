@@ -1,5 +1,6 @@
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { useAuthStore } from '../auth/AuthContext'
+import { useWorkspaceMenu } from '../auth/WorkspaceMenuContext'
 import { AuthEntryActions } from '../auth/AuthEntryActions'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
 import { SellerApplicationsStore } from '../seller/SellerApplicationsStore'
@@ -7,6 +8,7 @@ import { SellerApplicationsStore } from '../seller/SellerApplicationsStore'
 const labels: Record<string, string> = { PENDING: '심사 대기', APPROVED: '승인', REJECTED: '반려' }
 export function SellerApplicationsPage({ admin = false }: { admin?: boolean }) {
   const auth = useAuthStore()
+  const { showSellerApplicationLink } = useWorkspaceMenu()
   const session = useSyncExternalStore(auth.subscribe, auth.getSnapshot)
   const [store] = useState(() => new SellerApplicationsStore(auth, admin))
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot)
@@ -28,7 +30,10 @@ export function SellerApplicationsPage({ admin = false }: { admin?: boolean }) {
       setValidation('입력 내용과 최대 길이를 확인해 주세요.'); return
     }
     setValidation('')
-    if (await store.save(fields, id)) form.reset()
+    if (await store.save(fields, id)) {
+      form.reset()
+      if (!admin) showSellerApplicationLink()
+    }
   }
   return <section className="auth-card"><h1>{admin ? '판매자 심사' : '판매 신청'}</h1>
     <p>포트폴리오용 모의 심사입니다. 실제 사업자 검증이 아니며 실제 사업자번호·개인정보·은행 정보를 입력하지 마세요.</p>
@@ -40,7 +45,7 @@ export function SellerApplicationsPage({ admin = false }: { admin?: boolean }) {
         <label htmlFor="seller-description">판매 계획</label><input id="seller-description" name="description" required maxLength={1000} disabled={state.busy} />
         <button disabled={state.busy}>판매 신청하기</button><p>심사 중이거나 승인된 신청이 있으면 중복 신청할 수 없습니다.</p>
       </form>}
-      {session.member?.roles.includes('SELLER') && !admin && <p>판매자 자격이 있습니다. 구매자 기능도 계속 이용할 수 있습니다. 매대 편집은 다음 작업에서 제공됩니다.</p>}
+      {session.member?.roles.includes('SELLER') && !admin && <p>판매자 자격이 있습니다. 구매자 기능도 계속 이용할 수 있습니다.</p>}
       {state.items?.length === 0 && <p>신청 내역이 없습니다.</p>}
       {state.items?.map(item => <article key={item.id} aria-label={item.displayName}>
         <h2>{item.displayName}</h2><strong>{labels[item.status]}</strong><p>{item.description}</p>

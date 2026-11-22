@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
 import { AuthEntryLinks } from '../auth/AuthEntryActions'
-import { workspaces } from '../navigation'
+import { useWorkspaceMenu } from '../auth/WorkspaceMenuContext'
 
 export function SiteLayout() {
   const { pathname } = useLocation()
+  const { guest, buyer, seller, hasSellerApplication, permissions } = useWorkspaceMenu()
   const mainRef = useRef<HTMLElement>(null)
   const previousPath = useRef(pathname)
 
@@ -25,12 +26,14 @@ export function SiteLayout() {
         <nav className="primary-nav" aria-label="주요 화면">
           <NavLink className="navigation-link" to="/" end>둘러보기</NavLink>
           <NavLink className="navigation-link" to="/products">상품</NavLink>
-          {workspaces.map((workspace) => <NavLink className="navigation-link" key={workspace.path} to={workspace.path}>{workspace.label}</NavLink>)}
         </nav>
         <nav className="account-nav" aria-label="회원 서비스">
           <NavLink className="navigation-link" to="/cart">장바구니</NavLink>
-          <AuthEntryLinks />
-          <NavLink className="navigation-link" to="/account" end>내 계정</NavLink>
+          {guest && <AuthEntryLinks />}
+          {buyer && <NavLink className="navigation-link" to="/account" end>내 계정</NavLink>}
+          {hasSellerApplication && <NavLink className="navigation-link" to="/account/seller-application">판매 신청 상태</NavLink>}
+          {seller && <NavLink className="navigation-link" to="/seller">판매자 센터</NavLink>}
+          {permissions.length > 0 && <NavLink className="navigation-link" to="/admin">운영자 센터</NavLink>}
         </nav>
       </header>
       <main id="main-content" ref={mainRef} tabIndex={-1}><Outlet /></main>

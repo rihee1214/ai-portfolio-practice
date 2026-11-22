@@ -42,7 +42,7 @@ test('closed product report hides public detail and restores it through the reco
             await admin.locator('article').filter({ hasText: reportId }).getByRole('button', { name: '사건 열기' }).click();
             await admin.getByRole('link', { name: '콘텐츠 조치 확인' }).click();
             await page.goto('/products/' + slug);
-            const title = await page.locator('section:has(> h1:text-is("상품 상세")) > h2').first().innerText();
+            const title = await page.getByRole('region', { name: '구매 정보' }).getByRole('heading', { level: 1 }).innerText();
             const reason = '위반확인'.repeat(75);
             await admin.getByLabel('조치 사유').fill(reason);
             await admin.getByRole('button', { name: '운영 비공개' }).focus();

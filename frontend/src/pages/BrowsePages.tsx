@@ -3,12 +3,13 @@ import { SaveWish } from './WishlistPages'
 import { AddToCart } from './CartPages'
 import { useEffect, useState, useSyncExternalStore, type SubmitEvent } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
-import { BrowseResource, detailValid, pageValid, parseQuery, queryString, slugValid, type Item, type Query } from '../catalog/Browse'
+import { BrowseResource, detailValid, pageValid, parseQuery, queryString, slugValid, type Detail, type Item, type Query } from '../catalog/Browse'
 import { requestJson } from '../api/http'
-import { PublicMedia } from './MediaPanel'
+import { ProductPhoto, PublicMedia } from './MediaPanel'
 import { PublicReviews } from '../content/PublicReviews'
 import { ProductReport } from '../reports/ProductReport'
 import { ProductQuestions } from '../content/ProductQuestions'
+import { ProductDescriptionView } from '../catalog/ProductDescriptionView'
 import './product-browse.css'
 
 function useResource<T>(path: string, validate: (value: unknown) => value is T) {
@@ -19,12 +20,15 @@ function useResource<T>(path: string, validate: (value: unknown) => value is T) 
 }
 const price = (value: number) => value.toLocaleString('ko-KR') + '원'
 function Card({ item, search }: { item: Item; search: string }) {
-  return <article className="product-card"><div className="product-info">
-    <p>{item.categoryName} · <Link to={'/stores/' + item.storeSlug}>{item.storeName}</Link></p>
-    <h3><Link to={'/products/' + item.slug + '?' + search}>{item.title}</Link></h3>
-    <p>{item.minPrice === null ? '판매 준비 중' : '옵션 최저가 ' + price(item.minPrice)}</p>
-    {item.minPrice !== null && item.soldOut && <p>품절</p>}
-  </div></article>
+  const detail = '/products/' + item.slug + '?' + search
+  return <article className="product-card">
+    <Link to={detail} className="product-card-photo" aria-label={item.title + ' 사진'}><ProductPhoto photo={item.thumbnail} lazy /></Link>
+    <div className="product-info">
+      <p><Link to={'/stores/' + item.storeSlug}>{item.storeName}</Link></p>
+      <h3><Link to={detail}>{item.title}</Link></h3>
+      <p className="product-card-price">{item.minPrice === null ? '판매 준비 중' : <><strong>{price(item.minPrice)}</strong>{item.soldOut && <span>품절</span>}</>}</p>
+    </div>
+  </article>
 }
 type Categories = { items: { id: string; name: string }[]; page: number; hasMore: boolean }
 function categoriesValid(value: unknown): value is Categories {
@@ -132,22 +136,55 @@ export function HomeProducts() {
 export function ProductDetailPage() {
   const { slug } = useParams(); const [params] = useSearchParams()
   const state = useResource(slugValid(slug) ? '/api/browse/products/' + slug : '', detailValid)
-  const [selection, select] = useState('')
   const data = state.data?.product.slug === slug ? state.data : undefined
-  const offer = data?.offers.find(o => o.id === selection) ?? data?.offers[0]
   const query = parseQuery(params.toString())
-  return <section><h1>상품 상세</h1><Link to={'/products' + (query ? '?' + queryString(query) : '')}>상품 목록으로</Link>
+  return <section className="product-detail-page"><Link className="product-detail-back" to={'/products' + (query ? '?' + queryString(query) : '')}>상품 목록으로</Link>
+    {!data && <h1>상품 상세</h1>}
     {!slugValid(slug) && <p role="alert">상품 주소가 올바르지 않습니다.</p>}
     {state.busy && <p role="status">상품을 불러오고 있습니다.</p>}
     {state.error && <p role="alert">{state.error.message} <button onClick={state.retry}>상품 다시 불러오기</button></p>}
-    {data && <><h2>{data.product.title}</h2><SaveWish slug={data.product.slug} /><Link to={'/stores/' + data.product.storeSlug}>{data.product.storeName}</Link><p>{data.product.categoryName}</p>
-      <PublicMedia key={slug} kind="products" slug={slug!} />
-      <PublicReviews key={'reviews-'+data.product.slug} slug={data.product.slug}/>
-      <ProductQuestions slug={data.product.slug}/><ProductReport slug={data.product.slug}/>
-      <p className="product-description">{data.product.description}</p><p data-testid="product-return-policy">{returnPolicyText(data.product.returnPolicy)}</p>
-      {offer ? <><label htmlFor="browse-option">상품 옵션</label><select id="browse-option" value={offer.id} onChange={e => select(e.target.value)}>
-        {data.offers.map(o => <option key={o.id} value={o.id}>{o.options.length ? o.options.map(x => x.name + ': ' + x.value).join(' / ') : '기본 상품'} · {price(o.price)}{o.available === 0 ? ' · 품절' : ''}</option>)}
-      </select><p>선택 가격: {price(offer.price)}</p><p>{offer.available === 0 ? '품절' : '가용 수량: ' + offer.available}</p><p>재고는 조회 시점의 수량입니다.</p><AddToCart sku={offer.id} available={offer.available} /></> : <p>판매 준비 중</p>}
-    </>}
+    {data && <ProductDetail key={data.product.slug} data={data} />}
   </section>
+}
+
+function ProductDetail({ data }: { data: Detail }) {
+  const { product, offers } = data
+  const [selection, select] = useState('')
+  const offer = offers.find(row => row.id === selection) ?? offers[0]
+  return <>
+    <div className="product-detail-top">
+      <section className="product-detail-gallery" aria-label="상품 사진"><PublicMedia kind="products" slug={product.slug} /></section>
+      <section className="product-detail-purchase" aria-label="구매 정보">
+        <h1>{product.title}</h1>
+        <p className="product-detail-store"><Link to={'/stores/' + product.storeSlug}>{product.storeName}</Link></p>
+        {offer ? <>
+          <p className="product-detail-price"><strong>선택 가격: {price(offer.price)}</strong></p>
+          <div className="product-detail-option">
+            <label htmlFor="browse-option">상품 옵션</label>
+            <select id="browse-option" value={offer.id} onChange={event => select(event.target.value)}>
+              {offers.map(row => <option key={row.id} value={row.id}>{row.options.length ? row.options.map(x => x.name + ': ' + x.value).join(' / ') : '기본 상품'} · {price(row.price)}{row.available === 0 ? ' · 품절' : ''}</option>)}
+            </select>
+          </div>
+          <p className="product-detail-stock">{offer.available === 0 ? '품절' : '가용 수량: ' + offer.available}</p>
+          <AddToCart sku={offer.id} available={offer.available} />
+        </> : <p>판매 준비 중</p>}
+        <div className="product-detail-wish"><SaveWish slug={product.slug} /></div>
+      </section>
+    </div>
+    <div className="product-detail-information">
+      <section aria-labelledby="product-description-heading"><h2 id="product-description-heading">상품 설명</h2>
+        <ProductDescriptionView plain={product.description} rich={data.descriptionBlocks} />
+      </section>
+      <section aria-labelledby="product-information"><h2 id="product-information">상품 정보</h2>
+        <p>{product.categoryName}</p>
+      </section>
+      <section aria-labelledby="product-delivery"><h2 id="product-delivery">배송·반품 안내</h2>
+        <p>배송비와 배송 할인은 주문서에서 확인할 수 있습니다.</p>
+        <p data-testid="product-return-policy">{returnPolicyText(product.returnPolicy)}</p>
+      </section>
+      <PublicReviews slug={product.slug} />
+      <ProductQuestions slug={product.slug} />
+      <ProductReport slug={product.slug} />
+    </div>
+  </>
 }

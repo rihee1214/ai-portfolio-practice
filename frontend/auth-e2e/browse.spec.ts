@@ -33,6 +33,13 @@ test('공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를
         await page.getByRole('button', { name: '검색 적용', exact: true }).click();
         await expect(page.locator('.product-card')).toHaveCount(20);
         await expect(page.locator('.product-card').first()).toContainText('P05 browser 00');
+        const grid = await page.locator('.product-grid').evaluate(element => ({
+            columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+            width: innerWidth,
+            fits: document.documentElement.scrollWidth <= innerWidth,
+        }));
+        expect(grid.columns).toBe(grid.width <= 760 ? 2 : grid.width < 1100 ? 3 : 4);
+        expect(grid.fits).toBe(true);
     });
     await operation("browse: 다음 상품 [3]", async () => {
         await page.getByRole('button', { name: '다음 상품', exact: true }).click();
@@ -45,10 +52,31 @@ test('공개 탐색은 실제 상품과 URL 조건·페이지·상세·매대를
         await expect(page.locator('.product-card')).toHaveCount(20);
     });
     await operation("browse: P05 browser 00 [4]", async () => {
-        await page.getByRole('link', { name: 'P05 browser 00', exact: true }).click();
-        await expect(page.getByRole('heading', { name: 'P05 browser 00', exact: true })).toBeVisible();
+        const titleLink = page.getByRole('link', { name: 'P05 browser 00', exact: true });
+        const photoLink = page.getByRole('link', { name: 'P05 browser 00 사진', exact: true });
+        await expect(photoLink).toHaveAttribute('href', (await titleLink.getAttribute('href'))!);
+        await photoLink.click();
+        await expect(page).toHaveURL(/\/products\/p05-browser-0\?q=P05\+browser&sort=price_asc&page=0$/);
+        const purchase = page.getByRole('region', { name: '구매 정보', exact: true });
+        await expect(purchase.getByRole('heading', { level: 1, name: 'P05 browser 00', exact: true })).toBeVisible();
+        const placement = await page.evaluate(() => {
+            const gallery = document.querySelector('.product-detail-gallery')!.getBoundingClientRect();
+            const purchase = document.querySelector('.product-detail-purchase')!.getBoundingClientRect();
+            const information = document.querySelector('.product-detail-information')!.getBoundingClientRect();
+            return { width: innerWidth, fits: document.documentElement.scrollWidth <= innerWidth,
+                horizontal: gallery.right <= purchase.left, vertical: gallery.bottom <= purchase.top, below: Math.max(gallery.bottom, purchase.bottom) <= information.top };
+        });
+        expect(placement.width <= 760 ? placement.vertical : placement.horizontal).toBe(true);
+        expect(placement.fits && placement.below).toBe(true);
         await expect(page.getByText('품절', { exact: true })).toBeVisible();
         await expect(page.getByLabel('상품 옵션')).toContainText('1,000원');
+        await expect(page.getByLabel('담을 수량', { exact: true })).toBeDisabled();
+        const add = page.getByRole('button', { name: '장바구니 담기', exact: true });
+        await expect(add).toBeDisabled();
+        const savedCart = () => page.evaluate(() => localStorage.getItem('marketplace-guest-cart'));
+        const before = await savedCart();
+        await add.evaluate((button: HTMLButtonElement) => button.click());
+        expect(await savedCart()).toBe(before);
         await expect(page.getByRole('link', { name: '상품 목록으로' })).toHaveAttribute('href', '/products?q=P05+browser&sort=price_asc&page=0');
     });
     await operation("browse: P04B [5]", async () => {

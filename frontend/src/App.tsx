@@ -40,31 +40,36 @@ import AuthLayout from './auth/AuthLayout'
 import { AccountPage, AuthForm } from './pages/AuthPages'
 import { AccountDetailsPage } from './pages/AccountPages'
 import { PasswordPage } from './pages/PasswordPages'
-import { WorkspaceAccess, type AccessArea } from './auth/WorkspaceAccess'
+import { WorkspaceAccess } from './auth/WorkspaceAccess'
+import WorkspaceMenuProvider from './auth/WorkspaceMenuProvider'
+import { adminFeatureAreas, type AccessArea } from './auth/workspacePolicy'
 import type { Workspace } from './navigation'
 import { SellerApplicationsPage } from './pages/SellerApplicationsPage'
 import { StoreEditorPage, PublicStorePage } from './pages/StorePages'
 import { StoreOperationsPage, SellerFeaturePage } from './pages/StoreLifecycle'
 import { CategoryPage } from './pages/CatalogPages'
 import { RuntimeFeature, RuntimePolicyProvider } from './runtime/RuntimePolicy'
+import { ProductDraftScope } from './catalog/ProductDraftScope'
 
 function ProtectedWorkspace({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
   const feature = workspace.features.find(item => matchPath({ path: workspace.path + '/' + item.path, end: true }, location.pathname))
-  const areas: Record<string, AccessArea> = { dashboard: 'ADMIN', publications: 'CONTENT', settings: 'SYSTEM', jobs: 'SYSTEM', users: 'ACCOUNTS', sellers: 'ACCOUNTS', stores: 'ACCOUNTS', catalog: 'CONTENT', moderation: 'CONTENT', orders: 'SUPPORT', refunds: 'SYSTEM', notifications: 'SYSTEM', settlements: 'SETTLEMENTS', support: 'SUPPORT', reports: 'CONTENT' }
-  const area: AccessArea = workspace.path === '/seller' ? 'SELLER' : feature ? areas[feature.path] : 'ADMIN'
-  return <WorkspaceAccess key={location.pathname} area={area} title={feature?.title ?? workspace.title}>
+  const area: AccessArea = workspace.path === '/seller' ? 'SELLER' : feature ? adminFeatureAreas[feature.path] : 'ADMIN'
+  const gate = <WorkspaceAccess key={location.pathname} area={area} title={feature?.title ?? workspace.title}>
     <WorkspaceLayout workspace={workspace} />
   </WorkspaceAccess>
+  return workspace.path === '/seller' && feature?.path === 'products' ? <ProductDraftScope>{gate}</ProductDraftScope> : gate
 }
 
-function ShoppingProviders() { return <RuntimePolicyProvider><AuthProvider><CartProvider><Outlet /></CartProvider></AuthProvider></RuntimePolicyProvider> }
+function ShoppingProviders() {
+  return <RuntimePolicyProvider><AuthProvider><CartProvider><WorkspaceMenuProvider><Outlet /></WorkspaceMenuProvider></CartProvider></AuthProvider></RuntimePolicyProvider>
+}
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<SiteLayout />}><Route element={<ShoppingProviders />}>
+        <Route element={<ShoppingProviders />}><Route element={<SiteLayout />}>
           <Route path="/payments/:number" element={<PaymentPage />} /><Route path="/payments/:number/success" element={<PaymentPage />} /><Route path="/payments/:number/failure" element={<PaymentPage />} /><Route path="/checkout/guest" element={<RuntimeFeature title="방문자 구매 인증"><GuestPage /></RuntimeFeature>} />
           <Route path="/support" element={<SupportDesk />} /><Route path="/support/lost-access" element={<RuntimeFeature title="비회원 조회 복구 지원"><LostAccessForm /></RuntimeFeature>} />
           <Route path="/guest/recovery" element={<RuntimeFeature title="비회원 조회 비밀번호 복구"><GuestRecoveryPage /></RuntimeFeature>} /><Route path="/guest/security" element={<RuntimeFeature title="비회원 조회 자격 관리"><GuestRecoveryPage manage /></RuntimeFeature>} />
@@ -99,10 +104,12 @@ export default function App() {
             </Route>
           ))}
           </Route>
-          </Route>
-          {import.meta.env.DEV && <Route path="/dev/api-errors" element={<ApiErrorPreview />} />}
           <Route path="*" element={<NotFoundPage />} />
+          </Route>
         </Route>
+        {import.meta.env.DEV && <Route element={<SiteLayout />}>
+          <Route path="/dev/api-errors" element={<ApiErrorPreview />} />
+        </Route>}
       </Routes>
     </BrowserRouter>
   )

@@ -46,19 +46,43 @@ public final class JdbcBrowse implements Browse {
         if(q.minPrice()!=null) { sql.append(" AND prices.min_price>=:min"); args.addValue("min",q.minPrice()); }
         if(q.maxPrice()!=null) { sql.append(" AND prices.min_price<=:max"); args.addValue("max",q.maxPrice()); }
         if(q.inStock()) { sql.append(" AND prices.in_stock"); }
-        sql.append(" ORDER BY ").append(switch(q.sort()) {
-            case "price_asc" -> "prices.min_price ASC NULLS LAST";
-            case "price_desc" -> "prices.min_price DESC NULLS LAST";
-            case "name" -> "v.title ASC";
-            default -> "v.created_at DESC";
-        }).append(",v.id LIMIT 21 OFFSET :offset");
-        var rows=jdbc.query(sql.toString(),args,(r,n)->item(r));
+        String order=switch(q.sort()) {
+            case "price_asc" -> "min_price ASC NULLS LAST";
+            case "price_desc" -> "min_price DESC NULLS LAST";
+            case "name" -> "title ASC";
+            default -> "created_at DESC";
+        }+",id";
+        sql.append(" ORDER BY ").append(order).append(" LIMIT 21 OFFSET :offset");
+        // Project one current product asset per visible page row, in the same snapshot as the page.
+        String withThumbnails="""
+            SELECT page.slug,page.title,page.description,page.category_id,page.category_name,page.store_slug,page.store_name,
+                page.min_price,page.sold_out,page.id,page.return_policy_revision,page.return_policy_source,page.return_fee,
+                photo.asset_id,photo.alt FROM (%s) page
+            LEFT JOIN LATERAL (
+                SELECT a.id asset_id,m.alt FROM marketplace.media_slot m
+                JOIN marketplace.media_asset a ON a.id=m.asset_id AND a.retired_at IS NULL
+                WHERE m.kind='products' AND m.target_id=page.id
+                ORDER BY m.slot LIMIT 1
+            ) photo ON true
+            ORDER BY %s
+            """.formatted(sql,order);
+        var rows=jdbc.query(withThumbnails,args,(r,n)-> {
+            UUID asset=r.getObject("asset_id",UUID.class);
+            return item(r,asset==null?null:new Thumbnail(asset,r.getString("alt")));
+        });
         return new Products.Page<>(rows.stream().limit(20).toList(),q.page(),rows.size()>20);
     }
     @Override public Detail detail(String slug) {
+        return detail(slug,true);
+    }
+    private Detail detail(String slug,boolean includeDescription) {
         if(slug==null||!slug.matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { throw new CatalogException(404); }
         // Item eligibility and offers are evaluated within one statement snapshot.
-        var rows=jdbc.query("SELECT p.*,k.id offer_id,k.options,k.price,coalesce(b.on_hand-b.reserved,0) available FROM ("+PROJECTION+") p "
+        String productColumns=includeDescription?"p.*":"""
+            p.slug,p.title,p.description,p.category_id,p.category_name,p.store_slug,p.store_name,
+            p.min_price,p.sold_out,p.id,p.return_policy_revision,p.return_policy_source,p.return_fee
+            """;
+        var rows=jdbc.query("SELECT "+productColumns+",k.id offer_id,k.options,k.price,coalesce(b.on_hand-b.reserved,0) available FROM ("+PROJECTION+") p "
             +"LEFT JOIN marketplace.catalog_sku k ON k.product_id=p.id AND k.active LEFT JOIN marketplace.inventory_balance b ON b.sku_id=k.id WHERE p.slug=:slug ORDER BY k.id",
             Map.of("slug",slug),(r,n)-> {
                 Offer offer=null;
@@ -66,10 +90,10 @@ public final class JdbcBrowse implements Browse {
                     try { offer=new Offer(r.getObject("offer_id",UUID.class),mapper.readValue(r.getString("options"),new tools.jackson.core.type.TypeReference<List<Skus.Option>>() {}),r.getLong("price"),r.getLong("available")); }
                     catch(tools.jackson.core.JacksonException e) { throw new java.sql.SQLException("Invalid persisted options",e); }
                 }
-                return new Detail(item(r),offer==null?List.of():List.of(offer));
+                return new Detail(item(r,null),offer==null?List.of():List.of(offer),includeDescription&&n==0?DescriptionBlocks.read(mapper,r):null);
             });
         if(rows.isEmpty()) { throw new CatalogException(404); }
-        return new Detail(rows.getFirst().product(),rows.stream().flatMap(r->r.offers().stream()).toList());
+        return new Detail(rows.getFirst().product(),rows.stream().flatMap(r->r.offers().stream()).toList(),rows.getFirst().descriptionBlocks());
     }
     @Override public QuoteOffer quoteOffer(UUID sku) {
         if(sku==null) { return null; }
@@ -82,25 +106,25 @@ public final class JdbcBrowse implements Browse {
         var slugs=jdbc.queryForList("SELECT p.slug FROM marketplace.catalog_product p JOIN marketplace.catalog_sku k ON k.product_id=p.id WHERE k.id=:id",Map.of("id",sku),String.class);
         if(slugs.isEmpty()) { return null; }
         try {
-            var value=detail(slugs.getFirst());
+            var value=detail(slugs.getFirst(),false);
             var offers=value.offers().stream().filter(o->o.id().equals(sku)).toList();
-            return offers.isEmpty()?null:new Detail(value.product(),offers);
+            return offers.isEmpty()?null:new Detail(value.product(),offers,value.descriptionBlocks());
         } catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
     }
     @Override public Detail forProduct(UUID product) {
         var slugs=jdbc.queryForList("SELECT slug FROM marketplace.catalog_product WHERE id=:id",Map.of("id",product),String.class);
         if(slugs.isEmpty()) { return null; }
-        try { return detail(slugs.getFirst()); }
+        try { return detail(slugs.getFirst(),false); }
         catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
     }
     @Override public UUID identify(String slug) {
         if(slug==null||!slug.matches("[a-z0-9][a-z0-9-]{1,61}[a-z0-9]")) { return null; }
-        try { detail(slug); }
+        try { detail(slug,false); }
         catch(CatalogException e) { if(e.status()==404) { return null; } throw e; }
         var ids=jdbc.queryForList("SELECT id FROM marketplace.catalog_product WHERE slug=:slug",Map.of("slug",slug),UUID.class);
         return ids.isEmpty()?null:ids.getFirst();
     }
-    private Item item(java.sql.ResultSet r) throws java.sql.SQLException {
-        return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"),JdbcProducts.policy(r));
+    private Item item(java.sql.ResultSet r,Thumbnail thumbnail) throws java.sql.SQLException {
+        return new Item(r.getString("slug"),r.getString("title"),r.getString("description"),r.getObject("category_id",UUID.class),r.getString("category_name"),r.getString("store_slug"),r.getString("store_name"),(Long)r.getObject("min_price"),r.getBoolean("sold_out"),JdbcProducts.policy(r),thumbnail);
     }
 }

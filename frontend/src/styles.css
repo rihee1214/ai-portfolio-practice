@@ -47,6 +47,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .brand { text-decoration: none; white-space: nowrap; }
 .primary-nav, .account-nav, .member-menu, .auth-entry-actions { display: flex; gap: 8px; }
 .primary-nav { justify-self: center; }
+.account-nav { flex-wrap: wrap; }
 .navigation-link {
   display: inline-flex;
   align-items: center;

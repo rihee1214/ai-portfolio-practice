@@ -1,0 +1,57 @@
+.description-editor {
+  margin-block: 1rem;
+}
+.description-editor > p {
+  margin-block: .25rem .6rem;
+}
+.description-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin-block-end: .45rem;
+}
+.description-editor-surface {
+  min-height: 10rem;
+  padding: .75rem;
+  border: 1px solid #879986;
+  border-radius: .5rem;
+  background: #fffdf7;
+  color: #25382e;
+  cursor: text;
+}
+.description-editor-surface:focus-visible {
+  outline: 3px solid #b45932;
+  outline-offset: 4px;
+}
+.description-editor-surface[aria-readonly="true"] {
+  background: #eef0e7;
+  cursor: auto;
+}
+.description-editor-surface, .product-description-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.description-editor-surface :where(p, h3), .product-description-body :where(p, h3) {
+  margin: 0 0 .75rem;
+}
+.description-editor-surface :last-child, .product-description-body :last-child {
+  margin-block-end: 0;
+}
+.description-editor-image, .product-description-body img {
+  display: block;
+  max-width: 100%;
+  margin: .75rem 0;
+}
+.description-editor-image img, .product-description-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.description-editor-image button {
+  margin-block-start: .25rem;
+}
+.description-image-picker {
+  display: grid;
+  gap: .5rem;
+  margin-block-start: .5rem;
+}

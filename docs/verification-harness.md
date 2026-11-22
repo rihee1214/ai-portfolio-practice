@@ -40,7 +40,7 @@ P12-E 1차 필수 보완 후 현재 Node 필수 목록은 **77개**(root proof42
 
 P12-E는 `container-reproduction`을 **루트 전용 계약 phase**로 등록한다. 기존42개 JVM/IT 묶음과 그 DB 개수는 유지한다. 이 phase는 같은 루트 실행의 `package-runtime`이 생산한 JAR·production dist·출처만 명시 입력으로 소비한다. 무선택 전체와 `package-runtime`을 포함하는 선택 실행에 필수이며, `-ChangedContracts 'container-reproduction'`은 producer를 선택한다. 다른 정확한 선택은 `selection.json.rootPhases.excluded`에 제외를 기록한다. 제공/소비 계약과 영향표는 `verification/db-groups.json.rootPhases`에 있으며 미등록 phase·중복·producer 누락·소비 영향 누락은 자원 생성 전에 거부한다. 공유 하네스 실행 변경이므로 이번 변경의 최종 근거에는 새 무선택 전체가 필요하다.
 
-`container-reproduction/`은 새 Compose 프로젝트, PostgreSQL 컨테이너의 새 앱 DB1개, 새 DB/media 볼륨과 전용 네트워크2개를 보존한다. 이 DB는 backend IT DB 총계에 합산하지 않고 `result.json.rootPhases.container-reproduction`의 DB 이름·컨테이너·볼륨 ID로 구분한다. migration131개/latest132/실패0, before에 없던 컨테이너/볼륨, API/worker 동일 JAR 이미지·worker mount 없음, 기존 Docker 자원 동일성을 관측 자료로 대조한다. 단순 `existingDatabaseUsed=false` 선언이나 health만으로 통과하지 않는다.
+`container-reproduction/`은 새 Compose 프로젝트, PostgreSQL 컨테이너의 새 앱 DB1개, 새 DB/media 볼륨과 전용 네트워크2개를 보존한다. 이 DB는 backend IT DB 총계에 합산하지 않고 `result.json.rootPhases.container-reproduction`의 DB 이름·컨테이너·볼륨 ID로 구분한다. migration132개/latest133/실패0, before에 없던 컨테이너/볼륨, API/worker 동일 JAR 이미지·worker mount 없음, 기존 Docker 자원 동일성을 관측 자료로 대조한다. 단순 `existingDatabaseUsed=false` 선언이나 health만으로 통과하지 않는다.
 
 새 브라우저 필수 이름은 `required-browser-container-reproduction.json`의 desktop/mobile **정확한2개**다. 루트는 실제 Playwright 결과의 실패/skip/retry와 이름·프로젝트·중복, 기존 공유10초 업무 deadline 원장을 대조하고 `browser-coverage-container-reproduction.json`에 기록한다. 같은 주문 ID의 UI→API→PG→worker/판매자 배송→구매자 재조회, 금액13000원·PAID·COMMITTED·SHIPPED와 같은 결제 attempt의 승인 효과1회/성공 event1회를 두 프로젝트에서 각각 확인한다. 결제 관측은 이4개 필드의 정확한 전체 객체를 대조한다. 종료 후에는 모든 소유 컨테이너의 exited/running=false와 paused/restarting/OOM/dead=false를 확인하고, 서비스의 정상/SIGTERM 종료0 또는143·준비 helper의 종료0을 대조한다. 정리 오류 배열만으로 종료를 수용하지 않는다. `container-reproduction-proof.json`은 같은 실행 artifact/source 해시·관측 DB/볼륨·보존 원근거의 교차 검증이다. 원 화면·명령·실패와 기존 자원을 지우지 않으며 E의 공개/실결제 제한은 [P12-E 기록](work-items/P12-E.md)을 따른다.
 
@@ -89,7 +89,7 @@ P10-A부터 Playwright는 `frontend/auth-e2e/serve-current-bundle.mjs`로 현재
 
 ### P12-D 릴리스·복구 검증 — 격리 로컬 수용
 
-`release-upgrade`는 고정 P11-D H129 산출물을 실제 실행하여 V129→V132 이행과 과거 API 소비를 검사한다. `P12_D_H129_JAR`, `P12_D_HISTORY_PROOF`는 보존된 과거 산출물과 commit/JAR 출처를 가리켜야 한다. 현재 API 또는 SQL 결과만으로 대체하지 않으며 산출물 부재는 필수 차단이다. `release-recovery`는 `P12_D_R0_JAR`·`P12_D_R0_DIST`와 현재 후보를 실제 교체하고 새 DB/media 복원을 검사한다. R1은 제품 API가 같을 수 있는 운영 패키지 릴리스이며 실제 고정 payload 소비·프로세스·pointer·업무 결과를 확인한다. ZIP timestamp 차이는 버전 변경 근거가 아니다.
+`release-upgrade`는 고정 P11-D H129 산출물을 실제 실행하여 V129→V133 이행과 과거 API 소비를 검사한다. `P12_D_H129_JAR`, `P12_D_HISTORY_PROOF`는 보존된 과거 산출물과 commit/JAR 출처를 가리켜야 한다. 현재 API 또는 SQL 결과만으로 대체하지 않으며 산출물 부재는 필수 차단이다. `release-recovery`는 `P12_D_R0_JAR`·`P12_D_R0_DIST`와 현재 후보를 실제 교체하고 새 DB/media 복원을 검사한다. R1은 제품 API가 같을 수 있는 운영 패키지 릴리스이며 실제 고정 payload 소비·프로세스·pointer·업무 결과를 확인한다. ZIP timestamp 차이는 버전 변경 근거가 아니다.
 
 L의 local-full/local-test 비회원 성공 경로와 P의 초대 제한·개별 로그인 public-demo 경로를 구분한다. P의 비회원503·DB 무효과는 실제 P 경로에서 관측하고 제공자 무호출은 같은 제품 클래스에 결합된 `public-demo-runtime` 근거와 대조한다. 해당 연결 선택 검사에는 두 묶음을 함께 지정한다. 각 소유 DB와 실패 대상까지 필수 보조 DB 수에 등록하며, 의도한 거부도 정확한 명령·원인·무효과 assertion이 있어야 한다. 임의 실패 무시는 허용하지 않는다.
 

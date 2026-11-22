@@ -1,8 +1,10 @@
 import { NavLink, Outlet, useLocation, matchPath } from 'react-router'
 import type { Workspace } from '../navigation'
+import { useWorkspaceFeatures } from '../auth/WorkspaceMenuContext'
 
 export function WorkspaceLayout({ workspace }: { workspace: Workspace }) {
   const location = useLocation()
+  const features = useWorkspaceFeatures(workspace)
   const sellerReview = workspace.path === '/admin' && matchPath('/admin/sellers', location.pathname)
   const storeEditor = workspace.path === '/seller' && matchPath('/seller/store', location.pathname)
   const operations = workspace.path === '/admin' && matchPath('/admin/stores', location.pathname)
@@ -15,7 +17,7 @@ export function WorkspaceLayout({ workspace }: { workspace: Workspace }) {
         <p className="workspace-label">{workspace.title}</p>
         <nav className="workspace-nav" aria-label={`${workspace.label} 메뉴`}>
           <NavLink to={workspace.path} end>한눈에 보기</NavLink>
-          {workspace.features.map((feature) => <NavLink key={feature.path} to={`${workspace.path}/${feature.path}`}>{feature.title}</NavLink>)}
+          {features.map((feature) => <NavLink key={feature.path} to={`${workspace.path}/${feature.path}`}>{feature.title}</NavLink>)}
         </nav>
       </aside>
       <div className="workspace-content">

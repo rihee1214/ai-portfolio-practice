@@ -58,15 +58,33 @@ class CatalogIT extends PostgresContractFixture {
         jdbc.update("UPDATE marketplace.inventory_balance SET reserved=4 WHERE sku_id=:id",Map.of("id",sku));
         var client=authBrowser();String path="/api/browse/products/"+p.slug();var response=accountRequest(client,"GET",path,null,null);assertEquals(200,response.statusCode(),response.body());
         var detail=authMapper.readTree(response.body());assertEquals(1700,detail.get("product").get("minPrice").asLong());assertFalse(detail.get("product").get("soldOut").asBoolean());assertEquals(6,detail.get("offers").get(0).get("available").asLong());
+        String search="/api/browse/products?q=P05+visibility";
+        var withoutImage=authMapper.readTree(accountRequest(client,"GET",search,null,null).body()).get("items").get(0);
+        assertTrue(withoutImage.path("thumbnail").isNull(),withoutImage.toString());
+        var media=context.getBean(com.example.marketplace.media.api.Media.class);
+        byte[] png=mediaPng();
+        media.upload(owner,"products",p.id(),3,0,"상품 뒷면","rear.png",png);
+        var thumbnail=media.upload(owner,"products",p.id(),1,0,"상품 앞면","front.png",png);
+        var result=authMapper.readTree(accountRequest(client,"GET",search,null,null).body()).get("items").get(0).get("thumbnail");
+        assertEquals(thumbnail.assetId().toString(),result.get("assetId").asText());
+        assertEquals(thumbnail.alt(),result.get("alt").asText());
+        String image="/api/media/"+thumbnail.assetId()+"/content";
+        assertEquals(200,accountRequest(client,"GET",image,null,null).statusCode());
         String[] hide={"UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id","UPDATE marketplace.catalog_product SET state='STOPPED' WHERE id=:id","UPDATE marketplace.catalog_category SET active=false WHERE id=:category","UPDATE marketplace.seller_store SET visible=false WHERE owner_id=:owner","UPDATE marketplace.seller_store SET state='SUSPENDED',visible=false WHERE owner_id=:owner","UPDATE marketplace.identity_user SET state='SUSPENDED' WHERE id=:owner","DELETE FROM marketplace.role_assignment WHERE user_id=:owner AND role='SELLER'"};
         for(String sql:hide) {
             new TransactionTemplate(transactionManager).executeWithoutResult(status->{
                 jdbc.update(sql,Map.of("id",p.id(),"category",p.categoryId(),"owner",owner));
                 var api=context.getBean(com.example.marketplace.catalog.api.Browse.class);
                 assertEquals(404,assertThrows(com.example.marketplace.catalog.api.CatalogException.class,()->api.detail(p.slug())).status());
+                assertEquals(404,assertThrows(com.example.marketplace.media.api.MediaException.class,()->media.content(null,thumbnail.assetId())).status());
                 assertTrue(api.search(new com.example.marketplace.catalog.api.Browse.Query("P05 visibility",null,null,null,null,false,"newest",0)).items().isEmpty());status.setRollbackOnly();
             });
         }
+        var replacement=media.upload(owner,"products",p.id(),1,thumbnail.version(),"새 대표 사진","new.png",png);
+        assertEquals(404,accountRequest(client,"GET",image,null,null).statusCode());
+        var updated=authMapper.readTree(accountRequest(client,"GET",search,null,null).body()).get("items").get(0).get("thumbnail");
+        assertEquals(replacement.assetId().toString(),updated.get("assetId").asText());
+        assertEquals(replacement.alt(),updated.get("alt").asText());
         jdbc.update("UPDATE marketplace.inventory_balance SET reserved=on_hand WHERE sku_id=:id",Map.of("id",sku));
         assertTrue(authMapper.readTree(accountRequest(client,"GET",path,null,null).body()).get("product").get("soldOut").asBoolean());
         jdbc.update("UPDATE marketplace.catalog_sku SET active=false WHERE id=:id",Map.of("id",sku));

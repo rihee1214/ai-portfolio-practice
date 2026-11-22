@@ -1,6 +1,9 @@
 import {policyFixture} from './returnPolicyFixture'
 import {AuthContext} from '../../src/auth/AuthContext'
 import {AuthStore} from '../../src/auth/AuthStore'
+import { CartContext } from '../../src/cart/CartContext'
+import { CartStore } from '../../src/cart/CartStore'
+import { GuestCart } from '../../src/cart/GuestCart'
 import { expect, test } from 'vitest'
 import { BrowseResource, detailValid, pageValid, parseQuery, queryString, type Page } from '../../src/catalog/Browse'
 import type { JsonResult } from '../../src/api/http'
@@ -42,27 +45,59 @@ test('공개 상세 응답은 옵션·가격·가용량의 범위를 검증한�
 })
 
 test('상세 화면은 옵션 선택과 주소 변경에서 이전 상품을 제거한다', async () => {
-  const { render, screen } = await import('@testing-library/react')
+  const { fireEvent, render, screen } = await import('@testing-library/react')
   const { default: userEvent } = await import('@testing-library/user-event')
   const { vi } = await import('vitest')
   const { MemoryRouter, Routes, Route, Link } = await import('react-router')
   const { ProductDetailPage } = await import('../../src/pages/BrowsePages')
   const response = (data: unknown) => new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } })
+  const images = [
+    { slot: 0, assetId: item.categoryId, alt: '상품 정면', version: 1, width: 32, height: 32 },
+    { slot: 1, assetId: '00000000-0000-4000-8000-000000000006', alt: '상품 뒷면', version: 1, width: 32, height: 32 },
+  ]
   let missing!: (r: Response) => void
   vi.stubGlobal('fetch', vi.fn((path: string) => {
+    if (path === '/api/auth/me') return Promise.resolve(new Response('{}', { status: 401, headers: { 'Content-Type': 'application/json' } }))
     if (path.endsWith('/reviews')) return Promise.resolve(response({reviews:[],ratingSum:0,count:0}))
-    if (path.includes('/api/media/')) return Promise.resolve(response([]))
+    if (path.includes('/api/media/')) return Promise.resolve(response(images))
     if (path.endsWith('/second-item')) return new Promise<Response>(done => { missing = done })
     return Promise.resolve(response({ product: item, offers: [
       { id: item.categoryId, options: [{ name: '색', value: '파랑' }], price: 1000, available: 2 },
       { id: '00000000-0000-4000-8000-000000000004', options: [{ name: '색', value: '빨강' }], price: 2000, available: 0 },
     ] }))
   }))
-  render(<AuthContext.Provider value={new AuthStore()}><MemoryRouter initialEntries={['/products/sample-item']}><Link to="/products/second-item">다른 상품</Link><Routes><Route path="/products/:slug" element={<ProductDetailPage />} /></Routes></MemoryRouter></AuthContext.Provider>)
+  const auth = new AuthStore()
+  await auth.refresh()
+  const storage = { getItem: () => null, setItem: vi.fn(), removeItem: vi.fn() }
+  const cart = new CartStore(auth, new GuestCart(storage), work => work())
+  await cart.refresh()
+  const add = vi.spyOn(cart, 'add')
+  render(<AuthContext.Provider value={auth}><CartContext value={cart}><MemoryRouter initialEntries={['/products/sample-item?q=검색&sort=name&page=2']}><Link to="/products/second-item">다른 상품</Link><Routes><Route path="/products/:slug" element={<ProductDetailPage />} /></Routes></MemoryRouter></CartContext></AuthContext.Provider>)
   expect(await screen.findByText('가용 수량: 2')).toBeVisible()
   const user = userEvent.setup()
+  const gallery = screen.getByRole('region', { name: '상품 사진' })
+  expect(await screen.findByRole('img', { name: '상품 정면' })).toHaveAttribute('src', '/api/media/' + images[0].assetId + '/content')
+  await user.click(screen.getByRole('button', { name: '상품 뒷면 보기' }))
+  expect(gallery.querySelector('img[alt="상품 뒷면"]')).toHaveAttribute('src', '/api/media/' + images[1].assetId + '/content')
+  const purchase = screen.getByRole('region', { name: '구매 정보' })
+  const information = screen.getByRole('region', { name: '상품 정보' })
+  expect(gallery.compareDocumentPosition(purchase) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(purchase.compareDocumentPosition(information) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(screen.getByRole('heading', { level: 1, name: item.title })).toBeVisible()
+  expect(screen.getByRole('heading', { name: '배송·반품 안내' })).toBeVisible()
+  expect(screen.getByRole('link', { name: '상품 목록으로' })).toHaveAttribute('href', '/products?q=%EA%B2%80%EC%83%89&sort=name&page=2')
+  const cartButton = () => screen.getByRole<HTMLButtonElement>('button', { name: '장바구니 담기' })
+  expect(cartButton()).toBeEnabled()
   await user.selectOptions(screen.getByLabelText('상품 옵션'), '00000000-0000-4000-8000-000000000004')
   expect(screen.getByText('품절', { exact: true })).toBeVisible(); expect(screen.getByText('선택 가격: 2,000원')).toBeVisible()
+  expect(screen.getByLabelText('담을 수량')).toBeDisabled()
+  const soldOutButton = cartButton()
+  expect(soldOutButton).toBeDisabled()
+  await user.click(soldOutButton)
+  fireEvent.submit(soldOutButton.form!)
+  expect(add).not.toHaveBeenCalled()
+  expect(storage.setItem).not.toHaveBeenCalled()
+  expect(cart.getSnapshot().items).toEqual([])
   await user.click(screen.getByRole('link', { name: '다른 상품' }))
   expect(screen.queryByRole('heading', { name: '상품' })).not.toBeInTheDocument()
   expect(screen.queryByText('선택 가격: 2,000원')).not.toBeInTheDocument()
@@ -108,19 +143,22 @@ test('카테고리 선택은 페이지 이동 뒤 유지되고 검색 제출은 
 })
 
 test('상품 목록은 조회 상태와 빈 목록을 구분하고 검색 조건을 초기화한다', async () => {
-  const { render, screen, waitFor } = await import('@testing-library/react')
+  const { fireEvent, render, screen, waitFor } = await import('@testing-library/react')
   const { default: userEvent } = await import('@testing-library/user-event')
   const { vi } = await import('vitest')
   const { MemoryRouter, useLocation } = await import('react-router')
   const { BrowsePage } = await import('../../src/pages/BrowsePages')
   const response = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } })
+  const thumbnail = { assetId: item.categoryId, alt: '상품 실물' }
+  const calls: string[] = []
   let initial = true
   let settleSearch: ((result: Response) => void) | undefined
   vi.stubGlobal('fetch', vi.fn((path: string) => {
+    calls.push(path)
     if (path.startsWith('/api/categories')) return Promise.resolve(response({ items: [], page: 0, hasMore: false }))
     const query = new URL(path, 'http://test').searchParams
     if (query.has('q')) return new Promise<Response>(resolve => { settleSearch = resolve })
-    const items = initial ? [] : [item]
+    const items = initial ? [] : [{ ...item, thumbnail }]
     initial = false
     return Promise.resolve(response({ items, page: 0, hasMore: false }))
   }))
@@ -147,7 +185,20 @@ test('상품 목록은 조회 상태와 빈 목록을 구분하고 검색 조건
   settleSearch!(response({ items: [], page: 0, hasMore: false })); settleSearch = undefined
   expect(await screen.findByText('검색 결과가 없습니다')).toBeVisible()
   await user.click(screen.getByRole('link', { name: '조건 초기화' }))
-  expect(await screen.findByRole('link', { name: '상품' })).toBeVisible()
+  const name = await screen.findByRole('link', { name: '상품' })
+  const photo = screen.getByRole('link', { name: '상품 사진' })
+  const shop = screen.getByRole('link', { name: item.storeName })
+  expect(name).toBeVisible()
+  expect(photo).toHaveAttribute('href', name.getAttribute('href'))
+  expect(photo.querySelector('img')).toHaveAttribute('src', '/api/media/' + thumbnail.assetId + '/content')
+  expect(photo.querySelector('img')).toHaveAttribute('alt', thumbnail.alt)
+  expect(photo.compareDocumentPosition(shop) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(shop.compareDocumentPosition(name) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(name.compareDocumentPosition(screen.getByText('1,000원', { exact: true })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(calls.some(path => path.startsWith('/api/media/'))).toBe(false)
+  fireEvent.error(photo.querySelector('img')!)
+  expect(photo).toHaveTextContent('사진을 불러오지 못했습니다.')
+  expect(photo).toHaveAttribute('href', name.getAttribute('href'))
   expect(screen.getByLabelText('현재 주소')).toBeEmptyDOMElement()
   expect(screen.getByLabelText('상품 검색')).toHaveValue('')
   expect(screen.getByLabelText('정렬')).toHaveValue('newest')

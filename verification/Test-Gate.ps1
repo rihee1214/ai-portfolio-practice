@@ -132,8 +132,16 @@ Must-Reject 'running input disguised as quiet rollback baseline' {$copy=$rollbac
 Must-Reject 'quiet rollback baseline digest unbound' {$copy=$rollbackProof|ConvertTo-Json -Depth 10|ConvertFrom-Json;$copy.live.quietBaselineDigest=('b'*64);Assert-ReleasePreservationProof $copy -Action Rollback}
 'PASS exact full quiet and typed row preservation proof gates'
 $cancel=@{status='passed';limitMs=10000;activeOperations=0;activeRequests=0;executorTerminated=$true;observedHandles=@(@{pid=12345;alive=$false});handlerThreads=@(@{id=12;alive=$false});started='2026-11-16T00:00:00Z';ended='2026-11-16T00:00:01Z'}
-Assert-ReleaseOperationCancellation $cancel
-Must-Reject 'operator still alive before target cleanup' {$bad=$cancel.Clone();$bad.observedHandles=@(@{pid=12345;alive=$true});Assert-ReleaseOperationCancellation $bad}
-Must-Reject 'handler still running before target cleanup' {$bad=$cancel.Clone();$bad.handlerThreads=@(@{id=12;alive=$true});Assert-ReleaseOperationCancellation $bad}
-Must-Reject 'operator join failed despite all other counters' {$bad=$cancel.Clone();$bad.status='failed';Assert-ReleaseOperationCancellation $bad}
+function Assert-SerializedCancellation($Evidence) {
+    Assert-ReleaseOperationCancellation ($Evidence | ConvertTo-Json -Depth 4)
+}
+Assert-SerializedCancellation $cancel
+Must-Reject 'operator still alive before target cleanup' {$bad=$cancel.Clone();$bad.observedHandles=@(@{pid=12345;alive=$true});Assert-SerializedCancellation $bad}
+Must-Reject 'handler still running before target cleanup' {$bad=$cancel.Clone();$bad.handlerThreads=@(@{id=12;alive=$true});Assert-SerializedCancellation $bad}
+Must-Reject 'operator join failed despite all other counters' {$bad=$cancel.Clone();$bad.status='failed';Assert-SerializedCancellation $bad}
+$mixed=$cancel.Clone();$mixed.started='2026-11-19T15:12:27.509282Z';$mixed.ended='2026-11-19T15:12:27.510289800Z'
+Assert-SerializedCancellation $mixed
+$exact=$mixed.Clone();$exact.ended='2026-11-20T00:12:37.509282000+09:00';Assert-SerializedCancellation $exact
+Must-Reject 'cancellation exceeds ten seconds by one nanosecond' {$bad=$exact.Clone();$bad.ended='2026-11-19T15:12:37.509282001Z';Assert-SerializedCancellation $bad}
+Must-Reject 'cancellation timestamps reversed by one nanosecond' {$bad=$mixed.Clone();$bad.ended='2026-11-19T15:12:27.509281999Z';Assert-SerializedCancellation $bad}
 'PASS finite operator and handler cancellation evidence before target cleanup'

@@ -1,9 +1,11 @@
 import {returnPolicyValid,type ReturnPolicy} from './ReturnPolicy'
 import type { JsonResult } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
-export type Item = { slug: string; title: string; description: string; categoryId: string; categoryName: string; storeSlug: string; storeName: string; minPrice: number | null; soldOut: boolean; returnPolicy: ReturnPolicy }
+import { descriptionValid, type DescriptionBlock } from './ProductDescription'
+export type ProductThumbnail = { assetId: string; alt: string }
+export type Item = { slug: string; title: string; description: string; categoryId: string; categoryName: string; storeSlug: string; storeName: string; minPrice: number | null; soldOut: boolean; returnPolicy: ReturnPolicy; thumbnail?: ProductThumbnail | null }
 export type Page = { items: Item[]; page: number; hasMore: boolean }
-export type Detail = { product: Item; offers: { id: string; options: { name: string; value: string }[]; price: number; available: number }[] }
+export type Detail = { product: Item; descriptionBlocks?: DescriptionBlock[] | null; offers: { id: string; options: { name: string; value: string }[]; price: number; available: number }[] }
 export type Query = { q: string; category: string; store: string; minPrice: string; maxPrice: string; inStock: boolean; sort: string; page: number }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 export const slugValid = (v: unknown): v is string => typeof v === 'string' && /^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$/.test(v)
@@ -29,10 +31,12 @@ export function queryString(query: Query): string {
 function itemValid(v: unknown): v is Item {
   return record(v) && slugValid(v.slug) && text(v.title, 120) && v.title.trim() !== '' && text(v.description, 4000) && typeof v.categoryId === 'string' && uuid.test(v.categoryId)
     && text(v.categoryName, 80) && slugValid(v.storeSlug) && text(v.storeName, 80) && (v.minPrice === null || number(v.minPrice)) && typeof v.soldOut === 'boolean' && returnPolicyValid(v.returnPolicy)
+    && (v.thumbnail == null || record(v.thumbnail) && typeof v.thumbnail.assetId === 'string' && uuid.test(v.thumbnail.assetId)
+      && text(v.thumbnail.alt, 120) && Boolean(v.thumbnail.alt.trim()))
 }
 export function pageValid(v: unknown): v is Page { return record(v) && Array.isArray(v.items) && v.items.length <= 20 && v.items.every(itemValid) && number(v.page, 10000) && typeof v.hasMore === 'boolean' }
 export function detailValid(v: unknown): v is Detail {
-  return record(v) && itemValid(v.product) && Array.isArray(v.offers) && v.offers.length <= 100 && v.offers.every(o => record(o) && typeof o.id === 'string' && uuid.test(o.id)
+  return record(v) && itemValid(v.product) && descriptionValid(v.descriptionBlocks) && Array.isArray(v.offers) && v.offers.length <= 100 && v.offers.every(o => record(o) && typeof o.id === 'string' && uuid.test(o.id)
     && number(o.price) && number(o.available) && Array.isArray(o.options) && o.options.length <= 3 && o.options.every(x => record(x) && text(x.name, 40) && text(x.value, 40)))
 }
 type State<T> = { key: string; busy: boolean; data?: T; error?: ApiErrorView }

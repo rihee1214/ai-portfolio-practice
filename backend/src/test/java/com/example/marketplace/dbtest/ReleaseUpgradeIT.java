@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /** Fixed H129 application ports plus historical HTTP; no current application fallback. */
 @ExtendWith(ContractTiming.class)
 class ReleaseUpgradeIT {
+    // Keep the registered historical upgrade case identity as the current end version advances.
     @Test void retainedH129ApiWritesBeforeAndAfterRealV132MigrationWithoutRewritingHistory() throws Exception {
         try(var support=new ReleaseContractSupport()) {
             Path old=ReleaseContractSupport.requiredPath("P12_D_H129_JAR"),proof=ReleaseContractSupport.requiredPath("P12_D_HISTORY_PROOF");
@@ -74,10 +75,18 @@ class ReleaseUpgradeIT {
                 failures.add(Map.of("fault",fault,"sqlState",sqlState,"copiedV130Sha256",ReleaseContractSupport.sha(v130),"businessAndHistoryUnchanged",true,"realProcessCrash",false));
             }
             var migration=flyway(url,password,"classpath:db/migration");
-            assertEquals(List.of("130","131","132"),java.util.Arrays.stream(migration.info().pending()).map(info -> info.getVersion().getVersion()).toList());
-            assertEquals(3,migration.migrate().migrationsExecuted);migration.validate();assertEquals(0,migration.migrate().migrationsExecuted);
+            var expectedVersions=List.of("130","131","132","133");
+            assertEquals(expectedVersions,java.util.Arrays.stream(migration.info().pending()).map(info -> info.getVersion().getVersion()).toList());
+            assertEquals(expectedVersions.size(),migration.migrate().migrationsExecuted);migration.validate();assertEquals(0,migration.migrate().migrationsExecuted);
             var migratedBusiness=support.snapshot(jdbc,true);
-            for(var entry:original.entrySet()) {assertTrue(entry.getValue().equals(migratedBusiness.get(entry.getKey())),"Historical business canonical hash mismatch: "+entry.getKey());}
+            var historicalTables=new LinkedHashMap<>(migratedBusiness);
+            historicalTables.put("catalog_product",jdbc.queryForObject("""
+                    SELECT coalesce(jsonb_agg(legacy ORDER BY legacy::text),'[]'::jsonb)::text
+                    FROM (SELECT to_jsonb(p)-'description_blocks' AS legacy FROM marketplace.catalog_product p) products
+                    """,Map.of(),String.class));
+            for(var entry:original.entrySet()) {assertTrue(entry.getValue().equals(historicalTables.get(entry.getKey())),"Historical business canonical hash mismatch: "+entry.getKey());}
+            assertEquals(0,jdbc.queryForObject("SELECT count(*) FROM marketplace.catalog_product WHERE description_blocks IS NOT NULL",Map.of(),Integer.class));
+            assertEquals("[]",migratedBusiness.get("media_product_description"));
             assertTrue(history.equals(jdbc.queryForList("SELECT installed_rank,version,description,type,script,checksum,success FROM marketplace.flyway_schema_history WHERE version IS NULL OR version::integer<=129 ORDER BY installed_rank",Map.of())),"Historical history must preserve NULL SCHEMA version");
             assertTrue(sessions.equals(jdbc.queryForList("SELECT primary_id,session_id,principal_name FROM marketplace.spring_session ORDER BY primary_id",Map.of())),"Historical JDBC session identifiers changed during migration");
             assertEquals(Map.of("base_fee",3000L,"free_threshold",50000L),jdbc.queryForMap("SELECT base_fee,free_threshold FROM marketplace.site_shipping_policy WHERE version=1",Map.of()));
@@ -100,7 +109,7 @@ class ReleaseUpgradeIT {
             support.stop(candidate);assertFalse(candidate.isAlive());
             unchanged(migratedBusiness,support.snapshot(jdbc,true),"R1 historical HTTP consumers must preserve historical business rows");
             assertFalse(support.children.stream().anyMatch(Process::isAlive),"Current R1 writer must stop before historical H129 resumes");
-            var restarted=support.jar(old,"H129-on-V132",url,"marketplace_test",password,media,port,"api");
+            var restarted=support.jar(old,"H129-on-V133",url,"marketplace_test",password,media,port,"api");
             var read=purchase.buyer().request("GET","/api/orders/"+purchase.number(),null,200);
             assertEquals(Long.toString(purchase.amount()),read.path("total").asText());assertEquals("PAID",read.path("state").asText());
             var afterConsumers=consumeHistoricalHttp(support,port,financial,initialDashboard);
@@ -131,7 +140,7 @@ class ReleaseUpgradeIT {
             assertEquals("23038",purchase.buyer().request("GET","/api/orders/"+purchase.number(),null,200).path("total").asText());support.stop(restarted);
             var evidence=new LinkedHashMap<String,Object>();evidence.put("historicalCommit","aee626bb8d69ba1b4191d5a4688cb6b39538839c");
             evidence.put("historicalJarSha256",ReleaseContractSupport.sha(old));evidence.put("provenanceSha256",ReleaseContractSupport.sha(proof));
-            evidence.put("exclusiveRuntimeManifest",runtime.manifest().toString());evidence.put("database",database);evidence.put("migrationVersions",List.of("130","131","132"));
+            evidence.put("exclusiveRuntimeManifest",runtime.manifest().toString());evidence.put("database",database);evidence.put("migrationVersions",expectedVersions);
             evidence.put("businessBeforeHashes",hashes(original));evidence.put("historyRowsPreserved",history.size());evidence.put("sessionRowsPreserved",sessions.size());
             evidence.put("beforeOrder",purchase.number());evidence.put("afterOrder",after.number());evidence.put("sameOldCookieRead",true);evidence.put("actualOldApiWritesAfterUpgrade",true);
             evidence.put("advancedBeforeHttp",beforeConsumers);evidence.put("advancedAfterHttp",afterConsumers);evidence.put("newHistoricalHttpRefund",Map.of("attemptId",refund,"amount","10000","state","SUCCEEDED"));

@@ -267,7 +267,11 @@ class ModerationIT extends PostgresContractFixture {
         copyLegacyRows(named,"identity_user","SELECT u.* FROM marketplace.identity_user u WHERE u.id=:actor OR u.id IN (SELECT s.owner_id FROM marketplace.seller_store s JOIN marketplace.catalog_product p ON p.store_id=s.id WHERE p.id=:id)",p);
         copyLegacyRows(named,"seller_store","SELECT s.* FROM marketplace.seller_store s JOIN marketplace.catalog_product p ON p.store_id=s.id WHERE p.id=:id",p);
         copyLegacyRows(named,"catalog_category","SELECT c.* FROM marketplace.catalog_category c JOIN marketplace.catalog_product p ON c.id=p.category_id WHERE p.id=:id",p);
-        copyLegacyRows(named,"catalog_product","SELECT * FROM marketplace.catalog_product WHERE id=:id",p);
+        copyLegacyRows(named,"catalog_product","""
+                SELECT id,store_id,category_id,slug,title,description,state,is_hidden_by_admin,version,created_at,
+                       return_fee,return_policy_revision,return_policy_source
+                FROM marketplace.catalog_product WHERE id=:id
+                """,p);
         named.update("UPDATE marketplace.catalog_product SET is_hidden_by_admin=true WHERE id=:id",p);
         var upgrade=org.flywaydb.core.Flyway.configure().dataSource(ds).schemas("marketplace").defaultSchema("marketplace").locations("classpath:db/migration").load();
         assertPlannedCurrentUpgrade(upgrade,115);

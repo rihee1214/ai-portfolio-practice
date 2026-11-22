@@ -1,13 +1,9 @@
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { useAuthStore } from './AuthContext'
 import { AuthEntryActions } from './AuthEntryActions'
-import { requestJson } from '../api/http'
 import { apiErrorView, type ApiErrorView } from '../api/apiError'
 import { ApiErrorNotice } from '../components/ApiErrorNotice'
-
-export type AccessArea = 'SELLER' | 'ADMIN' | 'ACCOUNTS' | 'CONTENT' | 'SUPPORT' | 'SETTLEMENTS' | 'SYSTEM'
-const endpoint = (area: AccessArea) => area === 'SELLER' ? '/api/seller/access'
-  : area === 'ADMIN' ? '/api/admin/access' : '/api/admin/' + area.toLowerCase() + '/access'
+import { checkWorkspaceAccess, type AccessArea } from './workspacePolicy'
 
 export function WorkspaceAccess({ area, title, children }: { area: AccessArea; title: string; children: ReactNode }) {
   const auth = useAuthStore()
@@ -18,15 +14,12 @@ export function WorkspaceAccess({ area, title, children }: { area: AccessArea; t
     if (!session.member || session.busy || !session.checked) return
     const controller = new AbortController()
     let active = true
-    void requestJson(endpoint(area), { credentials: 'same-origin', cache: 'no-store',
-      signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]) }).then(response => {
+    void checkWorkspaceAccess(area, AbortSignal.any([controller.signal, AbortSignal.timeout(10000)])).then(({ response, allowed }) => {
       if (!active) return
       if (response.kind === 'http' && response.status === 401) {
         auth.rejectSession(apiErrorView(response) ?? { message: '로그인이 필요합니다.' }); return
       }
-      const valid = response.kind === 'success' && response.status === 200 && typeof response.data === 'object'
-        && response.data !== null && 'access' in response.data && response.data.access === area
-      setResult({ session, area, error: valid ? null : apiErrorView(response) ?? { message: '접근 상태를 확인하지 못했습니다.' } })
+      setResult({ session, area, error: allowed ? null : apiErrorView(response) ?? { message: '접근 상태를 확인하지 못했습니다.' } })
     })
     return () => { active = false; controller.abort() }
   }, [auth, session, area])

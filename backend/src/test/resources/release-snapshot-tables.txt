@@ -172,6 +172,7 @@ media_asset
 media_message_receipt
 media_message_slot
 media_namespace
+media_product_description
 media_review_slot
 media_site_image
 media_slot

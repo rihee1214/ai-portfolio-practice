@@ -17,6 +17,12 @@ function application(v: unknown): v is Application {
     && v.events.every(e => object(e) && uuid(e.actorId) && ['PENDING', 'APPROVED', 'REJECTED'].includes(String(e.status)) && text(e.reason, 300) && timestamp(e.occurredAt))
 }
 
+export function readSellerApplicationsPage(value: unknown, page: number) {
+  if (!object(value) || value.page !== page || typeof value.hasMore !== 'boolean'
+    || !Array.isArray(value.items) || value.items.length > 20 || !value.items.every(application)) return null
+  return { items: value.items, hasMore: value.hasMore }
+}
+
 export class SellerApplicationsStore {
   private state: State = empty
   private listeners = new Set<() => void>()
@@ -47,10 +53,9 @@ export class SellerApplicationsStore {
     const generation = this.begin()
     const result = await this.request(this.path + '?page=' + page)
     if (generation !== this.generation) return false
-    if (result.kind !== 'success' || result.status !== 200 || !object(result.data) || result.data.page !== page
-      || typeof result.data.hasMore !== 'boolean' || !Array.isArray(result.data.items) || result.data.items.length > 20
-      || !result.data.items.every(application)) { this.fail(result); return false }
-    this.set({ ...empty, items: result.data.items, page, hasMore: result.data.hasMore }); return true
+    const data = result.kind === 'success' && result.status === 200 ? readSellerApplicationsPage(result.data, page) : null
+    if (!data) { this.fail(result); return false }
+    this.set({ ...empty, ...data, page }); return true
   }
   save = async (fields: Record<string, string>, id?: string) => {
     if (!this.auth.getSnapshot().member || this.state.busy) return false

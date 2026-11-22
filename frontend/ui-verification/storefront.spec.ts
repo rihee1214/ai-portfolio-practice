@@ -28,10 +28,10 @@ function pendingResponse() {
 }
 
 const primaryLinks = [
-  ['둘러보기', '/'], ['상품', '/products'], ['구매자', '/account'], ['판매자', '/seller'], ['운영자', '/admin'],
+  ['둘러보기', '/'], ['상품', '/products'],
 ] as const
 const accountLinks = [
-  ['장바구니', '/cart'], ['로그인', '/login'], ['회원가입', '/signup'], ['내 계정', '/account'],
+  ['장바구니', '/cart'], ['로그인', '/login'], ['회원가입', '/signup'],
 ] as const
 const guestActions = [['로그인', '/login'], ['회원가입', '/signup']] as const
 const guestRoutes = [
@@ -39,7 +39,7 @@ const guestRoutes = [
   { path: '/seller', heading: '매대 운영', ready: '로그인이 필요합니다.' },
   { path: '/admin', heading: '사이트 운영', ready: '로그인이 필요합니다.' },
   { path: '/cart', heading: '장바구니', ready: '장바구니가 비어 있습니다.' },
-  { path: '/products/linen-tote', heading: '상품 상세' },
+  { path: '/products/linen-tote', heading: '린넨 장바구니' },
 ]
 const headerRoutes = [...guestRoutes,
   { path: '/products', heading: '상품 둘러보기', ready: '아직 등록된 상품이 없습니다' },
@@ -72,6 +72,8 @@ async function fixture(page: Page) {
         break
       case '/api/cart':
         await route.fulfill({ json: { version: 0, items: [] } }); break
+      case '/api/seller/applications':
+        await route.fulfill({ json: { items: [], page: 0, hasMore: false } }); break
       case '/api/browse/products/linen-tote':
         await route.fulfill({ json: { product: products[0], offers: [] } }); break
       case '/api/media/public/products/linen-tote':
@@ -242,7 +244,7 @@ if (!before) {
           await expect(main.getByRole('heading', { name: heading, exact: true })).toBeVisible()
           if (ready) await expect(main.getByText(ready)).toBeVisible()
           if (path === '/products/linen-tote') {
-            await expect(main.getByRole('heading', { name: '린넨 장바구니', exact: true })).toBeVisible()
+            await expect(main.getByRole('region', { name: '구매 정보' }).getByRole('heading', { level: 1 })).toHaveText(heading)
           }
           if (path === '/login' || path === '/signup') await expect(main.getByLabel('이메일', { exact: true })).toBeEnabled()
           await capture(page, name)
@@ -379,6 +381,12 @@ for (const [device, viewport] of Object.entries(devices)) {
       if (!before) {
         expect(layout.scrollWidth).toBeLessThanOrEqual(layout.width)
         expect(layout.elements.search!.width).toBeGreaterThan(150)
+        const columns = await main.locator('.product-grid').evaluate(grid => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
+        expect(columns).toBe(device === 'desktop' ? 4 : 2)
+        const card = main.locator('.product-card').first()
+        const photo = card.getByRole('link', { name: '린넨 장바구니 사진', exact: true })
+        const title = card.getByRole('link', { name: '린넨 장바구니', exact: true })
+        await expect(photo).toHaveAttribute('href', (await title.getAttribute('href'))!)
         if (device === 'desktop') expect(layout.elements.firstCard!.bottom).toBeLessThan(layout.height)
         await compareWithBefore(filename, 'y', 'firstCard', layout.elements.firstCard!.y, 20)
       }

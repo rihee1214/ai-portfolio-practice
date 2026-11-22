@@ -1,12 +1,13 @@
 import {policyFixture} from './returnPolicyFixture'
 import { test, expect, vi } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { AuthContext } from '../../src/auth/AuthContext'
 import { AuthStore } from '../../src/auth/AuthStore'
 import { SellerFeaturePage } from '../../src/pages/StoreLifecycle'
 import { CatalogStore, categoryValid, productValid } from '../../src/catalog/CatalogStore'
 import { CategoryPage, ProductPage } from '../../src/pages/CatalogPages'
+import { ProductDraftScope } from '../../src/catalog/ProductDraftScope'
 import userEvent from '@testing-library/user-event'
 
 const id = '00000000-0000-4000-8000-000000000003'
@@ -28,7 +29,7 @@ test('저장된 여러 줄 설명과 선택창의 레이블 이름은 내용에 
   const auth = new AuthStore(); await auth.refresh()
   render(<AuthContext value={auth}><ProductPage /></AuthContext>)
   await userEvent.setup().click(await screen.findByRole('button', { name: '상품 · 초안' }))
-  expect(screen.getByLabelText('설명', { exact: true })).toHaveValue('첫 줄\n둘째 줄')
+  expect(screen.getByRole('textbox', { name: '상품 설명' }).textContent).toBe('첫 줄\n둘째 줄')
   expect(screen.getByLabelText('카테고리', { exact: true })).toHaveValue(id)
   expect(screen.getByLabelText('상품 상태', { exact: true })).toHaveValue('DRAFT')
 })
@@ -134,4 +135,51 @@ test('P09C seller form shows the saved zero return fee before changing it', asyn
   const item={id,slug:'zero-fee-product',title:'회수비 상품',description:'',categoryId:id,state:'DRAFT',version:0,hiddenByAdmin:false,returnPolicy:{productId:id,revision:1,source:'SELLER_PRODUCT',amount:'0',version:'P09-RETURN-PRODUCT-MAX-1',basis:'ORIGINAL_SHIPMENT',aggregation:'RETURNED_TARGET_CUMULATIVE_MAX',repeat:'DELTA_ONLY'}}
   vi.stubGlobal('fetch',vi.fn(async(path:string)=>path==='/api/auth/me'?json({id,roles:['SELLER']}):json({items:path.startsWith('/api/categories')?[{id,name:'분류',active:true,version:0}]:[item],page:0,hasMore:false})))
   const auth=new AuthStore();await auth.refresh();render(<AuthContext value={auth}><ProductPage/></AuthContext>);await userEvent.setup().click(await screen.findByRole('button',{name:'회수비 상품 · 초안'}));expect(screen.getByLabelText('변심 반품 회수비')).toHaveValue('0')
+})
+
+test('a saved product opens for editing even when it is outside the visible page', async () => {
+  const product = { id, slug: 'new-product', title: '새 상품 이름', description: '', categoryId: id, state: 'DRAFT', version: 0,
+    hiddenByAdmin: false, returnPolicy: policyFixture(id) }
+  const items = Array.from({ length: 20 }, (_, index) => {
+    const rowId = '00000000-0000-4000-8000-' + String(index + 10).padStart(12, '0')
+    return { ...product, id: rowId, slug: 'other-product-' + index, title: '다른 상품 ' + index, returnPolicy: policyFixture(rowId) }
+  })
+  vi.stubGlobal('fetch', vi.fn(async (path: string, init: RequestInit) => {
+    if (path === '/api/auth/me') return json({ id, roles: ['SELLER'] })
+    if (path === '/api/auth/csrf') return json({ token: 'csrf', headerName: 'X-CSRF-TOKEN' })
+    if (path.startsWith('/api/categories')) return json({ items: [{ id, name: '상품 분류', active: true, version: 0 }], page: 0, hasMore: false })
+    if (init.method === 'POST') return new Response(JSON.stringify(product), { status: 201, headers: { 'Content-Type': 'application/json' } })
+    return json({ items: path.startsWith('/api/seller/products?') ? items : [], page: 0, hasMore: true })
+  }))
+  const auth = new AuthStore(); await auth.refresh()
+  render(<AuthContext value={auth}><ProductPage /></AuthContext>)
+  const user = userEvent.setup()
+  await user.type(await screen.findByLabelText(/^상품 주소/), product.slug)
+  await user.type(screen.getByLabelText('상품명'), product.title)
+  await user.selectOptions(screen.getByLabelText('카테고리', { exact: true }), id)
+  await user.click(screen.getByRole('button', { name: '상품 등록' }))
+  expect(await screen.findByRole('button', { name: '상품 저장' })).toBeEnabled()
+  expect(screen.getByLabelText('상품명')).toHaveValue(product.title)
+  expect(screen.queryByRole('button', { name: product.title + ' · 초안' })).toBeNull()
+})
+
+test('the native picker delivers a selected file while the seller workspace rechecks access', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (path: string) => path === '/api/auth/me' ? json({ id, roles: ['SELLER'] })
+    : json({ items: [], page: 0, hasMore: false })))
+  const auth = new AuthStore(); await auth.refresh()
+  function GatedProducts({ allowed }: { allowed: boolean }) {
+    return <AuthContext value={auth}><ProductDraftScope>{allowed && <ProductPage />}</ProductDraftScope></AuthContext>
+  }
+  const view = render(<GatedProducts allowed />)
+  const user = userEvent.setup()
+  await waitFor(() => expect(screen.getByRole('button', { name: '이미지 삽입' })).toBeEnabled())
+  await user.click(screen.getByRole('button', { name: '이미지 삽입' }))
+  const input = screen.getByLabelText('이미지 파일')
+  view.rerender(<GatedProducts allowed={false} />)
+  expect(screen.queryByRole('textbox', { name: '상품 설명' })).toBeNull()
+  expect(screen.getByLabelText('이미지 파일')).toBe(input)
+  fireEvent.change(input, { target: { files: [new File(['fixture'], 'focus-draft.png', { type: 'image/png' })] } })
+  view.rerender(<GatedProducts allowed />)
+  expect(await screen.findByText('focus-draft.png')).toBeVisible()
+  expect(screen.getByLabelText('이미지 대체 텍스트')).toBeEnabled()
 })

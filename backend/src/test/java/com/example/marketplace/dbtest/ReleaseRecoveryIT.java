@@ -26,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /** Real operator commands -> retained/current UI -> API -> isolated PostgreSQL/media. */
 @ExtendWith(ContractTiming.class)
 class ReleaseRecoveryIT {
+    private static final String CURRENT_SCHEMA="133";
+    private static final String MIGRATION_PATH="backend/src/main/resources/db/migration";
+    private static final String DESCRIPTION_MIGRATION="V133__product_descriptions.sql";
     private final ReleaseContractSupport support=new ReleaseContractSupport();
     private final ReleaseOperationLifecycle operationLifecycle=new ReleaseOperationLifecycle(support.folder);
     private final String node=support.root.resolve(".local-tools/node-v24.22.0-win-x64/node.exe").toString();
@@ -216,7 +219,7 @@ class ReleaseRecoveryIT {
     }
 
     private void prepareSource(Stack stack) throws Exception {
-        support.accounts(stack.url(),user,password,stack.media,"132");
+        support.accounts(stack.url(),user,password,stack.media,CURRENT_SCHEMA);
         stack.credentials=ReleaseCredentialPreparation.prepare(stack.url(),user,password,stack.media,support);
         if(stack.mode.equals("L")) {stack.reconciliation=ReleaseReconciliationFixture.prepare(stack.url(),user,password,stack.media,support.passwords,support.folder.resolve("reconciliation-producers.json"));}
         if(stack.mode.equals("L")) {ReleaseWorkerRecovery.exercise(support,r1jar,stack.url(),user,password,stack.media,stack.apiPort);}
@@ -350,9 +353,18 @@ class ReleaseRecoveryIT {
                 runtime.put("applicationEnvironment",mode.equals("L")?Map.of("FIREBASE_AUTH_EMULATOR_HOST",System.getenv("FIREBASE_AUTH_EMULATOR_HOST"),"GCLOUD_PROJECT",System.getenv("GCLOUD_PROJECT"),"MARKETPLACE_PHONE_MODE","local-test"):Map.of());
                 var artifacts=new LinkedHashMap<String,Object>();artifacts.put("jar",Map.of("path",jar.toString(),"sha256",ReleaseContractSupport.sha(jar)));artifacts.put("image",release.equals("R0")?r0image:r1image);artifacts.put("dist",Map.of("path",dist.toString(),"files",inventory(dist)));artifacts.put("operationalPayload",release.equals("R0")?r0Payload:controllerPayload);
                 artifacts.put("nginxConfig",Map.of("path",configuration.resolve("nginx.conf").toString(),"sha256",ReleaseContractSupport.sha(configuration.resolve("nginx.conf"))));artifacts.put("proxyConfig",Map.of("path",configuration.resolve("package-proxy.conf").toString(),"sha256",ReleaseContractSupport.sha(configuration.resolve("package-proxy.conf"))));
-                Path migrationSource=release.equals("R0")?r0Source:support.root;
-                var migrations=new ArrayList<Map<String,Object>>();try(var paths=Files.list(migrationSource.resolve("backend/src/main/resources/db/migration"))) {for(var file:paths.filter(Files::isRegularFile).sorted().toList()) {String name=file.getFileName().toString();migrations.add(Map.of("version",name.substring(1,name.indexOf("__")),"path",file.toString(),"sha256",ReleaseContractSupport.sha(file)));}}artifacts.put("migrations",migrations);
-                var manifest=Map.of("releaseId",release,"source",Map.of("head","8bf6b8f50514d3251a8e0c820fda60237c6bb261","inputsSha256",release.equals("R0")?ReleaseContractSupport.sha(ReleaseContractSupport.requiredPath("P12_D_HISTORY_PROOF")):sourceInputs),"artifacts",artifacts,"runtime",runtime,"compatibility",Map.of("schemaVersion","132","apiReleaseIds",List.of("R0","R1"),"uiReleaseIds",List.of("R0","R1")),"readiness",Map.of("sql","SELECT CASE WHEN count(*)>=8 THEN 'ready' ELSE 'missing' END FROM marketplace.identity_user WHERE state='ACTIVE'","expected","ready"));
+                Path migrationSource=(release.equals("R0")?r0Source:support.root).resolve(MIGRATION_PATH);
+                List<Path> migrationFiles;
+                try(var paths=Files.list(migrationSource)) {migrationFiles=new ArrayList<>(paths.filter(Files::isRegularFile).sorted().toList());}
+                if(release.equals("R0")) {
+                    // R0 stays fixed. The manifest checksum inventory describes the expanded database both applications consume.
+                    assertFalse(Files.exists(migrationSource.resolve(DESCRIPTION_MIGRATION)));
+                    migrationFiles.add(support.root.resolve(MIGRATION_PATH).resolve(DESCRIPTION_MIGRATION));
+                }
+                var migrations=new ArrayList<Map<String,Object>>();
+                for(var file:migrationFiles) {String name=file.getFileName().toString();migrations.add(Map.of("version",name.substring(1,name.indexOf("__")),"path",file.toString(),"sha256",ReleaseContractSupport.sha(file)));}
+                artifacts.put("migrations",migrations);
+                var manifest=Map.of("releaseId",release,"source",Map.of("head","8bf6b8f50514d3251a8e0c820fda60237c6bb261","inputsSha256",release.equals("R0")?ReleaseContractSupport.sha(ReleaseContractSupport.requiredPath("P12_D_HISTORY_PROOF")):sourceInputs),"artifacts",artifacts,"runtime",runtime,"compatibility",Map.of("schemaVersion",CURRENT_SCHEMA,"apiReleaseIds",List.of("R0","R1"),"uiReleaseIds",List.of("R0","R1")),"readiness",Map.of("sql","SELECT CASE WHEN count(*)>=8 THEN 'ready' ELSE 'missing' END FROM marketplace.identity_user WHERE state='ACTIVE'","expected","ready"));
                 Path file=configuration.resolve("manifest-"+release+".json");Files.writeString(file,support.json.writeValueAsString(manifest));manifests.put(release,file);
             }
         }

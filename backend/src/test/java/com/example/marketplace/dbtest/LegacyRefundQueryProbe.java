@@ -39,7 +39,7 @@ public final class LegacyRefundQueryProbe {
   try(var context=builder.run(options.toArray(String[]::new))){
    var sql=new org.springframework.jdbc.core.JdbcTemplate(context.getBean(javax.sql.DataSource.class));
    var events=context.getBean(NotificationEvents.class);
-   org.junit.jupiter.api.Assertions.assertEquals(prepare?102:132,sql.queryForObject(
+   org.junit.jupiter.api.Assertions.assertEquals(prepare?102:133,sql.queryForObject(
            "SELECT max(version::integer) FROM marketplace.flyway_schema_history WHERE success AND version ~ '^[0-9]+$'",Integer.class));
    org.junit.jupiter.api.Assertions.assertEquals(!prepare,sql.queryForObject(
            "SELECT to_regclass('marketplace.notification_event') IS NOT NULL",Boolean.class));

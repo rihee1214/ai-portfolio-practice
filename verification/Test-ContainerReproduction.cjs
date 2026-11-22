@@ -19,7 +19,7 @@ function fixture(){
  save('prerequisites',{...request,sourceHead:request.sourceHead,project,jarSha256:hash(jar)});
  save('jar-provenance',JSON.parse(fs.readFileSync(jarProvenance)));save('dist-provenance',JSON.parse(fs.readFileSync(distProvenance)));
  save('result',{status:'passed',cleanupErrors:[],project,mode:'public-demo',jarSha256:hash(jar),artifactOnlyReadOnly:true,existingDatabaseUsed:false,externalPayment:false});
- save('migration',{database,migrations:131,failed:0,latest:132});save('media-init',{expectedOwner:'10001:10001',observed:'10001:10001',nocopy:true});
+ save('migration',{database,migrations:132,failed:0,latest:133});save('media-init',{expectedOwner:'10001:10001',observed:'10001:10001',nocopy:true});
  const dockerfile=fs.readFileSync(path.join(__dirname,'../infra/p12-c/Dockerfile'),'utf8'),compose='image: '+references.nginx+'\nimage: '+references.postgres;
  fs.mkdirSync(path.join(root,'infra/p12-c'));fs.writeFileSync(path.join(root,'infra/p12-c/Dockerfile'),dockerfile);fs.writeFileSync(path.join(root,'infra/p12-c/compose.yaml'),compose);
  const images=Object.entries(references).map(([role,reference],i)=>({reference,Id:'sha256:'+String(i+1).repeat(64),RepoDigests:[reference],RootFS:{Layers:['sha256:'+String(i+4).repeat(64)]}}));
@@ -45,7 +45,7 @@ for(const [name,mutate]of [
  ['empty native host routes',f=>{const r=f.read('powershell-network');r.routes=[];f.save('powershell-network',r)}],
  ['cleanup failure',f=>{const r=f.read('result');r.cleanupErrors=['stop failed'];f.save('result',r)}],
  ['old database',f=>{const r=f.read('migration');r.database='existing';f.save('migration',r)}],
- ['incomplete migration',f=>{const r=f.read('migration');r.latest=131;f.save('migration',r)}],
+ ['incomplete migration',f=>{const r=f.read('migration');r.latest=132;f.save('migration',r)}],
  ['different artifact',f=>fs.appendFileSync(f.request.jar,'stale')],
  ['source mutation',f=>fs.appendFileSync(path.join(f.root,'infra/p12-e/reproduce.cjs'),'changed')],
  ['copied source mutation',f=>fs.appendFileSync(path.join(f.folder,'proof-source/reproduce.cjs'),'changed')],

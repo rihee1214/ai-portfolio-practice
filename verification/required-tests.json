@@ -271,6 +271,7 @@
       "com.example.marketplace.dbtest.MediaIT#mediaStoreOwnershipCsrfAndPublicProjectionAreEnforced",
       "com.example.marketplace.dbtest.MediaIT#mediaUploadReplaceDeleteAndDirectUrlRespectVisibility",
       "com.example.marketplace.dbtest.MediaIT#mediaWritesRecheckSuspensionAndArchiveAfterActualLockWait",
+      "com.example.marketplace.dbtest.MediaIT#productDescriptionImagesAreAtomicAndScopedAcrossLegacyAndRichWriters",
       "com.example.marketplace.dbtest.CatalogIT#memberReadsNeedOnlyOneDatabaseConnection",
       "com.example.marketplace.dbtest.IdentityIT#normalizedDuplicateIsRejectedWithoutExtraCredentialOrMail",
       "com.example.marketplace.dbtest.DatabaseRuntimeIT#parametersAndMappingHandleQuotesUnicodeDecimalAndNull",
